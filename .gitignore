@@ -1,0 +1,13 @@
+.vscode
+dist/
+docs/
+node_modules/
+old/
+public/
+tests/
+types/
+
+/src/js/plugins/ScrollClampPlugin/
+/src/js/plugins/SliderMovePlugin/
+
+package-lock.json

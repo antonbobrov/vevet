@@ -1,0 +1,39 @@
+.overflow {
+
+    &-visible {
+        overflow: visible;
+
+        &_imortant {
+            overflow: visible !important;
+        }
+
+    }
+
+    &-hidden {
+        overflow: hidden;
+
+        &_imortant {
+            overflow: hidden !important;
+        }
+
+    }
+
+    &-scroll {
+        overflow: scroll;
+
+        &_imortant {
+            overflow: scroll !important;
+        }
+
+    }
+
+    &-auto {
+        overflow: auto;
+
+        &_imortant {
+            overflow: auto !important;
+        }
+
+    }
+
+}

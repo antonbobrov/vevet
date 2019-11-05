@@ -1,0 +1,32 @@
+{
+    "tags": {
+        "allowUnknownTags": false
+    },
+    "source": {
+        "include": ["./src/"],
+        "includePattern": ".js$",
+        "excludePattern": "(node_modules/|docs)"
+    },
+    "plugins": [
+        "plugins/markdown",
+        "jsdoc/plugins/typedef_augments",
+        "@pixi/jsdoc-template/plugins/es6-fix"
+    ],
+    "opts": {
+        "template": "./node_modules/tsd-jsdoc/dist",
+        "encoding": "utf8",
+        "destination": "./types/",
+        "recurse": true,
+        "verbose": true,
+        "private": true,
+        "ignore": true,
+        "access": "public,private"
+    },
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false,
+        "default": {
+            "outputSourceFiles": true
+        }
+    }
+}

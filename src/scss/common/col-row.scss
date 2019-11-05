@@ -1,0 +1,45 @@
+.col {
+
+    @for $i from 1 through $cols {
+
+        $p: $i / $cols;
+        $value: percentage($p);
+
+        &-#{$i} {
+            width: $value;
+        }
+
+        &-v-#{$i} {
+            width: #{$p * 100}vw;
+        }
+
+    }
+
+    &-left {
+        float: left;
+    }
+
+    &-right {
+        float: right;
+    }
+
+}
+
+.row {
+
+    @for $i from 1 through $rows {
+
+        $p: $i / $rows;
+        $value: percentage($p);
+
+        &-#{$i} {
+            height: $value;
+        }
+
+        &-v-#{$i} {
+            height: #{$p * 100}vh;
+        }
+
+    }
+
+}

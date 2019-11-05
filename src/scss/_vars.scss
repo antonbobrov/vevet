@@ -1,0 +1,200 @@
+$prefix: 'vevet-' !default;
+
+$transition-timing-function: cubic-bezier(.25, .1, .25, 1) !default;
+
+$wrap-padding: 0 !default;
+$wrap-1-padding: 0 4vw !default;
+$wrap-2-padding: 0 8vw !default;
+$wrap-3-padding: 0 12vw !default;
+$wrap-4-padding: 0 16vw !default;
+
+$cols: 12 !default;
+$rows: 12 !default;
+
+$bg: #fff !default;
+$color: #000 !default;
+
+$mobile: 899px !default;
+$tablet: 1199px !default;
+
+
+
+// preloader
+
+$preloader-bg: #000 !default;
+
+
+
+// menu
+
+$menu-bg: #fff !default;
+$menu-z: 8 !default;
+
+$menu-duration: .5s !default;
+$menu-delay: 0s !default;
+
+$menu-button-bg: #000 !default;
+$menu-button-top: 4vw !default;
+$menu-button-right: 4vw !default;
+$menu-button-bottom: auto !default;
+$menu-button-left: auto !default;
+$menu-button-z: 9 !default;
+$menu-button-width: 30px !default;
+$menu-button-height: 15px !default;
+
+$menu-button-line-1-top: 0 !default;
+$menu-button-line-2-top: 7px !default;
+$menu-button-line-3-top: 14px !default;
+
+$menu-button-line-duration: .5s !default;
+$menu-button-line-delay: 0s !default;
+
+
+
+// slider
+
+$slider-control-width: 30px !default;
+$slider-control-height: 30px !default;
+$slider-control-radius: 50% !default;
+$slider-control-bg: #000 !default;
+
+$slider-prev-top: 50% !default;
+$slider-prev-right: auto !default;
+$slider-prev-bottom: auto !default;
+$slider-prev-left: 25px !default;
+$slider-prev-margin: -15px 0 0 0 !default;
+
+$slider-next-top: 50% !default;
+$slider-next-right: 25px !default;
+$slider-next-bottom: auto !default;
+$slider-next-left: auto !default;
+$slider-next-margin: -15px 0 0 0 !default;
+
+$slider-dots-top: auto !default;
+$slider-dots-right: auto !default;
+$slider-dots-bottom: 25px !default;
+$slider-dots-left: auto !default;
+
+$slider-dot-width: 10px !default;
+$slider-dot-height: 10px !default;
+$slider-dot-radius: 50% !default;
+$slider-dot-bg: #000 !default;
+$slider-dot-margin: 0 10px !default;
+
+$slider-counter-top: auto !default;
+$slider-counter-right: auto !default;
+$slider-counter-bottom: 50px !default;
+$slider-counter-left: auto !default;
+$slider-counter-margins: 0 10px !default;
+
+
+
+// form
+
+$form-input-margin: 1rem 0 0 0 !default;
+$form-textarea-height: 150px !default;
+$form-input-font-size: .875rem !default;
+$form-input-padding: 10px 20px !default;
+$form-input-color: #000 !default;
+$form-input-bg: #efefef !default;
+$form-input-border: 1px solid #000 !default;
+$form-disabled-opacity: .5 !default;
+$form-error-border-color: #e60000 !default;
+$form-error-color: #e60000 !default;
+$form-errors-bg: #efefef !default;
+$form-errors-border: 1px solid #e60000 !default;
+$form-errors-color: #e60000 !default;
+
+
+
+// scroll
+
+$scrollbar-bg: #ccc !default;
+$scrollbar-bar-bg: #000 !default;
+
+$scrollbar-y-top: 10px !default;
+$scrollbar-y-right: 0 !default;
+$scrollbar-y-bottom: auto !default;
+$scrollbar-y-left: auto !default;
+$scrollbar-y-width: 10px !default;
+$scrollbar-y-height: calc(100% - 20px) !default;
+$scrollbar-y-bar-width: 100% !default;
+$scrollbar-y-bar-height: 10% !default;
+
+$scrollbar-x-top: auto !default;
+$scrollbar-x-right: auto !default;
+$scrollbar-x-bottom: 0 !default;
+$scrollbar-x-left: 10px !default;
+$scrollbar-x-width: calc(100% - 20px) !default;
+$scrollbar-x-height: 10px !default;
+$scrollbar-x-bar-width: 10% !default;
+$scrollbar-x-bar-height: 100% !default;
+
+
+
+// popup
+
+$popup-duration: .75s !default;
+$popup-count: 3 !default;
+
+$popup-overlay-bg: #000 !default;
+$popup-overlay-alpha: .5 !default;
+
+$popup-level-bg: #fff !default;
+
+$popup-modal-width: 50% !default;
+$popup-modal-height: 50% !default;
+
+$popup-media-width: 60vw !default;
+$popup-media-height: 33.75vw !default;
+
+$popup-content-width: 100% !default;
+$popup-content-height: 100% !default;
+
+$popup-right-width: 30vw !default;
+
+$popup-close-bg: #000 !default;
+$popup-close-width: 36px !default;
+$popup-close-height: 36px !default;
+$popup-close-top: 10px !default;
+$popup-close-right: 10px !default;
+
+
+
+// select
+
+$select-bg: #fff !default;
+$select-border-color: #000 !default;
+$select-color: #000 !default;
+
+$select-placeholder-padding: 10px 30px 10px 10px !default;
+
+$select-arrow-width: 30px !default;
+
+$select-container-bg: #f0f0f0 !default;
+$select-container-animate: opacity !default;
+$select-container-duration: .25s !default;
+
+$select-content-padding: 10px 10px !default;
+$select-content-max-height: 250px !default;
+
+$select-search-height: 40px !default;
+$select-search-bg: #fff !default;
+$select-search-padding: 0 10px !default;
+
+$select-values-margin: 10px 0 0 !default;
+$select-value-padding: 5px 10px !default;
+$select-value-margin: 0 !default;
+$select-value-bg: transparent !default;
+$select-value-bg-active: #ccc !default;
+$select-value-color: #000 !default;
+$select-value-color-active: #000 !default;
+
+
+
+// pagination
+
+$pagination-ul-margin: 60px 0 0 0 !default;
+$pagination-li-margin: 0 10px !default;
+$pagination-li-opacity: .5 !default;
+$pagination-li-active-opacity: 1 !default;

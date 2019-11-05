@@ -1,0 +1,32 @@
+{
+    "tags": {
+        "allowUnknownTags": false
+    },
+    "source": {
+        "include": ["./src/"],
+        "includePattern": ".js$",
+        "excludePattern": "(node_modules/|docs)"
+    },
+    "plugins": [
+        "plugins/markdown",
+        "jsdoc/plugins/typedef_augments",
+        "@pixi/jsdoc-template/plugins/es6-fix"
+    ],
+    "opts": {
+        "template": "./node_modules/@pixi/jsdoc-template",
+        "encoding": "utf8",
+        "destination": "./docs/",
+        "recurse": true,
+        "verbose": true,
+        "private": true
+    },
+    "templates": {
+        "cleverLinks": false,
+        "referenceTitle": "My SDK Name",
+        "disableSort": false,
+        "monospaceLinks": false,
+        "default": {
+            "outputSourceFiles": false
+        }
+    }
+}

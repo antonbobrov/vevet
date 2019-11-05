@@ -1,0 +1,22 @@
+{
+    "env": {
+        "es": {
+            "presets": [
+                [
+                    "@babel/preset-env",
+                    {
+                        "modules": false,
+                        "exclude": ["transform-classes"]
+                    }
+                ],
+            ]
+        },
+        "cjs": {
+            "presets": [
+                [
+                    "@babel/preset-env"
+                ]
+            ]
+        }
+    }
+}

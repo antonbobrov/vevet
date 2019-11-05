@@ -1,0 +1,291 @@
+.#{$prefix}popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    visibility: hidden;
+
+    &_no-transition {
+        * {
+            transition: 0s !important;
+        }
+    }
+    
+    &__overlay {
+        @include absolute(top-left, 12, 12);
+        @include transition(opacity $popup-duration, 0s);
+        background: $popup-overlay-bg;
+        opacity: 0;
+    }
+
+    &_show {
+        visibility: visible;
+
+        .#{$prefix}popup {
+            &__overlay {
+                opacity: $popup-overlay-alpha;
+            }
+            &__close {
+                opacity: 1;
+            }
+        }
+
+    }
+
+    &__container {
+        position: relative;
+        opacity: 0;
+    }
+
+    &__close {
+        position: absolute;
+        top: $popup-close-top;
+        right: $popup-close-right;
+        width: $popup-close-width;
+        height: $popup-close-height;
+        transform: rotate(45deg);
+        z-index: 2;
+        cursor: pointer;
+        @include transition(opacity $popup-duration, 0s);
+        opacity: 0;
+
+        &:before,
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background: $popup-close-bg;
+        }
+        
+        &:before {
+            width: 2px;
+            height: 100%;
+            margin: -50% 0 0 -1px;
+        }
+        
+        &:after {
+            width: 100%;
+            height: 2px;
+            margin: -1px 0 0 -50%;
+        }
+
+    }
+
+    &__levels {
+        position: relative;
+    }
+
+    &__level {
+        position: relative;
+        background: $popup-level-bg;
+
+        &_active {
+            z-index: 1;
+        }
+
+    }
+
+
+
+    // Common styles for some types
+
+    &_auto,
+    &_modal,
+    &_media,
+    &_content,
+    &_right {
+        @include display-flex-center();
+        @include transition(visibility $popup-duration, 0s);
+
+        .#{$prefix}popup {
+    
+            &__container {
+                @include transition(opacity $popup-duration, 0s);
+            }
+
+        }
+
+        &.#{$prefix}popup_show {
+
+            .#{$prefix}popup {
+
+                &__container {
+                    opacity: 1;
+                }
+
+            }
+
+        }
+
+    }
+
+    &_modal,
+    &_media,
+    &_content {
+
+        .#{$prefix}popup {
+
+            &__container {
+                overflow: hidden;
+            }
+
+            &__levels,
+            &__level {
+                @include absolute(top-left, 12, 12);
+            }
+
+            &__level {
+                @include transition(opacity $popup-duration, 0s);
+                opacity: 0;
+
+                &.#{$prefix}popup__level_active {
+                    opacity: 1;
+                }
+
+            }
+
+        }
+
+    }
+
+
+
+    // Auto Type
+
+    &_auto {
+
+        .#{$prefix}popup {
+
+            &__level {
+                &:not(.#{$prefix}popup__level_active) {
+                    display: none;
+                }
+            }
+
+        }
+        
+    }
+
+
+
+    // Modal Type
+
+    &_modal {
+
+        .#{$prefix}popup {
+
+            &__container {
+                width: $popup-modal-width;
+                height: $popup-modal-height;
+            }
+
+        }
+        
+    }
+
+
+
+    // Media Type
+
+    &_media {
+
+        .#{$prefix}popup {
+
+            &__close {
+                position: fixed;
+            }
+
+            &__container {
+                width: $popup-media-width;
+                height: $popup-media-height;
+            }
+
+        }
+
+        video,
+        iframe {
+            @include absolute(top-left, 12, 12);
+        }
+        
+    }
+
+
+
+    // Content Type
+
+    &_content {
+
+        .#{$prefix}popup {
+
+            &__container {
+                width: $popup-content-width;
+                height: $popup-content-height;
+            }
+
+        }
+        
+    }
+
+
+
+    // Right Type
+
+    &_right {
+
+        .#{$prefix}popup {
+
+            &__container {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 0;
+                height: 100%;
+                opacity: 1;
+            }
+
+            &__levels {
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 100%;
+                width: (($popup-count) * $popup-right-width);
+                transform: translate3d((($popup-count) * $popup-right-width), 0, 0);
+                @include transition(transform $popup-duration, 0s);
+            }
+
+            &__level {
+                position: absolute;
+                top: 0;
+                height: 100%;
+            }
+
+        }
+
+        &.#{$prefix}popup {
+
+            @for $i from 0 through ($popup-count - 1) {
+                .#{$prefix}popup {
+                    &__level-#{$i} {
+                        left: ($i * $popup-right-width);
+                        width: (($i + 1) * $popup-right-width);
+                    }
+                }
+            }
+
+            @for $i from 0 through ($popup-count - 1) {
+                &_level-#{$i} {
+                    .#{$prefix}popup__levels {
+                        transform: translate3d(($popup-count * $popup-right-width - ($i + 1) * $popup-right-width), 0, 0);
+                    }
+                }
+            }
+
+        }
+        
+    }
+
+}

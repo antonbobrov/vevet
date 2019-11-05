@@ -1,0 +1,102 @@
+@mixin top-left() {
+    bottom: auto;
+    left: 0;
+    right: auto;
+    top: 0;
+}
+
+.top-left {
+    @include top-left();
+}
+
+
+
+@mixin top-right() {
+    bottom: auto;
+    left: auto;
+    right: 0;
+    top: 0;
+}
+
+.top-right {
+    @include top-right();
+}
+
+
+
+@mixin bottom-left() {
+    bottom: 0;
+    left: 0;
+    right: auto;
+    top: auto;
+}
+
+.bottom-left {
+    @include bottom-left();
+}
+
+
+
+@mixin bottom-right() {
+    bottom: 0;
+    left: auto;
+    right: 0;
+    top: auto;
+}
+
+.bottom-right {
+    @include bottom-right();
+}
+
+
+
+.relative {
+    position: relative;
+
+    &_important {
+        position: relative !important;
+    }
+
+}
+
+.absolute {
+    position: absolute;
+
+    &_important {
+        position: absolute !important;
+    }
+
+}
+
+@mixin absolute($positionate, $col, $row) {
+    height: percentage($row / 12);
+    position: absolute;
+    @if $positionate == top-left {
+        @include top-left();
+    } @else if $positionate == top-right {
+        @include top-right();
+    } @else if $positionate == bottom-left {
+        @include bottom-left();
+    } @else {
+        @include bottom-right();
+    }
+    width: percentage($col / 12);
+}
+
+.fixed {
+    position: fixed;
+
+    &_important {
+        position: fixed !important;
+    }
+
+}
+
+.static {
+    position: static;
+
+    &_important {
+        position: static !important;
+    }
+
+}

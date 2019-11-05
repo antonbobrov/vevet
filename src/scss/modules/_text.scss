@@ -1,0 +1,17 @@
+.#{$prefix}text,
+.#{$prefix}text-split {
+
+    &__letter {
+        display: inline-block;
+    }
+
+    &__word {
+        display: inline-block;
+        white-space: nowrap;
+    }
+
+    &__line {
+        display: block;
+    }
+
+}

@@ -1,0 +1,21 @@
+.#{$prefix}pagination {
+
+    &__ul {
+        @include reset-ul;
+        margin: $pagination-ul-margin;
+        position: relative;
+        @include display-flex-center;
+    }
+
+    &__li {
+        margin: $pagination-li-margin;
+        opacity: $pagination-li-opacity;
+
+        &_active {
+            font-weight: bold;
+            opacity: $pagination-li-active-opacity;
+        }
+
+    }
+
+}
