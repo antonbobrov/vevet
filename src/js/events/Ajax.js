@@ -285,7 +285,7 @@ export default class Ajax extends Event {
      */
     cacheClear() {
 
-        this.cache = [];
+        this._cache = [];
 
     }
 
