@@ -566,7 +566,7 @@ export default class Pagination extends Module {
     /**
      * @description Load a new page.
      * @param {object} data - Settings.
-     * @param {number|boolean} data.num - The order number of the page, or true (next page), or false (previous page).
+     * @param {number|boolean} [data.num=true] - The order number of the page, or true (next page), or false (previous page).
      * @param {boolean} [data.pagination=false] - Defines if the action was called due a pagination click.
      * @param {boolean} [data.reload=false] - If thru {@linkcode Vevet.Pagination#reload}.
      * @param {boolean} [data.pushState=true] - Defines if you need to change the url.
@@ -576,6 +576,7 @@ export default class Pagination extends Module {
 
         // data
         data = Object.assign({
+            num: true,
             pagination: false,
             reload: false,
             pushState: true
