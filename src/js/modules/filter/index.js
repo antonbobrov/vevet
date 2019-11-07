@@ -1,10 +1,8 @@
-const dom = require('dom-create-element');
-
 import Module from '../Module';
 import utils from '../../core/utils';
 
 /**
- * @classdesc  <br>
+ * @classdesc This class is to create filters. It works together with {@linkcode Vevet.Pagination} <br>
  * Available targets:
  *  <ul>
  *      <li>load - {@linkcode Vevet.Filter.Load} is an argument.</li>
@@ -24,27 +22,32 @@ export default class Filter extends Module {
      * @typedef {object} Properties
      * @augments Vevet.Module.Properties
      * 
-     * @property {string|HTMLElement} [selector=.vevet-filter] - *** This is the selector for filter elements.
-     * Each filter must have the following data attributes:
+     * @property {object} [selectors] - ***
+     * @property {string|HTMLElement|NodeList|Array<HTMLElement>} [selectors.group=.vevet-filter__group] - Group of filters.
+     * Each group must/may have the following data attributes:
      * <ul>
-     *      <li></li>
+     *      <li>data-vevet-filter-group - the name (id) of the group</li>
+     *      <li>data-vevet-filter-multiple - an optional attribute which defines that several filters 
+     *      may be active within one group. By default, none of the groups are multiple.</li>
      * </ul>
-     * @property {string} [param=page] - URL parameter that changes when a new page is loaded.
+     * @property {string|HTMLElement|NodeList|Array<HTMLElement>} [selectors.filter=.vevet-filter__filter] - Filter elements.
+     * Each element must have the following data attributes:
+     * <ul>
+     *      <li>data-vevet-filter-group - to what group the filter belongs</li>
+     *      <li>data-vevet-filter-id - the filter's ID</li>
+     * </ul>
      * 
-     * @property {object} [pagination]
-     * @property {boolean} [pagination.on=true] - Enable pagination.
-     * @property {number} [pagination.left=3] - How many links are shown on the left from the active one.
-     * @property {number} [pagination.right=3] - How many links are shown on the left from the active one.
-     * @property {boolean} [pagination.updateContent=true] - If true, after a click the content will be automatically changed. If false - new content will be added.
-     * @property {number} [pagination.timeout=0] - How much time to wait before {@linkcode Vevet.Filter#load} will be called.
+     * @property {boolean} [saveOnChange=true] - Defines if you need to save values when filters are changed.
+     * 
+     * @property {string} [multipleSeparator=_]
+     * @property {number} [timeout=0] - Timeout before loading.
      * 
      * @property {object} [popstate]
-     * @property {boolean} [popstate.event=true] - Catch popstate event and load content of the current url.
+     * @property {boolean} [popstate.event=true] - Catch popstate event.
      * @property {boolean} [popstate.reload=false] - Reload on popstate.
+     * @property {number} [popstate.timeout=300]
      * 
-     * @property {object} [ajax] - Ajax settings.
-     * @property {boolean} [ajax.cache=false] - Store data in cache.
-     * @property {string} [ajax.method=post] - post or get.
+     * @property {Vevet.Pagination} pagination - Pagination Module.
      * 
      */
     /**
@@ -57,88 +60,29 @@ export default class Filter extends Module {
     }
 
     get prefix() {
-        return `${this._v.prefix}pagination`;
+        return `${this._v.prefix}filter`;
     }
 
     get defaultProp() {
+
+        let prefix = this._prefix;
         
         return utils.merge(super.defaultProp, {
-            selector: `.${this._prefix}`,
-            param: `page`,
-            update: {
-                url: true,
-                title: true,
-                content: true
+            selectors: {
+                group: `.${prefix}__group`,
+                filter: `.${prefix}__filter`
             },
-            pagination: {
-                on: true,
-                left: 3,
-                right: 3,
-                updateContent: true,
-                timeout: 0
-            },
+            saveOnChange: true,
+            multipleSeparator: '_',
+            timeout: 0,
             popstate: {
                 event: true,
-                reload: false
+                reload: false,
+                timeout: 300
             },
-            ajax: {
-                cache: false,
-                method: 'post'
-            }
+            pagination: {}
         });
 
-    }
-
-
-
-    /**
-     * @memberof Vevet.Filter
-     * @typedef {object} Load
-     * @property {boolean} pagination - If the action was carried out thru a pagination click.
-     * @property {boolean} reload - If the action was carried out thru {@linkcode Vevet.Filter#reload}.
-     * @property {HTMLElement} outer - Elements' outer.
-     * @property {string} fullHTML - The new page's html.
-     * @property {string} html - The innerHTML of the outer.
-     */
-    /**
-     * @memberof Vevet.Filter
-     * @typedef {object} Last
-     * @property {HTMLElement} outer - Elements' outer.
-     * @property {string} fullHTML - The new page's html.
-     * @property {string} html - The innerHTML of the outer.
-     */
-    /**
-     * @memberof Vevet.Filter
-     * @typedef {object} Click
-     * @property {number} num - Order number of the anchor.
-     * @property {HTMLElement} anchor - Anchor.
-     */
-
-
-
-    /**
-     * @description Get active page.
-     * @readonly
-     * @type {number}
-     */
-    get active() {
-        return this._active;
-    }
-    /**
-     * @description Last page.
-     * @readonly
-     * @type {number}
-     */
-    get max() {
-        return this._max;
-    }
-    /**
-     * @description If content is loading.
-     * @readonly
-     * @type {boolean}
-     */
-    get loading() {
-        return this._loading;
     }
 
 
@@ -156,46 +100,589 @@ export default class Filter extends Module {
          * @private
          */
         this._data = {
-            active: `data-${prefix}-active`,
-            max: `data-${prefix}-max`,
-            url: `data-${prefix}-url`
+            group: `data-${prefix}-group`,
+            multiple: `data-${prefix}-multiple`,
+            id: `data-${prefix}-id`
         };
+        
+        // elements
+        this._groups = [];
+        this._filters = [];
+        this._filtersEvents = [];
 
-        // variables
-        this._active = 1;
-        this._max = 1;
-        this._loading = false;
+        // current json - current filters
+        this._json = '{}';
 
-        // pagination elements
-        this._pagination = null;
+        // popstate
+        this._popstateTimeout = false;
 
         // get elements
         this._elementsGet();
-
-        // get url
-        let urlAttribute = this._outer.getAttribute(this._data.url);
-        if (urlAttribute != null) {
-            this._url = urlAttribute;
-        }
-        else{
-            this._url = window.location.href;
-        }
-
-        // actions
-        this._range(this._outer);
-        this._paginationCreate();
-        this._paginationLinks();
-        this._paginationActive();
-        this._paginationVisibility();
+        this.setFilters();
 
     }
 
     // When properties are changed
     _changeProp(prop) {
         super._changeProp(prop);
-        this._paginationVisibility();
-        this._paginationLinks();
-        this._paginationActive();
+    }
+
+
+
+    /**
+     * @description Get elements and form arrays of groups and filters.
+     * @private
+     */
+    _elementsGet() {
+
+        // get groups
+        this._getGroups();
+        // get filters
+        this._getFilters();
+
+    }
+
+    /**
+     * @description Get groups.
+     * @private
+     */
+    _getGroups() {
+
+        // clear groups
+        this._groups = [];
+
+        // get dom groups
+        let items = utils.elements(this._prop.selectors.group);
+        items.forEach(el => {
+
+            // get the group's id
+            let group = this._getGroupId(el);
+            if (group) {
+
+                // check if it is multiple
+                let multiple = this._getGroupMultiple(el);
+                
+                // create an object and push it to the stack
+                this._groups.push({
+                    el: el,
+                    id: group,
+                    multiple: multiple
+                });
+
+            }
+
+        });
+
+    }
+
+    /**
+     * @description Get filters.
+     * @private
+     */
+    _getFilters() {
+
+        // clear filters
+        this._clearFilters();
+
+        // get dom groups
+        let items = utils.elements(this._prop.selectors.filter),
+            i = 0;
+        items.forEach(el => {
+
+            // get the filter's properties
+            let group = this._getGroupByElement(el),
+                id = this._getFilterID(el);
+            if (group !== false & id !== false) {
+                
+                // create an object and push it to the stack
+                let obj = {
+                    el: el,
+                    group: group,
+                    active: false,
+                    disabled: false,
+                    unique_id: utils.id(i),
+                    id: id
+                };
+                this._filters.push(obj);
+
+                // set events
+                let event = this.listener(el, "click", this.filterClick.bind(this, el));
+                this._filtersEvents.push(event);
+
+            }
+
+            i++;
+
+        });
+
+    }
+
+    /**
+     * @description Remove events from filters.
+     */
+    _clearFilters() {
+
+        this._filtersEvents.forEach(event => {
+            this.removeEventListener(event);
+        });
+        
+        this._filters = [];
+        this._filtersEvents = [];
+        
+    }
+
+
+
+    /**
+     * @memberof Vevet.Filter
+     * @typedef {object} Group
+     * 
+     * @property {HTMLElement} el
+     * @property {string} id
+     * @property {boolean} multiple
+     * 
+     */
+
+    /**
+     * @memberof Vevet.Filter
+     * @typedef {object} Filter
+     * 
+     * @property {HTMLElement} el
+     * @property {Vevet.Filter.Group} group
+     * @property {boolean} active
+     * @property {boolean} disabled
+     * @property {string} id
+     * @property {string} unique_id
+     * 
+     */
+
+
+
+    /**
+     * @description Get group id.
+     * @param {HTMLElement} el
+     * @returns {string|boolean} Returns the group's id or false.
+     * @private
+     */
+    _getGroupId(el) {
+
+        let attr = el.getAttribute(this._data.group);
+        if (attr) {
+            return attr;
+        }
+
+        return false;
+
+    }
+
+    /**
+     * @description Check if the group is multiple.
+     * @param {HTMLElement} el
+     * @returns {boolean} Returns true or false.
+     * @private
+     */
+    _getGroupMultiple(el) {
+
+        let attr = el.getAttribute(this._data.multiple);
+        if (attr) {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    /**
+     * @description Get group of an element.
+     * @param {HTMLElement} el
+     * @returns {Vevet.Filter.Group|boolean} Returns the group or false.
+     * @private
+     */
+    _getGroupByElement(el) {
+
+        let attr = el.getAttribute(this._data.group);
+        if (attr) {
+            let group = false;
+            this._groups.forEach(obj => {
+                if (obj.id == attr) {
+                    group = obj;
+                }
+            });
+            return group;
+        }
+
+        return false;
+
+    }
+
+    /**
+     * @description Get filter by element.
+     * @param {HTMLElement} el
+     * @returns {Vevet.Filter.Filter|boolean} Returns the group or false.
+     * @private
+     */
+    _getFilterByElement(el) {
+
+        let filter = false;
+        this._filters.forEach(obj => {
+            if (obj.el == el) {
+                filter = obj;
+            }
+        });
+
+        return filter;
+
+    }
+
+    /**
+     * @description Get filter by the id of the group.
+     * @param {string} id
+     * @returns {Array<Vevet.Filter.Filter>} Returns filters.
+     * @private
+     */
+    _getFiltersByGroupID(id) {
+
+        let filters = [];
+        this._filters.forEach(obj => {
+            if (obj.group.id == id) {
+                filters.push(obj);
+            }
+        });
+
+        return filters;
+
+    }
+
+    /**
+     * @description Get filters' id.
+     * @param {HTMLElement} el
+     * @returns {string|boolean} Returns the value or false.
+     * @private
+     */
+    _getFilterID(el) {
+
+        let attr = el.getAttribute(this._data.id);
+        if (attr) {
+            return attr;
+        }
+
+        return false;
+
+    }
+
+
+
+    /**
+     * @description Click on filter. It can be also imitated.
+     * @param {HTMLElement} el
+     * @param {object} [e]
+     * @returns {boolean} Returns true or false.
+     */
+    filterClick(el, e = false) {
+
+        // prevent default action
+        if (e) {
+            e.preventDefault();
+        }
+
+        // get filter
+        let filter = this._getFilterByElement(el);
+        if (!filter) {
+            return false;
+        }
+
+        // check if event possible
+        if (!this._checkFilterClick(filter)) {
+            return false;
+        }
+        
+        // change values of the filters
+        this._changeFiltersProp(filter);
+        
+        // change classes of the filters
+        this._changeFiltersClasses(filter);
+
+        // update values
+        let query = this._getFiltersQuery();
+        if (query !== this._json) {
+            let canUpdate = this._update(query);
+            if (canUpdate) {
+                this._json = query;
+                // alert('update')
+            }
+            else {
+                return false;
+            }
+        }
+
+        // return success
+        return true;
+
+    }
+
+    /**
+     * @description Check if the change of the filter is available.
+     * @param {Vevet.Filter.Filter} filter
+     * @private
+     * @returns {boolean} Ture or false.
+     */
+    _checkFilterClick(filter) {
+
+        let prop = this._prop;
+
+        // check if pagination is loading
+        if (prop.pagination.loading) {
+            return false;
+        }
+
+        // if the filter is disabled
+        if (filter.disabled) {
+            return false;
+        }
+
+        return true;
+
+    }
+
+    /**
+     * @description Change properties of the filters within one group - active values.
+     * @param {Vevet.Filter.Filter} filter - Current filter.
+     * @private
+     */
+    _changeFiltersProp(filter) {
+
+        // get current group
+        let group = filter.group;
+
+        // get all filters
+        let allFilters = this._getFiltersByGroupID(group.id);
+
+        // change active/non-active of the current filter and other filters
+        // within one group
+        for (let i = 0; i < allFilters.length; i++) {
+
+            let obj = allFilters[i];
+
+            // make the current filter active/non-active if the group is multiple
+            if (group.multiple) {
+                if (obj.unique_id == filter.unique_id) {
+                    obj.active = !filter.active;
+                }
+            }
+            // make the current filter active and others non-active
+            // if the group is not multiple
+            else {
+                if (obj.unique_id == filter.unique_id) {
+                    obj.active = true;
+                }
+                else {
+                    obj.active = false;
+                }
+            }
+        }
+
+    }
+
+    /**
+     * @description Set classes to the filters: active & disabled.
+     * @private
+     */
+    _changeFiltersClasses() {
+
+        let prefix = this._prefix;
+
+        this._filters.forEach(filter => {
+
+            // active class
+            let activeClass = `${prefix}__filter_active`;
+            if (filter.active) {
+                filter.el.classList.add(activeClass);
+            }
+            else {
+                filter.el.classList.remove(activeClass);
+            }
+
+            // disabled class & attribute (for selectors, buttons, etc)
+            let disabledClass = `${prefix}__filter_disabled`;
+            if (filter.disabled) {
+                filter.el.classList.add(disabledClass);
+                filter.el.disabled = true;
+            }
+            else {
+                filter.el.classList.remove(disabledClass);
+                filter.el.disabled = false;
+            }
+
+        });
+
+    }
+
+
+
+    /**
+     * @description Set filter properties and classes according to the url. This happens
+     * while initializing the class.
+     */
+    setFilters() {
+
+        // go thru all groups and search groups that exist in the URL
+        this._groups.forEach(group => {
+
+            let param = this._v.url.getParam({
+                key: group.id
+            });
+            if(param) {
+
+                let paramValues = param.split(this._prop.multipleSeparator);
+
+                // get filters in the group
+                let filters = this._getFiltersByGroupID(group.id);
+                filters.forEach(filter => {
+                    if (paramValues.includes(filter.id)) {
+                        filter.active = true;
+                    }
+                    else {
+                        filter.active = false;
+                    }
+                });
+
+            }
+            else {
+                // get filters in the group
+                let filters = this._getFiltersByGroupID(group.id);
+                filters.forEach(filter => {
+                    filter.active = false;
+                });
+            }
+
+        });
+
+        // set classes
+        this._changeFiltersClasses();
+
+    }
+
+
+    
+    /**
+     * @description Get a url query according to the active filters.
+     * @private
+     */
+    _getFiltersQuery() {
+
+        let groupsFilters = {};
+        this._filters.forEach(filter => {
+
+            // check if the filter is active
+            // and only then add it to its group
+            if (filter.active) {
+
+                // create group if doesn't exist
+                let groupID = filter.group.id;
+                if (typeof groupsFilters[groupID] == "undefined") {
+                    groupsFilters[groupID] = [];
+                }
+
+                // add filter to the group
+                groupsFilters[groupID].push(filter.id);
+
+            }
+
+        });
+
+        // make a json of it
+        let json = JSON.stringify(groupsFilters);
+
+        return json;
+
+    }
+
+    /**
+     * @description Get active url params.
+     * @param {string} json
+     * @returns {Array<Array<string>>} Returns values.
+     * @private
+     */
+    _getURLParams(json) {
+
+        let prop = this._prop;
+
+        // create an array: key => value
+        let obj = JSON.parse(json),
+            params = [];
+        for (let key in obj) {
+            let values = obj[key].join(prop.multipleSeparator);
+            params.push([key, values]);
+        }
+
+        return params;
+
+    }
+
+    /**
+     * @description Update the URL & content according to active filters.
+     * @param {string} json
+     * @returns {boolean} Returns true the filters have changed.
+     * @private
+     */
+    _update(json) {
+
+        let prop = this._prop;
+
+        // check if the url changed
+        if (this._json == json) {
+            return false;
+        }
+
+        // create an arryy: key => value
+        let params = this._getURLParams(json),
+            paramsPrev = this._getURLParams(this._json);
+
+        // get pagination
+        let pagination = prop.pagination;
+
+        // reset pagination
+        let url = this._v.url.setParam({
+            key: pagination.prop.param,
+            value: '',
+            push: false
+        });
+
+        // reset previous params
+        for (let i = 0; i < paramsPrev.length; i++) {
+            let push = false;
+            if (i == paramsPrev.length - 1) {
+                push = params.length === 0 ? true : false;
+            }
+            url = this._v.url.setParam({
+                url: url,
+                key: paramsPrev[i][0],
+                value: '',
+                push: push
+            });
+        }
+
+        // push it to the url
+        for (let i = 0; i < params.length; i++) {
+            let push = false;
+            if (i == params.length - 1) {
+                push = true;
+            }
+            url = this._v.url.setParam({
+                url: url,
+                key: params[i][0],
+                value: params[i][1],
+                push: push
+            });
+        }
+        
+        // update content
+        pagination.url = url;
+        pagination.reload(false);
+
+        // success
+        return true;
+
     }
 
 
@@ -207,20 +694,6 @@ export default class Filter extends Module {
         this.listener(window, "popstate", this._popstate.bind(this));
 
     }
-
-
-
-    /**
-     * @description Get elements
-     * @private
-     */
-    _elementsGet() {
-
-        this._outer = utils.element(this._prop.selector);
-
-    }
-
-
 
     /**
      * @description Popstate events.
@@ -237,19 +710,73 @@ export default class Filter extends Module {
             return false;
         }
         
-        this._popstateCatch();
+        this._popstateLoad();
 
     }
 
     /**
-     * @description Catch popstate and load a new page.
+     * @description Catch popstate and load new data.
      * @private
      */
-    _popstateCatch() {
+    _popstateLoad() {
 
-        // get active page according to the url
+        let prop = this._prop,
+            timeout = prop.popstate.timeout,
+            pagination = prop.pagination;
+
+        // clear timeout
+        if (this._popstateTimeout) {
+            clearTimeout(this._popstateTimeout);
+            this._popstateTimeout = false;
+        }
+
+        // check if available and then load
+        if (!pagination.loading) {
+            this._popstateTimeout = setTimeout(this._popstateForceLoad.bind(this), timeout);
+        }
+        // timeouts and callbacks if not available
+        else {
+            this._popstateTimeout = setTimeout(this._popstateBusyLoad.bind(this), timeout);
+        }
+
+    }
+
+    /**
+     * @description Popstate event when pagination is loading.
+     * @private
+     */
+    _popstateBusyLoad() {
+
+        this._prop.pagination.on("load", () => {
+            this._popstateLoad();
+        }, {
+            once: true
+        });
+
+    }
+
+    /**
+     * @description Popstate force load.
+     * @private
+     */
+    _popstateForceLoad() {
+
+        this.lbt('popstate', {
+            href: window.location.href
+        });
+        
+        // set filters
+        this.setFilters();
+
+        // get pagination
+        let pagination = this._prop.pagination;
+        
+        // update pagination url
+        pagination.url = window.location.href;
+
+        // update pagination active
         let active = this._v.url.getParam({
-            key: this._prop.param
+            key: pagination.prop.param
         });
         if (active != null) {
             active = parseInt(active);
@@ -257,538 +784,11 @@ export default class Filter extends Module {
         else {
             active = 1;
         }
+        pagination._active = active;
 
-        this.load({
-            num: active,
-            pushState: false,
-            reload: true
-        });
+        // reload pagination
+        pagination.reload(false, false);
 
-    }
-
-
-
-    /**
-     * @description Variables range: first and last page.
-     * @param {HTMLElement} outer - Outer element.
-     * @param {boolean} updateActive - If we need to update the active value.
-     * @private
-     */
-    _range(outer, updateActive = true) {
-
-        // check if outer exists
-        if (!outer) {
-            return;
-        }
-
-        let data = this._data;
-
-        // get active
-        if (updateActive) {
-            this._active = this._rangeInt(outer, data.active);
-        }
-        
-        // get max
-        this._max = this._rangeInt(outer, data.max);
-
-    }
-
-    /**
-     * @description Get range number.
-     * @private
-     * @param {HTMLElement} outer
-     * @param {string} data
-     */
-    _rangeInt(outer, data) {
-        
-        let num = outer.getAttribute(data);
-        num = parseInt(num);
-        if (!Number.isInteger(num)) {
-            num = 1;
-        }
-        else {
-            if (num < 1) {
-                num = 1;
-            }
-        }
-
-        return num;
-
-    }
-    
-
-    
-    /**
-     * @description Pagination links
-     * @private
-     */
-    _paginationCreate() {
-        
-        let el = dom({
-            selector: 'ul',
-            styles: `${this._prefix}__ul`
-        });
-        utils.insertAfter(el, this._outer);
-
-        this._pagination = el;
-
-    }
-
-    /**
-     * @description Create pagination links.
-     * @private
-     */
-    _paginationLinks() {
-        
-        // first of all, remove previous pagination links
-        utils.removeChildren(this._pagination);
-
-        // create or update pagination arrays
-        this._paginationLi = [];
-        this._paginationA = [];
-        this._paginationDots = [];
-
-        // create elements
-        for (let i = 0; i < this._max; i++) {
-
-            // list
-            let li = dom({
-                selector: 'li',
-                styles: `${this.prefix}__li`
-            });
-            this._paginationLi.push(li);
-            this._pagination.appendChild(li);
-
-            // anchor
-            let a = dom({
-                selector: 'a',
-            })
-            li.appendChild(a);
-            this._paginationA.push(a);
-            
-            // set anchor href
-            let href = this._v.url.setParam({
-                url: this._url,
-                key: this._prop.param,
-                value: (i + 1),
-                push: false
-            });
-            a.href = href;
-
-            // anchor text
-            let text = i + 1;
-            if (i < 9) {
-                text = '0' + text;
-            }
-            a.innerHTML = `<span>${text}</span>`;
-
-        }
-
-        // show or hide pagination
-        this._paginationVisibility();
-
-        // show links
-        this._paginationShown();
-        this._paginationEvents();
-
-    }
-
-    /**
-     * @description Sho pagination.
-     * @private
-     */
-    _paginationShown() {
-
-        // get shown links
-        let shown = [0, this._max - 1];
-
-        // add shown links
-        for (let i = this._active - 1; i >= this._active - 1 - this._prop.pagination.left; i--) {
-            shown.push(i);
-        }
-        for (let i = this._active - 1; i <= this._active - 1 + this._prop.pagination.left; i++) {
-            shown.push(i);
-        }
-
-        // append dots
-        for (let i = 0; i < this._paginationLi.length; i++) {
-            let anchor = this._paginationA[i];
-            if (!shown.includes(i)) {
-                // set dot
-                let li = this._paginationLi[i];
-                li.classList.add(`${this.prefix}__dot`);
-                this._paginationDots.push(li);
-                // append dots
-                let span = dom({
-                    selector: 'span'
-                });
-                span.innerHTML = '...';
-                li.appendChild(span);
-                // hide anchor
-                anchor.classList.add("display-none");
-            }
-            else {
-                this._paginationDots.push(null);
-            }
-        }
-
-        // hide extra dots
-        for (let i = 0, a = 0; i < this._active; i++) {
-            let dot = this._paginationDots[i];
-            if (dot != null) {
-                if (a > 0) {
-                    dot.classList.add("display-none");
-                }
-                a++;
-            }
-        }
-        for (let i = this._active - 1, a = 0; i < this._max - 1; i++) {
-            let dot = this._paginationDots[i];
-            if (dot != null) {
-                if (a > 0) {
-                    dot.classList.add("display-none");
-                }
-                a++;
-            }
-        }
-
-    }
-
-    /**
-     * @description Set pagination events: clicks on links.
-     * @private
-     */
-    _paginationEvents() {
-
-        let i = 0;
-        this._paginationA.forEach(el => {
-            el.addEventListener("click", this._paginationClick.bind(this, el, i));
-            i++;
-        });
-
-    }
-
-    /**
-     * @description Pagination click.
-     * @private
-     * @param {HTMLElement} el - Link.
-     * @param {number} num
-     * @param {object} e
-     */
-    _paginationClick(el, num, e) {
-
-        // prevent default event
-        e.preventDefault();
-
-        // prevent event for active links
-        if (el.parentElement.classList.contains(`${this.prefix}__li_active`)) {
-            return;
-        }
-
-        // get page number
-        num += 1;
-
-        // launch vevet events
-        this.launchByTarget("paginationClick", {
-            num: num,
-            anchor: el
-        });
-
-        // load content
-        setTimeout(() => {
-            this.load({
-                num: num,
-                pagination: true
-            });
-        }, this._prop.pagination.timeout);
-
-    }
-
-    /**
-     * @description Set active link in pagination
-     * @private
-     * @param {number} [num]
-     */
-    _paginationActive(num = this.active) {
-
-        let activeClass = `${this.prefix}__li_active`;
-
-        num -= 1;
-        for (let i = 0; i < this._paginationLi.length; i++) {
-            let li = this._paginationLi[i];
-            if (i !== num) {
-                li.classList.remove(activeClass);
-            }
-            else {
-                li.classList.add(activeClass);
-            }
-        }
-
-    }
-
-    /**
-     * @description Pagination visibility: hide or show.
-     * @private
-     */
-    _paginationVisibility() {
-
-        let visible = true;
-        
-        if (this._max === 1) { 
-            visible = false;
-        }
-        
-        if (!this._prop.pagination.on) { 
-            visible = false;
-        }
-
-        let className = "display-none_important";
-        if (visible) {
-            this._pagination.classList.remove(className);
-        }
-        else {
-            this._pagination.classList.add(className);
-        }
-
-    }
-
-
-
-    /**
-     * @description Load a new page.
-     * @param {object} data - Settings.
-     * @param {number|boolean} data.num - The order number of the page, or true (next page), or false (previous page).
-     * @param {boolean} [data.pagination=false] - Defines if the action was called due a pagination click.
-     * @param {boolean} [data.reload=false] - If thru {@linkcode Vevet.Filter#reload}.
-     * @param {boolean} [data.pushState=true] - Defines if you need to change the url.
-     * @returns {boolean} Returns true if the action can be carried out.
-     */
-    load(data) {
-
-        // data
-        data = Object.assign({
-            pagination: false,
-            reload: false,
-            pushState: true
-        }, data);
-
-        // get order number
-        if (typeof data.num == 'boolean') {
-            if (data.num) {
-                data.num = this._active + 1;
-            }
-            else {
-                data.num = this._active - 1;
-            }
-        }
-
-        // check if possible
-        if (!this._loadCheck(data.num)) {
-            return false;
-        }
-
-        // change bool
-        this._loading = true;
-
-        // update url if needed
-        this._url = this._v.url.setParam({
-            url: this._url,
-            key: this._prop.param,
-            value: data.num,
-            push: this._prop.update.url & data.pushState
-        });
-
-        // load the resource
-        this._loadAjax(data.reload, data.num, data.pagination);
-
-        // return success
-        return true;
-
-    }
-
-    /**
-     * @description Check if loading is available.
-     * @param {number} num - The order number of the page to be loaded.
-     * @returns {boolean} Returns true if available.
-     * @private
-     */
-    _loadCheck(num = this._active) {
-
-        if (this._loading) {
-            return false;
-        }
-        if (num > this._max) {
-            return false;
-        }
-        if (num > this._max) {
-            return false;
-        }
-
-        return true;
-
-    }
-
-    /**
-     * @description Load a new page.
-     * @param {boolean} reload - If thru {@linkcode Vevet.Filter#reload}.
-     * @param {number} num - The order number of the page to be loaded.
-     * @param {boolean} pagination - Defines if the action was called due a pagination click.
-     * @private
-     */
-    _loadAjax(reload, num, pagination) {
-
-        this._v.ajax.load({
-            url: this._url,
-            method: this._prop.ajax.method,
-            data: {
-                pagination: 1
-            },
-            cache: this._prop.ajax.cache,
-            success: this._loadSuccess.bind(this, reload, num, pagination),
-            abort: this._loadAjax.bind(this, reload, num, pagination),
-            error: this._loadError.bind(this)
-        });
-
-    }
-
-    /**
-     * @description If error while loading.
-     * @private
-     */
-    _loadError() {
-    }
-
-    /**
-     * @description Success loading of the new page.
-     * @param {boolean} reload - If thru {@linkcode Vevet.Filter#reload}.
-     * @param {number} num - The order number of the page to be loaded.
-     * @param {boolean} pagination - Defines if the action was called due a pagination click.
-     * @param {Vevet.Ajax.CacheItem} data - Ajax response.
-     * @private
-     */
-    _loadSuccess(reload, num, pagination, data) {
-       
-        // create additional element
-        let e = dom({
-            selector: 'div'
-        });
-        e.innerHTML = data.xhr.response;
-
-        // update title
-        if (this._prop.update.title) {
-            let el = {
-                current: document.querySelector("title"),
-                new: e.querySelector("title")
-            };
-            if (el.current != null & el.new != null) {
-                el.current.innerHTML = el.new.innerHTML;
-            }
-        }
-
-        // outer
-        let outers = {
-            current: this._outer,
-            new: e.querySelector(this._prop.selector)
-        };
-        if (outers.new == null) {
-            return;
-        }
-        e = null;
-
-        // html
-        let html = outers.new.innerHTML;
-
-        // update content
-        if (this._prop.update.content) {
-            if (!reload) {
-                if (pagination) {
-                    if (this._prop.pagination.updateContent) {
-                        utils.removeChildren(outers.current);
-                        outers.current.innerHTML = html;
-                    }
-                    else {
-                        for (let i = 0; i < outers.new.children.length; i++) {
-                            outers.current.appendChild(outers.new.children[i]);
-                        }
-                    }
-                }
-                else {
-                    for (let i = 0; i < outers.new.children.length; i++) {
-                        outers.current.appendChild(outers.new.children[i]);
-                    }
-                }
-            }
-            else {
-                utils.removeChildren(outers.current);
-                outers.current.innerHTML = html;
-            }
-        }
-        
-        // get range
-        this._range(outers.new, false);
-        this._active = num;
-
-        // callbacks
-        this.launchByTarget("load", {
-            pagination: pagination,
-            reload: reload,
-            outer: this._outer,
-            fullHTML: data.xhr.response,
-            html: html
-        });
-        if (this.active >= this.max) {
-            this.launchByTarget("last", {
-                outer: this._outer,
-                fullHTML: data.xhr.response,
-                html: html
-            });
-        }
-
-        // update pagination
-        this._paginationLinks();
-        this._paginationActive();
-
-        // loading
-        this._loading = false;
-        
-    }
-
-
-
-    /**
-     * @description Reload the content.
-     * @returns {boolean} Returns true if the action can be carried out.
-     */
-    reload() {
-
-        // check if possible
-        if (!this._loadCheck()) {
-            return false;
-        }
-
-        // change active value
-        this._active = 1;
-
-        // load
-        return this.load({
-            num: this._active, 
-            reload: true
-        });
-
-    }
-
-
-
-    /**
-     * @description Destroy the select.
-     */
-    destroy() {
-
-        super.destroy();
-
-        // remove pagination
-        this._pagination.remove();
-        
     }
 
 

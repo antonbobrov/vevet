@@ -36,7 +36,7 @@ import Keydown from './modules/keydown';
 import Dragger from './modules/dragger';
 import Drag from './modules/dragger/Drag';
 import Swipe from './modules/dragger/Swipe';
-import Filter from './modules/filter/Filter';
+import Filter from './modules/filter';
 
 import Plugin from './plugins/Plugin';
 import PaginationScrollPlugin from './plugins/paginationScrollPlugin';

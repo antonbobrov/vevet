@@ -184,10 +184,10 @@ export default class Pagination extends Module {
         // get url
         let urlAttribute = this._outer.getAttribute(this._data.url);
         if (urlAttribute != null) {
-            this._url = urlAttribute;
+            this.url = urlAttribute;
         }
         else{
-            this._url = window.location.href;
+            this.url = window.location.href;
         }
 
         // actions
@@ -377,7 +377,7 @@ export default class Pagination extends Module {
             
             // set anchor href
             let href = this._v.url.setParam({
-                url: this._url,
+                url: this.url,
                 key: this._prop.param,
                 value: (i + 1),
                 push: false
@@ -600,8 +600,8 @@ export default class Pagination extends Module {
         this._loading = true;
 
         // update url if needed
-        this._url = this._v.url.setParam({
-            url: this._url,
+        this.url = this._v.url.setParam({
+            url: this.url,
             key: this._prop.param,
             value: data.num,
             push: this._prop.update.url & data.pushState
@@ -647,7 +647,7 @@ export default class Pagination extends Module {
     _loadAjax(reload, num, pagination) {
 
         this._v.ajax.load({
-            url: this._url,
+            url: this.url,
             method: this._prop.ajax.method,
             data: {
                 pagination: 1
@@ -766,9 +766,11 @@ export default class Pagination extends Module {
 
     /**
      * @description Reload the content.
+     * @param {boolean} [pushState=true] - Defines if you need to change the url.
+     * @param {boolean} [changeActive=true] - Defines if you need to change the active page.
      * @returns {boolean} Returns true if the action can be carried out.
      */
-    reload() {
+    reload(pushState = true, changeActive = true) {
 
         // check if possible
         if (!this._loadCheck()) {
@@ -776,12 +778,15 @@ export default class Pagination extends Module {
         }
 
         // change active value
-        this._active = 1;
+        if (changeActive) {
+            this._active = 1;
+        }
 
         // load
         return this.load({
             num: this._active, 
-            reload: true
+            reload: true,
+            pushState: pushState
         });
 
     }
