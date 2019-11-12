@@ -1,8 +1,10 @@
 import utils from '../../core/utils';
-import Module from '../Module';
+import MenuBase from './MenuBase';
 
 /**
- * @classdesc A class for creating a menu that opens in a popup. <br>
+ * @classdesc A class for creating pop-up menus.
+ * All animation are set in CSS, here you set timings only.
+ * The menu can't be closed if the animaiton of its opening has not ended yet and vice versa. <br>
  * Available targets:
  *  <ul>
  *      <li>show - when the menu is being opened.</li>
@@ -18,33 +20,22 @@ import Module from '../Module';
  * 
  * @class
  * @memberof Vevet
- * @augments Vevet.Module
+ * @augments Vevet.MenuBase
  */
-export default class Menu extends Module {
+export default class Menu extends MenuBase {
 
 
     
     /**
      * @memberof Vevet.Menu
      * @typedef {object} Properties
-     * @augments Vevet.Module.Properties
+     * @augments Vevet.MenuBase.Properties
      * 
-     * @property {boolean} [events=true] - Defines if events are active: click on the menu button.
-     * 
-     * @property {object} [selectors] - ***
-     * @property {string|HTMLElement} [selectors.outer=.vevet-menu] -  The outer of the menu.
-     * @property {string|HTMLElement} [selectors.button=.vevet-menu-button] - The button that opens the menu.
-     * 
-     * @property {object} [animation] - An object with animation information.
+     * @property {object} [animation] - The class uses timeouts to calculate the animation boundaries.
      * @property {number} [animation.duration=750] - The duration of animation of the outer when it is being shown or hidden.
-     * @property {number} [animation.button=750] - If you need to animate the button when menu is shown, set the value that is equal to the duration of animation of the menu button.
      * @property {number} [animation.inner=0] - The inner duration of the menu. F.e., if you need to animate links before closing the menu.
-     * @property {number} [animation.innerShiftShow=1] - Shift of inner animation before showing. It mean that inner animation will start after (1 * animation.duration) since the button was pushed.
-     * @property {number} [animation.innerShiftHide=1] - Shift of inner animation before hiding. It mean that inner animation will start after (1 * animation.inner) since the button was pushed.
-     * 
-     * @property {object} [delays] - An object with delays information.
-     * @property {number} [delays.show=0] - Delay before the menu starts opening.
-     * @property {number} [delays.hide=0] - Delay before the menu starts closing.
+     * @property {number} [animation.innerShiftShow=1] - Shift of inner animation before showing. It means that inner animation will start after (1 * animation.duration) since the button was pushed.
+     * @property {number} [animation.innerShiftHide=1] - Shift of inner animation before hiding. It means that inner animation will start after (1 * animation.inner) since the button was pushed.
      */
     /**
      * @alias Vevet.Menu
@@ -55,28 +46,15 @@ export default class Menu extends Module {
         super(data);
     }
 
-    get prefix() {
-        return `${this._v.prefix}menu`;
-    }
-
     get defaultProp() {
         
         return utils.merge(super.defaultProp, {
-            events: true,
-            selectors: {
-                outer: `.${this._prefix}`,
-                button: `.${this._prefix}-button`
-            },
             animation: {
                 duration: 500,
                 button: 500,
                 inner: 0,
                 innerShiftShow: 1,
                 innerShiftHide: 1
-            },
-            delays: {
-                show: 0,
-                hide: 0
             }
         });
 
@@ -85,22 +63,13 @@ export default class Menu extends Module {
 
 
     /**
-     * @description If the menu is opening or closing.
+     * @description If the menu is animating: opening or closing.
      * @default false
      * @readonly
      * @type {boolean}
      */
     get animating() {
         return this._animating;
-    }
-    /**
-     * @description If menu is shown.
-     * @default false
-     * @readonly
-     * @type {boolean}
-     */
-    get shown() {
-        return this._shown;
     }
 
 
@@ -111,90 +80,17 @@ export default class Menu extends Module {
         super._extra();
 
         // variables
-        this._shown = false;
         this._animating = false;
 
-        // get elements
-        this._getElements();
-
-    }
-
-    /**
-     * @description Get elements.
-     * @private
-     */
-    _getElements() {
-
-        let selectors = this._prop.selectors;
-        
-        this._outer = utils.element(selectors.outer);
-        this._button = utils.element(selectors.button);
-
-    }
-
-
-
-    // Set listeners on elements.
-    _setEvents() {
-
-        super._setEvents();
-
-        // button click
-        this.listener(this._button, 'click', this._buttonClick.bind(this));
-
-    }
-
-    /**
-     * @description Click on button.
-     * @private
-     * @param {object} e
-     */
-    _buttonClick(e) {
-
-        if (this._prop.events) {
-            e.preventDefault();
-            this.toggle();
-        }
-
     }
 
 
 
     /**
-     * @description Show menu.
-     * @returns {boolean} Returns true if menu can be opened.
-     */
-    show() {
-
-        if (this._shown) {
-            return false;
-        }
-
-        return this.toggle();
-        
-    }
-
-    /**
-     * @description Hide menu.
-     * @returns {boolean} Returns true if menu can be closed.
-     */
-    hide() {
-
-        if (!this._shown) {
-            return false;
-        }
-
-        return this.toggle();
-        
-    }
-
-    /**
-     * @description Show/Hide menu.
-     * @returns {boolean} Returns true if menu can be opened or closed.
+     * @description Show/Hide the menu.
+     * @returns {boolean} Returns true if the menu can be opened or closed.
      */
     toggle() {
-
-        let delays = this._prop.delays;
 
         // check if animating
         if(this._animating){
@@ -202,41 +98,20 @@ export default class Menu extends Module {
         }
         this._animating = true;
 
-        // hide menu
-        
-        if (this._shown) {
-            this.lbt("hide");
-            let delay = delays.hide;
-            if (delay === 0) {
-                this._hide();
-            }
-            else {
-                setTimeout(this._hide.bind(this), delay);
-            }
-        }
-
-        // show menu
-
-        else {
-            this.lbt("show");
-            let delay = delays.show;
-            if (delay === 0) {
-                this._show();
-            }
-            else {
-                setTimeout(this._show.bind(this), delay);
-            }
-        }
-
-        return true;
+        // continue
+        return super.toggle();
         
     }
 
+
+
     /**
-     * @description Show menu.
-     * @private
+     * @description Show the menu.
+     * @protected
      */
     _show() {
+
+        super._show();
 
         // vars
         let outer = this._outer,
@@ -245,31 +120,20 @@ export default class Menu extends Module {
 
         // set classes
         outer.classList.add(`${prefix}_show`);
-        outer.classList.add(`${prefix}_showing`);
         this._button.classList.add(`${prefix}-button_close`);
-
-        // change vars
-        setTimeout(() => {
-            this._shown = true;
-        }, animation.duration);
 
         // show inner
         setTimeout(() => {
 
-            setTimeout(() => {
-                this._animating = false;
-                this.lbt("shown");
-            }, animation.inner);
-
             // add inner animation class
-            outer.classList.add(`${this._prefix}_inner`);
-
+            outer.classList.add(`${prefix}_inner`);
             // inner animation callback
             this.lbt("innerShow");
 
-            // inner animation end callback
             setTimeout(() => {
+                this._animating = false;
                 this.lbt("innerShown");
+                this.lbt("shown");
             }, animation.inner);
 
         }, animation.duration * animation.innerShiftShow);
@@ -277,19 +141,17 @@ export default class Menu extends Module {
     }
 
     /**
-     * @description Hide menu.
-     * @private
+     * @description Hide the menu.
+     * @protected
      */
     _hide() {
+
+        super._hide();
 
         // vars
         let outer = this._outer,
             prefix = this._prefix,
             animation = this._prop.animation;
-
-        // set classes
-        outer.classList.remove(`${prefix}_showing`);
-        outer.classList.add(`${prefix}_hiding`);
 
         // inner animation callback
         this.lbt("innerHide");
@@ -299,13 +161,10 @@ export default class Menu extends Module {
 
             // remove inner animation class
             outer.classList.remove(`${prefix}_inner`);
-
             // hide class
             outer.classList.add(`${prefix}_hide`);
-
             // inner animation end callback
             this.lbt("innerHidden");
-            
             // remove menu class
             this._button.classList.remove(`${prefix}-button_close`);
 
@@ -314,7 +173,6 @@ export default class Menu extends Module {
                 this._shown = false;
                 outer.classList.remove(`${prefix}_show`);
                 outer.classList.remove(`${prefix}_hide`);
-                outer.classList.remove(`${prefix}_hiding`);
                 this.lbt("hidden");
             }, animation.duration);
 

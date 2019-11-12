@@ -22,7 +22,9 @@ import Scroll from './modules/scroll';
 import ScrollAnimate from './modules/scrollAnimate';
 import View from './modules/scrollAnimate/View';
 import Anchor from './modules/scrollAnimate/anchor';
+import MenuBase from './modules/menu/MenuBase';
 import Menu from './modules/menu';
+import MenuTimeline from './modules/menu/MenuTimeline';
 import Slider from './modules/slider';
 import Form from './modules/form';
 import Columns from './modules/columns';
@@ -78,7 +80,9 @@ export {
     ScrollAnimate,
     View,
     Anchor,
+    MenuBase,
     Menu,
+    MenuTimeline,
     Slider,
     Form,
     Columns,
