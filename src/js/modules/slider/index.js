@@ -47,6 +47,8 @@ export default class Slider extends Module {
      * @property {boolean} [next=true] - If switching to the next slide is possible.
      * @property {boolean} [disabled=false] - If slide is disabled.
      * @property {number} [active=0] - Active slide.
+     * @property {Array<Vevet.Slider>} [dependents] - Dependent sliders. Their slides will be changed
+     * when the main slider changes.
      * 
      * @property {object} [animation]
      * @property {boolean} [animation.duration=1500] - Duration of animation.
@@ -88,6 +90,7 @@ export default class Slider extends Module {
             next: true,
             disabled: false,
             active: 0,
+            dependents: [],
             animation: {
                 duration: 1500,
                 prev: [0, .5],
@@ -108,7 +111,14 @@ export default class Slider extends Module {
      * @type {boolean}
      */
     get playing() {
-        return this._playing;
+
+        let playings = [this._playing];
+        this._prop.dependents.forEach(slider => {
+            playings.push(slider.playing);
+        });
+
+        return playings.includes(true);
+
     }
     /**
      * @description Get active slide.
@@ -315,7 +325,7 @@ export default class Slider extends Module {
      */
     prev() {
         
-        if (this._playing || !this._prop.prev) {
+        if (this.playing || !this._prop.prev) {
             return false;
         }
 
@@ -359,7 +369,7 @@ export default class Slider extends Module {
      */
     next() {
         
-        if (this._playing || !this._prop.next) {
+        if (this.playing || !this._prop.next) {
             return false;
         }
 
@@ -403,10 +413,16 @@ export default class Slider extends Module {
      */
     show() {
         
-        if (this._playing || this._shown || this._prop.disabled) {
+        if (this.playing || this._shown || this._prop.disabled) {
             return false;
         }
 
+        // show dependents
+        this._prop.dependents.forEach(slider => {
+            slider.show();
+        });
+
+        // continue
         this._shown = true;
         this._outer.classList.add(`${this._prefix}_shown`);
 
@@ -426,10 +442,16 @@ export default class Slider extends Module {
      */
     hide() {
         
-        if (this._playing || !this._shown || this._prop.disabled) {
+        if (this.playing || !this._shown || this._prop.disabled) {
             return false;
         }
 
+        // show dependents
+        this._prop.dependents.forEach(slider => {
+            slider.hide();
+        });
+
+        // continue
         this._shown = false;
         this._outer.classList.remove(`${this._prefix}_shown`);
 
@@ -520,9 +542,14 @@ export default class Slider extends Module {
     set(num = 0, direction = 'none') {
 
         // if available
-        if (this._playing || this._prop.disabled) {
+        if (this.playing || this._prop.disabled) {
             return false;
         }
+        
+        // change slides for dependents
+        this._prop.dependents.forEach(slider => {
+            slider.set(num, direction);
+        });
 
         // check if shown
         if (!this._shown) {
