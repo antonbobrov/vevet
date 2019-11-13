@@ -458,7 +458,7 @@ export default class PageAjax extends Module {
         this.lbt('prepare', callbackObj);
 
         // ajax load
-        setTimeout(() => {
+        utils.timeoutCallback(() => {
             this._loadAjax(data, href);
         }, props.timeouts.load);
 
@@ -638,12 +638,12 @@ export default class PageAjax extends Module {
         this.lbt("loaded", obj);
 
         // update contents
-        setTimeout(() => {
+        utils.timeoutCallback(() => {
 
             this._updateContents(obj);
 
             // done
-            setTimeout(() => {
+            utils.timeoutCallback(() => {
                 this._done(obj); 
             }, prop.timeouts.done);
 
