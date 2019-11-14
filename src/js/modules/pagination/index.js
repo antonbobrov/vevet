@@ -717,14 +717,14 @@ export default class Pagination extends Module {
                         outers.current.innerHTML = html;
                     }
                     else {
-                        for (let i = 0; i < outers.new.children.length; i++) {
-                            outers.current.appendChild(outers.new.children[i]);
+                        while (outers.new.firstChild) {
+                            outers.current.appendChild(outers.new.firstChild);
                         }
                     }
                 }
                 else {
-                    for (let i = 0; i < outers.new.children.length; i++) {
-                        outers.current.appendChild(outers.new.children[i]);
+                    while (outers.new.firstChild) {
+                        outers.current.appendChild(outers.new.firstChild);
                     }
                 }
             }
