@@ -177,8 +177,15 @@ export default class ScrollDragPlugin extends Plugin {
             module = this._m;
 
         // check minimum values
-        if (Math.abs(diff.x) < min || Math.abs(diff.y) < min) {
-            return;
+        if (module._prop.horizontal) {
+            if (Math.abs(diff.x) < min) {
+                return;
+            }
+        }
+        else {
+            if (Math.abs(diff.y) < min) {
+                return;
+            }
         }
 
         // drag values
