@@ -317,9 +317,8 @@ export default class Scroll extends Module {
         });
 
         // move elements
-        let children = this._outer.children;
-        for (let i = 0; i < children.length; i++) {
-            this._container.appendChild(children[i]);
+        while (this._outer.firstChild) {
+            this._container.appendChild(this._outer.firstChild);
         }
 
         // append additional elements
