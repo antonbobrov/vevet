@@ -119,6 +119,8 @@ export default class Filter extends Module {
         // get elements
         this._elementsGet();
         this.setFilters();
+        
+        this._json = this._getFiltersQuery();
 
     }
 
@@ -373,6 +375,29 @@ export default class Filter extends Module {
 
 
     /**
+     * @description Save values and push them to the URL.
+     * @returns {boolean} Returns true if there are any changes.
+     */
+    save() {
+
+        let query = this._getFiltersQuery();
+        if (query !== this._json) {
+            let canUpdate = this._update(query);
+            if (canUpdate) {
+                this._json = query;
+            }
+            else {
+                return false;
+            }
+        }
+
+        return true;
+
+    }
+
+
+
+    /**
      * @description Click on filter. It can be also imitated.
      * @param {HTMLElement} el
      * @param {object} [e]
@@ -402,17 +427,9 @@ export default class Filter extends Module {
         // change classes of the filters
         this._changeFiltersClasses(filter);
 
-        // update values
-        let query = this._getFiltersQuery();
-        if (query !== this._json) {
-            let canUpdate = this._update(query);
-            if (canUpdate) {
-                this._json = query;
-                // alert('update')
-            }
-            else {
-                return false;
-            }
+        // update values if saving is enabled
+        if (this._prop.saveOnChange) {
+            return this.save();
         }
 
         // return success
