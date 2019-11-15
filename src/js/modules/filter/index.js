@@ -5,7 +5,8 @@ import utils from '../../core/utils';
  * @classdesc This class is to create filters. It works together with {@linkcode Vevet.Pagination} <br>
  * Available targets:
  *  <ul>
- *      <li>load - {@linkcode Vevet.Filter.Load} is an argument.</li>
+ *      <li>popstate</li>
+ *      <li>save</li>
  *  </ul>
  * <br><br> <b>import {Filter} from 'vevet';</b>
  * 
@@ -385,6 +386,7 @@ export default class Filter extends Module {
             let canUpdate = this._update(query);
             if (canUpdate) {
                 this._json = query;
+                this.lbt("save");
             }
             else {
                 return false;
