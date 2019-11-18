@@ -213,6 +213,11 @@ export default class TextSplit extends Module {
         // get prop
         let prop = this._prop;
 
+        // perhaps, you will need thid class
+        // it is added when the text is being split
+        // and it removes  when it is already split
+        this._outer.classList.add(`${this._prefix}_splitting`);
+
         // split text into letters and words
         if (!this._splitBool) {
             
@@ -255,6 +260,9 @@ export default class TextSplit extends Module {
 
         // change value
         this._splitBool = true;
+
+        // remove the class
+        this._outer.classList.remove(`${this._prefix}_splitting`);
 
         // launch callback
         this.lbt("split");
