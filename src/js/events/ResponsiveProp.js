@@ -270,6 +270,17 @@ export default class ResponsiveProp {
 
     }
 
+    /**
+     * @description Destroy the responsive properties.
+     */
+    destroy() {
+
+        if (this._viewportID) {
+            this._v.viewport.remove(this._viewportID);
+        }
+
+    }
+
 
 
 }

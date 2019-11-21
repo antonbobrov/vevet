@@ -70,7 +70,8 @@ export default class Module extends Event {
             this._changeProp.bind(this), 
             this._changeProp.bind(this)
         );
-        this._prop = this._responsiveProp.prop;
+        this._prop = this._responsiveProp._prop;
+        this.on("destroy", this._responsiveProp.destroy.bind(this));
 
         // destroy when parent is destroyed
         let parent = this._prop.parent;
