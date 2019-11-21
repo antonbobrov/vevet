@@ -101,11 +101,12 @@ export function removeChildren (parent) {
  * @description Get an element.
  * 
  * @param {string|HTMLElement|Window} selector - Either a string selector or an element.
+ * @param {HTMLElement|boolean} [outer] - An outer element. It will work only for string selectors.
  * 
  * @memberof Vevet.utils
  * @alias Vevet.utils.element
  */
-export function element(selector) {
+export function element(selector, outer = false) {
 
     if (selector instanceof HTMLElement) {
         return selector;
@@ -114,7 +115,12 @@ export function element(selector) {
         return selector;
     }
     else {
-        return document.querySelector(selector);
+        if (outer instanceof HTMLElement) {
+            return outer.querySelector(selector);
+        }
+        else {
+            return document.querySelector(selector);
+        }
     }
 
 }
@@ -125,11 +131,12 @@ export function element(selector) {
  * @description Get elements.
  * 
  * @param {string|HTMLElement|NodeList|Array<HTMLElement>|Window} selector - A string selector, an element or a node list.
+ * @param {HTMLElement|boolean} [outer] - An outer element. It will work only for string selectors.
  * 
  * @memberof Vevet.utils
  * @alias Vevet.utils.element
  */
-export function elements(selector) {
+export function elements(selector, outer = false) {
 
     if (selector instanceof NodeList) {
         return selector;
@@ -144,7 +151,12 @@ export function elements(selector) {
         return [selector];
     }
     else {
-        return document.querySelectorAll(selector);
+        if (outer instanceof HTMLElement) {
+            return outer.querySelectorAll(selector);
+        }
+        else {
+            return document.querySelectorAll(selector);
+        }
     }
 
 }
