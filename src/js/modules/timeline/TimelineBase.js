@@ -46,7 +46,7 @@ export default class TimelineBase extends Module {
         super._extra();
 
         // variables
-        this._settings = utils.merge(this.defaultSettings, this._propInit);
+        this._settings = utils.merge(this.defaultSettings, this._responsiveProp._propInit);
         this._tickers();
 
         // nested timelines

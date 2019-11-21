@@ -56,14 +56,6 @@ export default class Event {
         this._prefix = this.prefix;
 
         /**
-         * @description The properties that were set while initialization.
-         * These properties do not change throughout time.
-         * @type {boolean|object}
-         * @protected
-         */
-        this._propInit = data;
-
-        /**
          * @description Current Properties.
          * @type {object}
          * @protected

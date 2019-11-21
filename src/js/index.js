@@ -1,5 +1,6 @@
 import utils from './core/utils';
 
+import ResponsiveProp from './events/ResponsiveProp';
 import Event from './events/Event';
 import Ajax from './events/Ajax';
 import Load from './events/Load';
@@ -58,6 +59,7 @@ export {
 
     utils,
 
+    ResponsiveProp,
     Event,
     Ajax,
     Load,

@@ -37,9 +37,9 @@ export default class MenuTimeline extends MenuBase {
      * 
      * @property {object} [timeline] - Timeline settings.
      * @property {number} [timeline.duration=1500] - The total duration of showing/hiding the menu.
-     * @property {Array} [timeline.outerScope=[0, .25]] - *** In which scope of the main timeline the outer animation
+     * @property {Array<number>} [timeline.outerScope=[0, .25]] - *** In which scope of the main timeline the outer animation
      * will be carried out. For example, how the outer element will appear.
-     * @property {Array} [timeline.innerScope=[0, 1]] - *** In which scope of the main timeline the inner animation
+     * @property {Array<number>} [timeline.innerScope=[0, 1]] - *** In which scope of the main timeline the inner animation
      * will be carried out. For example, how links in the menu will appear after the outer element is shown.
      * @property {string|Array<number>} [timeline.easing] - Easing function of the animation.
      */

@@ -1,5 +1,6 @@
 import Event from '../events/Event';
 import utils from '../core/utils';
+import ResponsiveProp from '../events/ResponsiveProp';
 
 /**
  * @classdesc An abstract class for modules.
@@ -9,30 +10,11 @@ import utils from '../core/utils';
  * @abstract
  * @memberof Vevet
  * @augments Vevet.Event
+ * @requires Vevet.ResponsiveProp
  */
 export default class Module extends Event {
 
 
-    
-    /**
-     * @memberof Vevet.Module
-     * @typedef {object} Responsive
-     * 
-     * @description Sometimes it may be useful to change properties when the window is resized.
-     * There are two ways to do it:
-     * <ul>
-     *      <li>To set an event on the window when it is resized (or use {@linkcode Vevet.Viewport}).
-     *          When the window is resized, change the properties with the help of {@linkcode Vevet.Module#changeProp}</li>
-     *      <li>
-     *          The second way is to use the property 'responsive'. In the property, set an object with the properties
-     *          you would like to change. Responsive properties can be also changed through {@linkcode Vevet.Module#changeProp},
-     *          but they must be initialized on start. In case the properties are not initialized on start,
-     *          they cannot be changed further.</li>
-     * </ul>
-     * 
-     * @property {number} breakpoint - F.e., 1199. It means that new settings will be applied when the window size is less or equal to 1199px.
-     * @property {object} settings - An object with new properties.
-     */
     
     /**
      * @description Properties marked by asterisks should not be changed after initializing.
@@ -40,7 +22,7 @@ export default class Module extends Event {
      * @memberof Vevet.Module
      * @typedef {object} Properties
      * @augments Vevet.Event.Properties
-     * @property {Array<Vevet.Module.Responsive>} [responsive] - Responsive Settings.
+     * @property {Array<Vevet.ResponsiveProp.Responsive>} [responsive] - *** Responsive Settings.
      * @property {Vevet.Module} [parent] - *** Parent class. When the parent class is destroyed, the child's class will be destroyed also.
      * 
      */
@@ -68,7 +50,6 @@ export default class Module extends Event {
          * @protected
          */
         this._allEvents = [];
-
         /**
          * @description Here event listeners on DOM elements are stored.
          * @type {Array<Vevet.Module.Listener>}
@@ -83,106 +64,18 @@ export default class Module extends Event {
          */
         this._plugins = [];
 
-        // we need to make properties responsive to the window size
-        // that's why we copy the properties that were already set in Event
-        this._referenceProp();
+        // Create responsive properties
+        this._responsiveProp = new ResponsiveProp(
+            this._prop,
+            this._changeProp.bind(this), 
+            this._changeProp.bind(this)
+        );
+        this._prop = this._responsiveProp.prop;
 
         // destroy when parent is destroyed
         let parent = this._prop.parent;
         if (parent instanceof Module) {
             parent.on("destroy", this.destroy.bind(this));
-        }
-
-    }
-
-
-
-    // Reference properties
-    // These are the properties that can be changed through changeProp
-    // but should not be changed through 'responsive' prop.
-
-    _referenceProp() {
-
-        // create object
-        this._propRef = utils.merge(this.defaultProp, this._propInit);
-
-        // check if responsive properties exist
-        if (typeof this._propRef.responsive != "undefined") {
-            // change properties according to the responsive prop
-            this._referencePropResponsive();
-    
-            // set events on resize
-            this._addEvent('viewport', {
-                target: 'w_',
-                name: this._name + ' Responsive',
-                do: () => {
-                    this._referencePropResponsive(true);
-                }
-            });
-        }
-
-    }
-
-    _referencePropResponsive(resize = false) {
-
-        let responsive = this._propRef.responsive;
-        
-        // check if responsive property exists
-        if (responsive) {
-
-            // get sizes
-            let viewport = this._v.viewport,
-                width = viewport.size[0];
-            
-            // go through all breakpoints
-            // check if breakpoint exists
-            let breakpointExists = false;
-            responsive.forEach((obj) => {
-
-                // copy settings
-                let settings = obj.settings,
-                    breakpoint = obj.breakpoint;
-
-                // if breakpoint is a number
-                if (typeof breakpoint == 'number') {
-                    if (width <= obj.breakpoint) {
-                        this._prop = utils.merge(this._prop, settings);
-                        breakpointExists = true;
-                    }
-                }
-                // if breakpoint is a string // desktop, tablet, mobile, mobiledevice
-                else if (typeof breakpoint === 'string') {
-                    breakpoint = breakpoint.toLowerCase();
-                    if (breakpoint === 'd' & viewport.desktop) {
-                        this._prop = utils.merge(this._prop, settings);
-                        breakpointExists = true;
-                    }
-                    if (breakpoint === 't' & viewport.tablet) {
-                        this._prop = utils.merge(this._prop, settings);
-                        breakpointExists = true;
-                    }
-                    if (breakpoint === 'm' & viewport.mobile) {
-                        this._prop = utils.merge(this._prop, settings);
-                        breakpointExists = true;
-                    }
-                    if (breakpoint === 'md' & viewport.mobiledevice) {
-                        this._prop = utils.merge(this._prop, settings);
-                        breakpointExists = true;
-                    }
-                }
-
-            });
-
-            // if breakpoint does not exist, restore the props
-            if (!breakpointExists) {
-                this._prop = utils.merge(this._prop, this._propRef);
-            }
-
-            // change prop
-            if (resize) {
-                this._changeProp();
-            }
-
         }
 
     }
@@ -207,13 +100,8 @@ export default class Module extends Event {
      * });
      */
     changeProp(prop) {
-
-        this._prop = utils.merge(this._prop, prop);
-        this._propRef = utils.merge(this._propRef, prop);
-        this._changeProp();
-
+        this._responsiveProp.changeProp(prop);
         this.lbt("changeProp");
-        
     }
 
     _changeProp() { }
