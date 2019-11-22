@@ -40,6 +40,7 @@ import Dragger from './modules/dragger';
 import Drag from './modules/dragger/Drag';
 import Swipe from './modules/dragger/Swipe';
 import Filter from './modules/filter';
+import Cursor from './modules/cursor';
 
 import Plugin from './plugins/Plugin';
 import PaginationScrollPlugin from './plugins/paginationScrollPlugin';
@@ -99,6 +100,7 @@ export {
     Drag,
     Swipe,
     Filter,
+    Cursor,
 
     Plugin,
     PaginationScrollPlugin,
