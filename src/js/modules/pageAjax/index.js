@@ -195,6 +195,13 @@ export default class PageAjax extends Module {
         this._popstateTimeout = false;
         this._linksListeners = [];
 
+        /**
+         * @description A list of visited links.
+         * @protected
+         * @type {Array<string>}
+         */
+        this._visitedLinks = [window.location.href];
+
         // get outer
         this._outer = utils.element(this._prop.selectors.outer);
 
@@ -369,6 +376,7 @@ export default class PageAjax extends Module {
      * @typedef {object} EventLinkHref
      * @property {string} href - The url of the further ajax request.
      * @property {HTMLAnchorElement|string} link - The link that was clicked or url passed.
+     * @property {boolean} visited - If the page was already visited.
      */
     /**
      * @description Page loading.
@@ -434,7 +442,8 @@ export default class PageAjax extends Module {
         // callback object
         let callbackObj = {
             href: href,
-            link: data.link
+            link: data.link,
+            visited: this._visitedLinks.includes(href)
         };
 
         // if the href is the same
@@ -540,6 +549,8 @@ export default class PageAjax extends Module {
      * @param {Vevet.Ajax.CacheItem} ajax - Ajax request & response data.
      */
     _loadSuccess(data, href, ajax) {
+
+        this._visitedLinks.push(href);
 
         this._update(data, href, ajax);
 
