@@ -181,6 +181,9 @@ export default class SliderCounterPlugin extends Plugin {
 
         super._destroy();
 
+        // get module
+        let module = this._m;
+
         // remove elements
         this._outer.remove();
 
