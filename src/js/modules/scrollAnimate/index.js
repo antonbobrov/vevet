@@ -119,17 +119,23 @@ export default class ScrollAnimate extends Module {
 
         super._changeProp();
 
-        // remove event listeners before
-        this.removeEventListeners();
-        if (this._scrollModule) {
-            this._vevetScroll.remove(this._scrollModule);
-        }
+        this._removeScrollListeners();
 
         // get elements & set events on them
         this._elGet();
 
         // update size values
         this.setSize();
+
+    }
+
+    _removeScrollListeners() {
+
+        // remove event listeners before
+        this.removeEventListeners();
+        if (this._scrollModule) {
+            this._vevetScroll.remove(this._scrollModule);
+        }
 
     }
 

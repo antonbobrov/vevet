@@ -129,6 +129,10 @@ export default class View extends ScrollAnimate {
      */
     updateEl() {
 
+        // remove event listeners before
+        this._removeScrollListeners();
+
+        // get new elements
         this._elGet();
 
     }
