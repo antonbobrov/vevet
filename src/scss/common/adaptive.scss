@@ -56,3 +56,15 @@
         @content;
     }
 }
+
+@mixin tablet-min() {
+    @media (min-width: $mobile + 1) {
+        @content;
+    }
+}
+
+@mixin desktop-min() {
+    @media (min-width: $tablet + 1) {
+        @content;
+    }
+}
