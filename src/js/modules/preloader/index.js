@@ -42,6 +42,8 @@ export default class Preloader extends Module {
      * this allows to end animation in a certain period of time.
      * @property {number} [forceEndDuration=3000] - Duration of the force-ednd-animation.
      * @property {boolean} [images=true] - Load images.
+     * @property {string|boolean} [bgSelector=*:not(script)] - If you are loading images, you may also need to load
+     * background images. To do this, set a background selector or make it false to skip this step.
      * @property {boolean} [videos=true] - Load videos.
      * @property {number} [resources=0] - Amount of resources to be loaded. 
      * It's a rare case when you need to set it. 
@@ -75,6 +77,7 @@ export default class Preloader extends Module {
                 forceEndDuration: 3000,
                 easing: this._vp.easing,
                 images: true,
+                bgSelector: '*:not(script)',
                 videos: true,
                 resources: 0
             },
@@ -223,21 +226,33 @@ export default class Preloader extends Module {
 
         let images = this._images;
 
-        let el = document.querySelectorAll('*:not(script)');
-        for (let i = 0; i < el.length; i++) {
-            let url = getComputedStyle(el[i]).backgroundImage;
-            if (url.indexOf('none') == -1 & url.indexOf('-gradient') == -1) {
-                if (url.indexOf('url') != -1) {
-                    let temp = url.match(/url\((.*?)\)/);
-                    url = temp[1].replace(/"/g, '');
-                    images.push(url);
+        // get real DOM images
+        let imgs = document.querySelectorAll("img");
+        imgs.forEach(img => {
+            images.push(img.src);
+        });
+
+        // get backgrounds
+        let bgSelector = this._prop.progress.bgSelector;
+        if (bgSelector) {
+
+            let el = document.querySelectorAll(bgSelector);
+            for (let i = 0; i < el.length; i++) {
+                let url = getComputedStyle(el[i]).backgroundImage;
+                if (url.indexOf('none') == -1 & url.indexOf('-gradient') == -1) {
+                    if (url.indexOf('url') != -1) {
+                        let temp = url.match(/url\((.*?)\)/);
+                        url = temp[1].replace(/"/g, '');
+                        images.push(url);
+                    }
+                }
+                else {
+                    if (el[i].tagName == "IMG") {
+                        images.push(el[i].src);
+                    }
                 }
             }
-            else {
-                if (el[i].tagName == "IMG") {
-                    images.push(el[i].src);
-                }
-            }
+
         }
 
         return images.length;
