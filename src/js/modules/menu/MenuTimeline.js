@@ -155,13 +155,17 @@ export default class MenuTimeline extends MenuBase {
             if (data.p > 0) {
                 outer.classList.add(`${prefix}_show`);
                 outer.classList.remove(`${prefix}_hide`);
-                button.classList.add(`${prefix}-button_close`);
+                if (button) {
+                    button.classList.add(`${prefix}-button_close`);
+                }
             }
         }
         else {
             if (data.p < 1) {
                 outer.classList.add(`${prefix}_hide`);
-                button.classList.remove(`${prefix}-button_close`);
+                if (button) {
+                    button.classList.remove(`${prefix}-button_close`);
+                }
             }
         }
 

@@ -120,7 +120,9 @@ export default class Menu extends MenuBase {
 
         // set classes
         outer.classList.add(`${prefix}_show`);
-        this._button.classList.add(`${prefix}-button_close`);
+        if (this._button) {
+            this._button.classList.add(`${prefix}-button_close`);
+        }
 
         // show inner
         setTimeout(() => {
@@ -166,7 +168,9 @@ export default class Menu extends MenuBase {
             // inner animation end callback
             this.lbt("innerHidden");
             // remove menu class
-            this._button.classList.remove(`${prefix}-button_close`);
+            if (this._button) {
+                this._button.classList.remove(`${prefix}-button_close`);
+            }
 
             setTimeout(() => {
                 this._animating = false;

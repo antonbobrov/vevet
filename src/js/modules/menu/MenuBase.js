@@ -111,7 +111,9 @@ export default class MenuBase extends Module {
         super._setEvents();
 
         // button click
-        this.listener(this._button, 'click', this._buttonClick.bind(this));
+        if (this._button) {
+            this.listener(this._button, 'click', this._buttonClick.bind(this));
+        }
 
     }
 
