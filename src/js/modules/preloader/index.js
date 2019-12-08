@@ -210,7 +210,7 @@ export default class Preloader extends Module {
                 this._frameLaunch();
             }
             else {
-                this._progressAnim = 1;
+                this._onloaded();
             }
             
         }
