@@ -33,6 +33,9 @@ export default class Scroll extends Module {
      * @property {string|HTMLElement|NodeList|Array<HTMLElement>} [selectors.elements=.vevet-scroll__el] - Elements inside the outer element to be scrolled.
      * 
      * @property {boolean} [run=true] - If true, the scrolling will work.
+     * @property {boolean|Vevet.Frame|Vevet.Module} [frame=false] - If false, the animation will work on the basis of {@linkcode requestAnimationFrame}.
+     * If not a frame or another module, an event under the target "frame" willbe added to it, and in this very event
+     * the scrolling values will be calculated.
      * @property {boolean} [resizeOnUpdate=true] - Sometimes content and its height may change.
      * If so, you need to launch {@linkcode Vevet.Scroll#setSize}.
      * But if resizeOnUpdate is true, this action is not needed, because everything will be updated automatically.
@@ -70,6 +73,7 @@ export default class Scroll extends Module {
                 elements: `.${prefix}__el`
             },
             run: true,
+            frame: false,
             resizeOnUpdate: true,
             resizeTimeout: 0,
             scroll: true,
@@ -629,12 +633,22 @@ export default class Scroll extends Module {
 
         if (this._prop.run) {
             if (!frame) {
-                this._frame = window.requestAnimationFrame(this.animate.bind(this));
+                if (this._prop.frame) {
+                    this._prop.frame.on("frame", this.animate.bind(this));
+                }
+                else {            
+                    this._frame = window.requestAnimationFrame(this.animate.bind(this));
+                }
             }
         }
         else {
             if (frame) {
-                window.cancelAnimationFrame(frame);
+                if (this._prop.frame) {
+                    this._prop.frame.remove(this._frame);
+                }
+                else {
+                    window.cancelAnimationFrame(frame);
+                }
                 this._frame = false;
             }
         }
@@ -677,7 +691,9 @@ export default class Scroll extends Module {
         });
 
         // animation frame
-        this._frame = window.requestAnimationFrame(this.animate.bind(this));
+        if (!this._prop.frame) {
+            this._frame = window.requestAnimationFrame(this.animate.bind(this));
+        }
 
     }
 
