@@ -818,8 +818,12 @@ export default class Scroll extends Module {
             outer.appendChild(children[i]);
         }
 
-        // elements
+        // remove elements
         outer.removeChild(container);
+
+        // remove scrollbars
+        this._scrollbars['x'].outer.remove();
+        this._scrollbars['y'].outer.remove();
 
         // classes
         outer.classList.remove(this._prefix);
