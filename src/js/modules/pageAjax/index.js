@@ -483,6 +483,9 @@ export default class PageAjax extends Module {
     _getHref(link) {
 
         if (typeof link === 'string') {
+            if (!link.includes("http")) {
+                link = location.origin + link;
+            }
             return link;
         }
         else {
