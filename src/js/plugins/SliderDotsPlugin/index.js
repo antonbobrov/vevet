@@ -176,6 +176,9 @@ export default class SliderDotsPlugin extends Plugin {
         // remove elements
         this._outer.remove();
 
+        // get module
+        let module = this._m;
+
         // remove events
         this._me.forEach(id => {
             module.remove(id);
