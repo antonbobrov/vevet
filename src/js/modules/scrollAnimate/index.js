@@ -208,7 +208,7 @@ export default class ScrollAnimate extends Module {
             do: () => {
                 setTimeout(() => {
                     this.setSize();
-                    if (prop.resize) {
+                    if (prop.resize & prop.on) {
                         this.seek();
                     }
                 }, prop.resizeTimeout);
@@ -223,9 +223,6 @@ export default class ScrollAnimate extends Module {
     setSize() {
 
         let prop = this._prop;
-        if (!prop.on) {
-            return;
-        }
 
         // get outer
         let outer = this._outer;
