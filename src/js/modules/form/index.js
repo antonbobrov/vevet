@@ -576,6 +576,7 @@ export default class Form extends Module {
             }
             else {
                 el.classList.remove("show");
+                el.innerHTML = '';
             }
 
         });
