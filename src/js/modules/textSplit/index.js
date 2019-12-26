@@ -265,7 +265,7 @@ export default class TextSplit extends Module {
         this._outer.classList.remove(`${this._prefix}_splitting`);
 
         // launch callback
-        this.lbt("split");
+        this.lbt("split", this._el);
 
     }
 
