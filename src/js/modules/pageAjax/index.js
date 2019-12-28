@@ -196,6 +196,12 @@ export default class PageAjax extends Module {
         this._linksListeners = [];
 
         /**
+         * @type {Vevet.PageAjax.EventLoaded}
+         * @protected
+         */
+        this._lastData = {};
+
+        /**
          * @description A list of visited links.
          * @protected
          * @type {Array<string>}
@@ -588,7 +594,7 @@ export default class PageAjax extends Module {
      * @memberof Vevet.PageAjax
      * @typedef {object} EventLoaded
      * @property {Vevet.Ajax.CacheItem} ajax - Ajax request & response data.
-     * @property {string} resonse - HTML of the whole page.
+     * @property {string} response - HTML of the whole page.
      * @property {string} html - innerHTML of the new outer.
      * @property {HTMLElement} e - An abstract html element with new html.
      * @property {HTMLElement} outer - The new outer.
@@ -637,7 +643,7 @@ export default class PageAjax extends Module {
         // form object
         let obj = {
             ajax: ajax,
-            resonse: ajax.xhr.responseText,
+            response: ajax.xhr.responseText,
             html: html,
             outer: outer,
             name: name,
@@ -674,6 +680,8 @@ export default class PageAjax extends Module {
      * @param {Vevet.PageAjax.EventLoaded} data - Ajax data.
      */
     _updateContents(data) {
+
+        this._lastData = data;
 
         // update contents
         this._updateUrl(data);
@@ -738,6 +746,17 @@ export default class PageAjax extends Module {
             this.setLinks();
         }
 
+    }
+
+    /**
+     * @description Update menu links.
+     */
+    updateMenuLinks() {
+
+        if (Object.keys(this._lastData).length > 0) {
+            this._updateMenuLinks(this._lastData);
+        }
+        
     }
 
     /**
