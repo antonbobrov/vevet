@@ -351,7 +351,12 @@ export default class Scroll extends Module {
         });
         
         // wheel
-        this.listener(this._outer, 'wheel', this._wheel.bind(this));
+        this.addEventListener({
+            el: this._outer,
+            target: 'wheel',
+            do: this._wheel.bind(this),
+            passive: true
+        });
 
     }
 

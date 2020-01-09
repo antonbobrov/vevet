@@ -12,6 +12,7 @@
  * @param {object} data - Object with data of the event.
  * @param {Window|HTMLElement} data.el - Element for the event.
  * @param {string} data.target - Target of the event.
+ * @param {boolean} [data.passive] - Passive listener.
  * @param {Function} data.do - Callback.
  * 
  * @returns {Vevet.utils.BindListener} Returns id of the event, its element and callback.
@@ -40,7 +41,15 @@ export function bindEventListener (data) {
 
     let id = this.id(`${attr}__${target}__`);
 
-    el.addEventListener(target, callback, false);
+    if (data.passive) {
+        el.addEventListener(target, callback, {
+            passive: true
+        });
+    }
+    else {
+        el.addEventListener(target, callback, false);
+    }
+
     el[attr][id] = {
         target: target,
         do: callback
