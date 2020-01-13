@@ -1,11 +1,12 @@
 {
   "name": "vevet",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "VEVET - A JavaScript library",
   "directories": {
     "dist:": "./dist"
   },
   "main": "dist/index.js",
+  "types": "dist/types/types.d.ts",
   "sideEffects": false,
   "sass": "dist/scss/index.scss",
   "scripts": {
@@ -16,7 +17,7 @@
     "docs:default": "./node_modules/.bin/jsdoc -c jsdoc.json -R README.md",
     "docs:types": "./node_modules/.bin/jsdoc -c jsdoc.types.json",
     "release": "npm publish",
-    "prepare": "npm run prepare:cjs && npm run build",
+    "prepare": "npm run prepare:cjs && npm run build && npm run docs",
     "prepare:cjs": "NODE_ENV=cjs babel ./src/js --out-dir ./dist"
   },
   "browserslist": [
