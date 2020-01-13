@@ -19,7 +19,7 @@ export default class Frame extends Module {
      * @typedef {object} Properties
      * @augments Vevet.Module.Properties
      * 
-     * @property {boolean} [fps=60] - Frames per second.
+     * @property {number} [fps=60] - Frames per second.
      */
     /**
      * @alias Vevet.Frame
