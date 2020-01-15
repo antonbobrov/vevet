@@ -420,7 +420,7 @@ export default class Scroll extends Module {
 
             // stop propagation if enabled
             if (!prop.propagation) {
-                evt.preventDefault();
+                // evt.preventDefault();
                 evt.stopPropagation();
             }
 
@@ -639,7 +639,7 @@ export default class Scroll extends Module {
         if (this._prop.run) {
             if (!frame) {
                 if (this._prop.frame) {
-                    this._prop.frame.on("frame", this.animate.bind(this));
+                    this._frame = this._prop.frame.on("frame", this.animate.bind(this));
                 }
                 else {            
                     this._frame = window.requestAnimationFrame(this.animate.bind(this));
