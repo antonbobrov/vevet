@@ -71,6 +71,8 @@ export default class Wheel extends Module {
 
         this.listener(this._outer, 'wheel', (e) => {
             this._implement(e);
+        }, {
+            passive: true
         });
 
     }
