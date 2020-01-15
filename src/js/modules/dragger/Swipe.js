@@ -20,10 +20,14 @@ export default class Swipe extends Dragger {
             type = "swipe";
 
         // stat swipe
-        this.listener(outer, 'touchstart', this._call.bind(this, type, 'start'));
+        this.listener(outer, 'touchstart', this._call.bind(this, type, 'start'), {
+            passive: true
+        });
 
         // moving
-        this.listener(outerIgnore, 'touchmove', this._call.bind(this, type, 'move'));
+        this.listener(outerIgnore, 'touchmove', this._call.bind(this, type, 'move'), {
+            passive: true
+        });
 
         // end swipe, _once events
         this.listener(outerIgnore, 'touchend', (e) => {
@@ -32,6 +36,8 @@ export default class Swipe extends Dragger {
             this._call(type, 'left', e);
             this._call(type, 'right', e);
             this._call(type, 'end', e);
+        }, {
+            passive: true
         });
 
     }

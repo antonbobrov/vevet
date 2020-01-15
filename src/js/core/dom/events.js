@@ -7,13 +7,17 @@
  */
 
 /**
- * @description Add event listener to the element. Almostqual to addEventListener but gives possibilities to manage listeners more convenient.
- * 
- * @param {object} data - Object with data of the event.
+ * @typedef {object} Vevet.utils.Listener
  * @param {Window|HTMLElement} data.el - Element for the event.
  * @param {string} data.target - Target of the event.
  * @param {boolean} [data.passive] - Passive listener.
  * @param {Function} data.do - Callback.
+ */
+
+/**
+ * @description Add event listener to the element. Almostqual to addEventListener but gives possibilities to manage listeners more convenient.
+ * 
+ * @param {Vevet.utils.Listener} data
  * 
  * @returns {Vevet.utils.BindListener} Returns id of the event, its element and callback.
  * 

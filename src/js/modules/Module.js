@@ -52,7 +52,7 @@ export default class Module extends Event {
         this._allEvents = [];
         /**
          * @description Here event listeners on DOM elements are stored.
-         * @type {Array<Vevet.Module.Listener>}
+         * @type {Array<Vevet.utils.BindListener>}
          * @protected
          */
         this._listeners = [];
@@ -214,33 +214,18 @@ export default class Module extends Event {
     /**
      * @description All event listeners created within the class.
      * @readonly
-     * @type {Array<Vevet.Module.Listener>}
+     * @type {Array<Vevet.utils.BindListener>}
      */
     get listeners() {
         return this._listeners();
     }
 
     /**
-     * @memberof Vevet.Module
-     * @typedef {object} Listener
-     * @property {string} id Id of the event.
-     * @property {Window|HTMLElement} el Element with the event.
-     * @property {string} target Target of the event.
-     * @property {Function} do Callback of the event.
-     */
-    /**
-     * @memberof Vevet.Module
-     * @typedef {object} ListenerData
-     * @property {Window|HTMLElement} el - Element.
-     * @property {string} target - Target of the event.
-     * @property {Function} do - Callback.
-     */
-    /**
      * @description Add event listener to an element.
      * 
-     * @param {Vevet.Module.ListenerData} data - Event's data.
+     * @param {Vevet.utils.Listener} data - Event's data.
      * 
-     * @returns {Vevet.Module.Listener} Returns data.
+     * @returns {Vevet.utils.BindListener} Returns data.
      * 
      * @example
      * module.addEventListener({
@@ -265,20 +250,21 @@ export default class Module extends Event {
      * @param {Window|HTMLElement} el - Element for the event.
      * @param {string} target - Target of the event.
      * @param {Function} callback - Callback.
+     * @param {Vevet.utils.Listener} data - Additional settings.
      * 
-     * @returns {Vevet.Module.Listener} Returns data.
+     * @returns {Vevet.utils.BindListener} Returns data.
      * 
      * @example
      * module.listener(el, "click", () => { 
      *     alert("Clicked!");
      * });
      */
-    listener(el, target, callback) {
-        return this.addEventListener({
+    listener(el, target, callback, data = {}) {
+        return this.addEventListener(utils.merge({
             el: el,
             target: target,
             do: callback
-        });
+        }, data));
     }
 
     /**

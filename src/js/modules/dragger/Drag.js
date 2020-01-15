@@ -36,11 +36,15 @@ export default class Drag extends Dragger {
             this._call(type, 'left', e);
             this._call(type, 'right', e);
             this._call(type, 'end', e);
+        }, {
+            passive: true
         });
 
         // end drag on window blur
         this.listener(outerIgnore, 'blur', (e) => {
             this._call(type, 'end', e);
+        }, {
+            passive: true
         });
 
     }
