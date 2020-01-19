@@ -12,7 +12,7 @@ npm i vevet
 
 Import Vevet.
 ```js
-import * as Vevet from './vevet';
+import * as Vevet from 'vevet';
 ```
 ```scss
 @import '~vevet/dist/scss/index';
