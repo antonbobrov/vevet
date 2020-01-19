@@ -382,6 +382,14 @@ export default class Scroll extends Module {
         this._widthOuter = outer.clientWidth;
         this._heightOuter = outer.clientHeight;
 
+        // bound height and widths
+        if (this._width < this._widthOuter) {
+            this._width = this._widthOuter;
+        }
+        if (this._height < this._heightOuter) {
+            this._height = this._heightOuter;
+        }
+
         // force change
         // it means that after resizing scrolling will be instantaneous for a while
         if (native) {
