@@ -196,6 +196,7 @@ export default class SliderCanvas extends Slider {
                 res.crossOrigin = "anonymous";
                 res.muted = true;
                 res.autoplay = true;
+                res.loop = true;
                 res.load();
             }
             // load image
@@ -250,10 +251,11 @@ export default class SliderCanvas extends Slider {
         // start
         this.on("start", obj => {
             this._playVideo(obj.next);
+            this._pauseVideo(obj.prev);
         });
         // end
         this.on("end", obj => {
-            this._playVideo(obj.prev);
+            this._pauseVideo(obj.prev);
         })
         // show
         this.on("show", () => {
