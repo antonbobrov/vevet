@@ -1,6 +1,6 @@
 {
   "name": "vevet",
-  "version": "0.4.6",
+  "version": "0.4.7",
   "description": "VEVET - A JavaScript library",
   "directories": {
     "dist:": "./dist"
