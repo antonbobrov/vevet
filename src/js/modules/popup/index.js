@@ -327,10 +327,10 @@ export default class Popup extends Module {
     
 
     /**
-     * @description Hide current level.
-     * @returns {boolean} Returns true if success.
+     * @description Check if it's possible to hide the popup.
+     * @private
      */
-    hide() {
+    _checkHide() {
 
         // if animating
         if (this._animating) {
@@ -342,6 +342,55 @@ export default class Popup extends Module {
         }
         // if not shown
         if (!this._shown) {
+            return false;
+        }
+
+        return true;
+
+    }
+
+    /**
+     * @description Hide all levels at once.
+     * @returns {boolean} Returns true if success.
+     */
+    hideAll() {
+
+        // if possible to hide
+        if (!this._checkHide()) {
+            return false;
+        }
+
+        // get current duration
+        const duration = this._prop.duration;
+
+        // change duration to zero
+        // if the active level is not the first one
+        if (this._levelActive > 0) {
+            this._prop.duration = 0;
+            // an now hide all the levels except for the first one
+            for (let i = this._levelActive; i > 0; i--) {
+                this.hide();
+            }
+            // then restore duration and hide the first level
+            this._prop.duration = duration;
+        }
+
+        // hide the first level
+        this.hide();
+
+        // return success
+        return true;
+
+    }
+
+    /**
+     * @description Hide current level.
+     * @returns {boolean} Returns true if success.
+     */
+    hide() {
+
+        // if possible to hide
+        if (!this._checkHide()) {
             return false;
         }
 
@@ -400,7 +449,7 @@ export default class Popup extends Module {
         level.shown = false;
 
         // some actiones when the level is hidden
-        setTimeout(() => {
+        utils.timeoutCallback(() => {
 
             // move innerHTML back to its owner
             if (level.append) {
