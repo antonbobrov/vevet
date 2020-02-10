@@ -417,14 +417,13 @@ export default class SliderCanvas extends Slider {
     
     /**
      * @description Animation progress.
-     * @param {Vevet.Slider.Change} obj - Callback data.
      * @param {Vevet.Timeline.Data} p - Progress data.
      * @protected
      */
-    _animateTypes(obj, p) {
+    _animateSlides(p) {
 
         this._canvasClear();
-        super._animateTypes(obj, p);
+        super._animateSlides(p);
 
     }
     

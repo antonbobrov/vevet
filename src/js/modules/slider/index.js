@@ -7,10 +7,10 @@ import utils from '../../core/utils';
  * Available targets:
  *  <ul>
  *      <li>first - first start if {@linkcode Vevet.Slider.Properties}.show is true.</li>
- *      <li>prev - when the previous slide is to be shown. Argument - {@linkcode Vevet.Slider.Callback}</li>
- *      <li>next - when the next slide is to be shown. Argument - {@linkcode Vevet.Slider.Callback}</li>
- *      <li>start - callbacks before the animation starts. Argument - {@linkcode Vevet.Slider.Callback}</li>
- *      <li>end - callbacks after the animations ends. Argument - {@linkcode Vevet.Slider.Change}</li>
+ *      <li>prev - when the previous slide is to be shown. Argument - {@linkcode Vevet.Slider.AnimationData}</li>
+ *      <li>next - when the next slide is to be shown. Argument - {@linkcode Vevet.Slider.AnimationData}</li>
+ *      <li>start - callbacks before the animation starts. Argument - {@linkcode Vevet.Slider.AnimationData}</li>
+ *      <li>end - callbacks after the animations ends. Argument - {@linkcode Vevet.Slider.AnimationData}</li>
  *      <li>show - event on the moment when the active slide is to be shown.</li>
  *      <li>hide - event on the moment when the active slide is to be hidden.</li>
  *      <li>shown - shown.</li>  
@@ -136,7 +136,18 @@ export default class Slider extends Module {
      * @type {boolean}
      */
     get shown() {
-        return this._shown;
+        
+        let showns = [this._shown];
+        this._prop.dependents.forEach(slider => {
+            showns.push(slider.shown);
+        });
+
+        if (showns.every((val, i, arr) => val === arr[0])) {
+            return this._shown;
+        }
+
+        return false;
+
     }
     /**
      * @description Total amount of slides.
@@ -174,9 +185,20 @@ export default class Slider extends Module {
 
         this._size = [0, 0];
 
+        this._timeline = false;
+
+        /**
+         * @type {Vevet.Slider.Callback}
+         * @protected
+         */
+        this._animationData = {
+            direction: '',
+            prev: -1,
+            next: prop.active,
+        };
+
         // get elements
         this._getElements();
-
         // create other elements
         this._createElements();
 
@@ -186,7 +208,7 @@ export default class Slider extends Module {
             target: '',
             name: this._name,
             do: () => {
-                setTimeout(() => {
+                utils.timeoutCallback(() => {
                     this.setSize();
                 }, prop.resizeTimeout);
             }
@@ -266,18 +288,6 @@ export default class Slider extends Module {
     }
 
 
-    
-    /**
-     * @description Set events.
-     * @protected
-     */
-    _setEvents() {
-
-        super._setEvents();
-
-    }
-
-
 
     /**
      * @description Update size values.
@@ -320,6 +330,52 @@ export default class Slider extends Module {
 
 
     /**
+     * @description Get index of the slide.
+     * @param {number} [num] - Reference slide number.
+     * Negative values are also possible.
+     * @protected
+     */
+    getSlideIndex(num = this._active) {
+
+        const total = this._total - 1;
+
+        if (num > 0) {
+            if (num > total) {
+                num = this.getSlideIndex(num - this._total);
+            }
+        }
+        else if (num < 0) {
+            if (num < (this._total * -1)) {
+                num = this.getSlideIndex(num + this._total); 
+            }
+            else {
+                num = this._total + num;
+            }
+        }
+
+        return num;
+
+    }
+
+    /**
+     * @description Get a slide index relative to another one.
+     * @param {number} [num] - Reference slide number.
+     * @param {number} [skip] - How many slides to skip. 
+     * Negative values are also possible.
+     * @protected
+     */
+    getFollowingSlideIndex(num = this._active, skip = 1) {
+
+        num += skip;
+        num = this.getSlideIndex(num);
+
+        return num;
+
+    }
+
+
+
+    /**
      * @description Set previous slide.
      * @returns {boolean} Returns true if successful.
      */
@@ -329,7 +385,7 @@ export default class Slider extends Module {
             return false;
         }
 
-        let num = this._prevGet();
+        let num = this.prevGet();
         if (num === false) {
             return false;
         }
@@ -345,19 +401,15 @@ export default class Slider extends Module {
      * @returns {number} Previous slide.
      * @protected
      */
-    _prevGet(num = this._active) {
-        
-        num -= 1;
-        if (num < 0) {
-            if(!this._prop.loop){
+    prevGet(num = this._active) {
+
+        if(!this._prop.loop){
+            if (num === 0) {
                 return false;
-            }
-            else {
-                num = this._total - 1;
             }
         }
         
-        return num;
+        return this.getFollowingSlideIndex(num, -1);
 
     }
 
@@ -373,7 +425,7 @@ export default class Slider extends Module {
             return false;
         }
 
-        let num = this._nextGet();
+        let num = this.nextGet();
         if (num === false) {
             return false;
         }
@@ -387,21 +439,72 @@ export default class Slider extends Module {
      * @description Get next slide.
      * @param {number} [num] - Reference slide num.
      * @returns {number} Next slide.
-     * @protected
      */
-    _nextGet(num = this._active) {
-        
-        num += 1;
-        if (num > (this._total - 1)) {
-            if(!this._prop.loop){
+    nextGet(num = this._active) {
+
+        if(!this._prop.loop){
+            if (num === this._total < 1) {
                 return false;
-            }
-            else {
-                num = 0;
             }
         }
         
-        return num;
+        return this.getFollowingSlideIndex(num, 1);
+
+    }
+
+
+
+    /**
+     * @description Create and launch a timeline
+     * @protected
+     * 
+     * @param {Function} progressCallback
+     * @param {Function} endCallback
+     * @param {Array<number>} [scope=[0, 1]] - Animation scope.
+     */
+    _launchTimeline(
+        progressCallback = () => {}, 
+        endCallback = () => {},
+        scope = [0, 1]
+    ) {
+
+        // create a timeline animation
+        this._timeline = new Timeline();
+        let timeline = this._timeline;
+
+        // add progress callbacks
+        timeline.add({
+            target: 'progress',
+            do: progressCallback.bind(this)
+        });
+
+        // end callback
+        timeline.add({
+            target: 'end',
+            do: endCallback.bind(this)
+        });
+
+        // launch timeline
+        timeline.play({
+            duration: this._prop.animation.duration,
+            autoDuration: true,
+            easing: 'linear',
+            scope: scope
+        });
+
+    }
+
+    /**
+     * @description Stop and destroy the animation timeline
+     * @protected
+     */
+    _stopTimeline() {
+
+        if (this._timeline) {
+            this._timeline.destroy();
+            this._timeline = false;
+            this._playing = false;
+        }
 
     }
 
@@ -413,7 +516,7 @@ export default class Slider extends Module {
      */
     show() {
         
-        if (this.playing || this._shown || this._prop.disabled) {
+        if (this.playing || this._prop.disabled) {
             return false;
         }
 
@@ -421,6 +524,11 @@ export default class Slider extends Module {
         this._prop.dependents.forEach(slider => {
             slider.show();
         });
+
+        // return if this very slider is shown
+        if (this._shown) {
+            return false;
+        }
 
         // continue
         this._shown = true;
@@ -442,14 +550,19 @@ export default class Slider extends Module {
      */
     hide() {
         
-        if (this.playing || !this._shown || this._prop.disabled) {
+        if (this.playing || this._prop.disabled) {
             return false;
         }
 
-        // show dependents
+        // hide dependents
         this._prop.dependents.forEach(slider => {
             slider.hide();
         });
+
+        // return if this very slider is not shown
+        if (!this._shown) {
+            return false;
+        }
 
         // continue
         this._shown = false;
@@ -477,48 +590,48 @@ export default class Slider extends Module {
         // change vars
         this._playing = true;
 
-        // get active num
-        let active = this._active;
+        // create timeline animation object
+        this._animationData = {
+            prev: this._active,
+            next: this._active,
+            direction: action
+        };
 
-        // create timeline animation
-        let timeline = new Timeline({
-            destroyOnEnd: true
-        });
+        // launch timelime
+        this._launchTimeline(
+            this._showHideProgress.bind(this),
+            this._showHideEnd.bind(this)
+        );
 
-        // add progress callbacks
-        timeline.add({
-            target: 'progress',
-            do: (p) => {
-                let obj = {
-                    prev: active,
-                    next: active,
-                    direction: action
-                };
-                this._animateTimeline(obj, p);
-                this._animateType(obj, action, p);
-            }
-        });
+    }
 
-        // end callback
-        timeline.add({
-            target: 'end',
-            do: () => {
-                this._animationEnd();
-                if (action == 'show') {
-                    this.lbt("shown");
-                }
-                else {
-                    this.lbt("hidden");
-                }
-            }
-        });
+    /**
+     * @description Progress callback for the "show/hide" timeline.
+     * @param {Vevet.Timeline.Data} p - Progress data.
+     * @protected
+     */
+    _showHideProgress(p) {
+        
+        this._animateSlidesTimeline(p);
+        this._animateSlide(this._animationData.direction, p);
 
-        // launch timeline
-        timeline.play({
-            duration: this._prop.animation.duration,
-            autoDuration: true,
-            easing: 'linear'
-        });
+    }
+
+    /**
+     * @description End callback for the "show/hide" timeline.
+     * @protected
+     */
+    _showHideEnd() {
+
+        this._animationEnd();
+        if (this._animationData.direction == 'show') {
+            this.lbt("shown");
+        }
+        else {
+            this.lbt("hidden");
+        }
+        
+        this._stopTimeline();
 
     }
 
@@ -526,11 +639,12 @@ export default class Slider extends Module {
 
     /**
      * @memberof Vevet.Slider
-     * @typedef {object} Callback
+     * @typedef {object} AnimationData
      * @property {string} direction - Direction of action: prev or next.
      * @property {number} prev - Previous slide number.
      * @property {number} next - Next slide number.
      */
+    
     /**
      * @description Set slide.
      * 
@@ -556,7 +670,7 @@ export default class Slider extends Module {
             return false;
         }
 
-        // check number
+        // check index number
         if (this._active === num) {
             return false;
         }
@@ -579,7 +693,7 @@ export default class Slider extends Module {
         }
 
         // launch callbacks
-        this._setCallbacks(direction);
+        this._launchCallbacks(direction);
 
         // animate
         this._animate(direction);
@@ -589,21 +703,19 @@ export default class Slider extends Module {
 
     }
 
-    _setCallbacks(direction = '') {
+    _launchCallbacks(direction = '') {
 
-        // Get object for callbacks - {@linkcode Vevet.Slider.Callback}.
-        let obj = {
+        // Get object for callbacks - {@linkcode Vevet.Slider.AnimationData}.
+        this._animationData = {
             direction: direction,
             prev: this._activePrev,
             next: this._active,
-        };
+        }
+        let obj = this._animationData;
 
-        if (direction === 'prev') {
-            this.lbt("prev", obj);
-        }
-        if (direction === 'next') {
-            this.lbt("next", obj);
-        }
+        // prev or next callback
+        this.lbt(direction, obj);
+
         this.lbt("start", obj);
 
     }
@@ -611,16 +723,9 @@ export default class Slider extends Module {
 
     
     /**
-     * @memberof Vevet.Slider
-     * @typedef {object} Change
-     * @property {string} direction - Direction of action: prev or next.
-     * @property {number} prev - Previous slide number.
-     * @property {number} next - Next slide number.
-     */
-    /**
      * @description Animate slides.
      * @param {string} direction - Direction of action: prev or next.
-     * @param {Array<number>} scope - Animation scope.
+     * @param {Array<number>} [scope=[0, 1]] - Animation scope.
      * @protected
      */
     _animate(direction = '', scope = [0, 1]) {
@@ -628,108 +733,74 @@ export default class Slider extends Module {
         // change vars
         this._playing = true;
 
-        // create timeline animation
-        let timeline = new Timeline({
-            destroyOnEnd: true
-        });
-
-        // Get object for callbacks - {@linkcode Vevet.Slider.Change}.
-        let obj = {
+        // Set object for callbacks
+        this._animationData = {
             direction: direction,
             prev: this._activePrev,
             next: this._active,
         };
 
-        // add progress callbacks
-        timeline.add({
-            target: 'progress',
-            do: this._animateTypes.bind(this, obj)
-        });
-
-        // end callback
-        timeline.add({
-            target: 'end',
-            do: this._animateEnd.bind(this, obj)
-        });
-
-        // launch timeline
-        timeline.play({
-            duration: this._prop.animation.duration,
-            autoDuration: true,
-            scope: scope,
-            easing: 'linear'
-        });
+        // launch timelime
+        this._launchTimeline(
+            this._animateSlides.bind(this),
+            this._animateEnd.bind(this),
+            scope
+        );
 
     }
 
     /**
-     * @description End of animation.
-     * @param {Vevet.Slider.Change} obj - Callback data.
+     * @description Slides animation. Here we split animation into two parts:
+     * animation of the previous & of the next slide.
+     * @param {Vevet.Timeline.Data} p - Progress data.
      * @protected
      */
-    _animateEnd(obj) {
+    _animateSlides(p) {
 
-        this._animationEnd();
-        this.lbt("end", obj);
+        // timeline
+        this._animateSlidesTimeline(p);
 
-    }
-
-    _animationEnd() {
-
-        this._playing = false;
+        // animate the previous & next slide
+        this._animateSlide('prev', p);
+        this._animateSlide('next', p);
 
     }
 
     /**
      * @memberof Vevet.Slider
      * @typedef {object} Timeline
-     * @augments Vevet.Slider.Change
+     * @augments Vevet.Slider.AnimationData
      * @property {number} p - Progress without easing.
      */
 
     /**
-     * @description Animation progress. Here we split animation into two parts:
-     * animation of the previous & of the next slide.
-     * @param {Vevet.Slider.Change} obj - Callback data.
-     * @param {Vevet.Timeline.Data} p - Progress data.
-     * @protected
-     */
-    _animateTypes(obj, p) {
-
-        // timeline
-        this._animateTimeline(obj, p);
-
-        // animate the previous & next slide
-        this._animateType(obj, 'prev', p);
-        this._animateType(obj, 'next', p);
-
-    }
-
-    /**
      * @description Timeline animation.
-     * @param {Vevet.Slider.Change} obj - Callback data.
      * @param {Vevet.Timeline.Data} p - Progress data.
      * @protected
      */
-    _animateTimeline(obj, p) {
+    _animateSlidesTimeline(p) {
 
         // the methods above will call the event "render" twice
         // perhaps, you will need to have a single render event that will not depend on slide animation props.
         let data = utils.merge({
             p: p.se
-        }, obj);
+        }, this._animationData);
+
+        // calculate
+
         this.lbt("timeline", data);
 
     }
 
     /**
-     * @description Animation a slide type: show|hide|prev|next.
-     * @param {Vevet.Slider.Change} obj - Callback data.
-     * @param {string} type - Slide type.
+     * @description Animate a slide
+     * @param {string} type - Slide type: show|hide|prev|next.
      * @param {Vevet.Timeline.Data} p - Progress data.
      * @protected
      */
-    _animateType(obj, type, p) {
+    _animateSlide(type, p) {
+
+        const obj = this._animationData;
 
         // get animation scope
         let scope = this._prop.animation[type];
@@ -764,14 +835,14 @@ export default class Slider extends Module {
     /**
      * @memberof Vevet.Slider
      * @typedef {object} Render
-     * @augments Vevet.Slider.Change
+     * @augments Vevet.Slider.AnimationData
      * @property {number} p - Progress of animation.
      * @property {number} num - Index number of the slide under animation.
      * @property {string} type - What type of a slide is under animation: prev|next|show|hide.
      */
 
     /**
-     * @description Animation render.
+     * @description Animation rendering.
      * @param {Vevet.Slider.Render} data - Animation data.
      * @protected
      */
@@ -779,6 +850,25 @@ export default class Slider extends Module {
 
         // reder callback
         this.lbt("render", data);
+
+    }
+
+    /**
+     * @description End of animation.
+     * @protected
+     */
+    _animateEnd() {
+
+        this._stopTimeline();
+
+        this._animationEnd();
+        this.lbt("end", this._animationData);
+
+    }
+
+    _animationEnd() {
+
+        this._playing = false;
 
     }
 
