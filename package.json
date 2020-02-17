@@ -29,7 +29,7 @@
     "url": "git+https://github.com/antonbobrov/vevet.git"
   },
   "author": "Anton Bobrov <anton.bobrov@hotmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/antonbobrov/vevet/issues"
   },
