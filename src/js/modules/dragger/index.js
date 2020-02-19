@@ -37,12 +37,16 @@ export default class Dragger extends Module {
     /**
      * @alias Vevet.Dragger
      * 
-     * @param {Vevet.Dragger.Properties} data
+     * @param {Vevet.Dragger.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.Dragger.Properties}
+     */
     get defaultProp() {
         return utils.merge(super.defaultProp, {
             outer: '',
@@ -50,6 +54,26 @@ export default class Dragger extends Module {
             min: 100
         });
     }
+
+    /**
+     * @member Vevet.Dragger#prop
+     * @memberof Vevet.Dragger
+     * @readonly
+     * @type {Vevet.Dragger.Properties}
+     */
+
+    /**
+     * @member Vevet.Dragger#_prop
+     * @memberof Vevet.Dragger
+     * @protected
+     * @type {Vevet.Dragger.Properties}
+     */
+
+    /**
+     * @function Vevet.Dragger#changeProp
+     * @memberof Vevet.Dragger
+     * @param {Vevet.Dragger.Properties} [prop]
+     */
 
     
 
