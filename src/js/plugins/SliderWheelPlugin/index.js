@@ -29,12 +29,16 @@ export default class SliderWheelPlugin extends Plugin {
      * @alias Vevet.SliderWheelPlugin
      * @description Construct the class.
      * 
-     * @param {Vevet.SliderWheelPlugin.Properties} data
+     * @param {Vevet.SliderWheelPlugin.Properties} [data]
      */
     constructor(data) {
         super(data, false);
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.SliderWheelPlugin.Properties}
+     */
     get defaultProp() {
         return utils.merge(super.defaultProp, {
             outer: false,
@@ -42,6 +46,39 @@ export default class SliderWheelPlugin extends Plugin {
             k: .1
         });
     }
+
+    /**
+     * @member Vevet.SliderWheelPlugin#prop
+     * @memberof Vevet.SliderWheelPlugin
+     * @readonly
+     * @type {Vevet.SliderWheelPlugin.Properties}
+     */
+
+    /**
+     * @member Vevet.SliderWheelPlugin#_prop
+     * @memberof Vevet.SliderWheelPlugin
+     * @protected
+     * @type {Vevet.SliderWheelPlugin.Properties}
+     */
+
+    /**
+     * @memberof Vevet.SliderWheelPlugin
+     * @typedef {object} ChangeProperties
+     * 
+     * @property {boolean} [on=true]
+     */
+    /**
+     * @function Vevet.SliderWheelPlugin#changeProp
+     * @memberof Vevet.SliderWheelPlugin
+     * @param {Vevet.SliderWheelPlugin.ChangeProperties} [prop]
+     */
+
+    /**
+     * @member Vevet.SliderWheelPlugin#_m
+     * @memberof Vevet.SliderWheelPlugin
+     * @protected
+     * @type {Vevet.Slider|Vevet.SliderCanvas}
+     */
 
 
     
