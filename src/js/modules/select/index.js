@@ -45,9 +45,9 @@ export default class Select extends Module {
     /**
      * @alias Vevet.Select
      * 
-     * @param {Vevet.Select.Properties} data
+     * @param {Vevet.Select.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
@@ -55,6 +55,10 @@ export default class Select extends Module {
         return `${this._v.prefix}select`;
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.Select.Properties}
+     */
     get defaultProp() {
         
         return utils.merge(super.defaultProp, {
@@ -73,6 +77,26 @@ export default class Select extends Module {
         });
 
     }
+
+    /**
+     * @member Vevet.Select#prop
+     * @memberof Vevet.Select
+     * @readonly
+     * @type {Vevet.Select.Properties}
+     */
+
+    /**
+     * @member Vevet.Select#_prop
+     * @memberof Vevet.Select
+     * @protected
+     * @type {Vevet.Select.Properties}
+     */
+
+    /**
+     * @function Vevet.Select#changeProp
+     * @memberof Vevet.Select
+     * @param {Vevet.Select.Properties} [prop]
+     */
 
 
 
