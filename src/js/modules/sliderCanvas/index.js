@@ -27,17 +27,37 @@ export default class SliderCanvas extends Slider {
      * @memberof Vevet.SliderCanvas
      * @typedef {object} Properties
      * @augments Vevet.Slider.Properties
+     * 
+     * @property {Vevet.SliderCanvas.Autoframe} [autoframe] - Launch animation frame automatically to render
+     * images onto canvas even when there's no change between slides. It it useful when creating some
+     * effects onto canvas that do not depend on slides animation change.
+     * @property {boolean} [autoplay=true] Autoplay video slides.
+     * @property {string} [img=img] Image elements tag. It may be replaced by div, f.e., 
+     * not to load images twice.
+     * @property {string} [src=src] Source attribute.
+     *
+     */
+    /**
+     * @memberof Vevet.SliderCanvas
+     * @typedef {object} Autoframe
+     * 
+     * @property {boolean} [on=false] Enable
+     * @property {number} [fps=30] Frames per second
      *
      */
     /**
      * @alias Vevet.SliderCanvas
      * 
-     * @param {Vevet.SliderCanvas.Properties} data
+     * @param {Vevet.SliderCanvas.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.SliderCanvas.Properties}
+     */
     get defaultProp() {
         
         return utils.merge(super.defaultProp, {
@@ -56,6 +76,26 @@ export default class SliderCanvas extends Slider {
         super._changeProp();
         this._autoframeToggle();
     }
+
+    /**
+     * @member Vevet.SliderCanvas#prop
+     * @memberof Vevet.SliderCanvas
+     * @readonly
+     * @type {Vevet.SliderCanvas.Properties}
+     */
+
+    /**
+     * @member Vevet.SliderCanvas#_prop
+     * @memberof Vevet.SliderCanvas
+     * @protected
+     * @type {Vevet.SliderCanvas.Properties}
+     */
+
+    /**
+     * @function Vevet.SliderCanvas#changeProp
+     * @memberof Vevet.SliderCanvas
+     * @param {Vevet.SliderCanvas.Properties} [prop]
+     */
 
 
 
