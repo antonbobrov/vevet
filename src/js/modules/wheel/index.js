@@ -38,12 +38,36 @@ export default class Wheel extends Module {
         super(data);
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.Wheel.Properties}
+     */
     get defaultProp() {
         return utils.merge(super.defaultProp, {
             outer: window,
             interval: 200
         });
     }
+
+    /**
+     * @member Vevet.Wheel#prop
+     * @memberof Vevet.Wheel
+     * @readonly
+     * @type {Vevet.Wheel.Properties}
+     */
+
+    /**
+     * @member Vevet.Wheel#_prop
+     * @memberof Vevet.Wheel
+     * @protected
+     * @type {Vevet.Wheel.Properties}
+     */
+
+    /**
+     * @function Vevet.Wheel#changeProp
+     * @memberof Vevet.Wheel
+     * @param {Vevet.Wheel.Properties} [prop]
+     */
 
 
     
