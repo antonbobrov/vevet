@@ -24,17 +24,48 @@ export default class SliderControlsPlugin extends Plugin {
     /**
      * @alias Vevet.SliderControlsPlugin
      * 
-     * @param {Vevet.SliderControlsPlugin.Properties} data
+     * @param {Vevet.SliderControlsPlugin.Properties} [data]
      */
     constructor(data) {
         super(data, false);
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.SliderControlsPlugin.Properties}
+     */
     get defaultProp() {
         return utils.merge(super.defaultProp, {
             on: true
         });
     }
+
+    /**
+     * @member Vevet.SliderControlsPlugin#prop
+     * @memberof Vevet.SliderControlsPlugin
+     * @readonly
+     * @type {Vevet.SliderControlsPlugin.Properties}
+     */
+
+    /**
+     * @member Vevet.SliderControlsPlugin#_prop
+     * @memberof Vevet.SliderControlsPlugin
+     * @protected
+     * @type {Vevet.SliderControlsPlugin.Properties}
+     */
+
+    /**
+     * @function Vevet.SliderControlsPlugin#changeProp
+     * @memberof Vevet.SliderControlsPlugin
+     * @param {Vevet.SliderControlsPlugin.Properties} [prop]
+     */
+
+    /**
+     * @member Vevet.SliderControlsPlugin#_m
+     * @memberof Vevet.SliderControlsPlugin
+     * @protected
+     * @type {Vevet.Slider|Vevet.SliderCanvas}
+     */
 
 
     
