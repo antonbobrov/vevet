@@ -41,9 +41,9 @@ export default class Form extends Module {
     /**
      * @alias Vevet.Form
      * 
-     * @param {Vevet.Form.Properties} data
+     * @param {Vevet.Form.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
@@ -51,6 +51,10 @@ export default class Form extends Module {
         return `${this._v.prefix}form`;
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.Form.Properties}
+     */
     get defaultProp() {
 
         let prefix = this._prefix;
@@ -70,6 +74,26 @@ export default class Form extends Module {
         });
 
     }
+
+    /**
+     * @member Vevet.Form#prop
+     * @memberof Vevet.Form
+     * @readonly
+     * @type {Vevet.Form.Properties}
+     */
+
+    /**
+     * @member Vevet.Form#_prop
+     * @memberof Vevet.Form
+     * @protected
+     * @type {Vevet.Form.Properties}
+     */
+
+    /**
+     * @function Vevet.Form#changeProp
+     * @memberof Vevet.Form
+     * @param {Vevet.Form.Properties} [prop]
+     */
 
 
 
