@@ -19,7 +19,7 @@ export default class PaginationScrollPlugin extends Plugin {
      * @typedef {object} Properties
      * @augments Vevet.Plugin.Properties
      * 
-     * @property {string|Vevet.Scroll} selector - Scroll Selector.
+     * @property {string|Vevet.Scroll} selector - *** Scroll Selector.
      */
     /**
      * @alias Vevet.PaginationScrollPlugin
@@ -31,11 +31,42 @@ export default class PaginationScrollPlugin extends Plugin {
         super(data, false);
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.PaginationScrollPlugin.Properties}
+     */
     get defaultProp() {
         return utils.merge(super.defaultProp, {
             selector: ``
         });
     }
+
+    /**
+     * @member Vevet.PaginationScrollPlugin#prop
+     * @memberof Vevet.PaginationScrollPlugin
+     * @readonly
+     * @type {Vevet.PaginationScrollPlugin.Properties}
+     */
+
+    /**
+     * @member Vevet.PaginationScrollPlugin#_prop
+     * @memberof Vevet.PaginationScrollPlugin
+     * @protected
+     * @type {Vevet.PaginationScrollPlugin.Properties}
+     */
+
+    /**
+     * @function Vevet.PaginationScrollPlugin#changeProp
+     * @memberof Vevet.PaginationScrollPlugin
+     * @param {object} [prop]
+     */
+
+    /**
+     * @member Vevet.PaginationScrollPlugin#_m
+     * @memberof Vevet.PaginationScrollPlugin
+     * @protected
+     * @type {Vevet.Pagination}
+     */
 
 
     
