@@ -34,17 +34,41 @@ export default class Page extends Module {
     /**
      * @alias Vevet.Page
      * 
-     * @param {Vevet.Page.Properties} data
+     * @param {Vevet.Page.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.Page.Properties}
+     */
     get defaultProp() {
         return utils.merge(super.defaultProp, {
             name: 'home'
         });
     }
+
+    /**
+     * @member Vevet.Page#prop
+     * @memberof Vevet.Page
+     * @readonly
+     * @type {Vevet.Page.Properties}
+     */
+
+    /**
+     * @member Vevet.Page#_prop
+     * @memberof Vevet.Page
+     * @protected
+     * @type {Vevet.Page.Properties}
+     */
+
+    /**
+     * @function Vevet.Page#changeProp
+     * @memberof Vevet.Page
+     * @param {Vevet.Page.Properties} [prop]
+     */
 
 
 
