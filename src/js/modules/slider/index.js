@@ -63,9 +63,9 @@ export default class Slider extends Module {
     /**
      * @alias Vevet.Slider
      * 
-     * @param {Vevet.Slider.Properties} data
+     * @param {Vevet.Slider.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
@@ -73,6 +73,10 @@ export default class Slider extends Module {
         return `${this._v.prefix}slider`;
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.Slider.Properties}
+     */
     get defaultProp() {
 
         let prefix = this._prefix;
@@ -101,6 +105,26 @@ export default class Slider extends Module {
         });
 
     }
+
+    /**
+     * @member Vevet.Slider#prop
+     * @memberof Vevet.Slider
+     * @readonly
+     * @type {Vevet.Slider.Properties}
+     */
+
+    /**
+     * @member Vevet.Slider#_prop
+     * @memberof Vevet.Slider
+     * @protected
+     * @type {Vevet.Slider.Properties}
+     */
+
+    /**
+     * @function Vevet.Slider#changeProp
+     * @memberof Vevet.Slider
+     * @param {Vevet.Slider.Properties} [prop]
+     */
 
 
 
