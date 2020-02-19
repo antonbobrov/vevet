@@ -42,9 +42,9 @@ export default class View extends ScrollAnimate {
     /**
      * @alias Vevet.View
      * 
-     * @param {Vevet.View.Properties} data
+     * @param {Vevet.View.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
@@ -52,6 +52,10 @@ export default class View extends ScrollAnimate {
         return `${this._v.prefix}view`;
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.View.Properties}
+     */
     get defaultProp() {
         
         return utils.merge(super.defaultProp, {
@@ -66,6 +70,26 @@ export default class View extends ScrollAnimate {
         });
 
     }
+
+    /**
+     * @member Vevet.View#prop
+     * @memberof Vevet.View
+     * @readonly
+     * @type {Vevet.View.Properties}
+     */
+
+    /**
+     * @member Vevet.View#_prop
+     * @memberof Vevet.View
+     * @protected
+     * @type {Vevet.View.Properties}
+     */
+
+    /**
+     * @function Vevet.View#changeProp
+     * @memberof Vevet.View
+     * @param {Vevet.View.Properties} [prop]
+     */
 
 
     
