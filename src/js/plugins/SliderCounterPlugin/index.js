@@ -24,17 +24,48 @@ export default class SliderCounterPlugin extends Plugin {
     /**
      * @alias Vevet.SliderCounterPlugin
      * 
-     * @param {Vevet.SliderCounterPlugin.Properties} data
+     * @param {Vevet.SliderCounterPlugin.Properties} [data]
      */
     constructor(data) {
         super(data, false);
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.SliderCounterPlugin.Properties}
+     */
     get defaultProp() {
         return utils.merge(super.defaultProp, {
             on: true
         });
     }
+
+    /**
+     * @member Vevet.SliderCounterPlugin#prop
+     * @memberof Vevet.SliderCounterPlugin
+     * @readonly
+     * @type {Vevet.SliderCounterPlugin.Properties}
+     */
+
+    /**
+     * @member Vevet.SliderCounterPlugin#_prop
+     * @memberof Vevet.SliderCounterPlugin
+     * @protected
+     * @type {Vevet.SliderCounterPlugin.Properties}
+     */
+
+    /**
+     * @function Vevet.SliderCounterPlugin#changeProp
+     * @memberof Vevet.SliderCounterPlugin
+     * @param {Vevet.SliderCounterPlugin.Properties} [prop]
+     */
+
+    /**
+     * @member Vevet.SliderCounterPlugin#_m
+     * @memberof Vevet.SliderCounterPlugin
+     * @protected
+     * @type {Vevet.Slider|Vevet.SliderCanvas}
+     */
 
 
     
