@@ -34,9 +34,9 @@ export default class TextSplit extends Module {
     /**
      * @alias Vevet.TextSplit
      * 
-     * @param {Vevet.TextSplit.Properties} data
+     * @param {Vevet.TextSplit.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
@@ -44,6 +44,10 @@ export default class TextSplit extends Module {
         return `${this._v.prefix}text-split`;
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.TextSplit.Properties}
+     */
     get defaultProp() {
         
         return utils.merge(super.defaultProp, {
@@ -55,6 +59,26 @@ export default class TextSplit extends Module {
         });
 
     }
+
+    /**
+     * @member Vevet.TextSplit#prop
+     * @memberof Vevet.TextSplit
+     * @readonly
+     * @type {Vevet.TextSplit.Properties}
+     */
+
+    /**
+     * @member Vevet.TextSplit#_prop
+     * @memberof Vevet.TextSplit
+     * @protected
+     * @type {Vevet.TextSplit.Properties}
+     */
+
+    /**
+     * @function Vevet.TextSplit#changeProp
+     * @memberof Vevet.TextSplit
+     * @param {Vevet.TextSplit.Properties} [prop]
+     */
 
 
 

@@ -42,9 +42,9 @@ export default class Text extends TextSplit {
     /**
      * @alias Vevet.Text
      * 
-     * @param {Vevet.Text.Properties} data
+     * @param {Vevet.Text.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
