@@ -62,15 +62,9 @@ export default class SliderWheelPlugin extends Plugin {
      */
 
     /**
-     * @memberof Vevet.SliderWheelPlugin
-     * @typedef {object} ChangeProperties
-     * 
-     * @property {boolean} [on=true]
-     */
-    /**
      * @function Vevet.SliderWheelPlugin#changeProp
      * @memberof Vevet.SliderWheelPlugin
-     * @param {Vevet.SliderWheelPlugin.ChangeProperties} [prop]
+     * @param {Vevet.SliderWheelPlugin.Properties} [prop]
      */
 
     /**
