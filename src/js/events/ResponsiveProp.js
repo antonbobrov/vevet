@@ -51,7 +51,7 @@ export default class ResponsiveProp {
     /**
      * @alias Vevet.ResponsiveProp
      * 
-     * @param {Vevet.ResponsiveProp.Properties} data
+     * @param {Vevet.ResponsiveProp.Properties} [data]
      * @param {Function} [onchange] - Callback that is called when properties are changed thru {@linkcode Vevet.ResponsiveProp#changeProp}.
      * @param {Function} [onresponsive] - Callback that is called when properties are changed on resize (responsive callback).
      * 
@@ -70,7 +70,7 @@ export default class ResponsiveProp {
      * let event = new Vevet.ResponsiveProp(data);
      * 
      */
-    constructor(data, onchange = () => {}, onresponsive = () => {}) {
+    constructor(data = {}, onchange = () => {}, onresponsive = () => {}) {
 
         // get vevet application if not exists
         data = getVevetProperties(data);

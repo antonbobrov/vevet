@@ -21,7 +21,7 @@ export default class Event {
     /**
      * @alias Vevet.Event
      * 
-     * @param {Vevet.Event.Properties} data
+     * @param {Vevet.Event.Properties} [data]
      * @param {boolean} [init=true] - Defines if you need to call {@linkcode Vevet.Event#init} at the constructor's end.
      * 
      * @example 
@@ -57,7 +57,7 @@ export default class Event {
 
         /**
          * @description Current Properties.
-         * @type {object}
+         * @type {Vevet.Event.Properties}
          * @protected
          */
         this._prop = utils.merge(this.defaultProp, data);
@@ -97,7 +97,7 @@ export default class Event {
     /**
      * @description Default properties. See {@linkcode typedef Properties} to get more info.
      * @readonly
-     * @type {object}
+     * @type {Vevet.Event.Properties}
      */
     get defaultProp() {
         return {
@@ -108,7 +108,7 @@ export default class Event {
 
     /**
      * @description Current Properties. See {@linkcode typedef Properties} to get more info.
-     * @type {object}
+     * @type {Vevet.Event.Properties}
      */
     get prop() {
         return this._prop;

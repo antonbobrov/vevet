@@ -29,9 +29,9 @@ export default class Columns extends Module {
     /**
      * @alias Vevet.Columns
      * 
-     * @param {Vevet.Columns.Properties} data
+     * @param {Vevet.Columns.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
@@ -39,6 +39,10 @@ export default class Columns extends Module {
         return `${this._v.prefix}columns`;
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.Columns.Properties}
+     */
     get defaultProp() {
         let prefix = this._prefix;
         return utils.merge(super.defaultProp, {
@@ -49,6 +53,20 @@ export default class Columns extends Module {
             columns: [0, 1, 2]
         });
     }
+
+    /**
+     * @member Vevet.Columns#prop
+     * @memberof Vevet.Columns
+     * @readonly
+     * @type {Vevet.Columns.Properties}
+     */
+
+    /**
+     * @member Vevet.Columns#_prop
+     * @memberof Vevet.Columns
+     * @protected
+     * @type {Vevet.Columns.Properties}
+     */
 
 
 

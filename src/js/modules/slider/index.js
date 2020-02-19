@@ -188,7 +188,7 @@ export default class Slider extends Module {
         this._timeline = false;
 
         /**
-         * @type {Vevet.Slider.Callback}
+         * @type {Vevet.Slider.AnimationData}
          * @protected
          */
         this._animationData = {

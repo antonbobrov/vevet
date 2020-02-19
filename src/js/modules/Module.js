@@ -29,7 +29,7 @@ export default class Module extends Event {
     /**
      * @alias Vevet.Module
      * 
-     * @param {Vevet.Module.Properties} data - Class Properties.
+     * @param {Vevet.Module.Properties} [data] - Class Properties.
      * @param {boolean} [init=true] - Defines if you need to call the init method at the end of the constructor.
      */
     constructor(data = {}, init = true) {
@@ -87,7 +87,7 @@ export default class Module extends Event {
 
     /**
      * @description Change properties. See {@linkcode typedef Properties} to get more info.
-     * @param {object} prop - New Properties.
+     * @param {Vevet.Module.Properties} prop - New Properties.
      * @example
      * 
      * // changing properties
@@ -108,6 +108,27 @@ export default class Module extends Event {
     }
 
     _changeProp() { }
+
+    /**
+     * @member Vevet.Module#defaultProp
+     * @memberof Vevet.Module
+     * @readonly
+     * @type {Vevet.Module.Properties}
+     */
+
+    /**
+     * @member Vevet.Module#prop
+     * @memberof Vevet.Module
+     * @readonly
+     * @type {Vevet.Module.Properties}
+     */
+
+    /**
+     * @member Vevet.Module#_prop
+     * @memberof Vevet.Module
+     * @protected
+     * @type {Vevet.Module.Properties}
+     */
 
 
 
