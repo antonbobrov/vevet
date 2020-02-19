@@ -64,6 +64,10 @@ export default class Filter extends Module {
         return `${this._v.prefix}filter`;
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.Filter.Properties}
+     */
     get defaultProp() {
 
         let prefix = this._prefix;
@@ -85,6 +89,26 @@ export default class Filter extends Module {
         });
 
     }
+
+    /**
+     * @member Vevet.Filter#prop
+     * @memberof Vevet.Filter
+     * @readonly
+     * @type {Vevet.Filter.Properties}
+     */
+
+    /**
+     * @member Vevet.Filter#_prop
+     * @memberof Vevet.Filter
+     * @protected
+     * @type {Vevet.Filter.Properties}
+     */
+
+    /**
+     * @function Vevet.Filter#changeProp
+     * @memberof Vevet.Filter
+     * @param {Vevet.Filter.Properties} [prop]
+     */
 
 
 
@@ -123,11 +147,6 @@ export default class Filter extends Module {
         
         this._json = this._getFiltersQuery();
 
-    }
-
-    // When properties are changed
-    _changeProp(prop) {
-        super._changeProp(prop);
     }
 
 
