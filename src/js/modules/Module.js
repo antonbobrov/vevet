@@ -87,7 +87,7 @@ export default class Module extends Event {
 
     /**
      * @description Change properties. See {@linkcode typedef Properties} to get more info.
-     * @param {Vevet.Module.Properties} prop - New Properties.
+     * @param {Vevet.Module.Properties} [prop] - New Properties.
      * @example
      * 
      * // changing properties
@@ -102,7 +102,7 @@ export default class Module extends Event {
      *     cute: false
      * });
      */
-    changeProp(prop) {
+    changeProp(prop = {}) {
         this._responsiveProp.changeProp(prop);
         this.lbt("changeProp");
     }

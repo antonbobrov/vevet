@@ -68,6 +68,12 @@ export default class Columns extends Module {
      * @type {Vevet.Columns.Properties}
      */
 
+    /**
+     * @function Vevet.Columns#changeProp
+     * @memberof Vevet.Columns
+     * @param {Vevet.Columns.Properties} [prop]
+     */
+
 
 
     /**
