@@ -27,18 +27,49 @@ export default class SliderKeydownPlugin extends Plugin {
      * @alias Vevet.SliderKeydownPlugin
      * @description Construct the class.
      * 
-     * @param {Vevet.SliderKeydownPlugin.Properties} data
+     * @param {Vevet.SliderKeydownPlugin.Properties} [data]
      */
     constructor(data) {
         super(data, false);
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.SliderKeydownPlugin.Properties}
+     */
     get defaultProp() {
         return utils.merge(super.defaultProp, {
             on: true,
             direction: 'h'
         });
     }
+
+    /**
+     * @member Vevet.SliderKeydownPlugin#prop
+     * @memberof Vevet.SliderKeydownPlugin
+     * @readonly
+     * @type {Vevet.SliderKeydownPlugin.Properties}
+     */
+
+    /**
+     * @member Vevet.SliderKeydownPlugin#_prop
+     * @memberof Vevet.SliderKeydownPlugin
+     * @protected
+     * @type {Vevet.SliderKeydownPlugin.Properties}
+     */
+
+    /**
+     * @function Vevet.SliderKeydownPlugin#changeProp
+     * @memberof Vevet.SliderKeydownPlugin
+     * @param {Vevet.SliderKeydownPlugin.Properties} [prop]
+     */
+
+    /**
+     * @member Vevet.SliderKeydownPlugin#_m
+     * @memberof Vevet.SliderKeydownPlugin
+     * @protected
+     * @type {Vevet.Slider|Vevet.SliderCanvas}
+     */
 
 
     
