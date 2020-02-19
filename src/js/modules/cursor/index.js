@@ -32,9 +32,9 @@ export default class Cursor extends Module {
     /**
      * @alias Vevet.Cursor
      * 
-     * @param {Vevet.Cursor.Properties} data
+     * @param {Vevet.Cursor.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
@@ -42,6 +42,10 @@ export default class Cursor extends Module {
         return `${this._v.prefix}cursor`;
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.Cursor.Properties}
+     */
     get defaultProp() {
         return utils.merge(super.defaultProp, {
             selector: 'body',
@@ -49,6 +53,26 @@ export default class Cursor extends Module {
             run: true
         });
     }
+
+    /**
+     * @member Vevet.Cursor#prop
+     * @memberof Vevet.Cursor
+     * @readonly
+     * @type {Vevet.Cursor.Properties}
+     */
+
+    /**
+     * @member Vevet.Cursor#_prop
+     * @memberof Vevet.Cursor
+     * @protected
+     * @type {Vevet.Cursor.Properties}
+     */
+
+    /**
+     * @function Vevet.Cursor#changeProp
+     * @memberof Vevet.Cursor
+     * @param {Vevet.Cursor.Properties} [prop]
+     */
 
 
 
