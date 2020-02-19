@@ -31,12 +31,16 @@ export default class SliderSwipePlugin extends Plugin {
      * @alias Vevet.SliderSwipePlugin
      * @description Construct the class.
      * 
-     * @param {Vevet.SliderSwipePlugin.Properties} data
+     * @param {Vevet.SliderSwipePlugin.Properties} [data]
      */
     constructor(data) {
         super(data, false);
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.SliderSwipePlugin.Properties}
+     */
     get defaultProp() {
         return utils.merge(super.defaultProp, {
             outer: false,
@@ -45,6 +49,33 @@ export default class SliderSwipePlugin extends Plugin {
             direction: 'h'
         });
     }
+
+    /**
+     * @member Vevet.SliderSwipePlugin#prop
+     * @memberof Vevet.SliderSwipePlugin
+     * @readonly
+     * @type {Vevet.SliderSwipePlugin.Properties}
+     */
+
+    /**
+     * @member Vevet.SliderSwipePlugin#_prop
+     * @memberof Vevet.SliderSwipePlugin
+     * @protected
+     * @type {Vevet.SliderSwipePlugin.Properties}
+     */
+
+    /**
+     * @function Vevet.SliderSwipePlugin#changeProp
+     * @memberof Vevet.SliderSwipePlugin
+     * @param {Vevet.SliderSwipePlugin.Properties} [prop]
+     */
+
+    /**
+     * @member Vevet.SliderSwipePlugin#_m
+     * @memberof Vevet.SliderSwipePlugin
+     * @protected
+     * @type {Vevet.Slider|Vevet.SliderCanvas}
+     */
 
 
     
