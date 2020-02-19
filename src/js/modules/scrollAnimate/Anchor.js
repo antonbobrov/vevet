@@ -47,9 +47,9 @@ export default class Anchor extends ScrollAnimate {
      */
     /**
      * @alias Vevet.Anchor
-     * @param {Vevet.Anchor.Properties} data
+     * @param {Vevet.Anchor.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
@@ -57,6 +57,10 @@ export default class Anchor extends ScrollAnimate {
         return `${this._v.prefix}anchor`;
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.Anchor.Properties}
+     */
     get defaultProp() {
         
         return utils.merge(super.defaultProp, {
@@ -81,6 +85,26 @@ export default class Anchor extends ScrollAnimate {
         });
 
     }
+
+    /**
+     * @member Vevet.Anchor#prop
+     * @memberof Vevet.Anchor
+     * @readonly
+     * @type {Vevet.Anchor.Properties}
+     */
+
+    /**
+     * @member Vevet.Anchor#_prop
+     * @memberof Vevet.Anchor
+     * @protected
+     * @type {Vevet.Anchor.Properties}
+     */
+
+    /**
+     * @function Vevet.Anchor#changeProp
+     * @memberof Vevet.Anchor
+     * @param {Vevet.Anchor.Properties} [prop]
+     */
 
 
 
