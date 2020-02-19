@@ -105,9 +105,18 @@ export default class Filter extends Module {
      */
 
     /**
+     * @memberof Vevet.Filter
+     * @typedef {object} ChangeProperties
+     * @augments Vevet.Filter.Properties
+     * 
+     * @property {Vevet.Pagination} [pagination]
+     * 
+     */
+
+    /**
      * @function Vevet.Filter#changeProp
      * @memberof Vevet.Filter
-     * @param {Vevet.Filter.Properties} [prop]
+     * @param {Vevet.Filter.ChangeProperties} [prop]
      */
 
 
