@@ -40,12 +40,16 @@ export default class Menu extends MenuBase {
     /**
      * @alias Vevet.Menu
      * 
-     * @param {Vevet.Menu.Properties} data
+     * @param {Vevet.Menu.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.Menu.Properties}
+     */
     get defaultProp() {
         
         return utils.merge(super.defaultProp, {
@@ -59,6 +63,26 @@ export default class Menu extends MenuBase {
         });
 
     }
+
+    /**
+     * @member Vevet.Menu#prop
+     * @memberof Vevet.Menu
+     * @readonly
+     * @type {Vevet.Menu.Properties}
+     */
+
+    /**
+     * @member Vevet.Menu#_prop
+     * @memberof Vevet.Menu
+     * @protected
+     * @type {Vevet.Menu.Properties}
+     */
+
+    /**
+     * @function Vevet.Menu#changeProp
+     * @memberof Vevet.Menu
+     * @param {Vevet.Menu.Properties} [prop]
+     */
 
 
 

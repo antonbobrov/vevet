@@ -29,17 +29,41 @@ export default class Keydown extends Module {
     /**
      * @alias Vevet.Keydown
      * 
-     * @param {Vevet.Keydown.Properties} data
+     * @param {Vevet.Keydown.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.Keydown.Properties}
+     */
     get defaultProp() {
         return utils.merge(super.defaultProp, {
             interval: 250
         });
     }
+
+    /**
+     * @member Vevet.Keydown#prop
+     * @memberof Vevet.Keydown
+     * @readonly
+     * @type {Vevet.Keydown.Properties}
+     */
+
+    /**
+     * @member Vevet.Keydown#_prop
+     * @memberof Vevet.Keydown
+     * @protected
+     * @type {Vevet.Keydown.Properties}
+     */
+
+    /**
+     * @function Vevet.Keydown#changeProp
+     * @memberof Vevet.Keydown
+     * @param {Vevet.Keydown.Properties} [prop]
+     */
     
 
 

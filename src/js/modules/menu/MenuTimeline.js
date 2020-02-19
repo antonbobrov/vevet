@@ -46,12 +46,16 @@ export default class MenuTimeline extends MenuBase {
     /**
      * @alias Vevet.MenuTimeline
      * 
-     * @param {Vevet.MenuTimeline.Properties} data
+     * @param {Vevet.MenuTimeline.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.MenuTimeline.Properties}
+     */
     get defaultProp() {
         
         return utils.merge(super.defaultProp, {
@@ -64,6 +68,26 @@ export default class MenuTimeline extends MenuBase {
         });
 
     }
+
+    /**
+     * @member Vevet.MenuTimeline#prop
+     * @memberof Vevet.MenuTimeline
+     * @readonly
+     * @type {Vevet.MenuTimeline.Properties}
+     */
+
+    /**
+     * @member Vevet.MenuTimeline#_prop
+     * @memberof Vevet.MenuTimeline
+     * @protected
+     * @type {Vevet.MenuTimeline.Properties}
+     */
+
+    /**
+     * @function Vevet.MenuTimeline#changeProp
+     * @memberof Vevet.MenuTimeline
+     * @param {Vevet.MenuTimeline.Properties} [prop]
+     */
 
 
 
