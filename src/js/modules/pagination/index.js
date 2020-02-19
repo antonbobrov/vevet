@@ -59,9 +59,9 @@ export default class Pagination extends Module {
     /**
      * @alias Vevet.Pagination
      * 
-     * @param {Vevet.Pagination.Properties} data
+     * @param {Vevet.Pagination.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
@@ -69,6 +69,10 @@ export default class Pagination extends Module {
         return `${this._v.prefix}pagination`;
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.Pagination.Properties}
+     */
     get defaultProp() {
         
         return utils.merge(super.defaultProp, {
@@ -97,6 +101,26 @@ export default class Pagination extends Module {
         });
 
     }
+
+    /**
+     * @member Vevet.Pagination#prop
+     * @memberof Vevet.Pagination
+     * @readonly
+     * @type {Vevet.Pagination.Properties}
+     */
+
+    /**
+     * @member Vevet.Pagination#_prop
+     * @memberof Vevet.Pagination
+     * @protected
+     * @type {Vevet.Pagination.Properties}
+     */
+
+    /**
+     * @function Vevet.Pagination#changeProp
+     * @memberof Vevet.Pagination
+     * @param {Vevet.Pagination.Properties} [prop]
+     */
 
 
 
