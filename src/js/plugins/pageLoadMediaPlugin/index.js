@@ -27,12 +27,16 @@ export default class PageLoadMediaPlugin extends Plugin {
      * @alias Vevet.PageLoadMediaPlugin
      * @description Construct the class.
      * 
-     * @param {Vevet.PageLoadMediaPlugin.Properties} data - Object of data to construct the class.
+     * @param {Vevet.PageLoadMediaPlugin.Properties} [data] - Object of data to construct the class.
      */
     constructor(data) {
         super(data, false);
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.PageLoadMediaPlugin.Properties}
+     */
     get defaultProp() {
         return utils.merge(super.defaultProp, {
             images: true,
@@ -41,6 +45,33 @@ export default class PageLoadMediaPlugin extends Plugin {
             bgSelector: '.bg'
         });
     }
+
+    /**
+     * @member Vevet.PageLoadMediaPlugin#prop
+     * @memberof Vevet.PageLoadMediaPlugin
+     * @readonly
+     * @type {Vevet.PageLoadMediaPlugin.Properties}
+     */
+
+    /**
+     * @member Vevet.PageLoadMediaPlugin#_prop
+     * @memberof Vevet.PageLoadMediaPlugin
+     * @protected
+     * @type {Vevet.PageLoadMediaPlugin.Properties}
+     */
+
+    /**
+     * @function Vevet.PageLoadMediaPlugin#changeProp
+     * @memberof Vevet.PageLoadMediaPlugin
+     * @param {object} [prop]
+     */
+
+    /**
+     * @member Vevet.PageLoadMediaPlugin#_m
+     * @memberof Vevet.PageLoadMediaPlugin
+     * @protected
+     * @type {Vevet.Page}
+     */
 
 
     
