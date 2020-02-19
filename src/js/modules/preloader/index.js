@@ -54,9 +54,9 @@ export default class Preloader extends Module {
     /**
      * @alias Vevet.Preloader
      * 
-     * @param {Vevet.Preloader.Properties} data
+     * @param {Vevet.Preloader.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
@@ -64,6 +64,10 @@ export default class Preloader extends Module {
         return `${this._v.prefix}preloader`;
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.Preloader.Properties}
+     */
     get defaultProp() {
         
         return utils.merge(super.defaultProp, {
@@ -85,6 +89,26 @@ export default class Preloader extends Module {
         });
 
     }
+
+    /**
+     * @member Vevet.Preloader#prop
+     * @memberof Vevet.Preloader
+     * @readonly
+     * @type {Vevet.Preloader.Properties}
+     */
+
+    /**
+     * @member Vevet.Preloader#_prop
+     * @memberof Vevet.Preloader
+     * @protected
+     * @type {Vevet.Preloader.Properties}
+     */
+
+    /**
+     * @function Vevet.Preloader#changeProp
+     * @memberof Vevet.Preloader
+     * @param {Vevet.Preloader.Properties} [prop]
+     */
 
 
 
