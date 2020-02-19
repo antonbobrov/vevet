@@ -84,9 +84,9 @@ export default class PageAjax extends Module {
     /**
      * @alias Vevet.PageAjax
      * 
-     * @param {Vevet.PageAjax.Properties} data
+     * @param {Vevet.PageAjax.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
@@ -94,6 +94,10 @@ export default class PageAjax extends Module {
         return `${this._v.prefix}pageAjax`;
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.PageAjax.Properties}
+     */
     get defaultProp() {
         
         return utils.merge(super.defaultProp, {
@@ -142,6 +146,26 @@ export default class PageAjax extends Module {
         });
 
     }
+
+    /**
+     * @member Vevet.PageAjax#prop
+     * @memberof Vevet.PageAjax
+     * @readonly
+     * @type {Vevet.PageAjax.Properties}
+     */
+
+    /**
+     * @member Vevet.PageAjax#_prop
+     * @memberof Vevet.PageAjax
+     * @protected
+     * @type {Vevet.PageAjax.Properties}
+     */
+
+    /**
+     * @function Vevet.PageAjax#changeProp
+     * @memberof Vevet.PageAjax
+     * @param {Vevet.PageAjax.Properties} [prop]
+     */
 
 
 
