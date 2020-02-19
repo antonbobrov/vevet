@@ -21,7 +21,7 @@ export default class Plugin extends Module {
      * @alias Vevet.Plugin
      * @description Construct the class.
      * 
-     * @param {Vevet.Plugin.Properties} data - Object of data to construct the class.
+     * @param {Vevet.Plugin.Properties} [data] - Object of data to construct the class.
      */
     constructor(data) {
         super(data, false);
