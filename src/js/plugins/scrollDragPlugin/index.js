@@ -34,12 +34,16 @@ export default class ScrollDragPlugin extends Plugin {
      * @alias Vevet.ScrollDragPlugin
      * @description Construct the class.
      * 
-     * @param {Vevet.ScrollDragPlugin.Properties} data
+     * @param {Vevet.ScrollDragPlugin.Properties} [data]
      */
     constructor(data) {
         super(data, false);
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.ScrollDragPlugin.Properties}
+     */
     get defaultProp() {
         return utils.merge(super.defaultProp, {
             on: true,
@@ -51,6 +55,33 @@ export default class ScrollDragPlugin extends Plugin {
             draggableEase: .15
         });
     }
+
+    /**
+     * @member Vevet.ScrollDragPlugin#prop
+     * @memberof Vevet.ScrollDragPlugin
+     * @readonly
+     * @type {Vevet.ScrollDragPlugin.Properties}
+     */
+
+    /**
+     * @member Vevet.ScrollDragPlugin#_prop
+     * @memberof Vevet.ScrollDragPlugin
+     * @protected
+     * @type {Vevet.ScrollDragPlugin.Properties}
+     */
+
+    /**
+     * @function Vevet.ScrollDragPlugin#changeProp
+     * @memberof Vevet.ScrollDragPlugin
+     * @param {Vevet.ScrollDragPlugin.Properties} [prop]
+     */
+
+    /**
+     * @member Vevet.ScrollDragPlugin#_m
+     * @memberof Vevet.ScrollDragPlugin
+     * @protected
+     * @type {Vevet.Scroll}
+     */
 
 
     
