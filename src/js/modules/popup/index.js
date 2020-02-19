@@ -54,7 +54,7 @@ export default class Popup extends Module {
      * 
      * @param {Vevet.Popup.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 

@@ -65,7 +65,7 @@ export default class Slider extends Module {
      * 
      * @param {Vevet.Slider.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 

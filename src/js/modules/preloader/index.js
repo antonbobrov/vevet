@@ -56,7 +56,7 @@ export default class Preloader extends Module {
      * 
      * @param {Vevet.Preloader.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 

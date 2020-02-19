@@ -37,7 +37,7 @@ export default class ScrollAnimate extends Module {
      * 
      * @param {Vevet.ScrollAnimate.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 

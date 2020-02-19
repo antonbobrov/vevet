@@ -31,7 +31,7 @@ export default class Keydown extends Module {
      * 
      * @param {Vevet.Keydown.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 

@@ -55,7 +55,7 @@ export default class Scroll extends Module {
      * 
      * @param {Vevet.Scroll.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 

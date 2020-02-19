@@ -44,7 +44,7 @@ export default class View extends ScrollAnimate {
      * 
      * @param {Vevet.View.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 

@@ -39,7 +39,7 @@ export default class Dragger extends Module {
      * 
      * @param {Vevet.Dragger.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 

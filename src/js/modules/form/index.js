@@ -43,7 +43,7 @@ export default class Form extends Module {
      * 
      * @param {Vevet.Form.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 

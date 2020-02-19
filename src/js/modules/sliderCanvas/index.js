@@ -50,7 +50,7 @@ export default class SliderCanvas extends Slider {
      * 
      * @param {Vevet.SliderCanvas.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 

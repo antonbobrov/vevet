@@ -61,7 +61,7 @@ export default class Pagination extends Module {
      * 
      * @param {Vevet.Pagination.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 

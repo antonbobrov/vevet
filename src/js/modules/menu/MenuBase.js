@@ -39,7 +39,7 @@ export default class MenuBase extends Module {
      * 
      * @param {Vevet.MenuBase.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 

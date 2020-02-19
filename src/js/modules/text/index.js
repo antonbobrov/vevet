@@ -44,13 +44,33 @@ export default class Text extends TextSplit {
      * 
      * @param {Vevet.Text.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 
     get prefix() {
         return `${this._v.prefix}text`;
     }
+
+    /**
+     * @member Vevet.Text#prop
+     * @memberof Vevet.Text
+     * @readonly
+     * @type {Vevet.Text.Properties}
+     */
+
+    /**
+     * @member Vevet.Text#_prop
+     * @memberof Vevet.Text
+     * @protected
+     * @type {Vevet.Text.Properties}
+     */
+
+    /**
+     * @function Vevet.Text#changeProp
+     * @memberof Vevet.Text
+     * @param {Vevet.Text.Properties} [prop]
+     */
 
 
 

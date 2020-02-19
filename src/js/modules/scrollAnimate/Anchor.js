@@ -49,7 +49,7 @@ export default class Anchor extends ScrollAnimate {
      * @alias Vevet.Anchor
      * @param {Vevet.Anchor.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 

@@ -34,7 +34,7 @@ export default class Cursor extends Module {
      * 
      * @param {Vevet.Cursor.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 

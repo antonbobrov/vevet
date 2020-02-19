@@ -48,7 +48,7 @@ export default class MenuTimeline extends MenuBase {
      * 
      * @param {Vevet.MenuTimeline.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 

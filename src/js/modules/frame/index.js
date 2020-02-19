@@ -26,7 +26,7 @@ export default class Frame extends Module {
      * 
      * @param {Vevet.Frame.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 

@@ -86,7 +86,7 @@ export default class PageAjax extends Module {
      * 
      * @param {Vevet.PageAjax.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 

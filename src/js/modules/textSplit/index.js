@@ -36,7 +36,7 @@ export default class TextSplit extends Module {
      * 
      * @param {Vevet.TextSplit.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 

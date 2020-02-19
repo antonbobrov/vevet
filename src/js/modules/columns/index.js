@@ -31,7 +31,7 @@ export default class Columns extends Module {
      * 
      * @param {Vevet.Columns.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 

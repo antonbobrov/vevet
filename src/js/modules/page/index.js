@@ -36,7 +36,7 @@ export default class Page extends Module {
      * 
      * @param {Vevet.Page.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 

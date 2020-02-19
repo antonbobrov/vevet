@@ -47,7 +47,7 @@ export default class Select extends Module {
      * 
      * @param {Vevet.Select.Properties} [data]
      */
-    constructor(data = {}) {
+    constructor(data) {
         super(data);
     }
 
