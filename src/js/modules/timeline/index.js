@@ -34,7 +34,7 @@ export default class Timeline extends TimelineBase {
      */
     /**
      * @alias Vevet.Timeline
-     * @param {Vevet.Timeline.Properties} data
+     * @param {Vevet.Timeline.Properties} [data]
      */
     constructor(data) {
         super(data);
