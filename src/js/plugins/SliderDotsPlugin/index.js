@@ -24,17 +24,48 @@ export default class SliderDotsPlugin extends Plugin {
     /**
      * @alias Vevet.SliderDotsPlugin
      * 
-     * @param {Vevet.SliderDotsPlugin.Properties} data
+     * @param {Vevet.SliderDotsPlugin.Properties} [data]
      */
     constructor(data) {
         super(data, false);
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.SliderDotsPlugin.Properties}
+     */
     get defaultProp() {
         return utils.merge(super.defaultProp, {
             on: true
         });
     }
+
+    /**
+     * @member Vevet.SliderDotsPlugin#prop
+     * @memberof Vevet.SliderDotsPlugin
+     * @readonly
+     * @type {Vevet.SliderDotsPlugin.Properties}
+     */
+
+    /**
+     * @member Vevet.SliderDotsPlugin#_prop
+     * @memberof Vevet.SliderDotsPlugin
+     * @protected
+     * @type {Vevet.SliderDotsPlugin.Properties}
+     */
+
+    /**
+     * @function Vevet.SliderDotsPlugin#changeProp
+     * @memberof Vevet.SliderDotsPlugin
+     * @param {Vevet.SliderDotsPlugin.Properties} [prop]
+     */
+
+    /**
+     * @member Vevet.SliderDotsPlugin#_m
+     * @memberof Vevet.SliderDotsPlugin
+     * @protected
+     * @type {Vevet.Slider|Vevet.SliderCanvas}
+     */
 
 
     
