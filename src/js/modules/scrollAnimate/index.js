@@ -35,9 +35,9 @@ export default class ScrollAnimate extends Module {
     /**
      * @alias Vevet.ScrollAnimate
      * 
-     * @param {Vevet.ScrollAnimate.Properties} data
+     * @param {Vevet.ScrollAnimate.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
@@ -45,6 +45,10 @@ export default class ScrollAnimate extends Module {
         return `${this._v.prefix}scrollAnimate`;
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.ScrollAnimate.Properties}
+     */
     get defaultProp() {
 
         let prefix = this._prefix;
@@ -64,6 +68,26 @@ export default class ScrollAnimate extends Module {
         });
 
     }
+
+    /**
+     * @member Vevet.ScrollAnimate#prop
+     * @memberof Vevet.ScrollAnimate
+     * @readonly
+     * @type {Vevet.ScrollAnimate.Properties}
+     */
+
+    /**
+     * @member Vevet.ScrollAnimate#_prop
+     * @memberof Vevet.ScrollAnimate
+     * @protected
+     * @type {Vevet.ScrollAnimate.Properties}
+     */
+
+    /**
+     * @function Vevet.ScrollAnimate#changeProp
+     * @memberof Vevet.ScrollAnimate
+     * @param {Vevet.ScrollAnimate.Properties} [prop]
+     */
 
 
 
