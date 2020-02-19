@@ -52,9 +52,9 @@ export default class Popup extends Module {
     /**
      * @alias Vevet.Popup
      * 
-     * @param {Vevet.Popup.Properties} data
+     * @param {Vevet.Popup.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
@@ -62,6 +62,10 @@ export default class Popup extends Module {
         return `${this._v.prefix}popup`;
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.Popup.Properties}
+     */
     get defaultProp() {
         
         return utils.merge(super.defaultProp, {
@@ -73,6 +77,26 @@ export default class Popup extends Module {
         });
 
     }
+
+    /**
+     * @member Vevet.Popup#prop
+     * @memberof Vevet.Popup
+     * @readonly
+     * @type {Vevet.Popup.Properties}
+     */
+
+    /**
+     * @member Vevet.Popup#_prop
+     * @memberof Vevet.Popup
+     * @protected
+     * @type {Vevet.Popup.Properties}
+     */
+
+    /**
+     * @function Vevet.Popup#changeProp
+     * @memberof Vevet.Popup
+     * @param {Vevet.Popup.Properties} [prop]
+     */
 
 
 
