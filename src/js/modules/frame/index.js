@@ -24,18 +24,45 @@ export default class Frame extends Module {
     /**
      * @alias Vevet.Frame
      * 
-     * @param {Vevet.Frame.Properties} data
+     * @param {Vevet.Frame.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.Frame.Properties}
+     */
     get defaultProp() {
         return utils.merge(super.defaultProp, {
             fps: 60
         });
     }
 
+    /**
+     * @member Vevet.Frame#prop
+     * @memberof Vevet.Frame
+     * @readonly
+     * @type {Vevet.Frame.Properties}
+     */
+
+    /**
+     * @member Vevet.Frame#_prop
+     * @memberof Vevet.Frame
+     * @protected
+     * @type {Vevet.Frame.Properties}
+     */
+
+    /**
+     * @function Vevet.Frame#changeProp
+     * @memberof Vevet.Frame
+     * @param {Vevet.Frame.Properties} [prop]
+     */
+
+
+
+    // Extra Constructor
     _extra() {
 
         super._extra();
