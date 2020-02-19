@@ -53,9 +53,9 @@ export default class Scroll extends Module {
     /**
      * @alias Vevet.Scroll
      * 
-     * @param {Vevet.Scroll.Properties} data
+     * @param {Vevet.Scroll.Properties} [data]
      */
-    constructor(data) {
+    constructor(data = {}) {
         super(data);
     }
 
@@ -63,6 +63,10 @@ export default class Scroll extends Module {
         return `${this._v.prefix}scroll`;
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.Scroll.Properties}
+     */
     get defaultProp() {
 
         let prefix = this._prefix;
@@ -84,6 +88,26 @@ export default class Scroll extends Module {
         });
 
     }
+
+    /**
+     * @member Vevet.Scroll#prop
+     * @memberof Vevet.Scroll
+     * @readonly
+     * @type {Vevet.Scroll.Properties}
+     */
+
+    /**
+     * @member Vevet.Scroll#_prop
+     * @memberof Vevet.Scroll
+     * @protected
+     * @type {Vevet.Scroll.Properties}
+     */
+
+    /**
+     * @function Vevet.Scroll#changeProp
+     * @memberof Vevet.Scroll
+     * @param {Vevet.Scroll.Properties} [prop]
+     */
 
 
 
