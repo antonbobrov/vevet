@@ -27,6 +27,33 @@ export default class Plugin extends Module {
         super(data, false);
     }
 
+    /**
+     * @member Vevet.Plugin#defaultProp
+     * @memberof Vevet.Plugin
+     * @readonly
+     * @type {Vevet.Plugin.Properties}
+     */
+
+    /**
+     * @member Vevet.Plugin#prop
+     * @memberof Vevet.Plugin
+     * @readonly
+     * @type {Vevet.Plugin.Properties}
+     */
+
+    /**
+     * @member Vevet.Plugin#_prop
+     * @memberof Vevet.Plugin
+     * @protected
+     * @type {Vevet.Plugin.Properties}
+     */
+
+    /**
+     * @function Vevet.Plugin#changeProp
+     * @memberof Vevet.Plugin
+     * @param {Vevet.Plugin.Properties} [prop]
+     */
+
 
     
     /**
