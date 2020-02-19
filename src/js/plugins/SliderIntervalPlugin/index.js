@@ -27,18 +27,49 @@ export default class SliderIntervalPlugin extends Plugin {
      * @alias Vevet.SliderIntervalPlugin
      * @description Construct the class.
      * 
-     * @param {Vevet.SliderIntervalPlugin.Properties} data
+     * @param {Vevet.SliderIntervalPlugin.Properties} [data]
      */
     constructor(data) {
         super(data, false);
     }
 
+    /**
+     * @readonly
+     * @type {Vevet.SliderIntervalPlugin.Properties}
+     */
     get defaultProp() {
         return utils.merge(super.defaultProp, {
             on: true,
             time: 5000
         });
     }
+
+    /**
+     * @member Vevet.SliderIntervalPlugin#prop
+     * @memberof Vevet.SliderIntervalPlugin
+     * @readonly
+     * @type {Vevet.SliderIntervalPlugin.Properties}
+     */
+
+    /**
+     * @member Vevet.SliderIntervalPlugin#_prop
+     * @memberof Vevet.SliderIntervalPlugin
+     * @protected
+     * @type {Vevet.SliderIntervalPlugin.Properties}
+     */
+
+    /**
+     * @function Vevet.SliderIntervalPlugin#changeProp
+     * @memberof Vevet.SliderIntervalPlugin
+     * @param {Vevet.SliderIntervalPlugin.Properties} [prop]
+     */
+
+    /**
+     * @member Vevet.SliderIntervalPlugin#_m
+     * @memberof Vevet.SliderIntervalPlugin
+     * @protected
+     * @type {Vevet.Slider|Vevet.SliderCanvas}
+     */
 
 
 
