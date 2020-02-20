@@ -9,7 +9,7 @@ import Interval from '../../modules/interval';
  * @class
  * @memberof Vevet
  * @augments Vevet.Plugin
- * @requires Vevet.Interval
+ * @requires Vevet.ModuleInterval
  */
 export default class SliderIntervalPlugin extends Plugin {
 

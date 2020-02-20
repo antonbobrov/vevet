@@ -9,7 +9,7 @@ import Keydown from '../../modules/keydown';
  * @class
  * @memberof Vevet
  * @augments Vevet.Plugin
- * @requires Vevet.Keydown
+ * @requires Vevet.ModuleKeydown
  */
 export default class SliderKeydownPlugin extends Plugin {
 

@@ -33,6 +33,8 @@ import ModuleSwipe from "./ModuleSwipe";
 import ModuleFilter from "./ModuleFilter";
 import ModuleForm from "./ModuleForm";
 import ModuleFrame from "./ModuleFrame";
+import ModuleInterval from "./ModuleInterval";
+import ModuleKeydown from "./ModuleKeydown";
 
 export {
     generateId,
@@ -70,7 +72,9 @@ export {
     ModuleSwipe,
     ModuleFilter,
     ModuleForm,
-    ModuleFrame
+    ModuleFrame,
+    ModuleInterval,
+    ModuleKeydown
     
 }
 
