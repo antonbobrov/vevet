@@ -19,7 +19,7 @@ export default class PaginationScrollPlugin extends Plugin {
      * @typedef {object} Properties
      * @augments Vevet.Plugin.Properties
      * 
-     * @property {string|Vevet.Scroll} selector - *** Scroll Selector.
+     * @property {string|Vevet.ScrollModule} selector - *** Scroll Selector.
      */
     /**
      * @alias Vevet.PaginationScrollPlugin

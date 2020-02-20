@@ -28,7 +28,7 @@ export default class ScrollDragPlugin extends Plugin {
      * @property {number} [timeoutListeners=10] - Time after which 'pointer-events' will be removed from children after dragging stops.
      * @property {number} [min=0] - Minimum amount of pixels for drag to respond.
      * @property {boolean} [draggable=true] - If true, the "draggable" property will be set to false.
-     * @property {number} [draggableEase=.15] - This property is the same as the ease property in {@linkcode Vevet.Scroll}, though the value in Scroll becomes the same as here only when dragging.
+     * @property {number} [draggableEase=.15] - This property is the same as the ease property in {@linkcode Vevet.ScrollModule}, though the value in Scroll becomes the same as here only when dragging.
      */
     /**
      * @alias Vevet.ScrollDragPlugin
@@ -80,7 +80,7 @@ export default class ScrollDragPlugin extends Plugin {
      * @member Vevet.ScrollDragPlugin#_m
      * @memberof Vevet.ScrollDragPlugin
      * @protected
-     * @type {Vevet.Scroll}
+     * @type {Vevet.ScrollModule}
      */
 
 

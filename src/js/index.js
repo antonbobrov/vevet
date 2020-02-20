@@ -46,6 +46,10 @@ import TimelineBaseModule from "./TimelineBaseModule";
 import TimelineModule from "./TimelineModule";
 import PopupModule from "./PopupModule";
 import PreloaderModule from "./PreloaderModule";
+import ScrollModule from "./ScrollModule";
+import ScrollAnimateModule from "./ScrollAnimateModule";
+import ScrollAnchorModule from "./ScrollAnchorModule";
+import ScrollViewModule from "./ScrollViewModule";
 
 export {
     generateId,
@@ -104,7 +108,12 @@ export {
     TimelineModule,
 
     PopupModule,
-    PreloaderModule
+    PreloaderModule,
+
+    ScrollModule,
+    ScrollAnimateModule,
+    ScrollAnchorModule,
+    ScrollViewModule
     
 }
 
