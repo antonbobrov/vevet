@@ -1,6 +1,21 @@
-# Vevet - a JavaScript library with useful stuff
+# Vevet
 
-The library contains classes that can allow you to create Page Routing, Sliders, Timelines and animations, etc. <br>
+## JavaScript library with useful stuff that is often used on websites.
+[![npm](https://img.shields.io/npm/v/vevet?style=flat-square)](https://www.npmjs.com/package/vevet)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+What the library can do:
+* AJAX requests
+* Custom Cursor
+* Drag/Swipe
+*Animation (Animation Frame, Timelines, easings)
+* Canvas Slider
+* AJAX Forms
+* Menu element
+* AJAX Page routing
+* Custom Scrolling
+* Text animation
+* etc <br>
 
 ## Initialize
 
@@ -18,20 +33,24 @@ import * as Vevet from 'vevet';
 @import '~vevet/dist/scss/index';
 ```
 
-The library consists of four parts, in general: Application, Core and Event.
-*  Application - this class is used to initialize Vevet. It is required by modules in properties.
-*  Core - just a set of functions that are frequently used in the library.
-*  Events - the basis of all modules. 
-*  Modules. 
+The library consists of four parts, in general: **Application**, **Event**, **Module** and **Plugin**.
+* Application - this class is used to initialize Vevet. It is required by other parts.
+* Event - custom abstract events.
+* Module - the basis for modules.
+* Plugin - addons for modules.
 
-Initialize an application.
+Initialize the application.
 ```js
 let app = new Vevet.Application({
     prefix: 'v-',
     page: ['home']
 });
 ```
-Now you can use all features of the library. F.e., include some modules:
+Now you can use all the features of the library. F.e., include some modules:
+```scss
+@import '~vevet/dist/scss/modules/preloader';
+@import '~vevet/dist/scss/modules/_preloader.scss';
+```
 ```js
 // initialize preloader
 let preloader = new Vevet.PreloaderModule({
@@ -50,7 +69,7 @@ preloader.add({
         console.log(`Resources total: ${data.total}`);
     }
 });
-// add hidden callback
+// launch callback when the preloader is hidden
 preloader.add({
     target: 'hidden',
     do: () => {
