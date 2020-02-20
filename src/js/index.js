@@ -26,6 +26,7 @@ import EventAJAX from "./EventAJAX";
 import ResponsiveProp from "./ResponsiveProp";
 import Module from "./Module";
 import ModuleColumns from "./ModuleColumns";
+import ModuleCursor from "./ModuleCursor";
 
 export {
     generateId,
@@ -56,8 +57,8 @@ export {
     ResponsiveProp,
 
     Module,
-    ModuleColumns
+    ModuleColumns,
+    ModuleCursor
     
 }
 
-// ModuleColumns,
