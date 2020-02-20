@@ -6,11 +6,6 @@ public/
 tests/
 types/
 
-<<<<<<< HEAD
-/src/js/plugins/ScrollClampPlugin/
-/src/js/plugins/SliderMovePlugin/
-=======
->>>>>>> new-file-structure
 /src/js/ScrollClampPlugin.js
 /src/js/SliderMovePlugin.js
 
