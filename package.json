@@ -94,6 +94,7 @@
     "lodash.merge": "^4.6.1",
     "lodash.mergewith": "^4.6.2",
     "polyfill-array-includes": "^2.0.0",
+    "select-el": "^1.0.3",
     "string.prototype.includes": "^1.0.0"
   }
 }

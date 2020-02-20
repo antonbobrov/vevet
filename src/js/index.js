@@ -25,6 +25,7 @@ import EventAJAX from "./EventAJAX";
 
 import ResponsiveProp from "./ResponsiveProp";
 import Module from "./Module";
+import ModuleColumns from "./ModuleColumns";
 
 export {
     generateId,
@@ -54,7 +55,9 @@ export {
 
     ResponsiveProp,
 
-    Module
+    Module,
+    ModuleColumns
     
 }
 
+// ModuleColumns,
