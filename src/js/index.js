@@ -59,7 +59,6 @@ import TextAnimateModule from "./TextAnimateModule";
 import WheelEventModule from "./WheelEventModule";
 import PageLoadMediaPlugin from "./PageLoadMediaPlugin";
 import PaginationScrollPlugin from "./PaginationScrollPlugin";
-import ScrollClampPlugin from "./ScrollClampPlugin";
 import Plugin from "./Plugin";
 import ScrollDragPlugin from "./ScrollDragPlugin";
 import SliderControlsPlugin from "./SliderControlsPlugin";
@@ -67,7 +66,6 @@ import SliderCounterPlugin from "./SliderCounterPlugin";
 import SliderDotsPlugin from "./SliderDotsPlugin";
 import SliderIntervalPlugin from "./SliderIntervalPlugin";
 import SliderKeydownPlugin from "./SliderKeydownPlugin";
-import SliderMovePlugin from "./SliderMovePlugin";
 import SliderDragSwipePlugin from "./SliderDragSwipePlugin";
 import SliderWheelPlugin from "./SliderWheelPlugin";
 
@@ -155,10 +153,7 @@ export {
     TextSplitModule,
     TextAnimateModule,
 
-    WheelEventModule,
-
-    ScrollClampPlugin,
-    SliderMovePlugin
+    WheelEventModule
     
 }
 
