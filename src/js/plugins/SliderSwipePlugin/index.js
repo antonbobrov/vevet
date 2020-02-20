@@ -1,7 +1,7 @@
 import utils from '../../core/utils';
 import Plugin from '../Plugin';
-import Drag from '../../modules/dragger/Drag';
-import Swipe from '../../modules/dragger/Swipe';
+import Drag from '../../ModuleDrag';
+import Swipe from '../../ModuleSwipe';
 
 /**
  * @classdesc Add drag & swipe changes of slides. <br>
@@ -10,8 +10,8 @@ import Swipe from '../../modules/dragger/Swipe';
  * @class
  * @memberof Vevet
  * @augments Vevet.Plugin
- * @requires Vevet.Drag
- * @requires Vevet.Swipe
+ * @requires Vevet.ModuleDrag
+ * @requires Vevet.ModuleSwipe
  */
 export default class SliderSwipePlugin extends Plugin {
 
@@ -86,7 +86,7 @@ export default class SliderSwipePlugin extends Plugin {
 
         /**
          * @description Where drag classes are stored.
-         * @type {Array<Vevet.Dragger|Vevet.Swipe|Vevet.Drag>}
+         * @type {Array<Vevet.ModuleDragger|Vevet.ModuleSwipe|Vevet.ModuleDrag>}
          * @private
          */
         this._draggers = [];
@@ -189,7 +189,7 @@ export default class SliderSwipePlugin extends Plugin {
 
     /**
      * @description Add a drag/swipe event.
-     * @param {Vevet.Drag|Vevet.Swipe} dragger
+     * @param {Vevet.ModuleDrag|Vevet.ModuleSwipe} dragger
      * @param {string} target
      * @param {string} method
      * @private

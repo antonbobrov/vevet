@@ -27,6 +27,9 @@ import ResponsiveProp from "./ResponsiveProp";
 import Module from "./Module";
 import ModuleColumns from "./ModuleColumns";
 import ModuleCursor from "./ModuleCursor";
+import ModuleDragger from "./ModuleDragger";
+import ModuleDrag from "./ModuleDrag";
+import ModuleSwipe from "./ModuleSwipe";
 
 export {
     generateId,
@@ -58,7 +61,10 @@ export {
 
     Module,
     ModuleColumns,
-    ModuleCursor
+    ModuleCursor,
+    ModuleDragger,
+    ModuleDrag,
+    ModuleSwipe
     
 }
 
