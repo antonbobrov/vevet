@@ -1,3 +1,5 @@
+import eventListenerGet from "./eventListenerGet";
+
 /**
  * @description Remove an event listener from an element.
  * 
@@ -17,7 +19,7 @@
 function eventListenerRemove (data) {
 
     let attr = 'vevet-event',
-        event = this.getEventListener(data);
+        event = eventListenerGet(data);
 
     event.el.removeEventListener(event.target, event.do, false);
     delete event.el[attr][data.id];

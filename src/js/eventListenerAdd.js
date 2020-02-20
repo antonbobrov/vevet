@@ -1,3 +1,5 @@
+import generateId from "./generateId";
+
 /**
  * @typedef {object} Vevet.Listener
  * @param {Window|HTMLElement} data.el - The element for the event.
@@ -43,7 +45,7 @@ function eventListenerAdd (data) {
         el[attr] = {};
     }
 
-    let id = this.id(`${attr}__${target}__`);
+    let id = generateId(`${attr}__${target}__`);
 
     if (data.passive) {
         el.addEventListener(target, callback, {
