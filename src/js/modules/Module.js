@@ -1,6 +1,7 @@
 import Event from '../events/Event';
 import utils from '../core/utils';
 import ResponsiveProp from '../events/ResponsiveProp';
+const isarray = require('isarray');
 
 /**
  * @classdesc An abstract class for modules.
@@ -148,7 +149,7 @@ export default class Module extends Event {
         let ids = [],
             returning = [];
 
-        if (Array.isArray(name)) {
+        if (isarray(name)) {
             for (let i = 0; i < name.length; i++) {
                 let id = this._addEventHelper(name[i], data, bool);
                 ids.push([id, name[i]]);
@@ -169,7 +170,7 @@ export default class Module extends Event {
             }
         }
 
-        if (Array.isArray(name)) {
+        if (isarray(name)) {
             return returning;
         }
         else {

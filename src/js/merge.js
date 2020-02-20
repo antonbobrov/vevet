@@ -1,4 +1,5 @@
-let mergeWith = require('lodash.mergewith');
+const mergeWith = require('lodash.mergewith');
+const isarray = require('isarray');
 
 /**
  * @description Merge properties except for arrays.
@@ -13,7 +14,7 @@ let mergeWith = require('lodash.mergewith');
  */
 function merge(obj, source) {
     return mergeWith(obj, source, (objValue, srcValue) => {
-        if (Array.isArray(objValue)) {
+        if (isarray(objValue)) {
             return srcValue;
         }
     });

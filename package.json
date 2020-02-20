@@ -88,6 +88,7 @@
     "dom-create-element": "^1.0.2",
     "form-serialize": "^0.7.2",
     "form-to-object": "^6.0.0",
+    "is-mobile": "^2.2.1",
     "isarray": "^2.0.5",
     "lodash.clonedeep": "^4.5.0",
     "lodash.merge": "^4.6.1",
