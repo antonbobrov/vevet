@@ -5,7 +5,7 @@
   "directories": {
     "dist:": "./dist"
   },
-  "main": "dist/index.js",
+  "main": "dist/js/index.js",
   "types": "dist/types/types.d.ts",
   "sideEffects": false,
   "sass": "dist/scss/index.scss",
@@ -18,7 +18,7 @@
     "docs:types": "./node_modules/.bin/jsdoc -c jsdoc/jsdoc.types.json && node jsdoc/exportVevetJsDoc.js",
     "release": "npm publish",
     "prepare": "npm version patch && npm run prepare:cjs && npm run build && npm run docs",
-    "prepare:cjs": "NODE_ENV=cjs babel ./src/js --out-dir ./dist"
+    "prepare:cjs": "NODE_ENV=cjs babel ./src/js --out-dir ./dist/js/"
   },
   "browserslist": [
     "> 1%",
