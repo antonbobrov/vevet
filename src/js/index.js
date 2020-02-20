@@ -18,6 +18,7 @@ import getMediaSize from "./getMediaSize";
 
 import Application from "./Application";
 
+import Event from "./Event";
 import LoadEvent from "./LoadEvent";
 import ViewportEvent from "./ViewportEvent";
 import URLEvent from "./URLEvent";
@@ -56,6 +57,19 @@ import SliderCanvasModule from "./SliderCanvasModule";
 import TextSplitModule from "./TextSplitModule";
 import TextAnimateModule from "./TextAnimateModule";
 import WheelEventModule from "./WheelEventModule";
+import PageLoadMediaPlugin from "./PageLoadMediaPlugin";
+import PaginationScrollPlugin from "./PaginationScrollPlugin";
+import ScrollClampPlugin from "./ScrollClampPlugin";
+import Plugin from "./Plugin";
+import ScrollDragPlugin from "./ScrollDragPlugin";
+import SliderControlsPlugin from "./SliderControlsPlugin";
+import SliderCounterPlugin from "./SliderCounterPlugin";
+import SliderDotsPlugin from "./SliderDotsPlugin";
+import SliderIntervalPlugin from "./SliderIntervalPlugin";
+import SliderKeydownPlugin from "./SliderKeydownPlugin";
+import SliderMovePlugin from "./SliderMovePlugin";
+import SliderDragSwipePlugin from "./SliderDragSwipePlugin";
+import SliderWheelPlugin from "./SliderWheelPlugin";
 
 export {
     generateId,
@@ -78,6 +92,7 @@ export {
 
     Application,
 
+    Event,
     LoadEvent,
     ViewportEvent,
     URLEvent,
@@ -86,6 +101,7 @@ export {
     ResponsiveProp,
 
     Module,
+    Plugin,
 
     ColumnsModule,
     CursorModule,
@@ -109,6 +125,8 @@ export {
     PageAjaxModule,
     PageModule,
     PaginationModule,
+    PaginationScrollPlugin,
+    PageLoadMediaPlugin,
     
     TimelineBaseModule,
     TimelineModule,
@@ -120,16 +138,27 @@ export {
     ScrollAnimateModule,
     ScrollAnchorModule,
     ScrollViewModule,
+    ScrollDragPlugin,
 
     SelectModule,
 
     SliderModule,
     SliderCanvasModule,
+    SliderControlsPlugin,
+    SliderCounterPlugin,
+    SliderDotsPlugin,
+    SliderIntervalPlugin,
+    SliderKeydownPlugin,
+    SliderDragSwipePlugin,
+    SliderWheelPlugin,
 
     TextSplitModule,
     TextAnimateModule,
 
-    WheelEventModule
+    WheelEventModule,
+
+    ScrollClampPlugin,
+    SliderMovePlugin
     
 }
 

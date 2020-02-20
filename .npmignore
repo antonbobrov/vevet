@@ -9,8 +9,8 @@ tests/
 types/
 webpack/
 
-/dist/plugins/ScrollClampPlugin/
-/dist/plugins/SliderMovePlugin/
+/dist/js/ScrollClampPlugin.js
+/dist/js/SliderMovePlugin.js
 
 .babelrc
 .eslintrc.json
