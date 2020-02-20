@@ -351,7 +351,7 @@ export default class ModuleFilter extends Module {
     /**
      * @description Get filter by element.
      * @param {HTMLElement} el
-     * @returns {Vevet.ModuleFilter.ModuleFilter|boolean} Returns the group or false.
+     * @returns {Vevet.ModuleFilter.Filter|boolean} Returns the group or false.
      * @private
      */
     _getFilterByElement(el) {
@@ -370,7 +370,7 @@ export default class ModuleFilter extends Module {
     /**
      * @description Get filter by the id of the group.
      * @param {string} id
-     * @returns {Array<Vevet.ModuleFilter.ModuleFilter>} Returns filters.
+     * @returns {Array<Vevet.ModuleFilter.Filter>} Returns filters.
      * @private
      */
     _getFiltersByGroupID(id) {
@@ -471,7 +471,7 @@ export default class ModuleFilter extends Module {
 
     /**
      * @description Check if the change of the filter is available.
-     * @param {Vevet.ModuleFilter.ModuleFilter} filter
+     * @param {Vevet.ModuleFilter.Filter} filter
      * @private
      * @returns {boolean} Ture or false.
      */
@@ -495,7 +495,7 @@ export default class ModuleFilter extends Module {
 
     /**
      * @description Change properties of the filters within one group - active values.
-     * @param {Vevet.ModuleFilter.ModuleFilter} filter - Current filter.
+     * @param {Vevet.ModuleFilter.Filter} filter - Current filter.
      * @private
      */
     _changeFiltersProp(filter) {
