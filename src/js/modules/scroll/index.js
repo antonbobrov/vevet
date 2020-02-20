@@ -780,8 +780,8 @@ export default class Scroll extends Module {
                 current[1] = this._scrollTop;
             }
             else {
-                current[0] = this._r(utils.lerp(current[0], this._targetLeft, ease));
-                current[1] = this._r(utils.lerp(current[1], this._targetTop, ease));
+                current[0] = this._r(lerp(current[0], this._targetLeft, ease));
+                current[1] = this._r(lerp(current[1], this._targetTop, ease));
             }
 
         }
@@ -798,8 +798,8 @@ export default class Scroll extends Module {
         let ease = this._getEase(null, instant);
 
         // change values
-        this._scrollLeft = this._r(utils.lerp(this._scrollLeft, this._targetLeft, ease));
-        this._scrollTop = this._r(utils.lerp(this._scrollTop, this._targetTop, ease));
+        this._scrollLeft = this._r(lerp(this._scrollLeft, this._targetLeft, ease));
+        this._scrollTop = this._r(lerp(this._scrollTop, this._targetTop, ease));
 
     }
 

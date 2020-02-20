@@ -402,7 +402,7 @@ export default class Preloader extends Module {
         let prop = this._prop;
 
         // progress interpolation
-        this._progressAnim = utils.lerp(this._progressAnim, this._progressLoad, prop.progress.k);
+        this._progressAnim = lerp(this._progressAnim, this._progressLoad, prop.progress.k);
         let progress = this._progressAnim;
 
         // if close to 1
