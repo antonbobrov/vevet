@@ -2,7 +2,7 @@ export * from './dom/el';
 export * from './dom/events';
 
 export * from '../id';
-export * from './common/merge';
+export * from '../merge';
 export * from './common/timeoutCallback';
 
 export * from './system/mobilecheck';
