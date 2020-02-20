@@ -18,31 +18,32 @@ import getMediaSize from "./getMediaSize";
 
 import Application from "./Application";
 
-import EventLoad from "./EventLoad";
-import EventViewport from "./EventViewport";
-import EventURL from "./EventURL";
-import EventAJAX from "./EventAJAX";
+import LoadEvent from "./LoadEvent";
+import ViewportEvent from "./ViewportEvent";
+import URLEvent from "./URLEvent";
+import AJAXEvent from "./AJAXEvent";
 
 import ResponsiveProp from "./ResponsiveProp";
+
 import Module from "./Module";
-import ModuleColumns from "./ModuleColumns";
-import ModuleCursor from "./ModuleCursor";
-import ModuleDragger from "./ModuleDragger";
-import ModuleDrag from "./ModuleDrag";
-import ModuleSwipe from "./ModuleSwipe";
-import ModuleFilter from "./ModuleFilter";
-import ModuleForm from "./ModuleForm";
-import ModuleFrame from "./ModuleFrame";
-import ModuleInterval from "./ModuleInterval";
-import ModuleKeydown from "./ModuleKeydown";
-import ModuleMenuBase from "./ModuleMenuBase";
-import ModuleMenuTimeline from "./ModuleMenuTimeline";
-import ModuleMenu from "./ModuleMenu";
-import ModuleTimeline from "./ModuleTimeline";
-import ModuleTimelineBase from "./ModuleTimelineBase";
-import ModulePage from "./ModulePage";
-import ModulePageAjax from "./ModulePageAjax";
-import ModulePagination from "./ModulePagination";
+import ColumnsModule from "./ColumnsModule";
+import CursorModule from "./CursorModule";
+import DraggerModule from "./DraggerModule";
+import DragModule from "./DragModule";
+import SwipeModule from "./SwipeModule";
+import FilterModule from "./FilterModule";
+import FormModule from "./FormModule";
+import FrameModule from "./FrameModule";
+import IntervalModule from "./IntervalModule";
+import KeydownModule from "./KeydownModule";
+import MenuBaseModule from "./MenuBaseModule";
+import MenuModule from "./MenuModule";
+import MenuTimelineModule from "./MenuTimelineModule";
+import PageAjaxModule from "./PageAjaxModule";
+import PageModule from "./PageModule";
+import PaginationModule from "./PaginationModule";
+import TimelineBaseModule from "./TimelineBaseModule";
+import TimelineModule from "./TimelineModule";
 
 export {
     generateId,
@@ -65,37 +66,40 @@ export {
 
     Application,
 
-    EventLoad,
-    EventViewport,
-    EventURL,
-    EventAJAX,
+    LoadEvent,
+    ViewportEvent,
+    URLEvent,
+    AJAXEvent,
 
     ResponsiveProp,
 
     Module,
-    ModuleColumns,
-    ModuleCursor,
 
-    ModuleDragger,
-    ModuleDrag,
-    ModuleSwipe,
-
-    ModuleFilter,
-    ModuleForm,
-    ModuleFrame,
-    ModuleInterval,
-    ModuleKeydown,
-
-    ModuleMenuBase,
-    ModuleMenuTimeline,
-    ModuleMenu,
-
-    ModuleTimeline,
-    ModuleTimelineBase,
-
-    ModulePage,
-    ModulePageAjax,
-    ModulePagination
+    ColumnsModule,
+    CursorModule,
+    
+    DraggerModule,
+    DragModule,
+    SwipeModule,
+    
+    FilterModule,
+    FormModule,
+    
+    FrameModule,
+    IntervalModule,
+    
+    KeydownModule,
+    
+    MenuBaseModule,
+    MenuModule,
+    MenuTimelineModule,
+    
+    PageAjaxModule,
+    PageModule,
+    PaginationModule,
+    
+    TimelineBaseModule,
+    TimelineModule
     
 }
 

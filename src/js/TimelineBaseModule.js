@@ -4,39 +4,39 @@ import easing from "./easing";
 import mathScopeProgress from "./mathScopeProgress";
 
 /**
- * @classdesc This class is a base for {@linkcode Vevet.ModuleTimeline}.
+ * @classdesc This class is a base for {@linkcode Vevet.TimelineModule}.
  * Available targets:
  *  <ul>
- *      <li>progress - receives {@linkcode Vevet.ModuleTimelineBase.Data} as an argument</li>
+ *      <li>progress - receives {@linkcode Vevet.TimelineBaseModule.Data} as an argument</li>
  *  </ul>
  * This timeline ist not quite simple. It is based on window.requestAnimationFrame. With each frame,
  * current progress is calculated. Here there may exist five types of progress:
  *  <ul>
- *      <li>absolute - see {@linkcode Vevet.ModuleTimelineBase#absolute}</li>
- *      <li>progress - see {@linkcode Vevet.ModuleTimelineBase#progress}</li>
- *      <li>easing - see {@linkcode Vevet.ModuleTimelineBase#easing}</li>
- *      <li>scope - see {@linkcode Vevet.ModuleTimelineBase#scope}</li>
- *      <li>scopeEasing - see {@linkcode Vevet.ModuleTimelineBase#scopeEasing}</li>
+ *      <li>absolute - see {@linkcode Vevet.TimelineBaseModule#absolute}</li>
+ *      <li>progress - see {@linkcode Vevet.TimelineBaseModule#progress}</li>
+ *      <li>easing - see {@linkcode Vevet.TimelineBaseModule#easing}</li>
+ *      <li>scope - see {@linkcode Vevet.TimelineBaseModule#scope}</li>
+ *      <li>scopeEasing - see {@linkcode Vevet.TimelineBaseModule#scopeEasing}</li>
  *  </ul>
- * <br><br> <b>import {TimelineBase} from 'vevet';</b>
+ * <br><br> <b>import {TimelineBaseModule} from 'vevet';</b>
  * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
  */
-export default class ModuleTimelineBase extends Module {
+export default class TimelineBaseModule extends Module {
 
 
     
     /**
-     * @memberof Vevet.ModuleTimelineBase
+     * @memberof Vevet.TimelineBaseModule
      * @typedef {object} Properties
      * @augments Vevet.Module.Properties
-     * @augments Vevet.ModuleTimelineBase.Settings
+     * @augments Vevet.TimelineBaseModule.Settings
      */
     /**
-     * @alias Vevet.ModuleTimelineBase
-     * @param {Vevet.ModuleTimelineBase.Properties} [data]
+     * @alias Vevet.TimelineBaseModule
+     * @param {Vevet.TimelineBaseModule.Properties} [data]
      */
     constructor(data) {
         super(data);
@@ -53,7 +53,7 @@ export default class ModuleTimelineBase extends Module {
 
         // nested timelines
         /**
-         * @type {Array<Vevet.ModuleTimeline|Vevet.ModuleTimelineBase>}
+         * @type {Array<Vevet.TimelineModule|Vevet.TimelineBaseModule>}
          */
         this._timelines = [];
         this._timelinesCount = 0;
@@ -81,23 +81,23 @@ export default class ModuleTimelineBase extends Module {
 
 
     /**
-     * @memberof Vevet.ModuleTimelineBase
+     * @memberof Vevet.TimelineBaseModule
      * @typedef {object} Settings
      * @property {Array<number>} [line=[0, 1]] - When animation must start and end - callback "progress".
      * This property may be used for nested timelines.
-     * When the value is [.15, .85], for example, {@linkcode Vevet.ModuleTimelineBase#progress} will be 0
-     * until {@linkcode Vevet.ModuleTimelineBase#absolute} is .15 or more, and it will be 1 after {@linkcode Vevet.ModuleTimelineBase#absolute}
+     * When the value is [.15, .85], for example, {@linkcode Vevet.TimelineBaseModule#progress} will be 0
+     * until {@linkcode Vevet.TimelineBaseModule#absolute} is .15 or more, and it will be 1 after {@linkcode Vevet.TimelineBaseModule#absolute}
      * reaches .85 or more.
      * @property {Array<number>} [scope=[0, 1]] - Scope of the animation line.
-     * Scope stretches {@linkcode Vevet.ModuleTimelineBase#scope} along {@linkcode Vevet.ModuleTimelineBase#progress}.
-     * F.e., if {@linkcode Vevet.ModuleTimelineBase#progress} is 0 and scope is [.5, 1], 
-     * {@linkcode Vevet.ModuleTimelineBase#scope} will be equal to 0.5.
+     * Scope stretches {@linkcode Vevet.TimelineBaseModule#scope} along {@linkcode Vevet.TimelineBaseModule#progress}.
+     * F.e., if {@linkcode Vevet.TimelineBaseModule#progress} is 0 and scope is [.5, 1], 
+     * {@linkcode Vevet.TimelineBaseModule#scope} will be equal to 0.5.
      * @property {string|Array<number>} [easing] - Easing function of the animation.
      */
     /**
      * @description Get default settings.
      * @readonly
-     * @type {Vevet.ModuleTimelineBase.Settings}
+     * @type {Vevet.TimelineBaseModule.Settings}
      */
     get defaultSettings() {
         return {
@@ -108,25 +108,25 @@ export default class ModuleTimelineBase extends Module {
     }
 
     /**
-     * @memberof Vevet.ModuleTimelineBase
+     * @memberof Vevet.TimelineBaseModule
      * @typedef {object} Data
      * @property {number} a - Absolute progress. 
-     * See {@linkcode Vevet.ModuleTimelineBase#absolute}.
+     * See {@linkcode Vevet.TimelineBaseModule#absolute}.
      * @property {number} p - Current progress. 
-     * See {@linkcode Vevet.ModuleTimelineBase#progress}.
+     * See {@linkcode Vevet.TimelineBaseModule#progress}.
      * @property {number} e - Current progress according to the easing function. 
-     * See {@linkcode Vevet.ModuleTimelineBase#easing}.
+     * See {@linkcode Vevet.TimelineBaseModule#easing}.
      * @property {number} s - Current progress according to the scope. 
-     * See {@linkcode Vevet.ModuleTimelineBase#scope}.
+     * See {@linkcode Vevet.TimelineBaseModule#scope}.
      * @property {number} se - Current progress according to the scope and easing function. 
-     * See {@linkcode Vevet.ModuleTimelineBase#scopeEasing}.
+     * See {@linkcode Vevet.TimelineBaseModule#scopeEasing}.
      * @property {Array<number>} scope - Scope of the animation line.
      * @property {Array<number>} line - When animation must start and end.
      */
     /**
      * @description Get animation data.
      * @readonly
-     * @type {Vevet.ModuleTimelineBase.Data}
+     * @type {Vevet.TimelineBaseModule.Data}
      */
     get data() {
         let settings = this._settings;
@@ -265,7 +265,7 @@ export default class ModuleTimelineBase extends Module {
     /**
      * @description Imitate progress animation.
      * @param {number} p - Progress from 0 to 1.
-     * @param {Vevet.ModuleTimelineBase.Settings} [settings] - Animation settings. Thru direct usage,
+     * @param {Vevet.TimelineBaseModule.Settings} [settings] - Animation settings. Thru direct usage,
      * you can change them at any time.
      */
     imitate(p, settings = this._settings) {
@@ -277,7 +277,7 @@ export default class ModuleTimelineBase extends Module {
 
     /**
      * @description Add a nested timeline.
-     * @param {Vevet.ModuleTimelineBase|Vevet.ModuleTimeline} timeline
+     * @param {Vevet.TimelineBaseModule|Vevet.TimelineModule} timeline
      */
     addTimeline(timeline) {
         this._timelines.push(timeline);

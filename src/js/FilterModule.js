@@ -4,24 +4,24 @@ import generateId from './generateId';
 const selectEl = require('select-el');
 
 /**
- * @classdesc This class is to create filters. It works together with {@linkcode Vevet.ModulePagination} <br>
+ * @classdesc This class is to create filters. It works together with {@linkcode Vevet.PaginationModule} <br>
  * Available targets:
  *  <ul>
  *      <li>popstate</li>
  *      <li>save</li>
  *  </ul>
- * <br><br> <b>import {Filter} from 'vevet';</b>
+ * <br><br> <b>import {FilterModule} from 'vevet';</b>
  * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
  */
-export default class ModuleFilter extends Module {
+export default class FilterModule extends Module {
 
 
     
     /**
-     * @memberof Vevet.ModuleFilter
+     * @memberof Vevet.FilterModule
      * @typedef {object} Properties
      * @augments Vevet.Module.Properties
      * 
@@ -50,13 +50,13 @@ export default class ModuleFilter extends Module {
      * @property {boolean} [popstate.reload=false] - Reload on popstate.
      * @property {number} [popstate.timeout=300]
      * 
-     * @property {Vevet.ModulePagination} pagination - Pagination Module.
+     * @property {Vevet.PaginationModule} pagination - Pagination Module.
      * 
      */
     /**
-     * @alias Vevet.ModuleFilter
+     * @alias Vevet.FilterModule
      * 
-     * @param {Vevet.ModuleFilter.Properties} data
+     * @param {Vevet.FilterModule.Properties} data
      */
     constructor(data) {
         super(data);
@@ -68,7 +68,7 @@ export default class ModuleFilter extends Module {
 
     /**
      * @readonly
-     * @type {Vevet.ModuleFilter.Properties}
+     * @type {Vevet.FilterModule.Properties}
      */
     get defaultProp() {
 
@@ -93,32 +93,32 @@ export default class ModuleFilter extends Module {
     }
 
     /**
-     * @member Vevet.ModuleFilter#prop
-     * @memberof Vevet.ModuleFilter
+     * @member Vevet.FilterModule#prop
+     * @memberof Vevet.FilterModule
      * @readonly
-     * @type {Vevet.ModuleFilter.Properties}
+     * @type {Vevet.FilterModule.Properties}
      */
 
     /**
-     * @member Vevet.ModuleFilter#_prop
-     * @memberof Vevet.ModuleFilter
+     * @member Vevet.FilterModule#_prop
+     * @memberof Vevet.FilterModule
      * @protected
-     * @type {Vevet.ModuleFilter.Properties}
+     * @type {Vevet.FilterModule.Properties}
      */
 
     /**
-     * @memberof Vevet.ModuleFilter
+     * @memberof Vevet.FilterModule
      * @typedef {object} ChangeProperties
-     * @augments Vevet.ModuleFilter.Properties
+     * @augments Vevet.FilterModule.Properties
      * 
-     * @property {Vevet.ModulePagination} [pagination]
+     * @property {Vevet.PaginationModule} [pagination]
      * 
      */
 
     /**
-     * @function Vevet.ModuleFilter#changeProp
-     * @memberof Vevet.ModuleFilter
-     * @param {Vevet.ModuleFilter.ChangeProperties} [prop]
+     * @function Vevet.FilterModule#changeProp
+     * @memberof Vevet.FilterModule
+     * @param {Vevet.FilterModule.ChangeProperties} [prop]
      */
 
 
@@ -267,7 +267,7 @@ export default class ModuleFilter extends Module {
 
 
     /**
-     * @memberof Vevet.ModuleFilter
+     * @memberof Vevet.FilterModule
      * @typedef {object} Group
      * 
      * @property {HTMLElement} el
@@ -277,11 +277,11 @@ export default class ModuleFilter extends Module {
      */
 
     /**
-     * @memberof Vevet.ModuleFilter
+     * @memberof Vevet.FilterModule
      * @typedef {object} Filter
      * 
      * @property {HTMLElement} el
-     * @property {Vevet.ModuleFilter.Group} group
+     * @property {Vevet.FilterModule.Group} group
      * @property {boolean} active
      * @property {boolean} disabled
      * @property {string} id
@@ -328,7 +328,7 @@ export default class ModuleFilter extends Module {
     /**
      * @description Get group of an element.
      * @param {HTMLElement} el
-     * @returns {Vevet.ModuleFilter.Group|boolean} Returns the group or false.
+     * @returns {Vevet.FilterModule.Group|boolean} Returns the group or false.
      * @private
      */
     _getGroupByElement(el) {
@@ -351,7 +351,7 @@ export default class ModuleFilter extends Module {
     /**
      * @description Get filter by element.
      * @param {HTMLElement} el
-     * @returns {Vevet.ModuleFilter.Filter|boolean} Returns the group or false.
+     * @returns {Vevet.FilterModule.Filter|boolean} Returns the group or false.
      * @private
      */
     _getFilterByElement(el) {
@@ -370,7 +370,7 @@ export default class ModuleFilter extends Module {
     /**
      * @description Get filter by the id of the group.
      * @param {string} id
-     * @returns {Array<Vevet.ModuleFilter.Filter>} Returns filters.
+     * @returns {Array<Vevet.FilterModule.Filter>} Returns filters.
      * @private
      */
     _getFiltersByGroupID(id) {
@@ -471,7 +471,7 @@ export default class ModuleFilter extends Module {
 
     /**
      * @description Check if the change of the filter is available.
-     * @param {Vevet.ModuleFilter.Filter} filter
+     * @param {Vevet.FilterModule.Filter} filter
      * @private
      * @returns {boolean} Ture or false.
      */
@@ -495,7 +495,7 @@ export default class ModuleFilter extends Module {
 
     /**
      * @description Change properties of the filters within one group - active values.
-     * @param {Vevet.ModuleFilter.Filter} filter - Current filter.
+     * @param {Vevet.FilterModule.Filter} filter - Current filter.
      * @private
      */
     _changeFiltersProp(filter) {

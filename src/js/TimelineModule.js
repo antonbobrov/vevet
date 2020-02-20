@@ -1,5 +1,5 @@
 import merge from './merge';
-import ModuleTimelineBase from './ModuleTimelineBase';
+import TimelineBaseModule from './TimelineBaseModule';
 
 /**
  * @classdesc This class is used for creating & playing timelines.
@@ -13,28 +13,28 @@ import ModuleTimelineBase from './ModuleTimelineBase';
  *      <li>stop</li>
  *      <li>reverse</li>
  *  </ul>
- * Each callback will receive the object {@linkcode Vevet.ModuleTimelineBase.Data} as an argument.
- * <br><br> <b>import {Timeline} from 'vevet';</b>
+ * Each callback will receive the object {@linkcode Vevet.TimelineBaseModule.Data} as an argument.
+ * <br><br> <b>import {TimelineBaseModule} from 'vevet';</b>
  * 
  * @class
  * @memberof Vevet
- * @augments Vevet.ModuleTimelineBase
+ * @augments Vevet.TimelineBaseModule
  */
-export default class ModuleTimeline extends ModuleTimelineBase {
+export default class TimelineModule extends TimelineBaseModule {
 
 
     
     /**
-     * @memberof Vevet.ModuleTimeline
+     * @memberof Vevet.TimelineModule
      * @typedef {object} Properties
-     * @augments Vevet.ModuleTimelineBase.Properties
-     * @augments Vevet.ModuleTimeline.Settings
+     * @augments Vevet.TimelineBaseModule.Properties
+     * @augments Vevet.TimelineModule.Settings
      * 
      * @property {boolean} [destroyOnEnd=false] - Destroy the timeline when it ends.
      */
     /**
-     * @alias Vevet.ModuleTimeline
-     * @param {Vevet.ModuleTimeline.Properties} [data]
+     * @alias Vevet.TimelineModule
+     * @param {Vevet.TimelineModule.Properties} [data]
      */
     constructor(data) {
         super(data);
@@ -70,16 +70,16 @@ export default class ModuleTimeline extends ModuleTimelineBase {
 
 
     /**
-     * @memberof Vevet.ModuleTimeline
+     * @memberof Vevet.TimelineModule
      * @typedef {object} Settings
-     * @augments Vevet.ModuleTimelineBase.Settings
+     * @augments Vevet.TimelineBaseModule.Settings
      * @property {number} [duration=750] - Duration of the animation.
      * @property {boolean} [autoDuration=false] - Defines if the duration can be changed according to the animation scope.
      */
     /**
      * @description Get default settings.
      * @readonly
-     * @type {Vevet.ModuleTimeline.Settings}
+     * @type {Vevet.TimelineModule.Settings}
      */
     get defaultSettings() {
         return merge(super.defaultSettings, {
@@ -109,15 +109,15 @@ export default class ModuleTimeline extends ModuleTimelineBase {
     }
 
     /**
-     * @memberof Vevet.ModuleTimeline
+     * @memberof Vevet.TimelineModule
      * @typedef {object} Data
-     * @augments Vevet.ModuleTimelineBase.Data
+     * @augments Vevet.TimelineBaseModule.Data
      * @property {number} duration - Duration of the animation.
      */
     /**
      * @description Get animation data.
      * @readonly
-     * @type {Vevet.ModuleTimeline.Data}
+     * @type {Vevet.TimelineModule.Data}
      */
     get data() {
         return merge(super.data, {
@@ -129,7 +129,7 @@ export default class ModuleTimeline extends ModuleTimelineBase {
 
     /**
      * @description Start animation. Launch requestAnimationFrame.
-     * Common for {@linkcode Vevet.ModuleTimeline#play} & {@linkcode Vevet.ModuleTimeline#resume}.
+     * Common for {@linkcode Vevet.TimelineModule#play} & {@linkcode Vevet.TimelineModule#resume}.
      * @private
      */
     _start() {
@@ -149,7 +149,7 @@ export default class ModuleTimeline extends ModuleTimelineBase {
 
     /**
      * @description Stop animation and set progress to zero.
-     * Common for {@linkcode Vevet.ModuleTimeline#stop} & {@linkcode Vevet.ModuleTimeline#pause}.
+     * Common for {@linkcode Vevet.TimelineModule#stop} & {@linkcode Vevet.TimelineModule#pause}.
      * @private
      */
     _stop() {
@@ -167,8 +167,8 @@ export default class ModuleTimeline extends ModuleTimelineBase {
 
     /**
      * @description Start the timeline.
-     * @param {Vevet.ModuleTimeline.Settings} data - Settings of the animation.
-     * @returns {Vevet.ModuleTimeline} Returns 'this'.
+     * @param {Vevet.TimelineModule.Settings} data - Settings of the animation.
+     * @returns {Vevet.TimelineModule} Returns 'this'.
      */
     play(data = this._settings) {
         
@@ -211,7 +211,7 @@ export default class ModuleTimeline extends ModuleTimelineBase {
 
     /**
      * @description Pause animation.
-     * @returns {Vevet.ModuleTimeline} Returns 'this'.
+     * @returns {Vevet.TimelineModule} Returns 'this'.
      */
     pause() {
 
@@ -233,7 +233,7 @@ export default class ModuleTimeline extends ModuleTimelineBase {
 
     /**
      * @description Resume animation after it is paused.
-     * @returns {Vevet.ModuleTimeline} Returns 'this'.
+     * @returns {Vevet.TimelineModule} Returns 'this'.
      */
     resume() {
 
@@ -262,7 +262,7 @@ export default class ModuleTimeline extends ModuleTimelineBase {
 
     /**
      * @description Stop animation and set progress to zero.
-     * @returns {Vevet.ModuleTimeline} Returns 'this'.
+     * @returns {Vevet.TimelineModule} Returns 'this'.
      */
     stop() {
 
@@ -296,7 +296,7 @@ export default class ModuleTimeline extends ModuleTimelineBase {
 
     /**
      * @description Reverse animation. This method does'nt start the animation line.
-     * @returns {Vevet.ModuleTimeline} Returns 'this'.
+     * @returns {Vevet.TimelineModule} Returns 'this'.
      */
     reverse() {
 

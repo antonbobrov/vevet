@@ -15,7 +15,7 @@ import utils from '../../core/utils';
  * @abstract
  * @memberof Vevet
  * @augments Vevet.ScrollAnimate
- * @requires Vevet.ModuleTimeline
+ * @requires Vevet.TimelineModule
  */
 export default class Anchor extends ScrollAnimate {
 

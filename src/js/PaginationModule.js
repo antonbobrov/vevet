@@ -10,22 +10,22 @@ import domRemoveChildren from './domRemoveChildren';
  * @classdesc Ajax Pagination. <br>
  * Available targets:
  *  <ul>
- *      <li>load - {@linkcode Vevet.ModulePagination.Load} is an argument.</li>
- *      <li>last - {@linkcode Vevet.ModulePagination.Last} is an argument.</li>
- *      <li>paginationClick - {@linkcode Vevet.ModulePagination.Click} is an argument.</li>
+ *      <li>load - {@linkcode Vevet.PaginationModule.Load} is an argument.</li>
+ *      <li>last - {@linkcode Vevet.PaginationModule.Last} is an argument.</li>
+ *      <li>paginationClick - {@linkcode Vevet.PaginationModule.Click} is an argument.</li>
  *  </ul>
- * <br><br> <b>import {Pagination} from 'vevet';</b>
+ * <br><br> <b>import {PaginationModule} from 'vevet';</b>
  * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
  */
-export default class ModulePagination extends Module {
+export default class PaginationModule extends Module {
 
 
     
     /**
-     * @memberof Vevet.ModulePagination
+     * @memberof Vevet.PaginationModule
      * @typedef {object} Properties
      * @augments Vevet.Module.Properties
      * 
@@ -48,7 +48,7 @@ export default class ModulePagination extends Module {
      * @property {number} [pagination.left=3] - How many links are shown on the left from the active one.
      * @property {number} [pagination.right=3] - How many links are shown on the left from the active one.
      * @property {boolean} [pagination.updateContent=true] - If true, after a click the content will be automatically changed. If false - new content will be added.
-     * @property {number} [pagination.timeout=0] - How much time to wait before {@linkcode Vevet.ModulePagination#load} will be called.
+     * @property {number} [pagination.timeout=0] - How much time to wait before {@linkcode Vevet.PaginationModule#load} will be called.
      * 
      * @property {object} [popstate]
      * @property {boolean} [popstate.event=true] - Catch popstate event and load content of the current url.
@@ -60,9 +60,9 @@ export default class ModulePagination extends Module {
      * 
      */
     /**
-     * @alias Vevet.ModulePagination
+     * @alias Vevet.PaginationModule
      * 
-     * @param {Vevet.ModulePagination.Properties} [data]
+     * @param {Vevet.PaginationModule.Properties} [data]
      */
     constructor(data) {
         super(data);
@@ -74,7 +74,7 @@ export default class ModulePagination extends Module {
 
     /**
      * @readonly
-     * @type {Vevet.ModulePagination.Properties}
+     * @type {Vevet.PaginationModule.Properties}
      */
     get defaultProp() {
         
@@ -106,45 +106,45 @@ export default class ModulePagination extends Module {
     }
 
     /**
-     * @member Vevet.ModulePagination#prop
-     * @memberof Vevet.ModulePagination
+     * @member Vevet.PaginationModule#prop
+     * @memberof Vevet.PaginationModule
      * @readonly
-     * @type {Vevet.ModulePagination.Properties}
+     * @type {Vevet.PaginationModule.Properties}
      */
 
     /**
-     * @member Vevet.ModulePagination#_prop
-     * @memberof Vevet.ModulePagination
+     * @member Vevet.PaginationModule#_prop
+     * @memberof Vevet.PaginationModule
      * @protected
-     * @type {Vevet.ModulePagination.Properties}
+     * @type {Vevet.PaginationModule.Properties}
      */
 
     /**
-     * @function Vevet.ModulePagination#changeProp
-     * @memberof Vevet.ModulePagination
-     * @param {Vevet.ModulePagination.Properties} [prop]
+     * @function Vevet.PaginationModule#changeProp
+     * @memberof Vevet.PaginationModule
+     * @param {Vevet.PaginationModule.Properties} [prop]
      */
 
 
 
     /**
-     * @memberof Vevet.ModulePagination
+     * @memberof Vevet.PaginationModule
      * @typedef {object} Load
      * @property {boolean} pagination - If the action was carried out thru a pagination click.
-     * @property {boolean} reload - If the action was carried out thru {@linkcode Vevet.ModulePagination#reload}.
+     * @property {boolean} reload - If the action was carried out thru {@linkcode Vevet.PaginationModule#reload}.
      * @property {HTMLElement} outer - Elements' outer.
      * @property {string} fullHTML - The new page's html.
      * @property {string} html - The innerHTML of the outer.
      */
     /**
-     * @memberof Vevet.ModulePagination
+     * @memberof Vevet.PaginationModule
      * @typedef {object} Last
      * @property {HTMLElement} outer - Elements' outer.
      * @property {string} fullHTML - The new page's html.
      * @property {string} html - The innerHTML of the outer.
      */
     /**
-     * @memberof Vevet.ModulePagination
+     * @memberof Vevet.PaginationModule
      * @typedef {object} Click
      * @property {number} num - Order number of the anchor.
      * @property {HTMLElement} anchor - Anchor.
@@ -595,7 +595,7 @@ export default class ModulePagination extends Module {
      * @param {object} data - Settings.
      * @param {number|boolean} [data.num=true] - The order number of the page, or true (next page), or false (previous page).
      * @param {boolean} [data.pagination=false] - Defines if the action was called due a pagination click.
-     * @param {boolean} [data.reload=false] - If thru {@linkcode Vevet.ModulePagination#reload}.
+     * @param {boolean} [data.reload=false] - If thru {@linkcode Vevet.PaginationModule#reload}.
      * @param {boolean} [data.pushState=true] - Defines if you need to change the url.
      * @returns {boolean} Returns true if the action can be carried out.
      */
@@ -667,7 +667,7 @@ export default class ModulePagination extends Module {
 
     /**
      * @description Load a new page.
-     * @param {boolean} reload - If thru {@linkcode Vevet.ModulePagination#reload}.
+     * @param {boolean} reload - If thru {@linkcode Vevet.PaginationModule#reload}.
      * @param {number} num - The order number of the page to be loaded.
      * @param {boolean} pagination - Defines if the action was called due a pagination click.
      * @private
@@ -697,10 +697,10 @@ export default class ModulePagination extends Module {
 
     /**
      * @description Success loading of the new page.
-     * @param {boolean} reload - If thru {@linkcode Vevet.ModulePagination#reload}.
+     * @param {boolean} reload - If thru {@linkcode Vevet.PaginationModule#reload}.
      * @param {number} num - The order number of the page to be loaded.
      * @param {boolean} pagination - Defines if the action was called due a pagination click.
-     * @param {Vevet.EventAJAX.CacheItem} data - Ajax response.
+     * @param {Vevet.AJAXEvent.CacheItem} data - Ajax response.
      * @private
      */
     _loadSuccess(reload, num, pagination, data) {

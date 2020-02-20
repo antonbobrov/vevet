@@ -65,7 +65,7 @@ export default class PaginationScrollPlugin extends Plugin {
      * @member Vevet.PaginationScrollPlugin#_m
      * @memberof Vevet.PaginationScrollPlugin
      * @protected
-     * @type {Vevet.ModulePagination}
+     * @type {Vevet.PaginationModule}
      */
 
 

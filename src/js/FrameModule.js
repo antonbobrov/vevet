@@ -4,27 +4,27 @@ import merge from './merge';
 /**
  * @classdesc Animation Frame. It is based on window.requestAnimationFrame but supports fps from 1 to 60, playing and stopping and manipulation with callbacks. <br>
  * Here any target for callbacks is available because with each frame {@linkcode Vevet.Event#launchAll} is launched.
- * <br><br> <b>import {Frame} from 'vevet';</b>
+ * <br><br> <b>import {FrameModule} from 'vevet';</b>
  * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
  */
-export default class ModuleFrame extends Module {
+export default class FrameModule extends Module {
 
 
     
     /**
-     * @memberof Vevet.ModuleFrame
+     * @memberof Vevet.FrameModule
      * @typedef {object} Properties
      * @augments Vevet.Module.Properties
      * 
      * @property {number} [fps=60] - Frames per second.
      */
     /**
-     * @alias Vevet.ModuleFrame
+     * @alias Vevet.FrameModule
      * 
-     * @param {Vevet.ModuleFrame.Properties} [data]
+     * @param {Vevet.FrameModule.Properties} [data]
      */
     constructor(data) {
         super(data);
@@ -32,7 +32,7 @@ export default class ModuleFrame extends Module {
 
     /**
      * @readonly
-     * @type {Vevet.ModuleFrame.Properties}
+     * @type {Vevet.FrameModule.Properties}
      */
     get defaultProp() {
         return merge(super.defaultProp, {
@@ -41,23 +41,23 @@ export default class ModuleFrame extends Module {
     }
 
     /**
-     * @member Vevet.ModuleFrame#prop
-     * @memberof Vevet.ModuleFrame
+     * @member Vevet.FrameModule#prop
+     * @memberof Vevet.FrameModule
      * @readonly
-     * @type {Vevet.ModuleFrame.Properties}
+     * @type {Vevet.FrameModule.Properties}
      */
 
     /**
-     * @member Vevet.ModuleFrame#_prop
-     * @memberof Vevet.ModuleFrame
+     * @member Vevet.FrameModule#_prop
+     * @memberof Vevet.FrameModule
      * @protected
-     * @type {Vevet.ModuleFrame.Properties}
+     * @type {Vevet.FrameModule.Properties}
      */
 
     /**
-     * @function Vevet.ModuleFrame#changeProp
-     * @memberof Vevet.ModuleFrame
-     * @param {Vevet.ModuleFrame.Properties} [prop]
+     * @function Vevet.FrameModule#changeProp
+     * @memberof Vevet.FrameModule
+     * @param {Vevet.FrameModule.Properties} [prop]
      */
 
 

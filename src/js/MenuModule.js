@@ -1,5 +1,5 @@
-import ModuleMenuBase from './ModuleMenuBase';
 import merge from './merge';
+import MenuBaseModule from './MenuBaseModule';
 
 /**
  * @classdesc A class for creating pop-up menus.
@@ -16,20 +16,20 @@ import merge from './merge';
  *      <li>innerHidden - when the menu is being hidden and inner animation ends.</li>
  *      <li>hidden - when the menu is hidden and the animation has ended.</li>
  *  </ul>
- * <br><br> <b>import {Menu} from 'vevet';</b>
+ * <br><br> <b>import {MenuModule} from 'vevet';</b>
  * 
  * @class
  * @memberof Vevet
- * @augments Vevet.ModuleMenuBase
+ * @augments Vevet.MenuBaseModule
  */
-export default class ModuleMenu extends ModuleMenuBase {
+export default class MenuModule extends MenuBaseModule {
 
 
     
     /**
-     * @memberof Vevet.ModuleMenu
+     * @memberof Vevet.MenuModule
      * @typedef {object} Properties
-     * @augments Vevet.ModuleMenuBase.Properties
+     * @augments Vevet.MenuBaseModule.Properties
      * 
      * @property {object} [animation] - The class uses timeouts to calculate the animation boundaries.
      * @property {number} [animation.duration=750] - The duration of animation of the outer when it is being shown or hidden.
@@ -38,9 +38,9 @@ export default class ModuleMenu extends ModuleMenuBase {
      * @property {number} [animation.innerShiftHide=1] - Shift of inner animation before hiding. It means that inner animation will start after (1 * animation.inner) since the button was pushed.
      */
     /**
-     * @alias Vevet.ModuleMenu
+     * @alias Vevet.MenuModule
      * 
-     * @param {Vevet.ModuleMenu.Properties} [data]
+     * @param {Vevet.MenuModule.Properties} [data]
      */
     constructor(data) {
         super(data);
@@ -48,7 +48,7 @@ export default class ModuleMenu extends ModuleMenuBase {
 
     /**
      * @readonly
-     * @type {Vevet.ModuleMenu.Properties}
+     * @type {Vevet.MenuModule.Properties}
      */
     get defaultProp() {
         
@@ -65,23 +65,23 @@ export default class ModuleMenu extends ModuleMenuBase {
     }
 
     /**
-     * @member Vevet.ModuleMenu#prop
-     * @memberof Vevet.ModuleMenu
+     * @member Vevet.MenuModule#prop
+     * @memberof Vevet.MenuModule
      * @readonly
-     * @type {Vevet.ModuleMenu.Properties}
+     * @type {Vevet.MenuModule.Properties}
      */
 
     /**
-     * @member Vevet.ModuleMenu#_prop
-     * @memberof Vevet.ModuleMenu
+     * @member Vevet.MenuModule#_prop
+     * @memberof Vevet.MenuModule
      * @protected
-     * @type {Vevet.ModuleMenu.Properties}
+     * @type {Vevet.MenuModule.Properties}
      */
 
     /**
-     * @function Vevet.ModuleMenu#changeProp
-     * @memberof Vevet.ModuleMenu
-     * @param {Vevet.ModuleMenu.Properties} [prop]
+     * @function Vevet.MenuModule#changeProp
+     * @memberof Vevet.MenuModule
+     * @param {Vevet.MenuModule.Properties} [prop]
      */
 
 

@@ -1,7 +1,7 @@
 import utils from '../../core/utils';
 import Plugin from '../Plugin';
-import Drag from '../../ModuleDrag';
-import Swipe from '../../ModuleSwipe';
+import Drag from '../../DragModule';
+import Swipe from '../../SwipeModule';
 
 /**
  * @classdesc Add drag and swipe to scroll. <br>
@@ -10,8 +10,8 @@ import Swipe from '../../ModuleSwipe';
  * @class
  * @memberof Vevet
  * @augments Vevet.Plugin
- * @requires Vevet.ModuleDrag
- * @requires Vevet.ModuleSwipe
+ * @requires Vevet.DragModule
+ * @requires Vevet.SwipeModule
  */
 export default class ScrollDragPlugin extends Plugin {
 
@@ -120,7 +120,7 @@ export default class ScrollDragPlugin extends Plugin {
 
         /**
          * @description Where drag classes are stored.
-         * @type {Array<Vevet.ModuleDragger|Vevet.ModuleSwipe|Vevet.ModuleDrag>}
+         * @type {Array<Vevet.DraggerModule|Vevet.SwipeModule|Vevet.DragModule>}
          * @private
          */
         this._draggers = [];
@@ -190,7 +190,7 @@ export default class ScrollDragPlugin extends Plugin {
 
     /**
      * @description Moving.
-     * @param {Vevet.ModuleDragger.Callback} data
+     * @param {Vevet.DraggerModule.Callback} data
      * @private
      */
     _move(data) {

@@ -5,24 +5,24 @@ const selectEl = require('select-el');
 
 /**
  * @classdesc A base class for creating pop-up menus. 
- * It is used by {@linkcode Vevet.ModuleMenu} & {@linkcode Vevet.ModuleMenuTimeline}. <br>
+ * It is used by {@linkcode Vevet.MenuModule} & {@linkcode Vevet.MenuTimelineModule}. <br>
  * Available targets:
  *  <ul>
  *      <li>show - when the menu is being opened.</li>
  *      <li>hide - when the menu is being hidden.</li> 
  *  </ul>
- * <br><br> <b>import {MenuBase} from 'vevet';</b>
+ * <br><br> <b>import {MenuBaseModule} from 'vevet';</b>
  * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
  */
-export default class ModuleMenuBase extends Module {
+export default class MenuBaseModule extends Module {
 
 
     
     /**
-     * @memberof Vevet.ModuleMenuBase
+     * @memberof Vevet.MenuBaseModule
      * @typedef {object} Properties
      * @augments Vevet.Module.Properties
      * 
@@ -37,9 +37,9 @@ export default class ModuleMenuBase extends Module {
      * @property {number} [delays.hide=0] - Delay before the menu starts closing.
      */
     /**
-     * @alias Vevet.ModuleMenuBase
+     * @alias Vevet.MenuBaseModule
      * 
-     * @param {Vevet.ModuleMenuBase.Properties} [data]
+     * @param {Vevet.MenuBaseModule.Properties} [data]
      */
     constructor(data) {
         super(data);
@@ -51,7 +51,7 @@ export default class ModuleMenuBase extends Module {
 
     /**
      * @readonly
-     * @type {Vevet.ModuleMenuBase.Properties}
+     * @type {Vevet.MenuBaseModule.Properties}
      */
     get defaultProp() {
         
@@ -70,23 +70,23 @@ export default class ModuleMenuBase extends Module {
     }
 
     /**
-     * @member Vevet.ModuleMenuBase#prop
-     * @memberof Vevet.ModuleMenuBase
+     * @member Vevet.MenuBaseModule#prop
+     * @memberof Vevet.MenuBaseModule
      * @readonly
-     * @type {Vevet.ModuleMenuBase.Properties}
+     * @type {Vevet.MenuBaseModule.Properties}
      */
 
     /**
-     * @member Vevet.ModuleMenuBase#_prop
-     * @memberof Vevet.ModuleMenuBase
+     * @member Vevet.MenuBaseModule#_prop
+     * @memberof Vevet.MenuBaseModule
      * @protected
-     * @type {Vevet.ModuleMenuBase.Properties}
+     * @type {Vevet.MenuBaseModule.Properties}
      */
 
     /**
-     * @function Vevet.ModuleMenuBase#changeProp
-     * @memberof Vevet.ModuleMenuBase
-     * @param {Vevet.ModuleMenuBase.Properties} [prop]
+     * @function Vevet.MenuBaseModule#changeProp
+     * @memberof Vevet.MenuBaseModule
+     * @param {Vevet.MenuBaseModule.Properties} [prop]
      */
 
 

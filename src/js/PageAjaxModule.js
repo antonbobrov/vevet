@@ -4,37 +4,37 @@ import timeoutCallback from './timeoutCallback';
 const selectEl = require('select-el');
 
 /**
- * @classdesc A class for changing pages on ajax requests. It manipulates pages created with the help of {@linkcode Vevet.ModulePage}.
+ * @classdesc A class for changing pages on ajax requests. It manipulates pages created with the help of {@linkcode Vevet.PageModule}.
  * While initializing the class, links with the selector 'selectorLinks' are searched and when they are clicked on, ajax request is launched, which receives HTML data of the page and decides what page to create and show. <br>
  * Available targets:
  *  <ul>
- *      <li>click - when a link is clicked.  Each event will receive {@linkcode Vevet.ModulePageAjax.EventLinkHref} as an argument.</li>
- *      <li>popstate - event on popstate. Each event will receive {@linkcode Vevet.ModulePageAjax.EventHref} as an argument.</li>
- *      <li>clickSame - when a link, which href is equal to the current page URL, is clicked. Each event will receive {@linkcode Vevet.ModulePageAjax.EventLinkHref} as an argument.</li> 
- *      <li>prepare - before the request is launched. Each event will receive {@linkcode Vevet.ModulePageAjax.EventLinkHref} as an argument.</li>
- *      <li>loaded - when new content is loaded. Each event will receive {@linkcode Vevet.ModulePageAjax.EventLoaded} as an argument.</li>
- *      <li>updated - when the content is updated. Each event will receive {@linkcode Vevet.ModulePageAjax.EventLoaded} as an argument.</li>
- *      <li>done - when {@linkcode Vevet.ModulePageAjax#loading} becomes false. Each event will receive {@linkcode Vevet.ModulePageAjax.EventLoaded} as an argument.</li>
+ *      <li>click - when a link is clicked.  Each event will receive {@linkcode Vevet.PageAjaxModule.EventLinkHref} as an argument.</li>
+ *      <li>popstate - event on popstate. Each event will receive {@linkcode Vevet.PageAjaxModule.EventHref} as an argument.</li>
+ *      <li>clickSame - when a link, which href is equal to the current page URL, is clicked. Each event will receive {@linkcode Vevet.PageAjaxModule.EventLinkHref} as an argument.</li> 
+ *      <li>prepare - before the request is launched. Each event will receive {@linkcode Vevet.PageAjaxModule.EventLinkHref} as an argument.</li>
+ *      <li>loaded - when new content is loaded. Each event will receive {@linkcode Vevet.PageAjaxModule.EventLoaded} as an argument.</li>
+ *      <li>updated - when the content is updated. Each event will receive {@linkcode Vevet.PageAjaxModule.EventLoaded} as an argument.</li>
+ *      <li>done - when {@linkcode Vevet.PageAjaxModule#loading} becomes false. Each event will receive {@linkcode Vevet.PageAjaxModule.EventLoaded} as an argument.</li>
  *  </ul>
- * <br><br> <b>import {PageAjax} from 'vevet';</b>
+ * <br><br> <b>import {PageAjaxModule} from 'vevet';</b>
  * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
  */
-export default class ModulePageAjax extends Module {
+export default class PageAjaxModule extends Module {
 
 
     
     /**
-     * @memberof Vevet.ModulePageAjax
+     * @memberof Vevet.PageAjaxModule
      * @typedef {object} Properties
      * @augments Vevet.Module.Properties
      * 
      * @property {object} [selectors] - ***
      * @property {string|HTMLElement} [selectors.outer=.vevet-pageAjax] - The outer in which pages will be changed.
      * The outer element must contain the attribute "data-vevet-pageAjax-name" 
-     * to define the name of the page {@linkcode Vevet.ModulePage}.
+     * to define the name of the page {@linkcode Vevet.PageModule}.
      * @property {string} [selectors.links=.vevet-pageAjax__link] - Links on which event listeners 
      * will be set.
      *
@@ -43,7 +43,7 @@ export default class ModulePageAjax extends Module {
      * @property {boolean} [popstate.reload=true] - If true, the page will be reloaded after popstate change in case {@linkcode popstate.event} is false.
      * @property {number} [popstate.timeout=300]
      * 
-     * @property {boolean} [on=true] - If false, {@linkcode Vevet.ModulePageAjax#load} will return 'false'.
+     * @property {boolean} [on=true] - If false, {@linkcode Vevet.PageAjaxModule#load} will return 'false'.
      * @property {boolean} [disabled=false] - If true, all listeners will be ignored.
      * 
      * @property {object} [update]
@@ -61,20 +61,20 @@ export default class ModulePageAjax extends Module {
      * @property {object} [timeouts]
      * @property {number} [timeouts.load=100] - Timeout before an ajax request will be sent.
      * @property {number} [timeouts.update=100] - Timeout before the content will be updated after its loaded.
-     * @property {number} [timeouts.done=100] - Timeout before {@linkcode Vevet.ModulePageAjax#loading} will be false 
+     * @property {number} [timeouts.done=100] - Timeout before {@linkcode Vevet.PageAjaxModule#loading} will be false 
      * and events under the target 'done' will be launched.
      * 
-     * @property {object} [pageChange] - Moments of changes of states of a page {@linkcode Vevet.ModulePage}.
+     * @property {object} [pageChange] - Moments of changes of states of a page {@linkcode Vevet.PageModule}.
      * Possible values are targets of this class. F.e., if {@linkcode page.hide=='prepare'},
      * the current page will be automatically hidden when events under the target 'prepare' are launched.
      * @property {boolean} [pageChange.on=true] - Defines if you want to change pages automatically.
      * @property {string} [pageChange.default=default] - The name of a default page.
-     * @property {string} [pageChange.hide=prepare] - {@linkcode Vevet.ModulePage#hide}.
-     * @property {string} [pageChange.destroy=loaded] - {@linkcode Vevet.ModulePage#destroy}
-     * @property {string} [pageChange.create=updated] - {@linkcode Vevet.ModulePage#create}
-     * @property {string} [pageChange.show=done] - {@linkcode Vevet.ModulePage#show}
+     * @property {string} [pageChange.hide=prepare] - {@linkcode Vevet.PageModule#hide}.
+     * @property {string} [pageChange.destroy=loaded] - {@linkcode Vevet.PageModule#destroy}
+     * @property {string} [pageChange.create=updated] - {@linkcode Vevet.PageModule#create}
+     * @property {string} [pageChange.show=done] - {@linkcode Vevet.PageModule#show}
      * 
-     * @property {boolean} [cache=false] - If we need to store ajax responses in cache {@linkcode Vevet.EventAJAX#cache}.
+     * @property {boolean} [cache=false] - If we need to store ajax responses in cache {@linkcode Vevet.AJAXEvent#cache}.
      * 
      * @property {boolean} [changeSame=true] - Defines if a new page with the same URL can be loaded.
      * 
@@ -84,9 +84,9 @@ export default class ModulePageAjax extends Module {
      * 
      */
     /**
-     * @alias Vevet.ModulePageAjax
+     * @alias Vevet.PageAjaxModule
      * 
-     * @param {Vevet.ModulePageAjax.Properties} [data]
+     * @param {Vevet.PageAjaxModule.Properties} [data]
      */
     constructor(data) {
         super(data);
@@ -98,7 +98,7 @@ export default class ModulePageAjax extends Module {
 
     /**
      * @readonly
-     * @type {Vevet.ModulePageAjax.Properties}
+     * @type {Vevet.PageAjaxModule.Properties}
      */
     get defaultProp() {
         
@@ -150,23 +150,23 @@ export default class ModulePageAjax extends Module {
     }
 
     /**
-     * @member Vevet.ModulePageAjax#prop
-     * @memberof Vevet.ModulePageAjax
+     * @member Vevet.PageAjaxModule#prop
+     * @memberof Vevet.PageAjaxModule
      * @readonly
-     * @type {Vevet.ModulePageAjax.Properties}
+     * @type {Vevet.PageAjaxModule.Properties}
      */
 
     /**
-     * @member Vevet.ModulePageAjax#_prop
-     * @memberof Vevet.ModulePageAjax
+     * @member Vevet.PageAjaxModule#_prop
+     * @memberof Vevet.PageAjaxModule
      * @protected
-     * @type {Vevet.ModulePageAjax.Properties}
+     * @type {Vevet.PageAjaxModule.Properties}
      */
 
     /**
-     * @function Vevet.ModulePageAjax#changeProp
-     * @memberof Vevet.ModulePageAjax
-     * @param {Vevet.ModulePageAjax.Properties} [prop]
+     * @function Vevet.PageAjaxModule#changeProp
+     * @memberof Vevet.PageAjaxModule
+     * @param {Vevet.PageAjaxModule.Properties} [prop]
      */
 
 
@@ -222,7 +222,7 @@ export default class ModulePageAjax extends Module {
         this._linksListeners = [];
 
         /**
-         * @type {Vevet.ModulePageAjax.EventLoaded}
+         * @type {Vevet.PageAjaxModule.EventLoaded}
          * @protected
          */
         this._lastData = {};
@@ -337,7 +337,7 @@ export default class ModulePageAjax extends Module {
     }
 
     /**
-     * @memberof Vevet.ModulePageAjax
+     * @memberof Vevet.PageAjaxModule
      * @typedef {object} EventHref
      * @property {string} href - The url of the further ajax request.
      */
@@ -404,7 +404,7 @@ export default class ModulePageAjax extends Module {
 
 
     /**
-     * @memberof Vevet.ModulePageAjax
+     * @memberof Vevet.PageAjaxModule
      * @typedef {object} EventLinkHref
      * @property {string} href - The url of the further ajax request.
      * @property {HTMLAnchorElement|string} link - The link that was clicked or url passed.
@@ -581,7 +581,7 @@ export default class ModulePageAjax extends Module {
      * @param {boolean} data.push - Defines if you need to push the new url to the history.
      * @param {boolean} data.popstate - Defines if the action is called on popstate.
      * @param {string} href  - Url.
-     * @param {Vevet.EventAJAX.CacheItem} ajax - Ajax request & response data.
+     * @param {Vevet.AJAXEvent.CacheItem} ajax - Ajax request & response data.
      */
     _loadSuccess(data, href, ajax) {
 
@@ -601,7 +601,7 @@ export default class ModulePageAjax extends Module {
      * @param {boolean} data.push - Defines if you need to push the new url to the history.
      * @param {boolean} data.popstate - Defines if the action is called on popstate.
      * @param {string} href  - Url.
-     * @param {Vevet.EventAJAX.CacheItem} ajax - Ajax request & response data.
+     * @param {Vevet.AJAXEvent.CacheItem} ajax - Ajax request & response data.
      */
     _loadError(data, href, ajax) {
 
@@ -617,9 +617,9 @@ export default class ModulePageAjax extends Module {
 
 
     /**
-     * @memberof Vevet.ModulePageAjax
+     * @memberof Vevet.PageAjaxModule
      * @typedef {object} EventLoaded
-     * @property {Vevet.EventAJAX.CacheItem} ajax - Ajax request & response data.
+     * @property {Vevet.AJAXEvent.CacheItem} ajax - Ajax request & response data.
      * @property {string} response - HTML of the whole page.
      * @property {string} html - innerHTML of the new outer.
      * @property {HTMLElement} e - An abstract html element with new html.
@@ -639,7 +639,7 @@ export default class ModulePageAjax extends Module {
      * @param {boolean} data.push - Defines if you need to push the new url to the history.
      * @param {boolean} data.popstate - Defines if the action is called on popstate.
      * @param {string} href - Url.
-     * @param {Vevet.EventAJAX.CacheItem} ajax - Ajax request & response data.
+     * @param {Vevet.AJAXEvent.CacheItem} ajax - Ajax request & response data.
      */
     _update(data, href, ajax) {
 
@@ -703,7 +703,7 @@ export default class ModulePageAjax extends Module {
     /**
      * @description Update contents inside the window.
      * @private
-     * @param {Vevet.ModulePageAjax.EventLoaded} data - Ajax data.
+     * @param {Vevet.PageAjaxModule.EventLoaded} data - Ajax data.
      */
     _updateContents(data) {
 
@@ -728,7 +728,7 @@ export default class ModulePageAjax extends Module {
     /**
      * @description Update page url.
      * @private
-     * @param {Vevet.ModulePageAjax.EventLoaded} data - Ajax data.
+     * @param {Vevet.PageAjaxModule.EventLoaded} data - Ajax data.
      */
     _updateUrl(data) {
 
@@ -741,7 +741,7 @@ export default class ModulePageAjax extends Module {
     /**
      * @description Update page title.
      * @private
-     * @param {Vevet.ModulePageAjax.EventLoaded} data - Ajax data.
+     * @param {Vevet.PageAjaxModule.EventLoaded} data - Ajax data.
      */
     _updateTitle(data) {
 
@@ -763,7 +763,7 @@ export default class ModulePageAjax extends Module {
     /**
      * @description Update page html.
      * @private
-     * @param {Vevet.ModulePageAjax.EventLoaded} data - Ajax data.
+     * @param {Vevet.PageAjaxModule.EventLoaded} data - Ajax data.
      */
     _updateHTML(data) {
 
@@ -788,7 +788,7 @@ export default class ModulePageAjax extends Module {
     /**
      * @description Update menu links.
      * @private
-     * @param {Vevet.ModulePageAjax.EventLoaded} data - Ajax data.
+     * @param {Vevet.PageAjaxModule.EventLoaded} data - Ajax data.
      */
     _updateMenuLinks(data) {
 
@@ -832,7 +832,7 @@ export default class ModulePageAjax extends Module {
     /**
      * @description Update current page data.
      * @private
-     * @param {Vevet.ModulePageAjax.EventLoaded} data - Ajax data.
+     * @param {Vevet.PageAjaxModule.EventLoaded} data - Ajax data.
      */
     _updatePageData(data) {
 
@@ -846,7 +846,7 @@ export default class ModulePageAjax extends Module {
     /**
      * @description End the process.
      * @private
-     * @param {Vevet.ModulePageAjax.EventLoaded} data - Ajax data.
+     * @param {Vevet.PageAjaxModule.EventLoaded} data - Ajax data.
      */
     _done(data) {
 

@@ -5,23 +5,23 @@ import timeoutCallback from './timeoutCallback';
  * @classdesc AJAX requests.
  * Available targets:
  *  <ul>
- *      <li>load - argument {@linkcode Vevet.EventAJAX.LoadData}</li>
- *      <li>loaded - argument {@linkcode Vevet.EventAJAX.CacheItem}</li>
+ *      <li>load - argument {@linkcode Vevet.AJAXEvent.LoadData}</li>
+ *      <li>loaded - argument {@linkcode Vevet.AJAXEvent.CacheItem}</li>
  *  </ul>
- * <br><br> <b>import {Ajax} from 'vevet';</b>
+ * <br><br> <b>import {AJAXEvent} from 'vevet';</b>
  * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Event
  */
-export default class EventAJAX extends Event {
+export default class AJAXEvent extends Event {
 
 
     _extra() {
 
         /**
          * @description Ajax Requests' Storage.
-         * @member {Array<Vevet.EventAJAX.CacheItem>}
+         * @member {Array<Vevet.AJAXEvent.CacheItem>}
          * @private
          */
         this._cache = [];
@@ -33,7 +33,7 @@ export default class EventAJAX extends Event {
     /**
      * @description Ajax Cache.
      * @readonly
-     * @type {Array<Vevet.EventAJAX.CacheItem>}
+     * @type {Array<Vevet.AJAXEvent.CacheItem>}
      */
     get cache() {
         return this._cache;
@@ -42,7 +42,7 @@ export default class EventAJAX extends Event {
 
 
     /**
-     * @memberof Vevet.EventAJAX
+     * @memberof Vevet.AJAXEvent
      * @typedef {object} LoadData
      * @property {string} [method=post] Method - post|get.
      * @property {string} [url=window.location.href] Request url.
@@ -56,7 +56,7 @@ export default class EventAJAX extends Event {
     /**
      * @description Load from url.
      * 
-     * @param {Vevet.EventAJAX.LoadData} data - Properties.
+     * @param {Vevet.AJAXEvent.LoadData} data - Properties.
      * 
      * @example
      * 
@@ -120,7 +120,7 @@ export default class EventAJAX extends Event {
 
     /**
      * @description XHR request.
-     * @param {Vevet.EventAJAX.LoadData} prop - Properties.
+     * @param {Vevet.AJAXEvent.LoadData} prop - Properties.
      * @private
      */
     _xhr(prop) {
@@ -263,7 +263,7 @@ export default class EventAJAX extends Event {
     }
 
     /**
-     * @memberof Vevet.EventAJAX
+     * @memberof Vevet.AJAXEvent
      * @typedef {object} CacheItem
      * @property {string} url
      * @property {string} method
@@ -275,7 +275,7 @@ export default class EventAJAX extends Event {
      * 
      * @private
      * 
-     * @param {Vevet.EventAJAX.CacheItem} prop - Object with the request data.
+     * @param {Vevet.AJAXEvent.CacheItem} prop - Object with the request data.
      */
     _cacheSet(prop) {
         this._cache.push(prop);

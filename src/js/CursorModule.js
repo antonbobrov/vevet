@@ -12,18 +12,18 @@ const lerp = require('lerp');
  *      <li>create</li>
  *      <li>render</li>
  *  </ul>
- * <br><br> <b>import {ModuleCursor} from 'vevet';</b>
+ * <br><br> <b>import {CursorModule} from 'vevet';</b>
  * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
  */
-export default class ModuleCursor extends Module {
+export default class CursorModule extends Module {
 
 
     
     /**
-     * @memberof Vevet.ModuleCursor
+     * @memberof Vevet.CursorModule
      * @typedef {object} Properties
      * @augments Vevet.Module.Properties
      * 
@@ -32,9 +32,9 @@ export default class ModuleCursor extends Module {
      * @property {boolean} [run=true] - Change to false to stop the animation frame.
      */
     /**
-     * @alias Vevet.ModuleCursor
+     * @alias Vevet.CursorModule
      * 
-     * @param {Vevet.ModuleCursor.Properties} [data]
+     * @param {Vevet.CursorModule.Properties} [data]
      */
     constructor(data) {
         super(data);
@@ -46,7 +46,7 @@ export default class ModuleCursor extends Module {
 
     /**
      * @readonly
-     * @type {Vevet.ModuleCursor.Properties}
+     * @type {Vevet.CursorModule.Properties}
      */
     get defaultProp() {
         return merge(super.defaultProp, {
@@ -57,23 +57,23 @@ export default class ModuleCursor extends Module {
     }
 
     /**
-     * @member Vevet.ModuleCursor#prop
-     * @memberof Vevet.ModuleCursor
+     * @member Vevet.CursorModule#prop
+     * @memberof Vevet.CursorModule
      * @readonly
-     * @type {Vevet.ModuleCursor.Properties}
+     * @type {Vevet.CursorModule.Properties}
      */
 
     /**
-     * @member Vevet.ModuleCursor#_prop
-     * @memberof Vevet.ModuleCursor
+     * @member Vevet.CursorModule#_prop
+     * @memberof Vevet.CursorModule
      * @protected
-     * @type {Vevet.ModuleCursor.Properties}
+     * @type {Vevet.CursorModule.Properties}
      */
 
     /**
-     * @function Vevet.ModuleCursor#changeProp
-     * @memberof Vevet.ModuleCursor
-     * @param {Vevet.ModuleCursor.Properties} [prop]
+     * @function Vevet.CursorModule#changeProp
+     * @memberof Vevet.CursorModule
+     * @param {Vevet.CursorModule.Properties} [prop]
      */
 
 
@@ -105,7 +105,7 @@ export default class ModuleCursor extends Module {
         /**
          * @description Mouse position.
          * @protected
-         * @type {Vevet.ModuleCursor.Coords}
+         * @type {Vevet.CursorModule.Coords}
          */
         this._mouse = {
             x: 0,
@@ -114,7 +114,7 @@ export default class ModuleCursor extends Module {
         /**
          * @description Cursor centered position.
          * @protected
-         * @type {Vevet.ModuleCursor.Coords}
+         * @type {Vevet.CursorModule.Coords}
          */
         this._pos = {
             x: 0,
@@ -141,7 +141,7 @@ export default class ModuleCursor extends Module {
     }
 
     /**
-     * @memberof Vevet.ModuleCursor
+     * @memberof Vevet.CursorModule
      * @typedef {object} Coords
      * @property {number} x
      * @property {number} y

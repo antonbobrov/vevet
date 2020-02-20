@@ -13,28 +13,28 @@ import merge from './merge';
  *      <li>hide</li>
  *      <li>destroy</li>
  *  </ul>
- * <br><br> <b>import {Page} from 'vevet';</b>
+ * <br><br> <b>import {PageModule} from 'vevet';</b>
  * 
  * @class
  * @abstract
  * @memberof Vevet
  * @augments Vevet.Module
  */
-export default class ModulePage extends Module {
+export default class PageModule extends Module {
 
 
     
     /**
-     * @memberof Vevet.ModulePage
+     * @memberof Vevet.PageModule
      * @typedef {object} Properties
      * @augments Vevet.Module.Properties
      * 
-     * @property {string} [name=home] - *** Each page must have a name. Later, when using {@linkcode Vevet.ModulePageAjax} it will be very helpful. Names of each page mut be unique.
+     * @property {string} [name=home] - *** Each page must have a name. Later, when using {@linkcode Vevet.PageAjaxModule} it will be very helpful. Names of each page mut be unique.
      */
     /**
-     * @alias Vevet.ModulePage
+     * @alias Vevet.PageModule
      * 
-     * @param {Vevet.ModulePage.Properties} [data]
+     * @param {Vevet.PageModule.Properties} [data]
      */
     constructor(data) {
         super(data);
@@ -42,7 +42,7 @@ export default class ModulePage extends Module {
 
     /**
      * @readonly
-     * @type {Vevet.ModulePage.Properties}
+     * @type {Vevet.PageModule.Properties}
      */
     get defaultProp() {
         return merge(super.defaultProp, {
@@ -51,23 +51,23 @@ export default class ModulePage extends Module {
     }
 
     /**
-     * @member Vevet.ModulePage#prop
-     * @memberof Vevet.ModulePage
+     * @member Vevet.PageModule#prop
+     * @memberof Vevet.PageModule
      * @readonly
-     * @type {Vevet.ModulePage.Properties}
+     * @type {Vevet.PageModule.Properties}
      */
 
     /**
-     * @member Vevet.ModulePage#_prop
-     * @memberof Vevet.ModulePage
+     * @member Vevet.PageModule#_prop
+     * @memberof Vevet.PageModule
      * @protected
-     * @type {Vevet.ModulePage.Properties}
+     * @type {Vevet.PageModule.Properties}
      */
 
     /**
-     * @function Vevet.ModulePage#changeProp
-     * @memberof Vevet.ModulePage
-     * @param {Vevet.ModulePage.Properties} [prop]
+     * @function Vevet.PageModule#changeProp
+     * @memberof Vevet.PageModule
+     * @param {Vevet.PageModule.Properties} [prop]
      */
 
 
@@ -147,9 +147,9 @@ export default class ModulePage extends Module {
     /**
      * @description Create the page.
      * 
-     * @param {boolean} [ajax=false] - Defines if the page was created through an ajax request. It may be helpful when using the class together with {@linkcode Vevet.ModulePageAjax}.
+     * @param {boolean} [ajax=false] - Defines if the page was created through an ajax request. It may be helpful when using the class together with {@linkcode Vevet.PageAjaxModule}.
      * 
-     * @returns {boolean|Vevet.ModulePage} Returns false if the page is not created.
+     * @returns {boolean|Vevet.PageModule} Returns false if the page is not created.
      */
     create(ajax = false) {
 

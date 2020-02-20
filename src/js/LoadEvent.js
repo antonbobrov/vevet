@@ -2,12 +2,12 @@ import Event from './Event';
 
 /**
  * @classdesc Callbacks on page loaded.
- * <br><br> <b>import {EventLoad} from 'vevet';</b>
+ * <br><br> <b>import {LoadEvent} from 'vevet';</b>
  * @class
  * @memberof Vevet
  * @augments Vevet.Event
  */
-export default class EventLoad extends Event {
+export default class LoadEvent extends Event {
 
 
     _extra() {

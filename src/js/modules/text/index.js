@@ -28,7 +28,7 @@ let composite_elementary = require("./_composite_elementary");
  * @class
  * @memberof Vevet
  * @augments Vevet.TextSplit
- * @requires Vevet.ModuleTimeline
+ * @requires Vevet.TimelineModule
  */
 export default class Text extends TextSplit {
 
@@ -143,7 +143,7 @@ export default class Text extends TextSplit {
      * @property {Array<Vevet.Text.SettingStyle>} [line] - Array of actions to change styles of each word in the line. Fill it if one of your types is 'line'.
      * @property {number} [shift=0.2] - Shift in animation chain between elements. F.e., if 0.2 then the animation of the second element will start after 80% of animation of the first element passed.
      * @property {number} [shiftLine=0.2] - Almost the same as the previous value, though it is active for the 'line' type only.
-     * @property {number} [reverse=false] - Defines if the chain of animation of the elements will be reversed. It is not the same as {@linkcode Vevet.ModuleTimeline}.
+     * @property {number} [reverse=false] - Defines if the chain of animation of the elements will be reversed. It is not the same as {@linkcode Vevet.TimelineModule}.
      * @property {number} [reverseComposite=false] - Defines if the chain of animation of parent elements will be reversed. It is actual only for composite types of animation.
      * @property {number} [shuffle=false] - If true, the chain of animation of the elements will be chaotic.
      * @property {number} [center=false] - If animation must start from center. Not available for 'lineletter' & 'lineword'.
@@ -177,7 +177,7 @@ export default class Text extends TextSplit {
      * 
      * @param {Vevet.Text.Settings} data - Settings of the animation.
      * 
-     * @returns {Vevet.ModuleTimeline|boolean} Returns an object if the animation is launched and false if not.
+     * @returns {Vevet.TimelineModule|boolean} Returns an object if the animation is launched and false if not.
      */
     play(data) {
         
@@ -450,7 +450,7 @@ export default class Text extends TextSplit {
      * 
      * @param {object} data - Animation data.
      * @param {Vevet.Text.Settings} prop - Settings of the animation.
-     * @param {Vevet.ModuleTimeline.Data} p - Current progress.
+     * @param {Vevet.TimelineModule.Data} p - Current progress.
      */
     _animateTypes(data, prop, p) {
         
@@ -632,7 +632,7 @@ export default class Text extends TextSplit {
      * @private
      * 
      * @param {Array<object>} callbacks - Array of callbacks.
-     * @param {Vevet.ModuleTimeline.Data} p - Settings of the animation.
+     * @param {Vevet.TimelineModule.Data} p - Settings of the animation.
      */
     _callbacks(callbacks, p) {
 

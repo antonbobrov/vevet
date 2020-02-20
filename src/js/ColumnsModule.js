@@ -6,18 +6,18 @@ const selectEl = require('select-el');
 
 /**
  * @classdesc Split your content into as many columns as you want. <br>
- * <br><br> <b>import {Columns} from 'vevet';</b>
+ * <br><br> <b>import {ColumnsModule} from 'vevet';</b>
  * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
  */
-export default class ModuleColumns extends Module {
+export default class ColumnsModule extends Module {
 
 
     
     /**
-     * @memberof Vevet.ModuleColumns
+     * @memberof Vevet.ColumnsModule
      * @typedef {object} Properties
      * @augments Vevet.Module.Properties
      * 
@@ -28,9 +28,9 @@ export default class ModuleColumns extends Module {
      * @property {Array<number>} [columns=[0, 1, 2]] - The array that defines quantity and order of columns. F.e., you can set [0, 1, 2], [2, 0, 1] etc.
      */
     /**
-     * @alias Vevet.ModuleColumns
+     * @alias Vevet.ColumnsModule
      * 
-     * @param {Vevet.ModuleColumns.Properties} [data]
+     * @param {Vevet.ColumnsModule.Properties} [data]
      */
     constructor(data) {
         super(data);
@@ -42,7 +42,7 @@ export default class ModuleColumns extends Module {
 
     /**
      * @readonly
-     * @type {Vevet.ModuleColumns.Properties}
+     * @type {Vevet.ColumnsModule.Properties}
      */
     get defaultProp() {
         let prefix = this._prefix;
@@ -56,23 +56,23 @@ export default class ModuleColumns extends Module {
     }
 
     /**
-     * @member Vevet.ModuleColumns#prop
-     * @memberof Vevet.ModuleColumns
+     * @member Vevet.ColumnsModule#prop
+     * @memberof Vevet.ColumnsModule
      * @readonly
-     * @type {Vevet.ModuleColumns.Properties}
+     * @type {Vevet.ColumnsModule.Properties}
      */
 
     /**
-     * @member Vevet.ModuleColumns#_prop
-     * @memberof Vevet.ModuleColumns
+     * @member Vevet.ColumnsModule#_prop
+     * @memberof Vevet.ColumnsModule
      * @protected
-     * @type {Vevet.ModuleColumns.Properties}
+     * @type {Vevet.ColumnsModule.Properties}
      */
 
     /**
-     * @function Vevet.ModuleColumns#changeProp
-     * @memberof Vevet.ModuleColumns
-     * @param {Vevet.ModuleColumns.Properties} [prop]
+     * @function Vevet.ColumnsModule#changeProp
+     * @memberof Vevet.ColumnsModule
+     * @param {Vevet.ColumnsModule.Properties} [prop]
      */
 
 

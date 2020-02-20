@@ -1,7 +1,7 @@
-import EventLoad from './EventLoad';
-import EventViewport from './EventViewport';
-import EventURL from './EventURL';
-import EventAJAX from './EventAJAX';
+import LoadEvent from './LoadEvent';
+import ViewportEvent from './ViewportEvent';
+import URLEvent from './URLEvent';
+import AJAXEvent from './AJAXEvent';
 import getBrowserName from './getBrowserName';
 import getOsName from './getOsName';
 import { getOSName } from './index';
@@ -167,44 +167,44 @@ export default class Application {
         this._os = getOsName();
 
         /**
-         * @member {Vevet.EventLoad}
+         * @member {Vevet.LoadEvent}
          */
-        this.load = new EventLoad({
+        this.load = new LoadEvent({
             v: this
         });
 
         /**
-         * @member {Vevet.EventViewport}
+         * @member {Vevet.ViewportEvent}
          */
-        this.viewport = new EventViewport({
+        this.viewport = new ViewportEvent({
             v: this
         });
 
         /**
-         * @member {Vevet.EventURL}
+         * @member {Vevet.URLEvent}
          */
-        this.url = new EventURL({
+        this.url = new URLEvent({
             v: this
         });
 
         /**
-         * @member {Vevet.EventAJAX}
+         * @member {Vevet.AJAXEvent}
          */
-        this.ajax = new EventAJAX({
+        this.ajax = new AJAXEvent({
             v: this
         });
         
         /**
          * @description An array of existing pages.
-         * A new element is added to the array when {@linkcode Vevet.ModulePage#create} is called.
-         * @type {Array<Vevet.ModulePage>}
+         * A new element is added to the array when {@linkcode Vevet.PageModule#create} is called.
+         * @type {Array<Vevet.PageModule>}
          */
         this.vevetPages = [];
         /**
-         * @description The active page. See {@linkcode Vevet.ModulePage}.
-         * Its value is false when no page is active and {@linkcode Vevet.ModulePage}
-         * if a page is created through {@linkcode Vevet.ModulePage#create}
-         * @type {Vevet.ModulePage|boolean}
+         * @description The active page. See {@linkcode Vevet.PageModule}.
+         * Its value is false when no page is active and {@linkcode Vevet.PageModule}
+         * if a page is created through {@linkcode Vevet.PageModule#create}
+         * @type {Vevet.PageModule|boolean}
          */
         this.vevetPage = false;
 

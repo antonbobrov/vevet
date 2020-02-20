@@ -1,14 +1,14 @@
-import Dragger from './ModuleDragger';
+import DraggerModule from './DraggerModule';
 
 /**
  * @classdesc Drag events.
- * <br><br> <b>import {Drag} from 'vevet';</b>
+ * <br><br> <b>import {DragModule} from 'vevet';</b>
  * 
  * @class
  * @memberof Vevet
- * @augments Vevet.ModuleDragger
+ * @augments Vevet.DraggerModule
  */
-export default class ModuleDrag extends Dragger {
+export default class DragModule extends DraggerModule {
 
 
 

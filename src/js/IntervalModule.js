@@ -4,18 +4,18 @@ import Module from './Module';
  * @classdesc Intervals. It is based on the "setInterval" function, 
  * but its manipulating is more convenient. <br>
  * Here any target is available.
- * <br><br> <b>import {Interval} from 'vevet';</b>
+ * <br><br> <b>import {IntervalModule} from 'vevet';</b>
  * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
  */
-export default class ModuleInterval extends Module {
+export default class IntervalModule extends Module {
     
 
 
     /**
-     * @memberof Vevet.ModuleInterval
+     * @memberof Vevet.IntervalModule
      * @typedef {object} EventObj
      * @augments Vevet.Event.EventObj
      * @property {number} [interval] Interval of callbacks (ms). 
@@ -25,7 +25,7 @@ export default class ModuleInterval extends Module {
     /**
      * @description Add a callback.
      * 
-     * @param {Vevet.ModuleInterval.EventObj} data - Callback data.
+     * @param {Vevet.IntervalModule.EventObj} data - Callback data.
      * @param {boolean} [bool=true] - Defines if the event is enabled.
      * 
      * @returns {string} Returns a string with an id of the callback.

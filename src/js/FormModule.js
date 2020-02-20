@@ -8,21 +8,21 @@ const selectEl = require('select-el');
  * @classdesc A class for creating an ajax form. <br>
  * Available targets:
  *  <ul>
- *      <li>success - If success. Each callback receives {@linkcode Vevet.EventAJAX.CacheItem} as an argument.</li>
- *      <li>failure - If failure. Each callback receives {@linkcode Vevet.ModuleForm.ErrorCallback} as an argument.</li>
+ *      <li>success - If success. Each callback receives {@linkcode Vevet.AJAXEvent.CacheItem} as an argument.</li>
+ *      <li>failure - If failure. Each callback receives {@linkcode Vevet.FormModule.ErrorCallback} as an argument.</li>
  *  </ul>
- * <br><br> <b>import {Form} from 'vevet';</b>
+ * <br><br> <b>import {FormModule} from 'vevet';</b>
  * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
  */
-export default class ModuleForm extends Module {
+export default class FormModule extends Module {
 
 
     
     /**
-     * @memberof Vevet.ModuleForm
+     * @memberof Vevet.FormModule
      * @typedef {object} Properties
      * @augments Vevet.Module.Properties
      * 
@@ -40,9 +40,9 @@ export default class ModuleForm extends Module {
      *
      */
     /**
-     * @alias Vevet.ModuleForm
+     * @alias Vevet.FormModule
      * 
-     * @param {Vevet.ModuleForm.Properties} [data]
+     * @param {Vevet.FormModule.Properties} [data]
      */
     constructor(data) {
         super(data);
@@ -54,7 +54,7 @@ export default class ModuleForm extends Module {
 
     /**
      * @readonly
-     * @type {Vevet.ModuleForm.Properties}
+     * @type {Vevet.FormModule.Properties}
      */
     get defaultProp() {
 
@@ -77,23 +77,23 @@ export default class ModuleForm extends Module {
     }
 
     /**
-     * @member Vevet.ModuleForm#prop
-     * @memberof Vevet.ModuleForm
+     * @member Vevet.FormModule#prop
+     * @memberof Vevet.FormModule
      * @readonly
-     * @type {Vevet.ModuleForm.Properties}
+     * @type {Vevet.FormModule.Properties}
      */
 
     /**
-     * @member Vevet.ModuleForm#_prop
-     * @memberof Vevet.ModuleForm
+     * @member Vevet.FormModule#_prop
+     * @memberof Vevet.FormModule
      * @protected
-     * @type {Vevet.ModuleForm.Properties}
+     * @type {Vevet.FormModule.Properties}
      */
 
     /**
-     * @function Vevet.ModuleForm#changeProp
-     * @memberof Vevet.ModuleForm
-     * @param {Vevet.ModuleForm.Properties} [prop]
+     * @function Vevet.FormModule#changeProp
+     * @memberof Vevet.FormModule
+     * @param {Vevet.FormModule.Properties} [prop]
      */
 
 
@@ -469,10 +469,10 @@ export default class ModuleForm extends Module {
     }
 
     /**
-     * @memberof Vevet.ModuleForm
+     * @memberof Vevet.FormModule
      * @typedef {object} ErrorCallback
-     * @property {Vevet.EventAJAX.CacheItem} data - Response data.
-     * @property {Array<Vevet.ModuleForm.Error>} errors - Array of errors.
+     * @property {Vevet.AJAXEvent.CacheItem} data - Response data.
+     * @property {Array<Vevet.FormModule.Error>} errors - Array of errors.
      */
 
     /**
@@ -525,7 +525,7 @@ export default class ModuleForm extends Module {
 
 
     /**
-     * @memberof Vevet.ModuleForm
+     * @memberof Vevet.FormModule
      * @typedef {object} Error
      * @property {string} key - Input name.
      * @property {string} value - Error message.
@@ -533,8 +533,8 @@ export default class ModuleForm extends Module {
     /**
      * @description Set errors in the form.
      * @private
-     * @param {Array<Vevet.ModuleForm.Error>} [array] - Array of errors for existing inputs.
-     * @param {Array<Vevet.ModuleForm.Error>} [allErrors] - Array of all errors.
+     * @param {Array<Vevet.FormModule.Error>} [array] - Array of errors for existing inputs.
+     * @param {Array<Vevet.FormModule.Error>} [allErrors] - Array of all errors.
      */
     // eslint-disable-next-line no-unused-vars
     _errorClasses(array = [], allErrors = []) {

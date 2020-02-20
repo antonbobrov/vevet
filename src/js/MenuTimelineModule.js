@@ -1,39 +1,39 @@
-import ModuleMenuBase from './ModuleMenuBase';
+import MenuBaseModule from './MenuBaseModule';
 import merge from './merge';
-import ModuleTimelineBase from './ModuleTimelineBase';
-import ModuleTimeline from './ModuleTimeline';
+import TimelineBaseModule from './TimelineBaseModule';
+import TimelineModule from './TimelineModule';
 
 /**
  * @classdesc A class for creating pop-up menus.
- * All animation are carried out throug {@linkcode Vevet.ModuleTimeline}.
+ * All animation are carried out through {@linkcode Vevet.TimelineModule}.
  * This menu CAN be closed if the animaiton of its opening has not ended yet and vice versa. <br>
  * Available targets:
  *  <ul>
- *      <li>progress - timeline animation. Argument - {@linkcode Vevet.ModuleTimelineBase.Data}</li>
- *      <li>progressOuter - animate the outer element. Argument - {@linkcode Vevet.ModuleTimelineBase.Data}</li>
- *      <li>progressInner - animate inner elements. Argument - {@linkcode Vevet.ModuleTimelineBase.Data}</li>
- *      <li>progress - timeline animation. Argument - {@linkcode Vevet.ModuleTimelineBase.Data}</li>
+ *      <li>progress - timeline animation. Argument - {@linkcode Vevet.TimelineBaseModule.Data}</li>
+ *      <li>progressOuter - animate the outer element. Argument - {@linkcode Vevet.TimelineBaseModule.Data}</li>
+ *      <li>progressInner - animate inner elements. Argument - {@linkcode Vevet.TimelineBaseModule.Data}</li>
+ *      <li>progress - timeline animation. Argument - {@linkcode Vevet.TimelineBaseModule.Data}</li>
  *      <li>show - when the menu is being opened.</li>
  *      <li>shown - when the menu is opened, the process of animation has ended.</li>
  *      <li>hide - when the menu is being hidden.</li>
  *      <li>hidden - when the menu is hidden and the animation has ended.</li>
  *  </ul>
- * <br><br> <b>import {MenuTimeline} from 'vevet';</b>
+ * <br><br> <b>import {MenuTimelineModule} from 'vevet';</b>
  * 
  * @class
  * @memberof Vevet
- * @augments Vevet.ModuleMenuBase
- * @requires Vevet.ModuleTimeline
- * @requires Vevet.ModuleTimelineBase
+ * @augments Vevet.MenuBaseModule
+ * @requires Vevet.TimelineModule
+ * @requires Vevet.TimelineBaseModule
  */
-export default class ModuleMenuTimeline extends ModuleMenuBase {
+export default class MenuTimelineModule extends MenuBaseModule {
 
 
     
     /**
-     * @memberof Vevet.ModuleMenuTimeline
+     * @memberof Vevet.MenuTimelineModule
      * @typedef {object} Properties
-     * @augments Vevet.ModuleMenuBase.Properties
+     * @augments Vevet.MenuBaseModule.Properties
      * 
      * @property {object} [timeline] - Timeline settings.
      * @property {number} [timeline.duration=1500] - The total duration of showing/hiding the menu.
@@ -44,9 +44,9 @@ export default class ModuleMenuTimeline extends ModuleMenuBase {
      * @property {string|Array<number>} [timeline.easing] - Easing function of the animation.
      */
     /**
-     * @alias Vevet.ModuleMenuTimeline
+     * @alias Vevet.MenuTimelineModule
      * 
-     * @param {Vevet.ModuleMenuTimeline.Properties} [data]
+     * @param {Vevet.MenuTimelineModule.Properties} [data]
      */
     constructor(data) {
         super(data);
@@ -54,7 +54,7 @@ export default class ModuleMenuTimeline extends ModuleMenuBase {
 
     /**
      * @readonly
-     * @type {Vevet.ModuleMenuTimeline.Properties}
+     * @type {Vevet.MenuTimelineModule.Properties}
      */
     get defaultProp() {
         
@@ -70,23 +70,23 @@ export default class ModuleMenuTimeline extends ModuleMenuBase {
     }
 
     /**
-     * @member Vevet.ModuleMenuTimeline#prop
-     * @memberof Vevet.ModuleMenuTimeline
+     * @member Vevet.MenuTimelineModule#prop
+     * @memberof Vevet.MenuTimelineModule
      * @readonly
-     * @type {Vevet.ModuleMenuTimeline.Properties}
+     * @type {Vevet.MenuTimelineModule.Properties}
      */
 
     /**
-     * @member Vevet.ModuleMenuTimeline#_prop
-     * @memberof Vevet.ModuleMenuTimeline
+     * @member Vevet.MenuTimelineModule#_prop
+     * @memberof Vevet.MenuTimelineModule
      * @protected
-     * @type {Vevet.ModuleMenuTimeline.Properties}
+     * @type {Vevet.MenuTimelineModule.Properties}
      */
 
     /**
-     * @function Vevet.ModuleMenuTimeline#changeProp
-     * @memberof Vevet.ModuleMenuTimeline
-     * @param {Vevet.ModuleMenuTimeline.Properties} [prop]
+     * @function Vevet.MenuTimelineModule#changeProp
+     * @memberof Vevet.MenuTimelineModule
+     * @param {Vevet.MenuTimelineModule.Properties} [prop]
      */
 
 
@@ -100,13 +100,13 @@ export default class ModuleMenuTimeline extends ModuleMenuBase {
             easing = timelineProp.easing;
 
         // main timeline
-        this._timeline = new ModuleTimeline();
+        this._timeline = new TimelineModule();
         let timeline = this._timeline;
         timeline.on("progress", this._timelineAnimation.bind(this));
         timeline.on("end", this._timelineAnimationEnd.bind(this));
 
         // outer timeline
-        this._timelineOuter = new ModuleTimelineBase({
+        this._timelineOuter = new TimelineBaseModule({
             line: timelineProp.outerScope,
             easing: easing
         });
@@ -114,7 +114,7 @@ export default class ModuleMenuTimeline extends ModuleMenuBase {
         timeline.addTimeline(this._timelineOuter);
 
         // inner timeline
-        this._timelineInner = new ModuleTimelineBase({
+        this._timelineInner = new TimelineBaseModule({
             line: timelineProp.innerScope,
             easing: easing
         });
@@ -127,7 +127,7 @@ export default class ModuleMenuTimeline extends ModuleMenuBase {
 
     /**
      * @description Animation.
-     * @param {Vevet.ModuleTimelineBase.Data} data
+     * @param {Vevet.TimelineBaseModule.Data} data
      * @protected
      */
     _timelineAnimation(data) {
@@ -162,7 +162,7 @@ export default class ModuleMenuTimeline extends ModuleMenuBase {
 
     /**
      * @description Outer animation.
-     * @param {Vevet.ModuleTimelineBase.Data} data
+     * @param {Vevet.TimelineBaseModule.Data} data
      * @protected
      */
     _timelineOuterAnimation(data) {
@@ -197,7 +197,7 @@ export default class ModuleMenuTimeline extends ModuleMenuBase {
 
     /**
      * @description Inner animation.
-     * @param {Vevet.ModuleTimelineBase.Data} data
+     * @param {Vevet.TimelineBaseModule.Data} data
      * @protected
      */
     _timelineInnerAnimation(data) {

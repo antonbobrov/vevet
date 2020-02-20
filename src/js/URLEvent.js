@@ -4,21 +4,21 @@ import Event from './Event';
  * @classdesc URL manipulation.
  * Available targets:
  *  <ul>
- *      <li>getParam - agrument {@linkcode Vevet.EventURL.GetParam}</li>
- *      <li>setParam - argument {@linkcode Vevet.EventURL.SetParam}</li>
+ *      <li>getParam - agrument {@linkcode Vevet.URLEvent.GetParam}</li>
+ *      <li>setParam - argument {@linkcode Vevet.URLEvent.SetParam}</li>
  *  </ul>
- * <br><br> <b>import {Url} from 'vevet';</b>
+ * <br><br> <b>import {URLEvent} from 'vevet';</b>
  * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Event
  */
-export default class EventURL extends Event {
+export default class URLEvent extends Event {
 
 
 
     /**
-     * @memberof Vevet.EventURL
+     * @memberof Vevet.URLEvent
      * @typedef {object} GetParam
      * @property {string} key The name of your parameter.
      * @property {string} url The url where the parameter was checked.
@@ -72,7 +72,7 @@ export default class EventURL extends Event {
 
 
     /**
-     * @memberof Vevet.EventURL
+     * @memberof Vevet.URLEvent
      * @typedef {object} SetParam
      * @property {string} key The name of param.
      * @property {string} value The value of the param.

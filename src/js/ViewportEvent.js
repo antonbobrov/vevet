@@ -13,14 +13,14 @@ const isMobile = require('is-mobile');
  *      <li>h_ - you need to trace only changes of height, width doesn't matter</li>
  *      <li>(empty) - use it when you don't care what changes</li>
  *  </ul>
- * <br>All targets will receive {@linkcode Vevet.EventViewport.Callback} as an argument.
- * <br><br> <b>import {Viewport} from 'vevet';</b>
+ * <br>All targets will receive {@linkcode Vevet.ViewportEvent.Callback} as an argument.
+ * <br><br> <b>import {ViewportEvent} from 'vevet';</b>
  * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Event
  */
-export default class EventViewport extends Event {
+export default class ViewportEvent extends Event {
 
 
     
@@ -158,7 +158,7 @@ export default class EventViewport extends Event {
 
 
     /**
-     * @memberof Vevet.EventViewport
+     * @memberof Vevet.ViewportEvent
      * @typedef {object} Callback
      * 
      * @property {Array<number>} size Current sizes of the window (width, height).

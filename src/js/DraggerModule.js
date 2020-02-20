@@ -6,26 +6,26 @@ const selectEl = require('select-el');
  * @classdesc Dragger is the basis for such modules as Drag and Swipe. <br>
  * Available targets:
  *  <ul>
- *      <li>start - {@linkcode Vevet.ModuleDragger.Callback}<li>
- *      <li>end - {@linkcode Vevet.ModuleDragger.Callback}</li>
- *      <li>move - {@linkcode Vevet.ModuleDragger.Callback}</li>
- *      <li>up - {@linkcode Vevet.ModuleDragger.Callback}</li>
- *      <li>down - {@linkcode Vevet.ModuleDragger.Callback}</li>
- *      <li>left - {@linkcode Vevet.ModuleDragger.Callback}</li>
- *      <li>right - {@linkcode Vevet.ModuleDragger.Callback}</li>
+ *      <li>start - {@linkcode Vevet.DraggerModule.Callback}<li>
+ *      <li>end - {@linkcode Vevet.DraggerModule.Callback}</li>
+ *      <li>move - {@linkcode Vevet.DraggerModule.Callback}</li>
+ *      <li>up - {@linkcode Vevet.DraggerModule.Callback}</li>
+ *      <li>down - {@linkcode Vevet.DraggerModule.Callback}</li>
+ *      <li>left - {@linkcode Vevet.DraggerModule.Callback}</li>
+ *      <li>right - {@linkcode Vevet.DraggerModule.Callback}</li>
  *  </ul>
- * <br><br> <b>import {Dragger} from 'vevet';</b>
+ * <br><br> <b>import {DraggerModule} from 'vevet';</b>
  * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Event
  */
-export default class ModuleDragger extends Module {
+export default class DraggerModule extends Module {
 
 
     
     /**
-     * @memberof Vevet.ModuleDragger
+     * @memberof Vevet.DraggerModule
      * @typedef {object} Properties
      * @augments Vevet.Module.Properties
      * 
@@ -33,12 +33,12 @@ export default class ModuleDragger extends Module {
      * @property {boolean} [ignoreOuter=true] - Swipe/Drag begins when it starts on the element under the selector.
      * Custom events are then called only if the movement is done inside the bounding of the element. Thought if
      * 'ignoreOuter' is true, swipe/drag can call the events even when the movement is out of the element's bounding.
-     * @property {number} [min=100] - Minimum length of movement in pixels to launch events under the targets {@linkcode Vevet.ModuleDragger#_once}. 
+     * @property {number} [min=100] - Minimum length of movement in pixels to launch events under the targets {@linkcode Vevet.DraggerModule#_once}. 
      */
     /**
-     * @alias Vevet.ModuleDragger
+     * @alias Vevet.DraggerModule
      * 
-     * @param {Vevet.ModuleDragger.Properties} [data]
+     * @param {Vevet.DraggerModule.Properties} [data]
      */
     constructor(data) {
         super(data);
@@ -46,7 +46,7 @@ export default class ModuleDragger extends Module {
 
     /**
      * @readonly
-     * @type {Vevet.ModuleDragger.Properties}
+     * @type {Vevet.DraggerModule.Properties}
      */
     get defaultProp() {
         return merge(super.defaultProp, {
@@ -57,23 +57,23 @@ export default class ModuleDragger extends Module {
     }
 
     /**
-     * @member Vevet.ModuleDragger#prop
-     * @memberof Vevet.ModuleDragger
+     * @member Vevet.DraggerModule#prop
+     * @memberof Vevet.DraggerModule
      * @readonly
-     * @type {Vevet.ModuleDragger.Properties}
+     * @type {Vevet.DraggerModule.Properties}
      */
 
     /**
-     * @member Vevet.ModuleDragger#_prop
-     * @memberof Vevet.ModuleDragger
+     * @member Vevet.DraggerModule#_prop
+     * @memberof Vevet.DraggerModule
      * @protected
-     * @type {Vevet.ModuleDragger.Properties}
+     * @type {Vevet.DraggerModule.Properties}
      */
 
     /**
-     * @function Vevet.ModuleDragger#changeProp
-     * @memberof Vevet.ModuleDragger
-     * @param {Vevet.ModuleDragger.Properties} [prop]
+     * @function Vevet.DraggerModule#changeProp
+     * @memberof Vevet.DraggerModule
+     * @param {Vevet.DraggerModule.Properties} [prop]
      */
 
     
@@ -151,15 +151,15 @@ export default class ModuleDragger extends Module {
 
 
     /**
-     * @memberof Vevet.ModuleDragger
+     * @memberof Vevet.DraggerModule
      * @typedef {object} Callback
-     * @property {Vevet.ModuleDragger.Coords} global - Coordinates relative to the window. 
-     * @property {Vevet.ModuleDragger.Coords} inner - Coordinates relative to the outer. 
-     * @property {Vevet.ModuleDragger.Coords} diff - Difference between the start and current coordinates.
-     * @property {Vevet.ModuleDragger.Coords} step - Difference between current and previous values.
+     * @property {Vevet.DraggerModule.Coords} global - Coordinates relative to the window. 
+     * @property {Vevet.DraggerModule.Coords} inner - Coordinates relative to the outer. 
+     * @property {Vevet.DraggerModule.Coords} diff - Difference between the start and current coordinates.
+     * @property {Vevet.DraggerModule.Coords} step - Difference between current and previous values.
      */
     /**
-     * @memberof Vevet.ModuleDragger
+     * @memberof Vevet.DraggerModule
      * @typedef {object} Coords
      * @property {number} x
      * @property {number} y
@@ -353,7 +353,7 @@ export default class ModuleDragger extends Module {
     /**
      * @description Call events and set coordinates as an argument.
      * @param {Vevet.Event.EventData} event
-     * @param {Vevet.ModuleDragger.Callback} obj
+     * @param {Vevet.DraggerModule.Callback} obj
      * @protected
      */
     _callWithCoords(event, obj) {
@@ -372,9 +372,9 @@ export default class ModuleDragger extends Module {
 
 
     /**
-     * @description Call events under the targets {@linkcode Vevet.ModuleDragger#_once}.
+     * @description Call events under the targets {@linkcode Vevet.DraggerModule#_once}.
      * @param {Vevet.Event.EventData} event
-     * @param {Vevet.ModuleDragger.Callback} obj
+     * @param {Vevet.DraggerModule.Callback} obj
      * @protected
      */
     _callOnce(event, obj) {

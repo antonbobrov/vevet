@@ -9,27 +9,27 @@ import merge from './merge';
  *      <li>once - One pressed key</li>
  *      <li>multi - A combination of keys dialed simultaneously</li>
  *  </ul>
- * <br><br> <b>import {Keydown} from 'vevet';</b>
+ * <br><br> <b>import {KeydownModule} from 'vevet';</b>
  * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
  */
-export default class ModuleKeydown extends Module {
+export default class KeydownModule extends Module {
 
 
     
     /**
-     * @memberof Vevet.ModuleKeydown
+     * @memberof Vevet.KeydownModule
      * @typedef {object} Properties
      * @augments Vevet.Module.Properties
      * 
      * @property {number} [interval=250] - Maximum interval between keydowns when using the target 'queue'.
      */
     /**
-     * @alias Vevet.ModuleKeydown
+     * @alias Vevet.KeydownModule
      * 
-     * @param {Vevet.ModuleKeydown.Properties} [data]
+     * @param {Vevet.KeydownModule.Properties} [data]
      */
     constructor(data) {
         super(data);
@@ -37,7 +37,7 @@ export default class ModuleKeydown extends Module {
 
     /**
      * @readonly
-     * @type {Vevet.ModuleKeydown.Properties}
+     * @type {Vevet.KeydownModule.Properties}
      */
     get defaultProp() {
         return merge(super.defaultProp, {
@@ -46,29 +46,29 @@ export default class ModuleKeydown extends Module {
     }
 
     /**
-     * @member Vevet.ModuleKeydown#prop
-     * @memberof Vevet.ModuleKeydown
+     * @member Vevet.KeydownModule#prop
+     * @memberof Vevet.KeydownModule
      * @readonly
-     * @type {Vevet.ModuleKeydown.Properties}
+     * @type {Vevet.KeydownModule.Properties}
      */
 
     /**
-     * @member Vevet.ModuleKeydown#_prop
-     * @memberof Vevet.ModuleKeydown
+     * @member Vevet.KeydownModule#_prop
+     * @memberof Vevet.KeydownModule
      * @protected
-     * @type {Vevet.ModuleKeydown.Properties}
+     * @type {Vevet.KeydownModule.Properties}
      */
 
     /**
-     * @function Vevet.ModuleKeydown#changeProp
-     * @memberof Vevet.ModuleKeydown
-     * @param {Vevet.ModuleKeydown.Properties} [prop]
+     * @function Vevet.KeydownModule#changeProp
+     * @memberof Vevet.KeydownModule
+     * @param {Vevet.KeydownModule.Properties} [prop]
      */
     
 
 
     /**
-     * @memberof Vevet.ModuleKeydown
+     * @memberof Vevet.KeydownModule
      * @typedef {object} EventObj
      * @augments Vevet.Event.EventObj
      * @property {Array<number>} [keys] An array of key codes. 
@@ -77,7 +77,7 @@ export default class ModuleKeydown extends Module {
     /**
      * @description Add a callback.
      * 
-     * @param {Vevet.ModuleKeydown.EventObj} data - Callback data.
+     * @param {Vevet.KeydownModule.EventObj} data - Callback data.
      * @param {boolean} [bool=true] - Defines if the event is enabled.
      * 
      * @returns {string} Returns a string with the callback's id.

@@ -19,7 +19,7 @@ export default class ResponsiveProp {
      * @description Sometimes it may be useful to change properties when the window is resized.
      * There are two ways to do it:
      * <ul>
-     *      <li>To set an event on the window when it is resized (or use {@linkcode Vevet.EventViewport}).
+     *      <li>To set an event on the window when it is resized (or use {@linkcode Vevet.ViewportEvent}).
      *          When the window is resized, change the properties with the help of {@linkcode Vevet.Module#changeProp}</li>
      *      <li>
      *          The second way is to use the property 'responsive'. In the property, set an object with the properties
