@@ -44,6 +44,7 @@ import PageModule from "./PageModule";
 import PaginationModule from "./PaginationModule";
 import TimelineBaseModule from "./TimelineBaseModule";
 import TimelineModule from "./TimelineModule";
+import PopupModule from "./PopupModule";
 
 export {
     generateId,
@@ -99,7 +100,9 @@ export {
     PaginationModule,
     
     TimelineBaseModule,
-    TimelineModule
+    TimelineModule,
+
+    PopupModule
     
 }
 
