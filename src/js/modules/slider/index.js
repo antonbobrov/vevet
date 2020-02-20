@@ -16,14 +16,14 @@ import utils from '../../core/utils';
  *      <li>shown - shown.</li>  
  *      <li>hidden - hidden.</li>  
  *      <li>render - animation. Argument - {@linkcode Vevet.Slider.Render}</li> 
- *      <li>timeline - timeline progress. Argument - {@linkcode Vevet.Slider.Timeline}</li> 
+ *      <li>timeline - timeline progress. Argument - {@linkcode Vevet.Slider.ModuleTimeline}</li> 
  *  </ul>
  * <br><br> <b>import {Slider} from 'vevet';</b>
  * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
- * @requires Vevet.Timeline
+ * @requires Vevet.ModuleTimeline
  */
 export default class Slider extends Module {
 
@@ -631,7 +631,7 @@ export default class Slider extends Module {
 
     /**
      * @description Progress callback for the "show/hide" timeline.
-     * @param {Vevet.Timeline.Data} p - Progress data.
+     * @param {Vevet.ModuleTimeline.Data} p - Progress data.
      * @protected
      */
     _showHideProgress(p) {
@@ -776,7 +776,7 @@ export default class Slider extends Module {
     /**
      * @description Slides animation. Here we split animation into two parts:
      * animation of the previous & of the next slide.
-     * @param {Vevet.Timeline.Data} p - Progress data.
+     * @param {Vevet.ModuleTimeline.Data} p - Progress data.
      * @protected
      */
     _animateSlides(p) {
@@ -799,7 +799,7 @@ export default class Slider extends Module {
 
     /**
      * @description Timeline animation.
-     * @param {Vevet.Timeline.Data} p - Progress data.
+     * @param {Vevet.ModuleTimeline.Data} p - Progress data.
      * @protected
      */
     _animateSlidesTimeline(p) {
@@ -819,7 +819,7 @@ export default class Slider extends Module {
     /**
      * @description Animate a slide
      * @param {string} type - Slide type: show|hide|prev|next.
-     * @param {Vevet.Timeline.Data} p - Progress data.
+     * @param {Vevet.ModuleTimeline.Data} p - Progress data.
      * @protected
      */
     _animateSlide(type, p) {

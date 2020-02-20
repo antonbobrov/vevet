@@ -35,6 +35,11 @@ import ModuleForm from "./ModuleForm";
 import ModuleFrame from "./ModuleFrame";
 import ModuleInterval from "./ModuleInterval";
 import ModuleKeydown from "./ModuleKeydown";
+import ModuleMenuBase from "./ModuleMenuBase";
+import ModuleMenuTimeline from "./ModuleMenuTimeline";
+import ModuleMenu from "./ModuleMenu";
+import ModuleTimeline from "./ModuleTimeline";
+import ModuleTimelineBase from "./ModuleTimelineBase";
 
 export {
     generateId,
@@ -67,14 +72,23 @@ export {
     Module,
     ModuleColumns,
     ModuleCursor,
+
     ModuleDragger,
     ModuleDrag,
     ModuleSwipe,
+
     ModuleFilter,
     ModuleForm,
     ModuleFrame,
     ModuleInterval,
-    ModuleKeydown
+    ModuleKeydown,
+
+    ModuleMenuBase,
+    ModuleMenuTimeline,
+    ModuleMenu,
+
+    ModuleTimeline,
+    ModuleTimelineBase
     
 }
 

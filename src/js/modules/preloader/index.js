@@ -15,7 +15,7 @@ import utils from '../../core/utils';
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
- * @requires Vevet.Timeline
+ * @requires Vevet.ModuleTimeline
  */
 export default class Preloader extends Module {
 
@@ -440,7 +440,7 @@ export default class Preloader extends Module {
     /**
      * @description Timeline animation.
      * @private
-     * @param {Vevet.Timeline.Data} p
+     * @param {Vevet.ModuleTimeline.Data} p
      */
     _progressFrameForce(p) {
 

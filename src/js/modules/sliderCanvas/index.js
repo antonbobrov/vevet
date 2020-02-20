@@ -457,7 +457,7 @@ export default class SliderCanvas extends Slider {
     
     /**
      * @description Animation progress.
-     * @param {Vevet.Timeline.Data} p - Progress data.
+     * @param {Vevet.ModuleTimeline.Data} p - Progress data.
      * @protected
      */
     _animateSlides(p) {
