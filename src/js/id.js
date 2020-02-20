@@ -7,8 +7,6 @@
  * 
  * @memberof Vevet
  * 
- * @public
- * 
  * @example 
  * 
  * Vevet.id('name');
