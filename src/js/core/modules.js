@@ -1,7 +1,7 @@
 export * from './dom/el';
 export * from './dom/events';
 
-export * from './common/id';
+export * from '../id';
 export * from './common/merge';
 export * from './common/timeoutCallback';
 
