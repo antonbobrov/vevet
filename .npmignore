@@ -3,15 +3,17 @@
 docs/
 jsdoc/
 node_modules/
-old/
 public/
 src/
 tests/
 types/
 webpack/
 
+<<<<<<< HEAD
 /dist/plugins/ScrollClampPlugin/
 /dist/plugins/SliderMovePlugin/
+=======
+>>>>>>> new-file-structure
 /dist/js/ScrollClampPlugin.js
 /dist/js/SliderMovePlugin.js
 

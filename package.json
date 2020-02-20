@@ -1,11 +1,11 @@
 {
   "name": "vevet",
-  "version": "0.4.9",
+  "version": "1.0.0",
   "description": "VEVET - A JavaScript library",
   "directories": {
     "dist:": "./dist"
   },
-  "main": "dist/index.js",
+  "main": "dist/js/index.js",
   "types": "dist/types/types.d.ts",
   "sideEffects": false,
   "sass": "dist/scss/index.scss",
@@ -18,7 +18,7 @@
     "docs:types": "./node_modules/.bin/jsdoc -c jsdoc/jsdoc.types.json && node jsdoc/exportVevetJsDoc.js",
     "release": "npm publish",
     "prepare": "npm version patch && npm run prepare:cjs && npm run build && npm run docs",
-    "prepare:cjs": "NODE_ENV=cjs babel ./src/js --out-dir ./dist"
+    "prepare:cjs": "NODE_ENV=cjs babel ./src/js --out-dir ./dist/js/"
   },
   "browserslist": [
     "> 1%",
@@ -88,11 +88,14 @@
     "dom-create-element": "^1.0.2",
     "form-serialize": "^0.7.2",
     "form-to-object": "^6.0.0",
+    "is-mobile": "^2.2.1",
     "isarray": "^2.0.5",
+    "lerp": "^1.0.3",
     "lodash.clonedeep": "^4.5.0",
     "lodash.merge": "^4.6.1",
     "lodash.mergewith": "^4.6.2",
     "polyfill-array-includes": "^2.0.0",
+    "select-el": "^1.0.3",
     "string.prototype.includes": "^1.0.0"
   }
 }

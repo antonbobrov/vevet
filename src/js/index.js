@@ -1,117 +1,159 @@
-import utils from './core/utils';
+import generateId from "./generateId";
+import merge from "./merge";
+import timeoutCallback from "./timeoutCallback";
+import domInsertAfter from "./domInsertAfter";
+import domChildOf from "./domChildOf";
+import domRemoveChildren from "./domRemoveChildren";
+import domChildren from "./domChildren";
+import eventListenerAdd from "./eventListenerAdd";
+import eventListenerGet from "./eventListenerGet";
+import eventListenerRemove from "./eventListenerRemove";
+import normalizeWheel from "./normalizeWheel";
+import easing from "./easing";
+import mathScopeProgress from "./mathScopeProgress";
+import mathSpreadScopeProgress from "./mathSpreadScopeProgress";
+import getOSName from "./getOsName";
+import getBrowserName from "./getBrowserName";
+import getMediaSize from "./getMediaSize";
 
-import ResponsiveProp from './events/ResponsiveProp';
-import Event from './events/Event';
-import Ajax from './events/Ajax';
-import Load from './events/Load';
-import Url from './events/Url';
-import Viewport from './events/Viewport';
+import Application from "./Application";
 
-import Application from './app/Application';
+import Event from "./Event";
+import LoadEvent from "./LoadEvent";
+import ViewportEvent from "./ViewportEvent";
+import URLEvent from "./URLEvent";
+import AJAXEvent from "./AJAXEvent";
 
-import Module from './modules/Module';
+import ResponsiveProp from "./ResponsiveProp";
 
-import Frame from './modules/frame';
-import Page from './modules/page';
-import PageAjax from './modules/pageAjax';
-import Preloader from './modules/preloader';
-import Text from './modules/text';
-import TextSplit from './modules/textSplit';
-import Timeline from './modules/timeline';
-import TimelineBase from './modules/timeline/TimelineBase';
-import Scroll from './modules/scroll';
-import ScrollAnimate from './modules/scrollAnimate';
-import View from './modules/scrollAnimate/View';
-import Anchor from './modules/scrollAnimate/anchor';
-import MenuBase from './modules/menu/MenuBase';
-import Menu from './modules/menu';
-import MenuTimeline from './modules/menu/MenuTimeline';
-import Slider from './modules/slider';
-import Form from './modules/form';
-import Columns from './modules/columns';
-import Popup from './modules/popup';
-import Select from './modules/select';
-import Wheel from './modules/wheel';
-import Interval from './modules/interval';
-import Pagination from './modules/pagination';
-import SliderCanvas from './modules/sliderCanvas';
-import Keydown from './modules/keydown';
-import Dragger from './modules/dragger';
-import Drag from './modules/dragger/Drag';
-import Swipe from './modules/dragger/Swipe';
-import Filter from './modules/filter';
-import Cursor from './modules/cursor';
-
-import Plugin from './plugins/Plugin';
-import PaginationScrollPlugin from './plugins/paginationScrollPlugin';
-import PageLoadMediaPlugin from './plugins/PageLoadMediaPlugin';
-import ScrollDragPlugin from './plugins/scrollDragPlugin';
-import SliderWheelPlugin from './plugins/SliderWheelPlugin';
-import SliderKeydownPlugin from './plugins/SliderKeydownPlugin';
-import SliderIntervalPlugin from './plugins/SliderIntervalPlugin';
-import SliderSwipePlugin from './plugins/SliderSwipePlugin';
-import SliderControlsPlugin from './plugins/SliderControlsPlugin';
-import SliderDotsPlugin from './plugins/SliderDotsPlugin';
-import SliderCounterPlugin from './plugins/SliderCounterPlugin';
-
-
+import Module from "./Module";
+import ColumnsModule from "./ColumnsModule";
+import CursorModule from "./CursorModule";
+import DraggerModule from "./DraggerModule";
+import DragModule from "./DragModule";
+import SwipeModule from "./SwipeModule";
+import FilterModule from "./FilterModule";
+import FormModule from "./FormModule";
+import FrameModule from "./FrameModule";
+import IntervalModule from "./IntervalModule";
+import KeydownModule from "./KeydownModule";
+import MenuBaseModule from "./MenuBaseModule";
+import MenuModule from "./MenuModule";
+import MenuTimelineModule from "./MenuTimelineModule";
+import PageAjaxModule from "./PageAjaxModule";
+import PageModule from "./PageModule";
+import PaginationModule from "./PaginationModule";
+import TimelineBaseModule from "./TimelineBaseModule";
+import TimelineModule from "./TimelineModule";
+import PopupModule from "./PopupModule";
+import PreloaderModule from "./PreloaderModule";
+import ScrollModule from "./ScrollModule";
+import ScrollAnimateModule from "./ScrollAnimateModule";
+import ScrollAnchorModule from "./ScrollAnchorModule";
+import ScrollViewModule from "./ScrollViewModule";
+import SelectModule from "./SelectModule";
+import SliderModule from "./SliderModule";
+import SliderCanvasModule from "./SliderCanvasModule";
+import TextSplitModule from "./TextSplitModule";
+import TextAnimateModule from "./TextAnimateModule";
+import WheelEventModule from "./WheelEventModule";
+import PageLoadMediaPlugin from "./PageLoadMediaPlugin";
+import PaginationScrollPlugin from "./PaginationScrollPlugin";
+import Plugin from "./Plugin";
+import ScrollDragPlugin from "./ScrollDragPlugin";
+import SliderControlsPlugin from "./SliderControlsPlugin";
+import SliderCounterPlugin from "./SliderCounterPlugin";
+import SliderDotsPlugin from "./SliderDotsPlugin";
+import SliderIntervalPlugin from "./SliderIntervalPlugin";
+import SliderKeydownPlugin from "./SliderKeydownPlugin";
+import SliderDragSwipePlugin from "./SliderDragSwipePlugin";
+import SliderWheelPlugin from "./SliderWheelPlugin";
 
 export {
-
-    utils,
-
-    ResponsiveProp,
-    Event,
-    Ajax,
-    Load,
-    Url,
-    Viewport,
+    generateId,
+    merge,
+    timeoutCallback,
+    domInsertAfter,
+    domChildOf,
+    domRemoveChildren,
+    domChildren,
+    eventListenerAdd,
+    eventListenerGet,
+    eventListenerRemove,
+    normalizeWheel,
+    easing,
+    mathScopeProgress,
+    mathSpreadScopeProgress,
+    getOSName,
+    getBrowserName,
+    getMediaSize,
 
     Application,
 
+    Event,
+    LoadEvent,
+    ViewportEvent,
+    URLEvent,
+    AJAXEvent,
+
+    ResponsiveProp,
+
     Module,
-
-    Frame,
-    Page,
-    PageAjax,
-    Preloader,
-    Text,
-    TextSplit,
-    Timeline,
-    TimelineBase,
-    Scroll,
-    ScrollAnimate,
-    View,
-    Anchor,
-    MenuBase,
-    Menu,
-    MenuTimeline,
-    Slider,
-    Form,
-    Columns,
-    Popup,
-    Select,
-    Wheel,
-    Interval,
-    Pagination,
-    SliderCanvas,
-    Keydown,
-    Dragger,
-    Drag,
-    Swipe,
-    Filter,
-    Cursor,
-
     Plugin,
+
+    ColumnsModule,
+    CursorModule,
+    
+    DraggerModule,
+    DragModule,
+    SwipeModule,
+    
+    FilterModule,
+    FormModule,
+    
+    FrameModule,
+    IntervalModule,
+    
+    KeydownModule,
+    
+    MenuBaseModule,
+    MenuModule,
+    MenuTimelineModule,
+    
+    PageAjaxModule,
+    PageModule,
+    PaginationModule,
     PaginationScrollPlugin,
     PageLoadMediaPlugin,
-    ScrollDragPlugin,
-    SliderWheelPlugin,
-    SliderKeydownPlugin,
-    SliderIntervalPlugin,
-    SliderSwipePlugin,
-    SliderControlsPlugin,
-    SliderDotsPlugin,
-    SliderCounterPlugin
+    
+    TimelineBaseModule,
+    TimelineModule,
 
-};
+    PopupModule,
+    PreloaderModule,
+
+    ScrollModule,
+    ScrollAnimateModule,
+    ScrollAnchorModule,
+    ScrollViewModule,
+    ScrollDragPlugin,
+
+    SelectModule,
+
+    SliderModule,
+    SliderCanvasModule,
+    SliderControlsPlugin,
+    SliderCounterPlugin,
+    SliderDotsPlugin,
+    SliderIntervalPlugin,
+    SliderKeydownPlugin,
+    SliderDragSwipePlugin,
+    SliderWheelPlugin,
+
+    TextSplitModule,
+    TextAnimateModule,
+
+    WheelEventModule
+    
+}
+
