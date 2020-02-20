@@ -30,6 +30,7 @@ import ModuleCursor from "./ModuleCursor";
 import ModuleDragger from "./ModuleDragger";
 import ModuleDrag from "./ModuleDrag";
 import ModuleSwipe from "./ModuleSwipe";
+import ModuleFilter from "./ModuleFilter";
 
 export {
     generateId,
@@ -64,7 +65,8 @@ export {
     ModuleCursor,
     ModuleDragger,
     ModuleDrag,
-    ModuleSwipe
+    ModuleSwipe,
+    ModuleFilter
     
 }
 
