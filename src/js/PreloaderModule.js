@@ -1,8 +1,8 @@
 import Module from './Module';
-import Timeline from '../timeline';
 import merge from './merge';
 import easing from './easing';
 import timeoutCallback from './timeoutCallback';
+import TimelineModule from './TimelineModule';
 const selectEl = require('select-el');
 const lerp = require('lerp');
 
@@ -499,7 +499,7 @@ export default class PreloaderModule extends Module {
                     this._progressBool = false;
 
                     // create a timeline animation
-                    let timeline = new Timeline({
+                    let timeline = new TimelineModule({
                         destroyOnEnd: true
                     });
                     timeline.add({
