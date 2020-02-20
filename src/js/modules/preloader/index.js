@@ -159,7 +159,7 @@ export default class Preloader extends Module {
         let prop = this._prop;
 
         // get outer
-        this._outer = utils.element(prop.selector);
+        this._outer = selectEl.one(prop.selector);
         this._outer.classList.add(this._prefix);
 
         // variables

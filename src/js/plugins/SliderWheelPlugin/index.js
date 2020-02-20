@@ -88,7 +88,7 @@ export default class SliderWheelPlugin extends Plugin {
             outer = this._m._outer;
         }
         else {
-            outer = utils.element(outer);
+            outer = selectEl.one(outer);
         }
 
         // add wheel event

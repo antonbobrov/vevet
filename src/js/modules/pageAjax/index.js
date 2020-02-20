@@ -233,7 +233,7 @@ export default class PageAjax extends Module {
         this._visitedLinks = [window.location.href];
 
         // get outer
-        this._outer = utils.element(this._prop.selectors.outer);
+        this._outer = selectEl.one(this._prop.selectors.outer);
 
         // get elements
         this.setLinks();
@@ -262,7 +262,7 @@ export default class PageAjax extends Module {
         this._removeLinksListeners();
 
         // get new links
-        this._links = utils.elements(this._prop.selectors.links);
+        this._links = selectEl.all(this._prop.selectors.links);
         // and set events on them
         this._addLinksListeners();
 

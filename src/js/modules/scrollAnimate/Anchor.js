@@ -154,7 +154,7 @@ export default class Anchor extends ScrollAnimate {
         super._elGet();
 
         // get anchors
-        this._anchors = utils.elements(this._prop.selectors.anchors);
+        this._anchors = selectEl.all(this._prop.selectors.anchors);
 
         // set hrefs
         this._hrefs = [];

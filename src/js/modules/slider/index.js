@@ -267,7 +267,7 @@ export default class Slider extends Module {
             prefix = this._prefix;
 
         // get elements
-        this._outer = utils.element(selectors.outer);
+        this._outer = selectEl.one(selectors.outer);
         this._slidesOuter = this._outer.querySelector(selectors.slides);
         this._slides = this._slidesOuter.querySelectorAll(selectors.slide);
 

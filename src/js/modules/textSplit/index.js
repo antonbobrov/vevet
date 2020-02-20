@@ -159,7 +159,7 @@ export default class TextSplit extends Module {
         super._extra();
 
         // get outer
-        this._outer = utils.element(this._prop.selector);
+        this._outer = selectEl.one(this._prop.selector);
         let outer = this._outer;
         outer.classList.add(`${this._prefix}`);
 

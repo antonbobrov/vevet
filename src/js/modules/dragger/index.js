@@ -121,7 +121,7 @@ export default class Dragger extends Module {
     _getElements() {
 
         // get elements
-        this._outer = utils.element(this._prop.outer);
+        this._outer = selectEl.one(this._prop.outer);
 
         // ignore outer
         if (this._prop.ignoreOuter) {

@@ -127,7 +127,7 @@ export default class Form extends Module {
     _getElements() {
         
         // form itself
-        this._outer = utils.element(this._prop.selectors.form);
+        this._outer = selectEl.one(this._prop.selectors.form);
         let outer = this._outer;
 
         // elements

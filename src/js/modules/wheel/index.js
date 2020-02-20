@@ -81,7 +81,7 @@ export default class Wheel extends Module {
         this._time = +new Date();
 
         // get element
-        this._outer = utils.element(this._prop.outer);
+        this._outer = selectEl.one(this._prop.outer);
 
     }
 

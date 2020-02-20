@@ -249,7 +249,7 @@ export default class Pagination extends Module {
      */
     _elementsGet() {
 
-        this._outer = utils.element(this._prop.selector);
+        this._outer = selectEl.one(this._prop.selector);
 
     }
 

@@ -267,7 +267,7 @@ export default class Select extends Module {
     _elementsGet() {
 
         // get select element
-        this._select = utils.element(this._prop.selector);
+        this._select = selectEl.one(this._prop.selector);
         this._select.style.display = 'none';
 
         // multiple

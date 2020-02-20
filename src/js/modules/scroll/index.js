@@ -282,11 +282,11 @@ export default class Scroll extends Module {
             selectors = prop.selectors;
 
         // get outer
-        this._outer = utils.element(selectors.outer);
+        this._outer = selectEl.one(selectors.outer);
         this._outer.classList.add(this._prefix);
 
         // get elements
-        this._el = utils.elements(selectors.elements);
+        this._el = selectEl.all(selectors.elements);
         let el = this._el;
         // count of elements
         this._length = el.length;

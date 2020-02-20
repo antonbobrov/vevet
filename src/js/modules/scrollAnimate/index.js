@@ -183,7 +183,7 @@ export default class ScrollAnimate extends Module {
             isModule = true;
         }
         else {
-            let el = utils.element(selectorOuter);
+            let el = selectEl.one(selectorOuter);
             this._vevetScroll = el;
             this._outer = el;
         }
@@ -194,7 +194,7 @@ export default class ScrollAnimate extends Module {
             this._el = this._outer.querySelectorAll(selectorElements);
         }
         else {
-            this._el = utils.elements(selectorElements);
+            this._el = selectEl.all(selectorElements);
         }
 
         // set scrolling events

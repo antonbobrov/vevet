@@ -183,7 +183,7 @@ export default class Filter extends Module {
         this._groups = [];
 
         // get dom groups
-        let items = utils.elements(this._prop.selectors.group);
+        let items = selectEl.all(this._prop.selectors.group);
         items.forEach(el => {
 
             // get the group's id
@@ -216,7 +216,7 @@ export default class Filter extends Module {
         this._clearFilters();
 
         // get dom groups
-        let items = utils.elements(this._prop.selectors.filter),
+        let items = selectEl.all(this._prop.selectors.filter),
             i = 0;
         items.forEach(el => {
 

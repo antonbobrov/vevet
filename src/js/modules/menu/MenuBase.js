@@ -122,8 +122,8 @@ export default class MenuBase extends Module {
 
         let selectors = this._prop.selectors;
         
-        this._outer = utils.element(selectors.outer);
-        this._button = utils.element(selectors.button);
+        this._outer = selectEl.one(selectors.outer);
+        this._button = selectEl.one(selectors.button);
 
     }
 
