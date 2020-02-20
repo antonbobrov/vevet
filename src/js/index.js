@@ -32,6 +32,7 @@ import ModuleDrag from "./ModuleDrag";
 import ModuleSwipe from "./ModuleSwipe";
 import ModuleFilter from "./ModuleFilter";
 import ModuleForm from "./ModuleForm";
+import ModuleFrame from "./ModuleFrame";
 
 export {
     generateId,
@@ -68,7 +69,8 @@ export {
     ModuleDrag,
     ModuleSwipe,
     ModuleFilter,
-    ModuleForm
+    ModuleForm,
+    ModuleFrame
     
 }
 

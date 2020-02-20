@@ -17,7 +17,7 @@ import utils from '../../core/utils';
  * @class
  * @memberof Vevet
  * @augments Vevet.Slider
- * @requires Vevet.Frame
+ * @requires Vevet.ModuleFrame
  */
 export default class SliderCanvas extends Slider {
 
@@ -140,7 +140,7 @@ export default class SliderCanvas extends Slider {
         this._loadedAll = false;
         /**
          * @description Frame settings.
-         * @type {Vevet.Frame}
+         * @type {Vevet.ModuleFrame}
          * @protected
          */
         this._autoframe = new Frame({
