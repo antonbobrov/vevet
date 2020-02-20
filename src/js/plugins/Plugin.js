@@ -1,4 +1,4 @@
-import Module from '../modules/Module';
+import Module from '../Module';
 
 /**
  * @classdesc A base plugin. <br>

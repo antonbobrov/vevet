@@ -1,6 +1,6 @@
 let toObject = require('form-to-object');
 
-import Module from '../Module';
+import Module from '../../Module';
 import utils from '../../core/utils';
 
 /**

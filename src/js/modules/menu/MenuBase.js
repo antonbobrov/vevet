@@ -1,5 +1,5 @@
 import utils from '../../core/utils';
-import Module from '../Module';
+import Module from '../../Module';
 
 /**
  * @classdesc A base class for creating pop-up menus. 

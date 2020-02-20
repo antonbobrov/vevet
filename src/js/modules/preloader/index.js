@@ -1,4 +1,4 @@
-import Module from '../Module';
+import Module from '../../Module';
 import Timeline from '../timeline';
 import utils from '../../core/utils';
 

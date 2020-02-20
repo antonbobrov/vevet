@@ -1,7 +1,7 @@
 const dom = require('dom-create-element');
 
 import utils from '../../core/utils';
-import Module from '../Module';
+import Module from '../../Module';
 
 /**
  * @classdesc Show your content in multi-level pop-up windows. Here there are several types of popups. <br>

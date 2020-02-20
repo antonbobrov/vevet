@@ -1,4 +1,4 @@
-import Module from '../Module';
+import Module from '../../Module';
 
 /**
  * @classdesc Intervals. It is based on the "setInterval" function, 

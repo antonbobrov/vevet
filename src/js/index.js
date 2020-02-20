@@ -24,6 +24,7 @@ import EventURL from "./EventURL";
 import EventAJAX from "./EventAJAX";
 
 import ResponsiveProp from "./ResponsiveProp";
+import Module from "./Module";
 
 export {
     generateId,
@@ -51,7 +52,9 @@ export {
     EventURL,
     EventAJAX,
 
-    ResponsiveProp
+    ResponsiveProp,
+
+    Module
     
 }
 
