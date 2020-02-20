@@ -72,7 +72,7 @@ export default class PageAjax extends Module {
      * @property {string} [pageChange.create=updated] - {@linkcode Vevet.Page#create}
      * @property {string} [pageChange.show=done] - {@linkcode Vevet.Page#show}
      * 
-     * @property {boolean} [cache=false] - If we need to store ajax responses in cache {@linkcode Vevet.Ajax#cache}.
+     * @property {boolean} [cache=false] - If we need to store ajax responses in cache {@linkcode Vevet.EventAJAX#cache}.
      * 
      * @property {boolean} [changeSame=true] - Defines if a new page with the same URL can be loaded.
      * 
@@ -579,7 +579,7 @@ export default class PageAjax extends Module {
      * @param {boolean} data.push - Defines if you need to push the new url to the history.
      * @param {boolean} data.popstate - Defines if the action is called on popstate.
      * @param {string} href  - Url.
-     * @param {Vevet.Ajax.CacheItem} ajax - Ajax request & response data.
+     * @param {Vevet.EventAJAX.CacheItem} ajax - Ajax request & response data.
      */
     _loadSuccess(data, href, ajax) {
 
@@ -599,7 +599,7 @@ export default class PageAjax extends Module {
      * @param {boolean} data.push - Defines if you need to push the new url to the history.
      * @param {boolean} data.popstate - Defines if the action is called on popstate.
      * @param {string} href  - Url.
-     * @param {Vevet.Ajax.CacheItem} ajax - Ajax request & response data.
+     * @param {Vevet.EventAJAX.CacheItem} ajax - Ajax request & response data.
      */
     _loadError(data, href, ajax) {
 
@@ -617,7 +617,7 @@ export default class PageAjax extends Module {
     /**
      * @memberof Vevet.PageAjax
      * @typedef {object} EventLoaded
-     * @property {Vevet.Ajax.CacheItem} ajax - Ajax request & response data.
+     * @property {Vevet.EventAJAX.CacheItem} ajax - Ajax request & response data.
      * @property {string} response - HTML of the whole page.
      * @property {string} html - innerHTML of the new outer.
      * @property {HTMLElement} e - An abstract html element with new html.
@@ -637,7 +637,7 @@ export default class PageAjax extends Module {
      * @param {boolean} data.push - Defines if you need to push the new url to the history.
      * @param {boolean} data.popstate - Defines if the action is called on popstate.
      * @param {string} href - Url.
-     * @param {Vevet.Ajax.CacheItem} ajax - Ajax request & response data.
+     * @param {Vevet.EventAJAX.CacheItem} ajax - Ajax request & response data.
      */
     _update(data, href, ajax) {
 

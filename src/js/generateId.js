@@ -9,11 +9,11 @@
  * 
  * @example 
  * 
- * Vevet.id('name');
+ * Vevet.generateId('name');
  * // => 'name_1563641265586_284'
  */
 
-function id (prefix = 'id') {
+function generateId (prefix = 'id') {
 
     let id = `${+new Date()}_${Math.round(Math.random() * 1000)}`;
 
@@ -21,4 +21,4 @@ function id (prefix = 'id') {
 
 }
 
-export default id;
+export default generateId;

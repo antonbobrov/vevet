@@ -697,7 +697,7 @@ export default class Pagination extends Module {
      * @param {boolean} reload - If thru {@linkcode Vevet.Pagination#reload}.
      * @param {number} num - The order number of the page to be loaded.
      * @param {boolean} pagination - Defines if the action was called due a pagination click.
-     * @param {Vevet.Ajax.CacheItem} data - Ajax response.
+     * @param {Vevet.EventAJAX.CacheItem} data - Ajax response.
      * @private
      */
     _loadSuccess(reload, num, pagination, data) {

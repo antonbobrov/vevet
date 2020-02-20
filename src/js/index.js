@@ -1,4 +1,4 @@
-import id from "./id";
+import generateId from "./generateId";
 import merge from "./merge";
 import timeoutCallback from "./timeoutCallback";
 import domInsertAfter from "./domInsertAfter";
@@ -16,8 +16,17 @@ import getOSName from "./getOsName";
 import getBrowserName from "./getBrowserName";
 import getMediaSize from "./getMediaSize";
 
+import Application from "./Application";
+
+import EventLoad from "./EventLoad";
+import EventViewport from "./EventViewport";
+import EventURL from "./EventURL";
+import EventAJAX from "./EventAJAX";
+
+import ResponsiveProp from "./ResponsiveProp";
+
 export {
-    id,
+    generateId,
     merge,
     timeoutCallback,
     domInsertAfter,
@@ -34,5 +43,15 @@ export {
     getOSName,
     getBrowserName,
     getMediaSize,
+
+    Application,
+
+    EventLoad,
+    EventViewport,
+    EventURL,
+    EventAJAX,
+
+    ResponsiveProp
+    
 }
 

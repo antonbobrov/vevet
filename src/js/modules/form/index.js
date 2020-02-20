@@ -7,7 +7,7 @@ import utils from '../../core/utils';
  * @classdesc A class for creating an ajax form. <br>
  * Available targets:
  *  <ul>
- *      <li>success - If success. Each callback receives {@linkcode Vevet.Ajax.CacheItem} as an argument.</li>
+ *      <li>success - If success. Each callback receives {@linkcode Vevet.EventAJAX.CacheItem} as an argument.</li>
  *      <li>failure - If failure. Each callback receives {@linkcode Vevet.Form.ErrorCallback} as an argument.</li>
  *  </ul>
  * <br><br> <b>import {Form} from 'vevet';</b>
@@ -470,7 +470,7 @@ export default class Form extends Module {
     /**
      * @memberof Vevet.Form
      * @typedef {object} ErrorCallback
-     * @property {Vevet.Ajax.CacheItem} data - Response data.
+     * @property {Vevet.EventAJAX.CacheItem} data - Response data.
      * @property {Array<Vevet.Form.Error>} errors - Array of errors.
      */
 

@@ -1,6 +1,6 @@
-import Event from '../events/Event';
+import Event from '../Event';
 import utils from '../core/utils';
-import ResponsiveProp from '../events/ResponsiveProp';
+import ResponsiveProp from '../ResponsiveProp';
 const isarray = require('isarray');
 
 /**
