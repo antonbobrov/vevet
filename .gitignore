@@ -9,5 +9,7 @@ types/
 
 /src/js/plugins/ScrollClampPlugin/
 /src/js/plugins/SliderMovePlugin/
+/src/js/ScrollClampPlugin.js
+/src/js/SliderMovePlugin.js
 
 package-lock.json
