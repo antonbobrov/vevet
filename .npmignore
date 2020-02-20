@@ -3,7 +3,6 @@
 docs/
 jsdoc/
 node_modules/
-old/
 public/
 src/
 tests/

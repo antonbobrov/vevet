@@ -2,7 +2,6 @@
 dist/
 docs/
 node_modules/
-old/
 public/
 tests/
 types/
