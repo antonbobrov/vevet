@@ -4,7 +4,6 @@ import URLEvent from './URLEvent';
 import AJAXEvent from './AJAXEvent';
 import getBrowserName from './getBrowserName';
 import getOsName from './getOsName';
-import { getOSName } from './index';
 
 /**
  * @classdesc Vevet Application
@@ -302,7 +301,7 @@ export default class Application {
     get os() {
 
         this._html.classList.remove(`${this._prefix}os_${this._os}`);
-        this._os = getOSName();
+        this._os = getOsName();
         this._html.classList.add(`${this._prefix}os_${this._os}`);
     
         return this._os;

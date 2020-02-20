@@ -12,7 +12,7 @@ import normalizeWheel from "./normalizeWheel";
 import easing from "./easing";
 import mathScopeProgress from "./mathScopeProgress";
 import mathSpreadScopeProgress from "./mathSpreadScopeProgress";
-import getOSName from "./getOsName";
+import getOsName from "./getOsName";
 import getBrowserName from "./getBrowserName";
 import getMediaSize from "./getMediaSize";
 
@@ -84,7 +84,7 @@ export {
     easing,
     mathScopeProgress,
     mathSpreadScopeProgress,
-    getOSName,
+    getOsName,
     getBrowserName,
     getMediaSize,
 
