@@ -51,6 +51,8 @@ import ScrollAnimateModule from "./ScrollAnimateModule";
 import ScrollAnchorModule from "./ScrollAnchorModule";
 import ScrollViewModule from "./ScrollViewModule";
 import SelectModule from "./SelectModule";
+import SliderModule from "./SliderModule";
+import SliderCanvasModule from "./SliderCanvasModule";
 
 export {
     generateId,
@@ -116,7 +118,10 @@ export {
     ScrollAnchorModule,
     ScrollViewModule,
 
-    SelectModule
+    SelectModule,
+
+    SliderModule,
+    SliderCanvasModule
     
 }
 

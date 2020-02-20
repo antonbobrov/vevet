@@ -64,7 +64,7 @@ export default class SliderControlsPlugin extends Plugin {
      * @member Vevet.SliderControlsPlugin#_m
      * @memberof Vevet.SliderControlsPlugin
      * @protected
-     * @type {Vevet.Slider|Vevet.SliderCanvas}
+     * @type {Vevet.SliderModule|Vevet.SliderCanvasModule}
      */
 
 

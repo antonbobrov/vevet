@@ -68,7 +68,7 @@ export default class SliderIntervalPlugin extends Plugin {
      * @member Vevet.SliderIntervalPlugin#_m
      * @memberof Vevet.SliderIntervalPlugin
      * @protected
-     * @type {Vevet.Slider|Vevet.SliderCanvas}
+     * @type {Vevet.SliderModule|Vevet.SliderCanvasModule}
      */
 
 

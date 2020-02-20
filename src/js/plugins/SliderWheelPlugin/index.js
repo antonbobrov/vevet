@@ -71,7 +71,7 @@ export default class SliderWheelPlugin extends Plugin {
      * @member Vevet.SliderWheelPlugin#_m
      * @memberof Vevet.SliderWheelPlugin
      * @protected
-     * @type {Vevet.Slider|Vevet.SliderCanvas}
+     * @type {Vevet.SliderModule|Vevet.SliderCanvasModule}
      */
 
 

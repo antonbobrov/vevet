@@ -74,7 +74,7 @@ export default class SliderSwipePlugin extends Plugin {
      * @member Vevet.SliderSwipePlugin#_m
      * @memberof Vevet.SliderSwipePlugin
      * @protected
-     * @type {Vevet.Slider|Vevet.SliderCanvas}
+     * @type {Vevet.SliderModule|Vevet.SliderCanvasModule}
      */
 
 

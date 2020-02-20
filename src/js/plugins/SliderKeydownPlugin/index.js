@@ -68,7 +68,7 @@ export default class SliderKeydownPlugin extends Plugin {
      * @member Vevet.SliderKeydownPlugin#_m
      * @memberof Vevet.SliderKeydownPlugin
      * @protected
-     * @type {Vevet.Slider|Vevet.SliderCanvas}
+     * @type {Vevet.SliderModule|Vevet.SliderCanvasModule}
      */
 
 

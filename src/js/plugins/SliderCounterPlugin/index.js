@@ -64,7 +64,7 @@ export default class SliderCounterPlugin extends Plugin {
      * @member Vevet.SliderCounterPlugin#_m
      * @memberof Vevet.SliderCounterPlugin
      * @protected
-     * @type {Vevet.Slider|Vevet.SliderCanvas}
+     * @type {Vevet.SliderModule|Vevet.SliderCanvasModule}
      */
 
 

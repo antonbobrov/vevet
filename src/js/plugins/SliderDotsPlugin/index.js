@@ -64,7 +64,7 @@ export default class SliderDotsPlugin extends Plugin {
      * @member Vevet.SliderDotsPlugin#_m
      * @memberof Vevet.SliderDotsPlugin
      * @protected
-     * @type {Vevet.Slider|Vevet.SliderCanvas}
+     * @type {Vevet.SliderModule|Vevet.SliderCanvasModule}
      */
 
 
