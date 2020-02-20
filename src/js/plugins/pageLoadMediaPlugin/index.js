@@ -18,7 +18,7 @@ export default class PageLoadMediaPlugin extends Plugin {
      * @typedef {object} Properties
      * @augments Vevet.Plugin.Properties
      * 
-     * @property {boolean} [images=true] - *** Defines if all images inside the page will be loaded before showing the page. Even if you call {@linkcode Vevet.Page#show}, the page will be shown only when images will be loaded.
+     * @property {boolean} [images=true] - *** Defines if all images inside the page will be loaded before showing the page. Even if you call {@linkcode Vevet.ModulePage#show}, the page will be shown only when images will be loaded.
      * @property {boolean} [videos=true] - *** The same thing but about videos.
      * @property {boolean} [bg=true] - *** The same thing but about background images.
      * @property {boolean} [bgSelector=.bg] - *** Background images selector.
@@ -70,7 +70,7 @@ export default class PageLoadMediaPlugin extends Plugin {
      * @member Vevet.PageLoadMediaPlugin#_m
      * @memberof Vevet.PageLoadMediaPlugin
      * @protected
-     * @type {Vevet.Page}
+     * @type {Vevet.ModulePage}
      */
 
 

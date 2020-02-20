@@ -196,15 +196,15 @@ export default class Application {
         
         /**
          * @description An array of existing pages.
-         * A new element is added to the array when {@linkcode Vevet.Page#create} is called.
-         * @type {Array<Vevet.Page>}
+         * A new element is added to the array when {@linkcode Vevet.ModulePage#create} is called.
+         * @type {Array<Vevet.ModulePage>}
          */
         this.vevetPages = [];
         /**
-         * @description The active page. See {@linkcode Vevet.Page}.
-         * Its value is false when no page is active and {@linkcode Vevet.Page}
-         * if a page is created through {@linkcode Vevet.Page#create}
-         * @type {Vevet.Page|boolean}
+         * @description The active page. See {@linkcode Vevet.ModulePage}.
+         * Its value is false when no page is active and {@linkcode Vevet.ModulePage}
+         * if a page is created through {@linkcode Vevet.ModulePage#create}
+         * @type {Vevet.ModulePage|boolean}
          */
         this.vevetPage = false;
 

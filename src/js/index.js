@@ -40,6 +40,9 @@ import ModuleMenuTimeline from "./ModuleMenuTimeline";
 import ModuleMenu from "./ModuleMenu";
 import ModuleTimeline from "./ModuleTimeline";
 import ModuleTimelineBase from "./ModuleTimelineBase";
+import ModulePage from "./ModulePage";
+import ModulePageAjax from "./ModulePageAjax";
+import ModulePagination from "./ModulePagination";
 
 export {
     generateId,
@@ -88,7 +91,11 @@ export {
     ModuleMenu,
 
     ModuleTimeline,
-    ModuleTimelineBase
+    ModuleTimelineBase,
+
+    ModulePage,
+    ModulePageAjax,
+    ModulePagination
     
 }
 

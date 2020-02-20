@@ -4,7 +4,7 @@ import generateId from './generateId';
 const selectEl = require('select-el');
 
 /**
- * @classdesc This class is to create filters. It works together with {@linkcode Vevet.Pagination} <br>
+ * @classdesc This class is to create filters. It works together with {@linkcode Vevet.ModulePagination} <br>
  * Available targets:
  *  <ul>
  *      <li>popstate</li>
@@ -50,7 +50,7 @@ export default class ModuleFilter extends Module {
      * @property {boolean} [popstate.reload=false] - Reload on popstate.
      * @property {number} [popstate.timeout=300]
      * 
-     * @property {Vevet.Pagination} pagination - Pagination Module.
+     * @property {Vevet.ModulePagination} pagination - Pagination Module.
      * 
      */
     /**
@@ -111,7 +111,7 @@ export default class ModuleFilter extends Module {
      * @typedef {object} ChangeProperties
      * @augments Vevet.ModuleFilter.Properties
      * 
-     * @property {Vevet.Pagination} [pagination]
+     * @property {Vevet.ModulePagination} [pagination]
      * 
      */
 
