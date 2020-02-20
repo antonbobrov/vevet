@@ -9,7 +9,7 @@ import Wheel from '../../modules/wheel';
  * @class
  * @memberof Vevet
  * @augments Vevet.Plugin
- * @requires Vevet.Wheel
+ * @requires Vevet.WheelEventModule
  */
 export default class SliderWheelPlugin extends Plugin {
 

@@ -53,6 +53,9 @@ import ScrollViewModule from "./ScrollViewModule";
 import SelectModule from "./SelectModule";
 import SliderModule from "./SliderModule";
 import SliderCanvasModule from "./SliderCanvasModule";
+import TextSplitModule from "./TextSplitModule";
+import TextAnimateModule from "./TextAnimateModule";
+import WheelEventModule from "./WheelEventModule";
 
 export {
     generateId,
@@ -121,7 +124,12 @@ export {
     SelectModule,
 
     SliderModule,
-    SliderCanvasModule
+    SliderCanvasModule,
+
+    TextSplitModule,
+    TextAnimateModule,
+
+    WheelEventModule
     
 }
 
