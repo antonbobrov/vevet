@@ -34,7 +34,7 @@ let app = new Vevet.Application({
 Now you can use all features of the library. F.e., include some modules:
 ```js
 // initialize preloader
-let preloader = new Vevet.Preloader({
+let preloader = new Vevet.PreloaderModule({
     selector: '.my-preloader',
     progress: {
         on: true,

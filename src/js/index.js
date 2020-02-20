@@ -45,6 +45,7 @@ import PaginationModule from "./PaginationModule";
 import TimelineBaseModule from "./TimelineBaseModule";
 import TimelineModule from "./TimelineModule";
 import PopupModule from "./PopupModule";
+import PreloaderModule from "./PreloaderModule";
 
 export {
     generateId,
@@ -102,7 +103,8 @@ export {
     TimelineBaseModule,
     TimelineModule,
 
-    PopupModule
+    PopupModule,
+    PreloaderModule
     
 }
 
