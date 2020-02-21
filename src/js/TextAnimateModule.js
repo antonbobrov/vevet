@@ -659,5 +659,5 @@ export default class TextAnimateModule extends TextSplitModule {
 
 }
 
-Text.prototype.animate_elementary = elementary;
-Text.prototype.animate_composite_elementary = composite_elementary;
+TextAnimateModule.prototype.animate_elementary = elementary;
+TextAnimateModule.prototype.animate_composite_elementary = composite_elementary;
