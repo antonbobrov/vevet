@@ -51,12 +51,7 @@ export default class PageAjaxModule extends Module {
      * @property {boolean} [update.title=true]
      * @property {object} [update.content=true]
      * 
-     * @property {object} [menuLinks] - Update menu links.
-     * @property {boolean} [menuLinks.update=true] - If true, {@linkcode menuLinks.class} will be added to active links and it will be removed from none-active ones.
-     * @property {string} [menuLinks.class=active] - Name of the class for active links.
-     * @property {string} [menuLinks.compare=href] - The attribute that will help to match old and new links.
-     * @property {string} [menuLinks.selectorNew=.menu a]
-     * @property {string} [menuLinks.selectorOld=.menu a]
+     * @property {Vevet.PageAjaxModule.MenuLinks} [menuLinks] - Update menu links.
      * 
      * @property {object} [timeouts]
      * @property {number} [timeouts.load=100] - Timeout before an ajax request will be sent.
@@ -83,6 +78,18 @@ export default class PageAjaxModule extends Module {
      * @property {Array<number>} [ajax.successCodes=[404]] - List of response codes that will not be accepted as errors. Otherwise the page will be reloaded.
      * 
      */
+
+    /**
+     * @memberof Vevet.PageAjaxModule
+     * @typedef {object} MenuLinks
+     * 
+     * @property {boolean} [update=true] - If true, {@linkcode menuLinks.class} will be added to active links and it will be removed from none-active ones.
+     * @property {string} [class=active] - Name of the class for active links.
+     * @property {string} [compare=href] - The attribute that will help to match old and new links.
+     * @property {string} [selectorNew=.menu a]
+     * @property {string} [selectorOld=.menu a]
+     */
+
     /**
      * @alias Vevet.PageAjaxModule
      * 
@@ -714,7 +721,7 @@ export default class PageAjaxModule extends Module {
         this._updateTitle(data);
         this._updateHTML(data);
         if (this._prop.menuLinks.update) {
-            this._updateMenuLinks(data);
+            this._updateMenuLinks(data, this.prop.menuLinks);
         }
         this._updatePageData(data);
 
@@ -776,11 +783,20 @@ export default class PageAjaxModule extends Module {
 
     /**
      * @description Update menu links.
+     * @param {Vevet.PageAjaxModule.MenuLinks} menuLinks
      */
-    updateMenuLinks() {
+    updateMenuLinks(menuLinks = this.prop.menuLinks) {
+
+        menuLinks = merge({
+            update: true,
+            class: 'active',
+            compare: 'href',
+            selectorNew: '.menu a',
+            selectorOld: '.menu a'
+        }, menuLinks);
 
         if (Object.keys(this._lastData).length > 0) {
-            this._updateMenuLinks(this._lastData);
+            this._updateMenuLinks(this._lastData, menuLinks);
         }
         
     }
@@ -789,11 +805,9 @@ export default class PageAjaxModule extends Module {
      * @description Update menu links.
      * @private
      * @param {Vevet.PageAjaxModule.EventLoaded} data - Ajax data.
+     * @param {Vevet.PageAjaxModule.MenuLinks} menuLinks
      */
-    _updateMenuLinks(data) {
-
-        // get prop
-        let menuLinks = this._prop.menuLinks;
+    _updateMenuLinks(data, menuLinks) {
 
         // get links
         let el = {
