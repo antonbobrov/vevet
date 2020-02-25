@@ -260,10 +260,6 @@ export default class FilterModule extends Module {
                 let event = this.listener(el, "click", this.filterClick.bind(this, el));
                 this._filtersEvents.push(event);
 
-                if (el.classList.contains(`${this._prefix}__filter_active`)) {
-                    console.log(el)
-                }
-
             }
 
             i++;
