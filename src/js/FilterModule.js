@@ -169,6 +169,15 @@ export default class FilterModule extends Module {
         return this._filters;
     }
 
+    /**
+     * @description Get filter groups.
+     * @type {Array<Vevet.FilterModule.Group>}
+     * @readonly
+     */
+    get groups() {
+        return this._groups;
+    }
+
 
 
     /**
