@@ -204,6 +204,13 @@ export default class PageAjaxModule extends Module {
         return this._loading;
     }
 
+    /**
+     * @type {Vevet.PageAjaxModule.EventLoaded}
+     */
+    get lastData() {
+        return this._lastData;
+    }
+
 
 
     // Extra Constructor
