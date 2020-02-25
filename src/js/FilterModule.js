@@ -154,10 +154,19 @@ export default class FilterModule extends Module {
 
         // get elements
         this._elementsGet();
-        this.setFilters();
+        this.setFilters(true);
         
         this._json = this._getFiltersQuery();
 
+    }
+
+    /**
+     * @description Get filters.
+     * @type {Array<Vevet.FilterModule.Filter>}
+     * @readonly
+     */
+    get filters() {
+        return this._filters;
     }
 
 
@@ -231,7 +240,7 @@ export default class FilterModule extends Module {
                 let obj = {
                     el: el,
                     group: group,
-                    active: false,
+                    active: el.classList.contains(`${this._prefix}__filter_active`),
                     disabled: false,
                     unique_id: generateId(i),
                     id: id
@@ -241,6 +250,10 @@ export default class FilterModule extends Module {
                 // set events
                 let event = this.listener(el, "click", this.filterClick.bind(this, el));
                 this._filtersEvents.push(event);
+
+                if (el.classList.contains(`${this._prefix}__filter_active`)) {
+                    console.log(el)
+                }
 
             }
 
@@ -571,8 +584,12 @@ export default class FilterModule extends Module {
     /**
      * @description Set filter properties and classes according to the url. This happens
      * while initializing the class.
+     * @param {boolean} considerClasses - Set true if you need to take into consideration active classes
+     * of the filters. It is used on initialization.
      */
-    setFilters() {
+    setFilters(considerClasses = false) {
+
+        const classActive = `${this._prefix}__filter_active`;
 
         // go thru all groups and search groups that exist in the URL
         this._groups.forEach(group => {
@@ -592,6 +609,11 @@ export default class FilterModule extends Module {
                     }
                     else {
                         filter.active = false;
+                        if (considerClasses) {
+                            if (filter.el.classList.contains(classActive)) {
+                                filter.active = true;
+                            }
+                        }
                     }
                 });
 
@@ -601,6 +623,11 @@ export default class FilterModule extends Module {
                 let filters = this._getFiltersByGroupID(group.id);
                 filters.forEach(filter => {
                     filter.active = false;
+                    if (considerClasses) {
+                        if (filter.el.classList.contains(classActive)) {
+                            filter.active = true;
+                        }
+                    }
                 });
             }
 
