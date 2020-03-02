@@ -1,5 +1,5 @@
 @import './settings';
-@import '../../mixins/';
+@import '../../mixins/index';
 
 .#{$prefix}scroll {
     @include absolute(top-left, 12, 12);
