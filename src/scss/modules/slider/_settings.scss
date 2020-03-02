@@ -1,0 +1,35 @@
+@import '../../prefix';
+
+$slider-control-width: 30px !default;
+$slider-control-height: 30px !default;
+$slider-control-radius: 50% !default;
+$slider-control-bg: #000 !default;
+
+$slider-prev-top: 50% !default;
+$slider-prev-right: auto !default;
+$slider-prev-bottom: auto !default;
+$slider-prev-left: 25px !default;
+$slider-prev-margin: -15px 0 0 0 !default;
+
+$slider-next-top: 50% !default;
+$slider-next-right: 25px !default;
+$slider-next-bottom: auto !default;
+$slider-next-left: auto !default;
+$slider-next-margin: -15px 0 0 0 !default;
+
+$slider-dots-top: auto !default;
+$slider-dots-right: auto !default;
+$slider-dots-bottom: 25px !default;
+$slider-dots-left: auto !default;
+
+$slider-dot-width: 10px !default;
+$slider-dot-height: 10px !default;
+$slider-dot-radius: 50% !default;
+$slider-dot-bg: #000 !default;
+$slider-dot-margin: 0 10px !default;
+
+$slider-counter-top: auto !default;
+$slider-counter-right: auto !default;
+$slider-counter-bottom: 50px !default;
+$slider-counter-left: auto !default;
+$slider-counter-margins: 0 10px !default;

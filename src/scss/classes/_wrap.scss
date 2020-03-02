@@ -1,0 +1,31 @@
+$wrap-padding: 0 !default;
+$wrap-1-padding: 0 4vw !default;
+$wrap-2-padding: 0 8vw !default;
+$wrap-3-padding: 0 12vw !default;
+$wrap-4-padding: 0 16vw !default;
+
+.wrap {
+    padding: $wrap-padding;
+    width: 100%;
+
+    &_1 {
+        @extend .wrap;
+        padding: $wrap-1-padding;
+    }
+
+    &_2 {
+        @extend .wrap;
+        padding: $wrap-2-padding;
+    }
+
+    &_3 {
+        @extend .wrap;
+        padding: $wrap-3-padding;
+    }
+
+    &_4 {
+        @extend .wrap;
+        padding: $wrap-4-padding;
+    }
+
+}

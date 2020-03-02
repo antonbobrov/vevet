@@ -1,0 +1,42 @@
+@mixin top-left() {
+    bottom: auto;
+    left: 0;
+    right: auto;
+    top: 0;
+}
+
+@mixin top-right() {
+    bottom: auto;
+    left: auto;
+    right: 0;
+    top: 0;
+}
+
+@mixin bottom-left() {
+    bottom: 0;
+    left: 0;
+    right: auto;
+    top: auto;
+}
+
+@mixin bottom-right() {
+    bottom: 0;
+    left: auto;
+    right: 0;
+    top: auto;
+}
+
+@mixin absolute($positionate, $col, $row) {
+    height: percentage($row / 12);
+    position: absolute;
+    @if $positionate == top-left {
+        @include top-left();
+    } @else if $positionate == top-right {
+        @include top-right();
+    } @else if $positionate == bottom-left {
+        @include bottom-left();
+    } @else {
+        @include bottom-right();
+    }
+    width: percentage($col / 12);
+}

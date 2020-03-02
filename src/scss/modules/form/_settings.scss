@@ -1,0 +1,15 @@
+@import '../../prefix';
+
+$form-input-margin: 1rem 0 0 0 !default;
+$form-textarea-height: 150px !default;
+$form-input-font-size: .875rem !default;
+$form-input-padding: 10px 20px !default;
+$form-input-color: #000 !default;
+$form-input-bg: #efefef !default;
+$form-input-border: 1px solid #000 !default;
+$form-disabled-opacity: .5 !default;
+$form-error-border-color: #e60000 !default;
+$form-error-color: #e60000 !default;
+$form-errors-bg: #efefef !default;
+$form-errors-border: 1px solid #e60000 !default;
+$form-errors-color: #e60000 !default;

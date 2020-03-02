@@ -1,0 +1,22 @@
+@import '../../prefix';
+
+$scrollbar-bg: #ccc !default;
+$scrollbar-bar-bg: #000 !default;
+
+$scrollbar-y-top: 10px !default;
+$scrollbar-y-right: 0 !default;
+$scrollbar-y-bottom: auto !default;
+$scrollbar-y-left: auto !default;
+$scrollbar-y-width: 10px !default;
+$scrollbar-y-height: calc(100% - 20px) !default;
+$scrollbar-y-bar-width: 100% !default;
+$scrollbar-y-bar-height: 10% !default;
+
+$scrollbar-x-top: auto !default;
+$scrollbar-x-right: auto !default;
+$scrollbar-x-bottom: 0 !default;
+$scrollbar-x-left: 10px !default;
+$scrollbar-x-width: calc(100% - 20px) !default;
+$scrollbar-x-height: 10px !default;
+$scrollbar-x-bar-width: 10% !default;
+$scrollbar-x-bar-height: 100% !default;

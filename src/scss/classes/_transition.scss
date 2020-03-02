@@ -1,0 +1,22 @@
+@import '../prefix';
+@import '../mixins/transition';
+
+.#{$prefix}no-transition {
+
+    *:not(.#{$prefix}preloader) {
+        
+        &:not(.#{$prefix}preloader__item) {
+            &:not(.#{$prefix}has-transition) {
+                &,
+                &:before,
+                &:after {
+                    animation-delay: 0s !important;
+                    animation-duration: 0s !important;
+                    transition: 0s !important;
+                }
+            }            
+        }
+
+    }
+
+}

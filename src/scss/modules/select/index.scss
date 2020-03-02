@@ -1,0 +1,142 @@
+@import './settings';
+@import '../../mixins/';
+
+.#{$prefix}select {
+    position: relative;
+    width: 100%;
+    background: $select-bg;
+
+    color: $select-color;
+    user-select: none;
+    
+    &__placeholder {
+        position: relative;
+        overflow: hidden;
+        padding: $select-placeholder-padding;
+        border: 1px solid $select-border-color;
+
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        cursor: pointer;
+
+        span {
+            display: block;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+    }
+
+    &__arrow {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: $select-arrow-width;
+        height: 100%;
+        
+        &:before {
+            content: '';
+            position: absolute;
+            display: block;
+            top: 50%;
+            right: calc(50% - 2px);
+            width: 0;
+            height: 0;
+            margin: -2px 0 0 -2px;
+            border: 3px solid transparent;
+            border-top-width: 4px;
+            border-top-color: $select-border-color;
+            border-bottom: 0;
+            z-index: 1;
+        }
+
+    }
+
+    &__container {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        margin: -1px 0 0;
+        border: 1px solid $select-border-color;
+        overflow: hidden;
+        background: $select-container-bg;
+
+        display: none;
+        opacity: 0;
+        @include transition($select-container-animate $select-container-duration, 0s);
+
+        &_opened {
+            display: block;
+        }
+
+        &_animate {
+            opacity: 1;
+        }
+        
+    }
+
+    &__content {
+        position: relative;
+        padding: $select-content-padding;
+        overflow: auto;
+        max-height: $select-content-max-height;
+    }
+
+    &__search {
+        width: 100%;
+
+        &_hide {
+            display: none;
+        }
+
+        input {
+            @include reset-input();
+            width: 100%;
+            height: $select-search-height;
+            padding: $select-search-padding;
+            border: 1px solid $select-border-color;
+            background: $select-search-bg;
+        }
+
+    }
+
+    &__values {
+        @include reset-ul();
+        margin: $select-values-margin;
+
+        &_hide-active {
+
+            .#{$prefix}select {
+                &__value {
+                    &_active {
+                        display: none;
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    &__value {
+        padding: $select-value-padding;
+        margin: $select-value-margin;
+        background: $select-value-bg;
+        color: $select-value-color;
+        cursor: pointer;
+
+        &_active {
+            background: $select-value-bg-active;
+            color: $select-value-color-active;
+        }
+
+        &_hide {
+            display: none;
+        }
+
+    }
+
+}

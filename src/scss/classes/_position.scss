@@ -1,0 +1,55 @@
+@import '../mixins/position';
+
+.top-left {
+    @include top-left();
+}
+
+.top-right {
+    @include top-right();
+}
+
+.bottom-left {
+    @include bottom-left();
+}
+
+.bottom-right {
+    @include bottom-right();
+}
+
+
+
+.relative {
+    position: relative;
+
+    &_important {
+        position: relative !important;
+    }
+
+}
+
+.absolute {
+    position: absolute;
+
+    &_important {
+        position: absolute !important;
+    }
+
+}
+
+.fixed {
+    position: fixed;
+
+    &_important {
+        position: fixed !important;
+    }
+
+}
+
+.static {
+    position: static;
+
+    &_important {
+        position: static !important;
+    }
+
+}

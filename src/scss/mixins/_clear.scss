@@ -1,0 +1,6 @@
+@mixin clear {
+    clear: both;
+    display: block;
+    height: 0;
+    width: 100%;   
+}

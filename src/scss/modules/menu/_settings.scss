@@ -1,0 +1,23 @@
+@import '../../prefix';
+
+$menu-bg: #fff !default;
+$menu-z: 8 !default;
+
+$menu-duration: .5s !default;
+$menu-delay: 0s !default;
+
+$menu-button-bg: #000 !default;
+$menu-button-top: 4vw !default;
+$menu-button-right: 4vw !default;
+$menu-button-bottom: auto !default;
+$menu-button-left: auto !default;
+$menu-button-z: 9 !default;
+$menu-button-width: 30px !default;
+$menu-button-height: 15px !default;
+
+$menu-button-line-1-top: 0 !default;
+$menu-button-line-2-top: 7px !default;
+$menu-button-line-3-top: 14px !default;
+
+$menu-button-line-duration: .5s !default;
+$menu-button-line-delay: 0s !default;

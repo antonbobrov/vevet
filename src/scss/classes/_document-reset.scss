@@ -1,0 +1,28 @@
+@import '../prefix';
+
+.#{$prefix}reset,
+.#{$prefix}reset * {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    
+    box-sizing: border-box;
+
+    outline: none;
+    
+}
+
+.#{$prefix}reset {
+    
+    input,
+    textarea {
+
+        &::-ms-clear {
+            display: none;
+        }
+
+    }
+    
+}

@@ -1,0 +1,24 @@
+.text {
+    position: relative;
+    
+    &-left {
+        text-align: left;
+    }
+
+    &-center {
+        text-align: center;
+    }
+
+    &-right {
+        text-align: right;
+    }
+
+    &-justify {
+        text-align: justify;
+    }
+    
+    p {
+        width: 100%;
+    }
+
+}

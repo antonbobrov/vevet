@@ -1,0 +1,26 @@
+@import '../../prefix';
+
+$popup-duration: .75s !default;
+$popup-count: 3 !default;
+
+$popup-overlay-bg: #000 !default;
+$popup-overlay-alpha: .5 !default;
+
+$popup-level-bg: #fff !default;
+
+$popup-modal-width: 50% !default;
+$popup-modal-height: 50% !default;
+
+$popup-media-width: 60vw !default;
+$popup-media-height: 33.75vw !default;
+
+$popup-content-width: 100% !default;
+$popup-content-height: 100% !default;
+
+$popup-right-width: 30vw !default;
+
+$popup-close-bg: #000 !default;
+$popup-close-width: 36px !default;
+$popup-close-height: 36px !default;
+$popup-close-top: 10px !default;
+$popup-close-right: 10px !default;

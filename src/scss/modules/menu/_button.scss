@@ -1,0 +1,58 @@
+@import './settings';
+@import '../../mixins/';
+
+.#{$prefix}menu-button {
+    position: fixed;
+    top: $menu-button-top;
+    right: $menu-button-right;
+    bottom: $menu-button-bottom;
+    left: $menu-button-left;
+    width: $menu-button-width;
+    height: $menu-button-height;
+    z-index: $menu-button-z;
+
+    &__line {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: $menu-button-bg;
+
+        @include transition((transform $menu-button-line-duration, opacity $menu-button-line-duration), $menu-button-line-delay);
+        animation-fill-mode: both;
+
+        &:nth-child(1) {
+            top: $menu-button-line-1-top;
+        }
+
+        &:nth-child(2) {
+            top: $menu-button-line-2-top;
+        }
+
+        &:nth-child(3) {
+            top: $menu-button-line-3-top;
+        }
+
+    }
+
+    &_close {
+
+        .#{$prefix}menu-button__line {
+    
+            &:nth-child(1) {
+                transform: translate3d(0, $menu-button-line-2-top - $menu-button-line-1-top, 0) rotate(45deg);
+            }
+    
+            &:nth-child(2) {
+                opacity: 0;
+            }
+    
+            &:nth-child(3) {
+                transform: translate3d(0, $menu-button-line-2-top - $menu-button-line-3-top, 0) rotate(-45deg);
+            }
+    
+        }
+
+    }
+
+}

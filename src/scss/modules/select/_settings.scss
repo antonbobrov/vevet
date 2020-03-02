@@ -1,0 +1,28 @@
+@import '../../prefix';
+
+$select-bg: #fff !default;
+$select-border-color: #000 !default;
+$select-color: #000 !default;
+
+$select-placeholder-padding: 10px 30px 10px 10px !default;
+
+$select-arrow-width: 30px !default;
+
+$select-container-bg: #f0f0f0 !default;
+$select-container-animate: opacity !default;
+$select-container-duration: .25s !default;
+
+$select-content-padding: 10px 10px !default;
+$select-content-max-height: 250px !default;
+
+$select-search-height: 40px !default;
+$select-search-bg: #fff !default;
+$select-search-padding: 0 10px !default;
+
+$select-values-margin: 10px 0 0 !default;
+$select-value-padding: 5px 10px !default;
+$select-value-margin: 0 !default;
+$select-value-bg: transparent !default;
+$select-value-bg-active: #ccc !default;
+$select-value-color: #000 !default;
+$select-value-color-active: #000 !default;

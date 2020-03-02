@@ -1,0 +1,19 @@
+@import './settings';
+
+.#{$prefix}columns {
+
+    @for $i from 1 through 12 {
+        $width: percentage(1 / $i);
+
+        &_#{$i} {
+
+            .#{$prefix}columns__column {
+                float: left;
+                width: #{$width};
+            }
+
+        }
+        
+    }
+
+}
