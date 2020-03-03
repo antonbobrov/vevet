@@ -164,6 +164,17 @@ export default class SliderCanvasModule extends SliderModule {
     }
 
 
+    
+    /**
+     * @description If all resources are loaded.
+     * @readonly
+     * @type {boolean}
+     */
+    get loaded() {
+        return this._loadedAll;
+    }
+
+
 
     /**
      * @description Create elements.
