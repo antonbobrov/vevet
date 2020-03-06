@@ -14,7 +14,6 @@ import mathScopeProgress from "./mathScopeProgress";
 import mathSpreadScopeProgress from "./mathSpreadScopeProgress";
 import getOsName from "./getOsName";
 import getBrowserName from "./getBrowserName";
-import getMediaSize from "./getMediaSize";
 
 import Application from "./Application";
 
@@ -86,7 +85,6 @@ export {
     mathSpreadScopeProgress,
     getOsName,
     getBrowserName,
-    getMediaSize,
 
     Application,
 

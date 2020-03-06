@@ -1,8 +1,8 @@
 import SliderModule from './SliderModule';
 import merge from './merge';
 import FrameModule from './FrameModule';
-import getMediaSize from './getMediaSize';
 
+import { get } from 'node-background-size';
 const dom = require('dom-create-element');
 
 /**
@@ -409,13 +409,10 @@ export default class SliderCanvasModule extends SliderModule {
 
         // set sizes
         this._res.forEach(res => {
-            let size = getMediaSize({
+            let size = get({
                 media: res,
-                size: 'cover',
                 width: width,
-                height: height,
-                maxWidth: width,
-                maxHeight: height
+                height: height
             });
             this._resSize.push(size);
         });
