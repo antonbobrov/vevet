@@ -9,9 +9,9 @@ import TimelineModule from './TimelineModule';
  * This menu CAN be closed if the animaiton of its opening has not ended yet and vice versa. <br>
  * Available targets:
  *  <ul>
- *      <li>progress - timeline animation.</li>
- *      <li>progressOuter - animate the outer element.</li>
- *      <li>progressInner - animate inner elements.</li>
+ *      <li>progress - timeline animation. Argument - {@linkcode Vevet.TimelineBaseModule.Data}</li>
+ *      <li>progressOuter - animate the outer element. Argument - {@linkcode Vevet.TimelineBaseModule.Data}</li>
+ *      <li>progressInner - animate inner elements. Argument - {@linkcode Vevet.TimelineBaseModule.Data}</li>
  *      <li>show - when the menu is being opened.</li>
  *      <li>shown - when the menu is opened, the process of animation has ended.</li>
  *      <li>hide - when the menu is being hidden.</li>

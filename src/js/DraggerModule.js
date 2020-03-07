@@ -6,9 +6,9 @@ const selectEl = require('select-el');
  * @classdesc Dragger is the basis for such modules as Drag and Swipe. <br>
  * Available targets:
  *  <ul>
- *      <li>start<li>
- *      <li>end</li>
- *      <li>move</li>
+ *      <li>start - argument {@linkcode Vevet.DraggerModule.Callback}<li>
+ *      <li>end - argument {@linkcode Vevet.DraggerModule.Callback}</li>
+ *      <li>move - argument {@linkcode Vevet.DraggerModule.Callback}</li>
  *      <li>up</li>
  *      <li>down</li>
  *      <li>left</li>

@@ -177,7 +177,7 @@ export default class TextAnimateModule extends TextSplitModule {
      * @memberof Vevet.TextAnimateModule
      * @typedef {object} SettingCallback
      * @property {number} target - The moment of the animation line at which the callback will be launched.
-     * @property {string} do - The callback itself. Each callback wil recieve an object !!!!!!!! as an argument.
+     * @property {string} do - The callback itself. Each callback wil receive an object !!!!!!!! as an argument.
      */
     /**
      * @description Start the animation.

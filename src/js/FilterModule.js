@@ -7,7 +7,7 @@ const selectEl = require('select-el');
  * @classdesc This class is to create filters. It works together with {@linkcode Vevet.PaginationModule} <br>
  * Available targets:
  *  <ul>
- *      <li>popstate</li>
+ *      <li>popstate - argument {@linkcode Vevet.FilterModule.PopstateCallback }</li>
  *      <li>save</li>
  *  </ul>
  * <br><br> <b>import {FilterModule} from 'vevet';</b>
