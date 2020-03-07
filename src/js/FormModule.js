@@ -8,10 +8,13 @@ const selectEl = require('select-el');
  * @classdesc A class for creating an ajax form. <br>
  * Available targets:
  *  <ul>
- *      <li>success - If success. Each callback receives {@linkcode Vevet.AJAXEvent.CacheItem} as an argument.</li>
- *      <li>failure - If failure. Each callback receives {@linkcode Vevet.FormModule.ErrorCallback} as an argument.</li>
+ *      <li>success - If success</li>
+ *      <li>failure - If failure</li>
  *  </ul>
  * <br><br> <b>import {FormModule} from 'vevet';</b>
+ * 
+ * @vevetModuleCallback { Vevet.FormModule : success : Vevet.FormModule.CacheItem}
+ * @vevetModuleCallback { Vevet.FormModule : failure : Vevet.FormModule.ErrorCallback}
  * 
  * @class
  * @memberof Vevet
