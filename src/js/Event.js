@@ -135,12 +135,16 @@ export default class Event {
     /**
      * @memberof Vevet.Event
      * @typedef {object} EventObj
-     * @property {string} [target] The target of the callback. See possible values at the top.
+     * @augments Vevet.Event.EventObjSettings
+     * @property {Function} do Callback itself.
+     */
+    /**
+     * @memberof Vevet.Event
+     * @typedef {object} EventObjSettings
      * @property {string} [name] A Name of the callback if needed. It is useful when you need to trace callbacks from different modules.
      * @property {number} [timeout] A timeout of the callback.
      * @property {boolean} [protected] Defines if the callback can be deleted or not. 
-     * @property {boolean} [once] Defines if the callback will be deleted right after it is launched. 
-     * @property {Function} do Callback itself.
+     * @property {boolean} [once] Defines if the callback will be deleted right after it is launched.
      */
     /**
      * @description All callbacks.
@@ -188,6 +192,7 @@ export default class Event {
      * 
      * @example
      * let id = event.add({
+     *     // if targets are available
      *     target: 'target name',
      *     do: () => {
      *         alert("callback launched");
@@ -225,7 +230,7 @@ export default class Event {
      * 
      * @param {string} target - Event target name.
      * @param {Function} callback - Callback itself.
-     * @param {object} [prop] - See {@linkcode #add} for other settings.
+     * @param {Vevet.Event.EventObjSettings} [prop] - Other settings.
      * 
      * @returns {string} Returns a string with the callback's id.
      * 

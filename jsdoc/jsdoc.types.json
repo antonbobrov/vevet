@@ -1,6 +1,6 @@
 {
     "tags": {
-        "allowUnknownTags": false
+        "allowUnknownTags": true
     },
     "source": {
         "include": ["./src/"],
@@ -9,6 +9,7 @@
     },
     "plugins": [
         "plugins/markdown",
+        "jsdoc/plugins/vevet_module_callbacks",
         "jsdoc/plugins/typedef_augments",
         "@pixi/jsdoc-template/plugins/es6-fix"
     ],
