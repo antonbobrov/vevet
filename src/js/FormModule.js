@@ -13,7 +13,7 @@ const selectEl = require('select-el');
  *  </ul>
  * <br><br> <b>import {FormModule} from 'vevet';</b>
  * 
- * @vevetModuleCallback { Vevet.FormModule : success : Vevet.FormModule.CacheItem}
+ * @vevetModuleCallback { Vevet.FormModule : success : Vevet.AJAXEvent.CacheItem}
  * @vevetModuleCallback { Vevet.FormModule : failure : Vevet.FormModule.ErrorCallback}
  * 
  * @class
