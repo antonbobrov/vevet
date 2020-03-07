@@ -10,9 +10,12 @@ const dom = require('dom-create-element');
  *  Available targets:
  *  <ul>
  *      <li>resize - when window is resizes.</li>
- *      <li>split - when the text is splitted into letters, words & lines.</li>
+ *      <li>split - when the text is splitted into letters, words & lines. Argument - {@linkcode Vevet.TextSplitModule.Elements}</li>
  *  </ul>
  * <br><br> <b>import {TextSplitModule} from 'vevet';</b>
+ * 
+ * @vevetModuleCallback { Vevet.TextSplitModule : resize :  }
+ * @vevetModuleCallback { Vevet.TextSplitModule : split : Vevet.TextSplitModule.Elements }
  * 
  * @class
  * @memberof Vevet

@@ -23,7 +23,7 @@ let composite_elementary = require("./text_animate_module_addons/_composite_elem
  *  Available targets:
  *  <ul>
  *      <li>resize - when window is resizes.</li>
- *      <li>split - when the text is splitted into letters, words & lines.</li>
+ *      <li>split - when the text is splitted into letters, words & lines. Argument - {@linkcode Vevet.TextSplitModule.Elements}</li>
  *  </ul>
  * <br><br> <b>import {TextAnimateModule} from 'vevet';</b>
  * 
@@ -130,11 +130,10 @@ export default class TextAnimateModule extends TextSplitModule {
     }
 
 
-
     /**
      * @memberof Vevet.TextAnimateModule
      * @typedef {object} Settings
-     * @property {Array<string>} [types=['letter']] - Types of animation. All types of animation can be combined! See the types at the top.
+     * @property {Array<'letter'|'word'|'wordletter'|'line'|'lineletter'|'lineword'>} [types=['letter']] - Types of animation. All types of animation can be combined! See the types at the top.
      * @property {number} [durationElement=250] - Duration of animation of each element according to the chosen type of animation.
      * @property {boolean} [durationAuto=true] - Defines if the total duration will be calculated accorging to the totalamount of elements.
      * @property {number} [duration=2500] - Total duration of the animation (will be taken into account only if durationAuto is false).
@@ -153,10 +152,16 @@ export default class TextAnimateModule extends TextSplitModule {
      */
     /**
      * @memberof Vevet.TextAnimateModule
+     * @callback _styleCallback
+     * @param {Vevet.TextAnimateModule.StyleArgument} data
+     * @returns {string}
+     */
+    /**
+     * @memberof Vevet.TextAnimateModule
      * @typedef {object} SettingStyle
      * @property {Array<number>} [scope=[0,1]] - Scope of the animation for each element. It defines the edges of the animation line. Numbers from 0 to 1 are available. F.e., [0, 1].
      * @property {string} [property] - The name of a css property to be changed. You can even skip it if you want to. F.e. you need to create a scramble-text-animation. In this case, you, perhaps will not need to change any css properties, though the "value" could be used as a callback for other changes.
-     * @property {Function} value - A new value of the property. The function will recieve an object {@linkcode Vevet.TextAnimateModule.StyleArgument} as an argument and must return a new value for the property.
+     * @property {Vevet.TextAnimateModule._styleCallback} value - A new value of the property. The function will recieve an object {@linkcode Vevet.TextAnimateModule.StyleArgument} as an argument and must return a new value for the property.
      * @property {boolean} [remove=false] - Defines if we need to remove a css property after its animation is proceeded.
      */
     /**
