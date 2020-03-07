@@ -24,7 +24,7 @@
     "jsdoc/check-indentation": 0,
     "jsdoc/check-param-names": 1,
     "jsdoc/check-syntax": 1,
-    "jsdoc/check-tag-names": 1,
+    "jsdoc/check-tag-names": 0,
     "jsdoc/check-types": 1,
     "jsdoc/implements-on-classes": 1,
     "jsdoc/match-description": 1,
