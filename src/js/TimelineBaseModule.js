@@ -20,6 +20,8 @@ import mathScopeProgress from "./mathScopeProgress";
  *  </ul>
  * <br><br> <b>import {TimelineBaseModule} from 'vevet';</b>
  * 
+ * @vevetModuleCallback { Vevet.TimelineBaseModule : progress : Vevet.TimelineBaseModule.Data }
+ * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module

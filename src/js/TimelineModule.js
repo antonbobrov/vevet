@@ -5,16 +5,24 @@ import TimelineBaseModule from './TimelineBaseModule';
  * @classdesc This class is used for creating & playing timelines.
  * Available targets:
  *  <ul>
- *      <li>play</li>
- *      <li>pause</li>
- *      <li>resume</li>
- *      <li>progress</li>
+ *      <li>play - receives {@linkcode Vevet.TimelineModule.Data} as an argument</li>
+ *      <li>pause - receives {@linkcode Vevet.TimelineModule.Data} as an argument</li>
+ *      <li>resume - receives {@linkcode Vevet.TimelineModule.Data} as an argument</li>
+ *      <li>progress - receives {@linkcode Vevet.TimelineModule.Data} as an argument</li>
  *      <li>end</li>
- *      <li>stop</li>
- *      <li>reverse</li>
+ *      <li>stop - receives {@linkcode Vevet.TimelineModule.Data} as an argument</li>
+ *      <li>reverse - receives {@linkcode Vevet.TimelineModule.Data} as an argument</li>
  *  </ul>
  * Each callback will receive the object {@linkcode Vevet.TimelineBaseModule.Data} as an argument.
  * <br><br> <b>import {TimelineBaseModule} from 'vevet';</b>
+ * 
+ * @vevetModuleCallback { Vevet.TimelineModule : play : Vevet.TimelineModule.Data }
+ * @vevetModuleCallback { Vevet.TimelineModule : pause : Vevet.TimelineModule.Data }
+ * @vevetModuleCallback { Vevet.TimelineModule : resume : Vevet.TimelineModule.Data }
+ * @vevetModuleCallback { Vevet.TimelineModule : progress : Vevet.TimelineModule.Data }
+ * @vevetModuleCallback { Vevet.TimelineModule : end :  }
+ * @vevetModuleCallback { Vevet.TimelineModule : stop : Vevet.TimelineModule.Data }
+ * @vevetModuleCallback { Vevet.TimelineModule : reverse : Vevet.TimelineModule.Data }
  * 
  * @class
  * @memberof Vevet
