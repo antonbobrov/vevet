@@ -16,6 +16,10 @@ const lerp = require('lerp');
  *  </ul>
  * <br><br> <b>import {PreloaderModule} from 'vevet';</b>
  * 
+ * @vevetModuleCallback { Vevet.PreloaderModule : progress : Vevet.PreloaderModule.Callback}
+ * @vevetModuleCallback { Vevet.PreloaderModule : hide :  }
+ * @vevetModuleCallback { Vevet.PreloaderModule : hidden :  }
+ * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
@@ -451,7 +455,7 @@ export default class PreloaderModule extends Module {
         this._progressAnim = p.s;
 
         // callbacks if animation is still in process
-        this.launchByTarget('progress', {
+        this.lbt('progress', {
             progress: this._progressAnim,
             easing: easing(p.s, this._prop.progress.easing),
             loaded: this.resourcesLoaded,
