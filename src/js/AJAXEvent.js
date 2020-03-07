@@ -271,7 +271,7 @@ export default class AJAXEvent extends Event {
      * @property {string} url
      * @property {string} method
      * @property {object} data
-     * @property {object} xhr
+     * @property {XMLHttpRequest} xhr
      */
     /**
      * @description Set cache.

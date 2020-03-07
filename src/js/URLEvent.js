@@ -9,6 +9,9 @@ import Event from './Event';
  *  </ul>
  * <br><br> <b>import {URLEvent} from 'vevet';</b>
  * 
+ * @vevetModuleCallback { Vevet.URLEvent : getParam : Vevet.URLEvent.GetParam }
+ * @vevetModuleCallback { Vevet.URLEvent : setParam : Vevet.URLEvent.SetParam }
+ * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Event
