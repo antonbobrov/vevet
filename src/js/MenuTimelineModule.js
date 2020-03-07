@@ -9,16 +9,23 @@ import TimelineModule from './TimelineModule';
  * This menu CAN be closed if the animaiton of its opening has not ended yet and vice versa. <br>
  * Available targets:
  *  <ul>
- *      <li>progress - timeline animation. Argument - {@linkcode Vevet.TimelineBaseModule.Data}</li>
- *      <li>progressOuter - animate the outer element. Argument - {@linkcode Vevet.TimelineBaseModule.Data}</li>
- *      <li>progressInner - animate inner elements. Argument - {@linkcode Vevet.TimelineBaseModule.Data}</li>
- *      <li>progress - timeline animation. Argument - {@linkcode Vevet.TimelineBaseModule.Data}</li>
+ *      <li>progress - timeline animation.</li>
+ *      <li>progressOuter - animate the outer element.</li>
+ *      <li>progressInner - animate inner elements.</li>
  *      <li>show - when the menu is being opened.</li>
  *      <li>shown - when the menu is opened, the process of animation has ended.</li>
  *      <li>hide - when the menu is being hidden.</li>
  *      <li>hidden - when the menu is hidden and the animation has ended.</li>
  *  </ul>
  * <br><br> <b>import {MenuTimelineModule} from 'vevet';</b>
+ * 
+ * @vevetModuleCallback { Vevet.MenuTimelineModule : progress : Vevet.TimelineBaseModule.Data }
+ * @vevetModuleCallback { Vevet.MenuTimelineModule : progressOuter : Vevet.TimelineBaseModule.Data }
+ * @vevetModuleCallback { Vevet.MenuTimelineModule : progressInner : Vevet.TimelineBaseModule.Data }
+ * @vevetModuleCallback { Vevet.MenuTimelineModule : show :  }
+ * @vevetModuleCallback { Vevet.MenuTimelineModule : shown :  }
+ * @vevetModuleCallback { Vevet.MenuTimelineModule : hide :  }
+ * @vevetModuleCallback { Vevet.MenuTimelineModule : hidden :  }
  * 
  * @class
  * @memberof Vevet

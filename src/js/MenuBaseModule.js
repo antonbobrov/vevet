@@ -13,6 +13,9 @@ const selectEl = require('select-el');
  *  </ul>
  * <br><br> <b>import {MenuBaseModule} from 'vevet';</b>
  * 
+ * @vevetModuleCallback { Vevet.MenuBaseModule : show :  }
+ * @vevetModuleCallback { Vevet.MenuBaseModule : hide :  }
+ * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module

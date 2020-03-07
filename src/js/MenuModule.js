@@ -18,6 +18,15 @@ import MenuBaseModule from './MenuBaseModule';
  *  </ul>
  * <br><br> <b>import {MenuModule} from 'vevet';</b>
  * 
+ * @vevetModuleCallback { Vevet.MenuModule : show :  }
+ * @vevetModuleCallback { Vevet.MenuModule : shown :  }
+ * @vevetModuleCallback { Vevet.MenuModule : innerShow :  }
+ * @vevetModuleCallback { Vevet.MenuModule : innerShown :  }
+ * @vevetModuleCallback { Vevet.MenuModule : hide :  }
+ * @vevetModuleCallback { Vevet.MenuModule : innerHide :  }
+ * @vevetModuleCallback { Vevet.MenuModule : innerHidden :  }
+ * @vevetModuleCallback { Vevet.MenuModule : hidden :  }
+ * 
  * @class
  * @memberof Vevet
  * @augments Vevet.MenuBaseModule
