@@ -123,7 +123,7 @@ export default class SliderCanvasModule extends SliderModule {
         this._res = [];
         /**
          * @description Resources' sizes.
-         * @type {Array<Vevet.MediaSize>}
+         * @type {object}
          * @protected
          */
         this._resSize = [];
