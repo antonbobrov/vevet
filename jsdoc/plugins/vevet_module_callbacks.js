@@ -12,6 +12,8 @@ exports.handlers = {
         const matches_array = e.source.match(regexp);
         if (Array.isArray(matches_array)) {
 
+            // create new doclets for methods
+            // and search for targets
             matches_array.forEach(match => {
 
                 let obj = {};
@@ -32,10 +34,11 @@ exports.handlers = {
                     callbackParamLongName: callbackParamLongName
                 };
     
-                // Create Doclets
+                // Create Doclets of "add" AND "on" methods
                 e.source += create_Methods_Doclet(obj);
 
             });
+
 
         }
 
