@@ -15,6 +15,11 @@ import merge from './merge';
  *  </ul>
  * <br><br> <b>import {PageModule} from 'vevet';</b>
  * 
+ * @vevetModuleCallback { Vevet.PageModule : create :  }
+ * @vevetModuleCallback { Vevet.PageModule : show :  }
+ * @vevetModuleCallback { Vevet.PageModule : hide :  }
+ * @vevetModuleCallback { Vevet.PageModule : destroy :  }
+ * 
  * @class
  * @abstract
  * @memberof Vevet
