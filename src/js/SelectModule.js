@@ -17,6 +17,12 @@ const selectEl = require('select-el');
  * Each callback receives {@linkcode Vevet.SelectModule.Callback} as an argument.
  * <br><br> <b>import {SelectModule} from 'vevet';</b>
  * 
+ * @vevetModuleCallback { Vevet.SelectModule : open : Vevet.SelectModule.Callback}
+ * @vevetModuleCallback { Vevet.SelectModule : opened : Vevet.SelectModule.Callback}
+ * @vevetModuleCallback { Vevet.SelectModule : close : Vevet.SelectModule.Callback}
+ * @vevetModuleCallback { Vevet.SelectModule : closed : Vevet.SelectModule.Callback}
+ * @vevetModuleCallback { Vevet.SelectModule : change : Vevet.SelectModule.Callback}
+ * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
@@ -104,7 +110,7 @@ export default class SelectModule extends Module {
     /**
      * @description Select element.
      * @readonly
-     * @type {HTMLElement}
+     * @type {HTMLSelectElement}
      */
     get select() {
         return this._select;
@@ -112,7 +118,7 @@ export default class SelectModule extends Module {
     /**
      * @description Options.
      * @readonly
-     * @type {Array<HTMLElement>}
+     * @type {Array<HTMLOptionElement>}
      */
     get options() {
         return this._options;
@@ -124,6 +130,14 @@ export default class SelectModule extends Module {
      */
     get opened() {
         return this._opened;
+    }
+    /**
+     * @description If the select element is multiple.
+     * @readonly
+     * @type {boolean}
+     */
+    get multiple() {
+        return this._multiple;
     }
     /**
      * @description If the animation is in process.
@@ -176,8 +190,8 @@ export default class SelectModule extends Module {
      * @typedef {object} Callback
      * @property {number|Array<number>|boolean} active - The order number/numbers (for multiple) of options or false if none are selected.
      * @property {string|Array<string>|boolean} value - Returns the value/values (for multiple) of the select or false if none are selected.
-     * @property {Array<HTMLElement>} [options] -  Options.
-     * @property {HTMLElement} select - Select element.
+     * @property {Array<HTMLOptionElement>} [options] -  Options.
+     * @property {HTMLSelectElement} select - Select element.
      * @property {HTMLElement} outer - Outer element.
      */
     /**
