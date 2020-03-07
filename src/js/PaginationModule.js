@@ -16,6 +16,10 @@ import domRemoveChildren from './domRemoveChildren';
  *  </ul>
  * <br><br> <b>import {PaginationModule} from 'vevet';</b>
  * 
+ * @vevetModuleCallback { Vevet.PaginationModule : load : Vevet.PaginationModule.Load}
+ * @vevetModuleCallback { Vevet.PaginationModule : last : Vevet.PaginationModule.Last}
+ * @vevetModuleCallback { Vevet.PaginationModule : paginationClick : Vevet.PaginationModule.Click}
+ * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
@@ -525,7 +529,7 @@ export default class PaginationModule extends Module {
         num += 1;
 
         // launch vevet events
-        this.launchByTarget("paginationClick", {
+        this.lbt("paginationClick", {
             num: num,
             anchor: el
         });
@@ -766,7 +770,7 @@ export default class PaginationModule extends Module {
         this._active = num;
 
         // callbacks
-        this.launchByTarget("load", {
+        this.lbt("load", {
             pagination: pagination,
             reload: reload,
             outer: this._outer,
@@ -774,7 +778,7 @@ export default class PaginationModule extends Module {
             html: html
         });
         if (this.active >= this.max) {
-            this.launchByTarget("last", {
+            this.lbt("last", {
                 outer: this._outer,
                 fullHTML: data.xhr.response,
                 html: html
