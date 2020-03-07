@@ -10,6 +10,8 @@ import timeoutCallback from './timeoutCallback';
  *  </ul>
  * <br><br> <b>import {ScrollViewModule} from 'vevet';</b>
  * 
+ * @vevetModuleCallback { Vevet.ScrollViewModule : in : Vevet.ScrollViewModule.Event}
+ * 
  * @class
  * @abstract
  * @memberof Vevet

@@ -19,6 +19,8 @@ import normalizeWheel from './normalizeWheel';
  *  </ul>
  * <br><br> <b>import {ScrollModule} from 'vevet';</b>
  * 
+ * @vevetModuleCallback { Vevet.ScrollModule : update : Vevet.ScrollModule.Event}
+ * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
