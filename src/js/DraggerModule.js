@@ -6,15 +6,23 @@ const selectEl = require('select-el');
  * @classdesc Dragger is the basis for such modules as Drag and Swipe. <br>
  * Available targets:
  *  <ul>
- *      <li>start - {@linkcode Vevet.DraggerModule.Callback}<li>
- *      <li>end - {@linkcode Vevet.DraggerModule.Callback}</li>
- *      <li>move - {@linkcode Vevet.DraggerModule.Callback}</li>
- *      <li>up - {@linkcode Vevet.DraggerModule.Callback}</li>
- *      <li>down - {@linkcode Vevet.DraggerModule.Callback}</li>
- *      <li>left - {@linkcode Vevet.DraggerModule.Callback}</li>
- *      <li>right - {@linkcode Vevet.DraggerModule.Callback}</li>
+ *      <li>start<li>
+ *      <li>end</li>
+ *      <li>move</li>
+ *      <li>up</li>
+ *      <li>down</li>
+ *      <li>left</li>
+ *      <li>right</li>
  *  </ul>
  * <br><br> <b>import {DraggerModule} from 'vevet';</b>
+ * 
+ * @vevetModuleCallback { Vevet.DraggerModule : start : Vevet.DraggerModule.Callback }
+ * @vevetModuleCallback { Vevet.DraggerModule : end : Vevet.DraggerModule.Callback }
+ * @vevetModuleCallback { Vevet.DraggerModule : move : Vevet.DraggerModule.Callback }
+ * @vevetModuleCallback { Vevet.DraggerModule : up :  }
+ * @vevetModuleCallback { Vevet.DraggerModule : down :  }
+ * @vevetModuleCallback { Vevet.DraggerModule : left :  }
+ * @vevetModuleCallback { Vevet.DraggerModule : right :  }
  * 
  * @class
  * @memberof Vevet
@@ -360,7 +368,7 @@ export default class DraggerModule extends Module {
 
         // if once event
         if (this._once.includes(event.data.target)) {
-            this._callOnce(event, obj);
+            this._callOnce(event);
             return;
         }
 
@@ -374,10 +382,9 @@ export default class DraggerModule extends Module {
     /**
      * @description Call events under the targets {@linkcode Vevet.DraggerModule#_once}.
      * @param {Vevet.Event.EventData} event
-     * @param {Vevet.DraggerModule.Callback} obj
      * @protected
      */
-    _callOnce(event, obj) {
+    _callOnce(event) {
 
         let allow = false,
             data = event.data,
@@ -422,7 +429,7 @@ export default class DraggerModule extends Module {
 
         // launch event
         if (allow) {
-            this._launch(event, obj);
+            this._launch(event);
         }
 
     }
