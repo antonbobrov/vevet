@@ -18,6 +18,14 @@ const selectEl = require('select-el');
  *  </ul>
  * <br><br> <b>import {PageAjaxModule} from 'vevet';</b>
  * 
+ * @vevetModuleCallback { Vevet.PageAjaxModule : click : Vevet.PageAjaxModule.EventLinkHref}
+ * @vevetModuleCallback { Vevet.PageAjaxModule : popstate : Vevet.PageAjaxModule.EventHref}
+ * @vevetModuleCallback { Vevet.PageAjaxModule : clickSame : Vevet.PageAjaxModule.EventLinkHref}
+ * @vevetModuleCallback { Vevet.PageAjaxModule : prepare : Vevet.PageAjaxModule.EventLinkHref}
+ * @vevetModuleCallback { Vevet.PageAjaxModule : loaded : Vevet.PageAjaxModule.EventLoaded}
+ * @vevetModuleCallback { Vevet.PageAjaxModule : updated : Vevet.PageAjaxModule.EventLoaded}
+ * @vevetModuleCallback { Vevet.PageAjaxModule : done : Vevet.PageAjaxModule.EventLoaded}
+ * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
