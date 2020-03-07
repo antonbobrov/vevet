@@ -14,6 +14,9 @@ const lerp = require('lerp');
  *  </ul>
  * <br><br> <b>import {CursorModule} from 'vevet';</b>
  * 
+ * @vevetModuleCallback { Vevet.CursorModule : create :  }
+ * @vevetModuleCallback { Vevet.CursorModule : render :  }
+ * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
