@@ -69,8 +69,26 @@ export default class KeydownModule extends Module {
 
     /**
      * @memberof Vevet.KeydownModule
+     * @callback _callback
+     * @param {KeyboardEvent} data
+     */
+    /**
+     * @memberof Vevet.KeydownModule
+     * @typedef {object} EventData
+     * @augments Vevet.Event.EventData
+     * @property {Vevet.KeydownModule.EventObj} data
+     */
+    /**
+     * @memberof Vevet.KeydownModule
      * @typedef {object} EventObj
-     * @augments Vevet.Event.EventObj
+     * @augments Vevet.KeydownModule.EventObjSettings
+     * @property {'queue'|'once'|'multi'} target
+     * @property {Vevet.KeydownModule._callback} do
+     */
+    /**
+     * @memberof Vevet.KeydownModule
+     * @typedef {object} EventObjSettings
+     * @augments Vevet.Event.EventObjSettings
      * @property {Array<number>} [keys] An array of key codes. 
      * @property {string} [input] You can also use a string to define keys instead of 'keys'.
      */
@@ -106,6 +124,31 @@ export default class KeydownModule extends Module {
 
     }
 
+    /**
+     * @function Vevet.KeydownModule#on
+     * @memberof Vevet.KeydownModule
+     * 
+     * @param {'queue'|'once'|'multi'} target
+     * @param {Vevet.KeydownModule._callback} callback
+     * @param {Vevet.KeydownModule.EventObjSettings} prop
+     * 
+     * @returns {string}
+     */
+
+    /**
+     * @member Vevet.KeydownModule#_events
+     * @memberof Vevet.KeydownModule
+     * @protected
+     * @type {Array<Vevet.KeydownModule.EventData>}
+     */
+
+    /**
+     * @member Vevet.KeydownModule#events
+     * @memberof Vevet.KeydownModule
+     * @readonly
+     * @type {Array<Vevet.KeydownModule.EventData>}
+     */
+
 
 
     // Set Events
@@ -122,7 +165,7 @@ export default class KeydownModule extends Module {
     /**
      * @description Launch callbacks on keydown.
      * 
-     * @param {object} e - Event object.
+     * @param {KeyboardEvent} e - Keydown Event object.
      * 
      * @private
      */

@@ -107,10 +107,27 @@ export default class WheelEventModule extends Module {
 
     /**
      * @memberof Vevet.WheelEventModule
+     * @callback _callback
+     * @param {WheelEvent} data
+     */
+    /**
+     * @memberof Vevet.WheelEventModule
+     * @typedef {object} EventData
+     * @augments Vevet.Event.EventData
+     * @property {Vevet.WheelEventModule.EventObj} data
+     */
+    /**
+     * @memberof Vevet.WheelEventModule
      * @typedef {object} EventObj
-     * @augments Vevet.Event.EventObj
+     * @augments Vevet.WheelEventModule.EventObjSettings
+     * @property {'up'|'down'|'left'|'right'} target
+     * @property {Vevet.WheelEventModule._callback} do
+     */
+    /**
+     * @memberof Vevet.WheelEventModule
+     * @typedef {object} EventObjSettings
+     * @augments Vevet.Event.EventObjSettings
      * @property {number} k Minimal length of wheel event in pixels. 
-     * @property {Function} do Callback itself.
      */
     /**
      * @description Add a callback.
@@ -136,12 +153,37 @@ export default class WheelEventModule extends Module {
         return super.add(data, bool);
     }
 
+    /**
+     * @function Vevet.WheelEventModule#on
+     * @memberof Vevet.WheelEventModule
+     * 
+     * @param {'queue'|'once'|'multi'} target
+     * @param {Vevet.WheelEventModule._callback} callback
+     * @param {Vevet.WheelEventModule.EventObjSettings} prop
+     * 
+     * @returns {string}
+     */
+
+    /**
+     * @member Vevet.WheelEventModule#_events
+     * @memberof Vevet.WheelEventModule
+     * @protected
+     * @type {Array<Vevet.WheelEventModule.EventData>}
+     */
+
+    /**
+     * @member Vevet.WheelEventModule#events
+     * @memberof Vevet.WheelEventModule
+     * @readonly
+     * @type {Array<Vevet.WheelEventModule.EventData>}
+     */
+
 
 
     /**
      * @description Launch callbacks on wheel.
      * 
-     * @param {object} e - Event object.
+     * @param {WheelEvent} e - Wheel Event object.
      * 
      * @private
      */

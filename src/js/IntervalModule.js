@@ -16,11 +16,22 @@ export default class IntervalModule extends Module {
 
     /**
      * @memberof Vevet.IntervalModule
+     * @typedef {object} EventData
+     * @augments Vevet.Event.EventData
+     * @property {Vevet.IntervalModule.EventObj} data Callback data.
+     */
+    /**
+     * @memberof Vevet.IntervalModule
      * @typedef {object} EventObj
-     * @augments Vevet.Event.EventObj
-     * @property {number} [interval] Interval of callbacks (ms). 
-     * @property {boolean} [disableOnBlur=true] Disable interval on window blur. 
-     * @property {Function} do Callback itself.
+     * @augments Vevet.IntervalModule.EventObjSettings
+     * @property {Function} do
+     */
+    /**
+     * @memberof Vevet.IntervalModule
+     * @typedef {object} EventObjSettings
+     * @augments Vevet.Event.EventObjSettings
+     * @property {number} interval Interval of callbacks (ms). 
+     * @property {boolean} [disableOnBlur] Disable interval on window blur.
      */
     /**
      * @description Add a callback.
@@ -41,6 +52,31 @@ export default class IntervalModule extends Module {
     add(data, bool = true) {
         return super.add(data, bool);
     }
+
+    /**
+     * @function Vevet.IntervalModule#on
+     * @memberof Vevet.IntervalModule
+     * 
+     * @param {''} target
+     * @param {Function} callback
+     * @param {Vevet.IntervalModule.EventObjSettings} prop
+     * 
+     * @returns {string}
+     */
+
+    /**
+     * @member Vevet.IntervalModule#_events
+     * @memberof Vevet.IntervalModule
+     * @protected
+     * @type {Array<Vevet.IntervalModule.EventData>}
+     */
+
+    /**
+     * @member Vevet.IntervalModule#events
+     * @memberof Vevet.IntervalModule
+     * @readonly
+     * @type {Array<Vevet.IntervalModule.EventData>}
+     */
 
     _addCallback(id) {
 

@@ -130,7 +130,13 @@ export default class Event {
      * @typedef {object} EventData
      * @property {string} id Id of the callback.
      * @property {boolean} on Defines if the callback is enabled.
-     * @property {Vevet.Event.EventObj} data Callback data.
+     * @property {Vevet.Event.EventObjWithTarget} data Callback data.
+     */
+    /**
+     * @memberof Vevet.Event
+     * @typedef {object} EventObjWithTarget
+     * @augments Vevet.Event.EventObj
+     * @property {string} [target] The target name of the callback.
      */
     /**
      * @memberof Vevet.Event
