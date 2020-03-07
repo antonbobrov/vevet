@@ -16,6 +16,14 @@ const isMobile = require('is-mobile');
  * <br>All targets will receive {@linkcode Vevet.ViewportEvent.Callback} as an argument.
  * <br><br> <b>import {ViewportEvent} from 'vevet';</b>
  * 
+ * @vevetModuleCallback { Vevet.ViewportEvent : w : Vevet.ViewportEvent.Callback }
+ * @vevetModuleCallback { Vevet.ViewportEvent : h : Vevet.ViewportEvent.Callback }
+ * @vevetModuleCallback { Vevet.ViewportEvent : wh : Vevet.ViewportEvent.Callback }
+ * @vevetModuleCallback { Vevet.ViewportEvent : hw : Vevet.ViewportEvent.Callback }
+ * @vevetModuleCallback { Vevet.ViewportEvent : w_ : Vevet.ViewportEvent.Callback }
+ * @vevetModuleCallback { Vevet.ViewportEvent : h_ : Vevet.ViewportEvent.Callback }
+ * @vevetModuleCallback { Vevet.ViewportEvent :  : Vevet.ViewportEvent.Callback }
+ * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Event
