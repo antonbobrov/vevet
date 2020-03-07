@@ -11,7 +11,7 @@ import timeoutCallback from './timeoutCallback';
  * <br><br> <b>import {AJAXEvent} from 'vevet';</b>
  * 
  * @vevetModuleCallback { Vevet.AJAXEvent : load : Vevet.AJAXEvent.LoadData}
- * @vevetModuleCallback { Vevet.AJAXEvent : loaded : Vevet.AJAXEvent.CacheItem
+ * @vevetModuleCallback { Vevet.AJAXEvent : loaded : Vevet.AJAXEvent.CacheItem }
  * 
  * @class
  * @memberof Vevet
