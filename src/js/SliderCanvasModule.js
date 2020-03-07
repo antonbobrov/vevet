@@ -15,6 +15,20 @@ const dom = require('dom-create-element');
  *  </ul>
  * <br><br> <b>import {SliderCanvasModule} from 'vevet';</b>
  * 
+ * @vevetModuleCallback { Vevet.SliderCanvasModule : first :  }
+ * @vevetModuleCallback { Vevet.SliderCanvasModule : prev : Vevet.SliderModule.AnimationData }
+ * @vevetModuleCallback { Vevet.SliderCanvasModule : next : Vevet.SliderModule.AnimationData }
+ * @vevetModuleCallback { Vevet.SliderCanvasModule : start : Vevet.SliderModule.AnimationData }
+ * @vevetModuleCallback { Vevet.SliderCanvasModule : end : Vevet.SliderModule.AnimationData }
+ * @vevetModuleCallback { Vevet.SliderCanvasModule : show :  }
+ * @vevetModuleCallback { Vevet.SliderCanvasModule : hide :  }
+ * @vevetModuleCallback { Vevet.SliderCanvasModule : shown :  }
+ * @vevetModuleCallback { Vevet.SliderCanvasModule : hidden :  }
+ * @vevetModuleCallback { Vevet.SliderCanvasModule : render : Vevet.SliderModule.Render }
+ * @vevetModuleCallback { Vevet.SliderCanvasModule : timeline : Vevet.SliderModule.Timeline }
+ * @vevetModuleCallback { Vevet.SliderCanvasModule : loaded :  }
+ * @vevetModuleCallback { Vevet.SliderCanvasModule : renderStat :  }
+ * 
  * @class
  * @memberof Vevet
  * @augments Vevet.SliderModule

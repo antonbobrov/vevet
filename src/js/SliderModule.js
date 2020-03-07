@@ -20,9 +20,21 @@ import mathScopeProgress from './mathScopeProgress';
  *      <li>shown - shown.</li>  
  *      <li>hidden - hidden.</li>  
  *      <li>render - animation. Argument - {@linkcode Vevet.SliderModule.Render}</li> 
- *      <li>timeline - timeline progress. Argument - {@linkcode Vevet.SliderModule.TimelineModule}</li> 
+ *      <li>timeline - timeline progress. Argument - {@linkcode Vevet.SliderModule.Timeline}</li> 
  *  </ul>
  * <br><br> <b>import {SliderModule} from 'vevet';</b>
+ * 
+ * @vevetModuleCallback { Vevet.SliderModule : first :  }
+ * @vevetModuleCallback { Vevet.SliderModule : prev : Vevet.SliderModule.AnimationData }
+ * @vevetModuleCallback { Vevet.SliderModule : next : Vevet.SliderModule.AnimationData }
+ * @vevetModuleCallback { Vevet.SliderModule : start : Vevet.SliderModule.AnimationData }
+ * @vevetModuleCallback { Vevet.SliderModule : end : Vevet.SliderModule.AnimationData }
+ * @vevetModuleCallback { Vevet.SliderModule : show :  }
+ * @vevetModuleCallback { Vevet.SliderModule : hide :  }
+ * @vevetModuleCallback { Vevet.SliderModule : shown :  }
+ * @vevetModuleCallback { Vevet.SliderModule : hidden :  }
+ * @vevetModuleCallback { Vevet.SliderModule : render : Vevet.SliderModule.Render }
+ * @vevetModuleCallback { Vevet.SliderModule : timeline : Vevet.SliderModule.Timeline }
  * 
  * @class
  * @memberof Vevet
