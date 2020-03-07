@@ -30,6 +30,16 @@ import timeoutCallback from './timeoutCallback';
  *  </ul>
  * <br><br> <b>import {PopupModule} from 'vevet';</b>
  * 
+ * @vevetModuleCallback { Vevet.PopupModule : created : Vevet.PopupModule.CallbackCreate}
+ * @vevetModuleCallback { Vevet.PopupModule : show : Vevet.PopupModule.Callback}
+ * @vevetModuleCallback { Vevet.PopupModule : showLevel : Vevet.PopupModule.Callback}
+ * @vevetModuleCallback { Vevet.PopupModule : shownLevel : Vevet.PopupModule.Callback}
+ * @vevetModuleCallback { Vevet.PopupModule : shown : Vevet.PopupModule.Callback}
+ * @vevetModuleCallback { Vevet.PopupModule : hide : Vevet.PopupModule.Callback}
+ * @vevetModuleCallback { Vevet.PopupModule : hideLevel : Vevet.PopupModule.Callback}
+ * @vevetModuleCallback { Vevet.PopupModule : hiddenLevel : Vevet.PopupModule.Callback}
+ * @vevetModuleCallback { Vevet.PopupModule : hidden : Vevet.PopupModule.Callback}
+ * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
@@ -44,7 +54,7 @@ export default class PopupModule extends Module {
      * @augments Vevet.Module.Properties
      * 
      * @property {number} [duration=750] - Animation duration. It is also set in SASS.
-     * @property {string} [type=auto] - Default type.
+     * @property {string|'auto'|'modal'|'media'|'content'|'right'} [type='auto'] - Default type.
      * @property {number} [levels=3] - *** Maximum number of levels.
      * @property {boolean} [overlayHide=true] - Hide popup on overlay click.
      * @property {string} [selectorHideButton=.v-popup__hide] - Selector for elements which can close the popup.
@@ -519,7 +529,7 @@ export default class PopupModule extends Module {
      * @property {string} [selector=.popup] - Selector of the element.
      * @property {Array<string>} [append=false] - If true, all children from the source element will be appended to the pop-up window.
      * If false, innerHTML will be copied and inserted.
-     * @property {Array<string>} [types] - The default value is taken from {@linkcode Vevet.PopupModule.Properties}.
+     * @property {Array<string|'auto'|'modal'|'media'|'content'|'right'>} [types] - The default value is taken from {@linkcode Vevet.PopupModule.Properties}.
      */
 
     _showConfig() {
