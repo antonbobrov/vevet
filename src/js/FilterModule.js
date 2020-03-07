@@ -12,6 +12,9 @@ const selectEl = require('select-el');
  *  </ul>
  * <br><br> <b>import {FilterModule} from 'vevet';</b>
  * 
+ * @vevetModuleCallback { Vevet.FilterModule : popstate : Vevet.FilterModule.PopstateCallback }
+ * @vevetModuleCallback { Vevet.FilterModule : save :  }
+ * 
  * @class
  * @memberof Vevet
  * @augments Vevet.Module
@@ -835,6 +838,14 @@ export default class FilterModule extends Module {
         });
 
     }
+
+    /**
+     * @memberof Vevet.FilterModule
+     * @typedef {object} PopstateCallback
+     * 
+     * @property {string} href
+     * 
+     */
 
     /**
      * @description Popstate force load.
