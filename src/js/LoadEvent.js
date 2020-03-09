@@ -17,7 +17,7 @@ export default class LoadEvent extends Event {
         /**
          * @description If the page is loaded.
          * @type {boolean}
-         * @private
+         * @protected
          */
         this._loaded = false;
 
