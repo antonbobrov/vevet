@@ -37,33 +37,33 @@ export default class ViewportEvent extends Event {
         super._extra();
 
         /**
-         * @private
+         * @protected
          * @type {Array<number>}
          */
         this._size = [0, 0];
         /**
-         * @private
+         * @protected
          * @type {Array<number>}
          */
         this._sizePrev = [0, 0];
         /**
-         * @private
+         * @protected
          * @type {boolean}
          */
         this._desktop = false;
         /**
-         * @private
+         * @protected
          * @type {boolean}
          */
         this._tablet = false;
         /**
-         * @private
+         * @protected
          * @type {boolean}
          */
         this._mobile = false;
         /**
          * @description Breakpoint types
-         * @private
+         * @protected
          * @type {Array<string>}
          */
         this._types = ['desktop', 'tablet', 'mobile'];
@@ -181,7 +181,7 @@ export default class ViewportEvent extends Event {
     /**
      * @description Launch callbacks on resize.
      * 
-     * @private
+     * @protected
      */
     _implement() {
 
@@ -242,7 +242,7 @@ export default class ViewportEvent extends Event {
 
     /**
      * @description Change values, classes, etc.
-     * @private
+     * @protected
      */
     _set() {
 
@@ -264,7 +264,7 @@ export default class ViewportEvent extends Event {
 
     /**
      * @description Change classes of the document element.
-     * @private
+     * @protected
      */
     _classes() {
 
@@ -325,6 +325,12 @@ export default class ViewportEvent extends Event {
 
     }
 
+    /**
+     * @description Change breakpoints classes of the document element.
+     * @protected
+     * @param {string} type
+     * @param {Array<string>} types
+     */
     _classesBreakpoint(type, types) {
 
         let html = this._v.html,
@@ -343,7 +349,7 @@ export default class ViewportEvent extends Event {
 
     /**
      * @description Breakpoints for sizes.
-     * @private
+     * @protected
      */
     _breakpoints() {
 
@@ -366,6 +372,12 @@ export default class ViewportEvent extends Event {
 
     }
 
+    /**
+     * @description Set breakpoints.
+     * @protected
+     * @param {string} type
+     * @param {Array<string>} types
+     */
     _breakpointsSet(type, types) {
 
         types.forEach(e => {
