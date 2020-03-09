@@ -112,7 +112,11 @@ export default class MenuModule extends MenuBaseModule {
 
         super._extra();
 
-        // variables
+        /**
+         * @description If the menu is animating.
+         * @protected
+         * @member {boolean}
+         */
         this._animating = false;
 
     }

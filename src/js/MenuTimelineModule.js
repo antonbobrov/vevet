@@ -106,13 +106,21 @@ export default class MenuTimelineModule extends MenuBaseModule {
         let timelineProp = this._prop.timeline,
             easing = timelineProp.easing;
 
-        // main timeline
+        /**
+         * @description Main timeline
+         * @member {Vevet.TimelineModule}
+         * @protected
+         */
         this._timeline = new TimelineModule();
         let timeline = this._timeline;
         timeline.on("progress", this._timelineAnimation.bind(this));
         timeline.on("end", this._timelineAnimationEnd.bind(this));
 
-        // outer timeline
+        /**
+         * @description Outer timeline
+         * @member {Vevet.TimelineBaseModule}
+         * @protected
+         */
         this._timelineOuter = new TimelineBaseModule({
             line: timelineProp.outerScope,
             easing: easing
@@ -120,7 +128,11 @@ export default class MenuTimelineModule extends MenuBaseModule {
         this._timelineOuter.on("progress", this._timelineOuterAnimation.bind(this));
         timeline.addTimeline(this._timelineOuter);
 
-        // inner timeline
+        /**
+         * @description Innter timeline
+         * @member {Vevet.TimelineBaseModule}
+         * @protected
+         */
         this._timelineInner = new TimelineBaseModule({
             line: timelineProp.innerScope,
             easing: easing

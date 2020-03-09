@@ -111,7 +111,11 @@ export default class MenuBaseModule extends Module {
 
         super._extra();
 
-        // variables
+        /**
+         * @description If menu is shown
+         * @member {boolean}
+         * @protected
+         */
         this._shown = false;
 
         // get elements
@@ -127,7 +131,17 @@ export default class MenuBaseModule extends Module {
 
         let selectors = this._prop.selectors;
         
+        /**
+         * @description Menu outer element.
+         * @protected
+         * @member {HTMLElement}
+         */
         this._outer = selectEl.one(selectors.outer);
+        /**
+         * @description Menu button element.
+         * @protected
+         * @member {HTMLElement}
+         */
         this._button = selectEl.one(selectors.button);
 
     }
