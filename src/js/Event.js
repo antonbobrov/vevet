@@ -433,6 +433,14 @@ export default class Event {
 
     }
 
+    /**
+     * @description Launch a callback.
+     * 
+     * @protected
+     * 
+     * @param {Function} callback
+     * @param {object} arg
+     */
     _launchCallback(callback, arg) {
         if (arg) {
             callback(arg);
