@@ -80,10 +80,18 @@ export default class SliderCounterPlugin extends Plugin {
             outer = module._outer,
             count = module.total;
 
-        // vars
+        /**
+         * @description Module events IDs.
+         * @protected
+         * @member {Array<string>}
+         */
         this._me = [];
         
-        // create outer
+        /**
+         * @description Counter outer element.
+         * @protected
+         * @member {HTMLElement}
+         */
         this._outer = dom({
             selector: 'div',
             styles: `${prefix}__counter`
@@ -97,6 +105,11 @@ export default class SliderCounterPlugin extends Plugin {
         });
         this._outer.appendChild(currents);
 
+        /**
+         * @description Numbers.
+         * @protected
+         * @member {Array<HTMLElement>}
+         */
         this._currents = [];
         for (let i = 0; i < count; i++) {
 
@@ -161,7 +174,7 @@ export default class SliderCounterPlugin extends Plugin {
 
     /**
      * @description Set classes.
-     * @private
+     * @protected
      */
     _classes() {
 
@@ -184,7 +197,7 @@ export default class SliderCounterPlugin extends Plugin {
     /**
      * @description Set active classes.
      * @param {number} num
-     * @private
+     * @protected
      */
     _classesActive(num) {
 

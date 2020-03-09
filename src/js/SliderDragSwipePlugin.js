@@ -89,7 +89,7 @@ export default class SliderDragSwipePlugin extends Plugin {
         /**
          * @description Where drag classes are stored.
          * @type {Array<Vevet.DraggerModule|Vevet.SwipeModule|Vevet.DragModule>}
-         * @private
+         * @protected
          */
         this._draggers = [];
 
@@ -113,7 +113,7 @@ export default class SliderDragSwipePlugin extends Plugin {
 
     /**
      * @description Set drag events.
-     * @private
+     * @protected
      */
     _dragSet() {
 
@@ -132,7 +132,7 @@ export default class SliderDragSwipePlugin extends Plugin {
 
     /**
      * @description Remove drag events.
-     * @private
+     * @protected
      */
     _dragRemove() {
 
@@ -146,7 +146,7 @@ export default class SliderDragSwipePlugin extends Plugin {
     /**
      * @description Add a drag/swipe event.
      * @param {string} type
-     * @private
+     * @protected
      */
     _dragAdd(type) {
 
@@ -194,7 +194,7 @@ export default class SliderDragSwipePlugin extends Plugin {
      * @param {Vevet.DragModule|Vevet.SwipeModule} dragger
      * @param {string} target
      * @param {string} method
-     * @private
+     * @protected
      */
     _dragAddEvent(dragger, target, method) {
 

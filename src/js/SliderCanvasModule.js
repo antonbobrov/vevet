@@ -119,19 +119,19 @@ export default class SliderCanvasModule extends SliderModule {
 
         /**
          * @description Canvas element
-         * @type {HTMLElement}
+         * @type {HTMLCanvasElement}
          * @protected
          */
         this._canvas = false;
         /**
          * @description Canvas Context.
-         * @type {object}
+         * @type {CanvasRenderingContext2D}
          * @protected
          */
         this._ctx = {};
         /**
          * @description Resources.
-         * @type {Array<HTMLElement>}
+         * @type {Array<HTMLImageElement|HTMLVideoElement>}
          * @protected
          */
         this._res = [];
@@ -244,7 +244,7 @@ export default class SliderCanvasModule extends SliderModule {
 
     /**
      * @description Load images.
-     * @private
+     * @protected
      */
     _load() {
     
@@ -280,7 +280,7 @@ export default class SliderCanvasModule extends SliderModule {
 
     /**
      * @description When a resource is loaded.
-     * @private
+     * @protected
      */
     _loadRes() {
 
@@ -296,7 +296,7 @@ export default class SliderCanvasModule extends SliderModule {
 
     /**
      * @description When all resources are loaded.
-     * @private
+     * @protected
      */
     _onloaded() {
 
@@ -392,9 +392,10 @@ export default class SliderCanvasModule extends SliderModule {
         }
 
     }
+
     /**
      * @description Set canvas sizes.
-     * @private
+     * @protected
      */
     _setCtxSize() {
 
@@ -409,7 +410,7 @@ export default class SliderCanvasModule extends SliderModule {
 
     /**
      * @description Set resource sizes.
-     * @private
+     * @protected
      */
     _setResSize() {
 
@@ -437,7 +438,7 @@ export default class SliderCanvasModule extends SliderModule {
 
     /**
      * @description Clear canvas.
-     * @private
+     * @protected
      */
     _canvasClear() {
         let size = this._size;

@@ -76,7 +76,11 @@ export default class SliderKeydownPlugin extends Plugin {
     // Set Events
     _setEvents() {
 
-        // add wheel event
+        /**
+         * @description Keydown event.
+         * @protected
+         * @member {Vevet.KeydownModule}
+         */
         this._keydown = new KeydownModule({
             v: this._m.prop.v
         });
@@ -97,8 +101,8 @@ export default class SliderKeydownPlugin extends Plugin {
 
     /**
      * @description Call events.
-     * @param {object} e
-     * @private
+     * @param {KeyboardEvent} e
+     * @protected
      */
     _call(e) {
 

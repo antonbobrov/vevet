@@ -79,13 +79,25 @@ export default class SliderDotsPlugin extends Plugin {
             prefix = module.prefix,
             outer = module._outer;
 
-        // vars
+        /**
+         * @description Module events IDs.
+         * @protected
+         * @member {Array<string>}
+         */
         this._me = [];
 
-        // create dots
+        /**
+         * @description Dot buttons.
+         * @protected
+         * @member {Array<HTMLButtonElement>}
+         */
         this._dots = [];
         
-        // create outer
+        /**
+         * @description Dots outer element.
+         * @protected
+         * @member {HTMLUListElement}
+         */
         this._outer = dom({
             selector: 'ul',
             styles: `${prefix}__dots`
@@ -154,7 +166,7 @@ export default class SliderDotsPlugin extends Plugin {
 
     /**
      * @description Set classes.
-     * @private
+     * @protected
      */
     _classes() {
 
@@ -177,7 +189,7 @@ export default class SliderDotsPlugin extends Plugin {
     /**
      * @description Set active classes.
      * @param {number} num
-     * @private
+     * @protected
      */
     _classesActive(num) {
 

@@ -92,7 +92,11 @@ export default class SliderWheelPlugin extends Plugin {
             outer = selectEl.one(outer);
         }
 
-        // add wheel event
+        /**
+         * @description Wheel event
+         * @protected
+         * @member {Vevet.WheelEventModule}
+         */
         this._wheel = new WheelEventModule({
             v: this._m.prop.v,
             outer: outer
@@ -118,7 +122,7 @@ export default class SliderWheelPlugin extends Plugin {
     /**
      * @description Call events.
      * @param {string} type
-     * @private
+     * @protected
      */
     _call(type) {
 

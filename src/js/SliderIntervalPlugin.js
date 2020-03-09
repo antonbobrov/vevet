@@ -96,7 +96,7 @@ export default class SliderIntervalPlugin extends Plugin {
 
     /**
      * @description Set interval.
-     * @private
+     * @protected
      */
     _setInterval() {
 
@@ -106,6 +106,11 @@ export default class SliderIntervalPlugin extends Plugin {
         // create new interval if enabled
         if (this._prop.on) {
 
+            /**
+             * @description Interval module
+             * @protected
+             * @member {Vevet.IntervalModule}
+             */
             this._interval = new IntervalModule({
                 v: this._m.prop.v
             });
@@ -121,7 +126,7 @@ export default class SliderIntervalPlugin extends Plugin {
 
     /**
      * @description Destroy interval.
-     * @private
+     * @protected
      */
     _removeInterval() {
 

@@ -81,6 +81,12 @@ export default class SliderControlsPlugin extends Plugin {
 
         // vars
         let controlClass = `${prefix}__control`;
+
+        /**
+         * @description Module events IDs.
+         * @protected
+         * @member {Array<string>}
+         */
         this._me = [];
 
         // create controls
@@ -96,7 +102,17 @@ export default class SliderControlsPlugin extends Plugin {
         });
         outer.appendChild(next); 
 
+        /**
+         * @description Previous control button.
+         * @protected
+         * @member {HTMLElement}
+         */
         this._prev = prev;
+        /**
+         * @description Next control button.
+         * @protected
+         * @member {HTMLElement}
+         */
         this._next = next;
 
         // set classes
@@ -139,7 +155,7 @@ export default class SliderControlsPlugin extends Plugin {
 
     /**
      * @description Set classes.
-     * @private
+     * @protected
      */
     _classes() {
 

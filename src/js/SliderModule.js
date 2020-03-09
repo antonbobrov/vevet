@@ -153,7 +153,7 @@ export default class SliderModule extends Module {
         return this._outer;
     }
     /**
-     * @description If slider is animating.
+     * @description If the slider is animating.
      * @default false
      * @readonly
      * @type {boolean}
@@ -208,7 +208,7 @@ export default class SliderModule extends Module {
     /**
      * @description Slides.
      * @readonly
-     * @type {Array<HTMLElement>}
+     * @type {NodeList|Array<HTMLElement>}
      */
     get slides() {
         return this._slides;
@@ -223,16 +223,49 @@ export default class SliderModule extends Module {
 
         let prop = this._prop;
 
-        // variables
-
+        /**
+         * @description Total amount of slides.
+         * @protected
+         * @member {number}
+         */
         this._total = 0;
+        /**
+         * @description If the slider is animating.
+         * @protected
+         * @member {boolean}
+         */
         this._playing = false;
+        /**
+         * @description Active slide number.
+         * @protected
+         * @member {number}
+         */
         this._active = prop.active;
+        /**
+         * @description Previous active slide number.
+         * @protected
+         * @member {number}
+         */
         this._activePrev = -1;
+        /**
+         * @description If the slider is shown.
+         * @protected
+         * @member {boolean}
+         */
         this._shown = false;
 
+        /**
+         * @description Slider sizes with DPR. Width & Height
+         * @protected
+         * @member {Array<number>}
+         */
         this._size = [0, 0];
 
+        /**
+         * @description Timeline for animation
+         * @protected
+         * @member {Vevet.TimelineModule}
+         */
         this._timeline = false;
 
         /**
@@ -290,9 +323,23 @@ export default class SliderModule extends Module {
             selectors = prop.selectors,
             prefix = this._prefix;
 
-        // get elements
+        /**
+         * @description Slider outer.
+         * @protected
+         * @member {HTMLElement}
+         */
         this._outer = selectEl.one(selectors.outer);
+        /**
+         * @description Slides outer.
+         * @protected
+         * @member {HTMLElement}
+         */
         this._slidesOuter = this._outer.querySelector(selectors.slides);
+        /**
+         * @description Slides outer.
+         * @protected
+         * @member {Array<HTMLElement>|NodeList}
+         */
         this._slides = this._slidesOuter.querySelectorAll(selectors.slide);
 
         // get amount
@@ -316,7 +363,7 @@ export default class SliderModule extends Module {
 
 
     /**
-     * @description Change slides classes
+     * @description Change slides classes. Set active Slide class.
      * @param {number} num - Index of the slide.
      * @protected
      */
@@ -345,8 +392,17 @@ export default class SliderModule extends Module {
         // size
         let size = this._getSize();
 
-        // get sizes
+        /**
+         * @description Width of the slider outer element.
+         * @protected
+         * @member {number}
+         */
         this._width = size[0];
+        /**
+         * @description Height of the slider outer element.
+         * @protected
+         * @member {number}
+         */
         this._height = size[1];
 
         // update dpr
@@ -358,6 +414,11 @@ export default class SliderModule extends Module {
 
     }
 
+    /**
+     * @description Get slider outer element sizes
+     * @protected
+     * @returns {Array<number>} Returns an width & height.
+     */
     _getSize() {
 
         let outer = this._outer;
@@ -369,8 +430,17 @@ export default class SliderModule extends Module {
 
     }
 
+    /**
+     * @description Update device pixel ratio.
+     * @protected
+     */
     _dprGet() {
 
+        /**
+         * @description Device pixel ratio.
+         * @protected
+         * @member {number}
+         */
         this._dpr = this._v.viewport.dprDevice;
 
     }
@@ -424,7 +494,7 @@ export default class SliderModule extends Module {
 
 
     /**
-     * @description Set previous slide.
+     * @description Go to the previous slide.
      * @returns {boolean} Returns true if successful.
      */
     prev() {
@@ -444,7 +514,7 @@ export default class SliderModule extends Module {
     }
 
     /**
-     * @description Get previous slide.
+     * @description Get the previous slide number.
      * @param {number} [num] - Reference slide num.
      * @returns {number} Previous slide.
      * @protected
@@ -464,7 +534,7 @@ export default class SliderModule extends Module {
 
 
     /**
-     * @description Set next slide.
+     * @description Go to the next slide.
      * @returns {boolean} Returns true if successful.
      */
     next() {
@@ -484,7 +554,7 @@ export default class SliderModule extends Module {
     }
 
     /**
-     * @description Get next slide.
+     * @description Get the next slide number.
      * @param {number} [num] - Reference slide num.
      * @returns {number} Next slide.
      */
@@ -694,7 +764,7 @@ export default class SliderModule extends Module {
      */
     
     /**
-     * @description Set slide.
+     * @description CHange slide.
      * 
      * @param {number} [num=0] - Slide index number.
      * @param {string} [direction=none] - Direction of action: prev or next.
@@ -914,6 +984,10 @@ export default class SliderModule extends Module {
 
     }
 
+    /**
+     * @description When animation has stopped.
+     * @protected
+     */
     _animationEnd() {
 
         this._playing = false;
