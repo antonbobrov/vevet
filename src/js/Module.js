@@ -44,7 +44,11 @@ export default class Module extends Event {
     // Extra Constructor
     _extra() {
 
-        // state vars
+        /**
+         * @description If the module is destroyed.
+         * @protected
+         * @member {boolean}
+         */
         this._destroyed = false;
 
         /**
