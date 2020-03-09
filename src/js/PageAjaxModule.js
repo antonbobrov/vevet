@@ -236,11 +236,30 @@ export default class PageAjaxModule extends Module {
             name: `data-${this._prefix}-name`
         };
 
-        // vars
+        /**
+         * @description If a page is loading.
+         * @protected
+         * @member {boolean}
+         */
         this._loading = false;
+        /**
+         * @description Links.
+         * @protected
+         * @member {NodeList}
+         */
         this._links = [];
 
+        /**
+         * @description Popstate timeout
+         * @member {number|false}
+         * @protected
+         */
         this._popstateTimeout = false;
+        /**
+         * @description Links listeners
+         * @protected
+         * @member {Array<Vevet.BindListener>}
+         */
         this._linksListeners = [];
 
         /**
@@ -256,7 +275,11 @@ export default class PageAjaxModule extends Module {
          */
         this._visitedLinks = [window.location.href];
 
-        // get outer
+        /**
+         * @description Outer element
+         * @member {HTMLElement}
+         * @protected
+         */
         this._outer = selectEl.one(this._prop.selectors.outer);
 
         // get elements
