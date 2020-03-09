@@ -196,6 +196,7 @@ export default class SelectModule extends Module {
      */
     /**
      * @description Get callback data.
+     * @returns {Vevet.SelectModule.Callback} Returns callback data.
      */
     _callbackData() {
 
@@ -218,13 +219,36 @@ export default class SelectModule extends Module {
 
         super._extra();
 
-        // variables
+        /**
+         * @description If multiple.
+         * @protected
+         * @member {boolean}
+         */
         this._multiple = false;
+        /**
+         * @description If opened.
+         * @protected
+         * @member {boolean}
+         */
         this._opened = false;
+        /**
+         * @description If animating.
+         * @protected
+         * @member {boolean}
+         */
         this._animating = false;
+        /**
+         * @description Active options numbers.
+         * @protected
+         * @member {Array<number>}
+         */
         this._actives = [];
 
-        // elements
+        /**
+         * @description List elements.
+         * @protected
+         * @member {HTMLLIElement}
+         */
         this._li = [];
 
         // get & create elements
@@ -246,7 +270,7 @@ export default class SelectModule extends Module {
 
     /**
      * @description Set classes.
-     * @private
+     * @protected
      */
     _setClasses() {
 
@@ -277,11 +301,15 @@ export default class SelectModule extends Module {
 
     /**
      * @description Get elements.
-     * @private
+     * @protected
      */
     _elementsGet() {
 
-        // get select element
+        /**
+         * @description Select element.
+         * @protected
+         * @member {HTMLSelectElement}
+         */
         this._select = selectEl.one(this._prop.selector);
         this._select.style.display = 'none';
 
@@ -290,17 +318,25 @@ export default class SelectModule extends Module {
             this._multiple = true;
         }
 
-        // get options
+        /**
+         * @description Options.
+         * @protected
+         * @member {Array<HTMLOptionElement>}
+         */
         this._options = this._select.querySelectorAll("option");
 
-        // get parent element
+        /**
+         * @description Parent element of the select element.
+         * @protected
+         * @member {HTMLElement}
+         */
         this._parent = this._select.parentElement;
 
     }
 
     /**
      * @description Create elements.
-     * @private
+     * @protected
      */
     _elementsCreate() {
 
@@ -308,42 +344,66 @@ export default class SelectModule extends Module {
         let prefix = this._prefix,
             domSelector = 'div';
 
-        // create outer
+        /**
+         * @description Outer element.
+         * @protected
+         * @member {HTMLElement}
+         */
         this._outer = dom({
             selector: domSelector,
             styles: `${prefix}`
         });
         this._parent.insertBefore(this._outer, this._select);
 
-        // placeholder
+        /**
+         * @description Placeholder outer element.
+         * @protected
+         * @member {HTMLElement}
+         */
         this._placeholder = dom({
             selector: domSelector,
             styles: `${prefix}__placeholder`
         });
         this._outer.appendChild(this._placeholder);
         
-        // container
+        /**
+         * @description Container element.
+         * @protected
+         * @member {HTMLElement}
+         */
         this._container = dom({
             selector: domSelector,
             styles: `${prefix}__container`
         });
         this._outer.appendChild(this._container);
         
-        // content
+        /**
+         * @description Content element.
+         * @protected
+         * @member {HTMLElement}
+         */
         this._content = dom({
             selector: domSelector,
             styles: `${prefix}__content`
         });
         this._container.appendChild(this._content);
         
-        // search
+        /**
+         * @description Search outer element.
+         * @protected
+         * @member {HTMLElement}
+         */
         this._search = dom({
             selector: domSelector,
             styles: `${prefix}__search`
         });
         this._content.appendChild(this._search);
         
-        // search input
+        /**
+         * @description Search input element.
+         * @protected
+         * @member {HTMLInputElement}
+         */
         this._input = dom({
             selector: 'input',
             attr: {
@@ -354,7 +414,11 @@ export default class SelectModule extends Module {
         });
         this._search.appendChild(this._input);
         
-        // values
+        /**
+         * @description UL element.
+         * @protected
+         * @member {HTMLUListElement}
+         */
         this._values = dom({
             selector: 'ul',
             styles: `${prefix}__values`
@@ -429,7 +493,7 @@ export default class SelectModule extends Module {
     /**
      * @description Outer click on window.
      * @param {object} e
-     * @private
+     * @protected
      */
     _windowClick(e) {
         if (!domChildOf(e.target, this._outer) & this._opened & this._prop.close.out) {
@@ -439,7 +503,7 @@ export default class SelectModule extends Module {
 
     /**
      * @description Key-up in search.
-     * @private
+     * @protected
      */
     _searchKeyup() {
 
@@ -477,7 +541,7 @@ export default class SelectModule extends Module {
 
     /**
      * @description Reset searching.
-     * @private
+     * @protected
      */
     _searchReset() {
 
@@ -490,7 +554,7 @@ export default class SelectModule extends Module {
 
     /**
      * @description Get values.
-     * @private
+     * @protected
      */
     _getValues() {
 
@@ -508,7 +572,7 @@ export default class SelectModule extends Module {
 
     /**
      * @description Get texts.
-     * @private
+     * @protected
      */
     _getTexts() {
 
@@ -528,7 +592,7 @@ export default class SelectModule extends Module {
 
     /**
      * @description Change values.
-     * @private
+     * @protected
      * @param {boolean} [event=true] - Defines if you need to launch callbacks.
      */
     _change(event = true) {
@@ -560,7 +624,7 @@ export default class SelectModule extends Module {
 
     /**
      * @description Change on value click.
-     * @private
+     * @protected
      * @param {number} num - The order number of a value li.
      */
     _changeValue(num) {
@@ -593,7 +657,7 @@ export default class SelectModule extends Module {
 
     /**
      * @description Change on select change.
-     * @private
+     * @protected
      */
     _changeSelect() {
 
