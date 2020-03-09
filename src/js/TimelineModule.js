@@ -53,11 +53,35 @@ export default class TimelineModule extends TimelineBaseModule {
 
         super._extra();
 
-        // variables
+        /**
+         * @description If animation is playing.
+         * @protected
+         * @member {boolean}
+         */
         this._playing = false;
+        /**
+         * @description If animation is paused.
+         * @protected
+         * @member {boolean}
+         */
         this._paused = false;
+        /**
+         * @description If animation is stopped.
+         * @protected
+         * @member {boolean}
+         */
         this._stopped = false;
+        /**
+         * @description If animation is reversed.
+         * @protected
+         * @member {boolean}
+         */
         this._reversed = false;
+        /**
+         * @description Animation Frame.
+         * @protected
+         * @member {number|null}
+         */
         this._frame = null;
 
     }
@@ -70,7 +94,15 @@ export default class TimelineModule extends TimelineBaseModule {
 
         super._tickers();
 
+        /**
+         * @protected
+         * @member {number}
+         */
         this._ticker = 0;
+        /**
+         * @protected
+         * @member {number}
+         */
         this._lastFrame = 0;
 
     }
@@ -138,7 +170,7 @@ export default class TimelineModule extends TimelineBaseModule {
     /**
      * @description Start animation. Launch requestAnimationFrame.
      * Common for {@linkcode Vevet.TimelineModule#play} & {@linkcode Vevet.TimelineModule#resume}.
-     * @private
+     * @protected
      */
     _start() {
 
@@ -158,7 +190,7 @@ export default class TimelineModule extends TimelineBaseModule {
     /**
      * @description Stop animation and set progress to zero.
      * Common for {@linkcode Vevet.TimelineModule#stop} & {@linkcode Vevet.TimelineModule#pause}.
-     * @private
+     * @protected
      */
     _stop() {
 
@@ -291,7 +323,7 @@ export default class TimelineModule extends TimelineBaseModule {
 
     /**
      * @description Stop animation and set progress to zero.
-     * @private
+     * @protected
      */
     _stopReset() {
 
@@ -326,7 +358,7 @@ export default class TimelineModule extends TimelineBaseModule {
 
     /**
      * @description Animation itself.
-     * @private
+     * @protected
      */
     _animate() {
 

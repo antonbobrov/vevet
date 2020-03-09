@@ -49,15 +49,26 @@ export default class TimelineBaseModule extends Module {
 
         super._extra();
 
-        // variables
+        /**
+         * @description Initial settings.
+         * @protected
+         * @member {Vevet.TimelineBaseModule.Settings}
+         */
         this._settings = merge(this.defaultSettings, this._responsiveProp._propInit);
         this._tickers();
 
         // nested timelines
         /**
+         * @description Nested timelines
          * @type {Array<Vevet.TimelineModule|Vevet.TimelineBaseModule>}
+         * @protected
          */
         this._timelines = [];
+        /**
+         * @description Total amount of nested timelines.
+         * @protected
+         * @member {number}
+         */
         this._timelinesCount = 0;
 
     }
@@ -68,14 +79,42 @@ export default class TimelineBaseModule extends Module {
      */
     _tickers() {
 
-        // progresses
+        /**
+         * @description Absolute progress.
+         * @protected
+         * @member {number}
+         */
         this._absolute = 0;
+        /**
+         * @description Progress.
+         * @protected
+         * @member {number}
+         */
         this._progress = 0;
+        /**
+         * @description Easing progress.
+         * @protected
+         * @member {number}
+         */
         this._easing = 0;
+        /**
+         * @description Scoped progress.
+         * @protected
+         * @member {number}
+         */
         this._scope = 0;
+        /**
+         * @description Scoped progress with easing.
+         * @protected
+         * @member {number}
+         */
         this._scopeEasing = 0;
 
-        // scope line
+        /**
+         * @description Scope line length.
+         * @protected
+         * @member {number}
+         */
         this._scopeLine = 0;
 
     }
