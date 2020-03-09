@@ -25,7 +25,7 @@ export default class AJAXEvent extends Event {
         /**
          * @description Ajax Requests' Storage.
          * @member {Array<Vevet.AJAXEvent.CacheItem>}
-         * @private
+         * @protected
          */
         this._cache = [];
 
@@ -124,7 +124,7 @@ export default class AJAXEvent extends Event {
     /**
      * @description XHR request.
      * @param {Vevet.AJAXEvent.LoadData} prop - Properties.
-     * @private
+     * @protected
      */
     _xhr(prop) {
 
@@ -213,7 +213,7 @@ export default class AJAXEvent extends Event {
     /**
      * @description Check if the request exists in cache.
      * 
-     * @private
+     * @protected
      * 
      * @param {object} prop - Request properties, they are not the same as used in the "load" method.
      * @param {string} prop.url - Url of the request.
@@ -276,7 +276,7 @@ export default class AJAXEvent extends Event {
     /**
      * @description Set cache.
      * 
-     * @private
+     * @protected
      * 
      * @param {Vevet.AJAXEvent.CacheItem} prop - Object with the request data.
      */
