@@ -156,6 +156,14 @@ export default class PreloaderModule extends Module {
     get hidden() {
         return this._hidden;
     }
+    /**
+     * @description Outer element.
+     * @readonly
+     * @type {HTMLElement}
+     */
+    get outer() {
+        return this._outer;
+    }
 
 
 
@@ -166,22 +174,75 @@ export default class PreloaderModule extends Module {
 
         let prop = this._prop;
 
-        // get outer
+        /**
+         * @description Outer element.
+         * @protected
+         * @member {HTMLElement}
+         */
         this._outer = selectEl.one(prop.selector);
         this._outer.classList.add(this._prefix);
 
-        // variables
+        /**
+         * @description Current loading time.
+         * @protected
+         * @member {number}
+         */
         this._time = +new Date();
+        /**
+         * @description If the preloader is hidden.
+         * @protected
+         * @member {boolean}
+         */
         this._hidden = false;
 
+        /**
+         * @description Images list.
+         * @protected
+         * @member {Array<string>}
+         */
         this._images = [];
+        /**
+         * @description Videos list.
+         * @protected
+         * @member {Array<HTMLVideoElement>}
+         */
         this._videos = [];
+        /**
+         * @description Total amount of resources.
+         * @protected
+         * @member {number}
+         */
         this._resourcesTotal = prop.progress.resources;
+        /**
+         * @description Total amount of loaded resources.
+         * @protected
+         * @member {number}
+         */
         this._resourcesLoaded = 0;
 
+        /**
+         * @description Loading progress.
+         * @protected
+         * @member {number}
+         */
         this._progressLoad = 0;
+        /**
+         * @description Loading animation progress.
+         * @protected
+         * @member {number}
+         */
         this._progressAnim = 0;
+        /**
+         * @description Progress animationFrame.
+         * @protected
+         * @member {null|number}
+         */
         this._progressFrameId = null;
+        /**
+         * @description If progress enabled.
+         * @protected
+         * @member {boolean}
+         */
         this._progressBool = true;
 
         // set styles to the preloader
@@ -193,7 +254,7 @@ export default class PreloaderModule extends Module {
 
     /**
      * @description Set transition styles of the preloader.
-     * @private
+     * @protected
      */
     _setStyles() {
 
@@ -251,7 +312,7 @@ export default class PreloaderModule extends Module {
 
     /**
      * @description Add images to stack.
-     * @private
+     * @protected
      * @returns {number} Total number of images to be loaded.
      */
     _getImages() {
@@ -293,7 +354,7 @@ export default class PreloaderModule extends Module {
 
     /**
      * @description Add videos to stack.
-     * @private
+     * @protected
      * @returns {number} Total number of images to be loaded.
      */
     _getVideos() {
@@ -311,7 +372,7 @@ export default class PreloaderModule extends Module {
 
     /**
      * @description Load real resources.
-     * @private
+     * @protected
      */
     _resourcesLoad() {
 
@@ -351,7 +412,7 @@ export default class PreloaderModule extends Module {
 
     /**
      * @description Event on any resource loaded.
-     * @private
+     * @protected
      */
     _resourcesOnLoaded() {
 
@@ -392,7 +453,7 @@ export default class PreloaderModule extends Module {
 
     /**
      * @description Set progress animation frame.
-     * @private
+     * @protected
      */
     _frameLaunch() {
 
@@ -400,6 +461,10 @@ export default class PreloaderModule extends Module {
 
     }
 
+    /**
+     * @description Frame animation
+     * @protected
+     */
     _frame() {
 
         // check if animation progress is enabled
@@ -447,7 +512,7 @@ export default class PreloaderModule extends Module {
     
     /**
      * @description Timeline animation.
-     * @private
+     * @protected
      * @param {Vevet.TimelineModule.Data} p
      */
     _progressFrameForce(p) {
@@ -474,7 +539,7 @@ export default class PreloaderModule extends Module {
 
     /**
      * @description Call it when either all resources are loaded or the page is loaded.
-     * @private
+     * @protected
      */
     _onloaded() {
 
@@ -535,7 +600,7 @@ export default class PreloaderModule extends Module {
 
     /**
      * @description Hide preloader.
-     * @private
+     * @protected
      */
     hide() {
 
@@ -547,7 +612,7 @@ export default class PreloaderModule extends Module {
 
     /**
      * @description Hide callback. Hide preloader when everything is loaded.
-     * @private
+     * @protected
      */
     _hide() {
         
@@ -579,7 +644,7 @@ export default class PreloaderModule extends Module {
     
     /**
      * @description Now we really hide the preloader.
-     * @private
+     * @protected
      */
     _hideAnimate() {
 
@@ -597,7 +662,7 @@ export default class PreloaderModule extends Module {
     
     /**
      * @description This action is called when the preloader is finally hidden.
-     * @private
+     * @protected
      */
     _onhidden() {
 
