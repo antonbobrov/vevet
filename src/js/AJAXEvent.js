@@ -220,7 +220,7 @@ export default class AJAXEvent extends Event {
      * @param {string} prop.method - Method of the request.
      * @param {object} prop.data - Object of data to transmit through ajax.
      * 
-     * @returns {false|object} Returns an object if the request exists in cache and false if it doesn't.
+     * @returns {false|Vevet.AJAXEvent.CacheItem} Returns an object if the request exists in cache and false if it doesn't.
      */
     _cacheCheck(prop) {
 
