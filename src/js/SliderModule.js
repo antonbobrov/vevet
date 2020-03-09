@@ -264,7 +264,7 @@ export default class SliderModule extends Module {
         /**
          * @description Timeline for animation
          * @protected
-         * @member {Vevet.TimelineModule}
+         * @member {false|Vevet.TimelineModule}
          */
         this._timeline = false;
 
