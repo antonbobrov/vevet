@@ -5,7 +5,7 @@
  * @param {Window|HTMLElement} data.el - Element with the event.
  * @param {string} data.id - Id of the event.
  * 
- * @returns {boolean|Vevet.BindListener} Returns either 'false' or object with an id of the event, 
+ * @returns {false|Vevet.BindListener} Returns either 'false' or object with an id of the event, 
  * its element and callback.
  * 
  * @memberof Vevet

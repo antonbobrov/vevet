@@ -150,7 +150,7 @@ export default class SelectModule extends Module {
     /**
      * @description The order number/numbers (for multiple) of options or false if none are selected.
      * @readonly
-     * @type {number|Array<number>|boolean}
+     * @type {number|Array<number>|false}
      */
     get active() {
         if (this._actives.length > 1) {
@@ -168,7 +168,7 @@ export default class SelectModule extends Module {
     /**
      * @description Returns the value/values (for multiple) of the select or false if none are selected.
      * @readonly
-     * @type {string|Array<string>|boolean}
+     * @type {string|Array<string>|false}
      */
     get value() {
         let values = this._getValues();
@@ -188,8 +188,8 @@ export default class SelectModule extends Module {
     /**
      * @memberof Vevet.SelectModule
      * @typedef {object} Callback
-     * @property {number|Array<number>|boolean} active - The order number/numbers (for multiple) of options or false if none are selected.
-     * @property {string|Array<string>|boolean} value - Returns the value/values (for multiple) of the select or false if none are selected.
+     * @property {number|Array<number>|false} active - The order number/numbers (for multiple) of options or false if none are selected.
+     * @property {string|Array<string>|false} value - Returns the value/values (for multiple) of the select or false if none are selected.
      * @property {Array<HTMLOptionElement>} [options] -  Options.
      * @property {HTMLSelectElement} select - Select element.
      * @property {HTMLElement} outer - Outer element.

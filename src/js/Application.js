@@ -203,7 +203,7 @@ export default class Application {
          * @description The active page. See {@linkcode Vevet.PageModule}.
          * Its value is false when no page is active and {@linkcode Vevet.PageModule}
          * if a page is created through {@linkcode Vevet.PageModule#create}
-         * @type {Vevet.PageModule|boolean}
+         * @type {Vevet.PageModule|false}
          */
         this.vevetPage = false;
 

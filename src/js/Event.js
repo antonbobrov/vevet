@@ -378,7 +378,7 @@ export default class Event {
      * @description Get a callback by id.
      * @param {string} id - Id of the callback.
      * 
-     * @returns {(boolean|Vevet.Event.EventData)} Returns false if callback does not exist or its object if it does.
+     * @returns {(false|Vevet.Event.EventData)} Returns false if callback does not exist or its object if it does.
      */
     get(id) {
 
@@ -402,7 +402,7 @@ export default class Event {
      * @protected
      * 
      * @param {Vevet.Event.EventData} obj - Callback's object.
-     * @param {object|boolean} [arg] - Callback's arguments.
+     * @param {object|false} [arg] - Callback's arguments.
      */
     _launch(obj, arg = false) {
 

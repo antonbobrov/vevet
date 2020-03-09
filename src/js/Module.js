@@ -144,7 +144,7 @@ export default class Module extends Event {
      * @param {object} data - Event's data.
      * @param {boolean} [bool=true] - Defines if the event will be enabled.
      * 
-     * @returns {string|boolean|Array<string|boolean>} Returns a string with an id or false if the event cannot be added. If there were several names, it will return an array with strings & booleans.
+     * @returns {string|false|Array<string|false>} Returns a string with an id or false if the event cannot be added. If there were several names, it will return an array with strings & booleans.
      */
     _addEvent(name, data, bool = true) {
 

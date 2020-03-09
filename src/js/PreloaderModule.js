@@ -50,7 +50,7 @@ export default class PreloaderModule extends Module {
      * this allows to end animation in a certain period of time.
      * @property {number} [forceEndDuration=3000] - Duration of the force-ednd-animation.
      * @property {boolean} [images=true] - Load images.
-     * @property {string|boolean} [bgSelector=*:not(script)] - If you are loading images, you may also need to load
+     * @property {string|false} [bgSelector=*:not(script)] - If you are loading images, you may also need to load
      * background images. To do this, set a background selector or make it false to skip this step.
      * @property {boolean} [videos=true] - Load videos.
      * @property {number} [resources=0] - Amount of resources to be loaded. 

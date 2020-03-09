@@ -130,7 +130,7 @@ export default class PopupModule extends Module {
     /**
      * @description Window outer. False if not created.
      * @readonly
-     * @member {HTMLElement|boolean}
+     * @member {HTMLElement|false}
      */
     get outer() {
         return this._outer;

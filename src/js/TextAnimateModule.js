@@ -184,7 +184,7 @@ export default class TextAnimateModule extends TextSplitModule {
      * 
      * @param {Vevet.TextAnimateModule.Settings} data - Settings of the animation.
      * 
-     * @returns {Vevet.TimelineModule|boolean} Returns an object if the animation is launched and false if not.
+     * @returns {Vevet.TimelineModule|false} Returns an object if the animation is launched and false if not.
      */
     play(data) {
         

@@ -39,7 +39,7 @@ export default class ScrollModule extends Module {
      * @property {string|HTMLElement|NodeList|Array<HTMLElement>} [selectors.elements=.vevet-scroll__el] - Elements inside the outer element to be scrolled.
      * 
      * @property {boolean} [run=true] - If true, the scrolling will work.
-     * @property {boolean|Vevet.FrameModule|Vevet.Module} [frame=false] - If false, the animation will work on the basis of {@linkcode requestAnimationFrame}.
+     * @property {false|Vevet.FrameModule|Vevet.Module} [frame=false] - If false, the animation will work on the basis of {@linkcode requestAnimationFrame}.
      * If not a frame or another module, an event under the target "frame" willbe added to it, and in this very event
      * the scrolling values will be calculated.
      * @property {boolean} [resizeOnUpdate=true] - Sometimes content and its height may change.

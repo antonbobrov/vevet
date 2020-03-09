@@ -154,7 +154,7 @@ export default class PageModule extends Module {
      * 
      * @param {boolean} [ajax=false] - Defines if the page was created through an ajax request. It may be helpful when using the class together with {@linkcode Vevet.PageAjaxModule}.
      * 
-     * @returns {boolean|Vevet.PageModule} Returns false if the page is not created.
+     * @returns {false|Vevet.PageModule} Returns false if the page is not created.
      */
     create(ajax = false) {
 

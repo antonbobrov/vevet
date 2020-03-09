@@ -90,7 +90,7 @@ export default class TextSplitModule extends Module {
     /**
      * @memberof Vevet.TextSplitModule
      * @typedef {object} Letter
-     * @property {HTMLElement|boolean} el Defines the span element itself.
+     * @property {HTMLElement|false} el Defines the span element itself.
      * @property {string} content Defines innerHTML of the element.
      * @property {boolean} newline Defines if the element precedes a new line.
      * @property {boolean} whitespace Defines if the element precedes a whitespace.
@@ -108,7 +108,7 @@ export default class TextSplitModule extends Module {
     /**
      * @memberof Vevet.TextSplitModule
      * @typedef {object} Word
-     * @property {HTMLElement|boolean} el Defines the span element itself.
+     * @property {HTMLElement|false} el Defines the span element itself.
      * @property {string} content Defines the contents of all letters inside the word.
      * @property {Array<Vevet.TextSplitModule.Letter>} children All letters inside the word.
      * @property {boolean} newline Defines if the element precedes a new line.
@@ -126,7 +126,7 @@ export default class TextSplitModule extends Module {
     /**
      * @memberof Vevet.TextSplitModule
      * @typedef {object} Line
-     * @property {HTMLElement|boolean} el Defines the span element itself.
+     * @property {HTMLElement|false} el Defines the span element itself.
      * @property {string} content The contents of all words inside of the line.
      * @property {Array<Vevet.TextSplitModule.Word|Vevet.TextSplitModule.Letter>} children All words inside of the line.
      * @property {string} type Defines the type of the element.
