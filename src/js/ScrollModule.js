@@ -216,7 +216,7 @@ export default class ScrollModule extends Module {
         /**
          * @description Data attributes names.
          * @member {object}
-         * @private
+         * @protected
          */
         this._data = {
             ease: `data-${prefix}-ease`
@@ -225,7 +225,7 @@ export default class ScrollModule extends Module {
         /**
          * @description Element properties.
          * @member {object}
-         * @private
+         * @protected
          */
         this._properties = {
             current: `${prefix}-current`,
@@ -233,21 +233,53 @@ export default class ScrollModule extends Module {
         };
 
         // what scroll values must be
+        /**
+         * @description Scroll Top goal
+         * @protected 
+         * @type {number}
+         */
         this._targetTop = 0;
+        /**
+         * @description Scroll Left goal
+         * @protected 
+         * @type {number}
+         */
         this._targetLeft = 0;
 
         // scroll top & scroll left
         // these are actually current values of last elements
+        /**
+         * @description Scroll Top value
+         * @protected 
+         * @type {number}
+         */
         this._scrollTop = 0;
+        /**
+         * @description Scroll Left value
+         * @protected 
+         * @type {number}
+         */
         this._scrollLeft = 0;
 
-        // if the change of the scroll values must happen without interpolation
+        /**
+         * @description If the change of the scroll values must happen without interpolation
+         * @protected 
+         * @type {boolean}
+         */
         this._instant = false;
 
-        // direction, 1 for down, -1 for up
+        /**
+         * @description Direction, 1 for down, -1 for up
+         * @protected 
+         * @type {number}
+         */
         this._direction = 1;
         
-        // animation frame
+        /**
+         * @description Animation frame
+         * @protected 
+         * @type {false|number}
+         */
         this._frame = false;
 
         // get elements
@@ -279,22 +311,34 @@ export default class ScrollModule extends Module {
 
     /**
      * @description Get elements. Scroll elements are searched not only inside the outer.
-     * @private
+     * @protected
      */
     _elGet() {
 
         // copy values
         let prop = this._prop,
             selectors = prop.selectors;
-
-        // get outer
+        /**
+         * @description Outer element.
+         * @protected
+         * @member {HTMLElement}
+         */
         this._outer = selectEl.one(selectors.outer);
         this._outer.classList.add(this._prefix);
 
-        // get elements
+        /**
+         * @description Scroll elements.
+         * @protected
+         * @member {Array<HTMLElement>|NodeList}
+         */
         this._el = selectEl.all(selectors.elements);
         let el = this._el;
-        // count of elements
+        
+        /**
+         * @description Amount of elements.
+         * @protected
+         * @member {number}
+         */
         this._length = el.length;
 
         // will change
@@ -308,7 +352,7 @@ export default class ScrollModule extends Module {
 
     /**
      * @description Set element properties.
-     * @private
+     * @protected
      */
     _elProp() {
 
@@ -340,11 +384,15 @@ export default class ScrollModule extends Module {
     
     /**
      * @description Create additional elements. They are needed for scrolling.
-     * @private
+     * @protected
      */
     _elCreate() {
 
-        // create container
+        /**
+         * @description Scroll Container.
+         * @protected
+         * @member {HTMLElement}
+         */
         this._container = dom({
             selector: 'div',
             styles: `${this._prefix}__container`
@@ -448,7 +496,7 @@ export default class ScrollModule extends Module {
     /**
      * @description Event on wheel.
      * @param {object} evt - Event.
-     * @private
+     * @protected
      */
     _wheel(evt) {
 
@@ -499,7 +547,7 @@ export default class ScrollModule extends Module {
 
     /**
      * @description Prevent cases when targets are less or more than the maximum values of scrolling
-     * @private
+     * @protected
      * @param {boolean} [vertical=true]
      */
     _boundaries(vertical = true) {
@@ -531,7 +579,7 @@ export default class ScrollModule extends Module {
 
     /**
      * @description The same as {@linkcode Vevet.ScrollModule._boundaries} but for both axis.
-     * @private
+     * @protected
      */
     _boundariesBoth() {
         this._boundaries(false);
@@ -539,13 +587,35 @@ export default class ScrollModule extends Module {
     }
 
 
+    /**
+     * @memberof Vevet.ScrollModule
+     * @typedef {object} Scrollbars
+     * 
+     * @property {Vevet.ScrollModule.Scrollbar} x
+     * @property {Vevet.ScrollModule.Scrollbar} y
+     */
+    /**
+     * @memberof Vevet.ScrollModule
+     * @typedef {object} Scrollbar
+     * 
+     * @property {HTMLElement} outer
+     * @property {HTMLElement} bar
+     * @property {number} outerWidth
+     * @property {number} outerHeight
+     * @property {number} barWidth
+     * @property {number} barHeight
+     */
 
     /**
      * @description Create Scrollbars.
-     * @private
+     * @protected
      */
     _scrollbarsCreate() {
 
+        /**
+         * @protected
+         * @member {Vevet.ScrollModule.Scrollbars}
+         */
         this._scrollbars = {};
         this._scrollbarCreate('x');
         this._scrollbarCreate('y');
@@ -554,7 +624,7 @@ export default class ScrollModule extends Module {
 
     /**
      * @description Create a certain Scrollbar.
-     * @private
+     * @protected
      * @param {string} postfix - X|Y.
      */
     _scrollbarCreate(postfix) {
@@ -588,7 +658,7 @@ export default class ScrollModule extends Module {
 
     /**
      * @description Update sizes of all scrollbars.
-     * @private
+     * @protected
      */
     _scrollbarsSizes() {
 
@@ -601,7 +671,7 @@ export default class ScrollModule extends Module {
 
     /**
      * @description Update a scrollbar sizes.
-     * @private
+     * @protected
      * @param {string} postfix - X|Y.
      */
     _scrollbarSizes(postfix) {
@@ -619,7 +689,7 @@ export default class ScrollModule extends Module {
 
     /**
      * @description Show/Hide scrollbars.
-     * @private
+     * @protected
      */
     _scrollbarsClasses() {
 
@@ -640,7 +710,7 @@ export default class ScrollModule extends Module {
 
     /**
      * @description Render scrollbars.
-     * @private
+     * @protected
      * @param {string} postfix - X|Y.
      */
     _scrollbarRender(postfix) {
@@ -668,7 +738,7 @@ export default class ScrollModule extends Module {
 
     /**
      * @description Run animationFrame.
-     * @private
+     * @protected
      */
     _run() {
 
@@ -825,7 +895,7 @@ export default class ScrollModule extends Module {
 
     /**
      * @description Get elements ease.
-     * @private
+     * @protected
      * @param {HTMLElement} el 
      * @param {boolean} instant - Instant scroll after resizing.
      */
@@ -847,7 +917,7 @@ export default class ScrollModule extends Module {
 
     /**
      * @description Render elements, transforms.
-     * @private
+     * @protected
      */
     _render() {
         

@@ -140,7 +140,17 @@ export default class ScrollAnchorModule extends ScrollAnimateModule {
     // Extra Constructor
     _extra() {
 
+        /**
+         * @description Edge border
+         * @protected
+         * @member {number}
+         */
         this._edge = 0;
+        /**
+         * @description Active ID
+         * @protected
+         * @member {string}
+         */
         this._active = '';
 
         super._extra();
@@ -157,13 +167,21 @@ export default class ScrollAnchorModule extends ScrollAnimateModule {
 
         super._elGet();
 
-        // get anchors
+        /**
+         * @description Anchors
+         * @member {NodeList|Array<HTMLElement>}
+         * @protected
+         */
         this._anchors = selectEl.all(this._prop.selectors.anchors);
 
-        // set hrefs
+        /**
+         * @description HREFS
+         * @member {Array<string>}
+         * @protected
+         */
         this._hrefs = [];
         this._anchors.forEach(el => {
-            let href = this._getHref(el);
+            let href = this.getHref(el);
             if (href) {
                 this._hrefs.push(href);
             }
@@ -174,9 +192,10 @@ export default class ScrollAnchorModule extends ScrollAnimateModule {
     /**
      * @description Get href of a link.
      * @param {HTMLElement} el 
-     * @private
+     * @returns {string|false} Returns a href or false.
+     * @protected
      */
-    _getHref(el) {
+    getHref(el) {
 
         let href = el.getAttribute("href");
         if (href) {
@@ -196,9 +215,10 @@ export default class ScrollAnchorModule extends ScrollAnimateModule {
     /**
      * @description Get a section with a certain id.
      * @param {string} href 
-     * @private
+     * @returns {HTMLElement|false} Returns a section or false.
+     * @protected
      */
-    _getSection(href) {
+    getSection(href) {
 
         let section = false;
 
@@ -216,14 +236,15 @@ export default class ScrollAnchorModule extends ScrollAnimateModule {
     /**
      * @description Get an anchor with a certain id.
      * @param {string} id 
-     * @private
+     * @returns {false|HTMLElement} Returns an anchor or false.
+     * @protected
      */
-    _getAnchor(id) {
+    getAnchor(id) {
 
         let anchor = false;
 
         this._anchors.forEach(el => {
-            let href = this._getHref(el);
+            let href = this.getHref(el);
             if (href) {
                 if (id === href) {
                     anchor = el;
@@ -267,8 +288,8 @@ export default class ScrollAnchorModule extends ScrollAnimateModule {
     /**
      * @description Click on anchor.
      * @param {HTMLElement} el - Anchor element.
-     * @param {object|null} [e=null] -Event object.
-     * @private
+     * @param {object|null} [e=null] - Event object.
+     * @protected
      */
     _click(el, e = null) {
 
@@ -278,13 +299,13 @@ export default class ScrollAnchorModule extends ScrollAnimateModule {
         }
 
         // get href
-        let href = this._getHref(el);
+        let href = this.getHref(el);
         if (!href) {
             return false;
         }
 
         // get section
-        let section = this._getSection(href);
+        let section = this.getSection(href);
         if (!section) {
             return false;
         }
@@ -308,7 +329,7 @@ export default class ScrollAnchorModule extends ScrollAnimateModule {
     /**
      * @description Scroll to a definite section.
      * @param {HTMLElement} el - Section element.
-     * @private
+     * @protected
      */
     _scrollTo(el) {
 
@@ -427,7 +448,7 @@ export default class ScrollAnchorModule extends ScrollAnimateModule {
                 }
 
                 // change anchor classes
-                let anchor = this._getAnchor(id);
+                let anchor = this.getAnchor(id);
                 if (anchor) {
                     if (id === this._active) {
                         anchor.classList.add(classes.anchor);
@@ -445,13 +466,13 @@ export default class ScrollAnchorModule extends ScrollAnimateModule {
             this.lbt("change", {
                 prev: {
                     href: activePrev,
-                    el: this._getSection(activePrev),
-                    anchor: this._getAnchor(activePrev)
+                    el: this.getSection(activePrev),
+                    anchor: this.getAnchor(activePrev)
                 },
                 next: {
                     href: this._active,
-                    el: this._getSection(this._active),
-                    anchor: this._getAnchor(this._active)
+                    el: this.getSection(this._active),
+                    anchor: this.getAnchor(this._active)
                 }
             });
         }
@@ -461,13 +482,13 @@ export default class ScrollAnchorModule extends ScrollAnimateModule {
 
 
     /**
-     * @description Set a new section/Scroll to a section.
+     * @description Scroll to a section.
      * @param {string} id - Id of the section.
      * @returns {boolean} Returns true if success.
      */
     set(id) {
 
-        let section = this._getSection(id);
+        let section = this.getSection(id);
         if (!section) {
             return false;
         }

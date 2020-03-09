@@ -114,14 +114,14 @@ export default class ScrollDragPlugin extends Plugin {
         /**
          * @description If being dragged at the moment.
          * @type {boolean}
-         * @private
+         * @protected
          */
         this._dragging = false;
 
         /**
          * @description Where drag classes are stored.
          * @type {Array<Vevet.DraggerModule|Vevet.SwipeModule|Vevet.DragModule>}
-         * @private
+         * @protected
          */
         this._draggers = [];
 
@@ -140,7 +140,7 @@ export default class ScrollDragPlugin extends Plugin {
 
     /**
      * @description Set Drag Events.
-     * @private
+     * @protected
      * @param {string} type - Drag|swipe.
      */
     _setDrag(type) {
@@ -175,7 +175,7 @@ export default class ScrollDragPlugin extends Plugin {
 
     /**
      * @description Start Dragging.
-     * @private
+     * @protected
      */
     _start() {
 
@@ -191,7 +191,7 @@ export default class ScrollDragPlugin extends Plugin {
     /**
      * @description Moving.
      * @param {Vevet.DraggerModule.Callback} data
-     * @private
+     * @protected
      */
     _move(data) {
 
@@ -254,7 +254,7 @@ export default class ScrollDragPlugin extends Plugin {
 
     /**
      * @description Drag end.
-     * @private
+     * @protected
      */
     _end() {
 
@@ -292,12 +292,24 @@ export default class ScrollDragPlugin extends Plugin {
 
 
     /**
+     * @memberof Vevet.ScrollDragPlugin
+     * @typedef {object} Velocity
+     * 
+     * @property {number} x
+     * @property {number} y
+     * @property {Date} t
+     */
+    /**
      * @description Reset Velocity values.
      * @param {number} [x=0] - Horizontal velocity.
      * @param {number} [y=0] - Vertical velocity.
-     * @private
+     * @protected
      */
     _setVelocity(x = 0, y = 0) {
+        /**
+         * @type {Vevet.ScrollDragPlugin.Velocity}
+         * @protected
+         */
         this._velocity = {
             x: x,
             y: y,
@@ -309,7 +321,7 @@ export default class ScrollDragPlugin extends Plugin {
      * @description Increase Velocity values.
      * @param {number} x - Iterator.
      * @param {number} y - Iterator.
-     * @private
+     * @protected
      */
     _increaseVelocity(x, y) {
 
@@ -330,7 +342,7 @@ export default class ScrollDragPlugin extends Plugin {
 
     /**
      * @description Override elements ease.
-     * @private
+     * @protected
      */
     _getEase() {
 

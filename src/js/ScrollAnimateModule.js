@@ -95,7 +95,7 @@ export default class ScrollAnimateModule extends Module {
     /**
      * @description Scroll outer.
      * @readonly
-     * @type {HTMLElement|Window|Vevet.ScrollModule}
+     * @type {HTMLElement|Window}
      */
     get outer() {
         return this._outer;
@@ -116,10 +116,32 @@ export default class ScrollAnimateModule extends Module {
 
         super._extra();
 
-        // variables
-        this._scrollModule = false;
+        /**
+         * @description Vevet ScrollModule callback
+         * @member {false|string}
+         * @protected
+         */
+        this._scrollModuleCallback = false;
+        /**
+         * @description Vevet ScrollModule or Scroll Outer
+         * @member {HTMLElement|Window|Vevet.ScrollModule}
+         * @protected
+         */
+        this._vevetScroll = false;
+        /**
+         * @member {number}
+         * @protected
+         */
         this._size = 0;
+        /**
+         * @member {number}
+         * @protected
+         */
         this._scrollValue = 0;
+        /**
+         * @member {DOMRect}
+         * @protected
+         */
         this._bounding = false;
 
         // get elements
@@ -154,12 +176,16 @@ export default class ScrollAnimateModule extends Module {
 
     }
 
+    /**
+     * @description Remove scroll listeners
+     * @protected
+     */
     _removeScrollListeners() {
 
         // remove event listeners before
         this.removeEventListeners();
-        if (this._scrollModule) {
-            this._vevetScroll.remove(this._scrollModule);
+        if (this._scrollModuleCallback) {
+            this._vevetScroll.remove(this._scrollModuleCallback);
         }
 
     }
@@ -176,6 +202,19 @@ export default class ScrollAnimateModule extends Module {
             prop = this._prop,
             selectors = prop.selectors,
             selectorOuter = selectors.outer;
+
+        /**
+         * @member Vevet.ScrollAnimateModule#_outer
+         * @memberof Vevet.ScrollAnimateModule
+         * @protected
+         * @type {HTMLElement|Window|Vevet.ScrollModule}
+         */
+        /**
+         * @member Vevet.ScrollAnimateModule#_el
+         * @memberof Vevet.ScrollAnimateModule
+         * @protected
+         * @type {Array<HTMLElement>|NodeList}
+         */
 
         // if a Module is used
         if (selectorOuter instanceof Module) {
@@ -199,11 +238,11 @@ export default class ScrollAnimateModule extends Module {
         }
 
         // set scrolling events
-        this._scrollModule = false;
+        this._scrollModuleCallback = false;
         if (prop.event) {
             // module event
             if (isModule) {
-                this._scrollModule = this._vevetScroll.add({
+                this._scrollModuleCallback = this._vevetScroll.add({
                     target: 'update',
                     do: this.seek.bind(this, null)
                 });
@@ -332,8 +371,8 @@ export default class ScrollAnimateModule extends Module {
         super.destroy();
 
         // remove vevet scroll event
-        if (this._scrollModule) {
-            this._vevetScroll.remove(this._scrollModule);
+        if (this._scrollModuleCallback) {
+            this._vevetScroll.remove(this._scrollModuleCallback);
         }
         
     }

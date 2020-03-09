@@ -110,14 +110,23 @@ export default class ScrollViewModule extends ScrollAnimate {
 
         let prefix = this._prefix;
 
-        // values
+        /**
+         * @description Edge border
+         * @protected
+         * @member {number}
+         */
         this._edge = 0;
+        /**
+         * @description If first load
+         * @protected
+         * @member {boolean}
+         */
         this._firstLoad = true;
 
         /**
          * @description Data attributes names.
          * @member {object}
-         * @private
+         * @protected
          */
         this._data = {
             proceeded: `data-${prefix}-proceeded`,
@@ -130,7 +139,7 @@ export default class ScrollViewModule extends ScrollAnimate {
         /**
          * @description Properties.
          * @member {object}
-         * @private
+         * @protected
          */
         this._properties = {
             callback: `${prefix}-callback`
@@ -295,6 +304,12 @@ export default class ScrollViewModule extends ScrollAnimate {
 
     }
 
+    /**
+     * @description Get element view delay
+     * @protected
+     * @param {HTMLElement} el 
+     * @param {Array<number>} elEdges 
+     */
     _getDelay(el, elEdges) {
 
         let prop = this._prop,
@@ -315,6 +330,10 @@ export default class ScrollViewModule extends ScrollAnimate {
 
     }
 
+    /**
+     * @protected
+     * @param {HTMLElement} el 
+     */
     _seekCallback(el) {
 
         let callbackProp = this._properties.callback;
