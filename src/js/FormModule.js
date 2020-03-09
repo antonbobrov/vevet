@@ -30,7 +30,7 @@ export default class FormModule extends Module {
      * @augments Vevet.Module.Properties
      * 
      * @property {object} [selectors] - *** An object with css selectors.
-     * @property {string|HTMLElement} [selectors.form=.vevet-form] - The form element.
+     * @property {string|HTMLFormElement} [selectors.form=.vevet-form] - The form element.
      * @property {string} [selectors.error=.vevet-form__error] - The elements, in which errors will be displayed. For each element it is possible to create a div. It must contain the attribute "for" which is equal to the name of the input.
      * @property {string} [selectors.errors=.vevet-form__errors] - The element, in which all errors will be displayed.
      * 
@@ -118,8 +118,13 @@ export default class FormModule extends Module {
 
         super._extra();
 
-        // vars
+        /**
+         * @description If loading at the moment.
+         * @protected
+         * @member {boolean}
+         */
         this._loading = false;
+
         this._inputClass = `${this._prefix}__input`;
         this._filledClass = `${this._inputClass}_filled`;
 
@@ -128,13 +133,25 @@ export default class FormModule extends Module {
 
     }
 
+    /**
+     * @description Get elements
+     * @protected
+     */
     _getElements() {
         
-        // form itself
+        /**
+         * @description The form element.
+         * @protected
+         * @member {HTMLFormElement}
+         */
         this._outer = selectEl.one(this._prop.selectors.form);
         let outer = this._outer;
 
-        // elements
+        /**
+         * @description Form inputs.
+         * @protected
+         * @member {NodeList}
+         */
         this._el = outer.querySelectorAll('input:not([type="submit"]):not([type="button"]), select, textarea, keygen');
         
         // set filled class
@@ -142,13 +159,25 @@ export default class FormModule extends Module {
             this._classFilled(el);
         });
         
-        // errors
+        /**
+         * @description Error elements.
+         * @protected
+         * @member {NodeList}
+         */
         this._errors = outer.querySelectorAll(this._prop.selectors.error);
         
-        // errors outer
+        /**
+         * @description Errors outer.
+         * @protected
+         * @member {HTMLElement}
+         */
         this._errorsOuter = outer.querySelector(this._prop.selectors.errors);
         
-        // submit
+        /**
+         * @description Submit button.
+         * @protected
+         * @member {HTMLButtonElement|HTMLInputElement}
+         */
         this._submit = outer.querySelector("input[type='submit']");
         let submit = this._submit;
         if (submit == null) {
@@ -182,7 +211,7 @@ export default class FormModule extends Module {
     /**
      * @description Set classes if an input is not empty.
      * @param {HTMLElement} el 
-     * @private
+     * @protected
      */
     _classFilled(el) {
 
@@ -205,7 +234,7 @@ export default class FormModule extends Module {
     /**
      * @description Check if an input is not empty.
      * @param {HTMLElement} el 
-     * @private
+     * @protected
      */
     _filled(el) {
 
@@ -226,7 +255,7 @@ export default class FormModule extends Module {
 
     /**
      * @description Check if all inputs are not empty.
-     * @private
+     * @protected
      */
     _filledAll() {
 
@@ -251,7 +280,7 @@ export default class FormModule extends Module {
 
     /**
      * @description Disable submit if inputs are empty.
-     * @private
+     * @protected
      */
     _submitDisabled() {
 
@@ -275,7 +304,7 @@ export default class FormModule extends Module {
     /**
      * @description Element focus.
      * @param {HTMLElement} el 
-     * @private
+     * @protected
      */
     _inputFocus(el) {
 
@@ -294,7 +323,7 @@ export default class FormModule extends Module {
     /**
      * @description Element blur.
      * @param {HTMLElement} el 
-     * @private
+     * @protected
      */
     _inputBlur(el) {
 
@@ -310,7 +339,7 @@ export default class FormModule extends Module {
 
     /**
      * @description Element keyup.
-     * @private
+     * @protected
      */
     _inputKeyup() {
 
@@ -370,7 +399,7 @@ export default class FormModule extends Module {
     /**
      * @description Ajax Request.
      * @param {object} obj 
-     * @private
+     * @protected
      */
     _submitRequest(obj) {
 
@@ -393,7 +422,7 @@ export default class FormModule extends Module {
 
     /**
      * @description Request error.
-     * @private
+     * @protected
      */
     _submitError() {
         throw new Error('Form Error');
@@ -402,7 +431,7 @@ export default class FormModule extends Module {
     /**
      * @description Request response.
      * @param {object} data
-     * @private
+     * @protected
      */
     _submitResponse(data) {
 
@@ -425,7 +454,7 @@ export default class FormModule extends Module {
     /**
      * @description Check if the form is valid.
      * @param {object} data 
-     * @private
+     * @protected
      */
     _validResponse(data) {
 
@@ -453,7 +482,7 @@ export default class FormModule extends Module {
     /**
      * @description Success validation.
      * @param {object} data 
-     * @private
+     * @protected
      */
     _validSuccess(data) {
 
@@ -482,7 +511,7 @@ export default class FormModule extends Module {
      * @description Validate errors.
      * @param {object} data 
      * @param {object} json 
-     * @private
+     * @protected
      */
     _validErrors(data, json) {
 
@@ -535,7 +564,7 @@ export default class FormModule extends Module {
      */
     /**
      * @description Set errors in the form.
-     * @private
+     * @protected
      * @param {Array<Vevet.FormModule.Error>} [array] - Array of errors for existing inputs.
      * @param {Array<Vevet.FormModule.Error>} [allErrors] - Array of all errors.
      */
@@ -581,7 +610,7 @@ export default class FormModule extends Module {
      * @description Show errors.
      * @param {Array<object>} array 
      * @param {Array<object>} allErrors 
-     * @private
+     * @protected
      */
     _errorEl(array = [], allErrors = []) {
 
