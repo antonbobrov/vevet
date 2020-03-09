@@ -143,7 +143,7 @@ export default class PaginationScrollPlugin extends Plugin {
     /**
      * @description Seek the moment.
      * @param {Array<any>} entries - Entries.
-     * @private
+     * @protected
      */
     _seek(entries) {
  
