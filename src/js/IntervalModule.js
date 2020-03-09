@@ -172,7 +172,7 @@ export default class IntervalModule extends Module {
      * 
      * @param {string} id - Id of the event.
      * 
-     * @private
+     * @protected
      */
     _on(id){
 
@@ -197,6 +197,11 @@ export default class IntervalModule extends Module {
 
     }
 
+    /**
+     * @description Enable interval
+     * @param {Vevet.IntervalModule.EventData} obj 
+     * @protected
+     */
     _enable(obj) {
         
         obj._intervalFunc = setInterval(() => {
@@ -210,7 +215,7 @@ export default class IntervalModule extends Module {
      * 
      * @param {string} id - Id of the event.
      * 
-     * @private
+     * @protected
      */
     _off(id) {
 
