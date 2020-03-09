@@ -131,18 +131,46 @@ export default class PageModule extends Module {
         // variables
         this._initVars();
 
-        // add page to the stack
+        // add the page to the stack
         this._v.vevetPages.push(this);
 
     }
 
+    /**
+     * @description Initialize variables.
+     */
     _initVars() {
 
+        /**
+         * @description If the page is created.
+         * @protected
+         * @member {boolean}
+         */
         this._created = false;
+        /**
+         * @description If the page is shown.
+         * @protected
+         * @member {boolean}
+         */
         this._shown = false;
+        /**
+         * @description If the page is hidden.
+         * @protected
+         * @member {boolean}
+         */
         this._hidden = false;
+        /**
+         * @description If the page is destroyed.
+         * @protected
+         * @member {boolean}
+         */
         this._destroyed = false;
 
+        /**
+         * @description If the page is loaded through AJAX.
+         * @protected
+         * @member {boolean}
+         */
         this._throughAjax = false;
         
     }
@@ -182,6 +210,7 @@ export default class PageModule extends Module {
 
     /**
      * @description Check if the page can be created.
+     * @protected
      */
     _createCheck() {
 
@@ -221,6 +250,7 @@ export default class PageModule extends Module {
 
     /**
      * @description Check if the page can be shown.
+     * @protected
      */
     _showCheck() {
 
@@ -263,6 +293,7 @@ export default class PageModule extends Module {
 
     /**
      * @description Check if the page can be hidden.
+     * @protected
      */
     _hideCheck() {
 
@@ -303,6 +334,7 @@ export default class PageModule extends Module {
 
     /**
      * @description Check if the page can be destroyed.
+     * @protected
      */
     _destroyCheck() {
 
