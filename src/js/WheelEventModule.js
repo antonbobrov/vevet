@@ -79,10 +79,17 @@ export default class WheelEventModule extends Module {
 
         super._extra();
 
-        // start time
+        /**
+         * @protected
+         * @member {number}
+         */
         this._time = +new Date();
 
-        // get element
+        /**
+         * @description Outer element.
+         * @protected
+         * @member {HTMLElement|Window}
+         */
         this._outer = selectEl.one(this._prop.outer);
 
     }
@@ -185,7 +192,7 @@ export default class WheelEventModule extends Module {
      * 
      * @param {WheelEvent} e - Wheel Event object.
      * 
-     * @private
+     * @protected
      */
     _implement(e) {
 
