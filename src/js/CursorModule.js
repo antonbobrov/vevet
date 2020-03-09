@@ -131,14 +131,24 @@ export default class CursorModule extends Module {
             click: `${prefix}_click`
         }
 
-        // get the outer
+        /**
+         * @description The outer element.
+         * @protected
+         * @member {HTMLElement}
+         */
         this._outer = selectEl.one(this._prop.selector);
 
         // create the cursor
         this._create();
 
-        // animate the cursor
+        /**
+         * @description Previous run property.
+         * @protected
+         * @member {boolean}
+         */
         this._runPrevBool = this._prop.run;
+
+        // play animationFrame
         this._play();
 
     }
