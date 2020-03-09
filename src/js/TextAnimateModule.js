@@ -87,12 +87,20 @@ export default class TextAnimateModule extends TextSplitModule {
 
 
 
-    // Extra for Constructor
-    
+    // Extra Constructor
     _extra() {
         
-        // vars
+        /**
+         * @description If animation in process.
+         * @protected
+         * @member {boolean}
+         */
         this._playing = false;
+        /**
+         * @description Timeline
+         * @protected
+         * @member {false|Vevet.TimelineModule}
+         */
         this._timeline = false;
 
         // split text
@@ -103,7 +111,6 @@ export default class TextAnimateModule extends TextSplitModule {
 
 
     // Resize & Split
-
     _resize() {
         
         setTimeout(() => {
@@ -112,6 +119,10 @@ export default class TextAnimateModule extends TextSplitModule {
 
     }
     
+    /**
+     * @description Resize text
+     * @protected
+     */
     _resizeText() {
 
         if (this._playing) {
@@ -260,6 +271,11 @@ export default class TextAnimateModule extends TextSplitModule {
 
     }
 
+    /**
+     * @description Merge style settings
+     * @protected
+     * @param {Array<Vevet.TextAnimateModule.SettingStyle>} arr 
+     */
     _mergeSettingStyle(arr) {
 
         for (let i = 0; i < arr.length; i++) {
@@ -281,7 +297,7 @@ export default class TextAnimateModule extends TextSplitModule {
     /**
      * @description Calculate animation time.
      * 
-     * @private
+     * @protected
      * 
      * @param {object} data - Play properties + el.
      */
@@ -361,7 +377,7 @@ export default class TextAnimateModule extends TextSplitModule {
     /**
      * @description Calculate how much time for each type of animation
      * 
-     * @private
+     * @protected
      * 
      * @param {Array<object>} data - Animation data from _animationInfo.
      */
@@ -399,7 +415,7 @@ export default class TextAnimateModule extends TextSplitModule {
     /**
      * @description Launch main animation.
      * 
-     * @private
+     * @protected
      * 
      * @param {object} data - Animation data.
      * @param {Vevet.TextAnimateModule.Settings} prop - Settings of the animation.
@@ -453,7 +469,7 @@ export default class TextAnimateModule extends TextSplitModule {
     /**
      * @description Launch main animation.
      * 
-     * @private
+     * @protected
      * 
      * @param {object} data - Animation data.
      * @param {Vevet.TextAnimateModule.Settings} prop - Settings of the animation.
@@ -490,7 +506,7 @@ export default class TextAnimateModule extends TextSplitModule {
     /**
      * @description Animate elements in each type.
      * 
-     * @private
+     * @protected
      * 
      * @param {number} p - Current progress.
      * @param {object} data - Animation data.
@@ -544,6 +560,11 @@ export default class TextAnimateModule extends TextSplitModule {
 
     }
 
+    /**
+     * @description Animate children according to the type of animation
+     * @protected
+     * @param {object} obj 
+     */
     _animateTypeChildren(obj) {
 
         this._animateEl({
@@ -560,7 +581,7 @@ export default class TextAnimateModule extends TextSplitModule {
     /**
      * @description Animate element.
      * 
-     * @private
+     * @protected
      * 
      * @param {object} data - Animation data.
      */
@@ -636,9 +657,9 @@ export default class TextAnimateModule extends TextSplitModule {
     /**
      * @description Launch callbacks.
      * 
-     * @private
+     * @protected
      * 
-     * @param {Array<object>} callbacks - Array of callbacks.
+     * @param {Array<Vevet.TextAnimateModule.SettingCallback>} callbacks - Array of callbacks.
      * @param {Vevet.TimelineModule.Data} p - Settings of the animation.
      */
     _callbacks(callbacks, p) {

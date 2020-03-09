@@ -156,6 +156,15 @@ export default class TextSplitModule extends Module {
         return this._el;
     }
 
+    /**
+     * @description Get outer element.
+     * @readonly
+     * @type {HTMLElement}
+     */
+    get outer() {
+        return this._outer;
+    }
+
 
 
     // Extra Constructor
@@ -163,22 +172,43 @@ export default class TextSplitModule extends Module {
 
         super._extra();
 
-        // get outer
+        /**
+         * @description Outer element.
+         * @protected
+         * @member {HTMLElement}
+         */
         this._outer = selectEl.one(this._prop.selector);
         let outer = this._outer;
         outer.classList.add(`${this._prefix}`);
 
-        // variables
+        /**
+         * @description Inner text.
+         * @protected
+         * @member {string}
+         */
         this._text = outer.innerText;
         if (this._text.length == 0) {
             this._text = outer.textContent;
         }
+        /**
+         * @description Inner HTML.
+         * @protected
+         * @member {string}
+         */
         this._html = outer.innerHTML;
 
-        // defines if the text is already split into letters & words
+        /**
+         * @description Defines if the text is already split into letters & words.
+         * @protected
+         * @member {boolean}
+         */
         this._splitBool = false;
 
-        // create elements
+        /**
+         * @description Elements.
+         * @protected
+         * @member {Vevet.TextSplitModule.Elements}
+         */
         this._el = {
             letters: [],
             words: [],
