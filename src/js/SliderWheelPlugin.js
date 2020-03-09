@@ -86,7 +86,7 @@ export default class SliderWheelPlugin extends Plugin {
         // get outer
         let outer = prop.outer;
         if (!outer) {
-            outer = this._m._outer;
+            outer = this._m.outer;
         }
         else {
             outer = selectEl.one(outer);

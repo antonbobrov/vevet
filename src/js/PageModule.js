@@ -186,7 +186,7 @@ export default class PageModule extends Module {
      */
     create(ajax = false) {
 
-        if (!this._createCheck()) {
+        if (!this.createCheck()) {
             return false;
         }
 
@@ -210,9 +210,8 @@ export default class PageModule extends Module {
 
     /**
      * @description Check if the page can be created.
-     * @protected
      */
-    _createCheck() {
+    createCheck() {
 
         if (this._created) {
             return false;
@@ -231,7 +230,7 @@ export default class PageModule extends Module {
      */
     show() {
 
-        if (!this._showCheck()) {
+        if (!this.showCheck()) {
             return false;
         }
 
@@ -250,9 +249,8 @@ export default class PageModule extends Module {
 
     /**
      * @description Check if the page can be shown.
-     * @protected
      */
-    _showCheck() {
+    showCheck() {
 
         if (!this._created) {
             return false;
@@ -274,7 +272,7 @@ export default class PageModule extends Module {
      */
     hide() {
 
-        if (!this._hideCheck()) {
+        if (!this.hideCheck()) {
             return false;
         }
 
@@ -293,9 +291,8 @@ export default class PageModule extends Module {
 
     /**
      * @description Check if the page can be hidden.
-     * @protected
      */
-    _hideCheck() {
+    hideCheck() {
 
         if (!this._created) {
             return false;
@@ -317,7 +314,7 @@ export default class PageModule extends Module {
      */
     destroy() {
 
-        if (!this._destroyCheck()) {
+        if (!this.destroyCheck()) {
             return false;
         }
         super.destroy();
@@ -334,9 +331,8 @@ export default class PageModule extends Module {
 
     /**
      * @description Check if the page can be destroyed.
-     * @protected
      */
-    _destroyCheck() {
+    destroyCheck() {
 
         if (!this._created) {
             return false;

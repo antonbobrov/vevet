@@ -145,6 +145,14 @@ export default class SliderModule extends Module {
 
 
     /**
+     * @description Get slider outer.
+     * @readonly
+     * @type {HTMLElement}
+     */
+    get outer() {
+        return this._outer;
+    }
+    /**
      * @description If slider is animating.
      * @default false
      * @readonly

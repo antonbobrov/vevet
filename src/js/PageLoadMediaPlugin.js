@@ -87,8 +87,8 @@ export default class PageLoadMediaPlugin extends Plugin {
         this._m.on("create", this._load.bind(this));
 
         // override show
-        let showCheckMethod = this._m._showCheck.bind(this._m);
-        this._m._showCheck = () => {
+        let showCheckMethod = this._m.showCheck.bind(this._m);
+        this._m.showCheck = () => {
 
             // native check
             if (!showCheckMethod()) {

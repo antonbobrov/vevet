@@ -153,7 +153,7 @@ export default class SliderDragSwipePlugin extends Plugin {
         // get outer
         let outer = this._prop.outer;
         if (!outer) {
-            outer = this._m._outer;
+            outer = this._m.outer;
         }
         else {
             outer = selectEl.one(outer);
