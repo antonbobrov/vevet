@@ -136,7 +136,7 @@ export default class FilterModule extends Module {
         /**
          * @description Available data attributes.
          * @member {object}
-         * @private
+         * @protected
          */
         this._data = {
             group: `data-${prefix}-group`,
@@ -144,15 +144,36 @@ export default class FilterModule extends Module {
             id: `data-${prefix}-id`
         };
         
-        // elements
+        /**
+         * @description Filter groups.
+         * @member {Array<Vevet.FilterModule.Group>}
+         * @protected
+         */
         this._groups = [];
+        /**
+         * @description Filters.
+         * @type {Array<Vevet.FilterModule.Filter>}
+         * @protected
+         */
         this._filters = [];
+        /**
+         * @description Events that were set on filters
+         * @protected
+         * @member {Vevet.BindListener}
+         */
         this._filtersEvents = [];
 
-        // current json - current filters
+        /**
+         * @description Current json - current filters
+         * @member {string}
+         * @protected
+         */
         this._json = '{}';
 
-        // popstate
+        /**
+         * @member {false|number}
+         * @protected
+         */
         this._popstateTimeout = false;
 
         // get elements
@@ -185,7 +206,7 @@ export default class FilterModule extends Module {
 
     /**
      * @description Get elements and form arrays of groups and filters.
-     * @private
+     * @protected
      */
     _elementsGet() {
 
@@ -198,7 +219,7 @@ export default class FilterModule extends Module {
 
     /**
      * @description Get groups.
-     * @private
+     * @protected
      */
     _getGroups() {
 
@@ -231,7 +252,7 @@ export default class FilterModule extends Module {
 
     /**
      * @description Get filters.
-     * @private
+     * @protected
      */
     _getFilters() {
 
@@ -273,6 +294,7 @@ export default class FilterModule extends Module {
 
     /**
      * @description Remove events from filters.
+     * @protected
      */
     _clearFilters() {
 
@@ -315,8 +337,8 @@ export default class FilterModule extends Module {
     /**
      * @description Get group id.
      * @param {HTMLElement} el
-     * @returns {string|boolean} Returns the group's id or false.
-     * @private
+     * @returns {string|false} Returns the group's id or false.
+     * @protected
      */
     _getGroupId(el) {
 
@@ -333,7 +355,7 @@ export default class FilterModule extends Module {
      * @description Check if the group is multiple.
      * @param {HTMLElement} el
      * @returns {boolean} Returns true or false.
-     * @private
+     * @protected
      */
     _getGroupMultiple(el) {
 
@@ -349,8 +371,8 @@ export default class FilterModule extends Module {
     /**
      * @description Get group of an element.
      * @param {HTMLElement} el
-     * @returns {Vevet.FilterModule.Group|boolean} Returns the group or false.
-     * @private
+     * @returns {Vevet.FilterModule.Group|false} Returns the group or false.
+     * @protected
      */
     _getGroupByElement(el) {
 
@@ -372,8 +394,8 @@ export default class FilterModule extends Module {
     /**
      * @description Get filter by element.
      * @param {HTMLElement} el
-     * @returns {Vevet.FilterModule.Filter|boolean} Returns the group or false.
-     * @private
+     * @returns {Vevet.FilterModule.Filter|false} Returns the group or false.
+     * @protected
      */
     _getFilterByElement(el) {
 
@@ -392,7 +414,7 @@ export default class FilterModule extends Module {
      * @description Get filter by the id of the group.
      * @param {string} id
      * @returns {Array<Vevet.FilterModule.Filter>} Returns filters.
-     * @private
+     * @protected
      */
     _getFiltersByGroupID(id) {
 
@@ -410,8 +432,8 @@ export default class FilterModule extends Module {
     /**
      * @description Get filters' id.
      * @param {HTMLElement} el
-     * @returns {string|boolean} Returns the value or false.
-     * @private
+     * @returns {string|false} Returns the value or false.
+     * @protected
      */
     _getFilterID(el) {
 
@@ -493,7 +515,7 @@ export default class FilterModule extends Module {
     /**
      * @description Check if the change of the filter is available.
      * @param {Vevet.FilterModule.Filter} filter
-     * @private
+     * @protected
      * @returns {boolean} Ture or false.
      */
     _checkFilterClick(filter) {
@@ -517,7 +539,7 @@ export default class FilterModule extends Module {
     /**
      * @description Change properties of the filters within one group - active values.
      * @param {Vevet.FilterModule.Filter} filter - Current filter.
-     * @private
+     * @protected
      */
     _changeFiltersProp(filter) {
 
@@ -555,7 +577,7 @@ export default class FilterModule extends Module {
 
     /**
      * @description Set classes to the filters: active & disabled.
-     * @private
+     * @protected
      */
     _changeFiltersClasses() {
 
@@ -650,7 +672,8 @@ export default class FilterModule extends Module {
     
     /**
      * @description Get a url query according to the active filters.
-     * @private
+     * @protected
+     * @returns {string} Returns a JSON string.
      */
     _getFiltersQuery() {
 
@@ -685,7 +708,7 @@ export default class FilterModule extends Module {
      * @description Get active url params.
      * @param {string} json
      * @returns {Array<Array<string>>} Returns values.
-     * @private
+     * @protected
      */
     _getURLParams(json) {
 
@@ -707,7 +730,7 @@ export default class FilterModule extends Module {
      * @description Update the URL & content according to active filters.
      * @param {string} json
      * @returns {boolean} Returns true the filters have changed.
-     * @private
+     * @protected
      */
     _update(json) {
 
@@ -781,7 +804,7 @@ export default class FilterModule extends Module {
 
     /**
      * @description Popstate events.
-     * @private
+     * @protected
      */
     _popstate() {
 
@@ -800,7 +823,7 @@ export default class FilterModule extends Module {
 
     /**
      * @description Catch popstate and load new data.
-     * @private
+     * @protected
      */
     _popstateLoad() {
 
@@ -827,7 +850,7 @@ export default class FilterModule extends Module {
 
     /**
      * @description Popstate event when pagination is loading.
-     * @private
+     * @protected
      */
     _popstateBusyLoad() {
 
@@ -849,7 +872,7 @@ export default class FilterModule extends Module {
 
     /**
      * @description Popstate force load.
-     * @private
+     * @protected
      */
     _popstateForceLoad() {
 
