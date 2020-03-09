@@ -103,23 +103,44 @@ export default class DraggerModule extends Module {
             'right'
         ];
 
-        // start values
-        this._xStart = null;
-        this._yStart = null;
+        /**
+         * @description X Axis start coordinated.
+         * @protected
+         * @member {number}
+         */
+        this._xStart = 0;
+        /**
+         * @description Y Axis start coordinated.
+         * @protected
+         * @member {number}
+         */
+        this._yStart = 0;
 
-        // global values
+        /**
+         * @description Global coordinates
+         * @protected 
+         * @member {Vevet.DraggerModule.Coords}
+         */
         this._global = {
             x: 0,
             y: 0
         };
 
-        // previous values
+        /**
+         * @description Previous coordinates
+         * @protected 
+         * @member {Vevet.DraggerModule.Coords}
+         */
         this._prev = {
             x: 0,
             y: 0
         };
 
-        // if dragging at the moment
+        /**
+         * @description If dragging at the moment
+         * @protected
+         * @member {boolean}
+         */
         this._dragging = false;
 
         // get elements
@@ -127,11 +148,26 @@ export default class DraggerModule extends Module {
 
     }
 
+    /**
+     * @description Get elements
+     * @protected
+     */
     _getElements() {
 
-        // get elements
+        /**
+         * @description Outer element
+         * @protected
+         * @member {HTMLElement}
+         */
         this._outer = selectEl.one(this._prop.outer);
 
+        /**
+         * @description Drag outer.
+         * Sometimes it may be WINDOW when ignoring the outer element outer.
+         * @member {HTMLElement|Window}
+         * @protected
+         */
+        this._outerIgnore;
         // ignore outer
         if (this._prop.ignoreOuter) {
             this._outerIgnore = window;
