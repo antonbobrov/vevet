@@ -128,14 +128,6 @@ export default class PopupModule extends Module {
         return this._shown;
     }
     /**
-     * @description Window outer. False if not created.
-     * @readonly
-     * @member {HTMLElement|false}
-     */
-    get outer() {
-        return this._outer;
-    }
-    /**
      * @description Current level number.
      * @readonly
      * @default -1
@@ -152,6 +144,47 @@ export default class PopupModule extends Module {
     get animating() {
         return this._animating;
     }
+    
+    /**
+     * @description Popup outer. False if not created.
+     * @readonly
+     * @member {HTMLElement|false}
+     */
+    get outer() {
+        return this._outer;
+    }
+    /**
+     * @description Popup overlay outer. False if not created.
+     * @readonly
+     * @member {HTMLElement|false}
+     */
+    get overlay() {
+        return this._overlay;
+    }
+    /**
+     * @description Popup container outer. False if not created.
+     * @readonly
+     * @member {HTMLElement|false}
+     */
+    get container() {
+        return this._container;
+    }
+    /**
+     * @description Popup levels outer. False if not created.
+     * @readonly
+     * @member {HTMLElement|false}
+     */
+    get levelsOuter() {
+        return this._levelsOuter;
+    }
+    /**
+     * @description Popup close button. False if not created.
+     * @readonly
+     * @member {HTMLElement|false}
+     */
+    get closeButton() {
+        return this._close;
+    }
 
 
 
@@ -160,26 +193,90 @@ export default class PopupModule extends Module {
 
         super._extra();
 
-        // vars
+        /**
+         * @description If the popup is created.
+         * @protected
+         * @member {boolean}
+         */
         this._created = false;
+        /**
+         * @description If the popup is animating.
+         * @protected
+         * @member {boolean}
+         */
         this._animating = false;
+        /**
+         * @description If the popup is shown.
+         * @protected
+         * @member {boolean}
+         */
         this._shown = false;
+        /**
+         * @description Popup ID.
+         * @protected
+         * @member {string}
+         */
         this._id = generateId(this._prefix);
+        /**
+         * @description Popup current types.
+         * @protected
+         * @member {Array<string|'auto'|'modal'|'media'|'content'|'right'>}
+         */
         this._types = [];
 
-        // elements
-        this._outer = false;
-        this._overlay = false;
-        this._container = false;
-        this._levelsOuter = false;
-        this._close = false;
+        /**
+         * @protected
+         * @member {HTMLElement}
+         */
+        this._outer;
+        /**
+         * @protected
+         * @member {HTMLElement}
+         */
+        this._overlay;
+        /**
+         * @protected
+         * @member {HTMLElement}
+         */
+        this._container;
+        /**
+         * @protected
+         * @member {HTMLElement}
+         */
+        this._levelsOuter;
+        /**
+         * @protected
+         * @member {HTMLElement}
+         */
+        this._close;
 
-        // levels
+        /**
+         * @description Current level number.
+         * @protected
+         * @member {number}
+         */
         this._levelActive = -1;
+        /**
+         * @description Levels.
+         * @protected
+         * @member {Array<Vevet.PopupModule.Level>}
+         */
         this._levels = [];
 
     }
 
+    /**
+     * @memberof Vevet.PopupModule
+     * @typedef Level
+     * 
+     * @property {HTMLElement} outer
+     * @property {Array<Vevet.BindListener>} listeners
+     * @property {boolean} shown
+     * @property {number} num
+     * @property {boolean} append
+     * @property {HTMLElement|false} source
+     * @property {Array<string|'auto'|'modal'|'media'|'content'|'right'>} types
+     */
 
 
     /**
@@ -206,7 +303,7 @@ export default class PopupModule extends Module {
         }
 
         // get next level and return false if max number exceeded
-        let num = this._getNextLevel();
+        let num = this.getNextLevel();
         if (typeof num == 'boolean' & !num) {
             return false;
         }
@@ -272,7 +369,7 @@ export default class PopupModule extends Module {
      * @param {number} num - Level number.
      * @param {Vevet.PopupModule.ShowConfig} data - Pop-up config.
      * @returns {boolean} Returns true if success.
-     * @private
+     * @protected
      */
     _showLevel(num, data) {
 
@@ -328,7 +425,7 @@ export default class PopupModule extends Module {
     /**
      * @description Set classes accorging to the level number.
      * @param {number} num - Level number.
-     * @private
+     * @protected
      */
     _levelClasses(num) {
 
@@ -363,9 +460,8 @@ export default class PopupModule extends Module {
 
     /**
      * @description Check if it's possible to hide the popup.
-     * @private
      */
-    _checkHide() {
+    checkHide() {
 
         // if animating
         if (this._animating) {
@@ -391,7 +487,7 @@ export default class PopupModule extends Module {
     hideAll() {
 
         // if possible to hide
-        if (!this._checkHide()) {
+        if (!this.checkHide()) {
             return false;
         }
 
@@ -425,7 +521,7 @@ export default class PopupModule extends Module {
     hide() {
 
         // if possible to hide
-        if (!this._checkHide()) {
+        if (!this.checkHide()) {
             return false;
         }
 
@@ -461,7 +557,7 @@ export default class PopupModule extends Module {
      * @description Hide a pop-up level.
      * @param {number} num - Level number.
      * @param {Function} callback 
-     * @private
+     * @protected
      */
     _hideLevel(num, callback = () => {}) {
 
@@ -472,7 +568,7 @@ export default class PopupModule extends Module {
         this.lbt("hideLevel", this._argument(num));
 
         // get previous level
-        let prev = this._getPrevLevel();
+        let prev = this.getPrevLevel();
 
         // change current level
         this._levelActive = prev;
@@ -532,6 +628,11 @@ export default class PopupModule extends Module {
      * @property {Array<string|'auto'|'modal'|'media'|'content'|'right'>} [types] - The default value is taken from {@linkcode Vevet.PopupModule.Properties}.
      */
 
+    /**
+     * @description Get default show configuration.
+     * @protected
+     * @returns {Vevet.PopupModule.ShowConfig} Returns an object.
+     */
     _showConfig() {
         return {
             el: false,
@@ -541,7 +642,11 @@ export default class PopupModule extends Module {
         };
     }
     
-    _getPrevLevel(){
+    /**
+     * @description Get previous level number.
+     * @returns {number} Returns a number.
+     */
+    getPrevLevel(){
 
         let prev = this._levelActive - 1;
 
@@ -549,7 +654,11 @@ export default class PopupModule extends Module {
 
     }
     
-    _getNextLevel(){
+    /**
+     * @description Get next level number.
+     * @returns {number} Returns a number.
+     */
+    getNextLevel(){
 
         let next = this._levelActive + 1;
         if (next > this._prop.levels - 1) {
@@ -564,7 +673,7 @@ export default class PopupModule extends Module {
 
     /**
      * @description Show pop-up
-     * @private
+     * @protected
      */
     _create() {
 
@@ -624,7 +733,7 @@ export default class PopupModule extends Module {
 
     /**
      * @description Create pop-up levels.
-     * @private
+     * @protected
      */
     _createLevels() {
 
@@ -637,7 +746,7 @@ export default class PopupModule extends Module {
     /**
      * @description Create a pop-up level.
      * @param {number} num - Pop-up level order number.
-     * @private
+     * @protected
      */
     _createLevel(num) {
 
@@ -673,7 +782,7 @@ export default class PopupModule extends Module {
 
     /**
      * @description Set pop-up event listeners.
-     * @private
+     * @protected
      */
     _createEvents() {
 
@@ -715,7 +824,8 @@ export default class PopupModule extends Module {
 
     /**
      * @description Get callback argument for 'create'.
-     * @private
+     * @protected
+     * @returns {Vevet.PopupModule.CallbackCreate} Returns an object.
      */
     _argumentCreate() {
         return {
@@ -736,7 +846,8 @@ export default class PopupModule extends Module {
     /**
      * @description Get callback argument for other events.
      * @param {number} num - Level number.
-     * @private
+     * @protected
+     * @returns {Vevet.PopupModule.Callback} Returns an object.
      */
     _argument(num) {
         return {
