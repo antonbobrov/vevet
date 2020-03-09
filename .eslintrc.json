@@ -32,7 +32,7 @@
     "jsdoc/no-types": 0,
     "jsdoc/no-undefined-types": 0,
     "jsdoc/require-description": 0,
-    "jsdoc/require-description-complete-sentence": 1,
+    "jsdoc/require-description-complete-sentence": 0,
     "jsdoc/require-example": 0,
     "jsdoc/require-hyphen-before-param-description": 1,
     "jsdoc/require-jsdoc": 0,
@@ -42,7 +42,7 @@
     "jsdoc/require-param-type": 1,
     "jsdoc/require-returns": 0,
     "jsdoc/require-returns-check": 1,
-    "jsdoc/require-returns-description": 1,
+    "jsdoc/require-returns-description": 0,
     "jsdoc/require-returns-type": 1,
     "jsdoc/valid-types": 1
 
