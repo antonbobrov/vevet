@@ -180,6 +180,30 @@ export default class PaginationModule extends Module {
     get loading() {
         return this._loading;
     }
+    /**
+     * @description Outer element.
+     * @readonly
+     * @type {HTMLElement}
+     */
+    get outer() {
+        return this._outer;
+    }
+    /**
+     * @description Pagination UL element.
+     * @readonly
+     * @type {HTMLUListElement}
+     */
+    get pagination() {
+        return this._pagination;
+    }
+    /**
+     * @description Current URL.
+     * @readonly
+     * @type {string}
+     */
+    get url() {
+        return this._url;
+    }
 
 
 
@@ -193,7 +217,7 @@ export default class PaginationModule extends Module {
         /**
          * @description Available data attributes.
          * @member {object}
-         * @private
+         * @protected
          */
         this._data = {
             active: `data-${prefix}-active`,
@@ -201,24 +225,49 @@ export default class PaginationModule extends Module {
             url: `data-${prefix}-url`
         };
 
-        // variables
+        /**
+         * @description Active page number.
+         * @protected
+         * @member {number}
+         */
         this._active = 1;
+        /**
+         * @description Maximum number of pages.
+         * @protected
+         * @member {number}
+         */
         this._max = 1;
+        /**
+         * @description If content is loading.
+         * @protected
+         * @member {boolean}
+         */
         this._loading = false;
 
-        // pagination elements
+        /**
+         * @description Pagination UL element.
+         * @protected
+         * @member {HTMLUListElement}
+         */
         this._pagination = null;
 
         // get elements
         this._elementsGet();
 
+        /**
+         * @description Current URL.
+         * @protected
+         * @member {string}
+         */
+        this._url;
+
         // get url
         let urlAttribute = this._outer.getAttribute(this._data.url);
         if (urlAttribute != null) {
-            this.url = urlAttribute;
+            this._url = urlAttribute;
         }
         else{
-            this.url = window.location.href;
+            this._url = window.location.href;
         }
 
         // actions
@@ -252,7 +301,7 @@ export default class PaginationModule extends Module {
 
     /**
      * @description Get elements
-     * @private
+     * @protected
      */
     _elementsGet() {
 
@@ -264,7 +313,7 @@ export default class PaginationModule extends Module {
 
     /**
      * @description Popstate events.
-     * @private
+     * @protected
      */
     _popstate() {
 
@@ -283,7 +332,7 @@ export default class PaginationModule extends Module {
 
     /**
      * @description Catch popstate and load a new page.
-     * @private
+     * @protected
      */
     _popstateCatch() {
 
@@ -312,7 +361,7 @@ export default class PaginationModule extends Module {
      * @description Variables range: first and last page.
      * @param {HTMLElement} outer - Outer element.
      * @param {boolean} updateActive - If we need to update the active value.
-     * @private
+     * @protected
      */
     _range(outer, updateActive = true) {
 
@@ -335,7 +384,7 @@ export default class PaginationModule extends Module {
 
     /**
      * @description Get range number.
-     * @private
+     * @protected
      * @param {HTMLElement} outer
      * @param {string} data
      */
@@ -360,7 +409,7 @@ export default class PaginationModule extends Module {
     
     /**
      * @description Pagination links
-     * @private
+     * @protected
      */
     _paginationCreate() {
         
@@ -376,7 +425,7 @@ export default class PaginationModule extends Module {
 
     /**
      * @description Create pagination links.
-     * @private
+     * @protected
      */
     _paginationLinks() {
         
@@ -408,7 +457,7 @@ export default class PaginationModule extends Module {
             
             // set anchor href
             let href = this._v.url.setParam({
-                url: this.url,
+                url: this._url,
                 key: this._prop.param,
                 value: (i + 1),
                 push: false
@@ -435,7 +484,7 @@ export default class PaginationModule extends Module {
 
     /**
      * @description Sho pagination.
-     * @private
+     * @protected
      */
     _paginationShown() {
 
@@ -496,7 +545,7 @@ export default class PaginationModule extends Module {
 
     /**
      * @description Set pagination events: clicks on links.
-     * @private
+     * @protected
      */
     _paginationEvents() {
 
@@ -510,7 +559,7 @@ export default class PaginationModule extends Module {
 
     /**
      * @description Pagination click.
-     * @private
+     * @protected
      * @param {HTMLElement} el - Link.
      * @param {number} num
      * @param {object} e
@@ -546,7 +595,7 @@ export default class PaginationModule extends Module {
 
     /**
      * @description Set active link in pagination
-     * @private
+     * @protected
      * @param {number} [num]
      */
     _paginationActive(num = this.active) {
@@ -568,7 +617,7 @@ export default class PaginationModule extends Module {
 
     /**
      * @description Pagination visibility: hide or show.
-     * @private
+     * @protected
      */
     _paginationVisibility() {
 
@@ -632,8 +681,8 @@ export default class PaginationModule extends Module {
         this._loading = true;
 
         // update url if needed
-        this.url = this._v.url.setParam({
-            url: this.url,
+        this._url = this._v.url.setParam({
+            url: this._url,
             key: this._prop.param,
             value: data.num,
             push: this._prop.update.url & data.pushState
@@ -651,7 +700,7 @@ export default class PaginationModule extends Module {
      * @description Check if loading is available.
      * @param {number} num - The order number of the page to be loaded.
      * @returns {boolean} Returns true if available.
-     * @private
+     * @protected
      */
     _loadCheck(num = this._active) {
 
@@ -674,12 +723,12 @@ export default class PaginationModule extends Module {
      * @param {boolean} reload - If thru {@linkcode Vevet.PaginationModule#reload}.
      * @param {number} num - The order number of the page to be loaded.
      * @param {boolean} pagination - Defines if the action was called due a pagination click.
-     * @private
+     * @protected
      */
     _loadAjax(reload, num, pagination) {
 
         this._v.ajax.load({
-            url: this.url,
+            url: this._url,
             method: this._prop.ajax.method,
             data: {
                 pagination: 1
@@ -694,7 +743,7 @@ export default class PaginationModule extends Module {
 
     /**
      * @description If error while loading.
-     * @private
+     * @protected
      */
     _loadError() {
     }
@@ -705,7 +754,7 @@ export default class PaginationModule extends Module {
      * @param {number} num - The order number of the page to be loaded.
      * @param {boolean} pagination - Defines if the action was called due a pagination click.
      * @param {Vevet.AJAXEvent.CacheItem} data - Ajax response.
-     * @private
+     * @protected
      */
     _loadSuccess(reload, num, pagination, data) {
        
@@ -826,7 +875,7 @@ export default class PaginationModule extends Module {
 
 
     /**
-     * @description Destroy the select.
+     * @description Destroy the module.
      */
     destroy() {
 
