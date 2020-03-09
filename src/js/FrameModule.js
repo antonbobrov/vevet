@@ -67,11 +67,27 @@ export default class FrameModule extends Module {
 
         super._extra();
 
-        // variables
+        /**
+         * @member {null|number}
+         * @protected
+         */
         this._time = null;
+        /**
+         * @member {number}
+         * @protected
+         */
         this._frameSeg = -1;
+        /**
+         * @member {null|number}
+         * @protected
+         */
         this._frame = null;
 
+        /**
+         * @description If the animation frame is already launched.
+         * @member {boolean}
+         * @protected
+         */
         this._playing = false;
 
     }
@@ -110,7 +126,7 @@ export default class FrameModule extends Module {
 
     /**
      * @description Start the animation frame.
-     * @private
+     * @protected
      * 
      * @param {number} timestamp - Timestamp.
      */
