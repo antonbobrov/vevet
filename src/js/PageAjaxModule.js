@@ -229,7 +229,7 @@ export default class PageAjaxModule extends Module {
         /**
          * @description Data attribute names.
          * @member {object}
-         * @private
+         * @protected
          */
         this._data = {
             proceeded: `data-${this._prefix}-proceeded`,
@@ -317,7 +317,7 @@ export default class PageAjaxModule extends Module {
     
     /**
      * @description Add event listeners on links.
-     * @private
+     * @protected
      */
     _addLinksListeners() {
 
@@ -344,7 +344,7 @@ export default class PageAjaxModule extends Module {
     
     /**
      * @description Remove listeners from links.
-     * @private
+     * @protected
      */
     _removeLinksListeners() {
 
@@ -364,7 +364,7 @@ export default class PageAjaxModule extends Module {
 
     /**
      * @description Popstate event
-     * @private
+     * @protected
      */
     _popstate() {
 
@@ -389,7 +389,7 @@ export default class PageAjaxModule extends Module {
 
     /**
      * @description Load on popstate.
-     * @private
+     * @protected
      */
     _popstateLoad() {
 
@@ -416,7 +416,7 @@ export default class PageAjaxModule extends Module {
 
     /**
      * @description Popstate force load.
-     * @private
+     * @protected
      */
     _popstateForceLoad() {
 
@@ -434,7 +434,7 @@ export default class PageAjaxModule extends Module {
 
     /**
      * @description Popstate event when loading or disabled.
-     * @private
+     * @protected
      */
     _popstateBusyLoad() {
 
@@ -555,7 +555,7 @@ export default class PageAjaxModule extends Module {
     /**
      * @description Get href.
      * @param {HTMLAnchorElement|string} link - Either an html element or a url string.
-     * @private
+     * @protected
      */
     _getHref(link) {
 
@@ -588,7 +588,7 @@ export default class PageAjaxModule extends Module {
     /**
      * @description Load page through ajax.
      * 
-     * @private
+     * @protected
      * 
      * @param {object} data
      * @param {HTMLAnchorElement|string} data.link - Either html element or url itself.
@@ -619,7 +619,7 @@ export default class PageAjaxModule extends Module {
     /**
      * @description When a new page is successfully loaded.
      * 
-     * @private
+     * @protected
      * 
      * @param {object} data
      * @param {HTMLAnchorElement|string} data.link - Either html element or url itself.
@@ -639,7 +639,7 @@ export default class PageAjaxModule extends Module {
     /**
      * @description When a new page is not loaded.
      * 
-     * @private
+     * @protected
      * 
      * @param {object} data
      * @param {HTMLAnchorElement|string} data.link - Either html element or url itself.
@@ -677,7 +677,7 @@ export default class PageAjaxModule extends Module {
     /**
      * @description Update values and contents.
      * 
-     * @private
+     * @protected
      * 
      * @param {object} data - Request info.
      * @param {HTMLAnchorElement|string} data.link
@@ -747,7 +747,7 @@ export default class PageAjaxModule extends Module {
 
     /**
      * @description Update contents inside the window.
-     * @private
+     * @protected
      * @param {Vevet.PageAjaxModule.EventLoaded} data - Ajax data.
      */
     _updateContents(data) {
@@ -772,7 +772,7 @@ export default class PageAjaxModule extends Module {
 
     /**
      * @description Update page url.
-     * @private
+     * @protected
      * @param {Vevet.PageAjaxModule.EventLoaded} data - Ajax data.
      */
     _updateUrl(data) {
@@ -785,7 +785,7 @@ export default class PageAjaxModule extends Module {
 
     /**
      * @description Update page title.
-     * @private
+     * @protected
      * @param {Vevet.PageAjaxModule.EventLoaded} data - Ajax data.
      */
     _updateTitle(data) {
@@ -807,7 +807,7 @@ export default class PageAjaxModule extends Module {
 
     /**
      * @description Update page html.
-     * @private
+     * @protected
      * @param {Vevet.PageAjaxModule.EventLoaded} data - Ajax data.
      */
     _updateHTML(data) {
@@ -841,7 +841,7 @@ export default class PageAjaxModule extends Module {
 
     /**
      * @description Update menu links.
-     * @private
+     * @protected
      * @param {Vevet.PageAjaxModule.EventLoaded} data - Ajax data.
      * @param {Vevet.PageAjaxModule.MenuLinks} menuLinks
      */
@@ -883,7 +883,7 @@ export default class PageAjaxModule extends Module {
 
     /**
      * @description Update current page data.
-     * @private
+     * @protected
      * @param {Vevet.PageAjaxModule.EventLoaded} data - Ajax data.
      */
     _updatePageData(data) {
@@ -897,7 +897,7 @@ export default class PageAjaxModule extends Module {
 
     /**
      * @description End the process.
-     * @private
+     * @protected
      * @param {Vevet.PageAjaxModule.EventLoaded} data - Ajax data.
      */
     _done(data) {
@@ -918,7 +918,7 @@ export default class PageAjaxModule extends Module {
      * @description Change pages automatically.
      * @param {string} target - What callback is launched. See {@linkcode _prop.pageChange}.
      * @param {string} name - Name of the page.
-     * @private
+     * @protected
      */
     _pageChange(target, name = '') {
 
