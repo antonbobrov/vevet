@@ -109,8 +109,23 @@ export default class PageLoadMediaPlugin extends Plugin {
 
     _initVars() {
 
+        /**
+         * @description Total Media Count
+         * @protected
+         * @member {number}
+         */
         this._mediaTotal = 0;
+        /**
+         * @description Total Loaded Media Count
+         * @protected
+         * @member {number}
+         */
         this._mediaLoaded = 0;
+        /**
+         * @description If the page is to be shown, but the media has not been loaded yet.
+         * @protected
+         * @member {boolean}
+         */
         this._showAfterMedia = false;
 
     }
@@ -119,7 +134,7 @@ export default class PageLoadMediaPlugin extends Plugin {
 
     /**
      * @description Load resources.
-     * @private
+     * @protected
      */
     _load() {
         
@@ -140,6 +155,10 @@ export default class PageLoadMediaPlugin extends Plugin {
 
     }
 
+    /**
+     * @description Load all images
+     * @protected
+     */
     _loadImages() {
 
         // get & load images
@@ -156,6 +175,10 @@ export default class PageLoadMediaPlugin extends Plugin {
 
     }
 
+    /**
+     * @description Load all videos
+     * @protected
+     */
     _loadVideos() {
 
         // get & load videos
@@ -170,6 +193,10 @@ export default class PageLoadMediaPlugin extends Plugin {
 
     }
 
+    /**
+     * @description Load background images
+     * @protected
+     */
     _loadBg() {
 
         // get & load images
@@ -196,6 +223,11 @@ export default class PageLoadMediaPlugin extends Plugin {
 
     }
 
+
+    /**
+     * @description When all media is loaded, we show the page.
+     * @protected
+     */
     _mediaOnLoad() {
 
         this._mediaLoaded++; 
