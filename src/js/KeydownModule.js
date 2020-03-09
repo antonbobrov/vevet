@@ -167,7 +167,7 @@ export default class KeydownModule extends Module {
      * 
      * @param {KeyboardEvent} e - Keydown Event object.
      * 
-     * @private
+     * @protected
      */
     _implement(e) {
 
