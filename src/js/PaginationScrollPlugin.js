@@ -71,10 +71,18 @@ export default class PaginationScrollPlugin extends Plugin {
 
         super._extra();
 
-        // get pagination outer
-        this._paginationUl = this._m._pagination;
+        /**
+         * @description Pagination UL element
+         * @protected
+         * @member {HTMLUListElement}
+         */
+        this._paginationUl = this._m.pagination;
 
-        // check if not empty
+        /**
+         * @description If pagination is empty.
+         * @protected
+         * @member {boolean}
+         */
         this._empty = false;
         this._emptyCheck();
         this._m.on("last", this._emptyCheck.bind(this));
@@ -86,7 +94,10 @@ export default class PaginationScrollPlugin extends Plugin {
 
 
 
-    // Check if empty
+    /**
+     * @description Check if pagination is empty.
+     * @protected
+     */
     _emptyCheck() {
 
         if (this._m.active == this._m.max) {
@@ -97,7 +108,10 @@ export default class PaginationScrollPlugin extends Plugin {
 
 
 
-    // Set styles
+    /**
+     * @description Apply styles.
+     * @protected
+     */
     _styles() {
 
         this._paginationUl.classList.remove("display-none_important");
