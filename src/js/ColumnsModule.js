@@ -104,11 +104,14 @@ export default class ColumnsModule extends Module {
         /**
          * @description Columns.
          * @member {Array<HTMLElement>}
-         * @private
+         * @protected
          */
         this._columns = [];
 
-        // vars
+        /**
+         * @protected
+         * @member {number}
+         */
         this._lastColumn = 0;
 
         // get elements
@@ -131,24 +134,38 @@ export default class ColumnsModule extends Module {
     }
 
 
-    // Get elements
+    /**
+     * @description Get elements
+     * @protected
+     */
     _getElements() {
 
         let prop = this._prop;
         
-        // form itself
+        /**
+         * @description The HTML outer of columns
+         * @member {HTMLElement}
+         * @protected
+         */
         this._outer = selectEl.one(prop.selectors.outer);
         let outer = this._outer;
         outer.classList.add(`${this._prefix}`);
         
-        // elements
+        /**
+         * @description Elements inside the columns.
+         * @type {Array<HTMLElement>}
+         * @protected
+         */
         this._items = outer.querySelectorAll(prop.selectors.item);
 
     }
 
 
 
-    // Split into columns
+    /**
+     * @description Split into columns
+     * @protected
+     */
     _columnsInit() {
 
         this._itemsToParent();
@@ -161,7 +178,7 @@ export default class ColumnsModule extends Module {
 
     /**
      * @description Remove columns.
-     * @private
+     * @protected
      */
     _columnsRemove() {
 
@@ -184,7 +201,7 @@ export default class ColumnsModule extends Module {
 
     /**
      * @description Add columns.
-     * @private
+     * @protected
      */
     _columnsAdd() {
 
@@ -208,9 +225,14 @@ export default class ColumnsModule extends Module {
 
     /**
      * @description Save columns data.
-     * @private
+     * @protected
      */
     _columnsRemember() {
+        /**
+         * @description Previous column number
+         * @protected
+         * @member {number}
+         */
         this._columnsPrev = this._prop.columns.slice();
     }
 
@@ -219,7 +241,7 @@ export default class ColumnsModule extends Module {
     
     /**
      * @description Move all items to the parent.
-     * @private
+     * @protected
      */
     _itemsToParent() {
 
@@ -231,7 +253,7 @@ export default class ColumnsModule extends Module {
 
     /**
      * @description Split items into columns.
-     * @private
+     * @protected
      * @param {Array<HTMLElement>} items
      */
     _itemsToColumns(items = this._items) {
