@@ -67,7 +67,11 @@ export default class Module extends Event {
          */
         this._plugins = [];
 
-        // Create responsive properties
+        /**
+         * @description Responsive properties
+         * @member {Vevet.ResponsiveProp}
+         * @protected
+         */
         this._responsiveProp = new ResponsiveProp(
             this._prop,
             this._changeProp.bind(this), 
@@ -110,6 +114,10 @@ export default class Module extends Event {
         this.lbt("changeProp");
     }
 
+    /**
+     * @description The method that is called on properties change.
+     * @protected
+     */
     _changeProp() { }
 
     /**
