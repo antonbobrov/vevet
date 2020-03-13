@@ -21,6 +21,32 @@ export default class URLEvent extends Event {
 
 
     /**
+     * @description Test if the URL has an HTTP or HTTPS protocol.
+     * If not, the URL is prefixed by window.location.origin
+     * 
+     * @protected
+     * 
+     * @param {string} url
+     */
+    _getAbsoluteURL(url) {
+
+        const testURL = /^https?:\/\//i;
+        if (!testURL.test(url)) {
+            if (url.indexOf('/') === 0) {
+                url = window.location.origin + url;
+            }
+            else {
+                url = window.location.origin + '/' + url;
+            }
+        }
+
+        return url;
+
+    }
+
+
+
+    /**
      * @memberof Vevet.URLEvent
      * @typedef {object} GetParam
      * @property {string} key The name of your parameter.
@@ -46,17 +72,8 @@ export default class URLEvent extends Event {
 
         let {key, url} = data;
 
-        // check if url has a protocol
-        // if no, add an origin
-        const testURL = /^https?:\/\//i;
-        if (!testURL.test(url)) {
-            if (url.indexOf('/') === 0) {
-                url = window.location.origin + url;
-            }
-            else {
-                url = window.location.origin + '/' + url;
-            }
-        }
+        // get proper URL
+        url = this._getAbsoluteURL(url);
 
         // search for the param
         key = key.replace(/[[\]]/g, "\\$&");
@@ -116,6 +133,9 @@ export default class URLEvent extends Event {
         data = Object.assign(prop, data);
 
         let {key, value, push, url} = data;
+
+        // get proper URL
+        url = this._getAbsoluteURL(url);
 
         // set the new value
         key = encodeURI(key);
