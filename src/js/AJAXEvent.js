@@ -176,8 +176,13 @@ export default class AJAXEvent extends Event {
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         }
 
+        // Before sending the request
+        prop.before(xhr);
+
         // Response type
-        xhr.responseType = prop.responseType;
+        if (prop.responseType !== '') {
+            xhr.responseType = prop.responseType;
+        }
 
         // Callback Proceeded
         xhr.onreadystatechange = () => {
@@ -210,9 +215,6 @@ export default class AJAXEvent extends Event {
             this.lbt('loaded', callbackObj);
 
         };
-
-        // Before sending the request
-        prop.before(xhr);
 
         // Send Ajax
         xhr.send(hasCotent ? propData : null);
