@@ -46,15 +46,27 @@ export default class AJAXEvent extends Event {
 
     /**
      * @memberof Vevet.AJAXEvent
+     * @callback _callback
+     * @param {Vevet.AJAXEvent.CacheItem} data
+     */
+    /**
+     * @memberof Vevet.AJAXEvent
+     * @callback _callback_before
+     * @param {XMLHttpRequest} xhr
+     */
+    /**
+     * @memberof Vevet.AJAXEvent
      * @typedef {object} LoadData
-     * @property {string} [method=post] Method - post|get.
+     * @property {'post'|'get'} [method=post] Method - post|get.
      * @property {string} [url=window.location.href] Request url.
+     * @property {string} [responseType] Response type.
      * @property {object} [data={}] Data to transmit through ajax.
      * @property {boolean} [cache=false] Save in cache.
      * @property {boolean} [async=true] Do the request asynchronously.
-     * @property {Function} [success] Callback on success.
+     * @property {Vevet.AJAXEvent._callback_before} [before] Before sending the request.
+     * @property {Vevet.AJAXEvent._callback} [success] Callback on success.
      * @property {Function} [abort] Callback when aborted.
-     * @property {Function} [error] Callback on error.
+     * @property {Vevet.AJAXEvent._callback} [error] Callback on error.
      */
     /**
      * @description Load from url.
@@ -88,9 +100,11 @@ export default class AJAXEvent extends Event {
         let prop = {
             method: 'post',
             url: window.location.href,
+            responseType: '',
             data: {},
             cache: false,
             async: true,
+            before: () => {},
             success: () => {},
             abort: () => {},
             error: () => {}
@@ -142,7 +156,7 @@ export default class AJAXEvent extends Event {
             }
             propData = arr.join("&");
         }
-        else {
+        else if (prop.method == 'GET') {
             for (let key in propData) {
                 url = this._v.url.setParam({
                     key: key,
@@ -161,6 +175,9 @@ export default class AJAXEvent extends Event {
         if (prop.method == 'POST') {
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         }
+
+        // Response type
+        xhr.responseType = prop.responseType;
 
         // Callback Proceeded
         xhr.onreadystatechange = () => {
@@ -193,6 +210,9 @@ export default class AJAXEvent extends Event {
             this.lbt('loaded', callbackObj);
 
         };
+
+        // Before sending the request
+        prop.before(xhr);
 
         // Send Ajax
         xhr.send(hasCotent ? propData : null);
