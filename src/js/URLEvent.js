@@ -46,6 +46,18 @@ export default class URLEvent extends Event {
 
         let {key, url} = data;
 
+        // check if url has a protocol
+        // if no, add an origin
+        const testURL = /^https?:\/\//i;
+        if (!testURL.test(url)) {
+            if (url.indexOf('/') === 0) {
+                url = window.location.origin + url;
+            }
+            else {
+                url = window.location.origin + '/' + url;
+            }
+        }
+
         // search for the param
         key = key.replace(/[[\]]/g, "\\$&");
         let regex = new RegExp("[?&]" + key + "(=([^&#]*)|&|#|$)"),
