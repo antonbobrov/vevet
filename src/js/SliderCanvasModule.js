@@ -2,8 +2,10 @@ import SliderModule from './SliderModule';
 import merge from './merge';
 import FrameModule from './FrameModule';
 
-import { get } from 'node-background-size';
+// import { get } from 'node-background-size';
+const nodeBackgroundSize = require('node-background-size');
 const dom = require('dom-create-element');
+import 'node-background-size/dist/types/types.d.ts';
 
 /**
  * @classdesc A class for creating image/video sliders onto canvas. <br>
@@ -135,9 +137,22 @@ export default class SliderCanvasModule extends SliderModule {
          * @protected
          */
         this._res = [];
+        // import('node-background-size').MediaSizes
+        /**
+         * @typedef { object } MediaSizes
+         * @memberof Vevet.SliderCanvasModule
+         * @property {HTMLImageElement|HTMLVideoElement} media - The media element itself.
+         * @property {number} width - The calculated width.
+         * @property {number} height - The calculated height.
+         * @property {number} mediaWidth - The initial width of the media element.
+         * @property {number} mediaHeight - The initial height of the media element.
+         * @property {number} scale - Scaling.
+         * @property {number} x - The x-axis coordinate of the top left corner.
+         * @property {number} y - The y-axis coordinate of the top left corner.
+         */
         /**
          * @description Resources' sizes.
-         * @type {object}
+         * @type {Array<Vevet.SliderCanvasModule.MediaSizes>}
          * @protected
          */
         this._resSize = [];
@@ -424,7 +439,7 @@ export default class SliderCanvasModule extends SliderModule {
 
         // set sizes
         this._res.forEach(res => {
-            let size = get({
+            let size = nodeBackgroundSize.get({
                 media: res,
                 width: width,
                 height: height
