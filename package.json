@@ -94,7 +94,7 @@
     "lodash.clonedeep": "^4.5.0",
     "lodash.merge": "^4.6.1",
     "lodash.mergewith": "^4.6.2",
-    "node-background-size": "^1.0.2",
+    "node-background-size": "^1.0.4",
     "polyfill-array-includes": "^2.0.0",
     "select-el": "^1.0.3",
     "string.prototype.includes": "^1.0.0"
