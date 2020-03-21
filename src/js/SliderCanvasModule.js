@@ -5,7 +5,6 @@ import FrameModule from './FrameModule';
 // import { get } from 'node-background-size';
 const nodeBackgroundSize = require('node-background-size');
 const dom = require('dom-create-element');
-import 'node-background-size/dist/types/types.d.ts';
 
 /**
  * @classdesc A class for creating image/video sliders onto canvas. <br>
