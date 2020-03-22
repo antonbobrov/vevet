@@ -344,6 +344,32 @@ export default class PageModule extends Module {
         return true;
 
     }
+
+
+
+    /**
+     * @description Add a 'show' callback. If the callback was added after the page was shown, it will be triggered anyway.
+     * @param {Function} callback
+     * @param {Vevet.Event.EventObjSettings} [settings]
+     * @returns {string} Returns a string with the callback's id.
+     */
+    onPageShown(callback, settings = {}) {
+        return this.on("show", () => {
+            callback();
+        }, settings);
+    }
+
+    /**
+     * @description Add a 'hide' callback. If the callback was added after the page was hidden, it will be triggered anyway.
+     * @param {Function} callback
+     * @param {Vevet.Event.EventObjSettings} [settings]
+     * @returns {string} Returns a string with the callback's id.
+     */
+    onPageHidden(callback, settings = {}) {
+        return this.on("hide", () => {
+            callback();
+        }, settings);
+    }
     
 
 
