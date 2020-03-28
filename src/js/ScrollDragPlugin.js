@@ -200,6 +200,9 @@ export default class ScrollDragPlugin extends Plugin {
             return;
         }
 
+        // play scroll
+        this._m.play();
+
         // vars
         let diff = data.diff,
             step = data.step,
@@ -273,7 +276,7 @@ export default class ScrollDragPlugin extends Plugin {
         let velocity = this._velocity.y / module._prop.ease;
         velocity = Math.abs(velocity) < 50 ? 0 : velocity;
 
-        module._targetTop -= velocity;
+        module.targetTop -= velocity;
         module._boundariesBoth();
 
         // change bool

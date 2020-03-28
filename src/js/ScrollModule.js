@@ -47,6 +47,7 @@ export default class ScrollModule extends Module {
      * But if resizeOnUpdate is true, this action is not needed, because everything will be updated automatically.
      * @property {number} [resizeTimeout=0] - A timeout before sizes are updated when the window is resized.
      * @property {boolean} [scroll=true] - Defines if the scroll will respond to the wheel event.
+     * @property {boolean} [autoStop=true] - Stop the animation frame when the scroll and target values are maximally approximated.
      * @property {boolean} [horizontal=false]
      * 
      * @property {number} [ease=0.1] - The higher number, the faster animation.
@@ -87,6 +88,7 @@ export default class ScrollModule extends Module {
             resizeOnUpdate: true,
             resizeTimeout: 0,
             scroll: true,
+            autoStop: true,
             horizontal: false,
             ease: .1,
             propagation: false,
@@ -539,6 +541,9 @@ export default class ScrollModule extends Module {
                 this._direction = 1;
             }
 
+            // play scroll
+            this.play();
+
         }
 
     }
@@ -742,28 +747,49 @@ export default class ScrollModule extends Module {
      */
     _run() {
 
-        let frame = this._frame;
-
         if (this._prop.run) {
-            if (!frame) {
-                if (this._prop.frame) {
-                    this._frame = this._prop.frame.on("frame", this.animate.bind(this));
-                }
-                else {            
-                    this._frame = window.requestAnimationFrame(this.animate.bind(this));
-                }
-            }
+            this.play();
         }
         else {
-            if (frame) {
-                if (this._prop.frame) {
-                    this._prop.frame.remove(this._frame);
-                }
-                else {
-                    window.cancelAnimationFrame(frame);
-                }
-                this._frame = false;
+            this.stop();
+        }
+
+    }
+
+    /**
+     * @description Run animation frame if scroll is enabled.
+     */
+    play() {
+
+        let frame = this._frame;
+
+        if (!frame & this._prop.run) {
+            if (this._prop.frame) {
+                this._frame = this._prop.frame.on("frame", this.animate.bind(this));
             }
+            else {            
+                this._frame = window.requestAnimationFrame(this.animate.bind(this));
+            }
+        }
+
+    }
+
+    /**
+     * @description Stop animation frame. Though it will restart on the wheel event.
+     * To stop scroll forever use {@linkcode Vevet.ScrollModule.changeProp}.
+     */
+    stop() {
+
+        let frame = this._frame;
+
+        if (frame) {
+            if (this._prop.frame) {
+                this._prop.frame.remove(this._frame);
+            }
+            else {
+                window.cancelAnimationFrame(frame);
+            }
+            this._frame = false;
         }
 
     }
@@ -813,6 +839,15 @@ export default class ScrollModule extends Module {
         // animation frame
         if (!this._prop.frame) {
             this._frame = window.requestAnimationFrame(this.animate.bind(this));
+        }
+
+        // stop frame if values are interpolated
+        if (this._prop.autoStop) {
+            const yDiff = Math.abs(this._targetTop - this._scrollTop);
+            const xDiff = Math.abs(this._targetLeft - this._scrollLeft);
+            if (yDiff < .01 & xDiff < .01) {
+                this.stop();
+            }
         }
 
     }
