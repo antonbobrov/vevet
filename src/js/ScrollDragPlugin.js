@@ -98,6 +98,9 @@ export default class ScrollDragPlugin extends Plugin {
             let draggableEl = this._m.outer.querySelectorAll("img, a");
             draggableEl.forEach(el => {
                 el.draggable = false;
+                el.ondragstart = function () {
+                    return false;
+                };
             });
         }
 
