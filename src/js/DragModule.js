@@ -21,6 +21,7 @@ export default class DragModule extends DraggerModule {
 
         // mouse down first
         this.listener(outer, 'mousedown', (e) => {
+            e.stopPropagation();
             if (e.which == 1) {
                 this._call(type, 'start', e);
             }

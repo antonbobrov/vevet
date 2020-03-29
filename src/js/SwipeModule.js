@@ -20,7 +20,10 @@ export default class SwipeModule extends DraggerModule {
             type = "swipe";
 
         // stat swipe
-        this.listener(outer, 'touchstart', this._call.bind(this, type, 'start'), {
+        this.listener(outer, 'touchstart', (e) => {
+            e.stopPropagation();
+            this._call(type, 'start', e);
+        }, {
             passive: true
         });
 
