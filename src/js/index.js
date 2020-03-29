@@ -47,6 +47,7 @@ import TimelineModule from "./TimelineModule";
 import PopupModule from "./PopupModule";
 import PreloaderModule from "./PreloaderModule";
 import ScrollModule from "./ScrollModule";
+import ScrollBarPlugin from "./ScrollBarPlugin";
 import ScrollAnimateModule from "./ScrollAnimateModule";
 import ScrollAnchorModule from "./ScrollAnchorModule";
 import ScrollViewModule from "./ScrollViewModule";
@@ -131,6 +132,7 @@ export {
     PreloaderModule,
 
     ScrollModule,
+    ScrollBarPlugin,
     ScrollAnimateModule,
     ScrollAnchorModule,
     ScrollViewModule,

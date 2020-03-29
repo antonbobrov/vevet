@@ -18,10 +18,31 @@
         pointer-events: none !important;
     }
 
+
+
     &__scrollbar {
         position: absolute;
         z-index: 9;
         background: $scrollbar-bg;
+
+        @include transition((opacity .35s, visibility .35s));
+        
+        &.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        &.no-action {
+            opacity: 0;
+        }
+
+        &.in-action {
+            opacity: 1;
+        }
+
+        &.hover {
+            opacity: 1;
+        }
 
         &_y {
             top: $scrollbar-y-top;
@@ -67,6 +88,7 @@
         position: relative;
         background: $scrollbar-bar-bg;
     }
+
 
     
 }

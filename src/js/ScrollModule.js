@@ -16,10 +16,16 @@ import normalizeWheel from './normalizeWheel';
  * Available targets:
  *  <ul>
  *      <li>update - when scroll values are updated, it is launched on each frame. Each callback receives {@linkcode Vevet.ScrollModule.Event} as an argument.</li>
+ *      <li>size - when scroll sizes are updated. This happens either with each frame if {@linkcode resizeOnUpdate} is enabled or on window resize.</li>
+ *      <li>wheel - event on wheen. Each callback receives {@linkcode WheelEvent} as an argument.</li>
+ *      <li>approximate - when scroll targets and values are approximated.</li>
  *  </ul>
  * <br><br> <b>import {ScrollModule} from 'vevet';</b>
  * 
  * @vevetModuleCallback { Vevet.ScrollModule : update : Vevet.ScrollModule.Event}
+ * @vevetModuleCallback { Vevet.ScrollModule : size :  }
+ * @vevetModuleCallback { Vevet.ScrollModule : wheel : WheelEvent }
+ * @vevetModuleCallback { Vevet.ScrollModule : approximate :  }
  * 
  * @class
  * @memberof Vevet
@@ -136,12 +142,20 @@ export default class ScrollModule extends Module {
         return this._el;
     }
     /**
-     * @description Get scroll sizes: scrollWidth & scrollHeight.
+     * @description Get container sizes: scrollWidth & scrollHeight.
      * @readonly
      * @type {Array<number>}
      */
     get sizes() {
         return [this._width, this._height];
+    }
+    /**
+     * @description Get outer sizes: clientWidth & clientHeight.
+     * @readonly
+     * @type {Array<number>}
+     */
+    get outerSizes() {
+        return [this._widthOuter, this._heightOuter];
     }
     
 
@@ -276,6 +290,32 @@ export default class ScrollModule extends Module {
          * @type {number}
          */
         this._direction = 1;
+
+        /**
+         * @description Container width
+         * @protected 
+         * @type {number}
+         */
+        this._width = 1;
+        /**
+         * @description Container height
+         * @protected 
+         * @type {number}
+         */
+        this._height = 1;
+
+        /**
+         * @description Outer width
+         * @protected 
+         * @type {number}
+         */
+        this._widthOuter = 1;
+        /**
+         * @description Outer height
+         * @protected 
+         * @type {number}
+         */
+        this._heightOuter = 1;
         
         /**
          * @description Animation frame
@@ -408,9 +448,6 @@ export default class ScrollModule extends Module {
         // append additional elements
         this._outer.appendChild(this._container);
 
-        // create scrollbar
-        this._scrollbarsCreate();
-
     }
 
 
@@ -485,11 +522,11 @@ export default class ScrollModule extends Module {
             this._boundaries(true);
         }
 
-        // update sizes of scrollbars
-        this._scrollbarsSizes();
-
         // change element properties
         this._elProp();
+
+        // launch callbacks
+        this.lbt("size");
 
     }
 
@@ -497,7 +534,7 @@ export default class ScrollModule extends Module {
 
     /**
      * @description Event on wheel.
-     * @param {object} evt - Event.
+     * @param {WheelEvent} evt - Event.
      * @protected
      */
     _wheel(evt) {
@@ -544,6 +581,9 @@ export default class ScrollModule extends Module {
             // play scroll
             this.play();
 
+            // launch events
+            this.lbt("wheel", evt);
+
         }
 
     }
@@ -589,154 +629,6 @@ export default class ScrollModule extends Module {
     _boundariesBoth() {
         this._boundaries(false);
         this._boundaries();
-    }
-
-
-    /**
-     * @memberof Vevet.ScrollModule
-     * @typedef {object} Scrollbars
-     * 
-     * @property {Vevet.ScrollModule.Scrollbar} x
-     * @property {Vevet.ScrollModule.Scrollbar} y
-     */
-    /**
-     * @memberof Vevet.ScrollModule
-     * @typedef {object} Scrollbar
-     * 
-     * @property {HTMLElement} outer
-     * @property {HTMLElement} bar
-     * @property {number} outerWidth
-     * @property {number} outerHeight
-     * @property {number} barWidth
-     * @property {number} barHeight
-     */
-
-    /**
-     * @description Create Scrollbars.
-     * @protected
-     */
-    _scrollbarsCreate() {
-
-        /**
-         * @protected
-         * @member {Vevet.ScrollModule.Scrollbars}
-         */
-        this._scrollbars = {};
-        this._scrollbarCreate('x');
-        this._scrollbarCreate('y');
-        
-    }
-
-    /**
-     * @description Create a certain Scrollbar.
-     * @protected
-     * @param {string} postfix - X|Y.
-     */
-    _scrollbarCreate(postfix) {
-
-        // create object
-        this._scrollbars[postfix] = {};
-        let obj = this._scrollbars[postfix];
-        let prefix = this._prefix;
-
-        // create outer
-        obj.outer = dom({
-            selector: 'div',
-            styles: `${prefix}__scrollbar ${prefix}__scrollbar_${postfix}`
-        });
-        this._outer.appendChild(obj.outer);
-
-        // create bar
-        obj.bar = dom({
-            selector: 'div',
-            styles: `${prefix}__bar`
-        });
-        obj.outer.appendChild(obj.bar);
-
-        // variables
-        obj.outerWidth = 0;
-        obj.outerHeight = 0;
-        obj.barWidth = 0;
-        obj.barHeight = 0;
-
-    }
-
-    /**
-     * @description Update sizes of all scrollbars.
-     * @protected
-     */
-    _scrollbarsSizes() {
-
-        this._scrollbarSizes('x');
-        this._scrollbarSizes('y');
-
-        this._scrollbarsClasses();
-
-    }
-
-    /**
-     * @description Update a scrollbar sizes.
-     * @protected
-     * @param {string} postfix - X|Y.
-     */
-    _scrollbarSizes(postfix) {
-
-        // get object
-        let obj = this._scrollbars[postfix];
-
-        // variables
-        obj.outerWidth = obj.outer.clientWidth;
-        obj.outerHeight = obj.outer.clientHeight;
-        obj.barWidth = obj.bar.clientWidth;
-        obj.barHeight = obj.bar.clientHeight;
-
-    }
-
-    /**
-     * @description Show/Hide scrollbars.
-     * @protected
-     */
-    _scrollbarsClasses() {
-
-        // get scrollbars
-        let scrollbars = this._scrollbars,
-            x = scrollbars.x,
-            y = scrollbars.y;
-
-        // hide if needed
-        if (this._width <= this._widthOuter) {
-            x.outer.style.visibility = 'hidden';
-        }
-        if (this._height <= this._heightOuter) {
-            y.outer.style.visibility = 'hidden';
-        }
-
-    }
-
-    /**
-     * @description Render scrollbars.
-     * @protected
-     * @param {string} postfix - X|Y.
-     */
-    _scrollbarRender(postfix) {
-
-        // get object
-        let obj = this._scrollbars[postfix];
-
-        // transforms
-        if (postfix == 'y') {
-            let line = this._height - this._heightOuter,
-                p = this._scrollTop / line,
-                lineLength = obj.outerHeight - obj.barHeight;
-            obj.bar.style.transform = `translateY(${lineLength * p}px)`;
-        }
-        else {
-            let line = this._width - this._widthOuter,
-                p = this._scrollLeft / line,
-                lineLength = obj.outerWidth - obj.barWidth;
-            obj.bar.style.transform = `translateX(${lineLength * p}px)`;
-        }
-
     }
 
 
@@ -826,9 +718,6 @@ export default class ScrollModule extends Module {
 
         // render
         this._render();
-        // render scrollbars
-        this._scrollbarRender('x');
-        this._scrollbarRender('y');
 
         // event
         this.lbt("update", {
@@ -842,12 +731,13 @@ export default class ScrollModule extends Module {
         }
 
         // stop frame if values are interpolated
-        if (this._prop.autoStop) {
-            const yDiff = Math.abs(this._targetTop - this._scrollTop);
-            const xDiff = Math.abs(this._targetLeft - this._scrollLeft);
-            if (yDiff < .01 & xDiff < .01) {
+        const yDiff = Math.abs(this._targetTop - this._scrollTop);
+        const xDiff = Math.abs(this._targetLeft - this._scrollLeft);
+        if (yDiff < .01 & xDiff < .01) {
+            if (this._prop.autoStop) {
                 this.stop();
             }
+            this.lbt("approximate");
         }
 
     }
@@ -991,10 +881,6 @@ export default class ScrollModule extends Module {
 
         // remove elements
         outer.removeChild(container);
-
-        // remove scrollbars
-        this._scrollbars['x'].outer.remove();
-        this._scrollbars['y'].outer.remove();
 
         // classes
         outer.classList.remove(this._prefix);
