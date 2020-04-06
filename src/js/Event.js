@@ -422,7 +422,12 @@ export default class Event {
         }
 
         // launch
-        timeoutCallback(this._launchCallback.bind(this, callback, arg), timeout);
+        if (timeout === 0) {
+            this._launchCallback(callback, arg);
+        }
+        else {
+            timeoutCallback(this._launchCallback.bind(this, callback, arg), timeout);
+        }
 
         // remove once-callback
         if (typeof data.once == 'boolean') {
