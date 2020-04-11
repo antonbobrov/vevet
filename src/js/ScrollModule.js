@@ -62,6 +62,8 @@ export default class ScrollModule extends Module {
      * 
      * @property {boolean} [propagation=false] - If false, 'stopPropagation' will work.
      * @property {boolean} [willChange=false] - Add will-change to the scrolling elements.
+     * @property { boolean } [round=false] - Round the scroll value to an integer.
+     * @property { boolean } [useTransform=true] - If false, "top" & "left" will be changed.
      */
     /**
      * @alias Vevet.ScrollModule
@@ -98,7 +100,9 @@ export default class ScrollModule extends Module {
             horizontal: false,
             ease: .1,
             propagation: false,
-            willChange: false
+            willChange: false,
+            round: false,
+            useTransform: true
         });
 
     }
@@ -383,11 +387,18 @@ export default class ScrollModule extends Module {
          */
         this._length = el.length;
 
-        // will change
+        // apply will change
+        let willChangeValue = '';
         if (prop.willChange) {
-            for (let i = 0; i < el.length; i++) {
-                el[i].style.willChange = 'transform';
+            if (prop.useTransform) {
+                willChangeValue = 'transform';
             }
+            else {
+                willChangeValue = 'top, left';
+            }
+        }
+        for (let i = 0; i < el.length; i++) {
+            el[i].style.willChange = willChangeValue;
         }
 
     }
@@ -790,6 +801,11 @@ export default class ScrollModule extends Module {
             else {
                 current[0] = this._r(lerp(current[0], this._targetLeft, ease));
                 current[1] = this._r(lerp(current[1], this._targetTop, ease));
+                // round the values
+                if (this._prop.round) {
+                    current[0] = Math.round(current[0]);
+                    current[1] = Math.round(current[1]);
+                }
             }
 
         }
@@ -808,6 +824,12 @@ export default class ScrollModule extends Module {
         // change values
         this._scrollLeft = this._r(lerp(this._scrollLeft, this._targetLeft, ease));
         this._scrollTop = this._r(lerp(this._scrollTop, this._targetTop, ease));
+
+        // round the values
+        if (this._prop.round) {
+            this._scrollLeft = Math.round(this._scrollLeft);
+            this._scrollTop = Math.round(this._scrollTop);
+        }
 
     }
 
