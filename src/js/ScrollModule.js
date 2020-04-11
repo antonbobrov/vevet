@@ -872,8 +872,19 @@ export default class ScrollModule extends Module {
         for (let i = 0; i < this._length; i++) {
             let el = this._el[i],
                 current = el[this._properties.current];
+            // coords
+            const x = -current[0];
+            const y = -current[1];
             // set styles
-            el.style.transform = "translate(" + (-current[0]) + "px, " + (-current[1]) + "px)";
+            if (this._prop.useTransform) {
+                el.style.transform = `
+                    matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0, ${x}, ${y}, 0,1)
+                `;
+            }
+            else {
+                el.style.left = x + 'px';
+                el.style.top = y + 'px';
+            }
         }
 
     }
