@@ -1,6 +1,5 @@
 import merge from "./merge";
-import DragModule from "./DragModule";
-import SwipeModule from "./SwipeModule";
+import DraggerModule from "./DraggerModule";
 import Plugin from "./Plugin";
 const dom = require('dom-create-element');
 
@@ -16,8 +15,7 @@ const className_hide = 'hide';
  * @class
  * @memberof Vevet
  * @augments Vevet.Plugin
- * @requires Vevet.DragModule
- * @requires Vevet.SwipeModule
+ * @requires Vevet.DraggerModule
  */
 export default class ScrollBarPlugin extends Plugin {
 
@@ -147,13 +145,6 @@ export default class ScrollBarPlugin extends Plugin {
          * @protected
          */
         this._dragging = false;
-
-        /**
-         * @description The place where drag classes are stored.
-         * @type {Array<Vevet.DraggerModule|Vevet.SwipeModule|Vevet.DragModule>}
-         * @protected
-         */
-        this._draggers = [];
 
     }
 
@@ -382,6 +373,8 @@ export default class ScrollBarPlugin extends Plugin {
         this._renderBar('x');
         this._renderBar('y');
 
+        this._setScrollBarsClass(className_inAction, true);
+
     }
 
     /**
@@ -429,8 +422,7 @@ export default class ScrollBarPlugin extends Plugin {
     _setEvents() {
 
         // drag events
-        this._setDrag("drag");
-        this._setDrag("swipe");
+        this._setDrag();
 
         // update scrollbar sizes
         this._updateSizes();
@@ -463,42 +455,34 @@ export default class ScrollBarPlugin extends Plugin {
     /**
      * @description Set Drag Events.
      * @protected
-     * @param { 'drag'|'swipe' } type - Drag|swipe.
      */
-    _setDrag(type) {
+    _setDrag() {
 
-        this._setDragOnBar(type, 'x');
-        this._setDragOnBar(type, 'y');
+        this._setDragOnBar('x');
+        this._setDragOnBar('y');
 
     }
 
     /**
      * @description Set Drag Events.
      * @protected
-     * @param { 'drag'|'swipe' } type
      * @param { 'x'|'y' } axis
      */
-    _setDragOnBar(type, axis) {
+    _setDragOnBar(axis) {
 
         // get scrollbar object
         let obj = this._bars[axis];
 
-        // vars
-        let dragger,
-            prop = {
-                outer: obj.bar
-            };
-
-        // create drag
-        if (type == 'drag') {
-            dragger = new DragModule(prop);
-        }
-        else {
-            dragger = new SwipeModule(prop);
-        }
-
-        // add to stack
-        this._draggers.push(dragger);
+        // create a drag
+        const dragger = new DraggerModule({
+            on: this._prop.draggable,
+            outer: obj.bar,
+            parent: this,
+            thresholdPropagation: {
+                dir: axis,
+                value: 1
+            }
+        });
 
         // add events
         dragger.on("start", this._start.bind(this, axis));
@@ -592,11 +576,6 @@ export default class ScrollBarPlugin extends Plugin {
     _destroy() {
 
         super._destroy();
-
-        // remove draggers
-        this._draggers.forEach(event => {
-            event.destroy();
-        });
 
         // remove ScrollModule events
         this._scrollEvents.forEach(event => {

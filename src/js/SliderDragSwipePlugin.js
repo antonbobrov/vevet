@@ -1,7 +1,6 @@
 import Plugin from './Plugin';
 import merge from './merge';
-import SwipeModule from './SwipeModule';
-import DragModule from './DragModule';
+import DraggerModule from './DraggerModule';
 
 const selectEl = require('select-el');
 
@@ -12,8 +11,7 @@ const selectEl = require('select-el');
  * @class
  * @memberof Vevet
  * @augments Vevet.Plugin
- * @requires Vevet.DragModule
- * @requires Vevet.SwipeModule
+ * @requires Vevet.DraggerModule
  */
 export default class SliderDragSwipePlugin extends Plugin {
 
@@ -88,10 +86,10 @@ export default class SliderDragSwipePlugin extends Plugin {
 
         /**
          * @description Where drag classes are stored.
-         * @type {Array<Vevet.DraggerModule|Vevet.SwipeModule|Vevet.DragModule>}
+         * @type { Vevet.DraggerModule | false }
          * @protected
          */
-        this._draggers = [];
+        this._dragger = false;
 
     }
 
@@ -125,8 +123,7 @@ export default class SliderDragSwipePlugin extends Plugin {
             return;
         }
 
-        this._dragAdd("drag");
-        this._dragAdd("swipe");
+        this._dragAdd();
 
     }
 
@@ -136,19 +133,17 @@ export default class SliderDragSwipePlugin extends Plugin {
      */
     _dragRemove() {
 
-        this._draggers.forEach(event => {
-            event.destroy();
-        });
-        this._draggers = [];
+        if (this._dragger) {
+            this._dragger.destroy();
+        }
 
     }
 
     /**
      * @description Add a drag/swipe event.
-     * @param {string} type
      * @protected
      */
-    _dragAdd(type) {
+    _dragAdd() {
 
         // get outer
         let outer = this._prop.outer;
@@ -160,22 +155,10 @@ export default class SliderDragSwipePlugin extends Plugin {
         }
         
         // dragger
-        let dragger;
-
-        // properties
-        let prop = {
-            v: this._m.prop.v,
+        const dragger = new DraggerModule({
             outer: outer
-        };
-
-        // create draggers
-        if (type == 'swipe') {
-            dragger = new SwipeModule(prop);
-        }
-        else {
-            dragger = new DragModule(prop);
-        }
-        this._draggers.push(dragger);
+        });
+        this._dragger = dragger;
 
         // event types
         let horizontal = [['right', 'prev'], ['left', 'next']],
@@ -191,7 +174,7 @@ export default class SliderDragSwipePlugin extends Plugin {
 
     /**
      * @description Add a drag/swipe event.
-     * @param {Vevet.DragModule|Vevet.SwipeModule} dragger
+     * @param {Vevet.DraggerModule} dragger
      * @param {string} target
      * @param {string} method
      * @protected
@@ -199,6 +182,7 @@ export default class SliderDragSwipePlugin extends Plugin {
     _dragAddEvent(dragger, target, method) {
 
         dragger.on(target, () => {
+            alert(method)
             this._m[method]();
         }, {
            min: this._prop.min 

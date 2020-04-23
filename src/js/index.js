@@ -29,8 +29,6 @@ import Module from "./Module";
 import ColumnsModule from "./ColumnsModule";
 import CursorModule from "./CursorModule";
 import DraggerModule from "./DraggerModule";
-import DragModule from "./DragModule";
-import SwipeModule from "./SwipeModule";
 import FilterModule from "./FilterModule";
 import FormModule from "./FormModule";
 import FrameModule from "./FrameModule";
@@ -104,8 +102,6 @@ export {
     CursorModule,
     
     DraggerModule,
-    DragModule,
-    SwipeModule,
     
     FilterModule,
     FormModule,

@@ -1,6 +1,5 @@
 import merge from "./merge";
-import DragModule from "./DragModule";
-import SwipeModule from "./SwipeModule";
+import DraggerModule from "./DraggerModule";
 import Plugin from "./Plugin";
 
 /**
@@ -10,8 +9,7 @@ import Plugin from "./Plugin";
  * @class
  * @memberof Vevet
  * @augments Vevet.Plugin
- * @requires Vevet.DragModule
- * @requires Vevet.SwipeModule
+ * @requires Vevet.DraggerModule
  */
 export default class ScrollDragPlugin extends Plugin {
 
@@ -23,12 +21,13 @@ export default class ScrollDragPlugin extends Plugin {
      * @augments Vevet.Plugin.Properties
      * 
      * @property {boolean} [on=true] - If enabled.
-     * @property {number} [k=1] - The higher number the faster animation.
+     * @property {number} [multiplier=1] - The higher number the faster animation.
+     * @property {number} [momentum=1] - If momentum drag/swipe is enabled.
+     * @property {number} [friction=.95] - Momentum deceleration friction.
+     * @property {number} [ease=.15] - This property is the same as the ease property in {@linkcode Vevet.ScrollModule}. This property means that the value in ScrollModule becomes the same as here when dragging.
      * @property {boolean} [disableListeners=true] - If you need to set 'pointer-events: none' to children when dragging.
      * @property {number} [timeoutListeners=10] - Time after which 'pointer-events' will be removed from children after dragging stops.
-     * @property {number} [min=0] - Minimum amount of pixels for drag to respond.
-     * @property {boolean} [draggable=true] - If true, the "draggable" property will be set to false.
-     * @property {number} [draggableEase=.15] - This property is the same as the ease property in {@linkcode Vevet.ScrollModule}, though the value in Scroll becomes the same as here only when dragging.
+     * @property {boolean} [draggable=true] - If true, the property "draggable" of all elements inside of the scorll outer will be set to false.
      */
     /**
      * @alias Vevet.ScrollDragPlugin
@@ -47,12 +46,14 @@ export default class ScrollDragPlugin extends Plugin {
     get defaultProp() {
         return merge(super.defaultProp, {
             on: true,
-            k: 1,
+            multiplier: 1,
+            momentum: true,
+            friction: .95,
+            ease: .15,
             disableListeners: true,
             timeoutListeners: 10,
-            min: 0,
             draggable: true,
-            draggableEase: .15
+            thresholdPropagation: false
         });
     }
 
@@ -95,23 +96,25 @@ export default class ScrollDragPlugin extends Plugin {
 
         // draggable elements
         if (this._prop.draggable) {
-            let draggableEl = this._m.outer.querySelectorAll("img, a");
-            draggableEl.forEach(el => {
-                el.draggable = false;
-                el.ondragstart = function () {
-                    return false;
-                };
-            });
+            this._preventInnerDrag();
         }
 
-        // override get ease
-        this._getEase();
+        /**
+         * @description Module event
+         * @type { Array<string> }
+         * @protected
+         */
+        this._moduleEvents = [];
 
-        // velocity decreaser
-        this._setVelocity();
+        // override get ease
+        this._overrideGetEase();
 
     }
 
+    /**
+     * @description Init vars.
+     * @protected
+     */
     _vars() {
 
         /**
@@ -123,10 +126,26 @@ export default class ScrollDragPlugin extends Plugin {
 
         /**
          * @description Where drag classes are stored.
-         * @type {Array<Vevet.DraggerModule|Vevet.SwipeModule|Vevet.DragModule>}
+         * @type { Vevet.DraggerModule | false }
          * @protected
          */
-        this._draggers = [];
+        this._dragger = false;
+
+    }
+
+    /**
+     * @description Prevent inner elements from dragging.
+     * @protected
+     */
+    _preventInnerDrag() {
+
+        const draggableEl = this._m.outer.querySelectorAll("img, a");
+        draggableEl.forEach(el => {
+            el.draggable = false;
+            el.ondragstart = function () {
+                return false;
+            };
+        });
 
     }
 
@@ -135,59 +154,43 @@ export default class ScrollDragPlugin extends Plugin {
     // Set events
     _setEvents() {
 
-        // drag events
-        this._setDrag("drag");
-        this._setDrag("swipe");
+        const module = this._m;
 
-    }
+        // create a dragger
+        const dragger = new DraggerModule({
+            on: this._prop.on,
+            parent: this,
+            outer: module.outer,
+            momentum: this._prop.momentum,
+            friction: this._prop.friction
+        });
+        this._dragger = dragger;
+        dragger.on("move", this._start.bind(this));
+        dragger.on("move", this._move.bind(this));
+        dragger.on("end", this._end.bind(this));
 
-    /**
-     * @description Set Drag Events.
-     * @protected
-     * @param {string} type - Drag|swipe.
-     */
-    _setDrag(type) {
-
-        // vars
-        let event,
-            module = this._m,
-            prop = {
-                v: module.prop.v,
-                outer: module.outer
-            };
-
-        // create drag
-        if (type == 'drag') {
-            event = new DragModule(prop);
-        }
-        else {
-            event = new SwipeModule(prop);
-        }
-
-        // add to stack
-        this._draggers.push(event);
-
-        // add events
-        event.on("start", this._start.bind(this));
-        event.on("move", this._move.bind(this));
-        event.on("end", this._end.bind(this));
+        // add a wheel event to the scroll to stop dragger
+        const id = module.on("wheel", () => {
+            dragger.stopDrag();
+        });
+        this._moduleEvents.push(id);
 
     }
 
 
 
     /**
-     * @description Start Dragging.
+     * @description Start dragging.
      * @protected
      */
     _start() {
 
-        if (this._m.prop.run & this._prop.on) {
-            // change bool
-            this._dragging = true;
-            // reset velocity
-            this._setVelocity();
+        // return if disabled
+        if (!this._m.prop.run || !this._prop.on) {
+            return;
         }
+
+        this._dragging = true;
 
     }
 
@@ -198,8 +201,11 @@ export default class ScrollDragPlugin extends Plugin {
      */
     _move(data) {
 
+        const thisProp = this._prop;
+        const module = this._m
+
         // return if disabled
-        if (!this._m.prop.run || !this._prop.on || !this._dragging) {
+        if (!module.prop.run || !thisProp.on || !this._dragging) {
             return;
         }
 
@@ -207,39 +213,21 @@ export default class ScrollDragPlugin extends Plugin {
         this._m.play();
 
         // vars
-        let diff = data.diff,
-            step = data.step,
-            min = this._prop.min,
-            k = this._prop.k,
-            module = this._m;
-
-        // check minimum values
-        if (module._prop.horizontal) {
-            if (Math.abs(diff.x) < min) {
-                return;
-            }
-        }
-        else {
-            if (Math.abs(diff.y) < min) {
-                return;
-            }
-        }
+        const step = data.step;
+        const multiplier = thisProp.multiplier;
 
         // drag values
-        let x = step.x * k,
-            y = step.y * k;
+        const x = step.x * multiplier;
+        const y = step.y * multiplier;
 
         // set new targets
         module.targetLeft -= x;
         module.targetTop -= y;
 
-        // calculate velocity
-        this._increaseVelocity(x, y);
-
         // shrink target values
         module._boundariesBoth();
 
-        // set direction
+        // set scroll direction
         let directionPixel = 'y';
         if (module._prop.horizontal) {
             directionPixel = 'x';
@@ -252,7 +240,7 @@ export default class ScrollDragPlugin extends Plugin {
         }
 
         // disable listeners
-        if (this._prop.disableListeners) {
+        if (thisProp.disableListeners) {
             module.outer.classList.add(`${module._prefix}_dragging`);
         }
 
@@ -264,93 +252,35 @@ export default class ScrollDragPlugin extends Plugin {
      */
     _end() {
 
-        // return if disabled
-        if (!this._m.prop.run || !this._prop.on) {
-            return;
-        }
-
-        // vars
+        const thisProp = this._prop;
         let module = this._m;
 
-        // apply acceleration
-
-        // y
-
-        let velocity = this._velocity.y / module._prop.ease;
-        velocity = Math.abs(velocity) < 50 ? 0 : velocity;
-
-        module.targetTop -= velocity;
-        module._boundariesBoth();
+        // return if disabled
+        if (!module.prop.run || !thisProp.on) {
+            return;
+        }
 
         // change bool
         this._dragging = false;
 
         // return listeners to the container
-        if (this._prop.disableListeners) {
+        if (thisProp.disableListeners) {
             setTimeout(() => {
                 if (!this._dragging) {
                     module.outer.classList.remove(`${module._prefix}_dragging`);
                 }
-            }, this._prop.timeoutListeners)
+            }, thisProp.timeoutListeners);
         }
 
     }
 
 
-    /**
-     * @memberof Vevet.ScrollDragPlugin
-     * @typedef {object} Velocity
-     * 
-     * @property {number} x
-     * @property {number} y
-     * @property {Date} t
-     */
-    /**
-     * @description Reset Velocity values.
-     * @param {number} [x=0] - Horizontal velocity.
-     * @param {number} [y=0] - Vertical velocity.
-     * @protected
-     */
-    _setVelocity(x = 0, y = 0) {
-        /**
-         * @type {Vevet.ScrollDragPlugin.Velocity}
-         * @protected
-         */
-        this._velocity = {
-            x: x,
-            y: y,
-            t: new Date()
-        };
-    }
-
-    /**
-     * @description Increase Velocity values.
-     * @param {number} x - Iterator.
-     * @param {number} y - Iterator.
-     * @protected
-     */
-    _increaseVelocity(x, y) {
-
-        // velocity values
-        let velocity = this._velocity,
-            frame = new Date() - velocity.t || 16,
-            // current velocity length
-            xLength = x / frame * 16,
-            yLength = y / frame * 16,
-            // new velocity values
-            newX = .9 * xLength + .1 * velocity.x,
-            newY = .9 * yLength + .1 * velocity.y;
-
-        // update velocity values
-        this._setVelocity(newX, newY);
-        
-    }
 
     /**
      * @description Override elements ease.
      * @protected
      */
-    _getEase() {
+    _overrideGetEase() {
 
         // get module
         let module = this._m;
@@ -361,7 +291,7 @@ export default class ScrollDragPlugin extends Plugin {
             let ease = _getEase(el, intstant);
 
             if (this._dragging) {
-                return this._prop.draggableEase;
+                return this._prop.ease;
             }
             else {
                 return ease;
@@ -370,16 +300,19 @@ export default class ScrollDragPlugin extends Plugin {
         };
 
     }
+    
 
 
 
-    // Destroy
-    _destroy() {
+    /**
+     * @description Destory the class.
+     */
+    destroy() {
 
-        super._destroy();
+        super.destroy();
 
-        this._draggers.forEach(event => {
-            event.destroy();
+        this._moduleEvents.forEach(id => {
+            this._m.remove(id);
         });
 
     }
