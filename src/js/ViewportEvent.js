@@ -120,7 +120,7 @@ export default class ViewportEvent extends Event {
      * @readonly
      * @type {number}
      */
-    get dprDevice() {
+    get dprMobile() {
         if (this.mobiledevice) {
             return this.dpr;
         }

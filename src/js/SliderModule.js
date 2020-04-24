@@ -441,7 +441,7 @@ export default class SliderModule extends Module {
          * @protected
          * @member {number}
          */
-        this._dpr = this._v.viewport.dprDevice;
+        this._dpr = this._v.viewport.dprMobile;
 
     }
 
