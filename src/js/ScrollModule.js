@@ -154,12 +154,44 @@ export default class ScrollModule extends Module {
         return [this._width, this._height];
     }
     /**
+     * @description Get scroll width.
+     * @readonly
+     * @type {number}
+     */
+    get scrollWidth() {
+        return this._width;
+    }
+    /**
+     * @description Get scroll height.
+     * @readonly
+     * @type {number}
+     */
+    get scrollHeight() {
+        return this._height;
+    }
+    /**
      * @description Get outer sizes: clientWidth & clientHeight.
      * @readonly
      * @type {Array<number>}
      */
     get outerSizes() {
         return [this._widthOuter, this._heightOuter];
+    }
+    /**
+     * @description Get outer width.
+     * @readonly
+     * @type {number}
+     */
+    get width() {
+        return this._widthOuter;
+    }
+    /**
+     * @description Get outer height.
+     * @readonly
+     * @type {number}
+     */
+    get height() {
+        return this._heightOuter;
     }
     
 
@@ -175,6 +207,7 @@ export default class ScrollModule extends Module {
         this._targetTop = value;
         this._boundaries(true);
         this._instant = true;
+        this.play();
     }
 
     /**
@@ -188,6 +221,7 @@ export default class ScrollModule extends Module {
         this._targetLeft = value;
         this._boundaries(false);
         this._instant = true;
+        this.play();
     }
 
     /**
@@ -200,6 +234,7 @@ export default class ScrollModule extends Module {
         this._boundaries(false);
         this._boundaries();
         this._instant = true;
+        this.play();
     }
 
     /**
@@ -211,6 +246,7 @@ export default class ScrollModule extends Module {
     }
     set targetLeft(value) {
         this._targetLeft = value;
+        this.play();
     }
 
     /**
@@ -222,6 +258,7 @@ export default class ScrollModule extends Module {
     }
     set targetTop(value) {
         this._targetTop = value;
+        this.play();
     }
 
 
