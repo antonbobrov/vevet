@@ -22,8 +22,9 @@ export default class ScrollDragPlugin extends Plugin {
      * 
      * @property {boolean} [on=true] - If enabled.
      * @property {number} [multiplier=1] - The higher number the faster animation.
-     * @property {number} [momentum=1] - If momentum drag/swipe is enabled.
+     * @property {boolean} [momentum=true] - If momentum drag/swipe is enabled.
      * @property {number} [friction=.95] - Momentum deceleration friction.
+     * @property { Vevet.DraggerModule.ThresholdPropagation | false } [thresholdPropagation=false] - Stop propagation if a definite length of movement in pixels was reached.
      * @property {number} [ease=.15] - This property is the same as the ease property in {@linkcode Vevet.ScrollModule}. This property means that the value in ScrollModule becomes the same as here when dragging.
      * @property {boolean} [disableListeners=true] - If you need to set 'pointer-events: none' to children when dragging.
      * @property {number} [timeoutListeners=10] - Time after which 'pointer-events' will be removed from children after dragging stops.
@@ -49,11 +50,11 @@ export default class ScrollDragPlugin extends Plugin {
             multiplier: 1,
             momentum: true,
             friction: .95,
+            thresholdPropagation: false,
             ease: .15,
             disableListeners: true,
             timeoutListeners: 10,
-            draggable: true,
-            thresholdPropagation: false
+            draggable: true
         });
     }
 
@@ -149,6 +150,16 @@ export default class ScrollDragPlugin extends Plugin {
 
     }
 
+    // When properties are changed
+    _changeProp(prop) {
+
+        super._changeProp(prop);
+
+        this._destroyDrag();
+        this._setEvents();
+        
+    }
+
 
 
     // Set events
@@ -162,7 +173,8 @@ export default class ScrollDragPlugin extends Plugin {
             parent: this,
             outer: module.outer,
             momentum: this._prop.momentum,
-            friction: this._prop.friction
+            friction: this._prop.friction,
+            thresholdPropagation: this._prop.thresholdPropagation
         });
         this._dragger = dragger;
         dragger.on("move", this._start.bind(this));
@@ -191,6 +203,9 @@ export default class ScrollDragPlugin extends Plugin {
         }
 
         this._dragging = true;
+
+        // launch events
+        this.lbt("start");
 
     }
 
@@ -244,6 +259,9 @@ export default class ScrollDragPlugin extends Plugin {
             module.outer.classList.add(`${module._prefix}_dragging`);
         }
 
+        // launch events
+        this.lbt("move");
+
     }
 
     /**
@@ -271,6 +289,9 @@ export default class ScrollDragPlugin extends Plugin {
                 }
             }, thisProp.timeoutListeners);
         }
+
+        // launch events
+        this.lbt("end");
 
     }
 
@@ -300,6 +321,24 @@ export default class ScrollDragPlugin extends Plugin {
         };
 
     }
+
+    /**
+     * @description Destroy draggable events.
+     * @protected
+     */
+    _destroyDrag() {
+
+        if (this._dragger) {
+            this._dragger.destroy();
+            this._dragger = false;
+        }
+
+        this._moduleEvents.forEach(id => {
+            this._m.remove(id);
+        });
+        this._moduleEvents = [];
+
+    }
     
 
 
@@ -311,9 +350,7 @@ export default class ScrollDragPlugin extends Plugin {
 
         super.destroy();
 
-        this._moduleEvents.forEach(id => {
-            this._m.remove(id);
-        });
+        this._destroyDrag();
 
     }
 
