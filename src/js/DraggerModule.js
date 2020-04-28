@@ -47,6 +47,7 @@ export default class DraggerModule extends Module {
      * @property {string|HTMLElement|Window} outer - *** Selector of the element or the element itself.
      * @property {number} [min=100] - Minimum length of movement in pixels to launch events under the targets "up", "down, "left", "right".
      * @property {boolean} [momentum=false] - If momentum drag/swipe is enabled.
+     * @property {number} [momentumStopThreshold=0.01] - When the momentum stops.
      * @property {number} [friction=.95] - Momentum deceleration friction.
      * @property { Vevet.DraggerModule.ThresholdPropagation | false } [thresholdPropagation=false] - Stop propagation if a definite length of movement in pixels was reached.
      */
@@ -69,6 +70,7 @@ export default class DraggerModule extends Module {
             outer: '',
             min: 100,
             momentum: false,
+            momentumStopThreshold: .01,
             friction: .95,
             thresholdPropagation: false
         });
@@ -565,7 +567,7 @@ export default class DraggerModule extends Module {
         }
 
         // vars
-        const stopThreshold = 0.3;
+        const stopThreshold = this._prop.momentumStopThreshold;
         const friction = this._prop.friction;
 
         // decelerate momentum

@@ -23,6 +23,7 @@ export default class ScrollDragPlugin extends Plugin {
      * @property {boolean} [on=true] - If enabled.
      * @property {number} [multiplier=1] - The higher number the faster animation.
      * @property {boolean} [momentum=true] - If momentum drag/swipe is enabled.
+     * @property {number} [momentumStopThreshold=0.01] - When the momentum stops.
      * @property {number} [friction=.95] - Momentum deceleration friction.
      * @property { Vevet.DraggerModule.ThresholdPropagation | false } [thresholdPropagation=false] - Stop propagation if a definite length of movement in pixels was reached.
      * @property {number} [ease=.15] - This property is the same as the ease property in {@linkcode Vevet.ScrollModule}. This property means that the value in ScrollModule becomes the same as here when dragging.
@@ -49,6 +50,7 @@ export default class ScrollDragPlugin extends Plugin {
             on: true,
             multiplier: 1,
             momentum: true,
+            momentumStopThreshold: .01,
             friction: .95,
             thresholdPropagation: false,
             ease: .15,
@@ -173,6 +175,7 @@ export default class ScrollDragPlugin extends Plugin {
             parent: this,
             outer: module.outer,
             momentum: this._prop.momentum,
+            momentumStopThreshold: this._prop.momentumStopThreshold,
             friction: this._prop.friction,
             thresholdPropagation: this._prop.thresholdPropagation
         });
