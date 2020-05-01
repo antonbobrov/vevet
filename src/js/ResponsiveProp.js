@@ -28,7 +28,7 @@ export default class ResponsiveProp {
      *          they cannot be changed further.</li>
      * </ul>
      * 
-     * @property {number} breakpoint - F.e., 1199. It means that new settings will be applied when the window size is less or equal to 1199px.
+     * @property { number | string } breakpoint - F.e., 1199. It means that new settings will be applied when the window size is less or equal to 1199px.
      * Available breakpoints:
      * <ul>
      *      <li>any number - width breakpoint</li>
