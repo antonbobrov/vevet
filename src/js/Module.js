@@ -304,8 +304,6 @@ export default class Module extends Event {
     /**
      * @description Remove an event listener from the element.
      * 
-     * @protected
-     * 
      * @param {object} data - Event's data.
      * @param {Window|HTMLElement} data.el - Element with the event.
      * @param {string} data.id - Id of the event.
