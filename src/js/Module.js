@@ -284,7 +284,7 @@ export default class Module extends Event {
      * @param {Window|HTMLElement} el - Element for the event.
      * @param {string} target - Target of the event.
      * @param {Function} callback - Callback.
-     * @param {Vevet.Listener} data - Additional settings.
+     * @param {Vevet.Listener} [data] - Additional settings.
      * 
      * @returns {Vevet.BindListener} Returns data.
      * 
