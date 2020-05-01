@@ -505,7 +505,7 @@ export default class ScrollModule extends Module {
 
         // sizes
         this.setSize();
-        this._addEvent('viewport', {
+        this.addEvent('viewport', {
             target: '',
             name: this.name,
             do: () => {

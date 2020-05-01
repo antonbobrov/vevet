@@ -227,7 +227,7 @@ export default class TextSplitModule extends Module {
 
         super._setEvents();
 
-        this._addEvent("viewport", {
+        this.addEvent("viewport", {
             target: 'w_',
             name: this.name,
             do: () => {

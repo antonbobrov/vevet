@@ -198,7 +198,7 @@ export default class ScrollViewModule extends ScrollAnimate {
 
         // on load
         if (prop.seekLoad) {
-            this._addEvent('load', {
+            this.addEvent('load', {
                 name: this.name,
                 do: () => {
                     if (prop.seekLoad) {

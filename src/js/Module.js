@@ -150,15 +150,13 @@ export default class Module extends Event {
     /**
      * @description Add events of different types. See {@linkcode Vevet.Event}.
      * 
-     * @protected
-     * 
      * @param {string|Array<string>} name - Name of the event class, f.e., viewport, load, etc.
      * @param {object} data - Event's data.
      * @param {boolean} [bool=true] - Defines if the event will be enabled.
      * 
      * @returns {string|false|Array<string|false>} Returns a string with an id or false if the event cannot be added. If there were several names, it will return an array with strings & booleans.
      */
-    _addEvent(name, data, bool = true) {
+    addEvent(name, data, bool = true) {
 
         let ids = [],
             returning = [];

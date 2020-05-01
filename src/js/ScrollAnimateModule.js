@@ -266,7 +266,7 @@ export default class ScrollAnimateModule extends Module {
 
         // sizes
         this.setSize();
-        this._addEvent('viewport', {
+        this.addEvent('viewport', {
             target: '',
             name: this.name,
             do: () => {

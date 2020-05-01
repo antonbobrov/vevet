@@ -274,7 +274,7 @@ export default class PreloaderModule extends Module {
     _setEvents() {
 
         // when the page is loaded
-        this._addEvent('load', {
+        this.addEvent('load', {
             name: this._name,
             do: () => {
                 this._onloaded();

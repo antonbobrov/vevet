@@ -285,7 +285,7 @@ export default class SliderModule extends Module {
 
         // sizes
         this.setSize();
-        this._addEvent('viewport', {
+        this.addEvent('viewport', {
             target: '',
             name: this._name,
             do: () => {
