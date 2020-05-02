@@ -600,7 +600,6 @@ export default class PreloaderModule extends Module {
 
     /**
      * @description Hide preloader.
-     * @protected
      */
     hide() {
 
