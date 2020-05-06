@@ -210,6 +210,7 @@ export default class PageModule extends Module {
 
     /**
      * @description Check if the page can be created.
+     * @returns { boolean }
      */
     createCheck() {
 
@@ -249,6 +250,7 @@ export default class PageModule extends Module {
 
     /**
      * @description Check if the page can be shown.
+     * @returns { boolean }
      */
     showCheck() {
 
@@ -291,6 +293,7 @@ export default class PageModule extends Module {
 
     /**
      * @description Check if the page can be hidden.
+     * @returns { boolean }
      */
     hideCheck() {
 
@@ -331,6 +334,7 @@ export default class PageModule extends Module {
 
     /**
      * @description Check if the page can be destroyed.
+     * @returns { boolean }
      */
     destroyCheck() {
 
