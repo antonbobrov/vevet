@@ -235,8 +235,9 @@ export default class Module extends Event {
      */
     _removeEvents() {
 
-        for (let i = 0; i < this._allEvents.length; i++) {
-            this._removeEvent(this._allEvents[i].id);
+        while (this._allEvents.length > 0) {
+            const id = this._allEvents[0].id;
+            this._removeEvent(id);
         }
 
         return true;
