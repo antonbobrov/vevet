@@ -431,7 +431,6 @@ export default class ScrollBarPlugin extends Plugin {
         );
 
         // render scrollbar
-        this._render();
         this._scrollEvents.push(
             this._m.on("update", this._render.bind(this))
         );
