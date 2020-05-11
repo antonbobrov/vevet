@@ -118,7 +118,7 @@ export default class URLEvent extends Event {
      * @param {object} data - Object with information.
      * @param {string} data.key - The name of the parameter.
      * @param {string} data.value - The new value of the parameter.
-     * @param {string} [data.push=true] - Identifies if we need to push the new parameter into the page url.
+     * @param {boolean} [data.push=true] - Identifies if we need to push the new parameter into the page url.
      * @param {string} [data.url=window.location.href] - Url in which the value will be set.
      * 
      * @returns {string} Returns new url.
