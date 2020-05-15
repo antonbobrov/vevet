@@ -1,5 +1,5 @@
 import Event from './Event';
-const isMobile = require('is-mobile');
+import isMobile from 'ismobilejs';
 
 /**
  * @classdesc Callbacks on window resize. Here the names of the OS, Browser, and Device can be changed. <br>
@@ -132,7 +132,11 @@ export default class ViewportEvent extends Event {
      * @type {boolean}
      */
     get mobiledevice() {
-        return isMobile({tablet: true});
+        const nav = window.navigator;
+        if (isMobile(nav).tablet || isMobile(nav).mobile) {
+            return true;
+        }
+        return false;
     }
     /**
      * @description If width greater than height.
