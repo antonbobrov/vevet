@@ -607,8 +607,8 @@ export default class ScrollModule extends Module {
                 x = delta.pixelY;
                 y = delta.pixelX;
             }
-            this._targetLeft += x;
-            this._targetTop += y;
+            this.targetLeft += x;
+            this.targetTop += y;
             
             // shrink target values
             this._boundaries(false);
@@ -652,19 +652,19 @@ export default class ScrollModule extends Module {
         if (vertical) {
             let max = this._height - this._heightOuter;
             if (targetTop < 0) {
-                this._targetTop = 0;
+                this.targetTop = 0;
             }
             if (targetTop > max) {
-                this._targetTop = max;
+                this.targetTop = max;
             }
         }
         else {
             let max = this._width - this._widthOuter;
             if (targetLeft < 0) {
-                this._targetLeft = 0;
+                this.targetLeft = 0;
             }
             if (targetLeft > max) {
-                this._targetLeft = max;
+                this.targetLeft = max;
             }
         }
 
