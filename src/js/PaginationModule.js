@@ -204,6 +204,9 @@ export default class PaginationModule extends Module {
     get url() {
         return this._url;
     }
+    set url(value) {
+        this._url = value;
+    }
 
 
 
@@ -681,7 +684,7 @@ export default class PaginationModule extends Module {
         this._loading = true;
 
         // update url if needed
-        this._url = this._v.url.setParam({
+        this.url = this._v.url.setParam({
             url: this._url,
             key: this._prop.param,
             value: data.num,
