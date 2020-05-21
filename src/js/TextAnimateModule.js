@@ -155,10 +155,10 @@ export default class TextAnimateModule extends TextSplitModule {
      * @property {Array<Vevet.TextAnimateModule.SettingStyle>} [line] - Array of actions to change styles of each word in the line. Fill it if one of your types is 'line'.
      * @property {number} [shift=0.2] - Shift in animation chain between elements. F.e., if 0.2 then the animation of the second element will start after 80% of animation of the first element passed.
      * @property {number} [shiftLine=0.2] - Almost the same as the previous value, though it is active for the 'line' type only.
-     * @property {number} [reverse=false] - Defines if the chain of animation of the elements will be reversed. It is not the same as {@linkcode Vevet.TimelineModule}.
-     * @property {number} [reverseComposite=false] - Defines if the chain of animation of parent elements will be reversed. It is actual only for composite types of animation.
-     * @property {number} [shuffle=false] - If true, the chain of animation of the elements will be chaotic.
-     * @property {number} [center=false] - If animation must start from center. Not available for 'lineletter' & 'lineword'.
+     * @property {boolean} [reverse=false] - Defines if the chain of animation of the elements will be reversed. It is not the same as {@linkcode Vevet.TimelineModule}.
+     * @property {boolean} [reverseComposite=false] - Defines if the chain of animation of parent elements will be reversed. It is actual only for composite types of animation.
+     * @property {boolean} [shuffle=false] - If true, the chain of animation of the elements will be chaotic.
+     * @property {boolean} [center=false] - If animation must start from center. Not available for 'lineletter' & 'lineword'.
      * @property {Array<Vevet.TextAnimateModule.SettingCallback>} [callbacks] - Callbacks on the animation process.
      */
     /**
