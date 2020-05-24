@@ -623,7 +623,7 @@ export default class PopupModule extends Module {
      * 
      * @property {HTMLElement} [el=false] - The DOM element which innerHTML will be taken and inserted into the pop-up window.
      * @property {string} [selector=.popup] - Selector of the element.
-     * @property {Array<string>} [append=false] - If true, all children from the source element will be appended to the pop-up window.
+     * @property {boolean} [append=false] - If true, all children from the source element will be appended to the pop-up window.
      * If false, innerHTML will be copied and inserted.
      * @property {Array<string|'auto'|'modal'|'media'|'content'|'right'>} [types] - The default value is taken from {@linkcode Vevet.PopupModule.Properties}.
      */
