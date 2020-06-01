@@ -182,7 +182,6 @@ export default class SliderDragSwipePlugin extends Plugin {
     _dragAddEvent(dragger, target, method) {
 
         dragger.on(target, () => {
-            alert(method)
             this._m[method]();
         }, {
            min: this._prop.min 
