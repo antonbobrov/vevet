@@ -522,6 +522,14 @@ export default class ScrollModule extends Module {
             do: this._wheel.bind(this),
             passive: true
         });
+        
+        // on scroll
+        this.addEventListener({
+            el: this._outer,
+            target: "scroll",
+            do: this._onScroll.bind(this),
+            passive: true
+        });
 
     }
 
@@ -632,6 +640,21 @@ export default class ScrollModule extends Module {
             // launch events
             this.lbt("wheel", evt);
 
+        }
+
+    }
+
+    /**
+     * @description Event on scroll. Reset native scroll values.
+     * @protected
+     */
+    _onScroll() {
+
+        let prop = this._prop;
+
+        if (prop.run) {
+            this._outer.scrollTop = 0;
+            this._outer.scrollLeft = 0;
         }
 
     }
