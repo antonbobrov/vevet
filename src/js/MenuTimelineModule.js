@@ -264,7 +264,10 @@ export default class MenuTimelineModule extends MenuBaseModule {
         }
         else {
             timeline.reverse();
-            timeline.play();
+            timeline.play({
+                duration: this._prop.timeline.duration,
+                easing: this._prop.timeline.easing
+            });
         }
 
     }
