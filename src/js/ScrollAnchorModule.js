@@ -12,8 +12,8 @@ const selectEl = require('select-el');
  *  </ul>
  * <br><br> <b>import {ScrollAnchorModule} from 'vevet';</b>
  * 
- * @vevetModuleCallback { Vevet.ScrollAnchorModule : change : Vevet.ScrollAnchorModule.Ref}
- * @vevetModuleCallback { Vevet.ScrollAnchorModule : click : Vevet.ScrollAnchorModule.Change}
+ * @vevetModuleCallback { Vevet.ScrollAnchorModule : change : Vevet.ScrollAnchorModule.Change}
+ * @vevetModuleCallback { Vevet.ScrollAnchorModule : click : Vevet.ScrollAnchorModule.Ref}
  * 
  * @class
  * @abstract
