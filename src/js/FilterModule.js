@@ -778,7 +778,7 @@ export default class FilterModule extends Module {
             url = this._v.url.setParam({
                 url: url,
                 key: params[i][0],
-                value: params[i][1],
+                value: params[i][1] == 'null' ? '' : params[i][1],
                 push: push
             });
         }
