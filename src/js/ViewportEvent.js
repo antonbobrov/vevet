@@ -62,6 +62,11 @@ export default class ViewportEvent extends Event {
          */
         this._mobile = false;
         /**
+         * @protected
+         * @type {boolean}
+         */
+        this._mobiledevice = false;
+        /**
          * @description Breakpoint types
          * @protected
          * @type {Array<string>}
@@ -132,11 +137,7 @@ export default class ViewportEvent extends Event {
      * @type {boolean}
      */
     get mobiledevice() {
-        const ifmobile = isMobileJs();
-        if (ifmobile.tablet || ifmobile.phone) {
-            return true;
-        }
-        return false;
+        return this._mobiledevice;
     }
     /**
      * @description If width greater than height.
@@ -258,6 +259,9 @@ export default class ViewportEvent extends Event {
             html.clientHeight
         ];
         this._sizePrev = this._size.slice();
+
+        const ifmobile = isMobileJs();
+        this._mobiledevice = (ifmobile.tablet || ifmobile.phone);
     
         this._classes();
         this._breakpoints();
