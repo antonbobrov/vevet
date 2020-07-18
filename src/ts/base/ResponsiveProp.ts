@@ -21,9 +21,9 @@ import mergeWithoutArrays from "../utils/mergeWithoutArrays";
  * </ul>
  */
 export class ResponsiveProp<
-    FullProp extends ResponsiveProp.Prop<ResProp>,
+    ResProp extends object,
     PureProp extends object,
-    ResProp extends object
+    FullProp extends ResponsiveProp.Prop<ResProp>,
 > {
 
     /**

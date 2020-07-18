@@ -6,9 +6,9 @@ import timeoutCallback from "../utils/timeoutCallback";
 /**
  * A class for callbacks' manipulation.
  */
-export abstract class Callbacks<
-    ClassProp extends Callbacks.Prop<CallbackType>, 
-    CallbackType extends Callbacks.CallbackSettings
+export abstract class Callbacks< 
+    CallbackType extends Callbacks.CallbackSettings,
+    ClassProp extends Callbacks.Prop<CallbackType>
 > {
 
     /**

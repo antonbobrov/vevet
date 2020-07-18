@@ -6,8 +6,8 @@ import { Callbacks } from '../base/Callbacks';
  * Callbacks on page loaded.
  */
 export class Load extends Callbacks<
-    Callbacks.Prop<Load.Callbacks>, 
-    Load.Callbacks
+    Load.Callbacks,
+    Callbacks.Prop<Load.Callbacks>
 > {
 
     /**

@@ -6,8 +6,8 @@ import { Callbacks } from '../base/Callbacks';
  * Here the names of the OS, Browser, and Device are also available. <br>
  */
 export class Viewport extends Callbacks<
-    Callbacks.Prop<Viewport.Callbacks>, 
-    Viewport.Callbacks
+    Viewport.Callbacks,
+    Callbacks.Prop<Viewport.Callbacks>
 > {
 
     /**
