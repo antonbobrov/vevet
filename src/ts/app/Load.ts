@@ -1,4 +1,4 @@
-import { Callbacks } from './Callbacks';
+import { Callbacks } from '../base/Callbacks';
 
 
 

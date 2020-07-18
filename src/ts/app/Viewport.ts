@@ -1,5 +1,5 @@
 import isMobileJs  from 'ismobilejs';
-import { Callbacks } from './Callbacks';
+import { Callbacks } from '../base/Callbacks';
 
 /**
  * Callbacks on window resize. 

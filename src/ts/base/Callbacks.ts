@@ -1,4 +1,4 @@
-import { Application } from "./Application";
+import { Application } from "../app/Application";
 import generateID from "../utils/generateID";
 import mergeWithoutArrays from "../utils/mergeWithoutArrays";
 import timeoutCallback from "../utils/timeoutCallback";
