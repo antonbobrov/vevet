@@ -18,17 +18,6 @@ export abstract class Callbacks<
     protected _app: Application;
 
     /**
-     * Module name
-     */
-    protected _name: string;
-    /**
-     * Get module name
-     */
-    get name() {
-        return this._name;
-    }
-
-    /**
      * All callbacks
      */
     protected _callbacks: Callbacks.CallbackData<CallbackType>[];
@@ -55,7 +44,6 @@ export abstract class Callbacks<
 
         this._app = window.vevetApplication;
 
-        this._name = this.constructor.name;
         this._callbacks = [];
 
         // add callbacks from properties
@@ -98,7 +86,7 @@ export abstract class Callbacks<
      * 
      * @example
      * const id = callback.add({
-     *     target: 'target_name',
+     *     target: 'target-name',
      * 	   do: () => {
      * 		   alert("callback");
      * 	   }
@@ -106,7 +94,7 @@ export abstract class Callbacks<
      */
     public add(data: CallbackType, bool = true): string {
 
-        const id = generateID(this.name);
+        const id = generateID('callback');
         const obj = {
             id: id,
             on: bool,
