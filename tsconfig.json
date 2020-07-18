@@ -1,13 +1,18 @@
 {
     "compilerOptions": {
         "outDir": "./dist/",
-        "noImplicitAny": false,
-        "module": "CommonJS",
-        "target": "ES5",
+        "noImplicitAny": true,
+        "module": "ESNext",
+        "target": "ES6",
         "jsx": "react",
         "allowJs": true,
         "noEmitOnError": false,
-        "declaration": true,
-        "esModuleInterop": true
-    }
+        "declaration": false,
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "sourceMap": true
+    },
+    "exclude": [
+        "node_modules"
+    ]
 }
