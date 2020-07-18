@@ -5,10 +5,7 @@ import { Callbacks } from '../base/Callbacks';
  * Callbacks on window resize. 
  * Here the names of the OS, Browser, and Device are also available. <br>
  */
-export class Viewport extends Callbacks<
-    Viewport.CallbackType,
-    Callbacks.Prop<Viewport.CallbackType>
-> {
+export class Viewport extends Callbacks<Viewport.CallbackType> {
 
     /**
      * Current Viewport size
@@ -327,7 +324,7 @@ export namespace Viewport {
      * Callback data with a function
      */
     type CallbackFunc = {
-        func: (data: CallbackArg) => void
+        do: (data: CallbackArg) => void
     } & Callbacks.CallbackBaseSettings;
 
     /**
