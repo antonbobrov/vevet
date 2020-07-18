@@ -8,13 +8,13 @@ import timeoutCallback from "../utils/timeoutCallback";
  */
 export abstract class Callbacks< 
     CallbackType extends Callbacks.CallbackSettings,
-    ClassProp extends Callbacks.Prop<CallbackType>
+    Prop extends Callbacks.Prop<CallbackType>
 > {
 
     /**
      * Module Properties
      */
-    protected _prop: ClassProp;
+    protected _prop: Prop;
     /**
      * Module Properties
      */
@@ -24,10 +24,10 @@ export abstract class Callbacks<
     /**
      * Default properties.
      */
-    get defaultProp(): ClassProp {
+    get defaultProp(): Prop {
         return {
             callbacks: []
-        } as ClassProp;
+        } as Prop;
     }
 
     
@@ -81,7 +81,7 @@ export abstract class Callbacks<
      * const callback = new Callbacks();
      */
     constructor(
-        data: ClassProp = {} as ClassProp, 
+        data: Prop = {} as Prop, 
         init = true
     ) {
 

@@ -6,8 +6,8 @@ import { Callbacks } from '../base/Callbacks';
  * Here the names of the OS, Browser, and Device are also available. <br>
  */
 export class Viewport extends Callbacks<
-    Viewport.Callbacks,
-    Callbacks.Prop<Viewport.Callbacks>
+    Viewport.CallbackType,
+    Callbacks.Prop<Viewport.CallbackType>
 > {
 
     /**
@@ -155,12 +155,6 @@ export class Viewport extends Callbacks<
         // update other values
         this._updateClasses();
 
-        this.addCallback({
-            func: (data) => {
-                data: ''
-            }
-        })
-
     }
 
     /**
@@ -292,7 +286,7 @@ export namespace Viewport {
     /**
      * Available callbacks
      */
-    export type Callbacks = {
+    export type CallbackType = {
         /**
          * Only width changes
          */

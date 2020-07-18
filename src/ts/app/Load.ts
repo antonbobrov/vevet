@@ -6,8 +6,8 @@ import { Callbacks } from '../base/Callbacks';
  * Callbacks on page loaded.
  */
 export class Load extends Callbacks<
-    Load.Callbacks,
-    Callbacks.Prop<Load.Callbacks>
+    Load.CallbackType,
+    Callbacks.Prop<Load.CallbackType>
 > {
 
     /**
@@ -68,7 +68,7 @@ export class Load extends Callbacks<
 
 export namespace Load {
 
-    export type Callbacks = {
+    export type CallbackType = {
         target?: "",
         func: () => void
     } & Callbacks.CallbackBaseSettings;

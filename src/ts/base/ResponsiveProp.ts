@@ -21,8 +21,17 @@ import mergeWithoutArrays from "../utils/mergeWithoutArrays";
  * </ul>
  */
 export class ResponsiveProp<
+    /**
+     * Changeable Properties
+     */
     ResProp extends object,
+    /**
+     * Static & Changeable Properties 
+     */
     PureProp extends object,
+    /**
+     * All Properties & Responsive Settings 
+     */
     FullProp extends ResponsiveProp.Prop<ResProp>,
 > {
 
