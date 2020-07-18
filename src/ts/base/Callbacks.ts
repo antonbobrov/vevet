@@ -5,7 +5,7 @@ import timeoutCallback from "../utils/timeoutCallback";
 /**
  * A class for callbacks' manipulation.
  */
-export abstract class Callbacks< 
+export class Callbacks< 
     /**
      * Module Callbacks
      */
