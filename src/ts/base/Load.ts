@@ -35,9 +35,7 @@ export class Load extends Callbacks<
 
         // add callbacks
         this.addCallback({
-            func: (data) => {
-                this._onloaded();
-            },
+            func: this._onloaded.bind(this),
             protected: true
         });
 
@@ -72,7 +70,7 @@ export namespace Load {
 
     export type Callbacks = {
         target?: "",
-        func: (isLoaded: true) => void
+        func: () => void
     } & Callbacks.CallbackBaseSettings;
 
 }
