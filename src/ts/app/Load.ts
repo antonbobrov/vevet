@@ -5,10 +5,7 @@ import { Callbacks } from '../base/Callbacks';
 /**
  * Callbacks on page loaded.
  */
-export class Load extends Callbacks<
-    Load.CallbackType,
-    Callbacks.Prop<Load.CallbackType>
-> {
+export class Load extends Callbacks<Load.CallbackType> {
 
     /**
      * If the page is loaded.
@@ -34,13 +31,13 @@ export class Load extends Callbacks<
     protected _setEvents() {
 
         // add callbacks
-        this.addCallback({
-            func: this._onloaded.bind(this),
+        this.add({
+            do: this._onloaded.bind(this),
             protected: true
         });
 
         // launch callbacks on loaded
-        window.addEventListener("load", this.triggerAllCallbacks.bind(this));
+        window.addEventListener("load", this.triggerAll.bind(this));
 
     }
 
@@ -70,7 +67,7 @@ export namespace Load {
 
     export type CallbackType = {
         target?: "",
-        func: () => void
+        do: () => void
     } & Callbacks.CallbackBaseSettings;
 
 }
