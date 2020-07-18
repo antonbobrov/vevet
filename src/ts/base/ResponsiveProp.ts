@@ -135,10 +135,10 @@ export class ResponsiveProp<
             // change properties according to the responsive prop
             this._responseProp();
             // add event on resize
-            this._viewportID = this._app.viewport.addCallback({
+            this._viewportID = this._app.viewport.add({
                 target: 'w_',
                 name: this._name,
-                func: this._responseProp.bind(this, true)
+                do: this._responseProp.bind(this, true)
             });
         }
 
@@ -261,7 +261,7 @@ export class ResponsiveProp<
     public destroy() {
 
         if (this._viewportID) {
-            this._app.viewport.removeCallback(this._viewportID);
+            this._app.viewport.remove(this._viewportID);
         }
 
     }
