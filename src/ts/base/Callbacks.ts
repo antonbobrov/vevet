@@ -1,53 +1,21 @@
 import { Application } from "../app/Application";
 import generateID from "../utils/generateID";
-import mergeWithoutArrays from "../utils/mergeWithoutArrays";
 import timeoutCallback from "../utils/timeoutCallback";
 
 /**
  * A class for callbacks' manipulation.
  */
 export abstract class Callbacks< 
-    CallbackType extends Callbacks.CallbackSettings,
-    Prop extends Callbacks.Prop<CallbackType>
+    /**
+     * Module Callbacks
+     */
+    CallbackType extends Callbacks.CallbackSettings
 > {
-
-    /**
-     * Module Properties
-     */
-    protected _prop: Prop;
-    /**
-     * Module Properties
-     */
-    get prop() {
-        return this._prop;
-    }
-    /**
-     * Default properties.
-     */
-    get defaultProp(): Prop {
-        return {
-            callbacks: []
-        } as Prop;
-    }
-
-    
 
     /**
      * Vevet Application
      */
     protected _app: Application;
-    /**
-     * Module prefix
-     */
-    protected _prefix: string;
-    /**
-     * Get module prefix
-     */
-    get prefix(): string {
-        return '';
-    }
-
-
 
     /**
      * Module name
@@ -81,20 +49,18 @@ export abstract class Callbacks<
      * const callback = new Callbacks();
      */
     constructor(
-        data: Prop = {} as Prop, 
+        callbacks: CallbackType[] = [], 
         init = true
     ) {
 
         this._app = window.vevetApplication;
 
-        this._prefix = this.prefix;
-        this._prop = mergeWithoutArrays(this.defaultProp, data);
         this._name = this.constructor.name;
         this._callbacks = [];
 
         // add callbacks from properties
-        for (let i = 0, l = this._prop.callbacks.length; i < l; i++) {
-            this.addCallback(this._prop.callbacks[i]);
+        for (let i = 0, l = callbacks.length; i < l; i++) {
+            this.add(callbacks[i]);
         }
 
         // initialize
@@ -133,12 +99,12 @@ export abstract class Callbacks<
      * @example
      * const id = callback.add({
      *     target: 'target_name',
-     * 	   func: () => {
+     * 	   do: () => {
      * 		   alert("callback");
      * 	   }
      * });
      */
-    public addCallback(data: CallbackType, bool = true): string {
+    public add(data: CallbackType, bool = true): string {
 
         const id = generateID(this.name);
         const obj = {
@@ -148,7 +114,7 @@ export abstract class Callbacks<
         };
         
         this._callbacks.push(obj);
-        this._addCallback(id);
+        this._add(id);
         
         return id;
 
@@ -158,14 +124,14 @@ export abstract class Callbacks<
      * Use it to implement some actions after adding a callback.
      * @param id
      */
-    protected _addCallback(id: string) { }
+    protected _add(id: string) { }
     
 
 
     /**
      * Remove a callback.
      */
-    public removeCallback(id: string): boolean {
+    public remove(id: string): boolean {
 
         const callbacks = this._callbacks;
         const newCallbacks: Callbacks.CallbackData<CallbackType>[] = [];
@@ -190,7 +156,7 @@ export abstract class Callbacks<
             
             // remove the callback if not protected
             if (!protectedCallback) {
-                this._removeCallback(id);
+                this._remove(id);
                 removed = true;
             }
             else {
@@ -211,15 +177,15 @@ export abstract class Callbacks<
     /**
      * Use it to implement some actions after removing a callback.
      */
-    protected _removeCallback(id: string) { }
+    protected _remove(id: string) { }
     
     /**
      * Remove all callbacks.
      */
-    public removeAllCallbacks() {
+    public removeAll() {
 
         while (this._callbacks.length > 0) {
-            this.removeCallback(this._callbacks[0].id);
+            this.remove(this._callbacks[0].id);
         }
 
     }
@@ -231,12 +197,12 @@ export abstract class Callbacks<
      * @param id - ID of the callback
      * @param bool - True to enable, false to disable.
      */
-    public turnCallback(id: string, bool = true): boolean {
+    public turn(id: string, bool = true): boolean {
 
-        const callback = this.getCallback(id);
+        const callback = this.get(id);
         if (callback) {
             callback.on = bool;
-            this._turnCallback(id);
+            this._turn(id);
             return true;
         }
         
@@ -247,14 +213,14 @@ export abstract class Callbacks<
     /**
      * Use it to implement some actions after enabling or disabling a callback.
      */
-    protected _turnCallback(id: string) { }
+    protected _turn(id: string) { }
     
 
 
     /**
      * Get a callback by id
      */
-    public getCallback(id: string): false | Callbacks.CallbackData<CallbackType> {
+    public get(id: string): false | Callbacks.CallbackData<CallbackType> {
 
         const callbacks = this._callbacks;
         for (let i = 0; i < callbacks.length; i++) {
@@ -272,7 +238,7 @@ export abstract class Callbacks<
     /**
      * Trigger a callback. It will work only if the callback is enabled.
      */
-    protected _triggerCallback(
+    protected _trigger(
         callback: Callbacks.CallbackData<CallbackType>, 
         arg: Callbacks.CallbackArg = false
     ) {
@@ -282,29 +248,30 @@ export abstract class Callbacks<
             return;
         }
 
-        const { timeout, func, once } = callback.data;
+        const { timeout, once } = callback.data;
+        const func = callback.data.do;
 
         // launch
         if (timeout) {
             if (arg) {
-                timeoutCallback(this._triggerCallbackFunc.bind(this, func, arg), timeout);
+                timeoutCallback(this._triggerFunc.bind(this, func, arg), timeout);
             }
             else {
-                timeoutCallback(this._triggerCallbackFunc.bind(this, func, false), timeout);
+                timeoutCallback(this._triggerFunc.bind(this, func, false), timeout);
             }
         }
         else {
             if (arg) {
-                this._triggerCallbackFunc(func, arg);
+                this._triggerFunc(func, arg);
             }
             else {
-                this._triggerCallbackFunc(func, false);
+                this._triggerFunc(func, false);
             }
         }
 
         // remove once-callback
         if (once) {
-            this.removeCallback(callback.id);
+            this.remove(callback.id);
         }
 
     }
@@ -312,7 +279,7 @@ export abstract class Callbacks<
     /**
      * Launch a callback's function
      */
-    protected _triggerCallbackFunc(func: Function, arg: Callbacks.CallbackArg) {
+    protected _triggerFunc(func: Function, arg: Callbacks.CallbackArg) {
         
         if (arg) {
             func(arg);
@@ -326,10 +293,10 @@ export abstract class Callbacks<
     /**
      * Trigger all existing callbacks.
      */
-    public triggerAllCallbacks() {
+    public triggerAll() {
 
         for (let i = 0, l = this._callbacks.length; i < l; i++) {
-            this._triggerCallback(this._callbacks[i]);
+            this._trigger(this._callbacks[i]);
         }
 
     }
@@ -341,7 +308,7 @@ export abstract class Callbacks<
 
         for (let i = 0; i < this._callbacks.length; i++) {
             if (this._callbacks[i].data.target === target) {
-                this._triggerCallback(this._callbacks[i], arg);
+                this._trigger(this._callbacks[i], arg);
             }
         }
 
@@ -357,13 +324,6 @@ export abstract class Callbacks<
  * @namespace
  */
 export namespace Callbacks {
-
-    /**
-     * Class Properties
-     */
-    export type Prop<C> = {
-        callbacks?: C[];
-    }
 
     /**
      * Callbacks Properties' Settings
@@ -397,7 +357,7 @@ export namespace Callbacks {
         /**
          * Callback Function
          */
-        func: Function;
+        do: Function;
     };
 
     /**
