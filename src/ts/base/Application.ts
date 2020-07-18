@@ -1,3 +1,6 @@
+import { Load } from "./Load";
+import { Viewport } from "./Viewport";
+
 /**
  * Vevet Application
  */
@@ -140,6 +143,29 @@ export class Application {
     }
 
 
+    /**
+     * Load Callbacks
+     */
+    protected _load: Load;
+    /**
+     * Load Callbacks
+     */
+    get load() {
+        return this._load;
+    }
+
+    /**
+     * Viewport Callbacks
+     */
+    protected _viewport: Viewport;
+    /**
+     * Viewport Callbacks
+     */
+    get viewport() {
+        return this._viewport;
+    }
+
+
 
     /**
      * @description Initialize the class
@@ -153,6 +179,9 @@ export class Application {
         // set current page name
         this.page = this.prop.page;
 
+        // add the application to the window object
+        window.vevetApplication = this;
+
         // /**
         //  * @type {string}
         //  * @private
@@ -164,13 +193,9 @@ export class Application {
         //  */
         // this._os = getOsName();
 
-        // this.load = new LoadCallbacks({
-        //     app: this
-        // });
-
-        // this.viewport = new ViewportEvent({
-        //     v: this
-        // });
+        // create default helpers
+        this._load = new Load();
+        this._viewport = new Viewport();
 
         // /**
         //  * @member {Vevet.URLEvent}
@@ -185,9 +210,6 @@ export class Application {
         // this.ajax = new AJAXEvent({
         //     v: this
         // });
-
-        // add the application to the window object
-        window.vevetApplication = this;
 
     }
 
