@@ -166,7 +166,7 @@ export class Viewport extends Callbacks<
     /**
      * Change classes of the document element.
      */
-    _updateClasses() {
+    protected _updateClasses() {
 
         const app = this._app;
         const appProp = app.prop;
@@ -220,7 +220,7 @@ export class Viewport extends Callbacks<
     /**
      *  Change breakpoint classes of the document element. 
      */
-    _updateBreakpointClasses(activeType: string, types: string[]) {
+    protected _updateBreakpointClasses(activeType: string, types: string[]) {
 
         const html = this._app.html;
         const prefix = this._app.prefix;
