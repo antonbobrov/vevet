@@ -31,15 +31,11 @@ export abstract class Callbacks<
 
 
     /**
-     * @param data
-     * @param init - Defines if you need to call {@linkcode Callbacks#init} at the constructor's end.
-     * 
      * @example
      * const callback = new Callbacks();
      */
     constructor(
-        callbacks: CallbackType[] = [], 
-        init = true
+        callbacks: CallbackType[] = []
     ) {
 
         this._app = window.vevetApplication;
@@ -52,9 +48,7 @@ export abstract class Callbacks<
         }
 
         // initialize
-        if (init) {
-            this._init();
-        }
+        this._init();
 
     }
 
