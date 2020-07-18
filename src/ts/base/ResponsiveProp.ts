@@ -119,7 +119,7 @@ export class ResponsiveProp<
     /**
      * Initialize responsive properties.
      */
-    _init() {
+    protected _init() {
 
         // check if responsive properties exist
         if (typeof this._initProp.responsive != "undefined") {
@@ -139,7 +139,7 @@ export class ResponsiveProp<
      * Change properties according to the "responsive" settings
      * @param { boolean } [resize=false] If the method was called on window resize.
      */
-    _responseProp(resize = false) {
+    protected _responseProp(resize = false) {
 
         const responsiveProp = this._initProp.responsive;
         
@@ -234,7 +234,7 @@ export class ResponsiveProp<
      *      }
      * });
      */
-    changeProp(prop: ResProp) {
+    public changeProp(prop: ResProp) {
 
         this._prop = mergeWithoutArrays(this._prop, prop);
         this._refProp = mergeWithoutArrays(this._refProp, prop);
