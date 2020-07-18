@@ -80,7 +80,10 @@ export abstract class Callbacks<
      * @example
      * const callback = new Callbacks();
      */
-    constructor(data: ClassProp, init = true) {
+    constructor(
+        data: ClassProp = {} as ClassProp, 
+        init = true
+    ) {
 
         this._app = window.vevetApplication;
 
