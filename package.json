@@ -53,9 +53,6 @@
     "escape-regex-string": "^1.0.6",
     "escape-string-regexp": "^2.0.0",
     "eslint": "^6.0.1",
-    "eslint-config-fbjs": "^3.1.0",
-    "eslint-config-google": "^0.13.0",
-    "eslint-config-standard": "^12.0.0",
     "eslint-plugin-filenames": "^1.3.2",
     "eslint-plugin-jsdoc": "^10.0.0",
     "file-loader": "^4.0.0",
@@ -85,6 +82,8 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
+    "@types/isarray": "^2.0.0",
+    "@types/lodash.mergewith": "^4.6.6",
     "dom-create-element": "^1.0.2",
     "form-serialize": "^0.7.2",
     "form-to-object": "^6.0.0",
