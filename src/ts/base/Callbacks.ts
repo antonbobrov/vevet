@@ -112,6 +112,7 @@ export class Callbacks<
      */
     protected _add(id: string) { 
         // code
+        id
     }
     
 
@@ -167,6 +168,7 @@ export class Callbacks<
      */
     protected _remove(id: string) {
         // code
+        id
     }
     
     /**
@@ -205,6 +207,7 @@ export class Callbacks<
      */
     protected _turn(id: string) {
         // code
+        id
     }
     
 
@@ -373,6 +376,6 @@ export namespace Callbacks {
     /**
      * The argument that is transmitted to the callback function
      */
-    export type CallbackArg = false | object;
+    export type CallbackArg = false | Record<string, unknown>;
     
 }
