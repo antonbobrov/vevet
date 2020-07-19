@@ -40,7 +40,7 @@ export class Application {
      *     page: ['home']
      * });
      */
-    constructor(data: Object | Application.Prop) {
+    constructor(data: Application.Prop) {
 
         this._prop = Object.assign(this.defaultProp, data);
         this._prefix = this.prop.prefix;
@@ -99,7 +99,7 @@ export class Application {
     /**
      * Name of the current page.
      */
-    protected _page: string = '';
+    protected _page = '';
     /**
      * Set page name.
      */
@@ -285,7 +285,7 @@ export class Application {
 
 declare global {
     interface Window {
-        vevetApplication: Application
+        vevetApplication: Application;
     }
 }
 
@@ -339,7 +339,7 @@ export namespace Application {
          * Easing function that is used in animation as the default value
          * @default [.25, .1, .25, 1]
          */
-        easing?: number[] | string | ((p: number) => number)
+        easing?: number[] | string | ((p: number) => number);
     }
 
 }
