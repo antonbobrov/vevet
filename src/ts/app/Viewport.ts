@@ -160,11 +160,8 @@ export class Viewport extends Callbacks<Viewport.CallbackType> {
     protected _updateClasses() {
 
         const app = this._app;
-        const appProp = app.prop;
         const html = app.html;
         const prefix = app.prefix;
-
-        const width = this._size[0];
 
         // set viewport type
         const viewportSizeTypes: Viewport.SizeTypes[] = [
@@ -287,44 +284,44 @@ export namespace Viewport {
         /**
          * Only width changes
          */
-        target: "w"
+        target: "w";
     } & CallbackFunc | {
         /**
          * Only height changes
          */
-        target: "h"
+        target: "h";
     } & CallbackFunc | {
         /**
          * Both width and height change
          */
-        target: "wh"
+        target: "wh";
     } & CallbackFunc | {
         /**
          * Both width and height change
          */
-        target: "hw"
+        target: "hw";
     } & CallbackFunc | {
         /**
          * When width changes. Don't care about height
          */
-        target: "w_"
+        target: "w_";
     } & CallbackFunc | {
         /**
          * When height changes. Don't care width 
          */
-        target: "h_"
+        target: "h_";
     } & CallbackFunc | {
         /**
          * Any change
          */
-        target?: undefined
+        target?: undefined;
     } & CallbackFunc;
 
     /**
      * Callback data with a function
      */
     type CallbackFunc = {
-        do: (data: CallbackArg) => void
+        do: (data: CallbackArg) => void;
     } & Callbacks.CallbackBaseSettings;
 
     /**
