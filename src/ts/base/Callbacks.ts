@@ -376,6 +376,6 @@ export namespace Callbacks {
     /**
      * The argument that is transmitted to the callback function
      */
-    export type CallbackArg = false | Record<string, unknown>;
+    export type CallbackArg = false | Record<string, any>;
     
 }

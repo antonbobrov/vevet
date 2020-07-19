@@ -24,11 +24,11 @@ export class ResponsiveProp<
     /**
      * Static Properties 
      */
-    StatProp extends Record<string, unknown>,
+    StatProp extends Record<string, any>,
     /**
      * Changeable Properties
      */
-    ResProp extends Record<string, unknown>,
+    ResProp extends Record<string, any>,
     /**
      * Static & Changeable Properties 
      */
