@@ -66,8 +66,8 @@ export class Load extends Callbacks<Load.CallbackType> {
 export namespace Load {
 
     export type CallbackType = {
-        target?: "",
-        do: () => void
+        target?: "";
+        do: () => void;
     } & Callbacks.CallbackBaseSettings;
 
 }
