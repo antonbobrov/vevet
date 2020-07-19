@@ -24,11 +24,11 @@ export class ResponsiveProp<
     /**
      * Static Properties 
      */
-    StatProp extends {},
+    StatProp extends Record<string, unknown>,
     /**
      * Changeable Properties
      */
-    ResProp extends {},
+    ResProp extends Record<string, unknown>,
     /**
      * Static & Changeable Properties 
      */
@@ -47,11 +47,11 @@ export class ResponsiveProp<
      * A callback that is launched when properties are changed 
      * through {@linkcode ResponsiveProp#changeProp}
      */
-    protected _onChange: Function;
+    protected _onChange: () => void;
     /**
      * A callback that is launched when properties are changed on window resize
      */
-    protected _onResponsive: Function;
+    protected _onResponsive: () => void;
     /**
      * Name of the responsive properties.
      */
@@ -104,8 +104,8 @@ export class ResponsiveProp<
      */
     constructor(
         data: Prop = {} as Prop, 
-        onChange: Function = () => {}, 
-        onResponsive: Function = () => {},
+        onChange: () => void = () => {}, 
+        onResponsive: () => void = () => {},
         name = ''
     ) {
 
