@@ -22,17 +22,21 @@ import mergeWithoutArrays from "../utils/mergeWithoutArrays";
  */
 export class ResponsiveProp<
     /**
+     * Static Properties 
+     */
+    StatProp extends {},
+    /**
      * Changeable Properties
      */
-    ResProp extends object,
+    ResProp extends {},
     /**
      * Static & Changeable Properties 
      */
-    PureProp extends object,
+    SRProp extends StatProp & ResProp,
     /**
      * All Properties & Responsive Settings 
      */
-    FullProp extends ResponsiveProp.Prop<ResProp>,
+    Prop extends SRProp & ResponsiveProp.Prop<ResProp>,
 > {
 
     /**
@@ -57,18 +61,18 @@ export class ResponsiveProp<
      * The properties that were set while initialization.
      * These properties do not change throughout time.
      */
-    protected _initProp: FullProp;
+    protected _initProp: Prop;
     /**
      * @description Reference properties.
      * These properties may change only through {@linkcode ResponsiveProp#changeProp}.
      */
-    protected _refProp: FullProp;
+    protected _refProp: Prop;
 
     /**
      * Current properties.
      * These properties may change both on resize and {@linkcode ResponsiveProp#changeProp}.
      */
-    protected _prop: FullProp;
+    protected _prop: Prop;
     /**
      * Get current properties
      */
@@ -99,10 +103,10 @@ export class ResponsiveProp<
      * const prop = new ResponsiveProp(data);
      */
     constructor(
-        data: FullProp = {} as FullProp, 
+        data: Prop = {} as Prop, 
         onChange: Function = () => {}, 
         onResponsive: Function = () => {},
-        name: string = ''
+        name = ''
     ) {
 
         this._app = window.vevetApplication;
@@ -146,7 +150,7 @@ export class ResponsiveProp<
 
     /**
      * Change properties according to the "responsive" settings
-     * @param { boolean } [resize=false] If the method was called on window resize.
+     * @param { boolean } [resize=false] - If the method was called on window resize.
      */
     protected _responseProp(resize = false) {
 
@@ -158,7 +162,7 @@ export class ResponsiveProp<
             // get sizes
             const viewport = this._app.viewport;
             const width = viewport.size[0];
-            let newProp: PureProp = {} as PureProp;
+            let newProp: SRProp = {} as SRProp;
             
             // go through all breakpoints
             // and check if a proper breakpoint exists
@@ -275,7 +279,7 @@ export class ResponsiveProp<
 export namespace ResponsiveProp {
 
     export interface Prop<S> {
-        responsive?: Responsive<S>[]
+        responsive?: Responsive<S>[];
     }
 
     export interface Responsive<S> {
@@ -290,8 +294,8 @@ export namespace ResponsiveProp {
          *      <li>'md' - for mobile devices</li>
          * </ul>
          */
-        breakpoint: number | 'd' | 't' | 'm' | 'md',
-        settings: S
+        breakpoint: number | 'd' | 't' | 'm' | 'md';
+        settings: S;
     }
 
 }
