@@ -65,11 +65,15 @@ export class Callbacks<
     /**
      * An empty method that is called in {@linkcode Callbacks#_init}.
      */
-    protected _constructor() { }
+    protected _constructor() {
+        // code
+    }
     /**
      * An empty method that is called in {@linkcode Callbacks#_init}.
      */
-    protected _setEvents() { }
+    protected _setEvents() {
+        // code
+    }
     
 
 
@@ -81,9 +85,9 @@ export class Callbacks<
      * @example
      * const id = callback.add({
      *     target: 'target-name',
-     * 	   do: () => {
-     * 		   alert("callback");
-     * 	   }
+     *     do: () => {
+     *         alert("callback");
+     *     }
      * });
      */
     public add(data: CallbackType, bool = true): string {
@@ -106,7 +110,9 @@ export class Callbacks<
      * Use it to implement some actions after adding a callback.
      * @param id
      */
-    protected _add(id: string) { }
+    protected _add(id: string) { 
+        // code
+    }
     
 
 
@@ -159,7 +165,9 @@ export class Callbacks<
     /**
      * Use it to implement some actions after removing a callback.
      */
-    protected _remove(id: string) { }
+    protected _remove(id: string) {
+        // code
+    }
     
     /**
      * Remove all callbacks.
@@ -195,7 +203,9 @@ export class Callbacks<
     /**
      * Use it to implement some actions after enabling or disabling a callback.
      */
-    protected _turn(id: string) { }
+    protected _turn(id: string) {
+        // code
+    }
     
 
 
@@ -340,7 +350,7 @@ export namespace Callbacks {
          * Callback Function
          */
         do: Function;
-    };
+    }
 
     /**
      * Full Callbacks Data
