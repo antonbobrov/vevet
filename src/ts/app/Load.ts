@@ -1,39 +1,33 @@
-import { Callbacks } from '../base/Callbacks';
-
-
+import { Callbacks, ICallbacks } from "../base/Callbacks";
 
 /**
  * Callbacks on page loaded.
  */
-export class Load extends Callbacks<Load.CallbackType> {
+export class Load extends Callbacks<ILoad.CallbackType> {
 
     /**
      * If the page is loaded.
      */
     protected _loaded: boolean;
+
     /**
      * If the page is loaded.
      */
-    get loaded() {
+    get loaded () {
         return this._loaded;
     }
 
-
-
-    _constructor() {
-
+    _constructor () {
         super._constructor();
-
         this._loaded = false;
-
     }
-     
-    protected _setEvents() {
+
+    protected _setEvents () {
 
         // add callbacks
         this.add({
             do: this._onloaded.bind(this),
-            protected: true
+            protected: true,
         });
 
         // launch callbacks on loaded
@@ -41,15 +35,13 @@ export class Load extends Callbacks<Load.CallbackType> {
 
     }
 
-
-
     /**
      * When the page is loaded.
      */
-    protected _onloaded() {
+    protected _onloaded () {
 
         const app = this._app;
-        const prefix = app.prefix;
+        const { prefix } = app;
         this._loaded = true;
 
         app.html.classList.remove(`${prefix}loading`);
@@ -59,15 +51,11 @@ export class Load extends Callbacks<Load.CallbackType> {
 
 }
 
-
-
-
-
-export namespace Load {
+export namespace ILoad {
 
     export type CallbackType = {
         target?: "";
         do: () => void;
-    } & Callbacks.CallbackBaseSettings;
+    } & ICallbacks.CallbackBaseSettings;
 
 }
