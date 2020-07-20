@@ -1,12 +1,17 @@
-import mergeWith from 'lodash.mergewith';
-import isarray from 'isarray';
+import mergeWith from "lodash.mergewith";
+import isarray from "isarray";
 
-function mergeWithoutArrays(obj: object, source: object): any {
+/**
+ * Deep merge of two object except for arrays
+ */
+export default function mergeWithoutArrays (
+    obj: Record<string, any>,
+    source: Record<string, any>,
+): any {
     return mergeWith(obj, source, (objValue, srcValue) => {
         if (isarray(objValue)) {
-            return srcValue;
+            return srcValue as Record<string, any>;
         }
+        return {};
     });
 }
-
-export default mergeWithoutArrays;
