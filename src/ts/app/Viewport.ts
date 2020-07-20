@@ -1,44 +1,137 @@
-import isMobileJs  from 'ismobilejs';
-import { Callbacks } from '../base/Callbacks';
+import isMobileJs from "ismobilejs";
+import { Callbacks, ICallbacks } from "../base/Callbacks";
+
+export namespace IViewport {
+
+    /**
+     * Available callbacks
+     */
+    export type CallbackType = {
+        /**
+         * Only width changes
+         */
+        target: "w";
+    } & CallbackFunc | {
+        /**
+         * Only height changes
+         */
+        target: "h";
+    } & CallbackFunc | {
+        /**
+         * Both width and height change
+         */
+        target: "wh";
+    } & CallbackFunc | {
+        /**
+         * Both width and height change
+         */
+        target: "hw";
+    } & CallbackFunc | {
+        /**
+         * When width changes. Don't care about height
+         */
+        target: "w_";
+    } & CallbackFunc | {
+        /**
+         * When height changes. Don't care width
+         */
+        target: "h_";
+    } & CallbackFunc | {
+        /**
+         * Any change
+         */
+        target?: undefined;
+    } & CallbackFunc;
+
+    /**
+     * Callback data with a function
+     */
+    type CallbackFunc = {
+        do: (data: CallbackArg) => void;
+    } & ICallbacks.CallbackBaseSettings;
+
+    /**
+     * Callbacks Argument
+     */
+    export interface CallbackArg {
+        dpr: number;
+        dprMobile: number;
+        desktop: boolean;
+        tablet: boolean;
+        mobile: boolean;
+        mobiledevice: boolean;
+        landscape: boolean;
+        portrait: boolean;
+    }
+
+    /**
+     * Viewport size: width & height
+     */
+    export type Size = number[];
+    /**
+     * Viewport size types
+     */
+    export enum SizeTypes {
+        // eslint-disable-next-line no-unused-vars
+        Desktop = "desktop",
+        // eslint-disable-next-line no-unused-vars
+        Tablet = "tablet",
+        // eslint-disable-next-line no-unused-vars
+        Mobile = "mobile"
+    }
+    /**
+     * Orientation types
+     */
+    export enum OrientationTypes {
+        // eslint-disable-next-line no-unused-vars
+        Landscape = "landscape",
+        // eslint-disable-next-line no-unused-vars
+        Portrait = "portrait"
+    }
+
+}
 
 /**
- * Callbacks on window resize. 
+ * Callbacks on window resize.
  * Here the names of the OS, Browser, and Device are also available. <br>
  */
-export class Viewport extends Callbacks<Viewport.CallbackType> {
+export class Viewport extends Callbacks<IViewport.CallbackType> {
 
     /**
      * Current Viewport size
      */
-    protected _size: Viewport.Size;
+    protected _size: IViewport.Size;
+
     /**
      * Get current Viewport size
      */
-    get size() {
+    get size () {
         return this._size;
     }
 
     /**
      * Previous Viewport size
      */
-    protected _prevSize: Viewport.Size;
+    protected _prevSize: IViewport.Size;
+
     /**
      * Get previous Viewport size
      */
-    get prevSize() {
+    get prevSize () {
         return this._prevSize;
     }
 
     /**
      * If width greater than height.
      */
-    get isLandscape() {
+    get isLandscape () {
         return this.size[0] > this.size[1];
     }
+
     /**
      * If width less than height.
      */
-    get isPortrait() {
+    get isPortrait () {
         return this.size[0] < this.size[1];
     }
 
@@ -46,30 +139,35 @@ export class Viewport extends Callbacks<Viewport.CallbackType> {
      * If desktop size
      */
     protected _isDesktop: boolean;
+
     /**
      * If desktop size
      */
-    get isDesktop() {
+    get isDesktop () {
         return this._isDesktop;
     }
+
     /**
      * If tablet size
      */
     protected _isTablet: boolean;
+
     /**
      * If tablet size
      */
-    get isTablet() {
+    get isTablet () {
         return this._isTablet;
     }
+
     /**
      * If mobile size
      */
     protected _isMobile: boolean;
+
     /**
      * If mobile size
      */
-    get isMobile() {
+    get isMobile () {
         return this._isMobile;
     }
 
@@ -77,65 +175,60 @@ export class Viewport extends Callbacks<Viewport.CallbackType> {
      * If mobile device.
      */
     protected _isMobileDevice: boolean;
+
     /**
      * If mobile device.
      */
-    get isMobileDevice() {
+    get isMobileDevice () {
         return this._isMobileDevice;
     }
 
     /**
      * Device pixel ratio
      */
-    get dpr() {
-        if(typeof window.devicePixelRatio != "undefined"){
+    get dpr () {
+        if (typeof window.devicePixelRatio !== "undefined") {
             return window.devicePixelRatio;
         }
         return 1;
     }
+
     /**
      * Device pixel ratio. For non-mobile devices it is always 1.
      */
-    get dprMobile() {
+    get dprMobile () {
         if (this.isMobileDevice) {
             return this.dpr;
         }
         return 1;
     }
 
-
-    
     // Extra constructor
-    _constructor() {
-
+    _constructor () {
         super._constructor();
-
         this._update();
-
     }
 
     // Set events on resize
-    _setEvents() {
+    _setEvents () {
 
         window.addEventListener("resize", this._onResize.bind(this));
 
     }
 
-
-
     /**
      * Update viewport values
      */
-    protected _update() {
+    protected _update () {
 
         const app = this._app;
-        const html = app.html;
+        const { html } = app;
         const appProp = app.prop;
 
         // set sizes
         this._size = [
             html.clientWidth,
-            html.clientHeight
+            html.clientHeight,
         ];
         this._prevSize = this._size.slice();
 
@@ -148,7 +241,7 @@ export class Viewport extends Callbacks<Viewport.CallbackType> {
         // mobile device
         const ifmobile = isMobileJs();
         this._isMobileDevice = (ifmobile.tablet || ifmobile.phone);
-    
+
         // update other values
         this._updateClasses();
 
@@ -157,79 +250,86 @@ export class Viewport extends Callbacks<Viewport.CallbackType> {
     /**
      * Change classes of the document element.
      */
-    protected _updateClasses() {
+    protected _updateClasses () {
 
         const app = this._app;
-        const html = app.html;
-        const prefix = app.prefix;
+        const { html } = app;
+        const { prefix } = app;
 
         // set viewport type
-        const viewportSizeTypes: Viewport.SizeTypes[] = [
-            Viewport.SizeTypes.Desktop, 
-            Viewport.SizeTypes.Tablet, 
-            Viewport.SizeTypes.Mobile
+        const viewportSizeTypes: IViewport.SizeTypes[] = [
+            IViewport.SizeTypes.Desktop,
+            IViewport.SizeTypes.Tablet,
+            IViewport.SizeTypes.Mobile,
         ];
         if (this.isDesktop) {
-            this._updateBreakpointClasses(Viewport.SizeTypes.Desktop, viewportSizeTypes);
-        }
-        else if (this.isTablet) {
-            this._updateBreakpointClasses(Viewport.SizeTypes.Tablet, viewportSizeTypes);
-        }
-        else {
-            this._updateBreakpointClasses(Viewport.SizeTypes.Mobile, viewportSizeTypes);
+            this._updateBreakpointClasses(
+                IViewport.SizeTypes.Desktop,
+                viewportSizeTypes,
+            );
+        } else if (this.isTablet) {
+            this._updateBreakpointClasses(
+                IViewport.SizeTypes.Tablet,
+                viewportSizeTypes,
+            );
+        } else {
+            this._updateBreakpointClasses(
+                IViewport.SizeTypes.Mobile,
+                viewportSizeTypes,
+            );
         }
 
         // set orientation type
-        const orientationTypes: Viewport.OrientationTypes[] = [
-            Viewport.OrientationTypes.Landscape,
-            Viewport.OrientationTypes.Portrait
+        const orientationTypes: IViewport.OrientationTypes[] = [
+            IViewport.OrientationTypes.Landscape,
+            IViewport.OrientationTypes.Portrait,
         ];
         if (this.isLandscape) {
-            this._updateBreakpointClasses(Viewport.OrientationTypes.Landscape, orientationTypes);
-        }
-        else if (this.isPortrait) {
-            this._updateBreakpointClasses(Viewport.OrientationTypes.Portrait, orientationTypes);
-        }
-        else {
+            this._updateBreakpointClasses(
+                IViewport.OrientationTypes.Landscape,
+                orientationTypes,
+            );
+        } else if (this.isPortrait) {
+            this._updateBreakpointClasses(
+                IViewport.OrientationTypes.Portrait,
+                orientationTypes,
+            );
+        } else {
             this._updateBreakpointClasses("", orientationTypes);
         }
 
         // mobile device
-        const mobileDeviceClass = prefix + 'mobile-device';
+        const mobileDeviceClass = `${prefix}mobile-device`;
         if (this.isMobileDevice) {
             html.classList.add(mobileDeviceClass);
-        }
-        else{
+        } else {
             html.classList.remove(mobileDeviceClass);
         }
 
     }
 
     /**
-     *  Change breakpoint classes of the document element. 
+     *  Change breakpoint classes of the document element.
      */
-    protected _updateBreakpointClasses(activeType: string, types: string[]) {
+    protected _updateBreakpointClasses (activeType: string, types: string[]) {
 
-        const html = this._app.html;
-        const prefix = this._app.prefix;
+        const { html } = this._app;
+        const { prefix } = this._app;
 
-        types.forEach(type => {
+        types.forEach((type) => {
             if (type === activeType) {
                 html.classList.add(prefix + type);
-            }
-            else {
+            } else {
                 html.classList.remove(prefix + type);
             }
         });
 
     }
 
-
-
     /**
      * Launch callbacks on resize.
      */
-    protected _onResize() {
+    protected _onResize () {
 
         // copy previous values
         const sizePrev = this._prevSize.slice();
@@ -267,95 +367,6 @@ export class Viewport extends Callbacks<Viewport.CallbackType> {
         // on any change
         this.tbt(undefined);
 
-    }
-
-
-
-}
-
-
-
-export namespace Viewport {
-
-    /**
-     * Available callbacks
-     */
-    export type CallbackType = {
-        /**
-         * Only width changes
-         */
-        target: "w";
-    } & CallbackFunc | {
-        /**
-         * Only height changes
-         */
-        target: "h";
-    } & CallbackFunc | {
-        /**
-         * Both width and height change
-         */
-        target: "wh";
-    } & CallbackFunc | {
-        /**
-         * Both width and height change
-         */
-        target: "hw";
-    } & CallbackFunc | {
-        /**
-         * When width changes. Don't care about height
-         */
-        target: "w_";
-    } & CallbackFunc | {
-        /**
-         * When height changes. Don't care width 
-         */
-        target: "h_";
-    } & CallbackFunc | {
-        /**
-         * Any change
-         */
-        target?: undefined;
-    } & CallbackFunc;
-
-    /**
-     * Callback data with a function
-     */
-    type CallbackFunc = {
-        do: (data: CallbackArg) => void;
-    } & Callbacks.CallbackBaseSettings;
-
-    /**
-     * Callbacks Argument
-     */
-    export interface CallbackArg {
-        dpr: number;
-        dprMobile: number;
-        desktop: boolean;
-        tablet: boolean;
-        mobile: boolean;
-        mobiledevice: boolean;
-        landscape: boolean;
-        portrait: boolean;
-    }
-
-    /**
-     * Viewport size: width & height
-     */
-    export type Size = number[];
-    /**
-     * Viewport size types
-     */
-    export enum SizeTypes {
-        Desktop = 'desktop', 
-        Tablet = 'tablet', 
-        Mobile = 'mobile'
-    }
-    /**
-     * Orientation types
-     */
-    export enum OrientationTypes {
-        Landscape = 'landscape', 
-        Portrait = 'portrait'
     }
 
 }
