@@ -9,30 +9,30 @@ export class Application {
     /**
      * Application properties.
      */
-    protected _prop: Application.Prop;
+    protected _prop: IApplication.Prop;
+
     /**
      * Application properties.
      */
-    get prop() {
+    get prop () {
         return this._prop;
     }
+
     /**
      * Default properties.
      */
-    get defaultProp(): Application.Prop {
+    get defaultProp (): IApplication.Prop {
         return {
-            page: 'home-page',
+            page: "home-page",
             tablet: 1199,
             mobile: 899,
-            prefix: 'v-',
-            prefixData: 'data-vevet-',
-            prefixProp: 'vevet-',
+            prefix: "v-",
+            prefixData: "data-vevet-",
+            prefixProp: "vevet-",
             maxAjaxTimeout: 5000,
-            easing: [.25, .1, .25, 1]
-        }
+            easing: [0.25, 0.1, 0.25, 1],
+        };
     }
-
-
 
     /**
      * @example
@@ -40,7 +40,7 @@ export class Application {
      *     page: ['home']
      * });
      */
-    constructor(data: Application.Prop) {
+    constructor (data: IApplication.Prop) {
 
         this._prop = Object.assign(this.defaultProp, data);
         this._prefix = this.prop.prefix;
@@ -50,16 +50,15 @@ export class Application {
 
     }
 
-
-
     /**
      * Application prefix.
      */
     protected _prefix: string;
+
     /**
      * Get Vevet prefix
      */
-    get prefix() {
+    get prefix () {
         return this._prefix;
     }
 
@@ -67,10 +66,11 @@ export class Application {
      * Document element.
      */
     protected _doc = document;
+
     /**
      * Get document element.
      */
-    get doc() {
+    get doc () {
         return this._doc;
     }
 
@@ -78,10 +78,11 @@ export class Application {
      * HTML element.
      */
     protected _html = document.documentElement;
+
     /**
      * Get HTML element
      */
-    get html() {
+    get html () {
         return this._html;
     }
 
@@ -89,33 +90,37 @@ export class Application {
      * Body element.
      */
     protected _body = document.body;
+
     /**
      * Get body element.
      */
-    get body() {
+    get body () {
         return this._body;
     }
 
     /**
      * Name of the current page.
      */
-    protected _page = '';
+    protected _page = "";
+
     /**
      * Set page name.
      */
-    set page(name: string) {
+    set page (name: string) {
         this._setPageName(name);
     }
+
     /**
      * Get name of the page.
      */
-    get page() {
+    get page () {
         return this._page;
     }
+
     /**
      * Check if the current page has the same name.
      */
-    checkPage(val: string): boolean {
+    checkPage (val: string): boolean {
         return this._page === val;
     }
 
@@ -123,34 +128,36 @@ export class Application {
      * Page Modules.
      */
     protected _vevetPages: [] = [];
+
     /**
      * Get an array of existing pages.
      * A new element is added to the array when {@linkcode Vevet.PageModule#create} is called.
      */
-    get vevetPages() {
+    get vevetPages () {
         return this._vevetPages;
     }
-    
+
     /**
      * Current Page Module.
      */
     protected _vevetPage: false | HTMLElement = false;
+
     /**
      * Get the current page module.
      */
-    get vevetPage() {
+    get vevetPage () {
         return this._vevetPage;
     }
-
 
     /**
      * Load Callbacks
      */
     protected _load: Load;
+
     /**
      * Load Callbacks
      */
-    get load() {
+    get load () {
         return this._load;
     }
 
@@ -158,20 +165,19 @@ export class Application {
      * Viewport Callbacks
      */
     protected _viewport: Viewport;
+
     /**
      * Viewport Callbacks
      */
-    get viewport() {
+    get viewport () {
         return this._viewport;
     }
-
-
 
     /**
      * @description Initialize the class
      * @private
      */
-    protected _init() {
+    protected _init () {
 
         // Define that we're using Vevet
         this._hi();
@@ -213,43 +219,41 @@ export class Application {
 
     }
 
-    protected _setPageName(name: string) {
-    
+    protected _setPageName (name: string) {
+
         // remove old classes
         this._html.classList.remove(`${this._prefix}page_${this._page}`);
-    
+
         // set classes & push to pages
         this._html.classList.add(`${this._prefix}page_${name}`);
-    
+
         // replace pages array
         this._page = name;
 
     }
 
-    
-
     /**
      * Defines that you're using Vevet.
      */
-    protected _hi() {
+    protected _hi () {
 
-        const msg = 'Vevet';
-        
+        const msg = "Vevet";
+
         const style = [
-            'padding: 1rem 1.5rem;',
-            'background: #5F2580;',
-            `font: 1rem/1 Arial;`,
-            'color: #ffffff;',
-        ].join('');
-        
-        console.log('%c%s', style, msg);
+            "padding: 1rem 1.5rem;",
+            "background: #5F2580;",
+            "font: 1rem/1 Arial;",
+            "color: #ffffff;",
+        ].join("");
+
+        // eslint-disable-next-line no-console
+        console.log("%c%s", style, msg);
 
     }
 
-
-
     // /**
-    //  * @description Get browser name and set it as a class to the HTML element. See {@linkcode Vevet.getBrowserName}
+    //  * @description Get browser name and set it as a class to the HTML element.
+    // See {@linkcode Vevet.getBrowserName}
     //  * @readonly
     //  * @type {string}
     //  */
@@ -258,15 +262,14 @@ export class Application {
     //     this._html.classList.remove(`${this._prefix}browser_${this._browser}`);
     //     this._browser = getBrowserName();
     //     this._html.classList.add(`${this._prefix}browser_${this._browser}`);
-    
+
     //     return this._browser;
-    
+
     // }
 
-
-
     // /**
-    //  * @description Get the operating system name and set it as a class to the HTML element. See {@linkcode Vevet.getOSName}
+    //  * @description Get the operating system name and set it as a class
+    // to the HTML element. See {@linkcode Vevet.getOSName}
     //  * @readonly
     //  * @type {string}
     //  */
@@ -275,12 +278,11 @@ export class Application {
     //     this._html.classList.remove(`${this._prefix}os_${this._os}`);
     //     this._os = getOsName();
     //     this._html.classList.add(`${this._prefix}os_${this._os}`);
-    
+
     //     return this._os;
-    
+
     // }
 
-    
 }
 
 declare global {
@@ -289,12 +291,10 @@ declare global {
     }
 }
 
-
-
 /**
  * @namespace
  */
-export namespace Application {
+export namespace IApplication {
 
     /**
      * Properties
