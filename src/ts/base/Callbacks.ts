@@ -139,7 +139,8 @@ export class Callbacks<
             if (!protectedCallback) {
                 this._remove(id);
                 removed = true;
-            } else {
+            }
+            else {
                 // add the callback to the new array
                 newCallbacks.push(callback);
             }
@@ -237,15 +238,18 @@ export class Callbacks<
                     this._triggerFunc.bind(this, func, arg),
                     timeout,
                 );
-            } else {
+            }
+            else {
                 timeoutCallback(
                     this._triggerFunc.bind(this, func, false),
                     timeout,
                 );
             }
-        } else if (arg) {
+        }
+        else if (arg) {
             this._triggerFunc(func, arg);
-        } else {
+        }
+        else {
             this._triggerFunc(func, false);
         }
 
@@ -263,7 +267,8 @@ export class Callbacks<
 
         if (arg) {
             func(arg);
-        } else {
+        }
+        else {
             func();
         }
 
