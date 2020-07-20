@@ -1,9 +1,9 @@
-import { Application } from "./app/Application"
-import { Load } from "./app/Load"
-import { Viewport } from "./app/Viewport"
+import { Application } from "./app/Application";
+import { Load } from "./app/Load";
+import { Viewport } from "./app/Viewport";
 
-import { Callbacks } from "./base/Callbacks"
-import { Module } from "./base/Module"
+import { Callbacks } from "./base/Callbacks";
+import { Module } from "./base/Module";
 
 export {
 
@@ -12,6 +12,6 @@ export {
     Viewport,
 
     Callbacks,
-    Module
+    Module,
 
-}
+};
