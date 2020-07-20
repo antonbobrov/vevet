@@ -5,5 +5,5 @@ import timeoutCallback from "./timeoutCallback";
 export const utils = {
     generateID,
     mergeWithoutArrays,
-    timeoutCallback
+    timeoutCallback,
 };
