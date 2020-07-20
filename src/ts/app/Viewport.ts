@@ -267,12 +267,14 @@ export class Viewport extends Callbacks<IViewport.CallbackType> {
                 IViewport.SizeTypes.Desktop,
                 viewportSizeTypes,
             );
-        } else if (this.isTablet) {
+        }
+        else if (this.isTablet) {
             this._updateBreakpointClasses(
                 IViewport.SizeTypes.Tablet,
                 viewportSizeTypes,
             );
-        } else {
+        }
+        else {
             this._updateBreakpointClasses(
                 IViewport.SizeTypes.Mobile,
                 viewportSizeTypes,
@@ -289,12 +291,14 @@ export class Viewport extends Callbacks<IViewport.CallbackType> {
                 IViewport.OrientationTypes.Landscape,
                 orientationTypes,
             );
-        } else if (this.isPortrait) {
+        }
+        else if (this.isPortrait) {
             this._updateBreakpointClasses(
                 IViewport.OrientationTypes.Portrait,
                 orientationTypes,
             );
-        } else {
+        }
+        else {
             this._updateBreakpointClasses("", orientationTypes);
         }
 
@@ -302,7 +306,8 @@ export class Viewport extends Callbacks<IViewport.CallbackType> {
         const mobileDeviceClass = `${prefix}mobile-device`;
         if (this.isMobileDevice) {
             html.classList.add(mobileDeviceClass);
-        } else {
+        }
+        else {
             html.classList.remove(mobileDeviceClass);
         }
 
@@ -319,7 +324,8 @@ export class Viewport extends Callbacks<IViewport.CallbackType> {
         types.forEach((type) => {
             if (type === activeType) {
                 html.classList.add(prefix + type);
-            } else {
+            }
+            else {
                 html.classList.remove(prefix + type);
             }
         });
