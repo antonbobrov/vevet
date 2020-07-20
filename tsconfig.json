@@ -10,7 +10,8 @@
         "declaration": false,
         "esModuleInterop": true,
         "moduleResolution": "node",
-        "sourceMap": true
+        "sourceMap": true,
+        "strictBindCallApply": true
     },
     "exclude": [
         "node_modules"
