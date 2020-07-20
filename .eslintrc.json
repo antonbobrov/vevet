@@ -1,100 +1,123 @@
 {
-
-  "env": {
-    "browser": true,
-    "es6": true,
-    "es2017": true,
-    "es2020": true,
-    "node": true
-  },
-  
-  "parser": "babel-eslint",
-  
-  "parserOptions": {
-    "ecmaVersion": 2020,
-    "sourceType": "module",
-    "allowImportExportEverywhere": true
-  },
-
-  "extends": [
-    "eslint:recommended"
-  ],
-
-  "plugins": [
-    "filenames",
-    "jsdoc"
-  ],
-
-  "globals": {
-  },
-
-  "rules": {
-
-    "jsdoc/check-alignment": 1,
-    "jsdoc/check-examples": 1,
-    "jsdoc/check-indentation": 0,
-    "jsdoc/check-param-names": 1,
-    "jsdoc/check-syntax": 1,
-    "jsdoc/check-tag-names": 1,
-    "jsdoc/check-types": 1,
-    "jsdoc/implements-on-classes": 1,
-    "jsdoc/match-description": 1,
-    "jsdoc/newline-after-description": 1,
-    "jsdoc/no-types": 0,
-    "jsdoc/no-undefined-types": 0,
-    "jsdoc/require-description": 0,
-    "jsdoc/require-description-complete-sentence": 0,
-    "jsdoc/require-example": 0,
-    "jsdoc/require-hyphen-before-param-description": 1,
-    "jsdoc/require-jsdoc": 0,
-    "jsdoc/require-param": 0,
-    "jsdoc/require-param-description": 0,
-    "jsdoc/require-param-name": 1,
-    "jsdoc/require-param-type": 1,
-    "jsdoc/require-returns": 0,
-    "jsdoc/require-returns-check": 1,
-    "jsdoc/require-returns-description": 0,
-    "jsdoc/require-returns-type": 1,
-    "jsdoc/valid-types": 1
-
-  },
-
-
-
-  "overrides": [
-
-    {
-    
-      "files": ["*.ts", "*.tsx"],
-
-      "parser": "@typescript-eslint/parser",
-
-      "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/recommended-requiring-type-checking"
-      ],
-
-      "parserOptions": {
-        "project": "tsconfig.json",
-        "tsconfigRootDir": "."
-      },
-
-      "plugins": ["@typescript-eslint"],
-      
-      "rules": {
-        "@typescript-eslint/no-use-before-define": 0,
-        "@typescript-eslint/prefer-regexp-exec": 0,
-        "@typescript-eslint/explicit-function-return-type": 0,
-        "@typescript-eslint/no-namespace": 0,
-        "@typescript-eslint/no-explicit-any": 0,
-        "@typescript-eslint/ban-ts-ignore": 0,
-        "@typescript-eslint/no-var-requires": 0
-      }
-
+    "env": {
+        "browser": true,
+        "es2020": true
+    },
+    "extends": [
+        "airbnb"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 11,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "@typescript-eslint",
+        "jsdoc"
+    ],
+    "rules": {
+        "indent": [
+            "error",
+            4
+        ],
+        "linebreak-style": [
+            "error",
+            "windows"
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "padded-blocks": "off",
+        "no-multiple-empty-lines": [
+            "error",
+            {
+                "max": 3
+            }
+        ],
+        "max-len": [
+            "error",
+            {
+                "code": 80,
+                "comments": 100
+            }
+        ],
+        "object-property-newline": [
+            "error",
+            {
+                "allowAllPropertiesOnSameLine": false
+            }
+        ],
+        "space-before-function-paren": [
+            "error",
+            {
+                "anonymous": "always",
+                "named": "always",
+                "asyncArrow": "always"
+            }
+        ],
+        "brace-style": [
+            "error",
+            "stroustrup"
+        ],
+        "import/prefer-default-export": "off",
+        "import/extensions": [
+            "error",
+            "never"
+        ],
+        "no-underscore-dangle": "off",
+        "no-unused-vars": "off",
+        "no-plusplus": "off",
+        "class-methods-use-this": "off",
+        "no-continue": "off",
+        "@typescript-eslint/no-unused-vars": [
+            "error"
+        ],
+        "@typescript-eslint/ban-types": [
+            "error",
+            {
+                "types": {
+                    "Function": false
+                }
+            }
+        ],
+        "jsdoc/check-alignment": 1,
+        "jsdoc/check-examples": 0,
+        "jsdoc/check-indentation": 0,
+        "jsdoc/check-param-names": 1,
+        "jsdoc/check-syntax": 1,
+        "jsdoc/check-tag-names": 1,
+        "jsdoc/check-types": 1,
+        "jsdoc/implements-on-classes": 1,
+        "jsdoc/match-description": 0,
+        "jsdoc/newline-after-description": 0,
+        "jsdoc/no-types": 0,
+        "jsdoc/no-undefined-types": 0,
+        "jsdoc/require-description": 0,
+        "jsdoc/require-description-complete-sentence": 0,
+        "jsdoc/require-example": 0,
+        "jsdoc/require-hyphen-before-param-description": 1,
+        "jsdoc/require-jsdoc": 0,
+        "jsdoc/require-param": 0,
+        "jsdoc/require-param-description": 0,
+        "jsdoc/require-param-name": 1,
+        "jsdoc/require-param-type": 0,
+        "jsdoc/require-returns": 0,
+        "jsdoc/require-returns-check": 1,
+        "jsdoc/require-returns-description": 0,
+        "jsdoc/require-returns-type": 1,
+        "jsdoc/valid-types": 1
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".jsx",
+                    ".ts",
+                    ".tsx"
+                ]
+            }
+        }
     }
-    
-  ]
-
 }
