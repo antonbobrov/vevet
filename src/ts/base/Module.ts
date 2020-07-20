@@ -1,7 +1,7 @@
-import { Callbacks } from '../base/Callbacks';
-import { ResponsiveProp } from './ResponsiveProp';
-import { Application } from '../app/Application';
-import mergeWithoutArrays from '../utils/mergeWithoutArrays';
+import { Callbacks, ICallbacks } from "./Callbacks";
+import { ResponsiveProp, IResponsiveProp } from "./ResponsiveProp";
+import { Application } from "../app/Application";
+import mergeWithoutArrays from "../utils/mergeWithoutArrays";
 
 
 
@@ -12,44 +12,46 @@ export class Module<
     /**
      * Module Callbacks
      */
-    CallbackType extends Module.CallbackType,
+    CallbackType extends IModule.CallbackType,
     /**
      * Static Properties (won't change)
      */
-    StatProp extends Module.StatProp,
+    StatProp extends IModule.StatProp,
     /**
      * Changeable Properties
      */
-    ResProp extends Module.ResProp,
+    ResProp extends IModule.ResProp,
     /**
-     * Static & Changeable Properties 
+     * Static & Changeable Properties
      */
     SRProp extends StatProp & ResProp,
     /**
-     * Static & Changeable Properties 
+     * Static & Changeable Properties
      */
-    Prop extends SRProp & ResponsiveProp.Prop<ResProp> & Module.CallbacksProp
+    Prop extends SRProp & IResponsiveProp.Prop<ResProp> & IModule.CallbacksProp
 > {
 
 
-    
+
     /**
      * Module Properties
      */
     protected _prop: Prop;
+
     /**
      * Module Properties
      */
-    get prop() {
+    get prop () {
         return this._prop;
     }
+
     /**
      * Default properties.
      */
-    get defaultProp(): Prop {
+    get defaultProp (): Prop {
         return {
             callbacks: [],
-            responsive: []
+            responsive: [],
         } as Prop;
     }
 
@@ -62,35 +64,39 @@ export class Module<
         SRProp,
         Prop
     >;
-    get rp() {
+
+    get rp () {
         return this._resProp;
     }
 
-    
+
 
     /**
      * Vevet Application
      */
     protected _app: Application;
+
     /**
      * Module prefix
      */
     protected _prefix: string;
+
     /**
      * Module prefix
      */
-    get prefix(): string {
-        return '';
+    get prefix (): string {
+        return "";
     }
 
     /**
      * Module name
      */
     protected _name: string;
+
     /**
      * Get module name
      */
-    get name() {
+    get name () {
         return this._name;
     }
 
@@ -98,10 +104,11 @@ export class Module<
      * Module Callbacks
      */
     protected _callbacks: Callbacks<CallbackType>;
+
     /**
      * Module Callbacks
      */
-    get callbacks() {
+    get callbacks () {
         return this._callbacks;
     }
 
@@ -110,13 +117,13 @@ export class Module<
     /**
      * @param data
      * @param init - Defines if you need to call {@linkcode Module#init} at the constructor's end.
-     * 
+     *
      * @example
      * const mod = new Module();
      */
-    constructor(
-        data: Prop = {} as Prop, 
-        init = true
+    constructor (
+        data: Prop = {} as Prop,
+        init = true,
     ) {
 
         // set vars
@@ -143,10 +150,10 @@ export class Module<
     /**
      * Create Callbacks
      */
-    protected _createCallbacks() {
+    protected _createCallbacks () {
 
         this._callbacks = new Callbacks<CallbackType>(
-            this._prop.callbacks as CallbackType[]
+            this._prop.callbacks as CallbackType[],
         );
 
     }
@@ -154,7 +161,7 @@ export class Module<
     /**
      * Create Module Properties
      */
-    protected _createProp(
+    protected _createProp (
         data: Prop = {} as Prop,
     ) {
 
@@ -166,28 +173,28 @@ export class Module<
     /**
      * Create Responsive Module Properties
      */
-    protected _createResProp(
+    protected _createResProp (
         data: Prop = {} as Prop,
     ) {
 
         // create responsive properties
         this._resProp = new ResponsiveProp<StatProp, ResProp, SRProp, Prop>(
             data,
-            this._changeProp.bind(this), 
             this._changeProp.bind(this),
-            this._name
+            this._changeProp.bind(this),
+            this._name,
         );
 
-        // bind properties // because if they have responsive settings, 
+        // bind properties // because if they have responsive settings,
         // they may change on initialization
         this._prop = this._resProp.prop;
 
         // destroy responsive properties when the module is destroyed
         this.callbacks.add({
-            target: 'destroy',
+            target: "destroy",
             do: () => {
                 this._resProp.destroy();
-            }
+            },
         } as CallbackType);
 
     }
@@ -196,8 +203,8 @@ export class Module<
 
     /**
      * Initializes the class.
-     */		    
-    protected _init() {
+     */
+    protected _init () {
         this._constructor();
         this._setEvents();
     }
@@ -205,13 +212,14 @@ export class Module<
     /**
      * Extra constructor
      */
-    protected _constructor() {
+    protected _constructor () {
         // code
     }
+
     /**
      * Set events
      */
-    protected _setEvents() {
+    protected _setEvents () {
         // code
     }
 
@@ -220,7 +228,7 @@ export class Module<
     /**
      * Change module properties.
      * @example
-     * 
+     *
      * // changing properties
      * // let's imagine that the module has the following properties:
      * prop = {
@@ -233,7 +241,7 @@ export class Module<
      *     cute: false
      * });
      */
-    public changeProp(prop: ResProp = {} as ResProp) {
+    public changeProp (prop: ResProp = {} as ResProp) {
         this._resProp.changeProp(prop);
         this._callbacks.tbt("changeProp");
     }
@@ -241,7 +249,7 @@ export class Module<
     /**
      * The method that is called on properties change.
      */
-    protected _changeProp() {
+    protected _changeProp () {
         // code
     }
 
@@ -251,9 +259,7 @@ export class Module<
 
 
 
-
-
-export namespace Module {
+export namespace IModule {
 
     export interface StatProp {
         parent?: Module<
@@ -261,7 +267,8 @@ export namespace Module {
             StatProp,
             ResProp,
             StatProp & ResProp,
-            StatProp & ResProp & ResponsiveProp.Prop<ResProp> & Module.CallbacksProp
+            StatProp & ResProp
+                & IResponsiveProp.Prop<ResProp> & IModule.CallbacksProp
         >;
     }
     export interface ResProp { }
@@ -273,9 +280,9 @@ export namespace Module {
     export type CallbackType = {
         target: "destroy";
         do: () => void;
-    } & Callbacks.CallbackBaseSettings | {
+    } & ICallbacks.CallbackBaseSettings | {
         target: "changeProp";
         do: () => void;
-    } & Callbacks.CallbackBaseSettings;
+    } & ICallbacks.CallbackBaseSettings;
 
 }
