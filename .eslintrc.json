@@ -38,7 +38,7 @@
         "max-len": [
             "error",
             {
-                "code": 80,
+                "code": 120,
                 "comments": 100
             }
         ],
@@ -65,11 +65,19 @@
             "error",
             "never"
         ],
+        "import/no-mutable-exports": "off",
+        "import/no-duplicates": "off",
+        "global-require": "off",
         "no-underscore-dangle": "off",
         "no-unused-vars": "off",
         "no-plusplus": "off",
         "class-methods-use-this": "off",
         "no-continue": "off",
+        "no-use-before-define": "off",
+        "no-restricted-globals": "off",
+        "no-bitwise": "off",
+        "no-param-reassign": "off",
+        "func-names": "off",
         "@typescript-eslint/no-unused-vars": [
             "error"
         ],
