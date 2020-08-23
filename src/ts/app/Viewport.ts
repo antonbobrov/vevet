@@ -1,6 +1,11 @@
 import isMobileJs from "ismobilejs";
 import { Callbacks, ICallbacks } from "../base/Callbacks";
 
+
+
+/**
+ * @namespace
+ */
 export namespace IViewport {
 
     /**
@@ -91,17 +96,20 @@ export namespace IViewport {
 
 }
 
+
+
 /**
  * Callbacks on window resize.
  * Here the names of the OS, Browser, and Device are also available. <br>
  */
-export class Viewport extends Callbacks<IViewport.CallbackType> {
+export class Viewport extends Callbacks<
+    IViewport.CallbackType
+> {
 
     /**
      * Current Viewport size
      */
     protected _size: IViewport.Size;
-
     /**
      * Get current Viewport size
      */
@@ -113,7 +121,6 @@ export class Viewport extends Callbacks<IViewport.CallbackType> {
      * Previous Viewport size
      */
     protected _prevSize: IViewport.Size;
-
     /**
      * Get previous Viewport size
      */
@@ -127,7 +134,6 @@ export class Viewport extends Callbacks<IViewport.CallbackType> {
     get isLandscape () {
         return this.size[0] > this.size[1];
     }
-
     /**
      * If width less than height.
      */
@@ -139,7 +145,6 @@ export class Viewport extends Callbacks<IViewport.CallbackType> {
      * If desktop size
      */
     protected _isDesktop: boolean;
-
     /**
      * If desktop size
      */
@@ -151,7 +156,6 @@ export class Viewport extends Callbacks<IViewport.CallbackType> {
      * If tablet size
      */
     protected _isTablet: boolean;
-
     /**
      * If tablet size
      */
@@ -163,7 +167,6 @@ export class Viewport extends Callbacks<IViewport.CallbackType> {
      * If mobile size
      */
     protected _isMobile: boolean;
-
     /**
      * If mobile size
      */
@@ -175,7 +178,6 @@ export class Viewport extends Callbacks<IViewport.CallbackType> {
      * If mobile device.
      */
     protected _isMobileDevice: boolean;
-
     /**
      * If mobile device.
      */
@@ -192,7 +194,6 @@ export class Viewport extends Callbacks<IViewport.CallbackType> {
         }
         return 1;
     }
-
     /**
      * Device pixel ratio. For non-mobile devices it is always 1.
      */
@@ -203,18 +204,22 @@ export class Viewport extends Callbacks<IViewport.CallbackType> {
         return 1;
     }
 
+
+
     // Extra constructor
-    _constructor () {
+    protected _constructor () {
         super._constructor();
         this._update();
     }
 
     // Set events on resize
-    _setEvents () {
+    protected _setEvents () {
 
         window.addEventListener("resize", this._onResize.bind(this));
 
     }
+
+
 
     /**
      * Update viewport values
@@ -246,6 +251,8 @@ export class Viewport extends Callbacks<IViewport.CallbackType> {
         this._updateClasses();
 
     }
+
+
 
     /**
      * Change classes of the document element.
@@ -316,7 +323,10 @@ export class Viewport extends Callbacks<IViewport.CallbackType> {
     /**
      *  Change breakpoint classes of the document element.
      */
-    protected _updateBreakpointClasses (activeType: string, types: string[]) {
+    protected _updateBreakpointClasses (
+        activeType: string,
+        types: string[],
+    ) {
 
         const { html } = this._app;
         const { prefix } = this._app;
@@ -331,6 +341,8 @@ export class Viewport extends Callbacks<IViewport.CallbackType> {
         });
 
     }
+
+
 
     /**
      * Launch callbacks on resize.
