@@ -1,5 +1,5 @@
 import { Application } from "../app/Application";
-import mergeWithoutArrays from "../utils/mergeWithoutArrays";
+import mergeWithoutArrays from "../utils/common/mergeWithoutArrays";
 
 /**
  * A class for creating properties that may change on window resize. <br><br>
@@ -28,15 +28,7 @@ export class ResponsiveProp<
     /**
      * Changeable Properties
      */
-    ResProp extends Record<string, any>,
-    /**
-     * Static & Changeable Properties
-     */
-    SRProp extends StatProp & ResProp,
-    /**
-     * All Properties & Responsive Settings
-     */
-    Prop extends SRProp & IResponsiveProp.Prop<ResProp>,
+    ResProp extends Record<string, any>
 > {
 
     /**
@@ -64,19 +56,19 @@ export class ResponsiveProp<
      * The properties that were set while initialization.
      * These properties do not change throughout time.
      */
-    protected _initProp: Prop;
+    protected _initProp: (StatProp & ResProp & IResponsiveProp.Prop<ResProp>);
 
     /**
      * @description Reference properties.
      * These properties may change only through {@linkcode ResponsiveProp#changeProp}.
      */
-    protected _refProp: Prop;
+    protected _refProp: (StatProp & ResProp & IResponsiveProp.Prop<ResProp>);
 
     /**
      * Current properties.
      * These properties may change both on resize and {@linkcode ResponsiveProp#changeProp}.
      */
-    protected _prop: Prop;
+    protected _prop: (StatProp & ResProp & IResponsiveProp.Prop<ResProp>);
 
     /**
      * Get current properties
@@ -108,7 +100,11 @@ export class ResponsiveProp<
      * const prop = new ResponsiveProp(data);
      */
     constructor (
-        data: Prop = {} as Prop,
+        data: (
+            StatProp & ResProp & IResponsiveProp.Prop<ResProp>
+        ) = {} as (
+            StatProp & ResProp & IResponsiveProp.Prop<ResProp>
+        ),
         onChange: () => void = () => {},
         onResponsive: () => void = () => {},
         name = "",
@@ -167,7 +163,7 @@ export class ResponsiveProp<
             // get sizes
             const { viewport } = this._app;
             const width = viewport.size[0];
-            let newProp: SRProp = {} as SRProp;
+            let newProp: (StatProp & ResProp) = {} as (StatProp & ResProp);
 
             // go through all breakpoints
             // and check if a proper breakpoint exists
@@ -278,6 +274,9 @@ export class ResponsiveProp<
 
 
 
+/**
+ * @namespace
+ */
 export namespace IResponsiveProp {
 
     export interface Prop<S> {
