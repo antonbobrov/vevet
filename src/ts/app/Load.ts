@@ -1,15 +1,32 @@
 import { Callbacks, ICallbacks } from "../base/Callbacks";
 
+
+
+/**
+ * @namespace
+ */
+export namespace ILoad {
+
+    export type CallbackType = {
+        target?: undefined;
+        do: () => void;
+    } & ICallbacks.CallbackBaseSettings;
+
+}
+
+
+
 /**
  * Callbacks on page loaded.
  */
-export class Load extends Callbacks<ILoad.CallbackType> {
+export class Load extends Callbacks<
+    ILoad.CallbackType
+> {
 
     /**
      * If the page is loaded.
      */
     protected _loaded: boolean;
-
     /**
      * If the page is loaded.
      */
@@ -17,7 +34,9 @@ export class Load extends Callbacks<ILoad.CallbackType> {
         return this._loaded;
     }
 
-    _constructor () {
+
+
+    protected _constructor () {
         super._constructor();
         this._loaded = false;
     }
@@ -35,6 +54,8 @@ export class Load extends Callbacks<ILoad.CallbackType> {
 
     }
 
+
+
     /**
      * When the page is loaded.
      */
@@ -49,13 +70,25 @@ export class Load extends Callbacks<ILoad.CallbackType> {
 
     }
 
-}
 
-export namespace ILoad {
 
-    export type CallbackType = {
-        target?: "";
-        do: () => void;
-    } & ICallbacks.CallbackBaseSettings;
+    /**
+     * Add a callback on page load.
+     * If the page is already loaded, the callback will be immediately triggered.
+     */
+    public setOnLoad (
+        callback: Function,
+    ) {
+
+        if (this.loaded) {
+            callback();
+        }
+        else {
+            this.add({
+                do: callback.bind(this),
+            });
+        }
+
+    }
 
 }
