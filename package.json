@@ -9,7 +9,9 @@
   "types": "dist/types/types.d.ts",
   "sideEffects": false,
   "sass": "dist/scss/index.scss",
-  "scripts": {},
+  "scripts": {
+    "docs": "typedoc --out docs src"
+  },
   "browserslist": [
     "> 1%",
     "last 3 version"
@@ -27,6 +29,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^3.6.1",
     "@typescript-eslint/parser": "^3.6.1",
+    "better-docs": "^2.3.0",
     "eslint": "^7.5.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.22.0",
