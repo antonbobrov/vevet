@@ -10,14 +10,12 @@ export class Application {
      * Application properties.
      */
     protected _prop: IApplication.Prop;
-
     /**
      * Application properties.
      */
     get prop () {
         return this._prop;
     }
-
     /**
      * Default properties.
      */
@@ -35,9 +33,20 @@ export class Application {
     }
 
     /**
+     * Application prefix.
+     */
+    protected _prefix: string;
+    /**
+     * Get Vevet prefix
+     */
+    get prefix () {
+        return this._prefix;
+    }
+
+    /**
      * @example
      * const app = Application({
-     *     page: ['home']
+     *     page: 'home-page'
      * });
      */
     constructor (data: IApplication.Prop) {
@@ -50,23 +59,12 @@ export class Application {
 
     }
 
-    /**
-     * Application prefix.
-     */
-    protected _prefix: string;
 
-    /**
-     * Get Vevet prefix
-     */
-    get prefix () {
-        return this._prefix;
-    }
 
     /**
      * Document element.
      */
     protected _doc = document;
-
     /**
      * Get document element.
      */
@@ -78,7 +76,6 @@ export class Application {
      * HTML element.
      */
     protected _html = document.documentElement;
-
     /**
      * Get HTML element
      */
@@ -90,7 +87,6 @@ export class Application {
      * Body element.
      */
     protected _body = document.body;
-
     /**
      * Get body element.
      */
@@ -98,40 +94,40 @@ export class Application {
         return this._body;
     }
 
+
+
     /**
      * Name of the current page.
      */
     protected _page = "";
-
     /**
      * Set page name.
      */
     set page (name: string) {
         this._setPageName(name);
     }
-
     /**
      * Get name of the page.
      */
     get page () {
         return this._page;
     }
-
     /**
      * Check if the current page has the same name.
      */
-    checkPage (val: string): boolean {
+    isPageName (val: string): boolean {
         return this._page === val;
     }
 
-    /**
-     * Page Modules.
-     */
-    protected _vevetPages: [] = [];
+
 
     /**
+     * Pages (Modules).
+     */
+    protected _vevetPages: [] = [];
+    /**
      * Get an array of existing pages.
-     * A new element is added to the array when {@linkcode Vevet.PageModule#create} is called.
+     * A new element is added to the array when {@linkcode Vevet.Page#create} is called.
      */
     get vevetPages () {
         return this._vevetPages;
@@ -141,7 +137,6 @@ export class Application {
      * Current Page Module.
      */
     protected _vevetPage: false | HTMLElement = false;
-
     /**
      * Get the current page module.
      */
@@ -149,13 +144,14 @@ export class Application {
         return this._vevetPage;
     }
 
-    /**
-     * Load Callbacks
-     */
-    protected _load: Load;
+
 
     /**
-     * Load Callbacks
+     * Page Load Callbacks
+     */
+    protected _load: Load;
+    /**
+     * Get Page Load Callbacks
      */
     get load () {
         return this._load;
@@ -165,13 +161,14 @@ export class Application {
      * Viewport Callbacks
      */
     protected _viewport: Viewport;
-
     /**
-     * Viewport Callbacks
+     * Get Viewport Callbacks
      */
     get viewport () {
         return this._viewport;
     }
+
+
 
     /**
      * @description Initialize the class
@@ -179,8 +176,8 @@ export class Application {
      */
     protected _init () {
 
-        // Define that we're using Vevet
-        this._hi();
+        // Define that you're using Vevet
+        this._sayHi();
 
         // set current page name
         this.page = this.prop.page;
@@ -219,23 +216,12 @@ export class Application {
 
     }
 
-    protected _setPageName (name: string) {
 
-        // remove old classes
-        this._html.classList.remove(`${this._prefix}page_${this._page}`);
-
-        // set classes & push to pages
-        this._html.classList.add(`${this._prefix}page_${name}`);
-
-        // replace pages array
-        this._page = name;
-
-    }
 
     /**
      * Defines that you're using Vevet.
      */
-    protected _hi () {
+    protected _sayHi () {
 
         const msg = "Vevet";
 
@@ -250,6 +236,26 @@ export class Application {
         console.log("%c%s", style, msg);
 
     }
+
+
+
+    /**
+     * Set name of the page
+     */
+    protected _setPageName (name: string) {
+
+        // remove old classes
+        this._html.classList.remove(`${this._prefix}page_${this._page}`);
+
+        // set classes & push to pages
+        this._html.classList.add(`${this._prefix}page_${name}`);
+
+        // replace pages array
+        this._page = name;
+
+    }
+
+
 
     // /**
     //  * @description Get browser name and set it as a class to the HTML element.
@@ -285,11 +291,15 @@ export class Application {
 
 }
 
+
+
 declare global {
     interface Window {
         vevetApplication: Application;
     }
 }
+
+
 
 /**
  * @namespace
