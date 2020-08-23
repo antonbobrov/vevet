@@ -1,5 +1,5 @@
-import generateID from "../utils/generateID";
-import timeoutCallback from "../utils/timeoutCallback";
+import generateID from "../utils/common/generateID";
+import timeoutCallback from "../utils/common/timeoutCallback";
 import { Application } from "../app/Application";
 
 /**
@@ -9,8 +9,9 @@ export class Callbacks<
     /**
      * Module Callbacks
      */
-    CallbackType extends ICallbacks.CallbackSettings
-    > {
+    CallbackType extends ICallbacks.CallbackType
+> {
+
     /**
      * Vevet Application
      */
@@ -20,7 +21,6 @@ export class Callbacks<
      * All callbacks
      */
     protected _callbacks: ICallbacks.CallbackData<CallbackType>[];
-
     /**
      * Get all callbacks
      */
@@ -28,30 +28,24 @@ export class Callbacks<
         return this._callbacks;
     }
 
+
+
     /**
      * @example
      * const callback = new Callbacks();
      */
-    constructor (
-        callbacks: CallbackType[] = [],
-    ) {
+    constructor () {
 
         this._app = window.vevetApplication;
-
         this._callbacks = [];
 
-        // add callbacks from properties
-        for (let i = 0, l = callbacks.length; i < l; i++) {
-            this.add(callbacks[i]);
-        }
-
-        // initialize
+        // initialize callbacks
         this._init();
 
     }
 
     /**
-     * Initializes the class.
+     * Initialize the class.
      */
     protected _init () {
         this._constructor();
@@ -72,10 +66,12 @@ export class Callbacks<
         // code
     }
 
+
+
     /**
      * Adds a callback
      * @param data - Callback's data
-     * @param bool
+     * @param bool - If the callback is enabled by default
      *
      * @example
      * const id = callback.add({
@@ -85,7 +81,10 @@ export class Callbacks<
      *     }
      * });
      */
-    public add (data: CallbackType, bool = true): string {
+    public add (
+        data: CallbackType,
+        bool = true,
+    ): string {
 
         const id = generateID("callback");
         const obj = {
@@ -110,10 +109,14 @@ export class Callbacks<
         this.get(id);
     }
 
+
+
     /**
      * Remove a callback.
      */
-    public remove (id: string): boolean {
+    public remove (
+        id: string,
+    ): boolean {
 
         const callbacks = this._callbacks;
         const newCallbacks: ICallbacks.CallbackData<CallbackType>[] = [];
@@ -173,12 +176,17 @@ export class Callbacks<
 
     }
 
+
+
     /**
      * Enable/disable a callback.
      * @param id - ID of the callback
      * @param bool - True to enable, false to disable.
      */
-    public turn (id: string, bool = true): boolean {
+    public turn (
+        id: string,
+        bool = true,
+    ): boolean {
 
         const callback = this.get(id);
         if (callback) {
@@ -199,10 +207,14 @@ export class Callbacks<
         this.get(id);
     }
 
+
+
     /**
      * Get a callback by id
      */
-    public get (id: string): false | ICallbacks.CallbackData<CallbackType> {
+    public get (
+        id: string,
+    ): false | ICallbacks.CallbackData<CallbackType> {
 
         const callbacks = this._callbacks;
 
@@ -214,6 +226,8 @@ export class Callbacks<
 
         return false;
     }
+
+
 
     /**
      * Trigger a callback. It will work only if the callback is enabled.
@@ -263,7 +277,10 @@ export class Callbacks<
     /**
      * Launch a callback's function
      */
-    protected _triggerFunc (func: Function, arg: ICallbacks.CallbackArg) {
+    protected _triggerFunc (
+        func: Function,
+        arg: ICallbacks.CallbackArg,
+    ) {
 
         if (arg) {
             func(arg);
@@ -288,7 +305,10 @@ export class Callbacks<
     /**
      * Trigger all enabled callbacks under a certain target name. (TBT: Trigger by target).
      */
-    public tbt (target: string, arg: ICallbacks.CallbackArg = false) {
+    public tbt (
+        target: string,
+        arg: ICallbacks.CallbackArg = false,
+    ) {
 
         for (let i = 0; i < this._callbacks.length; i++) {
             if (this._callbacks[i].data.target === target) {
@@ -298,6 +318,8 @@ export class Callbacks<
 
     }
 }
+
+
 
 /**
  * @namespace
@@ -328,7 +350,7 @@ export namespace ICallbacks {
     /**
      * Callbacks's Data with a Target
      */
-    export interface CallbackSettings extends CallbackBaseSettings {
+    export interface CallbackType extends CallbackBaseSettings {
         /**
          * Callback target name
          */
