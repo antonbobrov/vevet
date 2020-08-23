@@ -35,6 +35,7 @@
                 "max": 3
             }
         ],
+        "lines-between-class-members": "off",
         "max-len": [
             "error",
             {
