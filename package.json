@@ -46,6 +46,6 @@
     "ismobilejs": "^1.1.1",
     "lerp": "^1.0.3",
     "lodash.mergewith": "^4.6.2",
-    "select-el": "^1.0.3"
+    "vevet-dom": "0.0.3"
   }
 }
