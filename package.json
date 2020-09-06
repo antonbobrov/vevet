@@ -17,7 +17,7 @@
     "docs:default": "./node_modules/.bin/jsdoc -c jsdoc/jsdoc.json -R README.md",
     "docs:types": "./node_modules/.bin/jsdoc -c jsdoc/jsdoc.types.json && node jsdoc/exportVevetJsDoc.js",
     "release": "npm publish",
-    "prepare": "npm run prepare:cjs && npm run docs",
+    "prepare": "npm run prepare:cjs && npm run build && npm run docs",
     "prepare:cjs": "NODE_ENV=cjs babel ./src/js --out-dir ./dist/js/"
   },
   "browserslist": [
