@@ -1,8 +1,11 @@
 import { Module, IModule } from "../../base/Module";
 import { ICallbacks } from "../../base/Callbacks";
 
+/**
+ * Creates a canvas 2d rendering context inside an HTML Element.
+ */
 export class Ctx2D<
-    CallbackTypes extends IModule.CallbackTypes,
+    CallbackTypes extends ICtx2D.CallbackTypes,
     StatProp extends ICtx2D.StatProp,
     ResProp extends ICtx2D.ResProp
 > extends Module<
@@ -93,6 +96,18 @@ export class Ctx2D<
      */
     public updateSize () {
 
+        this._applySize();
+
+        // launch callbacks
+        this.callbacks.tbt("update");
+
+    }
+
+    /**
+     * Calculate and apply canvas sizes
+     */
+    protected _applySize () {
+
         const { viewport } = this._app;
         const { prop, canvas } = this;
 
@@ -138,9 +153,6 @@ export class Ctx2D<
         canvas.width = newWidth;
         canvas.height = newHeight;
 
-        // launch callbacks
-        this.callbacks.tbt("update");
-
     }
 
 }
@@ -157,7 +169,7 @@ export namespace ICtx2D {
          * Reference element to calculate canvas sizes.
          * @default false
          */
-        ref?: HTMLElement | false;
+        ref?: Element | false;
     }
 
     export interface ResProp {
@@ -178,13 +190,9 @@ export namespace ICtx2D {
         dpr?: number | false;
     }
 
-    export interface CallbacksProp {
-        callbacks?: CallbackTypes[];
-    }
-
-    export type CallbackTypes = IModule.CallbackTypes | ({
+    export type CallbackTypes = IModule.CallbackTypes | {
         target: "update";
         do: () => void;
-    } & ICallbacks.CallbackBaseSettings);
+    } & ICallbacks.CallbackBaseSettings;
 
 }
