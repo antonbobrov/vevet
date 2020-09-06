@@ -2,7 +2,6 @@
 dist/
 node_modules/
 public/
-tests/
 types/
 
 /src/js/ScrollClampPlugin.js

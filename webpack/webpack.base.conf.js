@@ -2,11 +2,11 @@
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const path = require('path');
-const fs = require('fs')
+// const fs = require('fs')
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+// const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const PATHS = {
     src: path.join(__dirname, '../src'),
@@ -16,8 +16,8 @@ const PATHS = {
     assets: 'assets/'
 };
 
-const PAGES_DIR = `${PATHS.tests}/pug/pages`;
-const PAGES = fs.readdirSync(PAGES_DIR).filter(fileName => fileName.endsWith('.pug'))
+// const PAGES_DIR = `${PATHS.tests}/pug/pages`;
+// const PAGES = fs.readdirSync(PAGES_DIR).filter(fileName => fileName.endsWith('.pug'))
 
 module.exports = {
 
@@ -135,10 +135,10 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: `${PATHS.assets}css/[name].css`
         }),
-        ...PAGES.map(page => new HtmlWebpackPlugin({
-            template: `${PAGES_DIR}/${page}`,
-            filename: `./${page.replace(/\.pug/,'.html')}`
-        })),
+        // ...PAGES.map(page => new HtmlWebpackPlugin({
+        //     template: `${PAGES_DIR}/${page}`,
+        //     filename: `./${page.replace(/\.pug/,'.html')}`
+        // })),
         new CopyWebpackPlugin([
             { from: `${PATHS.tests}/img`, to: `${PATHS.assets}img` },
             { from: `${PATHS.tests}/audio`, to: `${PATHS.assets}audio` },
