@@ -12,7 +12,7 @@ export abstract class Module<
     /**
      * Module Callbacks
      */
-    CallbackTypes extends IModule.CallbackTypes,
+    CallbackTypes extends ICallbacks.CallbackSettings,
     /**
      * Static Properties (won't change)
      */
@@ -284,7 +284,7 @@ export namespace IModule {
          * Parent module
          */
         parent?: Module<
-            CallbackTypes,
+            ICallbacks.CallbackSettings,
             StatProp,
             ResProp
         >;
@@ -296,7 +296,7 @@ export namespace IModule {
         do: () => void;
     } & ICallbacks.CallbackBaseSettings | {
         target: "changeProp";
-        do: () => void;
-    } & ICallbacks.CallbackBaseSettings;
+        do: (data: number) => void;
+    };
 
 }

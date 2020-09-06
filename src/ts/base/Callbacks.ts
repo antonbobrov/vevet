@@ -9,7 +9,7 @@ export class Callbacks<
     /**
      * Module Callbacks
      */
-    CallbackType extends ICallbacks.CallbackType
+    CallbackTypes extends ICallbacks.CallbackSettings
 > {
 
     /**
@@ -20,7 +20,7 @@ export class Callbacks<
     /**
      * All callbacks
      */
-    protected _callbacks: ICallbacks.CallbackData<CallbackType>[];
+    protected _callbacks: ICallbacks.CallbackData<CallbackTypes>[];
     /**
      * Get all callbacks
      */
@@ -82,7 +82,7 @@ export class Callbacks<
      * });
      */
     public add (
-        data: CallbackType,
+        data: CallbackTypes,
         bool = true,
     ): string {
 
@@ -119,7 +119,7 @@ export class Callbacks<
     ): boolean {
 
         const callbacks = this._callbacks;
-        const newCallbacks: ICallbacks.CallbackData<CallbackType>[] = [];
+        const newCallbacks: ICallbacks.CallbackData<CallbackTypes>[] = [];
         let removed = false;
 
         for (let i = 0, l = callbacks.length; i < l; i++) {
@@ -214,7 +214,7 @@ export class Callbacks<
      */
     public get (
         id: string,
-    ): false | ICallbacks.CallbackData<CallbackType> {
+    ): false | ICallbacks.CallbackData<CallbackTypes> {
 
         const callbacks = this._callbacks;
 
@@ -233,7 +233,7 @@ export class Callbacks<
      * Trigger a callback. It will work only if the callback is enabled.
      */
     protected _trigger (
-        callback: ICallbacks.CallbackData<CallbackType>,
+        callback: ICallbacks.CallbackData<CallbackTypes>,
         arg: ICallbacks.CallbackArg = false,
     ) {
 
@@ -350,15 +350,15 @@ export namespace ICallbacks {
     /**
      * Callbacks's Data with a Target
      */
-    export interface CallbackType extends CallbackBaseSettings {
+    export interface CallbackSettings extends CallbackBaseSettings {
         /**
          * Callback target name
          */
-        target?: any;
+        target?: string;
         /**
          * Callback Function
          */
-        do: Function;
+        do: (data?: any) => void;
     }
 
     /**

@@ -1,17 +1,17 @@
-import { Application } from "./app/Application";
-import { Load } from "./app/Load";
-import { Viewport } from "./app/Viewport";
+import { Application, IApplication } from "./app/Application";
+import { Load, ILoad } from "./app/Load";
+import { Viewport, IViewport } from "./app/Viewport";
 
-import { Callbacks } from "./base/Callbacks";
-import { Module } from "./base/Module";
+import { Callbacks, ICallbacks } from "./base/Callbacks";
+import { Module, IModule } from "./base/Module";
 
 export {
 
-    Application,
-    Load,
-    Viewport,
+    Application, IApplication,
+    Load, ILoad,
+    Viewport, IViewport,
 
-    Callbacks,
-    Module,
+    Callbacks, ICallbacks,
+    Module, IModule,
 
 };
