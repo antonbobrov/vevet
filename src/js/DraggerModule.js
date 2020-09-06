@@ -266,13 +266,25 @@ export default class DraggerModule extends Module {
         const listeners = this._runningListeners;
         const outer = this._outer;
 
-        listeners.push(this.listener(outer, 'touchmove', this._onMove.bind(this)));
-        listeners.push(this.listener(outer, 'touchend', this._onEnd.bind(this)));
-        listeners.push(this.listener(outer, 'touchcancel', this._onStop.bind(this)));
+        listeners.push(this.listener(outer, 'touchmove', this._onMove.bind(this), {
+            passive: false
+        }));
+        listeners.push(this.listener(outer, 'touchend', this._onEnd.bind(this), {
+            passive: false
+        }));
+        listeners.push(this.listener(outer, 'touchcancel', this._onStop.bind(this), {
+            passive: false
+        }));
 
-        listeners.push(this.listener(window, 'mousemove', this._onMove.bind(this)));
-        listeners.push(this.listener(window, 'mouseup', this._onEnd.bind(this)));
-        listeners.push(this.listener(window, 'blur', this._onStop.bind(this)));
+        listeners.push(this.listener(window, 'mousemove', this._onMove.bind(this), {
+            passive: false
+        }));
+        listeners.push(this.listener(window, 'mouseup', this._onEnd.bind(this), {
+            passive: false
+        }));
+        listeners.push(this.listener(window, 'blur', this._onStop.bind(this), {
+            passive: false
+        }));
 
     }
 

@@ -47,10 +47,17 @@ function eventListenerAdd (data) {
 
     let id = generateId(`${attr}__${target}__`);
 
-    if (data.passive) {
-        el.addEventListener(target, callback, {
-            passive: true
-        });
+    if (typeof data.passive !== "undefined") {
+        if (data.passive) {
+            el.addEventListener(target, callback, {
+                passive: true
+            });
+        }
+        else {
+            el.addEventListener(target, callback, {
+                passive: false
+            });
+        }
     }
     else {
         el.addEventListener(target, callback, false);
