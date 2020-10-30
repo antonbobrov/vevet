@@ -1,6 +1,6 @@
-import generateID from "../utils/common/generateID";
-import timeoutCallback from "../utils/common/timeoutCallback";
-import { Application } from "../app/Application";
+import generateID from '../utils/common/generateID';
+import timeoutCallback from '../utils/common/timeoutCallback';
+import { Application } from '../app/Application';
 
 /**
  * A class for callbacks' manipulation.
@@ -71,10 +71,10 @@ export class Callbacks<
     /**
      * Adds a callback
      * @param data - Callback's data
-     * @param bool - If the callback is enabled by default
+     * @param enabled - If the callback is enabled by default
      *
      * @example
-     * const id = callback.add({
+     * const onTarget = callback.add({
      *     target: "target-name",
      *     do: () => {
      *         alert("callback");
@@ -83,28 +83,33 @@ export class Callbacks<
      */
     public add (
         data: CallbackTypes,
-        bool = true,
-    ): string {
+        enabled = true,
+    ): {
+        id: string;
+        remove: () => boolean;
+    } {
 
-        const id = generateID("callback");
+        const id = generateID('callback');
         const obj = {
             id,
-            on: bool,
+            on: enabled,
             data,
         };
 
         this._callbacks.push(obj);
-        this._add(id);
+        this._onAdd(id);
 
-        return id;
+        return {
+            id,
+            remove: this.remove.bind(this, id),
+        };
 
     }
 
     /**
      * Use it to implement some actions after adding a callback.
-     * @param id
      */
-    protected _add (id: string) {
+    protected _onAdd (id: string) {
         // code
         this.get(id);
     }
@@ -133,14 +138,14 @@ export class Callbacks<
             }
 
             // check if the callback is protected
-            let protectedCallback = false;
+            let isProtected = false;
             if (callback.data.protected) {
-                protectedCallback = true;
+                isProtected = true;
             }
 
             // remove the callback if not protected
-            if (!protectedCallback) {
-                this._remove(id);
+            if (!isProtected) {
+                this._onRemove(id);
                 removed = true;
             }
             else {
@@ -160,7 +165,7 @@ export class Callbacks<
     /**
      * Use it to implement some actions after removing a callback.
      */
-    protected _remove (id: string) {
+    protected _onRemove (id: string) {
         // code
         this.get(id);
     }
@@ -181,17 +186,17 @@ export class Callbacks<
     /**
      * Enable/disable a callback.
      * @param id - ID of the callback
-     * @param bool - True to enable, false to disable.
+     * @param enabled - True to enable, false to disable.
      */
     public turn (
         id: string,
-        bool = true,
+        enabled = true,
     ): boolean {
 
         const callback = this.get(id);
         if (callback) {
-            callback.on = bool;
-            this._turn(id);
+            callback.on = enabled;
+            this._onTurn(id);
             return true;
         }
 
@@ -202,7 +207,7 @@ export class Callbacks<
     /**
      * Use it to implement some actions after enabling or disabling a callback.
      */
-    protected _turn (id: string) {
+    protected _onTurn (id: string) {
         // code
         this.get(id);
     }
@@ -362,7 +367,7 @@ export namespace ICallbacks {
     }
 
     /**
-     * Full Callbacks Data
+     * Full Callback Data
      */
     export type CallbackData<C> = {
         /**
