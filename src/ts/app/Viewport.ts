@@ -1,5 +1,5 @@
-import isMobileJs from "ismobilejs";
-import { Callbacks, ICallbacks } from "../base/Callbacks";
+import isMobileJs from 'ismobilejs';
+import { Callbacks, ICallbacks } from '../base/Callbacks';
 
 
 
@@ -13,34 +13,34 @@ export namespace IViewport {
      */
     export type CallbackType = {
         /**
-         * Only width changes
+         * When the width is changed regardless of the height
          */
-        target: "w";
+        target: 'w';
     } & CallbackFunc | {
         /**
-         * Only height changes
+         * When the height is changed regardless of the width
          */
-        target: "h";
+        target: 'h';
     } & CallbackFunc | {
         /**
-         * Both width and height change
+         * When both the width and height are changed
          */
-        target: "wh";
+        target: 'wh';
     } & CallbackFunc | {
         /**
-         * Both width and height change
+         * When both the width and height are changed
          */
-        target: "hw";
+        target: 'hw';
     } & CallbackFunc | {
         /**
-         * When width changes. Don't care about height
+         * When only the width is changed
          */
-        target: "w_";
+        target: 'w_';
     } & CallbackFunc | {
         /**
-         * When height changes. Don't care width
+         * When only the height is changed
          */
-        target: "h_";
+        target: 'h_';
     } & CallbackFunc | {
         /**
          * Any change
@@ -52,46 +52,23 @@ export namespace IViewport {
      * Callback data with a function
      */
     type CallbackFunc = {
-        do: (data: CallbackArg) => void;
+        do: () => void;
     } & ICallbacks.CallbackBaseSettings;
 
-    /**
-     * Callbacks Argument
-     */
-    export interface CallbackArg {
-        dpr: number;
-        dprMobile: number;
-        desktop: boolean;
-        tablet: boolean;
-        mobile: boolean;
-        mobiledevice: boolean;
-        landscape: boolean;
-        portrait: boolean;
-    }
-
-    /**
-     * Viewport size: width & height
-     */
-    export type Size = number[];
     /**
      * Viewport size types
      */
     export enum SizeTypes {
-        // eslint-disable-next-line no-unused-vars
-        Desktop = "desktop",
-        // eslint-disable-next-line no-unused-vars
-        Tablet = "tablet",
-        // eslint-disable-next-line no-unused-vars
-        Mobile = "mobile"
+        Desktop = 'desktop',
+        Tablet = 'tablet',
+        Mobile = 'mobile'
     }
     /**
      * Orientation types
      */
     export enum OrientationTypes {
-        // eslint-disable-next-line no-unused-vars
-        Landscape = "landscape",
-        // eslint-disable-next-line no-unused-vars
-        Portrait = "portrait"
+        Landscape = 'landscape',
+        Portrait = 'portrait'
     }
 
 }
@@ -107,20 +84,34 @@ export class Viewport extends Callbacks<
 > {
 
     /**
-     * Current Viewport size
+     * Current Viewport width
      */
-    protected _size: IViewport.Size;
+    protected _width = 0;
     /**
-     * Get current Viewport size
+     * Get viewport width
      */
-    get size () {
-        return this._size;
+    get width () {
+        return this._width;
+    }
+
+    /**
+     * Current Viewport height
+     */
+    protected _height = 0;
+    /**
+     * Get viewport height
+     */
+    get height () {
+        return this._height;
     }
 
     /**
      * Previous Viewport size
      */
-    protected _prevSize: IViewport.Size;
+    protected _prevSize: {
+        w: number;
+        h: number;
+    };
     /**
      * Get previous Viewport size
      */
@@ -132,13 +123,13 @@ export class Viewport extends Callbacks<
      * If width greater than height.
      */
     get isLandscape () {
-        return this.size[0] > this.size[1];
+        return this.width > this.height;
     }
     /**
      * If width less than height.
      */
     get isPortrait () {
-        return this.size[0] < this.size[1];
+        return this.width < this.height;
     }
 
     /**
@@ -189,7 +180,7 @@ export class Viewport extends Callbacks<
      * Device pixel ratio
      */
     get dpr () {
-        if (typeof window.devicePixelRatio !== "undefined") {
+        if (typeof window.devicePixelRatio !== 'undefined') {
             return window.devicePixelRatio;
         }
         return 1;
@@ -209,36 +200,37 @@ export class Viewport extends Callbacks<
     // Extra constructor
     protected _constructor () {
         super._constructor();
-        this._update();
+        this._setValues();
     }
 
     // Set events on resize
     protected _setEvents () {
 
-        window.addEventListener("resize", this._onResize.bind(this));
+        window.addEventListener('resize', this._onResize.bind(this));
 
     }
 
 
 
     /**
-     * Update viewport values
+     * Set viewport values
      */
-    protected _update () {
+    protected _setValues () {
 
         const app = this._app;
         const { html } = app;
         const appProp = app.prop;
 
         // set sizes
-        this._size = [
-            html.clientWidth,
-            html.clientHeight,
-        ];
-        this._prevSize = this._size.slice();
+        this._width = html.clientWidth;
+        this._height = html.clientHeight;
+        this._prevSize = {
+            w: this._width,
+            h: this._height,
+        };
 
         // size values
-        const width = this._size[0];
+        const { width } = this;
         this._isDesktop = width >= appProp.tablet;
         this._isTablet = width <= appProp.tablet && width > appProp.mobile;
         this._isMobile = width <= appProp.mobile;
@@ -306,7 +298,7 @@ export class Viewport extends Callbacks<
             );
         }
         else {
-            this._updateBreakpointClasses("", orientationTypes);
+            this._updateBreakpointClasses('', orientationTypes);
         }
 
         // mobile device
@@ -350,36 +342,35 @@ export class Viewport extends Callbacks<
     protected _onResize () {
 
         // copy previous values
-        const sizePrev = this._prevSize.slice();
+        const prevWidth = this._prevSize.w;
+        const prevHeight = this._prevSize.h;
 
         // set viewport values
-        this._update();
+        this._setValues();
 
         // copy size
-        const size = this._size;
-        const width = size[0];
-        const height = size[1];
+        const { width, height } = this;
 
         // only when width is changed
-        if (width !== sizePrev[0] && height === sizePrev[1]) {
-            this.tbt("w");
+        if (width !== prevWidth && height === prevHeight) {
+            this.tbt('w');
         }
         // only when height is changed
-        if (height !== sizePrev[1] && width === sizePrev[0]) {
-            this.tbt("h");
+        if (height !== prevHeight && width === prevWidth) {
+            this.tbt('h');
         }
         // when height & width are changed
-        if (width !== sizePrev[0] && height !== sizePrev[1]) {
-            this.tbt("wh");
-            this.tbt("hw");
+        if (width !== prevWidth && height !== prevHeight) {
+            this.tbt('wh');
+            this.tbt('hw');
         }
         // when width is changed
-        if (width !== sizePrev[0]) {
-            this.tbt("w_");
+        if (width !== prevWidth) {
+            this.tbt('w_');
         }
         // when height changed
-        if (height !== sizePrev[1]) {
-            this.tbt("h_");
+        if (height !== prevHeight) {
+            this.tbt('h_');
         }
 
         // on any change

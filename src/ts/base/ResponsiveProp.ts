@@ -139,7 +139,7 @@ export class ResponsiveProp<
             this._responseProp();
             // add event on resize
             this._viewportCallback = this._app.viewport.add({
-                target: 'w_',
+                target: 'w',
                 name: this._name,
                 do: this._responseProp.bind(this, true),
             });
@@ -160,7 +160,7 @@ export class ResponsiveProp<
 
             // get sizes
             const { viewport } = this._app;
-            const width = viewport.size[0];
+            const { width } = viewport;
             let newProp: (StatProp & ResProp) = {} as (StatProp & ResProp);
 
             // go through all breakpoints
