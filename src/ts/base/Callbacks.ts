@@ -84,10 +84,7 @@ export class Callbacks<
     public add (
         data: CallbackTypes,
         enabled = true,
-    ): {
-        id: string;
-        remove: () => boolean;
-    } {
+    ): ICallbacks.AddCallback {
 
         const id = generateID('callback');
         const obj = {
@@ -388,5 +385,16 @@ export namespace ICallbacks {
      * The argument that is transmitted to the callback function
      */
     export type CallbackArg = false | Record<string, any>;
+
+    export interface AddCallback {
+        /**
+         * ID of the callback
+         */
+        id: string;
+        /**
+         * Remove the callback
+         */
+        remove: () => void;
+    }
 
 }
