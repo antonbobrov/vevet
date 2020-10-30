@@ -1,11 +1,11 @@
-import { Application } from "../app/Application";
-import mergeWithoutArrays from "../utils/common/mergeWithoutArrays";
+import { Application } from '../app/Application';
+import mergeWithoutArrays from '../utils/common/mergeWithoutArrays';
+import { ICallbacks } from './Callbacks';
 
 /**
- * A class for creating properties that may change on window resize. <br><br>
+ * A class for creating mutable properties that change on window resize. <br><br>
  *
- * Sometimes it may be useful to change properties when the window is resized. <br>
- * There are two ways to do it:
+ * There are two ways to change properties:
  * <ul>
  *     <li>
  *         To set a resize-listener on window (or use {@linkcode Viewport}).
@@ -22,11 +22,11 @@ import mergeWithoutArrays from "../utils/common/mergeWithoutArrays";
  */
 export class ResponsiveProp<
     /**
-     * Static Properties
+     * Static Properties (they cannot be changed on viewport resize)
      */
     StatProp extends Record<string, any>,
     /**
-     * Changeable Properties
+     * Mutable Properties
      */
     ResProp extends Record<string, any>
 > {
@@ -78,9 +78,9 @@ export class ResponsiveProp<
     }
 
     /**
-     * Viewport callback id
+     * Viewport callback
      */
-    protected _viewportID: string | false;
+    protected _viewportCallback: ICallbacks.AddCallback;
 
 
 
@@ -107,7 +107,7 @@ export class ResponsiveProp<
         ),
         onChange: () => void = () => {},
         onResponsive: () => void = () => {},
-        name = "",
+        name = '',
     ) {
 
         this._app = window.vevetApplication;
@@ -119,8 +119,6 @@ export class ResponsiveProp<
         this._initProp = data;
         this._refProp = mergeWithoutArrays({}, data);
         this._prop = mergeWithoutArrays({}, data);
-
-        this._viewportID = false;
 
         // initialize responsive properties
         // and set events
@@ -136,12 +134,12 @@ export class ResponsiveProp<
     protected _init () {
 
         // check if responsive properties exist
-        if (typeof this._initProp.responsive !== "undefined") {
+        if (typeof this._initProp.responsive !== 'undefined') {
             // change properties according to the responsive prop
             this._responseProp();
             // add event on resize
-            this._viewportID = this._app.viewport.add({
-                target: "w_",
+            this._viewportCallback = this._app.viewport.add({
+                target: 'w_',
                 name: this._name,
                 do: this._responseProp.bind(this, true),
             });
@@ -174,28 +172,28 @@ export class ResponsiveProp<
                 const { settings, breakpoint } = prop;
 
                 // if the breakpoint is a number
-                if (typeof breakpoint === "number") {
+                if (typeof breakpoint === 'number') {
                     if (width <= prop.breakpoint) {
                         newProp = mergeWithoutArrays(newProp, settings);
                         breakpointExists = true;
                     }
                 }
                 // if breakpoint is a string // desktop, tablet, mobile, mobiledevice
-                else if (typeof breakpoint === "string") {
+                else if (typeof breakpoint === 'string') {
                     const string = breakpoint.toLowerCase();
-                    if (string === "d" && viewport.isDesktop) {
+                    if (string === 'd' && viewport.isDesktop) {
                         newProp = mergeWithoutArrays(newProp, settings);
                         breakpointExists = true;
                     }
-                    if (string === "t" && viewport.isTablet) {
+                    if (string === 't' && viewport.isTablet) {
                         newProp = mergeWithoutArrays(newProp, settings);
                         breakpointExists = true;
                     }
-                    if (string === "m" && viewport.isMobile) {
+                    if (string === 'm' && viewport.isMobile) {
                         newProp = mergeWithoutArrays(newProp, settings);
                         breakpointExists = true;
                     }
-                    if (string === "md" && viewport.isMobileDevice) {
+                    if (string === 'md' && viewport.isMobileDevice) {
                         newProp = mergeWithoutArrays(newProp, settings);
                         breakpointExists = true;
                     }
@@ -225,27 +223,6 @@ export class ResponsiveProp<
 
     /**
      * This method allows you to change properties manually.
-     * @example
-     *
-     * // changing properties
-     * // let's imagine that you set the following properties while initializing:
-     * prop = {
-     *      name: 'Me',
-     *      features: {
-     *          cute: true,
-     *          sleepy: false
-     *      }
-     * };
-     * // we can change some properties in it: whether one or several properties
-     * module.changeProp({
-     *     name: 'You'
-     * });
-     * module.changeProp({
-     *      name: 'You',
-     *      features: {
-     *          cute: false
-     *      }
-     * });
      */
     public changeProp (prop: ResProp) {
 
@@ -264,9 +241,7 @@ export class ResponsiveProp<
      */
     public destroy () {
 
-        if (this._viewportID) {
-            this._app.viewport.remove(this._viewportID);
-        }
+        this._viewportCallback.remove();
 
     }
 
@@ -295,7 +270,7 @@ export namespace IResponsiveProp {
          *      <li>'md' - for mobile devices</li>
          * </ul>
          */
-        breakpoint: number | "d" | "t" | "m" | "md";
+        breakpoint: number | 'd' | 't' | 'm' | 'md';
         settings: S;
     }
 
