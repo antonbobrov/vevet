@@ -1,5 +1,5 @@
-import { Load } from "./Load";
-import { Viewport } from "./Viewport";
+import { Load } from './Load';
+import { Viewport } from './Viewport';
 
 /**
  * Vevet Application
@@ -21,12 +21,12 @@ export class Application {
      */
     get defaultProp (): IApplication.Prop {
         return {
-            page: "home-page",
+            page: 'home-page',
             tablet: 1199,
             mobile: 899,
-            prefix: "v-",
-            prefixData: "data-vevet-",
-            prefixProp: "vevet-",
+            prefix: 'v-',
+            prefixData: 'data-vevet-',
+            prefixProp: 'vevet-',
             maxAjaxTimeout: 5000,
             easing: [0.25, 0.1, 0.25, 1],
         };
@@ -99,7 +99,7 @@ export class Application {
     /**
      * Name of the current page.
      */
-    protected _page = "";
+    protected _page = '';
     /**
      * Set page name.
      */
@@ -122,7 +122,7 @@ export class Application {
 
 
     /**
-     * Pages (Modules).
+     * Pages (modules).
      */
     protected _vevetPages: [] = [];
     /**
@@ -134,9 +134,9 @@ export class Application {
     }
 
     /**
-     * Current Page Module.
+     * Current Page (module).
      */
-    protected _vevetPage: false | HTMLElement = false;
+    protected _vevetPage: false | any = false;
     /**
      * Get the current page module.
      */
@@ -172,7 +172,6 @@ export class Application {
 
     /**
      * @description Initialize the class
-     * @private
      */
     protected _init () {
 
@@ -182,7 +181,7 @@ export class Application {
         // set current page name
         this.page = this.prop.page;
 
-        // add the application to the window object
+        // add the application to the window
         window.vevetApplication = this;
 
         // /**
@@ -223,17 +222,17 @@ export class Application {
      */
     protected _sayHi () {
 
-        const msg = "Vevet";
+        const msg = 'Vevet';
 
         const style = [
-            "padding: 1rem 1.5rem;",
-            "background: #5F2580;",
-            "font: 1rem/1 Arial;",
-            "color: #ffffff;",
-        ].join("");
+            'padding: 1rem 1.5rem;',
+            'background: #5F2580;',
+            'font: 1rem/1 Arial;',
+            'color: #ffffff;',
+        ].join('');
 
         // eslint-disable-next-line no-console
-        console.log("%c%s", style, msg);
+        console.log('%c%s', style, msg);
 
     }
 
