@@ -1,4 +1,4 @@
-import { Callbacks, ICallbacks } from "../base/Callbacks";
+import { Callbacks, ICallbacks } from '../base/Callbacks';
 
 
 
@@ -8,7 +8,6 @@ import { Callbacks, ICallbacks } from "../base/Callbacks";
 export namespace ILoad {
 
     export type CallbackType = {
-        target?: undefined;
         do: () => void;
     } & ICallbacks.CallbackBaseSettings;
 
@@ -50,7 +49,7 @@ export class Load extends Callbacks<
         });
 
         // launch callbacks on loaded
-        window.addEventListener("load", this.triggerAll.bind(this));
+        window.addEventListener('load', this.triggerAll.bind(this));
 
     }
 
@@ -76,7 +75,7 @@ export class Load extends Callbacks<
      * Add a callback on page load.
      * If the page is already loaded, the callback will be immediately triggered.
      */
-    public setOnLoad (
+    public onLoaded (
         callback: Function,
     ) {
 
