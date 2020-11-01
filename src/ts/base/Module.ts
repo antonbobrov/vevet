@@ -1,26 +1,26 @@
-import { Callbacks, ICallbacks } from "./Callbacks";
-import { ResponsiveProp, IResponsiveProp } from "./ResponsiveProp";
-import { Application } from "../app/Application";
-import mergeWithoutArrays from "../utils/common/mergeWithoutArrays";
+import { Callbacks, NCallbacks } from './Callbacks';
+import { ResponsiveProp, NResponsiveProp } from './ResponsiveProp';
+import { Application } from '../app/Application';
+import mergeWithoutArrays from '../utils/common/mergeWithoutArrays';
 
 
 
 /**
  * An abstract class for modules.
  */
-export abstract class Module<
+export class Module<
     /**
      * Module Callbacks
      */
-    CallbackTypes extends ICallbacks.CallbackSettings,
+    CallbacksTypes extends NModule.CallbacksTypes = NModule.CallbacksTypes,
     /**
      * Static Properties (won't change)
      */
-    StatProp extends IModule.StatProp,
+    StatProp extends NModule.StatProp = NModule.StatProp,
     /**
      * Changeable Properties
      */
-    ResProp extends IModule.ResProp,
+    ResProp extends NModule.ResProp = NModule.ResProp,
 > {
 
 
@@ -28,28 +28,28 @@ export abstract class Module<
     /**
      * Module Properties
      */
-    protected _prop: (StatProp & ResProp) & IResponsiveProp.Prop<ResProp>;
+    protected _prop: (StatProp & ResProp) & NResponsiveProp.Prop<ResProp>;
     /**
-     * Module Properties
+     * Get Module Properties
      */
     get prop () {
         return this._prop;
     }
 
     /**
-     * Default properties.
+     * Get Default properties.
      */
     get defaultProp () {
         return mergeWithoutArrays(this.dp, {
             callbacks: [],
             responsive: [],
-        }) as (StatProp & ResProp) & IResponsiveProp.Prop<ResProp>;
+        }) as (StatProp & ResProp) & NResponsiveProp.Prop<ResProp>;
     }
     /**
-     * Default properties (may be extended)
+     * Get Default properties (should be extended)
      */
     get dp () {
-        return { } as (StatProp & ResProp);
+        return {} as (StatProp & ResProp);
     }
 
     /**
@@ -60,10 +60,23 @@ export abstract class Module<
         ResProp
     >;
     /**
-     * Responsive Properties (Module)
+     * Get Responsive Properties (Module)
      */
     get rp () {
         return this._resProp;
+    }
+
+
+
+    /**
+     * Module Callbacks
+     */
+    protected _callbacks: Callbacks<CallbacksTypes>;
+    /**
+     * Module Callbacks
+     */
+    get callbacks () {
+        return this._callbacks;
     }
 
 
@@ -76,12 +89,8 @@ export abstract class Module<
     /**
      * Module prefix
      */
-    protected _prefix: string;
-    /**
-     * Module prefix
-     */
     get prefix (): string {
-        return "";
+        return '';
     }
 
     /**
@@ -95,17 +104,6 @@ export abstract class Module<
         return this._name;
     }
 
-    /**
-     * Module Callbacks
-     */
-    protected _callbacks: Callbacks<CallbackTypes>;
-    /**
-     * Module Callbacks
-     */
-    get callbacks () {
-        return this._callbacks;
-    }
-
 
 
     /**
@@ -116,14 +114,13 @@ export abstract class Module<
      * const mod = new Module();
      */
     constructor (
-        data: (StatProp & ResProp) & IResponsiveProp.Prop<ResProp>
-        = {} as (StatProp & ResProp) & IResponsiveProp.Prop<ResProp>,
+        data: (StatProp & ResProp) & NResponsiveProp.Prop<ResProp>
+        = {} as (StatProp & ResProp) & NResponsiveProp.Prop<ResProp>,
         init = true,
     ) {
 
         // set vars
-        this._app = window.vevetApplication;
-        this._prefix = this.prefix;
+        this._app = window.vevetApp;
         this._name = this.constructor.name;
 
         // create properties
@@ -147,16 +144,16 @@ export abstract class Module<
      */
     protected _createCallbacks () {
 
-        this._callbacks = new Callbacks<CallbackTypes>();
+        this._callbacks = new Callbacks<CallbacksTypes>();
 
     }
 
     /**
      * Create Module Properties
      */
-    protected _createProp <
-        C extends ((StatProp & ResProp) & IResponsiveProp.Prop<ResProp>)
-    > (data: C = {} as C) {
+    protected _createProp<
+        C extends ((StatProp & ResProp) & NResponsiveProp.Prop<ResProp>)
+    >(data: C = {} as C) {
 
         // extend properties
         this._prop = mergeWithoutArrays(this.defaultProp, data);
@@ -166,9 +163,9 @@ export abstract class Module<
     /**
      * Create Responsive Module Properties
      */
-    protected _createResProp <
-        C extends ((StatProp & ResProp) & IResponsiveProp.Prop<ResProp>)
-    > (data: C = {} as C) {
+    protected _createResProp<
+        C extends ((StatProp & ResProp) & NResponsiveProp.Prop<ResProp>)
+    >(data: C = {} as C) {
 
         // create responsive properties
         this._resProp = new ResponsiveProp<
@@ -185,12 +182,10 @@ export abstract class Module<
         this._prop = this._resProp.prop as C;
 
         // destroy responsive properties when the module is destroyed
-        this.callbacks.add({
-            target: "destroy",
-            do: () => {
-                this._resProp.destroy();
-            },
-        } as CallbackTypes);
+        // @ts-ignore
+        this.callbacks.add('changeProp', () => {
+            this._resProp.destroy();
+        });
 
     }
 
@@ -238,7 +233,7 @@ export abstract class Module<
      */
     public changeProp (prop: ResProp = {} as ResProp) {
         this._resProp.changeProp(prop);
-        this._callbacks.tbt("changeProp");
+        this._callbacks.tbt('changeProp');
     }
 
     /**
@@ -264,7 +259,7 @@ export abstract class Module<
      */
     protected _destroy () {
 
-        this.rp.destroy();
+        this._callbacks.tbt('destroy');
 
     }
 
@@ -277,26 +272,26 @@ export abstract class Module<
 /**
  * @namespace
  */
-export namespace IModule {
+export namespace NModule {
 
     export interface StatProp {
         /**
          * Parent module
          */
         parent?: Module<
-            ICallbacks.CallbackSettings,
+            CallbacksTypes,
             StatProp,
             ResProp
         >;
     }
     export interface ResProp { }
 
-    export type CallbackTypes = {
-        target: "destroy";
-        do: () => void;
-    } & ICallbacks.CallbackBaseSettings | {
-        target: "changeProp";
-        do: (data: number) => void;
-    };
+    /**
+     * Available callbacks
+     */
+    export interface CallbacksTypes extends NCallbacks.CallbacksTypes {
+        'destroy': false;
+        'changeProp': false;
+    }
 
 }

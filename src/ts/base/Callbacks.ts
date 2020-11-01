@@ -9,7 +9,7 @@ export class Callbacks<
     /**
      * Module Callbacks
      */
-    CallbackTypes extends ICallbacks.CallbackSettings
+    Types extends NCallbacks.CallbacksTypes
 > {
 
     /**
@@ -20,7 +20,7 @@ export class Callbacks<
     /**
      * All callbacks
      */
-    protected _callbacks: ICallbacks.CallbackData<CallbackTypes>[];
+    protected _callbacks: NCallbacks.CallbackData<Types>[];
     /**
      * Get all callbacks
      */
@@ -36,7 +36,7 @@ export class Callbacks<
      */
     constructor () {
 
-        this._app = window.vevetApplication;
+        this._app = window.vevetApp;
         this._callbacks = [];
 
         // initialize callbacks
@@ -70,27 +70,30 @@ export class Callbacks<
 
     /**
      * Adds a callback
-     * @param data - Callback's data
-     * @param enabled - If the callback is enabled by default
+     * @param target - Callback target
+     * @param func - Callback function
+     * @param data - Callback data
      *
      * @example
-     * const onTarget = callback.add({
-     *     target: "target-name",
-     *     do: () => {
-     *         alert("callback");
-     *     }
+     * const onTarget = callback.add("target-name", () => {
+     *     alert("callback");
      * });
      */
-    public add (
-        data: CallbackTypes,
-        enabled = true,
-    ): ICallbacks.AddCallback {
+    public add <Target extends keyof Types> (
+        target: Target,
+        func: NCallbacks.CallbackSettings<Types, Target>['do'],
+        data: NCallbacks.CallbackBaseSettings = {},
+    ): NCallbacks.AddCallback {
 
         const id = generateID('callback');
         const obj = {
             id,
-            on: enabled,
-            data,
+            on: true,
+            data: {
+                target,
+                do: func,
+                ...data,
+            },
         };
 
         this._callbacks.push(obj);
@@ -121,7 +124,7 @@ export class Callbacks<
     ): boolean {
 
         const callbacks = this._callbacks;
-        const newCallbacks: ICallbacks.CallbackData<CallbackTypes>[] = [];
+        const newCallbacks: NCallbacks.CallbackData<Types>[] = [];
         let removed = false;
 
         for (let i = 0, l = callbacks.length; i < l; i++) {
@@ -216,7 +219,7 @@ export class Callbacks<
      */
     public get (
         id: string,
-    ): false | ICallbacks.CallbackData<CallbackTypes> {
+    ): false | NCallbacks.CallbackData<Types> {
 
         const callbacks = this._callbacks;
 
@@ -235,8 +238,8 @@ export class Callbacks<
      * Trigger a callback. It will work only if the callback is enabled.
      */
     protected _trigger (
-        callback: ICallbacks.CallbackData<CallbackTypes>,
-        arg: ICallbacks.CallbackArg = false,
+        callback: NCallbacks.CallbackData<Types>,
+        arg: false | any = false,
     ) {
 
         // check if enabled
@@ -281,7 +284,7 @@ export class Callbacks<
      */
     protected _triggerFunc (
         func: Function,
-        arg: ICallbacks.CallbackArg,
+        arg: false | any,
     ) {
 
         if (arg) {
@@ -307,9 +310,9 @@ export class Callbacks<
     /**
      * Trigger all enabled callbacks under a certain target name. (TBT: Trigger by target).
      */
-    public tbt (
-        target: string,
-        arg: ICallbacks.CallbackArg = false,
+    public tbt <T extends keyof Types> (
+        target: T,
+        arg: false | Types[T] = false,
     ) {
 
         for (let i = 0; i < this._callbacks.length; i++) {
@@ -323,13 +326,10 @@ export class Callbacks<
 
 
 
-/**
- * @namespace
- */
-export namespace ICallbacks {
+export namespace NCallbacks {
 
     /**
-     * Callbacks Properties' Settings
+     * Callbacks Properties Settings
      */
     export interface CallbackBaseSettings {
         /**
@@ -349,24 +349,26 @@ export namespace ICallbacks {
          */
         once?: boolean | undefined;
     }
+
     /**
-     * Callbacks's Data with a Target
+     * Callbacks Settings
      */
-    export interface CallbackSettings extends CallbackBaseSettings {
-        /**
-         * Callback target name
-         */
-        target?: string;
-        /**
-         * Callback Function
-         */
-        do: (data?: any) => void;
+    export interface CallbackSettings<
+        Types, Target extends keyof Types
+    > extends CallbackBaseSettings {
+        target: Target;
+        do: Types[Target] extends false ? () => void : (arg: Types[Target]) => void;
     }
 
     /**
-     * Full Callback Data
+     * Callbacks Types
      */
-    export type CallbackData<C> = {
+    export interface CallbacksTypes { }
+
+    /**
+     * Callback Full Data
+     */
+    export type CallbackData<Types> = {
         /**
          * ID of the callback
          */
@@ -378,13 +380,8 @@ export namespace ICallbacks {
         /**
          * Callback Data
          */
-        data: C;
+        data: CallbackSettings<Types, keyof Types>;
     }
-
-    /**
-     * The argument that is transmitted to the callback function
-     */
-    export type CallbackArg = false | Record<string, any>;
 
     export interface AddCallback {
         /**

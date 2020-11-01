@@ -1,17 +1,4 @@
-import { Callbacks, ICallbacks } from '../base/Callbacks';
-
-
-
-/**
- * @namespace
- */
-export namespace ILoad {
-
-    export type CallbackType = {
-        do: () => void;
-    } & ICallbacks.CallbackBaseSettings;
-
-}
+import { Callbacks, NCallbacks } from '../base/Callbacks';
 
 
 
@@ -19,7 +6,7 @@ export namespace ILoad {
  * Callbacks on page loaded.
  */
 export class Load extends Callbacks<
-    ILoad.CallbackType
+    NLoad.CallbacksTypes
 > {
 
     /**
@@ -43,8 +30,7 @@ export class Load extends Callbacks<
     protected _setEvents () {
 
         // add callbacks
-        this.add({
-            do: this._onloaded.bind(this),
+        this.add('', this._onLoaded.bind(this), {
             protected: true,
         });
 
@@ -58,7 +44,7 @@ export class Load extends Callbacks<
     /**
      * When the page is loaded.
      */
-    protected _onloaded () {
+    protected _onLoaded () {
 
         const app = this._app;
         const { prefix } = app;
@@ -83,11 +69,19 @@ export class Load extends Callbacks<
             callback();
         }
         else {
-            this.add({
-                do: callback.bind(this),
-            });
+            this.add('', callback.bind(this));
         }
 
+    }
+
+}
+
+
+
+export namespace NLoad {
+
+    export interface CallbacksTypes extends NCallbacks.CallbacksTypes {
+        '': false;
     }
 
 }

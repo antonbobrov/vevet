@@ -1,6 +1,16 @@
 import { Load } from './Load';
 import { Viewport } from './Viewport';
 
+
+
+declare global {
+    interface Window {
+        vevetApp: Application;
+    }
+}
+
+
+
 /**
  * Vevet Application
  */
@@ -9,7 +19,7 @@ export class Application {
     /**
      * Application properties.
      */
-    protected _prop: IApplication.Prop;
+    protected _prop: NApplication.Prop;
     /**
      * Application properties.
      */
@@ -19,7 +29,7 @@ export class Application {
     /**
      * Default properties.
      */
-    get defaultProp (): IApplication.Prop {
+    get defaultProp (): NApplication.Prop {
         return {
             page: 'home-page',
             tablet: 1199,
@@ -49,7 +59,7 @@ export class Application {
      *     page: 'home-page'
      * });
      */
-    constructor (data: IApplication.Prop) {
+    constructor (data: NApplication.Prop) {
 
         this._prop = Object.assign(this.defaultProp, data);
         this._prefix = this.prop.prefix;
@@ -182,7 +192,7 @@ export class Application {
         this.page = this.prop.page;
 
         // add the application to the window
-        window.vevetApplication = this;
+        window.vevetApp = this;
 
         // /**
         //  * @type {string}
@@ -292,18 +302,7 @@ export class Application {
 
 
 
-declare global {
-    interface Window {
-        vevetApplication: Application;
-    }
-}
-
-
-
-/**
- * @namespace
- */
-export namespace IApplication {
+export namespace NApplication {
 
     /**
      * Properties

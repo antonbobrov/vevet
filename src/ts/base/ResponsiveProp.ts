@@ -1,6 +1,6 @@
 import { Application } from '../app/Application';
 import mergeWithoutArrays from '../utils/common/mergeWithoutArrays';
-import { ICallbacks } from './Callbacks';
+import { NCallbacks } from './Callbacks';
 
 /**
  * A class for creating mutable properties that change on window resize. <br><br>
@@ -56,19 +56,19 @@ export class ResponsiveProp<
      * The properties that were set while initialization.
      * These properties do not change throughout time.
      */
-    protected _initProp: (StatProp & ResProp & IResponsiveProp.Prop<ResProp>);
+    protected _initProp: (StatProp & ResProp & NResponsiveProp.Prop<ResProp>);
 
     /**
      * @description Reference properties.
      * These properties may change only through {@linkcode ResponsiveProp#changeProp}.
      */
-    protected _refProp: (StatProp & ResProp & IResponsiveProp.Prop<ResProp>);
+    protected _refProp: (StatProp & ResProp & NResponsiveProp.Prop<ResProp>);
 
     /**
      * Current properties.
      * These properties may change both on resize and {@linkcode ResponsiveProp#changeProp}.
      */
-    protected _prop: (StatProp & ResProp & IResponsiveProp.Prop<ResProp>);
+    protected _prop: (StatProp & ResProp & NResponsiveProp.Prop<ResProp>);
 
     /**
      * Get current properties
@@ -80,7 +80,7 @@ export class ResponsiveProp<
     /**
      * Viewport callback
      */
-    protected _viewportCallback: ICallbacks.AddCallback;
+    protected _viewportCallback: NCallbacks.AddCallback;
 
 
 
@@ -101,16 +101,16 @@ export class ResponsiveProp<
      */
     constructor (
         data: (
-            StatProp & ResProp & IResponsiveProp.Prop<ResProp>
+            StatProp & ResProp & NResponsiveProp.Prop<ResProp>
         ) = {} as (
-            StatProp & ResProp & IResponsiveProp.Prop<ResProp>
+            StatProp & ResProp & NResponsiveProp.Prop<ResProp>
         ),
         onChange: () => void = () => {},
         onResponsive: () => void = () => {},
         name = '',
     ) {
 
-        this._app = window.vevetApplication;
+        this._app = window.vevetApp;
         this._onChange = onChange;
         this._onResponsive = onResponsive;
         this._name = `${this.constructor.name} ${name}`;
@@ -138,10 +138,8 @@ export class ResponsiveProp<
             // change properties according to the responsive prop
             this._responseProp();
             // add event on resize
-            this._viewportCallback = this._app.viewport.add({
-                target: 'w',
+            this._viewportCallback = this._app.viewport.add('w', this._responseProp.bind(this, true), {
                 name: this._name,
-                do: this._responseProp.bind(this, true),
             });
         }
 
@@ -252,7 +250,7 @@ export class ResponsiveProp<
 /**
  * @namespace
  */
-export namespace IResponsiveProp {
+export namespace NResponsiveProp {
 
     export interface Prop<S> {
         responsive?: Responsive<S>[];

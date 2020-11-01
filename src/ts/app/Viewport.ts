@@ -1,77 +1,5 @@
 import isMobileJs from 'ismobilejs';
-import { Callbacks, ICallbacks } from '../base/Callbacks';
-
-
-
-/**
- * @namespace
- */
-export namespace IViewport {
-
-    /**
-     * Available callbacks
-     */
-    export type CallbackType = {
-        /**
-         * When the width is changed regardless of the height
-         */
-        target: 'w';
-    } & CallbackFunc | {
-        /**
-         * When the height is changed regardless of the width
-         */
-        target: 'h';
-    } & CallbackFunc | {
-        /**
-         * When both the width and height are changed
-         */
-        target: 'wh';
-    } & CallbackFunc | {
-        /**
-         * When both the width and height are changed
-         */
-        target: 'hw';
-    } & CallbackFunc | {
-        /**
-         * When only the width is changed
-         */
-        target: 'w_';
-    } & CallbackFunc | {
-        /**
-         * When only the height is changed
-         */
-        target: 'h_';
-    } & CallbackFunc | {
-        /**
-         * Any change
-         */
-        target?: undefined;
-    } & CallbackFunc;
-
-    /**
-     * Callback data with a function
-     */
-    type CallbackFunc = {
-        do: () => void;
-    } & ICallbacks.CallbackBaseSettings;
-
-    /**
-     * Viewport size types
-     */
-    export enum SizeTypes {
-        Desktop = 'desktop',
-        Tablet = 'tablet',
-        Mobile = 'mobile'
-    }
-    /**
-     * Orientation types
-     */
-    export enum OrientationTypes {
-        Landscape = 'landscape',
-        Portrait = 'portrait'
-    }
-
-}
+import { Callbacks, NCallbacks } from '../base/Callbacks';
 
 
 
@@ -80,7 +8,7 @@ export namespace IViewport {
  * Here the names of the OS, Browser, and Device are also available. <br>
  */
 export class Viewport extends Callbacks<
-    IViewport.CallbackType
+    NViewport.CallbacksTypes
 > {
 
     /**
@@ -256,44 +184,44 @@ export class Viewport extends Callbacks<
         const { prefix } = app;
 
         // set viewport type
-        const viewportSizeTypes: IViewport.SizeTypes[] = [
-            IViewport.SizeTypes.Desktop,
-            IViewport.SizeTypes.Tablet,
-            IViewport.SizeTypes.Mobile,
+        const viewportSizeTypes: NViewport.SizeTypes[] = [
+            NViewport.SizeTypes.Desktop,
+            NViewport.SizeTypes.Tablet,
+            NViewport.SizeTypes.Mobile,
         ];
         if (this.isDesktop) {
             this._updateBreakpointClasses(
-                IViewport.SizeTypes.Desktop,
+                NViewport.SizeTypes.Desktop,
                 viewportSizeTypes,
             );
         }
         else if (this.isTablet) {
             this._updateBreakpointClasses(
-                IViewport.SizeTypes.Tablet,
+                NViewport.SizeTypes.Tablet,
                 viewportSizeTypes,
             );
         }
         else {
             this._updateBreakpointClasses(
-                IViewport.SizeTypes.Mobile,
+                NViewport.SizeTypes.Mobile,
                 viewportSizeTypes,
             );
         }
 
         // set orientation type
-        const orientationTypes: IViewport.OrientationTypes[] = [
-            IViewport.OrientationTypes.Landscape,
-            IViewport.OrientationTypes.Portrait,
+        const orientationTypes: NViewport.OrientationTypes[] = [
+            NViewport.OrientationTypes.Landscape,
+            NViewport.OrientationTypes.Portrait,
         ];
         if (this.isLandscape) {
             this._updateBreakpointClasses(
-                IViewport.OrientationTypes.Landscape,
+                NViewport.OrientationTypes.Landscape,
                 orientationTypes,
             );
         }
         else if (this.isPortrait) {
             this._updateBreakpointClasses(
-                IViewport.OrientationTypes.Portrait,
+                NViewport.OrientationTypes.Portrait,
                 orientationTypes,
             );
         }
@@ -353,7 +281,7 @@ export class Viewport extends Callbacks<
 
         // only when width is changed
         if (width !== prevWidth && height === prevHeight) {
-            this.tbt('w');
+            this.tbt('');
         }
         // only when height is changed
         if (height !== prevHeight && width === prevWidth) {
@@ -374,8 +302,64 @@ export class Viewport extends Callbacks<
         }
 
         // on any change
-        this.tbt(undefined);
+        this.tbt('');
 
+    }
+
+}
+
+
+
+export namespace NViewport {
+
+    /**
+     * Available callbacks
+     */
+    export interface CallbacksTypes extends NCallbacks.CallbacksTypes {
+        /**
+         * When the width is changed regardless of the height
+         */
+        'w': false;
+        /**
+         * When the height is changed regardless of the width
+         */
+        'h': false;
+        /**
+         * When both the width and height are changed
+         */
+        'wh': false;
+        /**
+         * When both the width and height are changed
+         */
+        'hw': false
+        /**
+         * When only the width is changed
+         */
+        'w_': false;
+        /**
+         * When only the height is changed
+         */
+        'h_': false;
+        /**
+         * Any change
+         */
+        '': false;
+    }
+
+    /**
+     * Viewport size types
+     */
+    export enum SizeTypes {
+        Desktop = 'desktop',
+        Tablet = 'tablet',
+        Mobile = 'mobile'
+    }
+    /**
+     * Orientation types
+     */
+    export enum OrientationTypes {
+        Landscape = 'landscape',
+        Portrait = 'portrait'
     }
 
 }
