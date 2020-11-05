@@ -1,11 +1,7 @@
 .vscode
+
 dist/
 node_modules/
-public/
-tests/
-types/
-
-/src/js/ScrollClampPlugin.js
-/src/js/SliderMovePlugin.js
+public-demo/
 
 package-lock.json

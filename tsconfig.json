@@ -11,7 +11,7 @@
         "esModuleInterop": true,
         "moduleResolution": "node",
         "sourceMap": true,
-        "strictBindCallApply": true
+        "experimentalDecorators": true
     },
     "exclude": [
         "node_modules"

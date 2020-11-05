@@ -20,14 +20,7 @@
             "error",
             4
         ],
-        "linebreak-style": [
-            "error",
-            "windows"
-        ],
-        "quotes": [
-            "error",
-            "double"
-        ],
+        "linebreak-style": "off",
         "padded-blocks": "off",
         "no-multiple-empty-lines": [
             "error",
@@ -79,6 +72,9 @@
         "no-bitwise": "off",
         "no-param-reassign": "off",
         "func-names": "off",
+        "no-useless-constructor": "off",
+        "no-mixed-operators": "off",
+        "no-restricted-syntax": "off",
         "@typescript-eslint/no-unused-vars": [
             "error"
         ],

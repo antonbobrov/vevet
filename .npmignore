@@ -1,24 +1,14 @@
 .vscode
 
-docs/
-jsdoc/
+demo/
 node_modules/
-public/
-src/
-tests/
-types/
+public-demo/
 webpack/
 
-/dist/js/ScrollClampPlugin.js
-/dist/js/SliderMovePlugin.js
-
-.babelrc
+.eslintignore
 .eslintrc.json
 .gitignore
-.sass-lint.yml
 .npmignore
-jsdoc.json
-jsdoc.types.json
+.stylelintrc.json
 package-lock.json
-README.md
 tsconfig.json
