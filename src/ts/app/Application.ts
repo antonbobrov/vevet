@@ -1,4 +1,4 @@
-import { Module } from '../../../dist/es';
+import { Module } from '../base/Module';
 import { Load } from './Load';
 import { Viewport } from './Viewport';
 
