@@ -201,6 +201,9 @@ export class Application <
         // set current page name
         this.pagename = this.prop.pagename;
 
+        // add the application to the window
+        window.vevetApp = this;
+
         // /**
         //  * @type {string}
         //  * @private
@@ -229,9 +232,6 @@ export class Application <
         // this.ajax = new AJAXEvent({
         //     v: this
         // });
-
-        // add the application to the window
-        window.vevetApp = this;
 
     }
 
