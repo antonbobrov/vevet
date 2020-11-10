@@ -35,7 +35,9 @@ export class Load extends Callbacks<
         });
 
         // launch callbacks on loaded
-        window.addEventListener('load', this.triggerAll.bind(this));
+        window.addEventListener('load', () => {
+            this.tbt('', false);
+        });
 
     }
 
