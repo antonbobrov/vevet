@@ -25,7 +25,9 @@
     "url": "git+https://github.com/antonbobrov/vevet.git"
   },
   "keywords": [
-    "keyword"
+    "vevet", "application", "app",
+    "viewport", "onresize", "onload", "",
+    "callbacks", "responsive", "properties", "settings"
   ],
   "author": "Anton Bobrov <anton.bobrov@hotmail.com>",
   "license": "MIT",
