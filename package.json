@@ -8,7 +8,7 @@
     "docs": "typedoc --out docs ./src/ts --theme default --hideGenerator",
     "prepare:all": "npm run prepare:es && npm run prepare:cjs && npm run prepare:cdn",
     "prepare:es": "tsc ./src/ts/index.ts --allowJs true --outDir ./dist/es --target es6 --moduleResolution node --declaration true --allowSyntheticDefaultImports true --declarationDir ./dist/types --declarationMap true",
-    "prepare:cjs": "tsc ./src/ts/index.ts --allowJs true --outDir ./dist/cjs --target es5 --module commonjs",
+    "prepare:cjs": "tsc ./src/ts/index.ts --allowJs true --esModuleInterop true --outDir ./dist/cjs --target es5 --module commonjs",
     "prepare:cdn": "NODE_ENV=production webpack --config ./webpack/webpack.cdn.conf.js",
     "demo-build": "NODE_ENV=production webpack --config ./webpack/webpack.build.conf.js",
     "demo-start": "webpack-dev-server --config ./webpack/webpack.dev.conf.js",
