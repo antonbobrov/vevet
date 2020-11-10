@@ -1,3 +1,4 @@
+import { Module } from '../../../dist/es';
 import { Load } from './Load';
 import { Viewport } from './Viewport';
 
@@ -14,7 +15,9 @@ declare global {
 /**
  * Vevet Application
  */
-export class Application {
+export class Application <
+    PageInstance extends Module = Module
+> {
 
     /**
      * Application properties.
@@ -31,12 +34,10 @@ export class Application {
      */
     get defaultProp (): NApplication.Prop {
         return {
-            page: 'home-page',
+            pagename: 'home-page',
             tablet: 1199,
             mobile: 899,
             prefix: 'v-',
-            prefixData: 'data-vevet-',
-            prefixProp: 'vevet-',
             maxAjaxTimeout: 5000,
             easing: [0.25, 0.1, 0.25, 1],
         };
@@ -72,36 +73,22 @@ export class Application {
 
 
     /**
-     * Document element.
-     */
-    protected _doc = document;
-    /**
      * Get document element.
      */
     get doc () {
-        return this._doc;
+        return document;
     }
-
-    /**
-     * HTML element.
-     */
-    protected _html = document.documentElement;
     /**
      * Get HTML element
      */
     get html () {
-        return this._html;
+        return document.documentElement;
     }
-
-    /**
-     * Body element.
-     */
-    protected _body = document.body;
     /**
      * Get body element.
      */
     get body () {
-        return this._body;
+        return document.body;
     }
 
 
@@ -109,24 +96,41 @@ export class Application {
     /**
      * Name of the current page.
      */
-    protected _page = '';
+    protected _pagename = '';
     /**
      * Set page name.
      */
-    set page (name: string) {
+    set pagename (name: string) {
         this._setPageName(name);
     }
     /**
      * Get name of the page.
      */
-    get page () {
-        return this._page;
+    get pagename () {
+        return this._pagename;
     }
+
     /**
      * Check if the current page has the same name.
      */
     isPageName (val: string): boolean {
-        return this._page === val;
+        return this._pagename === val;
+    }
+
+    /**
+     * Set name of the page
+     */
+    protected _setPageName (name: string) {
+
+        // remove old classes
+        this.html.classList.remove(`${this.prefix}page_${this.pagename}`);
+
+        // set classes & push to pages
+        this.html.classList.add(`${this.prefix}page_${name}`);
+
+        // replace pages array
+        this._pagename = name;
+
     }
 
 
@@ -134,24 +138,30 @@ export class Application {
     /**
      * Pages (modules).
      */
-    protected _vevetPages: [] = [];
+    protected _pages: PageInstance[] = [];
     /**
      * Get an array of existing pages.
      * A new element is added to the array when {@linkcode Vevet.Page#create} is called.
      */
-    get vevetPages () {
-        return this._vevetPages;
+    get pages () {
+        return this._pages;
     }
 
     /**
      * Current Page (module).
      */
-    protected _vevetPage: false | any = false;
+    protected _page: false | PageInstance = false;
     /**
      * Get the current page module.
      */
-    get vevetPage () {
-        return this._vevetPage;
+    get page () {
+        return this._page;
+    }
+    /**
+     * Set the current page module.
+     */
+    set page (val: false | PageInstance) {
+        this._page = val;
     }
 
 
@@ -189,10 +199,7 @@ export class Application {
         this._sayHi();
 
         // set current page name
-        this.page = this.prop.page;
-
-        // add the application to the window
-        window.vevetApp = this;
+        this.pagename = this.prop.pagename;
 
         // /**
         //  * @type {string}
@@ -223,6 +230,9 @@ export class Application {
         //     v: this
         // });
 
+        // add the application to the window
+        window.vevetApp = this;
+
     }
 
 
@@ -248,24 +258,6 @@ export class Application {
 
 
 
-    /**
-     * Set name of the page
-     */
-    protected _setPageName (name: string) {
-
-        // remove old classes
-        this._html.classList.remove(`${this._prefix}page_${this._page}`);
-
-        // set classes & push to pages
-        this._html.classList.add(`${this._prefix}page_${name}`);
-
-        // replace pages array
-        this._page = name;
-
-    }
-
-
-
     // /**
     //  * @description Get browser name and set it as a class to the HTML element.
     // See {@linkcode Vevet.getBrowserName}
@@ -274,9 +266,9 @@ export class Application {
     //  */
     // get browser() {
 
-    //     this._html.classList.remove(`${this._prefix}browser_${this._browser}`);
+    //     this._html.classList.remove(`${this.prefix}browser_${this._browser}`);
     //     this._browser = getBrowserName();
-    //     this._html.classList.add(`${this._prefix}browser_${this._browser}`);
+    //     this._html.classList.add(`${this.prefix}browser_${this._browser}`);
 
     //     return this._browser;
 
@@ -290,9 +282,9 @@ export class Application {
     //  */
     // get os() {
 
-    //     this._html.classList.remove(`${this._prefix}os_${this._os}`);
+    //     this._html.classList.remove(`${this.prefix}os_${this._os}`);
     //     this._os = getOsName();
-    //     this._html.classList.add(`${this._prefix}os_${this._os}`);
+    //     this._html.classList.add(`${this.prefix}os_${this._os}`);
 
     //     return this._os;
 
@@ -312,7 +304,7 @@ export namespace NApplication {
          * Page name
          * @default 'home-page'
          */
-        page?: string;
+        pagename?: string;
         /**
          * Tablet identification max width
          * @default 1199
@@ -328,16 +320,6 @@ export namespace NApplication {
          * @default 'vevet-'
          */
         prefix?: string;
-        /**
-         * Prefix for data attributes in modules
-         * @default 'data-vevet-'
-         */
-        prefixData?: string;
-        /**
-         * Prefix for properties in modules
-         * @default 'vevet-''
-         */
-        prefixProp?: string;
         /**
          * Maximum timeout of waiting for a response from an ajax request
          * @default 5000
