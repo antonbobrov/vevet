@@ -9,7 +9,7 @@ export class Callbacks<
     /**
      * Module Callbacks
      */
-    Types extends NCallbacks.CallbacksTypes
+    Types extends NCallbacks.CallbacksTypes = NCallbacks.CallbacksTypes
 > {
 
     /**
@@ -20,7 +20,7 @@ export class Callbacks<
     /**
      * All callbacks
      */
-    protected _callbacks: NCallbacks.CallbackData<Types>[];
+    protected _callbacks: NCallbacks.CallbacksData<Types>[];
     /**
      * Get all callbacks
      */
@@ -83,10 +83,10 @@ export class Callbacks<
         target: Target,
         func: NCallbacks.CallbackSettings<Types, Target>['do'],
         data: NCallbacks.CallbackBaseSettings = {},
-    ): NCallbacks.AddCallback {
+    ): NCallbacks.AddedCallback {
 
         const id = generateID('callback');
-        const obj = {
+        const obj: NCallbacks.CallbacksData<Types> = {
             id,
             on: true,
             data: {
@@ -124,7 +124,7 @@ export class Callbacks<
     ): boolean {
 
         const callbacks = this._callbacks;
-        const newCallbacks: NCallbacks.CallbackData<Types>[] = [];
+        const newCallbacks: NCallbacks.CallbacksData<Types>[] = [];
         let removed = false;
 
         for (let i = 0, l = callbacks.length; i < l; i++) {
@@ -219,7 +219,7 @@ export class Callbacks<
      */
     public get (
         id: string,
-    ): false | NCallbacks.CallbackData<Types> {
+    ): false | NCallbacks.CallbacksData<Types> {
 
         const callbacks = this._callbacks;
 
@@ -237,9 +237,9 @@ export class Callbacks<
     /**
      * Trigger a callback. It will work only if the callback is enabled.
      */
-    protected _trigger (
-        callback: NCallbacks.CallbackData<Types>,
-        arg: false | any = false,
+    protected _trigger <Target extends keyof Types> (
+        callback: NCallbacks.SingleCallbackData<Types, Target>,
+        arg: Types[Target],
     ) {
 
         // check if enabled
@@ -297,22 +297,11 @@ export class Callbacks<
     }
 
     /**
-     * Trigger all existing callbacks.
-     */
-    public triggerAll () {
-
-        for (let i = 0, l = this._callbacks.length; i < l; i++) {
-            this._trigger(this._callbacks[i]);
-        }
-
-    }
-
-    /**
      * Trigger all enabled callbacks under a certain target name. (TBT: Trigger by target).
      */
     public tbt <T extends keyof Types> (
         target: T,
-        arg: false | Types[T] = false,
+        arg: Types[T],
     ) {
 
         for (let i = 0; i < this._callbacks.length; i++) {
@@ -357,7 +346,7 @@ export namespace NCallbacks {
         Types, Target extends keyof Types
     > extends CallbackBaseSettings {
         target: Target;
-        do: Types[Target] extends false ? () => void : (arg: Types[Target]) => void;
+        do: (arg: Types[Target]) => void;
     }
 
     /**
@@ -368,7 +357,7 @@ export namespace NCallbacks {
     /**
      * Callback Full Data
      */
-    export type CallbackData<Types> = {
+    export type CallbacksData<Types> = {
         /**
          * ID of the callback
          */
@@ -383,7 +372,22 @@ export namespace NCallbacks {
         data: CallbackSettings<Types, keyof Types>;
     }
 
-    export interface AddCallback {
+    export type SingleCallbackData<Types, Target extends keyof Types> = {
+        /**
+         * ID of the callback
+         */
+        id: string;
+        /**
+         * Defines if the callback is enabled
+         */
+        on: boolean;
+        /**
+         * Callback Data
+         */
+        data: CallbackSettings<Types, Target>;
+    }
+
+    export interface AddedCallback {
         /**
          * ID of the callback
          */
