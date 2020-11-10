@@ -1,17 +1,25 @@
-import { Application, IApplication } from "./app/Application";
-import { Load, ILoad } from "./app/Load";
-import { Viewport, IViewport } from "./app/Viewport";
+import * as CommonUtils from './utils/common';
+import * as MathUtils from './utils/math';
 
-import { Callbacks, ICallbacks } from "./base/Callbacks";
-import { Module, IModule } from "./base/Module";
+import { Application, NApplication } from './app/Application';
+import { Load, NLoad } from './app/Load';
+import { Viewport, NViewport } from './app/Viewport';
+
+import { Callbacks, NCallbacks } from './base/Callbacks';
+import { ResponsiveProp, NResponsiveProp } from './base/ResponsiveProp';
+import { Module, NModule } from './base/Module';
 
 export {
 
-    Application, IApplication,
-    Load, ILoad,
-    Viewport, IViewport,
+    CommonUtils,
+    MathUtils,
 
-    Callbacks, ICallbacks,
-    Module, IModule,
+    Application, NApplication,
+    Load, NLoad,
+    Viewport, NViewport,
+
+    Callbacks, NCallbacks,
+    ResponsiveProp, NResponsiveProp,
+    Module, NModule,
 
 };
