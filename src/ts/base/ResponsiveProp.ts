@@ -80,7 +80,7 @@ export class ResponsiveProp<
     /**
      * Viewport callback
      */
-    protected _viewportCallback: NCallbacks.AddCallback;
+    protected _viewportCallback: NCallbacks.AddedCallback;
 
 
 
