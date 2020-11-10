@@ -13,12 +13,10 @@
  * scopeProgress(.35, [.25, 1]);
  * // => .133
  */
-function scopeProgress (
+export default function scopeProgress (
     time: number,
     scope: number[] = [0, 1],
 ) {
     const result = (time - scope[0]) / (scope[1] - scope[0]);
     return result;
 }
-
-export default scopeProgress;

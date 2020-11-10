@@ -15,7 +15,7 @@
  * boundProgress(1.5, [.25, 1]);
  * // => 1
  */
-function boundProgress (
+export default function boundProgress (
     progress: number,
     scope: number[] = [0, 1],
 ) {
@@ -27,5 +27,3 @@ function boundProgress (
     }
     return progress;
 }
-
-export default boundProgress;
