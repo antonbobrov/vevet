@@ -10,10 +10,6 @@ import mergeWithoutArrays from '../utils/common/mergeWithoutArrays';
  */
 export class Module<
     /**
-     * Module Callbacks
-     */
-    CallbacksTypes extends NModule.CallbacksTypes = NModule.CallbacksTypes,
-    /**
      * Static Properties (won't change)
      */
     StatProp extends NModule.StatProp = NModule.StatProp,
@@ -21,6 +17,10 @@ export class Module<
      * Changeable Properties
      */
     ResProp extends NModule.ResProp = NModule.ResProp,
+    /**
+     * Module Callbacks
+     */
+    CallbacksTypes extends NModule.CallbacksTypes = NModule.CallbacksTypes,
 > {
 
 
@@ -43,12 +43,12 @@ export class Module<
         return mergeWithoutArrays(this.dp, {
             callbacks: [],
             responsive: [],
-        }) as (StatProp & ResProp) & NResponsiveProp.Prop<ResProp>;
+        });
     }
     /**
      * Get Default properties (should be extended)
      */
-    get dp () {
+    get dp (): StatProp & ResProp {
         return {} as (StatProp & ResProp);
     }
 
@@ -140,15 +140,6 @@ export class Module<
 
 
     /**
-     * Create Callbacks
-     */
-    protected _createCallbacks () {
-
-        this._callbacks = new Callbacks<CallbacksTypes>();
-
-    }
-
-    /**
      * Create Module Properties
      */
     protected _createProp<
@@ -157,6 +148,15 @@ export class Module<
 
         // extend properties
         this._prop = mergeWithoutArrays(this.defaultProp, data);
+
+    }
+
+    /**
+     * Create Callbacks
+     */
+    protected _createCallbacks () {
+
+        this._callbacks = new Callbacks<CallbacksTypes>();
 
     }
 
@@ -182,8 +182,7 @@ export class Module<
         this._prop = this._resProp.prop as C;
 
         // destroy responsive properties when the module is destroyed
-        // @ts-ignore
-        this.callbacks.add('changeProp', () => {
+        this.callbacks.add('destroy', () => {
             this._resProp.destroy();
         });
 
@@ -233,7 +232,7 @@ export class Module<
      */
     public changeProp (prop: ResProp = {} as ResProp) {
         this._resProp.changeProp(prop);
-        this._callbacks.tbt('changeProp');
+        this._callbacks.tbt('changeProp', false);
     }
 
     /**
@@ -250,6 +249,8 @@ export class Module<
      */
     public destroy () {
 
+        this._callbacks.tbt('destroy', false);
+
         this._destroy();
 
     }
@@ -259,7 +260,7 @@ export class Module<
      */
     protected _destroy () {
 
-        this._callbacks.tbt('destroy');
+        this._callbacks.tbt('destroy', false);
 
     }
 
@@ -279,9 +280,9 @@ export namespace NModule {
          * Parent module
          */
         parent?: Module<
-            CallbacksTypes,
             StatProp,
-            ResProp
+            ResProp,
+            CallbacksTypes
         >;
     }
     export interface ResProp { }
