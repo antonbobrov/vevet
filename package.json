@@ -25,9 +25,17 @@
     "url": "git+https://github.com/antonbobrov/vevet.git"
   },
   "keywords": [
-    "vevet", "application", "app",
-    "viewport", "onresize", "onload", "",
-    "callbacks", "responsive", "properties", "settings"
+    "vevet",
+    "application",
+    "app",
+    "viewport",
+    "onresize",
+    "onload",
+    "",
+    "callbacks",
+    "responsive",
+    "properties",
+    "settings"
   ],
   "author": "Anton Bobrov <anton.bobrov@hotmail.com>",
   "license": "MIT",
@@ -75,6 +83,6 @@
     "isarray": "^2.0.5",
     "ismobilejs": "^1.1.1",
     "lodash.mergewith": "^4.6.2",
-    "vevet-dom": "0.0.4"
+    "vevet-dom": "0.0.11"
   }
 }
