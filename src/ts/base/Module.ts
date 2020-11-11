@@ -41,7 +41,6 @@ export class Module<
      */
     get defaultProp () {
         return mergeWithoutArrays(this.dp, {
-            callbacks: [],
             responsive: [],
         });
     }
