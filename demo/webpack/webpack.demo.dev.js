@@ -1,10 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
-const webpack = require('webpack');
+const path = require('path');
 const { merge } = require('webpack-merge');
-const baseWebpackConfig = require('./webpack.base.conf');
+const webpack = require('webpack');
+const demoConfig = require('./base');
+const baseConfig = require('../../config/webpack.base');
 
-const devWebpackConfig = merge(baseWebpackConfig, {
+const config = merge(baseConfig, demoConfig, {
 
     mode: 'development',
 
@@ -16,12 +18,11 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     },
 
     devServer: {
-        contentBase: baseWebpackConfig.externals.paths.public,
+        contentBase: path.join(__dirname, '../public'),
         open: true,
         compress: true,
         disableHostCheck: true,
         port: 8080,
-        // host: "0.0.0.0",
         overlay: {
             warnings: true,
             errors: true,
@@ -40,5 +41,5 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 });
 
 module.exports = new Promise((resolve) => {
-    resolve(devWebpackConfig);
+    resolve(config);
 });

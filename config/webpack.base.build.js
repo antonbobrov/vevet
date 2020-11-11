@@ -1,50 +1,14 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
-const NODE_ENV = process.env.NODE_ENV || 'development';
-const webpack = require('webpack');
+const { merge } = require('webpack-merge');
 const TerserPlugin = require('terser-webpack-plugin');
-const paths = require('./paths').PATHS;
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const preamble = require('./preamble');
+const baseConfig = require('./webpack.base');
 
-module.exports = {
+const config = merge(baseConfig, {
 
     mode: 'production',
-
-    entry: {
-        index: `${paths.cdn.src}/index.ts`,
-    },
-    output: {
-        filename: '[name].js',
-        path: paths.cdn.public,
-        publicPath: '/',
-    },
-
-    resolve: {
-        extensions: ['.ts', '.js', '.json'],
-    },
-
-    module: {
-
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader',
-            },
-            {
-                test: /\.ts?$/,
-                exclude: /node_modules/,
-                loaders: ['babel-loader', 'ts-loader'],
-            },
-        ],
-
-    },
-
-    plugins: [
-        new webpack.DefinePlugin({
-            NODE_ENV: JSON.stringify(NODE_ENV),
-        }),
-    ],
 
     optimization: {
         minimize: true,
@@ -73,4 +37,14 @@ module.exports = {
         sideEffects: true,
     },
 
-};
+    plugins: [
+        new CleanWebpackPlugin({
+            verbose: false,
+            cleanStaleWebpackAssets: true,
+            dry: false,
+        }),
+    ],
+
+});
+
+module.exports = config;

@@ -9,9 +9,9 @@
     "prepare:all": "npm run prepare:es && npm run prepare:cjs && npm run prepare:cdn",
     "prepare:es": "tsc ./src/ts/index.ts --allowJs true --outDir ./dist/es --target es6 --moduleResolution node --declaration true --allowSyntheticDefaultImports true --declarationDir ./dist/types --declarationMap true",
     "prepare:cjs": "tsc ./src/ts/index.ts --allowJs true --esModuleInterop true --outDir ./dist/cjs --target es5 --module commonjs",
-    "prepare:cdn": "NODE_ENV=production webpack --config ./webpack/webpack.cdn.conf.js",
-    "demo-build": "NODE_ENV=production webpack --config ./webpack/webpack.build.conf.js",
-    "demo-start": "webpack-dev-server --config ./webpack/webpack.dev.conf.js",
+    "prepare:cdn": "NODE_ENV=production webpack --config ./src/cdn/webpack.cdn.js",
+    "demo-build": "NODE_ENV=production webpack --config ./demo/webpack/webpack.demo.build.js",
+    "demo-dev": "webpack-dev-server --config ./demo/webpack/webpack.demo.dev.js",
     "lint:js": "eslint . --ext .ts,.js",
     "lint:scss": "npx stylelint \"**/*.scss\"",
     "precommit": "npm run lint:js && npm run lint:scss"
