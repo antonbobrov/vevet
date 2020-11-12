@@ -9,6 +9,9 @@ import { Callbacks, NCallbacks } from './base/Callbacks';
 import { ResponsiveProp, NResponsiveProp } from './base/ResponsiveProp';
 import { Module, NModule } from './base/Module';
 
+import { Ctx2D, NCtx2D } from './components/canvas/Ctx2D';
+import { Ctx2DPrerender, NCtx2DPrerender } from './components/canvas/Ctx2DPrerender';
+
 export {
 
     CommonUtils,
@@ -21,5 +24,8 @@ export {
     Callbacks, NCallbacks,
     ResponsiveProp, NResponsiveProp,
     Module, NModule,
+
+    Ctx2D, NCtx2D,
+    Ctx2DPrerender, NCtx2DPrerender,
 
 };
