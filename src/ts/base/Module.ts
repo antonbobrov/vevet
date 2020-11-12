@@ -274,6 +274,9 @@ export class Module<
  */
 export namespace NModule {
 
+    /**
+     * Static properties
+     */
     export interface StatProp {
         /**
          * Parent module
@@ -284,6 +287,10 @@ export namespace NModule {
             CallbacksTypes
         >;
     }
+
+    /**
+     * Responsive properties
+     */
     export interface ResProp { }
 
     /**
