@@ -35,7 +35,10 @@
     "callbacks",
     "responsive",
     "properties",
-    "settings"
+    "settings",
+    "canvas",
+    "ctx2d",
+    "prerender"
   ],
   "author": "Anton Bobrov <anton.bobrov@hotmail.com>",
   "license": "MIT",
