@@ -113,8 +113,7 @@ export class Module<
      * const mod = new Module();
      */
     constructor (
-        data: (StatProp & ResProp) & NResponsiveProp.Prop<ResProp>
-        = {} as (StatProp & ResProp) & NResponsiveProp.Prop<ResProp>,
+        data: (StatProp & ResProp) & NResponsiveProp.Prop<ResProp>,
         init = true,
     ) {
 
