@@ -5,7 +5,7 @@
   "scripts": {
     "release": "npm publish",
     "prepare": "npm version patch && npm run prepare:all && npm run docs && npm run demo-build",
-    "docs": "typedoc --out docs ./src/ts --theme default --hideGenerator",
+    "docs": "typedoc --out docs ./src/ts --theme default --hideGenerator --plugin typedoc-plugin-nojekyll",
     "prepare:all": "npm run prepare:es && npm run prepare:cjs && npm run prepare:cdn",
     "prepare:es": "tsc ./src/ts/index.ts --allowJs true --outDir ./dist/es --target es6 --moduleResolution node --declaration true --allowSyntheticDefaultImports true --declarationDir ./dist/types --declarationMap true",
     "prepare:cjs": "tsc ./src/ts/index.ts --allowJs true --esModuleInterop true --outDir ./dist/cjs --target es5 --module commonjs",
@@ -62,6 +62,7 @@
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
     "mini-css-extract-plugin": "^0.10.0",
+    "normalize-scss": "^7.0.1",
     "postcss-loader": "^3.0.0",
     "sass": "^1.26.10",
     "sass-loader": "^10.0.1",
@@ -72,12 +73,12 @@
     "terser-webpack-plugin": "^4.1.0",
     "ts-loader": "^8.0.3",
     "typedoc": "^0.18.0",
+    "typedoc-plugin-nojekyll": "^1.0.1",
     "typescript": "^4.0.2",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
-    "webpack-merge": "^5.1.2",
-    "normalize-scss": "^7.0.1"
+    "webpack-merge": "^5.1.2"
   },
   "dependencies": {
     "@types/isarray": "^2.0.0",
