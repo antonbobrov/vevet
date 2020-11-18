@@ -1,7 +1,11 @@
+import { detect } from 'detect-browser';
 import { Module } from '../base/Module';
 import { Load } from './Load';
 import { Viewport } from './Viewport';
 
+
+
+const browser = detect();
 
 
 declare global {
@@ -193,6 +197,15 @@ export class Application <
 
 
     /**
+     * Get agent info
+     */
+    get agent () {
+        return browser;
+    }
+
+
+
+    /**
      * @description Initialize the class
      */
     protected _init () {
@@ -205,17 +218,6 @@ export class Application <
 
         // add the application to the window
         window.vevetApp = this;
-
-        // /**
-        //  * @type {string}
-        //  * @private
-        //  */
-        // this._browser = getBrowserName();
-        // /**
-        //  * @type {string}
-        //  * @private
-        //  */
-        // this._os = getOsName();
 
         // create default helpers
         this._load = new Load();
@@ -257,40 +259,6 @@ export class Application <
         console.log('%c%s', style, msg);
 
     }
-
-
-
-    // /**
-    //  * @description Get browser name and set it as a class to the HTML element.
-    // See {@linkcode Vevet.getBrowserName}
-    //  * @readonly
-    //  * @type {string}
-    //  */
-    // get browser() {
-
-    //     this._html.classList.remove(`${this.prefix}browser_${this._browser}`);
-    //     this._browser = getBrowserName();
-    //     this._html.classList.add(`${this.prefix}browser_${this._browser}`);
-
-    //     return this._browser;
-
-    // }
-
-    // /**
-    //  * @description Get the operating system name and set it as a class
-    // to the HTML element. See {@linkcode Vevet.getOSName}
-    //  * @readonly
-    //  * @type {string}
-    //  */
-    // get os() {
-
-    //     this._html.classList.remove(`${this.prefix}os_${this._os}`);
-    //     this._os = getOsName();
-    //     this._html.classList.add(`${this.prefix}os_${this._os}`);
-
-    //     return this._os;
-
-    // }
 
 }
 

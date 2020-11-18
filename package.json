@@ -83,6 +83,7 @@
   "dependencies": {
     "@types/isarray": "^2.0.0",
     "@types/lodash.mergewith": "^4.6.6",
+    "detect-browser": "^5.2.0",
     "get-image-pos": "0.0.7",
     "isarray": "^2.0.5",
     "ismobilejs": "^1.1.1",
