@@ -279,30 +279,37 @@ export class Viewport extends Callbacks<
         // copy size
         const { width, height } = this;
 
+        // get changes in viewport
+        const changes: NViewport.Changes = {
+            width: width !== prevWidth,
+            height: height !== prevHeight,
+            orientation: (width > height) !== (prevWidth > prevHeight),
+        };
+
         // only when width is changed
         if (width !== prevWidth && height === prevHeight) {
-            this.tbt('', false);
+            this.tbt('', changes);
         }
         // only when height is changed
         if (height !== prevHeight && width === prevWidth) {
-            this.tbt('h', false);
+            this.tbt('h', changes);
         }
         // when height & width are changed
         if (width !== prevWidth && height !== prevHeight) {
-            this.tbt('wh', false);
-            this.tbt('hw', false);
+            this.tbt('wh', changes);
+            this.tbt('hw', changes);
         }
         // when width is changed
         if (width !== prevWidth) {
-            this.tbt('w_', false);
+            this.tbt('w_', changes);
         }
         // when height changed
         if (height !== prevHeight) {
-            this.tbt('h_', false);
+            this.tbt('h_', changes);
         }
 
         // on any change
-        this.tbt('', false);
+        this.tbt('', changes);
 
     }
 
@@ -319,31 +326,40 @@ export namespace NViewport {
         /**
          * When the width is changed regardless of the height
          */
-        'w': false;
+        'w': Changes;
         /**
          * When the height is changed regardless of the width
          */
-        'h': false;
+        'h': Changes;
         /**
          * When both the width and height are changed
          */
-        'wh': false;
+        'wh': Changes;
         /**
          * When both the width and height are changed
          */
-        'hw': false
+        'hw': Changes
         /**
          * When only the width is changed
          */
-        'w_': false;
+        'w_': Changes;
         /**
          * When only the height is changed
          */
-        'h_': false;
+        'h_': Changes;
         /**
          * Any change
          */
-        '': false;
+        '': Changes;
+    }
+
+    /**
+     * Callbacks argument. Changes in viewport
+     */
+    export interface Changes {
+        width: boolean;
+        height: boolean;
+        orientation: boolean;
     }
 
     /**
