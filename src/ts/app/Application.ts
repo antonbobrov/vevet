@@ -60,7 +60,9 @@ export class Application <
      *     page: 'home-page'
      * });
      */
-    constructor (data: NApplication.Prop) {
+    constructor (
+        data: NApplication.Prop = {},
+    ) {
 
         this._prop = Object.assign(this.defaultProp, data);
         this._prefix = this.prop.prefix;
