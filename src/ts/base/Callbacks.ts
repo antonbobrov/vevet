@@ -311,6 +311,24 @@ export class Callbacks<
         }
 
     }
+
+
+
+    /**
+     * Destroy the callbacks
+     */
+    public destroy () {
+
+        // remove all callbakcs, event protected
+        const callbacks = this._callbacks;
+        for (let i = 0, l = callbacks.length; i < l; i++) {
+            const callback = callbacks[i];
+            this._onRemove(callback.id);
+        }
+        this._callbacks = [];
+
+    }
+
 }
 
 
