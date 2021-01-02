@@ -8,13 +8,13 @@ export default function mergeWithoutArrays <
     A extends Record<string, any>,
     B extends Record<string, any>,
 > (
-    obj: A,
-    source: B,
+    source: A,
+    obj: B,
 ): A & B {
     return mergeWith(obj, source, (objValue, srcValue) => {
         if (isarray(objValue)) {
             return srcValue as Record<string, any>;
         }
-        return {};
+        return objValue;
     });
 }
