@@ -10,60 +10,48 @@ import mergeWithoutArrays from '../utils/common/mergeWithoutArrays';
  */
 export class Module<
     /**
-     * Static Properties (won't change)
+     * All Properties
      */
-    StatProp extends NModule.StatProp = NModule.StatProp,
+    AllProp extends NModule.AllProp,
     /**
-     * Changeable Properties
+     * Responsive Properties (may change on window resize, a part of the first object)
      */
-    ResProp extends NModule.ResProp = NModule.ResProp,
+    ResProp extends NModule.MutableProp,
+    /**
+     * Properties that may be changed through {@linkcode Module#changeProp}
+     * (a part of the first object)
+     */
+    ChangeableProp extends NModule.MutableProp,
     /**
      * Module Callbacks
      */
-    CallbacksTypes extends NModule.CallbacksTypes = NModule.CallbacksTypes,
+    CallbacksTypes extends NModule.CallbacksTypes,
 > {
 
 
 
     /**
-     * Module Properties
+     * Get Default properties (should be extended)
      */
-    protected _prop: (StatProp & ResProp) & NResponsiveProp.Prop<ResProp>;
-    /**
-     * Get Module Properties
-     */
-    get prop () {
-        return this._prop;
+    protected get defaultProp () {
+        return {} as AllProp;
     }
 
     /**
-     * Get Default properties.
+     * Current properties
      */
-    get defaultProp () {
-        return mergeWithoutArrays(this.dp, {
-            responsive: [],
-        });
-    }
-    /**
-     * Get Default properties (should be extended)
-     */
-    get dp (): StatProp & ResProp {
-        return {} as (StatProp & ResProp);
+    get prop () {
+        return this._resProp.prop as NModule.AllProp;
     }
 
     /**
      * Responsive properties
      */
     protected _resProp: ResponsiveProp<
-        StatProp,
-        ResProp
+        AllProp,
+        ResProp,
+        ChangeableProp
     >;
-    /**
-     * Get Responsive Properties (Module)
-     */
-    get rp () {
-        return this._resProp;
-    }
 
 
 
@@ -93,40 +81,40 @@ export class Module<
     }
 
     /**
-     * Module name
-     */
-    protected _name: string;
-    /**
      * Get module name
      */
     get name () {
-        return this._name;
+        return this.constructor.name;
     }
 
 
 
     /**
-     * @param data
-     * @param init - Defines if you need to call {@linkcode Module#init} at the constructor's end.
-     *
      * @example
      * const mod = new Module();
      */
     constructor (
-        data: (StatProp & ResProp) & NResponsiveProp.Prop<ResProp>,
+        /**
+         * Properties on script start
+         */
+        initialProp: AllProp = {} as AllProp,
+        /**
+         * Responsive rules
+         */
+        responsiveRules: NResponsiveProp.Responsive<ResProp>[] = [],
+        /**
+         * Defines if you need to call {@linkcode Module#init} at the constructor's end.
+         */
         init = true,
     ) {
 
         // set vars
         this._app = window.vevetApp;
-        this._name = this.constructor.name;
 
-        // create properties
-        this._createProp(data);
         // create callbacks
         this._createCallbacks();
         // create responsive properties
-        this._createResProp();
+        this._createResProp(initialProp, responsiveRules);
 
         // initialize
         if (init) {
@@ -138,18 +126,6 @@ export class Module<
 
 
     /**
-     * Create Module Properties
-     */
-    protected _createProp<
-        C extends ((StatProp & ResProp) & NResponsiveProp.Prop<ResProp>)
-    >(data: C = {} as C) {
-
-        // extend properties
-        this._prop = mergeWithoutArrays(this.defaultProp, data);
-
-    }
-
-    /**
      * Create Callbacks
      */
     protected _createCallbacks () {
@@ -159,29 +135,29 @@ export class Module<
     }
 
     /**
-     * Create Responsive Module Properties
+     * Create Responsive Properties
      */
     protected _createResProp<
-        C extends ((StatProp & ResProp) & NResponsiveProp.Prop<ResProp>)
-    >(data: C = {} as C) {
+        InitPropData extends AllProp,
+        ResPropData extends NResponsiveProp.Responsive<ResProp>[]
+    > (initialProp: InitPropData, responsiveRules: ResPropData) {
+
+        const prop = mergeWithoutArrays(this.defaultProp, initialProp);
 
         // create responsive properties
-        this._resProp = new ResponsiveProp<
-            StatProp, ResProp
-        >(
-            data,
+        this._resProp = new ResponsiveProp(
+            prop,
+            responsiveRules,
+            this._onPropResponsive.bind(this),
             this._onPropChange.bind(this),
-            this._onPropChange.bind(this),
-            this._name,
+            this.name,
         );
-
-        // bind properties // because if they have responsive settings,
-        // they may change on initialization
-        this._prop = this._resProp.prop as C;
 
         // destroy responsive properties when the module is destroyed
         this.callbacks.add('destroy', () => {
             this._resProp.destroy();
+        }, {
+            protected: true,
         });
 
     }
@@ -228,15 +204,25 @@ export class Module<
      *     cute: false
      * });
      */
-    public changeProp (prop: ResProp = {} as ResProp) {
+    public changeProp (prop: ChangeableProp = {} as ChangeableProp) {
         this._resProp.changeProp(prop);
         this._callbacks.tbt('changeProp', false);
     }
 
     /**
+     * The method that is called on window resize and properties change.
+     */
+    protected _onPropResponsive () {
+        // code
+    }
+
+    /**
      * The method that is called on properties change.
      */
-    protected _onPropChange () {
+    protected _onPropChange (
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        changedProp: ChangeableProp,
+    ) {
         // code
     }
 
@@ -259,6 +245,7 @@ export class Module<
     protected _destroy () {
 
         this._callbacks.tbt('destroy', false);
+        this._callbacks.destroy();
 
     }
 
@@ -282,15 +269,21 @@ export namespace NModule {
          */
         parent?: Module<
             StatProp,
-            ResProp,
+            MutableProp,
+            MutableProp,
             CallbacksTypes
         >;
     }
 
     /**
+     * Properties that may change
+     */
+    export interface MutableProp {}
+
+    /**
      * Responsive properties
      */
-    export interface ResProp { }
+    export interface AllProp extends StatProp, MutableProp { }
 
     /**
      * Available callbacks

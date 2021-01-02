@@ -22,13 +22,18 @@ import { NCallbacks } from './Callbacks';
  */
 export class ResponsiveProp<
     /**
-     * Static Properties (they cannot be changed on viewport resize)
+     * All Properties
      */
-    StatProp extends Record<string, any>,
+    AllProp extends Record<string, any>,
     /**
-     * Mutable Properties
+     * Responsive Properties (may change on window resize, a part of the first object)
      */
-    ResProp extends Record<string, any>
+    ResProp extends Record<string, any>,
+    /**
+     * Properties that may be changed through {@linkcode Module#changeProp}
+     * (a part of the first object)
+     */
+    ChangeableProp extends Record<string, any>
 > {
 
     /**
@@ -37,38 +42,27 @@ export class ResponsiveProp<
     protected _app: Application;
 
     /**
-     * A callback that is launched when properties are changed
-     * through {@linkcode ResponsiveProp#changeProp}
-     */
-    protected _onChange: () => void;
-
-    /**
-     * A callback that is launched when properties are changed on window resize
-     */
-    protected _onResponsive: () => void;
-
-    /**
-     * Name of the responsive properties.
-     */
-    protected _name: string;
-
-    /**
      * The properties that were set while initialization.
      * These properties do not change throughout time.
      */
-    protected _initProp: (StatProp & ResProp & NResponsiveProp.Prop<ResProp>);
+    protected _initProp: AllProp;
 
     /**
      * @description Reference properties.
      * These properties may change only through {@linkcode ResponsiveProp#changeProp}.
      */
-    protected _refProp: (StatProp & ResProp & NResponsiveProp.Prop<ResProp>);
+    protected _refProp: AllProp;
 
     /**
      * Current properties.
-     * These properties may change both on resize and {@linkcode ResponsiveProp#changeProp}.
+     * These properties may change both on {@linkcode ResponsiveProp#changeProp} and resize.
      */
-    protected _prop: (StatProp & ResProp & NResponsiveProp.Prop<ResProp>);
+    protected _prop: AllProp;
+
+    /**
+     * A set of responsive rules
+     */
+    protected _resRules: NResponsiveProp.Responsive<ResProp>[];
 
     /**
      * Get current properties
@@ -86,39 +80,43 @@ export class ResponsiveProp<
 
     /**
      * @example
-     * const data = {
+     * const static = {
      *      myProp: true,
-     *      responsive: [
-     *          {
-     *              breakpoint: 'm',
-     *              settings: {
-     *                  myProp: false
-     *              }
-     *          }
-     *      ]
      * };
-     * const prop = new ResponsiveProp(data);
+     * const responsive = [
+     *      {
+     *          breakpoint: 'm',
+     *          settings: {
+     *              myProp: false
+     *          }
+     *      }
+     * ];
+     * const prop = new ResponsiveProp(static, responsive);
      */
     constructor (
-        data: (
-            StatProp & ResProp & NResponsiveProp.Prop<ResProp>
-        ) = {} as (
-            StatProp & ResProp & NResponsiveProp.Prop<ResProp>
-        ),
-        onChange: () => void = () => {},
-        onResponsive: () => void = () => {},
-        name = '',
+        initialProp: AllProp = {} as AllProp,
+        responsiveRules: NResponsiveProp.Responsive<ResProp>[] = [],
+        /**
+         * A callback that is launched when properties are changed on window resize
+         */
+        protected _onResponsive: () => void = () => {},
+        /**
+         * A callback that is launched when properties are changed
+         * through {@linkcode ResponsiveProp#changeProp}
+         */
+        protected _onChange: (prop: ChangeableProp) => void = () => {},
+        /**
+         * Name of the responsive properties.
+         */
+        protected _name = 'Responsive Prop',
     ) {
 
         this._app = window.vevetApp;
-        this._onChange = onChange;
-        this._onResponsive = onResponsive;
-        this._name = `${this.constructor.name} ${name}`;
 
-        this._initProp = data;
-        this._initProp = data;
-        this._refProp = mergeWithoutArrays({}, data);
-        this._prop = mergeWithoutArrays({}, data);
+        this._initProp = initialProp;
+        this._refProp = mergeWithoutArrays({}, initialProp);
+        this._prop = mergeWithoutArrays({}, initialProp);
+        this._resRules = responsiveRules;
 
         // initialize responsive properties
         // and set events
@@ -134,7 +132,7 @@ export class ResponsiveProp<
     protected _init () {
 
         // check if responsive properties exist
-        if (typeof this._initProp.responsive !== 'undefined') {
+        if (this._resRules.length > 0) {
             // change properties according to the responsive prop
             this._responseProp();
             // add event on resize
@@ -147,72 +145,69 @@ export class ResponsiveProp<
 
     /**
      * Change properties according to the "responsive" settings
-     * @param { boolean } [resize=false] - If the method was called on window resize.
+     * @param onResize - If the method was called on window resize.
      */
-    protected _responseProp (resize = false) {
+    protected _responseProp (
+        onResize = false,
+    ) {
 
-        const responsiveProp = this._initProp.responsive;
+        const responsiveProp = this._resRules;
 
-        // check if responsive properties exist
-        if (responsiveProp) {
+        // get sizes
+        const { viewport } = this._app;
+        const { width } = viewport;
+        let newProp: AllProp = {} as AllProp;
 
-            // get sizes
-            const { viewport } = this._app;
-            const { width } = viewport;
-            let newProp: (StatProp & ResProp) = {} as (StatProp & ResProp);
+        // go through all breakpoints
+        // and check if a proper breakpoint exists
+        let breakpointExists = false;
+        responsiveProp.forEach((prop) => {
 
-            // go through all breakpoints
-            // and check if a proper breakpoint exists
-            let breakpointExists = false;
-            responsiveProp.forEach((prop) => {
+            // copy settings
+            const { settings, breakpoint } = prop;
 
-                // copy settings
-                const { settings, breakpoint } = prop;
-
-                // if the breakpoint is a number
-                if (typeof breakpoint === 'number') {
-                    if (width <= prop.breakpoint) {
-                        newProp = mergeWithoutArrays(newProp, settings);
-                        breakpointExists = true;
-                    }
+            // if the breakpoint is a number
+            if (typeof breakpoint === 'number') {
+                if (width <= prop.breakpoint) {
+                    newProp = mergeWithoutArrays(newProp, settings);
+                    breakpointExists = true;
                 }
-                // if breakpoint is a string // desktop, tablet, mobile, mobiledevice
-                else if (typeof breakpoint === 'string') {
-                    const string = breakpoint.toLowerCase();
-                    if (string === 'd' && viewport.isDesktop) {
-                        newProp = mergeWithoutArrays(newProp, settings);
-                        breakpointExists = true;
-                    }
-                    if (string === 't' && viewport.isTablet) {
-                        newProp = mergeWithoutArrays(newProp, settings);
-                        breakpointExists = true;
-                    }
-                    if (string === 'm' && viewport.isMobile) {
-                        newProp = mergeWithoutArrays(newProp, settings);
-                        breakpointExists = true;
-                    }
-                    if (string === 'md' && viewport.isMobileDevice) {
-                        newProp = mergeWithoutArrays(newProp, settings);
-                        breakpointExists = true;
-                    }
+            }
+            // if breakpoint is a string // desktop, tablet, mobile, mobiledevice
+            else if (typeof breakpoint === 'string') {
+                const string = breakpoint.toLowerCase();
+                if (string === 'd' && viewport.isDesktop) {
+                    newProp = mergeWithoutArrays(newProp, settings);
+                    breakpointExists = true;
                 }
-
-            });
-
-            // if there's no breakpoint, restore the props
-            if (!breakpointExists) {
-                this._prop = mergeWithoutArrays(this._prop, this._refProp);
-            }
-            // otherwise, change the properties
-            else {
-                this._prop = mergeWithoutArrays(this._prop, newProp);
-            }
-
-            // responsive callback
-            if (resize) {
-                this._onResponsive();
+                if (string === 't' && viewport.isTablet) {
+                    newProp = mergeWithoutArrays(newProp, settings);
+                    breakpointExists = true;
+                }
+                if (string === 'm' && viewport.isMobile) {
+                    newProp = mergeWithoutArrays(newProp, settings);
+                    breakpointExists = true;
+                }
+                if (string === 'md' && viewport.isMobileDevice) {
+                    newProp = mergeWithoutArrays(newProp, settings);
+                    breakpointExists = true;
+                }
             }
 
+        });
+
+        // if there's no breakpoint, restore the props
+        if (!breakpointExists) {
+            this._prop = mergeWithoutArrays(this._prop, this._refProp);
+        }
+        // otherwise, change the properties
+        else {
+            this._prop = mergeWithoutArrays(this._prop, newProp);
+        }
+
+        // responsive callback
+        if (onResize) {
+            this._onResponsive();
         }
 
     }
@@ -220,15 +215,17 @@ export class ResponsiveProp<
 
 
     /**
-     * This method allows you to change properties manually.
+     * This method allows you to change the properties manually.
      */
-    public changeProp (prop: ResProp) {
+    public changeProp (
+        prop: ChangeableProp,
+    ) {
 
         this._prop = mergeWithoutArrays(this._prop, prop);
         this._refProp = mergeWithoutArrays(this._refProp, prop);
 
         // change prop callback
-        this._onChange();
+        this._onChange(prop);
 
     }
 
@@ -252,10 +249,6 @@ export class ResponsiveProp<
  */
 export namespace NResponsiveProp {
 
-    export interface Prop<S> {
-        responsive?: Responsive<S>[];
-    }
-
     export interface Responsive<S> {
         /**
          * Breakpoint on which the properties will change.
@@ -269,7 +262,7 @@ export namespace NResponsiveProp {
          * </ul>
          */
         breakpoint: number | 'd' | 't' | 'm' | 'md';
-        settings: S;
+        settings?: S;
     }
 
 }
