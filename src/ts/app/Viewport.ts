@@ -288,11 +288,11 @@ export class Viewport extends Callbacks<
 
         // only when width is changed
         if (width !== prevWidth && height === prevHeight) {
-            this.tbt('', changes);
+            this.tbt('w_', changes);
         }
         // only when height is changed
         if (height !== prevHeight && width === prevWidth) {
-            this.tbt('h', changes);
+            this.tbt('h_', changes);
         }
         // when height & width are changed
         if (width !== prevWidth && height !== prevHeight) {
@@ -301,11 +301,11 @@ export class Viewport extends Callbacks<
         }
         // when width is changed
         if (width !== prevWidth) {
-            this.tbt('w_', changes);
+            this.tbt('w', changes);
         }
         // when height changed
         if (height !== prevHeight) {
-            this.tbt('h_', changes);
+            this.tbt('h', changes);
         }
 
         // on any change
