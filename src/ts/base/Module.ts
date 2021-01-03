@@ -268,7 +268,7 @@ export namespace NModule {
          * Parent module
          */
         parent?: Module<
-            StatProp,
+            AllProp,
             MutableProp,
             MutableProp,
             CallbacksTypes
