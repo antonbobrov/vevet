@@ -278,10 +278,10 @@ export namespace NModule {
     /**
      * Properties that may change
      */
-    export interface MutableProp {}
+    export interface MutableProp { }
 
     /**
-     * Responsive properties
+     * All properties
      */
     export interface AllProp extends StatProp, MutableProp { }
 
