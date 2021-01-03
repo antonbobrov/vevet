@@ -12,20 +12,20 @@ export class Module<
     /**
      * All Properties
      */
-    AllProp extends NModule.AllProp,
+    AllProp extends NModule.AllProp = NModule.AllProp,
     /**
      * Responsive Properties (may change on window resize, a part of the first object)
      */
-    ResProp extends NModule.MutableProp,
+    ResProp extends NModule.MutableProp = NModule.MutableProp,
     /**
      * Properties that may be changed through {@linkcode Module#changeProp}
      * (a part of the first object)
      */
-    ChangeableProp extends NModule.MutableProp,
+    ChangeableProp extends NModule.MutableProp = NModule.MutableProp,
     /**
      * Module Callbacks
      */
-    CallbacksTypes extends NModule.CallbacksTypes,
+    CallbacksTypes extends NModule.CallbacksTypes = NModule.CallbacksTypes,
 > {
 
 
@@ -40,8 +40,8 @@ export class Module<
     /**
      * Current properties
      */
-    get prop () {
-        return this._resProp.prop as NModule.AllProp;
+    get prop (): NModule.AllProp {
+        return this._resProp.prop;
     }
 
     /**
@@ -213,7 +213,7 @@ export class Module<
      * The method that is called on window resize and properties change.
      */
     protected _onPropResponsive () {
-        // code
+        this._onPropMutate();
     }
 
     /**
@@ -223,8 +223,13 @@ export class Module<
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         changedProp: ChangeableProp,
     ) {
-        // code
+        this._onPropMutate();
     }
+
+    /**
+     * The method that is called on properties change.
+     */
+    protected _onPropMutate () { }
 
 
 
