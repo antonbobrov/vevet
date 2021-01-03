@@ -236,7 +236,9 @@ export class ResponsiveProp<
      */
     public destroy () {
 
-        this._viewportCallback.remove();
+        if (this._viewportCallback) {
+            this._viewportCallback.remove();
+        }
 
     }
 
