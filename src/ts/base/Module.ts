@@ -168,8 +168,17 @@ export class Module<
      * Initializes the class.
      */
     protected _init () {
+
         this._constructor();
         this._setEvents();
+
+        // destroy the current module on parent destroy
+        if (this.prop.parent) {
+            this.prop.parent.callbacks.add('destroy', () => {
+                this.destroy();
+            });
+        }
+
     }
 
     /**
