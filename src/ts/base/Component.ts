@@ -3,7 +3,7 @@ import { Module, NModule } from './Module';
 
 
 /**
- * An abstract class for modules.
+ * A class for Components.
  */
 export class Component<
     /**

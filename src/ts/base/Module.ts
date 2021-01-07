@@ -7,7 +7,7 @@ import mergeWithoutArrays from '../utils/common/mergeWithoutArrays';
 
 
 /**
- * An abstract class for modules.
+ * A class for modules.
  */
 export class Module<
     /**
