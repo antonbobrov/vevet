@@ -6,22 +6,28 @@ import { Ctx2D, NCtx2D } from './Ctx2D';
  * Prerender an image onto canvas
  */
 export class Ctx2DPrerender <
-    StatProp extends NCtx2DPrerender.StatProp = NCtx2DPrerender.StatProp,
-    ResProp extends NCtx2DPrerender.ResProp = NCtx2DPrerender.ResProp,
-    CallbacksTypes extends NCtx2DPrerender.CallbacksTypes = NCtx2DPrerender.CallbacksTypes
+StaticProp extends NCtx2DPrerender.StaticProp = NCtx2DPrerender.StaticProp,
+ChangeableProp extends NCtx2DPrerender.ChangeableProp = NCtx2DPrerender.ChangeableProp,
+CallbacksTypes extends NCtx2DPrerender.CallbacksTypes = NCtx2DPrerender.CallbacksTypes,
 > extends Ctx2D <
-    StatProp,
-    ResProp,
+    StaticProp,
+    ChangeableProp,
     CallbacksTypes
 > {
 
 
 
-    get dp () {
-        return mergeWithoutArrays(super.dp, {
+    get defaultProp () {
+        const prop: Required<
+            Omit<
+                NCtx2DPrerender.StaticProp & NCtx2DPrerender.ChangeableProp,
+                keyof (NCtx2D.StaticProp & NCtx2D.ChangeableProp)
+            >
+        > = {
             resource: undefined,
             rule: 'cover',
-        } as (StatProp & ResProp));
+        };
+        return mergeWithoutArrays(super.defaultProp, prop);
     }
 
 
@@ -76,7 +82,7 @@ export namespace NCtx2DPrerender {
     /**
      * Static properties
      */
-    export interface StatProp extends NCtx2D.StatProp {
+    export interface StaticProp extends NCtx2D.StaticProp {
         /**
          * The resource to be prerendered
          */
@@ -89,9 +95,9 @@ export namespace NCtx2DPrerender {
     }
 
     /**
-     * Static properties
+     * Changeable properties
      */
-    export interface ResProp extends NCtx2D.ResProp { }
+    export interface ChangeableProp extends NCtx2D.ChangeableProp { }
 
     /**
      * Available callbacks

@@ -8,26 +8,34 @@ import { mergeWithoutArrays } from '../../utils/common';
  * implement automatic resize.
  */
 export class Ctx2D <
-    StatProp extends NCtx2D.StatProp = NCtx2D.StatProp,
-    ResProp extends NCtx2D.ResProp = NCtx2D.ResProp,
-    CallbacksTypes extends NCtx2D.CallbacksTypes = NCtx2D.CallbacksTypes
+    StaticProp extends NCtx2D.StaticProp = NCtx2D.StaticProp,
+    ChangeableProp extends NCtx2D.ChangeableProp = NCtx2D.ChangeableProp,
+    CallbacksTypes extends NCtx2D.CallbacksTypes = NCtx2D.CallbacksTypes,
 > extends Module <
-    StatProp,
-    ResProp,
+    StaticProp,
+    ChangeableProp,
     CallbacksTypes
 > {
 
 
 
-    get dp (): StatProp & ResProp {
-        return mergeWithoutArrays(super.dp, {
+    get defaultProp () {
+        const prop: Required<
+            Omit<
+                NCtx2D.StaticProp & NCtx2D.ChangeableProp,
+                keyof (NModule.StaticProp & NModule.ChangeableProp)
+            >
+        > = {
             container: false,
             append: true,
             width: false,
             height: false,
             dpr: false,
-        } as (StatProp & ResProp));
+        };
+        return mergeWithoutArrays(super.defaultProp, prop);
     }
+
+
 
     /**
      * The parent container of the canvas
@@ -92,17 +100,18 @@ export class Ctx2D <
      */
     protected _create () {
 
-        this._canvas = createElement('canvas');
+        this._canvas = createElement('canvas', {
+            parent: this.prop.append && !!this.prop.container ? this.prop.container : undefined,
+        });
         this._ctx = this._canvas.getContext('2d');
 
         this.resize();
 
     }
 
-    // When properties are changed
-    protected _onPropChange () {
+    protected _onPropMutate () {
 
-        super._onPropChange();
+        super._onPropMutate();
         this.resize();
 
     }
@@ -159,6 +168,19 @@ export class Ctx2D <
 
 
 
+    /**
+     * Destroy the module
+     */
+    protected _destroy () {
+
+        super._destroy();
+
+        this._canvas.remove();
+
+    }
+
+
+
 }
 
 
@@ -168,7 +190,7 @@ export namespace NCtx2D {
     /**
      * Static properties
      */
-    export interface StatProp extends NModule.StatProp {
+    export interface StaticProp extends NModule.StaticProp {
         /**
          * The parent element of the canvas. If false, it will be Window.
          * @default false
@@ -182,9 +204,9 @@ export namespace NCtx2D {
     }
 
     /**
-     * Static properties
+     * Changeable properties
      */
-    export interface ResProp extends NModule.ResProp {
+    export interface ChangeableProp extends NModule.ChangeableProp {
         /**
          * The width of the canvas (dpr = 1).
          * If false, the width will be the same as of the parent.
