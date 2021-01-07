@@ -1,4 +1,5 @@
 import { createElement } from 'vevet-dom';
+import { NViewport } from '../../app/Viewport';
 import { Component, NComponent } from '../../base/Component';
 import { mergeWithoutArrays } from '../../utils/common';
 
@@ -28,6 +29,7 @@ export class Ctx2D <
         > = {
             container: false,
             append: true,
+            updateOnResize: false,
             width: false,
             height: false,
             dpr: false,
@@ -90,6 +92,19 @@ export class Ctx2D <
     protected _constructor () {
 
         this._create();
+
+    }
+
+    // Set Module Events
+    protected _setEvents () {
+
+        super._setEvents();
+
+        if (typeof this.prop.updateOnResize !== 'boolean') {
+            this.addViewportCallback(this.prop.updateOnResize, () => {
+                this.resize();
+            });
+        }
 
     }
 
@@ -201,6 +216,11 @@ export namespace NCtx2D {
          * @default true
          */
         append?: boolean;
+        /**
+         * Update sizes on resize
+         * @default false
+         */
+        updateOnResize?: false | keyof NViewport.CallbacksTypes;
     }
 
     /**
