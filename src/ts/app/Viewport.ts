@@ -1,5 +1,6 @@
 import isMobileJs from 'ismobilejs';
 import { Callbacks, NCallbacks } from '../base/Callbacks';
+import { timeoutCallback } from '../utils/common';
 
 
 
@@ -134,7 +135,11 @@ export class Viewport extends Callbacks<
     // Set events on resize
     protected _setEvents () {
 
-        window.addEventListener('resize', this._onResize.bind(this));
+        window.addEventListener('resize', () => {
+            timeoutCallback(() => {
+                this._onResize();
+            }, this._app.prop.viewportResizeTimeout);
+        });
 
     }
 

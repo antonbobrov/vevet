@@ -44,6 +44,7 @@ export class Application <
             prefix: 'v-',
             maxAjaxTimeout: 5000,
             easing: [0.25, 0.1, 0.25, 1],
+            viewportResizeTimeout: 0,
         };
     }
 
@@ -295,6 +296,11 @@ export namespace NApplication {
          * @default 5000
          */
         maxAjaxTimeout?: number;
+        /**
+         * Timeout of viewport callbacks
+         * @default 0
+         */
+        viewportResizeTimeout?: number;
         /**
          * Easing function that is used in animation as the default value
          * @default [.25, .1, .25, 1]
