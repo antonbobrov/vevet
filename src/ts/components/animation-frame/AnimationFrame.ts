@@ -80,10 +80,10 @@ export class AnimationFrame <
         this._frameSeg = -1;
 
         if (this.prop.run) {
-            this.play();
+            this._play();
         }
         else {
-            this.pause();
+            this._pause();
         }
 
     }
@@ -94,27 +94,45 @@ export class AnimationFrame <
      * Launch the animation frame.
      */
     public play () {
+        this.changeProp({
+            run: true,
+        } as ChangeableProp);
+    }
+
+    /**
+     * Launch the animation frame.
+     */
+    protected _play () {
 
         // check if already playing
         if (this.isPlaying) {
-            return false;
+            return;
         }
         this._isPlaying = true;
 
         // request animation frame
         this._animate();
 
-        return true;
+    }
 
+
+
+    /**
+     * Stop the animation frame
+     */
+    public pause () {
+        this.changeProp({
+            run: false,
+        } as ChangeableProp);
     }
 
     /**
      * Stop the animation frame
      */
-    pause () {
+    protected _pause () {
 
         if (!this.isPlaying) {
-            return false;
+            return;
         }
 
         // cancel animation frame
@@ -125,8 +143,6 @@ export class AnimationFrame <
 
         // bool
         this._isPlaying = false;
-
-        return true;
 
     }
 
