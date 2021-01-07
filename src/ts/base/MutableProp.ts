@@ -10,30 +10,26 @@ import { NCallbacks } from './Callbacks';
  *     <li>
  *         To set a resize-listener on window (or use {@linkcode Viewport}).
  *         When the window is resized, change the properties with the help of
- *         {@linkcode Module#changeProp}</li>
+ *         {@linkcode MutableProp#changeProp}</li>
  *     <li>
  *         The second way is to use the property 'responsive'.
  *         In the property, set an object with the settings you would like to change.
- *         Responsive properties can be also changed through {@linkcode Module#changeProp},
+ *         Responsive properties can be also changed through {@linkcode MutableProp#changeProp},
  *         but they must be initialized on start.
  *         In case the properties are not initialized on start,
  *         they cannot be changed further.</li>
  * </ul>
  */
-export class ResponsiveProp<
+export class MutableProp<
     /**
-     * All Properties
+     * Static Properties (they never change)
      */
-    AllProp extends Record<string, any>,
+    StaticProp extends Record<string, any>,
     /**
-     * Responsive Properties (may change on window resize, a part of the first object)
+     * Mutable Properties
+     * (may change on window resize or through {@linkcode MutableProp#changeProp})
      */
-    ResProp extends Record<string, any>,
-    /**
-     * Properties that may be changed through {@linkcode Module#changeProp}
-     * (a part of the first object)
-     */
-    ChangeableProp extends Record<string, any>
+    ChangeableProp extends Record<string, any>,
 > {
 
     /**
@@ -42,27 +38,21 @@ export class ResponsiveProp<
     protected _app: Application;
 
     /**
-     * The properties that were set while initialization.
-     * These properties do not change throughout time.
-     */
-    protected _initProp: AllProp;
-
-    /**
      * @description Reference properties.
      * These properties may change only through {@linkcode ResponsiveProp#changeProp}.
      */
-    protected _refProp: AllProp;
+    protected _refProp: StaticProp & ChangeableProp;
 
     /**
      * Current properties.
      * These properties may change both on {@linkcode ResponsiveProp#changeProp} and resize.
      */
-    protected _prop: AllProp;
+    protected _prop: StaticProp & ChangeableProp;
 
     /**
      * A set of responsive rules
      */
-    protected _resRules: NResponsiveProp.Responsive<ResProp>[];
+    protected _responsiveRules: NMutableProp.Responsive<ChangeableProp>[] = [];
 
     /**
      * Get current properties
@@ -94,8 +84,11 @@ export class ResponsiveProp<
      * const prop = new ResponsiveProp(static, responsive);
      */
     constructor (
-        initialProp: AllProp = {} as AllProp,
-        responsiveRules: NResponsiveProp.Responsive<ResProp>[] = [],
+        /**
+         * The properties that were set while initialization.
+         * These properties do not change throughout time.
+         */
+        protected _initProp: (StaticProp & ChangeableProp) = {} as (StaticProp & ChangeableProp),
         /**
          * A callback that is launched when properties are changed on window resize
          */
@@ -113,35 +106,35 @@ export class ResponsiveProp<
 
         this._app = window.vevetApp;
 
-        this._initProp = initialProp;
-        this._refProp = mergeWithoutArrays({}, initialProp);
-        this._prop = mergeWithoutArrays({}, initialProp);
-        this._resRules = responsiveRules;
-
-        // initialize responsive properties
-        // and set events
-        this._init();
+        this._refProp = mergeWithoutArrays({}, _initProp);
+        this._prop = mergeWithoutArrays({}, _initProp);
 
     }
 
 
 
     /**
-     * Initialize responsive properties.
+     * Add responsive rules
      */
-    protected _init () {
+    public addResponsiveProp (
+        rules: NMutableProp.Responsive<ChangeableProp>,
+    ) {
 
-        // check if responsive properties exist
-        if (this._resRules.length > 0) {
-            // change properties according to the responsive prop
-            this._responseProp();
-            // add event on resize
+        this._responsiveRules.push(rules);
+
+        // add event on resize
+        if (typeof this._viewportCallback === 'undefined') {
             this._viewportCallback = this._app.viewport.add('w', this._responseProp.bind(this, true), {
                 name: this._name,
             });
         }
 
+        // change properties according to the responsive prop
+        this._responseProp();
+
     }
+
+
 
     /**
      * Change properties according to the "responsive" settings
@@ -151,12 +144,12 @@ export class ResponsiveProp<
         onResize = false,
     ) {
 
-        const responsiveProp = this._resRules;
+        const responsiveProp = this._responsiveRules;
 
         // get sizes
         const { viewport } = this._app;
         const { width } = viewport;
-        let newProp: AllProp = {} as AllProp;
+        let newProp = mergeWithoutArrays(this.prop, {});
 
         // go through all breakpoints
         // and check if a proper breakpoint exists
@@ -242,6 +235,8 @@ export class ResponsiveProp<
 
     }
 
+
+
 }
 
 
@@ -249,7 +244,7 @@ export class ResponsiveProp<
 /**
  * @namespace
  */
-export namespace NResponsiveProp {
+export namespace NMutableProp {
 
     export interface Responsive<S> {
         /**
