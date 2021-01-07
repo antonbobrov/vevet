@@ -86,6 +86,7 @@
                 }
             }
         ],
+        "react/sort-comp": "off",
         "jsdoc/check-alignment": 1,
         "jsdoc/check-examples": 0,
         "jsdoc/check-indentation": 0,
