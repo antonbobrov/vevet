@@ -1,5 +1,5 @@
 import { Callbacks, NCallbacks } from './Callbacks';
-import { ResponsiveProp, NResponsiveProp } from './ResponsiveProp';
+import { MutableProp, NMutableProp } from './MutableProp';
 import { Application } from '../app/Application';
 import mergeWithoutArrays from '../utils/common/mergeWithoutArrays';
 
@@ -10,18 +10,14 @@ import mergeWithoutArrays from '../utils/common/mergeWithoutArrays';
  */
 export class Module<
     /**
-     * All Properties
+     * Static Properties (they never change)
      */
-    AllProp extends NModule.AllProp = NModule.AllProp,
+    StaticProp extends NModule.StaticProp = NModule.StaticProp,
     /**
-     * Responsive Properties (may change on window resize, a part of the first object)
+     * Mutable Properties
+     * (may change on window resize or through {@linkcode Module#changeProp})
      */
-    ResProp extends NModule.MutableProp = NModule.MutableProp,
-    /**
-     * Properties that may be changed through {@linkcode Module#changeProp}
-     * (a part of the first object)
-     */
-    ChangeableProp extends NModule.MutableProp = NModule.MutableProp,
+    ChangeableProp extends NModule.ChangeableProp = NModule.ChangeableProp,
     /**
      * Module Callbacks
      */
@@ -33,23 +29,22 @@ export class Module<
     /**
      * Get Default properties (should be extended)
      */
-    protected get defaultProp () {
-        return {} as AllProp;
+    get defaultProp (): StaticProp & ChangeableProp {
+        return {} as StaticProp & ChangeableProp;
     }
 
     /**
      * Current properties
      */
-    get prop (): NModule.AllProp {
-        return this._resProp.prop;
+    get prop () {
+        return this._mutableProp.prop;
     }
 
     /**
      * Responsive properties
      */
-    protected _resProp: ResponsiveProp<
-        AllProp,
-        ResProp,
+    protected _mutableProp: MutableProp<
+        StaticProp,
         ChangeableProp
     >;
 
@@ -87,6 +82,11 @@ export class Module<
         return this.constructor.name;
     }
 
+    /**
+     * If the module is initialized
+     */
+    protected _inited = false;
+
 
 
     /**
@@ -97,13 +97,10 @@ export class Module<
         /**
          * Properties on script start
          */
-        initialProp: AllProp = {} as AllProp,
-        /**
-         * Responsive rules
-         */
-        responsiveRules: NResponsiveProp.Responsive<ResProp>[] = [],
+        initialProp: (StaticProp & ChangeableProp) = {} as (StaticProp & ChangeableProp),
         /**
          * Defines if you need to call {@linkcode Module#init} at the constructor's end.
+         * If you want to set add responsive properties, set this argument to FALSE.
          */
         init = true,
     ) {
@@ -114,11 +111,11 @@ export class Module<
         // create callbacks
         this._createCallbacks();
         // create responsive properties
-        this._createResProp(initialProp, responsiveRules);
+        this._createMutableProp(initialProp);
 
         // initialize
         if (init) {
-            this._init();
+            this.init();
         }
 
     }
@@ -137,38 +134,99 @@ export class Module<
     /**
      * Create Responsive Properties
      */
-    protected _createResProp<
-        InitPropData extends AllProp,
-        ResPropData extends NResponsiveProp.Responsive<ResProp>[]
-    > (initialProp: InitPropData, responsiveRules: ResPropData) {
+    protected _createMutableProp<
+        InitPropData extends (StaticProp & ChangeableProp)
+    > (initialProp: InitPropData) {
 
         const prop = mergeWithoutArrays(this.defaultProp, initialProp);
 
         // create responsive properties
-        this._resProp = new ResponsiveProp(
+        this._mutableProp = new MutableProp(
             prop,
-            responsiveRules,
             this._onPropResponsive.bind(this),
             this._onPropChange.bind(this),
             this.name,
         );
-
-        // destroy responsive properties when the module is destroyed
-        this.callbacks.add('destroy', () => {
-            this._resProp.destroy();
-        }, {
-            protected: true,
-        });
 
     }
 
 
 
     /**
+     * Add responsive rules
+     */
+    public addResponsiveProp (
+        rules: NMutableProp.Responsive<ChangeableProp>,
+    ) {
+
+        if (this._inited) {
+            throw new Error('Responsive properties cannot be added because the class instance is already initialized');
+        }
+        else {
+            this._mutableProp.addResponsiveProp(rules);
+        }
+
+    }
+
+    /**
+     * Change module properties.
+     * @example
+     *
+     * // changing properties
+     * // let's imagine that the module has the following properties:
+     * prop = {
+     *     name: 'module',
+     *     cute: true
+     * };
+     * // we can change some properties in it: whether one or several properties
+     * // after the properties are changed, the method _onPropChange is called.
+     * module.changeProp({
+     *     cute: false
+     * });
+     */
+    public changeProp (
+        prop: ChangeableProp = {} as ChangeableProp,
+    ) {
+        this._mutableProp.changeProp(prop);
+        this._callbacks.tbt('changeProp', false);
+    }
+
+    /**
+     * The method that is called on window resize and properties change.
+     */
+    protected _onPropResponsive () {
+        this._onPropMutate();
+    }
+
+    /**
+     * The method that is called on properties change.
+     */
+    protected _onPropChange (
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        changedProp: ChangeableProp,
+    ) {
+        this._onPropMutate();
+    }
+
+    /**
+     * The method that is called on properties change.
+     */
+    protected _onPropMutate () { }
+
+
+
+    /**
      * Initializes the class.
      */
-    protected _init () {
+    public init () {
 
+        // return if the module is already initialized
+        if (this._inited) {
+            return;
+        }
+        this._inited = true;
+
+        // continue initializing
         this._constructor();
         this._setEvents();
 
@@ -198,56 +256,14 @@ export class Module<
 
 
     /**
-     * Change module properties.
-     * @example
-     *
-     * // changing properties
-     * // let's imagine that the module has the following properties:
-     * prop = {
-     *     name: 'module',
-     *     cute: true
-     * };
-     * // we can change some properties in it: whether one or several properties
-     * // after the properties are changed, the method _onPropChange is called.
-     * module.changeProp({
-     *     cute: false
-     * });
-     */
-    public changeProp (prop: ChangeableProp = {} as ChangeableProp) {
-        this._resProp.changeProp(prop);
-        this._callbacks.tbt('changeProp', false);
-    }
-
-    /**
-     * The method that is called on window resize and properties change.
-     */
-    protected _onPropResponsive () {
-        this._onPropMutate();
-    }
-
-    /**
-     * The method that is called on properties change.
-     */
-    protected _onPropChange (
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        changedProp: ChangeableProp,
-    ) {
-        this._onPropMutate();
-    }
-
-    /**
-     * The method that is called on properties change.
-     */
-    protected _onPropMutate () { }
-
-
-
-    /**
      * Destroy the module
      */
     public destroy () {
 
+        // destroy callbacks
         this._callbacks.tbt('destroy', false);
+        // destroy mutable properties
+        this._mutableProp.destroy();
 
         this._destroy();
 
@@ -277,27 +293,20 @@ export namespace NModule {
     /**
      * Static properties
      */
-    export interface StatProp {
+    export interface StaticProp {
         /**
          * Parent module
          */
         parent?: Module<
-            AllProp,
-            MutableProp,
-            MutableProp,
-            CallbacksTypes
+            StaticProp,
+            ChangeableProp
         >;
     }
 
     /**
-     * Properties that may change
+     * Mutable Properties (may change on window resize or through {@linkcode Module#changeProp})
      */
-    export interface MutableProp { }
-
-    /**
-     * All properties
-     */
-    export interface AllProp extends StatProp, MutableProp { }
+    export interface ChangeableProp { }
 
     /**
      * Available callbacks
