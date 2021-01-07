@@ -283,16 +283,6 @@ export class Module<
      */
     public destroy () {
 
-        // destroy callbacks
-        this._callbacks.tbt('destroy', false);
-        // destroy mutable properties
-        this._mutableProp.destroy();
-
-        // destroy viewport callbacks
-        this._viewportCallbacks.forEach((callback) => {
-            callback.remove();
-        });
-
         this._destroy();
 
     }
@@ -302,8 +292,17 @@ export class Module<
      */
     protected _destroy () {
 
+        // destroy callbacks
         this._callbacks.tbt('destroy', false);
         this._callbacks.destroy();
+
+        // destroy mutable properties
+        this._mutableProp.destroy();
+
+        // destroy viewport callbacks
+        this._viewportCallbacks.forEach((callback) => {
+            callback.remove();
+        });
 
     }
 
