@@ -286,9 +286,9 @@ export class Viewport extends Callbacks<
 
         // get changes in viewport
         const changes: NViewport.Changes = {
-            width: width !== prevWidth,
-            height: height !== prevHeight,
-            orientation: (width > height) !== (prevWidth > prevHeight),
+            widthChanged: width !== prevWidth,
+            heightChanged: height !== prevHeight,
+            orientationChanged: (width > height) !== (prevWidth > prevHeight),
         };
 
         // only when width is changed
@@ -362,9 +362,9 @@ export namespace NViewport {
      * Callbacks argument. Changes in viewport
      */
     export interface Changes {
-        width: boolean;
-        height: boolean;
-        orientation: boolean;
+        widthChanged: boolean;
+        heightChanged: boolean;
+        orientationChanged: boolean;
     }
 
     /**
