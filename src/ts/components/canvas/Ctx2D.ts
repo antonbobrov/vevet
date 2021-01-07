@@ -1,5 +1,5 @@
 import { createElement } from 'vevet-dom';
-import { Module, NModule } from '../../base/Module';
+import { Component, NComponent } from '../../base/Component';
 import { mergeWithoutArrays } from '../../utils/common';
 
 /**
@@ -11,7 +11,7 @@ export class Ctx2D <
     StaticProp extends NCtx2D.StaticProp = NCtx2D.StaticProp,
     ChangeableProp extends NCtx2D.ChangeableProp = NCtx2D.ChangeableProp,
     CallbacksTypes extends NCtx2D.CallbacksTypes = NCtx2D.CallbacksTypes,
-> extends Module <
+> extends Component <
     StaticProp,
     ChangeableProp,
     CallbacksTypes
@@ -23,7 +23,7 @@ export class Ctx2D <
         const prop: Required<
             Omit<
                 NCtx2D.StaticProp & NCtx2D.ChangeableProp,
-                keyof (NModule.StaticProp & NModule.ChangeableProp)
+                keyof (NComponent.StaticProp & NComponent.ChangeableProp)
             >
         > = {
             container: false,
@@ -190,7 +190,7 @@ export namespace NCtx2D {
     /**
      * Static properties
      */
-    export interface StaticProp extends NModule.StaticProp {
+    export interface StaticProp extends NComponent.StaticProp {
         /**
          * The parent element of the canvas. If false, it will be Window.
          * @default false
@@ -206,7 +206,7 @@ export namespace NCtx2D {
     /**
      * Changeable properties
      */
-    export interface ChangeableProp extends NModule.ChangeableProp {
+    export interface ChangeableProp extends NComponent.ChangeableProp {
         /**
          * The width of the canvas (dpr = 1).
          * If false, the width will be the same as of the parent.
@@ -230,7 +230,7 @@ export namespace NCtx2D {
     /**
      * Available callbacks
      */
-    export interface CallbacksTypes extends NModule.CallbacksTypes {
+    export interface CallbacksTypes extends NComponent.CallbacksTypes {
         'resize': false;
     }
 
