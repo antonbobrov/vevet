@@ -6,7 +6,7 @@ import { Load, NLoad } from './app/Load';
 import { Viewport, NViewport } from './app/Viewport';
 
 import { Callbacks, NCallbacks } from './base/Callbacks';
-import { ResponsiveProp, NResponsiveProp } from './base/ResponsiveProp';
+import { MutableProp, NMutableProp } from './base/MutableProp';
 import { Module, NModule } from './base/Module';
 
 import { Ctx2D, NCtx2D } from './components/canvas/Ctx2D';
@@ -22,7 +22,7 @@ export {
     Viewport, NViewport,
 
     Callbacks, NCallbacks,
-    ResponsiveProp, NResponsiveProp,
+    MutableProp, NMutableProp,
     Module, NModule,
 
     Ctx2D, NCtx2D,
