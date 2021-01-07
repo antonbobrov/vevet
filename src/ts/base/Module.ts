@@ -1,6 +1,7 @@
 import { Callbacks, NCallbacks } from './Callbacks';
 import { MutableProp, NMutableProp } from './MutableProp';
 import { Application } from '../app/Application';
+import { Viewport } from '../app/Viewport';
 import mergeWithoutArrays from '../utils/common/mergeWithoutArrays';
 
 
@@ -256,6 +257,28 @@ export class Module<
 
 
     /**
+     * Viewport callbacks
+     */
+    protected _viewportCallbacks: NCallbacks.AddedCallback[] = [];
+
+    /**
+     * Add a viewport callback that will be removed on class destroy
+     * {@see Viewport}
+     */
+    public addViewportCallback (
+        target: Parameters<Viewport['add']>[0],
+        func: Parameters<Viewport['add']>[1],
+        data: Parameters<Viewport['add']>[2] = {},
+
+    ) {
+        const callback = this._app.viewport.add(target, func, data);
+        this._viewportCallbacks.push(callback);
+        return callback;
+    }
+
+
+
+    /**
      * Destroy the module
      */
     public destroy () {
@@ -264,6 +287,11 @@ export class Module<
         this._callbacks.tbt('destroy', false);
         // destroy mutable properties
         this._mutableProp.destroy();
+
+        // destroy viewport callbacks
+        this._viewportCallbacks.forEach((callback) => {
+            callback.remove();
+        });
 
         this._destroy();
 
