@@ -1,6 +1,6 @@
 import { detect } from 'detect-browser';
 import { Module } from '../base/Module';
-import { Load } from './Load';
+import { PageLoad } from './PageLoad';
 import { Viewport } from './Viewport';
 
 
@@ -176,12 +176,12 @@ export class Application <
     /**
      * Page Load Callbacks
      */
-    protected _load: Load;
+    protected _pageLoad: PageLoad;
     /**
      * Get Page Load Callbacks
      */
-    get load () {
-        return this._load;
+    get pageLoad () {
+        return this._pageLoad;
     }
 
     /**
@@ -221,7 +221,7 @@ export class Application <
         window.vevetApp = this;
 
         // create default helpers
-        this._load = new Load();
+        this._pageLoad = new PageLoad();
         this._viewport = new Viewport();
 
         // /**

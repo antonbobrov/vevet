@@ -5,8 +5,8 @@ import { Callbacks, NCallbacks } from '../base/Callbacks';
 /**
  * Callbacks on page loaded.
  */
-export class Load extends Callbacks<
-    NLoad.CallbacksTypes
+export class PageLoad extends Callbacks<
+    NPageLoad.CallbacksTypes
 > {
 
     /**
@@ -80,7 +80,7 @@ export class Load extends Callbacks<
 
 
 
-export namespace NLoad {
+export namespace NPageLoad {
 
     export interface CallbacksTypes extends NCallbacks.CallbacksTypes {
         '': false;

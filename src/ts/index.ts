@@ -2,7 +2,7 @@ import * as CommonUtils from './utils/common';
 import * as MathUtils from './utils/math';
 
 import { Application, NApplication } from './app/Application';
-import { Load, NLoad } from './app/Load';
+import { PageLoad, NPageLoad } from './app/PageLoad';
 import { Viewport, NViewport } from './app/Viewport';
 
 import { Callbacks, NCallbacks } from './base/Callbacks';
@@ -18,7 +18,7 @@ export {
     MathUtils,
 
     Application, NApplication,
-    Load, NLoad,
+    PageLoad, NPageLoad,
     Viewport, NViewport,
 
     Callbacks, NCallbacks,
