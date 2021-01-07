@@ -37,7 +37,7 @@
     "settings",
     "canvas",
     "ctx2d",
-    "prerender"
+    "image prerender"
   ],
   "author": "Anton Bobrov <anton.bobrov@hotmail.com>",
   "license": "MIT",
