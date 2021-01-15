@@ -53,14 +53,14 @@ export class Callbacks<
     }
 
     /**
-     * An empty method that is called in {@linkcode Callbacks#_init}.
+     * An empty method that is called in {@linkcode Callbacks._init}.
      */
     protected _constructor () {
         // code
     }
 
     /**
-     * An empty method that is called in {@linkcode Callbacks#_init}.
+     * An empty method that is called in {@linkcode Callbacks._init}.
      */
     protected _setEvents () {
         // code
