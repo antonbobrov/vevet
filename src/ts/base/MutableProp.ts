@@ -11,14 +11,10 @@ import { NCallbacks } from './Callbacks';
  *     <li>
  *         To set a resize-listener on window (or use {@linkcode Viewport}).
  *         When the window is resized, change the properties with the help of
- *         {@linkcode MutableProp#changeProp}</li>
+ *         {@linkcode MutableProp.changeProp}</li>
  *     <li>
- *         The second way is to use the property 'responsive'.
- *         In the property, set an object with the settings you would like to change.
- *         Responsive properties can be also changed through {@linkcode MutableProp#changeProp},
- *         but they must be initialized on start.
- *         In case the properties are not initialized on start,
- *         they cannot be changed further.</li>
+ *         The second way is to use the MutableProp and add responsive properties
+ *         with help of {@linkcode MutableProp.addResponsiveProp}.</li>
  * </ul>
  */
 export class MutableProp<
@@ -28,7 +24,7 @@ export class MutableProp<
     StaticProp extends Record<string, any>,
     /**
      * Mutable Properties
-     * (may change on window resize or through {@linkcode MutableProp#changeProp})
+     * (may change on window resize or through {@linkcode MutableProp.changeProp})
      */
     ChangeableProp extends Record<string, any>,
 > {
@@ -40,13 +36,13 @@ export class MutableProp<
 
     /**
      * @description Reference properties.
-     * These properties may change only through {@linkcode ResponsiveProp#changeProp}.
+     * These properties may change only through {@linkcode MutableProp.changeProp}.
      */
     protected _refProp: StaticProp & ChangeableProp;
 
     /**
      * Current properties.
-     * These properties may change both on {@linkcode ResponsiveProp#changeProp} and resize.
+     * These properties may change both on {@linkcode MutableProp.changeProp} and resize.
      */
     protected _prop: StaticProp & ChangeableProp;
 
@@ -82,7 +78,7 @@ export class MutableProp<
      *          }
      *      }
      * ];
-     * const prop = new ResponsiveProp(static, responsive);
+     * const prop = new MutableProp(static, responsive);
      */
     constructor (
         /**
@@ -96,7 +92,7 @@ export class MutableProp<
         protected _onResponsive: () => void = () => {},
         /**
          * A callback that is launched when properties are changed
-         * through {@linkcode ResponsiveProp#changeProp}
+         * through {@linkcode MutableProp.changeProp}
          */
         protected _onChange: (prop: ChangeableProp) => void = () => {},
         /**
