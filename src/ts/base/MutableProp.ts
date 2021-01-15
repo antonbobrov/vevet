@@ -1,3 +1,4 @@
+import cloneDeep from 'lodash.clonedeep';
 import { Application } from '../app/Application';
 import mergeWithoutArrays from '../utils/common/mergeWithoutArrays';
 import { NCallbacks } from './Callbacks';
@@ -105,9 +106,8 @@ export class MutableProp<
     ) {
 
         this._app = window.vevetApp;
-
-        this._refProp = mergeWithoutArrays({}, _initProp);
-        this._prop = mergeWithoutArrays({}, _initProp);
+        this._refProp = cloneDeep(_initProp);
+        this._prop = cloneDeep(_initProp);
 
     }
 
