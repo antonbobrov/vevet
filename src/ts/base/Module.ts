@@ -279,6 +279,22 @@ export class Module<
 
 
     /**
+     * Add a module callback
+     * {@see Callbacks}
+     */
+    public addCallback <Target extends keyof CallbacksTypes> (
+        target: Target,
+        func: NCallbacks.CallbackSettings<CallbacksTypes, Target>['do'],
+        data: NCallbacks.CallbackBaseSettings = {},
+
+    ) {
+        const callback = this.callbacks.add(target, func, data);
+        return callback;
+    }
+
+
+
+    /**
      * Destroy the module
      */
     public destroy () {
