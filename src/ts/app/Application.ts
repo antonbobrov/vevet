@@ -148,7 +148,7 @@ export class Application <
     protected _pages: PageInstance[] = [];
     /**
      * Get an array of existing pages.
-     * A new element is added to the array when {@linkcode Vevet.Page#create} is called.
+     * A new element is added to the array when {@linkcode Vevet.Page.create} is called.
      */
     get pages () {
         return this._pages;
@@ -207,7 +207,7 @@ export class Application <
 
 
     /**
-     * @description Initialize the class
+     * Initialize the class
      */
     protected _init () {
 
