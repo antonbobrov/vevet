@@ -16,7 +16,7 @@ export class Module<
     StaticProp extends NModule.StaticProp = NModule.StaticProp,
     /**
      * Mutable Properties
-     * (may change on window resize or through {@linkcode Module#changeProp})
+     * (may change on window resize or through {@linkcode Module.changeProp})
      */
     ChangeableProp extends NModule.ChangeableProp = NModule.ChangeableProp,
     /**
@@ -100,7 +100,7 @@ export class Module<
          */
         initialProp: (StaticProp & ChangeableProp) = {} as (StaticProp & ChangeableProp),
         /**
-         * Defines if you need to call {@linkcode Module#init} at the constructor's end.
+         * Defines if you need to call {@linkcode Module.init} at the constructor's end.
          * If you want to set add responsive properties, set this argument to FALSE.
          */
         init = true,
@@ -331,7 +331,7 @@ export namespace NModule {
     }
 
     /**
-     * Mutable Properties (may change on window resize or through {@linkcode Module#changeProp})
+     * Mutable Properties (may change on window resize or through {@linkcode Module.changeProp})
      */
     export interface ChangeableProp { }
 

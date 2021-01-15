@@ -12,7 +12,7 @@ export class Component<
     StaticProp extends NComponent.StaticProp = NComponent.StaticProp,
     /**
      * Mutable Properties
-     * (may change on window resize or through {@linkcode Component#changeProp})
+     * (may change on window resize or through {@linkcode Component.changeProp})
      */
     ChangeableProp extends NComponent.ChangeableProp = NComponent.ChangeableProp,
     /**
