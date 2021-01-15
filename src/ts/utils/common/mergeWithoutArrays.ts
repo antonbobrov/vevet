@@ -1,20 +1,22 @@
 import mergeWith from 'lodash.mergewith';
-import isarray from 'isarray';
-
+import cloneDeep from 'lodash.clonedeep';
 /**
- * Deep merge of two object except for arrays
+ * Deep merge of two object except for arrays.
+ * The function doesn't change the "object" and "source".
  */
 export default function mergeWithoutArrays <
     A extends Record<string, any>,
     B extends Record<string, any>,
 > (
-    source: A,
-    obj: B,
+    object: A,
+    source: B,
 ): A & B {
-    return mergeWith(obj, source, (objValue, srcValue) => {
-        if (isarray(objValue)) {
+    const obj = cloneDeep(object);
+    const src = cloneDeep(source);
+    return mergeWith(obj, src, (objValue, srcValue) => {
+        if (Array.isArray(objValue)) {
             return srcValue as Record<string, any>;
         }
-        return objValue;
+        return srcValue;
     });
 }
