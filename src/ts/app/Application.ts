@@ -306,7 +306,7 @@ export namespace NApplication {
          * Easing function that is used in animation as the default value
          * @default [.25, .1, .25, 1]
          */
-        easing?: number[] | string | ((p: number) => number);
+        easing?: EasingType;
     }
 
 }
