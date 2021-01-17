@@ -1,4 +1,5 @@
 import { detect } from 'detect-browser';
+import { EasingType } from 'easing-progress';
 import { Module } from '../base/Module';
 import { PageLoad } from './PageLoad';
 import { Viewport } from './Viewport';
