@@ -14,6 +14,7 @@ import { Ctx2D, NCtx2D } from './components/canvas/Ctx2D';
 import { Ctx2DPrerender, NCtx2DPrerender } from './components/canvas/Ctx2DPrerender';
 
 import { AnimationFrame, NAnimationFrame } from './components/animation-frame/AnimationFrame';
+import { TimelineBase, NTimelineBase } from './components/timeline/TimelineBase';
 
 import { Page, NPage } from './components/page/Page';
 
@@ -35,6 +36,7 @@ export {
     Ctx2DPrerender, NCtx2DPrerender,
 
     AnimationFrame, NAnimationFrame,
+    TimelineBase, NTimelineBase,
 
     Page, NPage,
 
