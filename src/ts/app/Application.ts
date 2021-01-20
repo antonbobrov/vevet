@@ -1,6 +1,6 @@
 import { detect } from 'detect-browser';
 import { EasingType } from 'easing-progress';
-import { Module } from '../base/Module';
+import { Page } from '../components/page/Page';
 import { PageLoad } from './PageLoad';
 import { Viewport } from './Viewport';
 
@@ -21,7 +21,7 @@ declare global {
  * Vevet Application
  */
 export class Application <
-    PageInstance extends Module = Module
+    PageInstance extends Page = Page
 > {
 
     /**

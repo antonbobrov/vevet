@@ -15,6 +15,8 @@ import { Ctx2DPrerender, NCtx2DPrerender } from './components/canvas/Ctx2DPreren
 
 import { AnimationFrame, NAnimationFrame } from './components/animation-frame/AnimationFrame';
 
+import { Page, NPage } from './components/page/Page';
+
 export {
 
     CommonUtils,
@@ -33,5 +35,7 @@ export {
     Ctx2DPrerender, NCtx2DPrerender,
 
     AnimationFrame, NAnimationFrame,
+
+    Page, NPage,
 
 };
