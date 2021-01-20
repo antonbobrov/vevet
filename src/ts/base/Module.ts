@@ -233,7 +233,7 @@ export class Module<
 
         // destroy the current module on parent destroy
         if (this.prop.parent) {
-            this.prop.parent.callbacks.add('destroy', () => {
+            this.prop.parent.addCallback('destroy', () => {
                 this.destroy();
             });
         }
