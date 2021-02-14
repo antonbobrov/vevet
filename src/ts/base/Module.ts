@@ -101,7 +101,7 @@ export class Module<
         initialProp: (StaticProp & ChangeableProp) = {} as (StaticProp & ChangeableProp),
         /**
          * Defines if you need to call {@linkcode Module.init} at the constructor's end.
-         * If you want to set add responsive properties, set this argument to FALSE.
+         * If you want to add responsive properties, set this argument to FALSE.
          */
         init = true,
     ) {
