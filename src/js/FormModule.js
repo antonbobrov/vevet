@@ -178,11 +178,7 @@ export default class FormModule extends Module {
          * @protected
          * @member {HTMLButtonElement|HTMLInputElement}
          */
-        this._submit = outer.querySelector("input[type='submit']");
-        let submit = this._submit;
-        if (submit == null) {
-            submit = outer.querySelector("button[type='submit']");
-        }
+        this._submit = outer.querySelector("input[type='submit'], button[type='submit']");
 
         // if submit is now disabled
         this._submitDisabled();
@@ -382,7 +378,7 @@ export default class FormModule extends Module {
 
         // disable submit
         if (this._submit) {
-            this._submit.setAttribute("disabled", "disabled");
+            this._submit.disabled = true;
         }
 
         // change vars
@@ -439,7 +435,7 @@ export default class FormModule extends Module {
 
         // enable submit
         if (this._submit) {
-            this._submit.removeAttribute("disabled");
+            this._submit.disabled = false;
         }
 
         // change vars
