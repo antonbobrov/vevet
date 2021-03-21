@@ -483,7 +483,7 @@ export default class ScrollModule extends Module {
     _elCreate() {
 
         const containerSelector = `${this._prefix}__container`;
-        const containerElement = selectEl.one(containerSelector);
+        const containerElement = selectEl.one('.' + containerSelector, this._outer);
         if (containerElement) {
             this._container = containerElement;
             this._containerExists = true;
