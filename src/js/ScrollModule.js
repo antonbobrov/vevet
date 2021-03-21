@@ -344,6 +344,10 @@ export default class ScrollModule extends Module {
          * @type {number}
          */
         this._height = 1;
+        /**
+         * @description Container exists by default
+         */
+        this._containerExists = false;
 
         /**
          * @description Outer width
@@ -478,23 +482,33 @@ export default class ScrollModule extends Module {
      */
     _elCreate() {
 
-        /**
-         * @description Scroll Container.
-         * @protected
-         * @member {HTMLElement}
-         */
-        this._container = dom({
-            selector: 'div',
-            styles: `${this._prefix}__container`
-        });
-
-        // move elements
-        while (this._outer.firstChild) {
-            this._container.appendChild(this._outer.firstChild);
+        const containerSelector = `${this._prefix}__container`;
+        const containerElement = selectEl.one(containerSelector);
+        if (containerElement) {
+            this._container = containerElement;
+            this._containerExists = true;
         }
+        else {
 
-        // append additional elements
-        this._outer.appendChild(this._container);
+            /**
+             * @description Scroll Container.
+             * @protected
+             * @member {HTMLElement}
+             */
+            this._container = dom({
+                selector: 'div',
+                styles: `${this._prefix}__container`
+            });
+
+            // move elements
+            while (this._outer.firstChild) {
+                this._container.appendChild(this._outer.firstChild);
+            }
+
+            // append additional elements
+            this._outer.appendChild(this._container);
+
+        }
 
     }
 
@@ -963,17 +977,23 @@ export default class ScrollModule extends Module {
         this._run();
 
         // vars
-        let container = this._container,
-            children = container.children,
-            outer = this._outer;
+        const outer = this._outer;
 
-        // children
-        for (let i = 0; i < children.length; i++) {
-            outer.appendChild(children[i]);
+        // remove container if created by the script
+        if (!this._containerExists) {
+
+            // vars
+            let container = this._container,
+                children = container.children;
+
+            // move children from the container to the root
+            for (let i = 0; i < children.length; i++) {
+                outer.appendChild(children[i]);
+            }
+            // remove container
+            outer.removeChild(container);
+
         }
-
-        // remove elements
-        outer.removeChild(container);
 
         // classes
         outer.classList.remove(this._prefix);
