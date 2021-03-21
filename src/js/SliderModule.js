@@ -67,7 +67,7 @@ export default class SliderModule extends Module {
      * when the main slider changes.
      * 
      * @property {object} [animation]
-     * @property {boolean} [animation.duration=1500] - Duration of animation.
+     * @property {number} [animation.duration=1500] - Duration of animation.
      * @property {Array<number>} [animation.prev=[0, 0.5]] - Scope of animation of the previous slide.
      * @property {Array<number>} [animation.next=[0.5, 1]] - Scope of animation of the next slide.
      * @property {string|Array<number>|Function} [animation.easing] - Easing function.
