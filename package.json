@@ -1,0 +1,63 @@
+{
+  "name": "vevet",
+  "version": "2.0.0",
+  "description": "VEVET - A JavaScript library",
+  "browserslist": [
+    "since 2015"
+  ],
+  "scripts": {
+    "prepare:all": "npm run prepare:es && npm run prepare:cjs && npm run prepare:cdn",
+    "prepare:es": "tsc ./src/ts/index.ts --outDir ./lib/es --target esNext --moduleResolution node --declaration true --declarationDir ./lib/types --declarationMap true",
+    "prepare:cjs": "tsc ./src/ts/index.ts --outDir ./lib/cjs --target es5 --module commonjs",
+    "prepare:cdn": "webpack --config ./src/cdn/webpack.conf.js",
+    "lint:js": "eslint . --ext .ts,.js"
+  },
+  "main": "./lib/cjs/index.js",
+  "types": "./lib/types/index.d.ts",
+  "module": "./lib/es/index.js",
+  "jsdelivr": "./lib/cdn/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antonbobrov/vevet.git"
+  },
+  "keywords": [
+    "vevet",
+    "application",
+    "app",
+    "viewport",
+    "onresize",
+    "onload",
+    "callbacks",
+    "responsive",
+    "properties",
+    "settings",
+    "canvas",
+    "ctx2d",
+    "image prerender"
+  ],
+  "author": "Anton Bobrov <anton.bobrov@hotmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "eslint": "^7.29.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsdoc": "^35.4.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.24.0",
+    "path": "^0.12.7",
+    "terser-webpack-plugin": "^5.1.4",
+    "ts-loader": "^9.2.3",
+    "typescript": "^4.3.5",
+    "webpack": "^5.41.1",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.8.0"
+  },
+  "dependencies": {}
+}

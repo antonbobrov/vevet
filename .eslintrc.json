@@ -1,0 +1,43 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "airbnb"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint",
+        "jsdoc"
+    ],
+    "rules": {
+        "indent": [
+            "error",
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "linebreak-style": "off",
+        "no-use-before-define": "off",
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "never",
+                "ts": "never"
+            }
+        ]
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".ts"
+                ]
+            }
+        }
+    }
+}
