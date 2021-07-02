@@ -6,16 +6,17 @@
     "since 2015"
   ],
   "scripts": {
+    "watch-tsc": "nodemon --watch ./src/ts --ext ts,js --exec \"npm run prepare:es\"",
     "prepare:all": "npm run prepare:es && npm run prepare:cjs && npm run prepare:cdn",
-    "prepare:es": "tsc ./src/ts/index.ts --outDir ./lib/es --target esNext --moduleResolution node --declaration true --declarationDir ./lib/types --declarationMap true",
-    "prepare:cjs": "tsc ./src/ts/index.ts --outDir ./lib/cjs --target es5 --module commonjs",
-    "prepare:cdn": "webpack --config ./src/cdn/webpack.conf.js",
+    "prepare:es": "tsc ./src/ts/index.ts --outDir ./build/es --target esNext --moduleResolution node --declaration true --declarationDir ./build/types --declarationMap true",
+    "prepare:cjs": "tsc ./src/ts/index.ts --outDir ./build/cjs --target es5 --module commonjs",
+    "prepare:cdn": "webpack --config ./config/webpack.cdn.js",
     "lint:js": "eslint . --ext .ts,.js"
   },
-  "main": "./lib/cjs/index.js",
-  "types": "./lib/types/index.d.ts",
-  "module": "./lib/es/index.js",
-  "jsdelivr": "./lib/cdn/index.js",
+  "main": "./build/cjs/index.js",
+  "types": "./build/types/index.d.ts",
+  "module": "./build/es/index.js",
+  "jsdelivr": "./build/cdn/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/antonbobrov/vevet.git"
@@ -50,6 +51,7 @@
     "eslint-plugin-jsdoc": "^35.4.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.24.0",
+    "nodemon": "^2.0.9",
     "path": "^0.12.7",
     "terser-webpack-plugin": "^5.1.4",
     "ts-loader": "^9.2.3",

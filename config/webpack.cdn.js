@@ -2,16 +2,17 @@
 
 const path = require('path');
 const { merge } = require('webpack-merge');
-const baseConfig = require('../../config/webpack.prod.conf');
+const { PATHS } = require('./paths');
+const baseConfig = require('./webpack.prod.conf');
 
 module.exports = merge(baseConfig, {
 
     entry: {
-        index: path.join(__dirname, 'index.js'),
+        index: path.join(PATHS.src.cdn, 'index.js'),
     },
     output: {
         filename: '[name].js',
-        path: path.join(__dirname, '../../', 'lib/cdn'),
+        path: PATHS.build.cdn,
     },
 
 });
