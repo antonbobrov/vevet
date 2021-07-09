@@ -1,12 +1,12 @@
 import {
     addEventListener, IAddEventListener, IAddEventListenerOptions, ListenerElement,
 } from 'vevet-dom';
-import { DeepNonNullable, DeepRequired } from 'ts-essentials';
 import { Callbacks, NCallbacks } from './Callbacks';
 import { MutableProp, NMutableProp } from './MutableProp';
 import { Application } from '../app/Application';
 import mergeWithoutArrays from '../utils/common/mergeWithoutArrays';
 import { Viewport } from '../app/events/Viewport';
+import { DeepNonNullable, DeepRequired } from '../utils/types/utility';
 
 
 
