@@ -12,15 +12,6 @@
         "jsdoc"
     ],
     "rules": {
-        "indent": [
-            "error",
-            4,
-            {
-                "SwitchCase": 1
-            }
-        ],
-        "linebreak-style": "off",
-        "no-use-before-define": "off",
         "import/extensions": [
             "error",
             "ignorePackages",
@@ -28,7 +19,29 @@
                 "js": "never",
                 "ts": "never"
             }
-        ]
+        ],
+        "linebreak-style": "off",
+        "indent": [
+            "error",
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "space-before-function-paren": ["error", "always"],
+        "no-multiple-empty-lines": [
+            "error",
+            {
+                "max": 3,
+                "maxEOF": 1,
+                "maxBOF": 1
+            }
+        ],
+        "no-underscore-dangle": [
+            "error",
+            { "allowAfterThis": true }
+        ],
+        "class-methods-use-this": "off"
     },
     "settings": {
         "import/resolver": {
