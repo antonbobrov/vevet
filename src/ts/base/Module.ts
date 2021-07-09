@@ -1,6 +1,7 @@
 import {
     addEventListener, IAddEventListener, IAddEventListenerOptions, ListenerElement,
 } from 'vevet-dom';
+import { DeepNonNullable, DeepRequired } from 'ts-essentials';
 import { Callbacks, NCallbacks } from './Callbacks';
 import { MutableProp, NMutableProp } from './MutableProp';
 import { Application } from '../app/Application';
@@ -59,15 +60,17 @@ export class Module<
     /**
      * Get Default properties (should be extended)
      */
-    get defaultProp (): StaticProp & ChangeableProp {
-        return {} as StaticProp & ChangeableProp;
+    get defaultProp (): DeepRequired<StaticProp & ChangeableProp> {
+        return {} as DeepRequired<StaticProp & ChangeableProp>;
     }
 
     /**
      * Current properties
      */
-    get prop () {
-        return this._mutableProp.prop;
+    get prop (): DeepNonNullable<DeepRequired<(StaticProp & ChangeableProp)>> {
+        return this._mutableProp.prop as DeepNonNullable<
+            DeepRequired<(StaticProp & ChangeableProp)>
+        >;
     }
 
     /**
