@@ -1,6 +1,6 @@
 import { NCallbacks } from './types.d';
-import Application from '../app/Application';
-import { timeoutCallback, randID } from '../utils/common';
+import Application from '../../app/Application';
+import { timeoutCallback, randID } from '../../utils/common';
 
 /**
  * A class for callbacks' manipulation.
