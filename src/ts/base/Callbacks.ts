@@ -170,7 +170,7 @@ export class Callbacks<
      * });
      */
     public add <Target extends keyof Types> (
-        target: keyof Types,
+        target: Target,
         func: NCallbacks.CallbackSettings<Types, Target>['do'],
         data: NCallbacks.CallbackBaseSettings = {},
     ): NCallbacks.AddedCallback {
@@ -356,7 +356,7 @@ export class Callbacks<
      * Trigger all enabled callbacks under a certain target name. (TBT: Trigger by target).
      */
     public tbt <T extends keyof Types> (
-        target: keyof Types,
+        target: T,
         arg: Types[T],
     ) {
         this._callbacks.forEach((callback) => {
