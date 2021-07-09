@@ -60,8 +60,11 @@ export class Module<
     /**
      * Get Default properties (should be extended)
      */
-    get defaultProp (): DeepRequired<StaticProp & ChangeableProp> {
-        return {} as DeepRequired<StaticProp & ChangeableProp>;
+    protected _getDefaultProp () {
+        const prop: DeepRequired<StaticProp & ChangeableProp> = {
+            parent: false,
+        } as DeepRequired<StaticProp & ChangeableProp>;
+        return prop;
     }
 
     /**
@@ -165,7 +168,7 @@ export class Module<
         this._callbacks = new Callbacks<CallbacksTypes>();
 
         // create mutable properties
-        const prop = mergeWithoutArrays(this.defaultProp, initialProp);
+        const prop = mergeWithoutArrays(this._getDefaultProp(), initialProp);
         this._mutableProp = new MutableProp(
             prop,
             this._onPropResponsive.bind(this),
