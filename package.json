@@ -8,8 +8,8 @@
   "scripts": {
     "watch-tsc": "nodemon --watch ./src/ts --ext ts,js --exec \"npm run prepare:es\"",
     "prepare:all": "npm run prepare:es && npm run prepare:cjs && npm run prepare:cdn",
-    "prepare:es": "tsc ./src/ts/index.ts --outDir ./build/es --target esNext --moduleResolution node --declaration true --declarationDir ./build/types --declarationMap true",
-    "prepare:cjs": "tsc ./src/ts/index.ts --outDir ./build/cjs --target es5 --module commonjs",
+    "prepare:es": "tsc ./src/ts/index.ts --outDir ./build/es --target esNext --module esNext --moduleResolution node --esModuleInterop true --allowSyntheticDefaultImports true --declaration true --declarationDir ./build/types --declarationMap true",
+    "prepare:cjs": "tsc ./src/ts/index.ts --outDir ./build/cjs --target es5 --module commonjs --moduleResolution node --esModuleInterop true --allowSyntheticDefaultImports true",
     "prepare:cdn": "webpack --config ./config/webpack.cdn.js",
     "lint:js": "eslint . --ext .ts,.js"
   },
