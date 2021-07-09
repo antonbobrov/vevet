@@ -7,6 +7,7 @@ import { PageLoad, NPageLoad } from './app/events/PageLoad';
 import { Callbacks, NCallbacks } from './base/Callbacks';
 import { MutableProp, NMutableProp } from './base/MutableProp';
 import { Module, NModule } from './base/Module';
+import { Component, NComponent } from './base/Component';
 
 
 
@@ -20,4 +21,5 @@ export {
     Callbacks, NCallbacks,
     MutableProp, NMutableProp,
     Module, NModule,
+    Component, NComponent,
 };
