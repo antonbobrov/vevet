@@ -1,5 +1,7 @@
 module.exports = {
 
+    target: 'web',
+
     resolve: {
         extensions: ['.ts', '.js', '.json'],
     },
