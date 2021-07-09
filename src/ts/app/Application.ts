@@ -5,16 +5,13 @@
 // import { PageLoad } from './PageLoad';
 
 import { Viewport } from './events/Viewport';
+import { PageLoad } from './events/PageLoad';
 
 
 
 // const browser = detect();
 
 interface Page {
-
-}
-
-class PageLoad {
 
 }
 
@@ -141,20 +138,6 @@ export class Application <
         // create default helpers
         this._pageLoad = new PageLoad();
         this._viewport = new Viewport();
-
-        // /**
-        //  * @member {Vevet.URLEvent}
-        //  */
-        // this.url = new URLEvent({
-        //     v: this
-        // });
-
-        // /**
-        //  * @member {Vevet.AJAXEvent}
-        //  */
-        // this.ajax = new AJAXEvent({
-        //     v: this
-        // });
     }
 
 
