@@ -1,6 +1,6 @@
-import { DeepRequired } from 'ts-essentials';
 import { Component, NComponent } from '../../base/Component';
 import { mergeWithoutArrays } from '../../utils/common';
+import { DeepRequired } from '../../utils/types/utility';
 
 
 
