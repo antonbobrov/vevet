@@ -9,6 +9,8 @@ export default function timeoutCallback (
     if (timeout === 0) {
         callback();
     } else {
-        setTimeout(callback.bind(this), timeout);
+        setTimeout(() => {
+            callback();
+        }, timeout);
     }
 }
