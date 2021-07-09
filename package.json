@@ -64,6 +64,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "ismobilejs": "^1.1.1",
     "lodash.clonedeep": "^4.5.0",
     "lodash.mergewith": "^4.6.2"
   }
