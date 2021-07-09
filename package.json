@@ -66,6 +66,7 @@
   "dependencies": {
     "ismobilejs": "^1.1.1",
     "lodash.clonedeep": "^4.5.0",
-    "lodash.mergewith": "^4.6.2"
+    "lodash.mergewith": "^4.6.2",
+    "vevet-dom": "0.0.15"
   }
 }
