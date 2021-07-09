@@ -39,9 +39,11 @@
         ],
         "no-underscore-dangle": [
             "error",
-            { "allowAfterThis": true }
+            { "allowAfterThis": true, "allowAfterSuper": true }
         ],
-        "class-methods-use-this": "off"
+        "class-methods-use-this": "off",
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": ["error"]
     },
     "settings": {
         "import/resolver": {
