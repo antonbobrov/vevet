@@ -6,6 +6,9 @@
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "strict": true,
+        "lib": [
+            "DOM"
+        ]
     },
     "exclude": [
         "node_modules",
