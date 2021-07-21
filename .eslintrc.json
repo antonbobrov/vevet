@@ -12,6 +12,7 @@
         "jsdoc"
     ],
     "rules": {
+        "linebreak-style": "off",
         "import/extensions": [
             "error",
             "ignorePackages",
@@ -20,7 +21,6 @@
                 "ts": "never"
             }
         ],
-        "linebreak-style": "off",
         "indent": [
             "error",
             4,
@@ -28,7 +28,9 @@
                 "SwitchCase": 1
             }
         ],
-        "space-before-function-paren": ["error", "always"],
+        "func-names": ["error", "as-needed"],
+        "no-use-before-define": ["error", { "functions": false, "classes": false }],
+        "no-case-declarations": "off",
         "no-multiple-empty-lines": [
             "error",
             {
@@ -42,9 +44,19 @@
             { "allowAfterThis": true, "allowAfterSuper": true }
         ],
         "class-methods-use-this": "off",
+        "space-before-function-paren": ["error", "always"],
+        "lines-between-class-members": "off",
         "no-shadow": "off",
         "@typescript-eslint/no-shadow": ["error"]
     },
+    "overrides": [
+        {
+            "files": ["*.ts"],
+            "rules": {
+                "no-undef": "off"
+            }
+        }
+    ],
     "settings": {
         "import/resolver": {
             "node": {
