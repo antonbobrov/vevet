@@ -1,9 +1,9 @@
 /* eslint-disable max-classes-per-file */
 // import { detect } from 'detect-browser';
-// import { EasingType } from 'easing-progress';
 // import { Page } from '../components/page/Page';
 // import { PageLoad } from './PageLoad';
 
+import { EasingType } from 'easing-progress';
 import { Viewport } from './events/Viewport';
 import { PageLoad } from './events/PageLoad';
 
@@ -16,7 +16,6 @@ interface Page {
 }
 
 const browser = '';
-type EasingType = any;
 
 export namespace NApplication {
 
