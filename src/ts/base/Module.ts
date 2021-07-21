@@ -7,6 +7,7 @@ import { Application } from '../app/Application';
 import mergeWithoutArrays from '../utils/common/mergeWithoutArrays';
 import { Viewport } from '../app/events/Viewport';
 import { DeepNonNullable, DeepRequired } from '../utils/types/utility';
+import { throwVevetAppError } from '../utils/errors';
 
 
 
@@ -110,7 +111,7 @@ export class Module<
     /**
      * Vevet Application
      */
-    protected _app: Application;
+    protected _app!: Application;
 
     /**
      * Module prefix
@@ -158,7 +159,11 @@ export class Module<
         init = true,
     ) {
         // set vars
-        this._app = window.vevetApp;
+        if (window.vevetApp) {
+            this._app = window.vevetApp;
+        } else {
+            throwVevetAppError();
+        }
 
         // set default vars
         this._destroyed = false;
@@ -325,8 +330,9 @@ export class Module<
     public addEventListeners <
         El extends ListenerElement,
         Target extends keyof HTMLElementEventMap,
-        Callback extends (ev: HTMLElementEventMap[Target]) => void,
+        Callback extends (evt: HTMLElementEventMap[Target]) => void,
     > (
+
         el: El,
         target: Target,
         callback: Callback,

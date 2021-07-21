@@ -1,5 +1,5 @@
 export declare type Primitive = string | number | boolean | bigint | symbol | undefined | null;
-export declare type Builtin = Primitive | Function | Date | Error | RegExp | Element;
+export declare type Builtin = Primitive | Function | Date | Error | RegExp | Element | Window;
 
 export declare type DeepNonNullable<T> = T extends Builtin
   ? NonNullable<T>
