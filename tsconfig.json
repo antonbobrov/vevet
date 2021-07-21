@@ -1,14 +1,14 @@
 {
     "compilerOptions": {
-        "module": "ESNext",
         "target": "ESNext",
-        "moduleResolution": "node",
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
+        "lib": ["dom", "dom.iterable", "esnext"],
         "strict": true,
-        "lib": [
-            "DOM"
-        ]
+        "forceConsistentCasingInFileNames": true,
+        "noEmit": true,
+        "esModuleInterop": true,
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "isolatedModules": true,
     },
     "exclude": [
         "node_modules",
