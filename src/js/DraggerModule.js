@@ -26,7 +26,7 @@ const selectEl = require('select-el');
  * 
  * @class
  * @memberof Vevet
- * @augments Vevet.Event
+ * @augments Vevet.Module
  */
 export default class DraggerModule extends Module {
 
@@ -50,6 +50,8 @@ export default class DraggerModule extends Module {
      * @property {number} [momentumStopThreshold=0.01] - When the momentum stops.
      * @property {number} [friction=.95] - Momentum deceleration friction.
      * @property { Vevet.DraggerModule.ThresholdPropagation | false } [thresholdPropagation=false] - Stop propagation if a definite length of movement in pixels was reached.
+     * @property { boolean } [preventDefault=false] - Prevent default action on all events
+     * @property { boolean } [stopPropagation=false] - Stop event propagation action on all events
      */
     /**
      * @alias Vevet.DraggerModule
@@ -72,7 +74,9 @@ export default class DraggerModule extends Module {
             momentum: false,
             momentumStopThreshold: .01,
             friction: .95,
-            thresholdPropagation: false
+            thresholdPropagation: false,
+            preventDefault: false,
+            stopPropagation: false,
         });
     }
 
@@ -316,6 +320,13 @@ export default class DraggerModule extends Module {
 
         const event = this._normalizeEvent(e);
 
+        if (this._prop.preventDefault) {
+            e.preventDefault();
+        }
+        if (this._prop.stopPropagation) {
+            e.stopPropagation();
+        }
+
         if (!this._dragging) {
 
             // prevent actions
@@ -361,6 +372,13 @@ export default class DraggerModule extends Module {
      * @param { Event } e
      */
     _onMove(e) {
+
+        if (this._prop.preventDefault) {
+            e.preventDefault();
+        }
+        if (this._prop.stopPropagation) {
+            e.stopPropagation();
+        }
 
         const event = this._normalizeEvent(e);
 
@@ -414,6 +432,13 @@ export default class DraggerModule extends Module {
      * @param { Event } e
      */
     _onEnd(e) {
+
+        if (this._prop.preventDefault) {
+            e.preventDefault();
+        }
+        if (this._prop.stopPropagation) {
+            e.stopPropagation();
+        }
 
         const event = this._normalizeEvent(e);
 
