@@ -374,11 +374,21 @@ export default class ScrollAnchorModule extends ScrollAnimateModule {
         timeline.add({
             target: 'progress',
             do: (p) => {
-                if (prop.horizontal) {
-                    this._vevetScroll.scrollLeft = scrollValue + (diff * p.se);
+                if (this._vevetScroll instanceof Window) {
+                    if (prop.horizontal) {
+                        this._vevetScroll.scrollTo(scrollValue + (diff * p.se), 0);
+                    }
+                    else {
+                        this._vevetScroll.scrollTo(0, scrollValue + (diff * p.se));
+                    }
                 }
                 else {
-                    this._vevetScroll.scrollTop = scrollValue + (diff * p.se);
+                    if (prop.horizontal) {
+                        this._vevetScroll.scrollLeft = scrollValue + (diff * p.se);
+                    }
+                    else {
+                        this._vevetScroll.scrollTop = scrollValue + (diff * p.se);
+                    }
                 }
             }
         });
