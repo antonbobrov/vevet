@@ -8,3 +8,15 @@ declare global {
         Vevet: typeof Vevet;
     }
 }
+
+
+
+const pageNameAttr = document.documentElement.getAttribute('data-page-name');
+
+switch (pageNameAttr) {
+    case 'app-events-page-load':
+        import('../pages/app/events/page-load/sample');
+        break;
+    default:
+        break;
+}
