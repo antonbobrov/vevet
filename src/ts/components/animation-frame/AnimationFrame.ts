@@ -1,5 +1,5 @@
 import { Component, NComponent } from '../../base/Component';
-import { mergeWithoutArrays, timeoutCallback } from '../../utils/common';
+import { mergeWithoutArrays } from '../../utils/common';
 import { DeepRequired } from '../../utils/types/utility';
 
 
