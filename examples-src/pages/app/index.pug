@@ -1,0 +1,20 @@
+extends ../_layout/page
+
+block variables
+    - var title = 'Example of Vevet Application';
+
+block content
+    
+    .container
+
+        h1 Vevet Application
+        
+        //- description
+        p.lead
+            b Vevet Application 
+            | is the necessary instance of the whole library. It should be initialized before any component is used.
+
+        hr
+        h2 An example of initialization
+        pre
+            code!= readFile('./sample.ts', dir)
