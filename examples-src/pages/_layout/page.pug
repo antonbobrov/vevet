@@ -1,0 +1,115 @@
+block variables
+doctype html
+html(
+    lang="en"
+    dir="ltr"
+    class=""
+    data-page-name=pageName
+)
+
+    head
+
+        //- meta
+        meta(
+            http-equiv="Content-Type",
+            content="text/html; charset=UTF-8",
+        )
+        meta(
+            http-equiv="X-UA-Compatible",
+            content="IE=Edge",
+        )
+        meta(
+            name="format-detection",
+            content="telephone=no",
+        )
+        meta(
+            name="viewport",
+            content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no",
+        )
+
+        title #{title}
+
+        //- icons
+        link(
+            rel="icon",
+            type="image/png",
+            href="/image/favicon-16x16.png",
+            sizes="16x16",
+        )
+        link(
+            rel="icon",
+            type="image/png",
+            href="/image/favicon-32x32.png",
+            sizes="32x32",
+        )
+        link(
+            rel="icon",
+            type="image/png",
+            href="/image/favicon-64x64.png",
+            sizes="64x64",
+        )
+        link(
+            rel="icon",
+            type="image/png",
+            href="/image/favicon-96x96.png",
+            sizes="96x96",
+        )
+        link(
+            rel="apple-touch-icon",
+            href="/image/192x192.png",
+        )
+       
+        //-web
+        meta(
+            name="apple-mobile-web-app-capable",
+            content="yes",
+        )
+        meta(
+            name="theme-color",
+            content="#000000",
+        )
+        link(
+            rel="manifest",
+            href="/manifest.webmanifest",
+        )
+        
+        //- SEO
+        meta(name="description", content=description)
+        meta(name="keywords", content=keywords)
+
+        //- Facebook
+        meta(property="og:site_name", content=title)
+        meta(property="og:type", content="article")
+        meta(property="og:title", content=title)
+        meta(property="og:description", content=description)
+        meta(property="og:image", content=(domain + image))
+
+        //- Twitter
+        meta(name="twitter:card", content="summary")
+        meta(name="twitter:title", content=title)
+        meta(name="twitter:description", content=description)
+        meta(name="twitter:image", content=(domain + image))
+
+        //- Settings
+        meta(name="theme-color", content="#ffffff")
+        link(rel="manifest", href="/manifest.webmanifest")
+
+        //- Styles
+        //- link(
+        //-     rel="stylesheet",
+        //-     href="https://cdn.jsdelivr.net/npm/highlightjs-themes@1.0.0/darkula.css",
+        //- )
+        link(
+            rel="stylesheet",
+            href="https://cdn.jsdelivr.net/npm/highlightjs-themes@1.0.0/darkula.css",
+        )
+
+    body
+
+        block content
+
+        script(
+            src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js",
+        )
+        script
+            | hljs.initHighlightingOnLoad();

@@ -9,4 +9,11 @@ exports.PATHS = {
     build: {
         cdn: path.join(__dirname, '..', 'build/cdn'),
     },
+    pages: {
+        pages: path.join(__dirname, '..', 'examples-src', 'pages'),
+        html: path.join(__dirname, '..', 'examples-src', 'html'),
+        ts: path.join(__dirname, '..', 'examples-src', 'ts'),
+        static: path.join(__dirname, '..', 'examples-src', 'static'),
+        build: path.join(__dirname, '..', 'examples-build'),
+    },
 };
