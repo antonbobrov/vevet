@@ -1,5 +1,5 @@
 import { Component, NComponent } from '../../base/Component';
-import { mergeWithoutArrays } from '../../utils/common';
+import { mergeWithoutArrays, timeoutCallback } from '../../utils/common';
 import { DeepRequired } from '../../utils/types/utility';
 
 
@@ -17,7 +17,7 @@ export namespace NAnimationFrame {
     export interface ChangeableProp extends NComponent.ChangeableProp {
         /**
          * Frames per second
-         * @default 60
+         * @default 140
          */
         fps?: number;
         /**
@@ -31,7 +31,11 @@ export namespace NAnimationFrame {
      * Available callbacks
      */
     export interface CallbacksTypes extends NComponent.CallbacksTypes {
-        'frame': false;
+        'frame': {
+            fps: number;
+            realFPS: number;
+            prevFrameDuration: number;
+        };
     }
 
 }
@@ -53,28 +57,49 @@ export class AnimationFrame <
     /**
      * If the frame is launched
      */
+    protected _isPlaying: boolean;
     get isPlaying () {
         return this._isPlaying;
     }
 
-    protected _isPlaying = false;
-
     /**
      * The animation frame
      */
-    protected _frame: number | null = null;
+    protected _frame: number | null;
+
 
     /**
      * Previous frame segment
      */
-    protected _frameSeg = -1;
+     protected _frameIndex: number;
 
     /**
      * Timestamp
      */
-    protected _time: null | number = null;
+    protected _timeStamp: null | number;
+    /**
+     * Previous frame duration
+     */
+    protected _prevFrameTime: null | number;
 
 
+
+    constructor (
+        initialProp: (StaticProp & ChangeableProp) = {} as (StaticProp & ChangeableProp),
+        init = true,
+    ) {
+        super(initialProp, false);
+
+        this._isPlaying = false;
+        this._frame = null;
+        this._frameIndex = -1;
+        this._timeStamp = null;
+        this._prevFrameTime = null;
+
+        if (init) {
+            this.init();
+        }
+    }
 
     /**
      * Get default properties
@@ -86,7 +111,7 @@ export class AnimationFrame <
                 keyof (NComponent.StaticProp & NComponent.ChangeableProp)
             >
         > = {
-            fps: 60,
+            fps: 140,
             run: false,
         };
         return mergeWithoutArrays(super._getDefaultProp(), prop);
@@ -104,15 +129,15 @@ export class AnimationFrame <
      * Create the frame
      */
     protected _create () {
-        this._isPlaying = this.prop.run;
         if (this.prop.run) {
             this.play();
         }
     }
 
     protected _onPropMutate () {
-        this._frameSeg = -1;
-
+        this._frameIndex = -1;
+        this._timeStamp = null;
+        this._prevFrameTime = null;
         if (this.prop.run) {
             this._play();
         } else {
@@ -143,9 +168,8 @@ export class AnimationFrame <
             return;
         }
         this._isPlaying = true;
-
-        // request animation frame
-        this._animate();
+        // launch animation
+        this._frame = window.requestAnimationFrame(this._animate.bind(this));
     }
 
 
@@ -166,13 +190,11 @@ export class AnimationFrame <
         if (!this.isPlaying) {
             return;
         }
-
         // cancel animation frame
         if (this._frame) {
             window.cancelAnimationFrame(this._frame);
             this._frame = null;
         }
-
         // bool
         this._isPlaying = false;
     }
@@ -183,23 +205,45 @@ export class AnimationFrame <
      * Launch the animation frame.
      */
     protected _animate (
-        timestamp = 0,
+        timestamp: number,
     ) {
+        if (!this._isPlaying) {
+            return;
+        }
+
         // launch animation
         this._frame = window.requestAnimationFrame(this._animate.bind(this));
 
-        // update current time
-        if (this._time == null) {
-            this._time = timestamp;
+        // update variables
+        const currentTime = +new Date();
+        if (this._timeStamp == null) {
+            this._timeStamp = timestamp;
+        }
+        if (this._prevFrameTime == null) {
+            this._prevFrameTime = currentTime;
         }
 
-        // calculate frame segment
-        const seg = Math.floor((timestamp - this._time) / (1000 / this.prop.fps));
-        if (seg > this._frameSeg) {
-            this._frameSeg = seg;
-            // trigger callbakcs
-            this.callbacks.tbt('frame', false);
+        // calculate frame index
+        const newFrameIndex = Math.floor((timestamp - this._timeStamp) / (1000 / this.prop.fps));
+        if (newFrameIndex <= this._frameIndex) {
+            return;
         }
+
+        // update frame index
+        this._frameIndex = newFrameIndex;
+
+        // calculate real fps
+        const timeDiff = currentTime - this._prevFrameTime;
+        const realFPS = timeDiff === 0 ? 1000 / this.prop.fps : Math.floor(1000 / timeDiff);
+
+        // launch callbacks
+        this.callbacks.tbt('frame', {
+            fps: this.prop.fps,
+            realFPS,
+            prevFrameDuration: currentTime - this._prevFrameTime,
+        });
+
+        this._prevFrameTime = currentTime;
     }
 
 
