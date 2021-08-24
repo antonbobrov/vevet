@@ -1,15 +1,9 @@
-/* eslint-disable max-classes-per-file */
-// import { detect } from 'detect-browser';
-// import { Page } from '../components/page/Page';
-// import { PageLoad } from './PageLoad';
-
+import isMobileJs from 'ismobilejs';
 import { EasingType } from 'easing-progress';
 import { Viewport } from './events/Viewport';
 import { PageLoad } from './events/PageLoad';
 
 
-
-// const browser = detect();
 
 interface Page {
 
@@ -90,16 +84,46 @@ export class Application <
     }
 
     /**
-     * Application prefix.
+     * Vevet prefix.
      */
     protected _prefix: string;
-
-    /**
-     * Get Vevet prefix
-     */
     get prefix () {
         return this._prefix;
     }
+
+    /**
+     * If is phone
+     */
+    protected _isPhone: boolean;
+    get isPhone () {
+        return this._isPhone;
+    }
+
+    /**
+     * If tablet
+     */
+    protected _isTablet: boolean;
+    get isTablet () {
+        return this._isTablet;
+    }
+
+    /**
+     * If mobile device
+     */
+    protected _isMobile: boolean;
+    get isMobile () {
+        return this._isMobile;
+    }
+
+    /**
+     * If desktop device
+     */
+    protected _isDesktop: boolean;
+    get isDesktop () {
+        return this._isDesktop;
+    }
+
+
 
     /**
      * @example
@@ -125,6 +149,17 @@ export class Application <
 
         // add the application to the window
         window.vevetApp = this;
+
+        // get type of device
+        const ifmobile = isMobileJs();
+        this._isPhone = ifmobile.phone;
+        this.html.classList.toggle(`${this.prefix}phone`, this._isPhone);
+        this._isTablet = ifmobile.tablet;
+        this.html.classList.toggle(`${this.prefix}tablet`, this._isTablet);
+        this._isMobile = ifmobile.phone || ifmobile.tablet;
+        this.html.classList.toggle(`${this.prefix}mobile`, this._isMobile);
+        this._isDesktop = !this._isMobile;
+        this.html.classList.toggle(`${this.prefix}desktop`, this._isDesktop);
 
         // create default helpers
         this._pageLoad = new PageLoad();
@@ -192,10 +227,9 @@ export class Application <
 
 
     /**
-     * Pages (modules).
+     * Pages (instances)
      */
     protected _pages: PageInstance[] = [];
-
     /**
      * Get an array of existing pages.
      * A new element is added to the array when {@linkcode Vevet.Page.create} is called.
@@ -205,19 +239,17 @@ export class Application <
     }
 
     /**
-     * Current Page (module).
+     * Current Page (instance).
      */
     protected _page: false | PageInstance = false;
-
     /**
-     * Get the current page module.
+     * Get the current page instance.
      */
     get page () {
         return this._page;
     }
-
     /**
-     * Set the current page module.
+     * Set the current page instance.
      */
     set page (val: false | PageInstance) {
         this._page = val;
@@ -229,10 +261,6 @@ export class Application <
      * Page Load Callbacks
      */
     protected _pageLoad: PageLoad;
-
-    /**
-     * Get Page Load Callbacks
-     */
     get pageLoad () {
         return this._pageLoad;
     }
@@ -241,10 +269,6 @@ export class Application <
      * Viewport Callbacks
      */
     protected _viewport: Viewport;
-
-    /**
-     * Get Viewport Callbacks
-     */
     get viewport () {
         return this._viewport;
     }

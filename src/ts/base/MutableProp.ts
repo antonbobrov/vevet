@@ -13,13 +13,15 @@ export namespace NMutableProp {
          * Available breakpoints:
          * <ul>
          *      <li>any number - width breakpoint</li>
-         *      <li>'d' - for desktop only</li>
-         *      <li>'t' - for tablets only</li>
-         *      <li>'m' - for mobiles only</li>
-         *      <li>'md' - for mobile devices</li>
+         *      <li>'d' - for desktop size</li>
+         *      <li>'t' - for tablet size</li>
+         *      <li>'m' - for mobile size</li>
+         *      <li>'phone' - for phones</li>
+         *      <li>'tablet' - for tablets</li>
+         *      <li>'mobile' - for phone or tablet devices</li>
          * </ul>
          */
-        breakpoint: number | 'd' | 't' | 'm' | 'md';
+        breakpoint: number | 'd' | 't' | 'm' | 'phone' | 'tablet' | 'mobile';
         settings: S;
     }
 
@@ -161,7 +163,8 @@ export class MutableProp<
         const responsiveProp = this._responsiveRules;
 
         // get sizes
-        const { viewport } = this._app;
+        const app = this._app;
+        const { viewport } = app;
         const { width } = viewport;
         let newProp: (StaticProp & ChangeableProp) | false = false;
 
@@ -177,18 +180,21 @@ export class MutableProp<
                     newProp = mergeWithoutArrays(this._refProp, settings);
                 }
             } else if (typeof breakpoint === 'string') {
-                // if breakpoint is a string // desktop, tablet, mobile, mobiledevice
-                const string = breakpoint.toLowerCase();
-                if (string === 'd' && viewport.isDesktop) {
+                const string = breakpoint.toLowerCase() as typeof breakpoint;
+                // viewport size
+                if (
+                    (string === 'd' && viewport.isDesktop)
+                    || (string === 't' && viewport.isTablet)
+                    || (string === 'm' && viewport.isMobile)
+                ) {
                     newProp = mergeWithoutArrays(this._refProp, settings);
                 }
-                if (string === 't' && viewport.isTablet) {
-                    newProp = mergeWithoutArrays(this._refProp, settings);
-                }
-                if (string === 'm' && viewport.isMobile) {
-                    newProp = mergeWithoutArrays(this._refProp, settings);
-                }
-                if (string === 'md' && viewport.isMobileDevice) {
+                // device type
+                if (
+                    (string === 'phone' && app.isPhone)
+                    || (string === 'tablet' && app.isTablet)
+                    || (string === 'mobile' && app.isMobile)
+                ) {
                     newProp = mergeWithoutArrays(this._refProp, settings);
                 }
             }

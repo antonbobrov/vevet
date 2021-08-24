@@ -1,4 +1,3 @@
-import isMobileJs from 'ismobilejs';
 import { Callbacks, NCallbacks } from '../../base/Callbacks';
 import { timeoutCallback } from '../../utils/common';
 
@@ -81,10 +80,6 @@ export class Viewport extends Callbacks<
      * Current Viewport width
      */
     protected _width: number;
-
-    /**
-     * Get viewport width
-     */
     get width () {
         return this._width;
     }
@@ -93,10 +88,6 @@ export class Viewport extends Callbacks<
      * Current Viewport height
      */
     protected _height: number;
-
-    /**
-     * Get viewport height
-     */
     get height () {
         return this._height;
     }
@@ -134,10 +125,6 @@ export class Viewport extends Callbacks<
      * If desktop size
      */
     protected _isDesktop: boolean;
-
-    /**
-     * If desktop size
-     */
     get isDesktop () {
         return this._isDesktop;
     }
@@ -146,10 +133,6 @@ export class Viewport extends Callbacks<
      * If tablet size
      */
     protected _isTablet: boolean;
-
-    /**
-     * If tablet size
-     */
     get isTablet () {
         return this._isTablet;
     }
@@ -158,24 +141,8 @@ export class Viewport extends Callbacks<
      * If mobile size
      */
     protected _isMobile: boolean;
-
-    /**
-     * If mobile size
-     */
     get isMobile () {
         return this._isMobile;
-    }
-
-    /**
-     * If mobile device.
-     */
-    protected _isMobileDevice: boolean;
-
-    /**
-     * If mobile device.
-     */
-    get isMobileDevice () {
-        return this._isMobileDevice;
     }
 
     /**
@@ -191,11 +158,11 @@ export class Viewport extends Callbacks<
     /**
      * Device pixel ratio. For non-mobile devices it is always 1.
      */
-    get dprMobile () {
-        if (this.isMobileDevice) {
-            return this.dpr;
+    get lowerDesktopDPR () {
+        if (this._app.isDesktop) {
+            return 1;
         }
-        return 1;
+        return this.dpr;
     }
 
 
@@ -208,7 +175,6 @@ export class Viewport extends Callbacks<
         this._isDesktop = false;
         this._isTablet = false;
         this._isMobile = false;
-        this._isMobileDevice = false;
         this._init();
     }
 
@@ -251,10 +217,6 @@ export class Viewport extends Callbacks<
         this._isTablet = width <= appProp.tablet && width > appProp.mobile;
         this._isMobile = width <= appProp.mobile;
 
-        // mobile device
-        const ifmobile = isMobileJs();
-        this._isMobileDevice = (ifmobile.tablet || ifmobile.phone);
-
         // update other values
         this._updateClasses();
     }
@@ -265,10 +227,6 @@ export class Viewport extends Callbacks<
      * Change classes of the document element.
      */
     protected _updateClasses () {
-        const app = this._app;
-        const { html } = app;
-        const { prefix } = app;
-
         // set viewport type
         const viewportSizeTypes: SizeTypes[] = [
             SizeTypes.Desktop,
@@ -310,14 +268,6 @@ export class Viewport extends Callbacks<
         } else {
             this._updateBreakpointClasses('', orientationTypes);
         }
-
-        // mobile device
-        const mobileDeviceClass = `${prefix}mobile-device`;
-        if (this.isMobileDevice) {
-            html.classList.add(mobileDeviceClass);
-        } else {
-            html.classList.remove(mobileDeviceClass);
-        }
     }
 
     /**
@@ -332,9 +282,9 @@ export class Viewport extends Callbacks<
 
         types.forEach((type) => {
             if (type === activeType) {
-                html.classList.add(prefix + type);
+                html.classList.add(`${prefix}viewport-${type}`);
             } else {
-                html.classList.remove(prefix + type);
+                html.classList.remove(`${prefix}viewport-${type}`);
             }
         });
     }
