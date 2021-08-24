@@ -22,10 +22,6 @@ export class PageLoad extends Callbacks<
      * If the page is loaded.
      */
     protected _loaded: boolean;
-
-    /**
-     * If the page is loaded.
-     */
     get loaded () {
         return this._loaded;
     }
@@ -38,21 +34,14 @@ export class PageLoad extends Callbacks<
         this._init();
     }
 
-    // Extra constructor
-    protected _constructor () {
-        super._constructor();
-        this._loaded = false;
-    }
-
     protected _setEvents () {
-        // add callbacks
-        this.add('', this._handleLoaded.bind(this), {
-            protected: true,
-        });
-        // launch callbacks on loaded
-        window.addEventListener('load', () => {
-            this.tbt('', false);
-        });
+        if (document.readyState === 'complete') {
+            this._handleLoaded();
+        } else {
+            window.addEventListener('load', () => {
+                this._handleLoaded();
+            });
+        }
     }
 
 
@@ -68,6 +57,8 @@ export class PageLoad extends Callbacks<
         app.html.classList.remove(`${prefix}loading`);
         app.body.classList.remove(`${prefix}loading`);
         app.html.classList.add(`${prefix}loaded`);
+
+        this.tbt('', false);
     }
 
 
