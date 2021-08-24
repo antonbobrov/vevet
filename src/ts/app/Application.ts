@@ -44,11 +44,6 @@ export namespace NApplication {
          */
         prefix: string;
         /**
-         * Maximum timeout of waiting for a response from an ajax request
-         * @default 5000
-         */
-        maxAjaxTimeout: number;
-        /**
          * Timeout of viewport callbacks
          * @default 0
          */
@@ -91,7 +86,6 @@ export class Application <
             tablet: 1199,
             mobile: 899,
             prefix: 'v-',
-            maxAjaxTimeout: 5000,
             easing: [0.25, 0.1, 0.25, 1],
             viewportResizeTimeout: 0,
         };
