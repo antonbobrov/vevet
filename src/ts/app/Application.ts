@@ -15,8 +15,6 @@ interface Page {
 
 }
 
-const browser = '';
-
 export namespace NApplication {
 
     /**
@@ -249,15 +247,6 @@ export class Application <
      */
     get viewport () {
         return this._viewport;
-    }
-
-
-
-    /**
-     * Get agent info
-     */
-    get agent () {
-        return browser;
     }
 
 
