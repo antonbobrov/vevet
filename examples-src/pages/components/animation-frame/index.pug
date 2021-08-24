@@ -1,0 +1,30 @@
+extends ../../_layout/page
+
+block variables
+    - var title = 'Example of AnimationFrame';
+    - var pageName = 'components-animation-frame';
+
+block content
+    
+    .container
+
+        h1 AnimationFrame
+        
+        //- description
+        p.lead
+            b AnimationFrame 
+            | is a convenient way to launch an animation with a definite FPS.
+        p The class allows you to:
+            ul 
+                li Start animation;
+                li Pause animation;
+                li Set a definite FPS;
+                li Change the FPS at any time;
+                li Make FPS responsive according to the type of device or viewport size.
+
+        hr
+        h2 Example
+        p Resize your viewport to desktop, tablet, and mobile sizes to see the change of FPS.
+        include ./sample.pug
+        pre.ts
+            code!= readFile('./sample.ts', dir)
