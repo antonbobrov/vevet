@@ -20,6 +20,9 @@ switch (pageNameAttr) {
     case 'components-animation-frame':
         import('../pages/components/animation-frame/sample');
         break;
+    case 'components-ctx2d':
+        import('../pages/components/ctx2d/sample');
+        break;
     default:
         break;
 }
