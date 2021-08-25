@@ -1,0 +1,23 @@
+extends ../../_layout/page
+
+block variables
+    - var title = 'Example of Ctx2DPrerender';
+    - var pageName = 'components-ctx2d-prerender';
+
+block content
+    
+    .container
+
+        h1 Ctx2DPrerender
+        
+        //- description
+        p.lead
+            b Ctx2DPrerender 
+            | allows you to prerender media for further use with reduced payloads.
+
+        hr
+        h2 Example
+        include ./sample.pug
+        hr
+        pre.ts
+            code!= readFile('./sample.ts', dir)
