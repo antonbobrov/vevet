@@ -80,6 +80,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "detect-browser": "^5.2.0",
     "easing-progress": "0.0.4",
     "get-image-pos": "0.0.9",
     "ismobilejs": "^1.1.1",

@@ -1,5 +1,6 @@
 import isMobileJs from 'ismobilejs';
 import { EasingType } from 'easing-progress';
+import { detect } from 'detect-browser';
 import { Viewport } from './events/Viewport';
 import { PageLoad } from './events/PageLoad';
 
@@ -126,6 +127,24 @@ export class Application <
 
 
     /**
+     * OS name
+     */
+    protected _osName: string;
+    get osName () {
+        return this._osName;
+    }
+
+    /**
+     * OS name
+     */
+    protected _browserName: string;
+    get browserName () {
+        return this._browserName;
+    }
+
+
+
+    /**
      * @example
      * const app = Application({
      *     page: 'home'
@@ -160,6 +179,26 @@ export class Application <
         this.html.classList.toggle(`${this.prefix}mobile`, this._isMobile);
         this._isDesktop = !this._isMobile;
         this.html.classList.toggle(`${this.prefix}desktop`, this._isDesktop);
+
+        // get browser info
+        const browserData = detect();
+        // get OS name
+        if (browserData?.os) {
+            const osName = browserData.os.split(' ')[0].toLowerCase();
+            this.html.classList.add(`${this.prefix}os-${osName}`);
+            this._osName = osName;
+        } else {
+            this._osName = '';
+        }
+        // get browser name
+        if (browserData?.name) {
+            const browserName = browserData.name.toLowerCase();
+            this.html.classList.add(`${this.prefix}browser-${browserName}`);
+            this._browserName = browserName;
+        } else {
+            this._browserName = '';
+        }
+        // browserData
 
         // create default helpers
         this._pageLoad = new PageLoad();
