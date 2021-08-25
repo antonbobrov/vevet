@@ -12,6 +12,7 @@ import { Component, NComponent } from './base/Component';
 import { AnimationFrame, NAnimationFrame } from './components/animation-frame/AnimationFrame';
 
 import { Ctx2D, NCtx2D } from './components/canvas/Ctx2D';
+import { Ctx2DPrerender, NCtx2DPrerender } from './components/canvas/Ctx2DPrerender';
 
 
 
@@ -30,4 +31,5 @@ export {
     AnimationFrame, NAnimationFrame,
 
     Ctx2D, NCtx2D,
+    Ctx2DPrerender, NCtx2DPrerender,
 };
