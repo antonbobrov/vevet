@@ -81,6 +81,7 @@
   },
   "dependencies": {
     "easing-progress": "0.0.4",
+    "get-image-pos": "0.0.9",
     "ismobilejs": "^1.1.1",
     "lodash.clonedeep": "^4.5.0",
     "lodash.mergewith": "^4.6.2",
