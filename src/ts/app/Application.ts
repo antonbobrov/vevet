@@ -3,12 +3,9 @@ import { EasingType } from 'easing-progress';
 import { detect } from 'detect-browser';
 import { Viewport } from './events/Viewport';
 import { PageLoad } from './events/PageLoad';
+import { Page } from '../components/page/Page';
 
 
-
-interface Page {
-
-}
 
 export namespace NApplication {
 
@@ -292,6 +289,44 @@ export class Application <
      */
     set page (val: false | PageInstance) {
         this._page = val;
+    }
+
+    /**
+     * Action on page created
+     */
+    public onPageCreated () {
+        return new Promise((
+            resolve: (page: PageInstance) => void,
+        ) => {
+            if (this._page) {
+                this._page.onCreate().then(() => {
+                    resolve(this.page as PageInstance);
+                });
+                return;
+            }
+            setTimeout(() => {
+                this.onPageCreated().then(() => {
+                    resolve(this.page as PageInstance);
+                });
+            }, 30);
+        });
+    }
+
+    /**
+     * Action on page shown
+     */
+    public onPageShown () {
+        return new Promise((
+            resolve: (page: PageInstance) => void,
+        ) => {
+            this.onPageCreated().then(() => {
+                if (this._page) {
+                    this._page.onShow().then(() => {
+                        resolve(this.page as PageInstance);
+                    });
+                }
+            });
+        });
     }
 
 

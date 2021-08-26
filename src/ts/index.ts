@@ -9,6 +9,8 @@ import { MutableProp, NMutableProp } from './base/MutableProp';
 import { Module, NModule } from './base/Module';
 import { Component, NComponent } from './base/Component';
 
+import { Page, NPage } from './components/page/Page';
+
 import { AnimationFrame, NAnimationFrame } from './components/animation-frame/AnimationFrame';
 
 import { Ctx2D, NCtx2D } from './components/canvas/Ctx2D';
@@ -27,6 +29,8 @@ export {
     MutableProp, NMutableProp,
     Module, NModule,
     Component, NComponent,
+
+    Page, NPage,
 
     AnimationFrame, NAnimationFrame,
 
