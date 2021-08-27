@@ -154,6 +154,9 @@ export class AnimationFrame <
         if (this._destroyed) {
             return;
         }
+        if (this.prop.run) {
+            return;
+        }
         this.changeProp({
             run: true,
         } as ChangeableProp);
@@ -178,6 +181,9 @@ export class AnimationFrame <
      * Stop the animation frame
      */
     public pause () {
+        if (!this.prop.run) {
+            return;
+        }
         this.changeProp({
             run: false,
         } as ChangeableProp);
@@ -243,7 +249,7 @@ export class AnimationFrame <
             prevFrameDuration: currentTime - this._prevFrameTime,
         });
 
-        this._prevFrameTime = currentTime;
+        this._prevFrameTime = +new Date();
     }
 
 
