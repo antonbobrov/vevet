@@ -18,6 +18,6 @@ export default function mergeWithoutArrays <
         if (Array.isArray(objValue)) {
             return srcValue as Record<string, any>;
         }
-        return srcValue;
+        return undefined;
     });
 }
