@@ -1,5 +1,6 @@
 import { Component, NComponent } from '../../base/Component';
 import { mergeWithoutArrays } from '../../utils/common';
+import { boundVal } from '../../utils/math';
 import { DeepRequired } from '../../utils/types/utility';
 
 
@@ -240,7 +241,10 @@ export class AnimationFrame <
 
         // calculate real fps
         const timeDiff = currentTime - this._prevFrameTime;
-        const realFPS = timeDiff === 0 ? 1000 / this.prop.fps : Math.floor(1000 / timeDiff);
+        const realFPS = boundVal(
+            timeDiff === 0 ? 1000 / this.prop.fps : Math.floor(1000 / timeDiff),
+            [1, Infinity],
+        );
 
         // launch callbacks
         this.callbacks.tbt('frame', {
