@@ -242,7 +242,7 @@ export class AnimationFrame <
         // calculate real fps
         const timeDiff = currentTime - this._prevFrameTime;
         const realFPS = boundVal(
-            timeDiff === 0 ? 1000 / this.prop.fps : Math.floor(1000 / timeDiff),
+            timeDiff === 0 ? 1000 / 60 : Math.floor(1000 / timeDiff),
             [1, Infinity],
         );
 
