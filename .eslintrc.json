@@ -51,6 +51,12 @@
         "no-unused-vars": "off",
         "@typescript-eslint/no-unused-vars": [
             "error"
+        ],
+        "no-param-reassign": [
+            "error",
+            {
+                "props": false
+            }
         ]
     },
     "overrides": [
