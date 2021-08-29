@@ -1,0 +1,13 @@
+@import '../../mixins/index';
+
+.#{$prefix}smooth-scroll {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    &__container {
+        width: 100%;
+    }
+
+}
