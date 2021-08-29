@@ -1,5 +1,4 @@
 import mergeWith from 'lodash.mergewith';
-import cloneDeep from 'lodash.clonedeep';
 
 /**
  * Deep merge of two objects except for arrays.
@@ -12,9 +11,7 @@ export default function mergeWithoutArrays <
     object: A,
     source: B,
 ): A & B {
-    const obj = cloneDeep(object);
-    const src = cloneDeep(source);
-    return mergeWith(obj, src, (objValue, srcValue) => {
+    return mergeWith(object, source, (objValue, srcValue) => {
         if (Array.isArray(objValue)) {
             return srcValue as Record<string, any>;
         }

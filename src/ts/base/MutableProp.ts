@@ -1,4 +1,3 @@
-import cloneDeep from 'lodash.clonedeep';
 import { Application } from '../app/Application';
 import { mergeWithoutArrays } from '../utils/common';
 import { NCallbacks } from './Callbacks';
@@ -126,8 +125,8 @@ export class MutableProp<
         protected _name = 'Responsive Prop',
     ) {
         this._app = window.vevetApp;
-        this._refProp = cloneDeep(_initProp);
-        this._prop = cloneDeep(_initProp);
+        this._refProp = mergeWithoutArrays({}, _initProp);
+        this._prop = mergeWithoutArrays({}, _initProp);
     }
 
 
@@ -167,6 +166,7 @@ export class MutableProp<
         const { viewport } = app;
         const { width } = viewport;
         let newProp: (StaticProp & ChangeableProp) | false = false;
+        const statProp = mergeWithoutArrays({}, this._refProp);
 
         // go through all breakpoints
         // and check if a proper breakpoint exists
@@ -177,7 +177,7 @@ export class MutableProp<
             // if the breakpoint is a number
             if (typeof breakpoint === 'number') {
                 if (width <= prop.breakpoint) {
-                    newProp = mergeWithoutArrays(this._refProp, settings);
+                    newProp = mergeWithoutArrays(statProp, settings);
                 }
             } else if (typeof breakpoint === 'string') {
                 const string = breakpoint.toLowerCase() as typeof breakpoint;
@@ -187,7 +187,7 @@ export class MutableProp<
                     || (string === 't' && viewport.isTablet)
                     || (string === 'm' && viewport.isMobile)
                 ) {
-                    newProp = mergeWithoutArrays(this._refProp, settings);
+                    newProp = mergeWithoutArrays(statProp, settings);
                 }
                 // device type
                 if (
@@ -195,7 +195,7 @@ export class MutableProp<
                     || (string === 'tablet' && app.isTablet)
                     || (string === 'mobile' && app.isMobile)
                 ) {
-                    newProp = mergeWithoutArrays(this._refProp, settings);
+                    newProp = mergeWithoutArrays(statProp, settings);
                 }
             }
         });
