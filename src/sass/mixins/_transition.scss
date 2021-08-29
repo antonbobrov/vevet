@@ -1,0 +1,19 @@
+$transition-timing-function: cubic-bezier(.25, .1, .25, 1) !default;
+
+@mixin transition (
+    $duration: 1.25s, 
+    $delay: 0s
+) {
+    transition: #{$duration};
+    transition-delay: #{$delay};
+    transition-timing-function: $transition-timing-function;
+}
+
+@mixin transition-animation (
+    $duration: 1.25s, 
+    $delay: 0s
+) {
+    animation-duration: #{$duration};
+    animation-delay: #{$delay};
+    animation-timing-function: $transition-timing-function;
+}
