@@ -1,0 +1,19 @@
+div.v-smooth-scroll#v-smooth-scroll-outer
+    - var n = 0;
+    while n < 3
+        p= n++ 
+            | &nbsp;- Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur velit ex earum quidem laboriosam hic iste nulla, odio, culpa ad quod nesciunt excepturi modi quaerat placeat facere accusamus error repudiandae.
+    br
+    div.v-smooth-scroll.mini#v-smooth-scroll-inner
+        - var n = 0;
+        while n < 10
+            p= n++ 
+                | &nbsp;- Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur velit ex earum quidem laboriosam hic iste nulla, odio, culpa ad quod nesciunt excepturi modi quaerat placeat facere accusamus error repudiandae.
+    br
+    - var n = 3;
+    while n < 30
+        p= n++ 
+            | &nbsp;- Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur velit ex earum quidem laboriosam hic iste nulla, odio, culpa ad quod nesciunt excepturi modi quaerat placeat facere accusamus error repudiandae.
+
+style 
+    = readFile('./style.css', dir)

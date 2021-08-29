@@ -29,6 +29,9 @@ switch (pageNameAttr) {
     case 'components-ctx2d-prerender':
         import('../pages/components/ctx2d-prerender/sample');
         break;
+    case 'components-smooth-scroll':
+        import('../pages/components/scroll/smooth-scroll/sample');
+        break;
     default:
         break;
 }
