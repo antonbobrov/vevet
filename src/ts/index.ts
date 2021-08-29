@@ -1,5 +1,7 @@
 import * as CommonUtils from './utils/common';
 
+import * as GeneralTypes from './utils/types/general';
+
 import { Application, NApplication } from './app/Application';
 import { Viewport, NViewport } from './app/events/Viewport';
 import { PageLoad, NPageLoad } from './app/events/PageLoad';
@@ -20,6 +22,7 @@ import { Ctx2DPrerender, NCtx2DPrerender } from './components/canvas/Ctx2DPreren
 
 export {
     CommonUtils,
+    GeneralTypes,
 
     Application, NApplication,
     Viewport, NViewport,
