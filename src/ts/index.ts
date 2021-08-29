@@ -19,6 +19,7 @@ import { Ctx2D, NCtx2D } from './components/canvas/Ctx2D';
 import { Ctx2DPrerender, NCtx2DPrerender } from './components/canvas/Ctx2DPrerender';
 
 import { SmoothScroll, NSmoothScroll } from './components/scroll/smooth-scroll/SmoothScroll';
+import { ScrollBar, NScrollBar } from './components/scroll/scrollbar/ScrollBar';
 
 
 
@@ -43,4 +44,5 @@ export {
     Ctx2DPrerender, NCtx2DPrerender,
 
     SmoothScroll, NSmoothScroll,
+    ScrollBar, NScrollBar,
 };

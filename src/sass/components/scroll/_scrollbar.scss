@@ -1,0 +1,78 @@
+@import '../../mixins/index';
+
+$scrollbar-color: #babac0 !default;
+$scrollbar-duration: 0.5s !default;
+$scrollbar-gap: 3px !default;
+$scrollbar-track-size: 10px !default;
+$scrollbar-thumb-size: 50px !default;
+$scrollbar-thumb-radius: 5px !default;
+
+
+
+.#{$prefix}scrollbar-parent {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+}
+
+.#{$prefix}scrollbar {
+    position: absolute;
+
+    &.in-window {
+        position: fixed;
+    }
+
+    &.is-empty {
+        display: none;
+    }
+
+    &.auto-hide {
+        opacity: 0;
+        @include transition(opacity $scrollbar-duration);
+
+        &.is-hovered,
+        &.in-action {
+            opacity: 1;
+        }
+    }
+
+    &_x {
+        bottom: $scrollbar-gap;
+        left: $scrollbar-gap;
+        width: calc(100% - #{$scrollbar-gap * 2});
+        height: $scrollbar-track-size;
+    }
+    
+    &_y {
+        top: $scrollbar-gap;
+        right: $scrollbar-gap;
+        width: $scrollbar-track-size;
+        height: calc(100% - #{$scrollbar-gap * 2});
+    }
+
+    &__thumb {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: $scrollbar-color;
+        border-radius: $scrollbar-thumb-radius;
+
+        cursor: pointer;
+
+        &_x {
+            width: $scrollbar-thumb-size;
+            height: 100%;
+        }
+
+        &_y {
+            width: 100%;
+            height: $scrollbar-thumb-size;
+        }
+
+    }
+
+}
