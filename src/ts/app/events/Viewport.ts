@@ -93,6 +93,19 @@ export class Viewport extends Callbacks<
     }
 
     /**
+     * Get VW value
+     */
+    get vw () {
+        return this.width / 100;
+    }
+    /**
+     * Get VH value
+     */
+    get vh () {
+        return this.height / 100;
+    }
+
+    /**
      * Previous Viewport size
      */
     protected _prevSize: {
@@ -191,6 +204,9 @@ export class Viewport extends Callbacks<
                 this._onResize();
             }, this._app.prop.viewportResizeTimeout);
         });
+        this._app.pageLoad.onLoaded(() => {
+            this._onResize();
+        });
     }
 
 
@@ -219,6 +235,7 @@ export class Viewport extends Callbacks<
 
         // update other values
         this._updateClasses();
+        this._updateCSSVars();
     }
 
 
@@ -287,6 +304,16 @@ export class Viewport extends Callbacks<
                 html.classList.remove(`${prefix}viewport-${type}`);
             }
         });
+    }
+
+
+    /**
+     * Update CSS vars
+     */
+    protected _updateCSSVars () {
+        const { html } = this._app;
+        html.style.setProperty('--vw', `${this.vw}px`);
+        html.style.setProperty('--vh', `${this.vh}px`);
     }
 
 
