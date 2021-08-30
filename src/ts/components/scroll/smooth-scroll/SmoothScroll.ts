@@ -139,7 +139,7 @@ export namespace NSmoothScroll {
 
 }
 
-interface ScrollInnerElement extends HTMLElement {
+export interface ScrollInnerElement extends HTMLElement {
     smoothScrollTop: number;
     smoothScrollLeft: number;
     smoothScrollLerpEase: number;
