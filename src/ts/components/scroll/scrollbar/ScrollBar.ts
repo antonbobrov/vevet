@@ -43,6 +43,13 @@ export namespace NScrollBar {
          * @default 50
          */
         minSize?: number;
+        /**
+         * Optimize sizes calculation.
+         * If true, the sizes are calculated only when calling the "resize" method.
+         * Subsequently, if content changes, the scrollbar may be of false sizes.
+         * @default false
+         */
+        optimizeCalculations?: boolean;
     }
 
     /**
@@ -100,7 +107,9 @@ export class ScrollBar <
     ) {
         super(initialProp, false);
         const { domParent } = this;
-        const { autoHide, autoSize, minSize } = this.prop;
+        const {
+            autoHide, autoSize, minSize, optimizeCalculations,
+        } = this.prop;
 
         // create bars
         const barMainProp = {
@@ -109,6 +118,7 @@ export class ScrollBar <
             autoHide,
             autoSize,
             minSize,
+            optimizeCalculations,
             prefix: this.prefix,
         };
         this._xBar = new Bar({
@@ -142,6 +152,7 @@ export class ScrollBar <
             autoSize: true,
             autoHide: true,
             minSize: 50,
+            optimizeCalculations: false,
         };
         return mergeWithoutArrays(super._getDefaultProp(), prop);
     }

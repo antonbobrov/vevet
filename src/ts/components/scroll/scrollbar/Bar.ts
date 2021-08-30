@@ -11,6 +11,7 @@ interface Data {
     autoHide: boolean;
     autoSize: boolean;
     minSize: number;
+    optimizeCalculations: boolean;
     prefix: string;
 }
 
@@ -146,6 +147,10 @@ export default class Bar {
         scrollTop: number;
         scrollLeft: number;
     }) {
+        // resize if needed
+        if (!this.prop.optimizeCalculations) {
+            this.resize();
+        }
         // check if changes happened
         let hasChanged = false;
         if (this.isX) {
@@ -172,7 +177,9 @@ export default class Bar {
         }
 
         // render thumb
-        this._renderThumb();
+        if (this.prop.optimizeCalculations) {
+            this._renderThumb();
+        }
     }
 
     /**
