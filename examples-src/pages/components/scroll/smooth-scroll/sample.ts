@@ -15,8 +15,9 @@ const outerScroll = new Vevet.SmoothScroll({
 new Vevet.ScrollBar({
     container: outerScroll,
 });
+outerScroll.addPlugin(new Vevet.SmoothScrollKeyboardPlugin());
 
-const test = new Vevet.SmoothScroll({
+const innerScroll = new Vevet.SmoothScroll({
     selectors: {
         outer: '#v-smooth-scroll-inner',
     },
@@ -27,5 +28,5 @@ const test = new Vevet.SmoothScroll({
     overscroll: false,
 });
 new Vevet.ScrollBar({
-    container: test,
+    container: innerScroll,
 });
