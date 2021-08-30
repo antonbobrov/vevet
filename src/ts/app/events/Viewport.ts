@@ -204,9 +204,6 @@ export class Viewport extends Callbacks<
                 this._onResize();
             }, this._app.prop.viewportResizeTimeout);
         });
-        this._app.pageLoad.onLoaded(() => {
-            this._onResize();
-        });
     }
 
 
