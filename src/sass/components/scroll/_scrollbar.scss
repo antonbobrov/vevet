@@ -10,17 +10,12 @@ $scrollbar-thumb-radius: 5px !default;
 
 
 .#{$prefix}scrollbar-parent {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-        display: none;
-    }
-
+    @include hide-scroll-bars;
 }
 
 .#{$prefix}scrollbar {
     position: absolute;
+    z-index: 9;
 
     &.in-window {
         position: fixed;
