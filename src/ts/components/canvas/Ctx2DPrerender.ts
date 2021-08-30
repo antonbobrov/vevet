@@ -1,6 +1,5 @@
 import { getPos, BaseProp, PosRule } from 'get-image-pos';
-import { mergeWithoutArrays } from '../../utils/common';
-import { DeepRequired } from '../../utils/types/utility';
+import { RequiredModuleProp } from '../../utils/types/utility';
 import { Ctx2D, NCtx2D } from './Ctx2D';
 
 
@@ -50,17 +49,14 @@ export class Ctx2DPrerender <
     ChangeableProp,
     CallbacksTypes
 > {
-    protected _getDefaultProp () {
-        const prop: DeepRequired<
-            Omit<
-                NCtx2DPrerender.StaticProp & NCtx2DPrerender.ChangeableProp,
-                keyof (NCtx2D.StaticProp & NCtx2D.ChangeableProp)
-            >
-        > = {
+    protected _getDefaultProp <
+        T extends RequiredModuleProp<StaticProp & ChangeableProp>
+    > (): T {
+        return {
+            ...super._getDefaultProp(),
             media: false,
             posRule: 'cover',
         };
-        return mergeWithoutArrays(super._getDefaultProp(), prop);
     }
 
     /**

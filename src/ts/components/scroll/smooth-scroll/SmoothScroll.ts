@@ -3,8 +3,7 @@ import {
 } from 'vevet-dom';
 import normalizeWheel from 'normalize-wheel';
 import { Component, NComponent } from '../../../base/Component';
-import { mergeWithoutArrays } from '../../../utils/common';
-import { DeepRequired } from '../../../utils/types/utility';
+import { RequiredModuleProp } from '../../../utils/types/utility';
 import { AnimationFrame } from '../../animation-frame/AnimationFrame';
 import { ScrollableElement } from '../types';
 import boundVal from '../../../utils/math/boundVal';
@@ -351,7 +350,7 @@ export class SmoothScroll <
 
 
     constructor (
-        initialProp: (StaticProp & ChangeableProp) = {} as (StaticProp & ChangeableProp),
+        initialProp?: (StaticProp & ChangeableProp),
         init = true,
     ) {
         super(initialProp, false);
@@ -410,13 +409,11 @@ export class SmoothScroll <
         }
     }
 
-    protected _getDefaultProp () {
-        const prop: DeepRequired<
-            Omit<
-                NSmoothScroll.StaticProp & NSmoothScroll.ChangeableProp,
-                keyof (NComponent.StaticProp & NComponent.ChangeableProp)
-            >
-        > = {
+    protected _getDefaultProp <
+        T extends RequiredModuleProp<StaticProp & ChangeableProp>
+    > (): T {
+        return {
+            ...super._getDefaultProp(),
             selectors: {
                 outer: `#${this.prefix}`,
                 elements: false,
@@ -440,7 +437,6 @@ export class SmoothScroll <
                 max: 250,
             },
         };
-        return mergeWithoutArrays(super._getDefaultProp(), prop);
     }
 
     // Extra constructor

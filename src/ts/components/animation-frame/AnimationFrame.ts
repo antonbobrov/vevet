@@ -1,7 +1,6 @@
 import { Component, NComponent } from '../../base/Component';
-import { mergeWithoutArrays } from '../../utils/common';
 import { boundVal } from '../../utils/math';
-import { DeepRequired } from '../../utils/types/utility';
+import { RequiredModuleProp } from '../../utils/types/utility';
 
 
 
@@ -86,7 +85,7 @@ export class AnimationFrame <
 
 
     constructor (
-        initialProp: (StaticProp & ChangeableProp) = {} as (StaticProp & ChangeableProp),
+        initialProp?: (StaticProp & ChangeableProp),
         init = true,
     ) {
         super(initialProp, false);
@@ -105,17 +104,14 @@ export class AnimationFrame <
     /**
      * Get default properties
      */
-    protected _getDefaultProp () {
-        const prop: DeepRequired<
-            Omit<
-                NAnimationFrame.StaticProp & NAnimationFrame.ChangeableProp,
-                keyof (NComponent.StaticProp & NComponent.ChangeableProp)
-            >
-        > = {
+    protected _getDefaultProp <
+        T extends RequiredModuleProp<StaticProp & ChangeableProp>
+    > (): T {
+        return {
+            ...super._getDefaultProp(),
             fps: 140,
             run: false,
         };
-        return mergeWithoutArrays(super._getDefaultProp(), prop);
     }
 
     // Extra constructor

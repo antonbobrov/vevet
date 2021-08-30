@@ -1,6 +1,5 @@
 import { Component, NComponent } from '../../base/Component';
-import { mergeWithoutArrays } from '../../utils/common';
-import { DeepRequired } from '../../utils/types/utility';
+import { RequiredModuleProp } from '../../utils/types/utility';
 
 
 
@@ -85,7 +84,7 @@ export class Page <
     }
 
     constructor (
-        initialProp: (StaticProp & ChangeableProp) = {} as (StaticProp & ChangeableProp),
+        initialProp?: (StaticProp & ChangeableProp),
         init = true,
     ) {
         super(initialProp, false);
@@ -103,16 +102,13 @@ export class Page <
         }
     }
 
-    protected _getDefaultProp () {
-        const prop: DeepRequired<
-            Omit<
-                NPage.StaticProp & NPage.ChangeableProp,
-                keyof (NComponent.StaticProp & NComponent.ChangeableProp)
-            >
-        > = {
+    protected _getDefaultProp <
+        T extends RequiredModuleProp<StaticProp & ChangeableProp>
+    > (): T {
+        return {
+            ...super._getDefaultProp(),
             name: 'home',
         };
-        return mergeWithoutArrays(super._getDefaultProp(), prop);
     }
 
 

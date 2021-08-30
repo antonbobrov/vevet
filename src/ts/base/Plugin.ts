@@ -37,7 +37,7 @@ export abstract class Plugin<
     CallbacksTypes
 > {
     constructor (
-        initialProp: (StaticProp & ChangeableProp) = {} as (StaticProp & ChangeableProp),
+        initialProp?: (StaticProp & ChangeableProp),
     ) {
         super(initialProp, false);
     }

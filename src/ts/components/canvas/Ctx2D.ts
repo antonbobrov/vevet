@@ -1,8 +1,7 @@
 import { createElement } from 'vevet-dom';
 import { Component, NComponent } from '../../base/Component';
-import { mergeWithoutArrays } from '../../utils/common';
 import { NViewport } from '../../app/events/Viewport';
-import { DeepRequired } from '../../utils/types/utility';
+import { RequiredModuleProp } from '../../utils/types/utility';
 
 
 
@@ -140,7 +139,7 @@ export class Ctx2D <
 
 
     constructor (
-        initialProp: (StaticProp & ChangeableProp) = {} as (StaticProp & ChangeableProp),
+        initialProp?: (StaticProp & ChangeableProp),
         init = true,
     ) {
         super(initialProp, false);
@@ -166,13 +165,11 @@ export class Ctx2D <
         }
     }
 
-    protected _getDefaultProp () {
-        const prop: DeepRequired<
-            Omit<
-                NCtx2D.StaticProp & NCtx2D.ChangeableProp,
-                keyof (NComponent.StaticProp & NComponent.ChangeableProp)
-            >
-        > = {
+    protected _getDefaultProp <
+        T extends RequiredModuleProp<StaticProp & ChangeableProp>
+    > (): T {
+        return {
+            ...super._getDefaultProp(),
             container: false,
             append: true,
             updateOnResize: false,
@@ -180,7 +177,6 @@ export class Ctx2D <
             height: false,
             dpr: false,
         };
-        return mergeWithoutArrays(super._getDefaultProp(), prop);
     }
 
     // Set Module Events

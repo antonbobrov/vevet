@@ -6,7 +6,7 @@ import { MutableProp, NMutableProp } from './MutableProp';
 import { Application } from '../app/Application';
 import mergeWithoutArrays from '../utils/common/mergeWithoutArrays';
 import { Viewport } from '../app/events/Viewport';
-import { DeepNonNullable, DeepRequired } from '../utils/types/utility';
+import { RequiredModuleProp } from '../utils/types/utility';
 import { throwVevetAppError } from '../utils/errors';
 
 
@@ -61,20 +61,19 @@ export class Module<
     /**
      * Get Default properties (should be extended)
      */
-    protected _getDefaultProp () {
-        const prop: DeepRequired<StaticProp & ChangeableProp> = {
+    protected _getDefaultProp <
+        T extends RequiredModuleProp<StaticProp & ChangeableProp>
+    > (): T {
+        return {
             parent: false,
-        } as DeepRequired<StaticProp & ChangeableProp>;
-        return prop;
+        } as T;
     }
 
     /**
      * Current properties
      */
-    get prop (): DeepNonNullable<DeepRequired<(StaticProp & ChangeableProp)>> {
-        return this._mutableProp.prop as DeepNonNullable<
-            DeepRequired<(StaticProp & ChangeableProp)>
-        >;
+    get prop (): RequiredModuleProp<(StaticProp & ChangeableProp)> {
+        return this._mutableProp.prop as RequiredModuleProp<(StaticProp & ChangeableProp)>;
     }
 
     /**
@@ -154,7 +153,7 @@ export class Module<
         /**
          * Properties on script start
          */
-        initialProp: (StaticProp & ChangeableProp) = {} as (StaticProp & ChangeableProp),
+        initialProp?: (StaticProp & ChangeableProp),
         /**
          * Defines if you need to call {@linkcode Module.init} at the constructor's end.
          * If you want to add responsive properties, set this argument to FALSE.
@@ -176,9 +175,9 @@ export class Module<
         this._callbacks = new Callbacks<CallbacksTypes>();
 
         // create mutable properties
-        const prop = mergeWithoutArrays(this._getDefaultProp(), initialProp);
+        const prop = mergeWithoutArrays(this._getDefaultProp(), initialProp || {});
         this._mutableProp = new MutableProp(
-            prop,
+            prop as (StaticProp & ChangeableProp),
             this._onPropResponsive.bind(this),
             this._onPropChange.bind(this),
             this.name,

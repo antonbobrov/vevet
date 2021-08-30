@@ -109,7 +109,7 @@ export class MutableProp<
          * The properties that were set while initialization.
          * These properties do not change throughout time.
          */
-        protected _initProp: (StaticProp & ChangeableProp) = {} as (StaticProp & ChangeableProp),
+        protected _initProp: (StaticProp & ChangeableProp),
         /**
          * A callback that is launched when properties are changed on window resize
          */
