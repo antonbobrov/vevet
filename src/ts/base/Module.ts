@@ -131,6 +131,9 @@ export class Module<
      * If the module is initialized
      */
     protected _inited = false;
+    get inited () {
+        return this._inited;
+    }
 
     /**
      * If the module is destroyed
