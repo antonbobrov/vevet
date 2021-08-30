@@ -24,10 +24,10 @@ export namespace NApplication {
          */
         tablet: number;
         /**
-         * Mobile identification max width
+         * Phone identification max width
          * @default 899
          */
-        mobile: number;
+        phone: number;
         /**
          * Vevet prefix
          * @default 'v-'
@@ -74,7 +74,7 @@ export class Application <
         return {
             pagename: 'home',
             tablet: 1199,
-            mobile: 899,
+            phone: 899,
             prefix: 'v-',
             easing: [0.25, 0.1, 0.25, 1],
             viewportResizeTimeout: 0,

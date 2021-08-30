@@ -18,7 +18,7 @@ frame.addResponsiveProp({
     },
 });
 frame.addResponsiveProp({
-    breakpoint: 'm',
+    breakpoint: 'p',
     settings: {
         fps: 10,
     },

@@ -56,7 +56,7 @@ export namespace NViewport {
 enum SizeTypes {
     Desktop = 'desktop',
     Tablet = 'tablet',
-    Mobile = 'mobile'
+    Phone = 'phone'
 }
 
 /**
@@ -151,11 +151,11 @@ export class Viewport extends Callbacks<
     }
 
     /**
-     * If mobile size
+     * If phone size
      */
-    protected _isMobile: boolean;
-    get isMobile () {
-        return this._isMobile;
+    protected _isPhone: boolean;
+    get isPhone () {
+        return this._isPhone;
     }
 
     /**
@@ -187,7 +187,7 @@ export class Viewport extends Callbacks<
         this._prevSize = { w: 0, h: 0 };
         this._isDesktop = false;
         this._isTablet = false;
-        this._isMobile = false;
+        this._isPhone = false;
         this._init();
     }
 
@@ -230,8 +230,8 @@ export class Viewport extends Callbacks<
         // size values
         const { width } = this;
         this._isDesktop = width >= appProp.tablet;
-        this._isTablet = width <= appProp.tablet && width > appProp.mobile;
-        this._isMobile = width <= appProp.mobile;
+        this._isTablet = width <= appProp.tablet && width > appProp.phone;
+        this._isPhone = width <= appProp.phone;
 
         // update other values
         this._updateClasses();
@@ -248,7 +248,7 @@ export class Viewport extends Callbacks<
         const viewportSizeTypes: SizeTypes[] = [
             SizeTypes.Desktop,
             SizeTypes.Tablet,
-            SizeTypes.Mobile,
+            SizeTypes.Phone,
         ];
         if (this.isDesktop) {
             this._updateBreakpointClasses(
@@ -262,7 +262,7 @@ export class Viewport extends Callbacks<
             );
         } else {
             this._updateBreakpointClasses(
-                SizeTypes.Mobile,
+                SizeTypes.Phone,
                 viewportSizeTypes,
             );
         }

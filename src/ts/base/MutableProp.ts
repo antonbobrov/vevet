@@ -14,13 +14,13 @@ export namespace NMutableProp {
          *      <li>any number - width breakpoint</li>
          *      <li>'d' - for desktop size</li>
          *      <li>'t' - for tablet size</li>
-         *      <li>'m' - for mobile size</li>
+         *      <li>'p' - for phone size</li>
          *      <li>'phone' - for phones</li>
          *      <li>'tablet' - for tablets</li>
          *      <li>'mobile' - for phone or tablet devices</li>
          * </ul>
          */
-        breakpoint: number | 'd' | 't' | 'm' | 'phone' | 'tablet' | 'mobile';
+        breakpoint: number | 'd' | 't' | 'p' | 'phone' | 'tablet' | 'mobile';
         settings: S;
     }
 
@@ -185,7 +185,7 @@ export class MutableProp<
                 if (
                     (string === 'd' && viewport.isDesktop)
                     || (string === 't' && viewport.isTablet)
-                    || (string === 'm' && viewport.isMobile)
+                    || (string === 'p' && viewport.isPhone)
                 ) {
                     newProp = mergeWithoutArrays(statProp, settings);
                 }
