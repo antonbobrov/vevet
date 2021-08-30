@@ -1,4 +1,5 @@
 import { Module, NModule } from './Module';
+import { Plugin } from './Plugin';
 
 
 
@@ -45,7 +46,38 @@ export class Component<
     ChangeableProp,
     CallbacksTypes
 > {
+    protected _plugins?: Plugin[];
+
+    /**
+     * Add a single plugin
+     */
+    public addPlugin (
+        plugin: Plugin,
+    ) {
+        if (typeof this._plugins === 'undefined') {
+            this._plugins = [];
+        }
+        this._plugins.push(plugin);
+        if (!plugin.inited) {
+            plugin.initPlugin(this as any);
+        }
+    }
+
+    /**
+     * Destroy all plugins
+     */
+    protected _destroyPlugins () {
+        if (this._plugins) {
+            this._plugins.forEach((plugin) => {
+                plugin.destroy();
+            });
+        }
+    }
 
 
 
+    protected _destroy () {
+        super._destroy();
+        this._destroyPlugins();
+    }
 }

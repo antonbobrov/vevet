@@ -10,6 +10,7 @@ import { Callbacks, NCallbacks } from './base/Callbacks';
 import { MutableProp, NMutableProp } from './base/MutableProp';
 import { Module, NModule } from './base/Module';
 import { Component, NComponent } from './base/Component';
+import { Plugin, NPlugin } from './base/Plugin';
 
 import { Page, NPage } from './components/page/Page';
 
@@ -35,6 +36,7 @@ export {
     MutableProp, NMutableProp,
     Module, NModule,
     Component, NComponent,
+    Plugin, NPlugin,
 
     Page, NPage,
 
