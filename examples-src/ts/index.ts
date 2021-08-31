@@ -35,6 +35,9 @@ switch (pageNameAttr) {
     case 'components-scroll-view':
         import('../pages/components/scroll/scroll-view/sample');
         break;
+    case 'components-static-timeline':
+        import('../pages/components/timeline/static-timeline/sample');
+        break;
     default:
         break;
 }

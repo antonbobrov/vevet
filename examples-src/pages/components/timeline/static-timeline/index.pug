@@ -1,0 +1,27 @@
+extends ../../../_layout/page
+
+block variables
+    - var title = 'Example of StaticTimeline';
+    - var pageName = 'components-static-timeline';
+
+block content
+    
+    .container
+
+        h1 StaticTimeline
+        
+        //- description
+        p.lead
+            b StaticTimeline 
+            | is a way to manipulate with progress.
+
+        hr
+        h2 Example
+        include ./sample.pug
+        hr
+        pre.pug
+            code!= readFile('./sample.pug', dir)
+        pre.css
+            code!= readFile('./sample.css', dir)
+        pre.ts
+            code!= readFile('./sample.ts', dir)

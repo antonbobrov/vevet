@@ -1,0 +1,17 @@
+.timeline-visualizer {
+    position: relative;
+    margin-top: 10px;
+    width: 100%;
+    height: 20px;
+    background-color: #dedede;
+}
+
+.timeline-visualizer-thumb {
+    position: absolute;
+    top: -5px;
+    left: 0;
+    width: 10px;
+    height: 30px;
+    transform: translate(-50%, 0);
+    background-color: #000;
+}
