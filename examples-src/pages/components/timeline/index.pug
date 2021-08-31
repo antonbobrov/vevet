@@ -1,0 +1,27 @@
+extends ../../_layout/page
+
+block variables
+    - var title = 'Example of Timeline';
+    - var pageName = 'components-timeline';
+
+block content
+    
+    .container
+
+        h1 Timeline
+        
+        //- description
+        p.lead
+            b Timeline 
+            | is an animation helper
+
+        hr
+        h2 Example
+        include ./sample.pug
+        hr
+        pre.pug
+            code!= readFile('./sample.pug', dir)
+        pre.css
+            code!= readFile('./sample.css', dir)
+        pre.ts
+            code!= readFile('./sample.ts', dir)
