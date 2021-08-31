@@ -9,6 +9,8 @@ declare global {
     }
 }
 
+window.history.scrollRestoration = 'manual';
+
 
 
 const pageNameAttr = document.documentElement.getAttribute('data-page-name');
@@ -40,6 +42,9 @@ switch (pageNameAttr) {
         break;
     case 'components-static-timeline':
         import('../pages/components/timeline/static-timeline/sample');
+        break;
+    case 'components-nested-timeline':
+        import('../pages/components/timeline/nested-timeline/sample');
         break;
     default:
         break;
