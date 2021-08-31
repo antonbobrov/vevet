@@ -1,0 +1,28 @@
+div
+    input(
+        type="range",
+        id="timeline-range"
+        min="0"
+        max="1"
+        step="0.0001"
+        value="0"
+        style="width: 100%;"
+    )
+
+br
+.btn-group
+    button(type="button").btn.btn-success#timeline-play play
+    button(type="button").btn.btn-secondary#timeline-pause pause
+    button(type="button").btn.btn-primary#timeline-reverse reverse
+br
+br
+
+div.nested-timeline
+    .nested-timeline__item
+    .nested-timeline__item
+    .nested-timeline__item
+    .nested-timeline__item
+    .nested-timeline__item
+
+style 
+    = readFile('./sample.css', dir)
