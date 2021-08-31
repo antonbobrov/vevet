@@ -8,7 +8,7 @@
   "scripts": {
     "pages-build": "node ./examples-src/compiler/index.js && webpack --config ./examples-src/webpack/webpack.prod.js",
     "pages-dev": "npm-run-all --parallel pages-dev:pug pages-dev:webpack",
-    "pages-dev:pug": "nodemon --watch ./examples-src/pages --watch ./examples-src/compiler --ext pug,json,ts,js,html ./examples-src/compiler/index.js",
+    "pages-dev:pug": "nodemon --watch ./examples-src/pages --watch ./examples-src/compiler --ext pug,json,ts,js,html,css ./examples-src/compiler/index.js",
     "pages-dev:webpack": "webpack serve --config ./examples-src/webpack/webpack.dev.js",
     "watch-tsc": "nodemon --watch ./src/ts --ext ts,js --exec \"npm run prepare:es\"",
     "prepare:all": "npm run prepare:es && npm run prepare:cjs && npm run prepare:cdn",
