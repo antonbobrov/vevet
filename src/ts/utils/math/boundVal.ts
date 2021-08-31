@@ -3,7 +3,7 @@
  */
 export default function boundVal (
     val: number,
-    scope = [0, 1],
+    scope: [number, number] = [0, 1],
 ) {
     if (val < scope[0]) {
         return scope[0];
