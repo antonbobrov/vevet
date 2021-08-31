@@ -8,7 +8,7 @@ const visualizerThumb = document.querySelector<HTMLElement>('#timeline-visualize
 
 // create a timeline
 const timeline = new Vevet.Timeline({
-    duration: 5000,
+    duration: 2000,
     easing: Easing.easeOutBounce,
 });
 timeline.addCallback('progress', (data) => {
