@@ -28,6 +28,7 @@ export namespace NTimeline {
     export interface ChangeableProp extends NStaticTimeline.ChangeableProp {
         /**
          * Timeline duration
+         * @default 1000
          */
         duration?: number;
     }
@@ -72,7 +73,7 @@ export class Timeline <
     > (): T {
         return {
             ...super._getDefaultProp(),
-            duration: 1500,
+            duration: 1000,
             reset: false,
             destroyOnEnd: false,
         };
