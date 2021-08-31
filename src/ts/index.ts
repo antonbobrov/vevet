@@ -17,6 +17,7 @@ import { Page, NPage } from './components/page/Page';
 import { AnimationFrame, NAnimationFrame } from './components/animation-frame/AnimationFrame';
 
 import { StaticTimeline, NStaticTimeline } from './components/timeline/StaticTimeline';
+import { Timeline, NTimeline } from './components/timeline/Timeline';
 
 import { Ctx2D, NCtx2D } from './components/canvas/Ctx2D';
 import { Ctx2DPrerender, NCtx2DPrerender } from './components/canvas/Ctx2DPrerender';
@@ -48,6 +49,7 @@ export {
     AnimationFrame, NAnimationFrame,
 
     StaticTimeline, NStaticTimeline,
+    Timeline, NTimeline,
 
     Ctx2D, NCtx2D,
     Ctx2DPrerender, NCtx2DPrerender,
