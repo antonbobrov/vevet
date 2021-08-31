@@ -21,6 +21,7 @@ import { Ctx2DPrerender, NCtx2DPrerender } from './components/canvas/Ctx2DPreren
 
 import { SmoothScroll, NSmoothScroll } from './components/scroll/smooth-scroll/SmoothScroll';
 import { ScrollBar, NScrollBar } from './components/scroll/scrollbar/ScrollBar';
+import { ScrollEventsBase, NScrollEventsBase } from './components/scroll/scrollable/ScrollEventsBase';
 import { SmoothScrollKeyboardPlugin, NSmoothScrollKeyboardPlugin } from './components/scroll/plugins/SmoothScrollKeyboardPlugin';
 
 
@@ -48,5 +49,6 @@ export {
 
     SmoothScroll, NSmoothScroll,
     ScrollBar, NScrollBar,
+    ScrollEventsBase, NScrollEventsBase,
     SmoothScrollKeyboardPlugin, NSmoothScrollKeyboardPlugin,
 };
