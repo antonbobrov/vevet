@@ -32,6 +32,9 @@ switch (pageNameAttr) {
     case 'components-smooth-scroll':
         import('../pages/components/scroll/smooth-scroll/sample');
         break;
+    case 'components-scroll-view':
+        import('../pages/components/scroll/scroll-view/sample');
+        break;
     default:
         break;
 }

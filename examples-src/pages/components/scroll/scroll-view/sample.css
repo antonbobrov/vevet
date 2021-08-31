@@ -1,0 +1,30 @@
+.v-smooth-scroll {
+    height: 300px;
+    box-sizing: border-box;
+    border: 1px solid #000;
+}
+
+.wrapper-scroll {
+    height: 300px;
+    box-sizing: border-box;
+    border: 1px solid #000;
+    overflow: auto;
+}
+
+.p-container p {
+    padding: 0 20px;
+}
+
+.v-smooth-scroll p + p {
+    margin-top: 5px;
+}
+
+.v-view {
+    background-color: #dedede;
+    opacity: 0;
+    transition: opacity 1s, transform 1s;
+}
+
+.v-view.viewed {
+    opacity: 1;
+}

@@ -1,0 +1,21 @@
+h2 Window scroll
+p.v-view.v-view-window 
+    | This paragraph is shown when it is in the viewport. Used for ScrollView in "window".
+
+h2 SmoothScroll
+div.v-smooth-scroll#v-smooth-scroll.p-container
+    - var n = 0;
+    while n < 15
+        p.v-view.v-view-smooth-scroll= n++ 
+            | &nbsp;- This paragraph has been shown because it reached the scrolling rect.
+
+br
+h2 Wrapper scroll
+div.wrapper-scroll#wrapper-scroll
+    - var n = 0;
+    while n < 15
+        p.v-view.v-view-wrapper-scroll= n++ 
+            | &nbsp;- This paragraph has been shown because it reached the scrolling rect.
+
+style 
+    = readFile('./sample.css', dir)
