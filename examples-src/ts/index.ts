@@ -46,6 +46,10 @@ switch (pageNameAttr) {
     case 'components-nested-timeline':
         import('../pages/components/timeline/nested-timeline/sample');
         break;
+
+    case 'components-preloader':
+        import('../pages/components/loading/preloader/sample');
+        break;
     default:
         break;
 }
