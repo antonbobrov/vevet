@@ -83,6 +83,10 @@ export class Page <
         return this._viaAJAX;
     }
 
+    get pageClassName () {
+        return `${this._app.prefix}page-${this.prop.name}`;
+    }
+
     constructor (
         initialProp?: (StaticProp & ChangeableProp),
         init = true,
@@ -134,6 +138,8 @@ export class Page <
 
         // update page
         this._app.page = this as unknown as Page;
+        // add page class
+        this._app.html.classList.add(this.pageClassName);
 
         // launch events
         this.callbacks.tbt('create', false);
@@ -252,6 +258,8 @@ export class Page <
 
         // update page
         this._app.page = false;
+        // remove page class
+        this._app.html.classList.remove(this.pageClassName);
 
         // launch inner method
         this._innerDestroy();
