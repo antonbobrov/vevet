@@ -816,12 +816,13 @@ export class SmoothScroll <
 
         // if numbers
         if (typeof arg[0] === 'number' || typeof arg[1] === 'number') {
-            const [left, top] = arg;
-            if (typeof left === 'number') {
-                this.scrollLeft = left;
+            if (typeof arg[0] === 'number') {
+                // eslint-disable-next-line prefer-destructuring
+                this.scrollLeft = arg[0];
             }
-            if (typeof top === 'number') {
-                this.scrollTop = top;
+            if (typeof arg[1] === 'number') {
+                // eslint-disable-next-line prefer-destructuring
+                this.scrollTop = arg[1];
             }
         }
     }
