@@ -780,6 +780,54 @@ export class SmoothScroll <
 
 
 
+    // LIKE NATIVE SCROLL
+
+
+    /**
+     * Scroll to
+     */
+    public scrollTo () {
+        // eslint-disable-next-line prefer-rest-params
+        const arg = arguments;
+
+        // if object
+        if (arg.length === 1 && typeof arg[0] === 'object') {
+            const options = arg[0] as ScrollToOptions;
+            const { top, left, behavior } = options;
+
+            if (typeof left !== 'undefined') {
+                if (behavior === 'smooth') {
+                    this.targetLeftBound = left;
+                } else {
+                    this.scrollLeft = left;
+                }
+            }
+            if (typeof top !== 'undefined') {
+                if (behavior === 'smooth') {
+                    this.targetTopBound = top;
+                } else {
+                    this.scrollTop = top;
+                }
+            }
+            if (behavior === 'smooth') {
+                this._enable();
+            }
+        }
+
+        // if numbers
+        if (typeof arg[0] === 'number' || typeof arg[1] === 'number') {
+            const [left, top] = arg;
+            if (typeof left === 'number') {
+                this.scrollLeft = left;
+            }
+            if (typeof top === 'number') {
+                this.scrollTop = top;
+            }
+        }
+    }
+
+
+
     /**
      * Destroy the scroll
      */
