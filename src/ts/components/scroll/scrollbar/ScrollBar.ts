@@ -49,6 +49,17 @@ export namespace NScrollBar {
          * @default false
          */
         optimizeCalculations?: boolean;
+        /**
+         * If the scroll bar is draggable
+         * @default true
+         */
+        isDraggable?: boolean;
+        /**
+         * What scroll behavior should be used when dragging the ScrollBar thumb.
+         * Only for SmoothScroll
+         * @default 'smooth'
+         */
+        draggableScrollBehavior?: 'smooth' | 'auto';
     }
 
     /**
@@ -107,18 +118,21 @@ export class ScrollBar <
         super(initialProp, false);
         const { domParent } = this;
         const {
-            autoHide, autoSize, minSize, optimizeCalculations,
+            container, autoHide, autoSize, minSize,
+            optimizeCalculations, isDraggable, draggableScrollBehavior,
         } = this.prop;
 
         // create bars
         const barMainProp = {
-            container: this.prop.container as any,
+            container: container as any,
             domParent,
             autoHide,
             autoSize,
             minSize,
             optimizeCalculations,
             prefix: this.prefix,
+            isDraggable,
+            draggableScrollBehavior,
         };
         this._xBar = new Bar({
             dir: 'x',
@@ -150,6 +164,8 @@ export class ScrollBar <
             autoHide: true,
             minSize: 50,
             optimizeCalculations: false,
+            isDraggable: true,
+            draggableScrollBehavior: 'smooth',
         };
     }
 

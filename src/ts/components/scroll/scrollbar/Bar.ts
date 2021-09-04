@@ -3,6 +3,8 @@ import { IRemovable } from '../../../utils/types/general';
 import onScroll from '../../../utils/listeners/onScroll';
 import boundVal from '../../../utils/math/boundVal';
 import { NScrollBar } from './ScrollBar';
+import { DraggerMove, NDraggerMove } from '../../dragger/DraggerMove';
+import { SmoothScroll } from '../smooth-scroll/SmoothScroll';
 
 interface Data {
     container: Required<NScrollBar.StaticProp>['container'];
@@ -13,6 +15,8 @@ interface Data {
     minSize: number;
     optimizeCalculations: boolean;
     prefix: string;
+    isDraggable: boolean;
+    draggableScrollBehavior: 'smooth' | 'auto';
 }
 
 export default class Bar {
@@ -64,11 +68,16 @@ export default class Bar {
 
     // states
     protected _scrollVal: number;
+    protected _coordsAtDragStart: {
+        left: number;
+        top: number;
+    }
 
     // events
     protected _listeners: IAddEventListener[];
     protected _scrollEvent?: IRemovable;
     protected _actionTimeout?: NodeJS.Timeout;
+    protected _dragger?: DraggerMove;
 
 
 
@@ -89,6 +98,10 @@ export default class Bar {
         this._thumbHeight = 0;
         this._thumbWidth = 0;
         this._scrollVal = 0;
+        this._coordsAtDragStart = {
+            left: 0,
+            top: 0,
+        };
 
         // create outer
         let outerClassNames = `${prefix} ${prefix}_${dir}`;
@@ -117,6 +130,28 @@ export default class Bar {
 
 
 
+    get scrollValues () {
+        const { container } = this.prop;
+        let top = 0;
+        let left = 0;
+        if (container instanceof Window) {
+            top = container.pageYOffset;
+            left = container.pageXOffset;
+        } else if (container instanceof SmoothScroll) {
+            top = container.targetTop;
+            left = container.targetLeft;
+        } else {
+            top = container.scrollTop;
+            left = container.scrollLeft;
+        }
+        return {
+            left,
+            top,
+        };
+    }
+
+
+
     /**
      * Set scrolblar events
      */
@@ -129,6 +164,39 @@ export default class Bar {
         this._scrollEvent = onScroll(this.prop.container, (data) => {
             this._handleScroll(data);
         });
+
+        // set dragger
+        if (this.prop.isDraggable) {
+            this._dragger = new DraggerMove({
+                container: this.thumb,
+            });
+            this._dragger.addCallback('start', () => {
+                this.thumb.classList.add('in-action');
+                this._disableScrollBehaviour(true);
+                this._coordsAtDragStart = this.scrollValues;
+            });
+            this._dragger.addCallback('move', (data) => {
+                this._handleThumbDrag(data);
+            });
+            this._dragger.addCallback('end', () => {
+                this.thumb.classList.remove('in-action');
+                this._disableScrollBehaviour(false);
+            });
+        }
+    }
+
+    /**
+     * Toggle scrollBehavior: disable & reset smooth scrolling
+     */
+    protected _disableScrollBehaviour (
+        bool: boolean,
+    ) {
+        const val = bool ? 'auto' : 'unset';
+        if (this.prop.container instanceof Window) {
+            document.documentElement.style.scrollBehavior = val;
+        } else if (this.prop.container instanceof HTMLElement) {
+            document.documentElement.style.scrollBehavior = val;
+        }
     }
 
     /**
@@ -180,6 +248,39 @@ export default class Bar {
         if (this.prop.optimizeCalculations) {
             this._renderThumb();
         }
+    }
+
+    /**
+     * Event on dragger move
+     */
+    protected _handleThumbDrag (
+        data: NDraggerMove.CallbacksTypes['move'],
+    ) {
+        data.evt.preventDefault();
+        const { container } = this.prop;
+
+        // calculate scroll iterators
+        const leftIterator = (
+            (data.coords.x - data.start.x) / (this._outerWidth - this._thumbWidth)
+        ) * this.scrollLine;
+        const topIterator = (
+            (data.coords.y - data.start.y) / (this._outerHeight - this._thumbHeight)
+        ) * this.scrollLine;
+
+        // calculate new scroll values
+        let { left, top } = this._coordsAtDragStart;
+        if (this.isX) {
+            left += leftIterator;
+        } else {
+            top += topIterator;
+        }
+
+        // apply the values
+        container.scrollTo({
+            top,
+            left,
+            behavior: container instanceof SmoothScroll ? this.prop.draggableScrollBehavior : 'auto',
+        });
     }
 
     /**
@@ -255,6 +356,9 @@ export default class Bar {
         }
         if (this._actionTimeout) {
             clearTimeout(this._actionTimeout);
+        }
+        if (this._dragger) {
+            this._dragger.destroy();
         }
     }
 }
