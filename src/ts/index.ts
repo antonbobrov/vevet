@@ -22,6 +22,7 @@ import { Timeline, NTimeline } from './components/timeline/Timeline';
 import { Preloader, NPreloader } from './components/loading/Preloader';
 
 import { Dragger, NDragger } from './components/dragger/Dragger';
+import { DraggerMove, NDraggerMove } from './components/dragger/DraggerMove';
 
 import { Ctx2D, NCtx2D } from './components/canvas/Ctx2D';
 import { Ctx2DPrerender, NCtx2DPrerender } from './components/canvas/Ctx2DPrerender';
@@ -58,6 +59,7 @@ export {
     Preloader, NPreloader,
 
     Dragger, NDragger,
+    DraggerMove, NDraggerMove,
 
     Ctx2D, NCtx2D,
     Ctx2DPrerender, NCtx2DPrerender,
