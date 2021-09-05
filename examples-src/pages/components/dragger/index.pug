@@ -1,0 +1,22 @@
+extends ../../_layout/page
+
+block variables
+    - var title = 'Example of DraggerMove';
+    - var pageName = 'components-evt-dragger';
+
+block content
+    
+    .container
+
+        h1 Dragger with 'move' events
+
+        hr
+        h2 Example
+        include ./sample.pug
+        hr
+        pre.pug
+            code!= readFile('./sample.pug', dir)
+        pre.css
+            code!= readFile('./sample.css', dir)
+        pre.ts
+            code!= readFile('./sample.ts', dir)
