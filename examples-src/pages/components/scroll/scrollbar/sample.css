@@ -1,0 +1,24 @@
+.v-smooth-scroll {
+    height: 300px;
+    box-sizing: border-box;
+    border: 1px solid #000;
+}
+
+.wrapper-scroll {
+    height: 300px;
+    box-sizing: border-box;
+    border: 1px solid #000;
+    overflow: auto;
+}
+
+.textarea-scroll {
+    width: 200px;
+    height: 200px;
+    box-sizing: border-box;
+    border: 1px solid #000;
+    resize: none;
+}
+
+.p-container p {
+    padding: 0 20px;
+}

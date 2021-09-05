@@ -55,6 +55,10 @@ switch (pageNameAttr) {
         import('../pages/components/dragger/sample');
         break;
 
+    case 'components-scrollbar':
+        import('../pages/components/scroll/scrollbar/sample');
+        break;
+
     default:
         break;
 }
