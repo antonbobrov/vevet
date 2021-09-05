@@ -1,3 +1,4 @@
+import { createElement, selectOne } from 'vevet-dom';
 import { Component, NComponent } from '../../../base/Component';
 import { RequiredModuleProp } from '../../../utils/types/utility';
 import { SmoothScroll } from '../smooth-scroll/SmoothScroll';
@@ -15,7 +16,7 @@ export namespace NScrollBar {
          * The scrollable element
          * @default window
          */
-        container?: Window | SmoothScroll | Element;
+        container?: Window | SmoothScroll | Element | string;
         /**
          * The element that will contain the scrollbar.
          * If false, the property 'container' will be taken into consideration.
@@ -88,13 +89,59 @@ export class ScrollBar <
     ChangeableProp,
     CallbacksTypes
 > {
+    protected _getDefaultProp <
+        T extends RequiredModuleProp<StaticProp & ChangeableProp>
+    > (): T {
+        return {
+            ...super._getDefaultProp(),
+            container: window,
+            domParent: false,
+            draggable: true,
+            autoSize: true,
+            autoHide: true,
+            minSize: 50,
+            optimizeCalculations: false,
+            isDraggable: true,
+            draggableScrollBehavior: 'smooth',
+        };
+    }
+
     get prefix () {
         return `${this._app.prefix}scrollbar`;
     }
 
+    /**
+     * Scroll container
+     */
+    get container () {
+        return this._container;
+    }
+    protected _container: Element | Window | SmoothScroll;
+
+    /**
+     * Get scrollable element
+     */
+    get scrollableElement () {
+        const { container } = this;
+        if (container instanceof Window) {
+            return this._app.body;
+        }
+        if (container instanceof Element) {
+            return container;
+        }
+        return container.outer;
+    }
+
+    /**
+     * The element into wchich scroll bars will be appended
+     */
     get domParent () {
-        const { container, domParent } = this.prop;
+        const { domParent } = this.prop;
+        const { container } = this;
         if (!domParent) {
+            if (this._scrollWrapper) {
+                return this._scrollWrapper;
+            }
             if (container instanceof Window) {
                 return this._app.body;
             }
@@ -106,6 +153,13 @@ export class ScrollBar <
         return domParent;
     }
 
+    /**
+     * The scroll wrapper.
+     * Used for wrapper scroll
+     */
+    protected _scrollWrapper?: HTMLElement;
+
+    // scrollbars
     protected _xBar: Bar;
     protected _yBar: Bar;
 
@@ -116,16 +170,40 @@ export class ScrollBar <
         init = true,
     ) {
         super(initialProp, false);
-        const { domParent } = this;
         const {
-            container, autoHide, autoSize, minSize,
+            autoHide, autoSize, minSize,
             optimizeCalculations, isDraggable, draggableScrollBehavior,
         } = this.prop;
 
+        // get container
+        if (typeof this.prop.container === 'string') {
+            const el = selectOne(this.prop.container);
+            if (el) {
+                this._container = el;
+            } else {
+                throw new Error('No scroll container');
+            }
+        } else {
+            this._container = this.prop.container;
+        }
+
+        // create scrollBarsParent if needed
+        if (this.container instanceof Element) {
+            const { parentElement } = this.container;
+            if (parentElement) {
+                this._scrollWrapper = createElement('div');
+                this._scrollWrapper.style.position = 'relative';
+                this._scrollWrapper.style.display = 'inline-block';
+                parentElement.insertBefore(this._scrollWrapper, this.container);
+                this._scrollWrapper.appendChild(this.container);
+                this._scrollWrapper.classList.add(`${this.prefix}-wrapper`);
+            }
+        }
+
         // create bars
         const barMainProp = {
-            container: container as any,
-            domParent,
+            container: this.container,
+            domParent: this.domParent,
             autoHide,
             autoSize,
             minSize,
@@ -144,7 +222,7 @@ export class ScrollBar <
         });
 
         // add styles
-        domParent.classList.add(`${this.prefix}-parent`);
+        this.scrollableElement.classList.add(`${this.prefix}-parent`);
 
         // initialize the class
         if (init) {
@@ -152,27 +230,10 @@ export class ScrollBar <
         }
     }
 
-    protected _getDefaultProp <
-        T extends RequiredModuleProp<StaticProp & ChangeableProp>
-    > (): T {
-        return {
-            ...super._getDefaultProp(),
-            container: window,
-            domParent: false,
-            draggable: true,
-            autoSize: true,
-            autoHide: true,
-            minSize: 50,
-            optimizeCalculations: false,
-            isDraggable: true,
-            draggableScrollBehavior: 'smooth',
-        };
-    }
-
     // Set Module Events
     protected _setEvents () {
         super._setEvents();
-        const { container } = this.prop;
+        const { container } = this;
 
         // set resize event
         if (container instanceof SmoothScroll) {
@@ -212,7 +273,16 @@ export class ScrollBar <
     protected _destroy () {
         super._destroy();
 
-        // remove styles
-        this.domParent.classList.remove(`${this.prefix}-parent`);
+        // remove scrollbars parent
+        if (!!this._scrollWrapper && this.container instanceof Element) {
+            const { parentElement } = this._scrollWrapper;
+            if (parentElement) {
+                parentElement.insertBefore(this.container, this._scrollWrapper);
+            }
+            this._scrollWrapper.remove();
+        }
+
+        // reset styles
+        this.scrollableElement.classList.remove(`${this.prefix}-parent`);
     }
 }

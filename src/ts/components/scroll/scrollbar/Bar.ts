@@ -2,12 +2,11 @@ import { addEventListener, createElement, IAddEventListener } from 'vevet-dom';
 import { IRemovable } from '../../../utils/types/general';
 import onScroll from '../../../utils/listeners/onScroll';
 import boundVal from '../../../utils/math/boundVal';
-import { NScrollBar } from './ScrollBar';
 import { DraggerMove, NDraggerMove } from '../../dragger/DraggerMove';
 import { SmoothScroll } from '../smooth-scroll/SmoothScroll';
 
 interface Data {
-    container: Required<NScrollBar.StaticProp>['container'];
+    container: Window | SmoothScroll | Element;
     domParent: Element;
     dir: 'x' | 'y';
     autoHide: boolean;
