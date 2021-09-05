@@ -1,4 +1,6 @@
-import * as CommonUtils from './utils/common';
+import * as common from './utils/common';
+import * as listeners from './utils/listeners';
+import * as math from './utils/math';
 
 import * as GeneralTypes from './utils/types/general';
 
@@ -33,10 +35,16 @@ import { ScrollEventsBase, NScrollEventsBase } from './components/scroll/scrolla
 import { ScrollView, NScrollView } from './components/scroll/scrollable/ScrollView';
 import { SmoothScrollKeyboardPlugin, NSmoothScrollKeyboardPlugin } from './components/scroll/plugins/SmoothScrollKeyboardPlugin';
 
+const utils = {
+    common,
+    listeners,
+    math,
+};
+
 
 
 export {
-    CommonUtils,
+    utils,
     GeneralTypes,
 
     Application, NApplication,
