@@ -340,6 +340,19 @@ export class Application <
     }
 
     /**
+     * Action on page laoded
+     */
+    public onPageLoaded () {
+        return new Promise((
+            resolve: (...arg: any) => void,
+        ) => {
+            this._pageLoad.onLoaded(() => {
+                resolve();
+            });
+        });
+    }
+
+    /**
      * Viewport Callbacks
      */
     protected _viewport: Viewport;
