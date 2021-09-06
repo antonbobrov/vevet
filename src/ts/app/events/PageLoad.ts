@@ -72,8 +72,8 @@ export class PageLoad extends Callbacks<
     ) {
         if (this.loaded) {
             callback();
-        } else {
-            this.add('', callback.bind(this));
+            return undefined;
         }
+        return this.add('', callback.bind(this));
     }
 }
