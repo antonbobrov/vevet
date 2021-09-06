@@ -144,6 +144,7 @@ export class Preloader <
 
         // set events
         this._onLoaded().then(() => {
+            this._endTime = +new Date();
             this._handleLoaded();
         });
 
