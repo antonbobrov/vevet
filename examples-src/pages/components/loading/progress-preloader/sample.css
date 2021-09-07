@@ -1,0 +1,26 @@
+.v-preloader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.v-preloader span {
+    font-size: 2rem;
+    font-weight: 500;
+    color: #fff;
+}
+
+.preload-resources {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.preload-resources > * {
+    display: block;
+    width: 100px;
+    height: 100px;
+}

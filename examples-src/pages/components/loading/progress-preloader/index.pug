@@ -1,0 +1,24 @@
+extends ../../../_layout/page
+
+block variables
+    - var title = 'Example of ProgressPreloader';
+    - var pageName = 'components-progress-preloader';
+
+block content
+    
+    .container
+
+        h1 ProgressPreloader
+        
+        //- description
+        p.lead
+            b ProgressPreloader 
+            | is a page preloader that counts resources loaded.
+
+        hr
+        include ./sample.pug
+        hr
+        pre.pug
+            code!= readFile('./sample.pug', dir)
+        pre.ts
+            code!= readFile('./sample.ts', dir)

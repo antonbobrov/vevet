@@ -50,6 +50,9 @@ switch (pageNameAttr) {
     case 'components-preloader':
         import('../pages/components/loading/preloader/sample');
         break;
+    case 'components-progress-preloader':
+        import('../pages/components/loading/progress-preloader/sample');
+        break;
 
     case 'components-evt-dragger':
         import('../pages/components/dragger/sample');
