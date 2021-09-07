@@ -54,7 +54,7 @@ switch (pageNameAttr) {
         import('../pages/components/loading/progress-preloader/sample');
         break;
 
-    case 'components-evt-dragger':
+    case 'components-dragger':
         import('../pages/components/dragger/sample');
         break;
 
