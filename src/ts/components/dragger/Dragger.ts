@@ -249,10 +249,6 @@ export abstract class Dragger <
         }
         const evt = this._normalizeEvent(e);
 
-        // update states
-        this._isDragging = true;
-        this._pointerID = evt.id;
-
         // prevent actions
         if (e.type === 'mousedown') {
             if (e.which === 1) {
@@ -261,6 +257,10 @@ export abstract class Dragger <
                 return false;
             }
         }
+
+        // update states
+        this._isDragging = true;
+        this._pointerID = evt.id;
 
         // change coordinates
         this._coords = { x: evt.x, y: evt.y };
