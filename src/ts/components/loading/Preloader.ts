@@ -38,6 +38,7 @@ export namespace NPreloader {
      */
     export interface CallbacksTypes extends NComponent.CallbacksTypes {
         'loaded': false;
+        'hide': false;
         'hidden': false;
     }
 
@@ -103,6 +104,11 @@ export class Preloader <
     }
 
     /**
+     * If the preloader is to be hidden
+     */
+    protected _toBeHidden: boolean;
+
+    /**
      * If the preloader is hidden
      */
     get isHidden () {
@@ -140,18 +146,21 @@ export class Preloader <
         // set default vars
         this._startTime = +new Date();
         this._endTime = Infinity;
+        this._toBeHidden = false;
         this._isHidden = false;
-
-        // set events
-        this._onLoaded().then(() => {
-            this._endTime = +new Date();
-            this._handleLoaded();
-        });
 
         // initialize the class
         if (init) {
             this.init();
         }
+    }
+
+    protected _setEvents () {
+        super._setEvents();
+        this._onLoaded().then(() => {
+            this._endTime = +new Date();
+            this._handleLoaded();
+        });
     }
 
 
@@ -192,6 +201,8 @@ export class Preloader <
     public hideContainer (
         duration = typeof this.prop.hide !== 'boolean' ? this.prop.hide : 250,
     ) {
+        this.callbacks.tbt('hide', false);
+        this._toBeHidden = true;
         return new Promise((
             resolve: (...arg: any) => void,
         ) => {
@@ -218,7 +229,40 @@ export class Preloader <
      * Handle the moment when the container is hidden
      */
     protected _handleHidden () {
+        this._isHidden = true;
         this.callbacks.tbt('hidden', false);
+    }
+
+
+
+    /**
+     * Callback at the moment when the preloader starts hiding
+     */
+    public onHide (
+        callback: () => void,
+    ) {
+        if (this._toBeHidden) {
+            callback();
+            return undefined;
+        }
+        return this.callbacks.add('hide', () => {
+            callback();
+        });
+    }
+
+    /**
+     * Callback at the moment when the preloader is hidden
+     */
+    public onHidden (
+        callback: () => void,
+    ) {
+        if (this._isHidden) {
+            callback();
+            return undefined;
+        }
+        return this.callbacks.add('hidden', () => {
+            callback();
+        });
     }
 
 
