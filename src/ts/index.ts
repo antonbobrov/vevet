@@ -22,6 +22,7 @@ import { StaticTimeline, NStaticTimeline } from './components/timeline/StaticTim
 import { Timeline, NTimeline } from './components/timeline/Timeline';
 
 import { Preloader, NPreloader } from './components/loading/Preloader';
+import { ProgressPreloader, NProgressPreloader } from './components/loading/ProgressPreloader';
 
 import { Dragger, NDragger } from './components/dragger/Dragger';
 import { DraggerMove, NDraggerMove } from './components/dragger/DraggerMove';
@@ -65,6 +66,7 @@ export {
     Timeline, NTimeline,
 
     Preloader, NPreloader,
+    ProgressPreloader, NProgressPreloader,
 
     Dragger, NDragger,
     DraggerMove, NDraggerMove,
