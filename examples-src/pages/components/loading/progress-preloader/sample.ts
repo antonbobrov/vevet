@@ -8,10 +8,6 @@ if (container) {
 
     const preloader = new Vevet.ProgressPreloader({
         container: '#v-preloader',
-        loaders: {
-            video: false,
-            img: false,
-        },
     });
     preloader.addCallback('progress', (data) => {
         progressEl.innerHTML = `${(data.progress * 100).toFixed(0)}%`;
