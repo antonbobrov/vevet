@@ -57,6 +57,9 @@ switch (pageNameAttr) {
     case 'components-dragger':
         import('../pages/components/dragger/sample');
         break;
+    case 'components-dragger-direction':
+        import('../pages/components/dragger/direction/sample');
+        break;
 
     case 'components-scrollbar':
         import('../pages/components/scroll/scrollbar/sample');
