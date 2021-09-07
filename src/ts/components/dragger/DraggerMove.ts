@@ -85,7 +85,7 @@ export class DraggerMove <
     protected _handleMove (e: MouseEvent | TouchEvent) {
         const evt = this._normalizeEvent(e);
         if (!this.isDragging || evt.id !== this._pointerID) {
-            return;
+            return false;
         }
 
         // update coordinates
@@ -99,6 +99,8 @@ export class DraggerMove <
             coords: this.coords,
             step: this.stepCoords,
         });
+
+        return true;
     }
 
 

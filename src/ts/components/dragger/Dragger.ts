@@ -242,10 +242,10 @@ export abstract class Dragger <
      */
     protected _handleStart (e: MouseEvent | TouchEvent) {
         if (!this.prop.enabled) {
-            return;
+            return false;
         }
         if (this.isDragging) {
-            return;
+            return false;
         }
         const evt = this._normalizeEvent(e);
 
@@ -258,7 +258,7 @@ export abstract class Dragger <
             if (e.which === 1) {
                 e.stopPropagation();
             } else {
-                return;
+                return false;
             }
         }
 
@@ -274,6 +274,8 @@ export abstract class Dragger <
         this.callbacks.tbt('start', {
             evt: e,
         });
+
+        return true;
     }
 
     /**
@@ -282,9 +284,10 @@ export abstract class Dragger <
     protected _handleEnd (e: TouchEvent | MouseEvent) {
         const evt = this._normalizeEvent(e);
         if (!this.isDragging || evt.id !== this._pointerID) {
-            return;
+            return false;
         }
         this._end();
+        return true;
     }
 
     /**
