@@ -1,5 +1,5 @@
 import {
-    addEventListener, IAddEventListener, isElement, selectOne,
+    addEventListener, IAddEventListener, isElement, isWindow, selectOne,
 } from 'vevet-dom';
 import { Component, NComponent } from '../../base/Component';
 import { RequiredModuleProp } from '../../utils/types/utility';
@@ -16,7 +16,7 @@ export namespace NDragger {
          * Draggable element
          * @default '#v-dragger'
          */
-        container?: string | Element;
+        container?: string | Element | Window;
         /**
          * If need to use passive events
          * @default false
@@ -89,7 +89,7 @@ export abstract class Dragger <
     get container () {
         return this._container;
     }
-    protected _container: Element;
+    protected _container: Element | Window;
 
     /**
      * Runtime events
@@ -139,8 +139,8 @@ export abstract class Dragger <
         super(initialProp, false);
 
         // get container
-        this._container = selectOne(this.prop.container) as Element;
-        if (!isElement(this._container)) {
+        this._container = selectOne(this.prop.container)!;
+        if (!isElement(this._container) && !isWindow(this._container)) {
             throw new Error('No container');
         }
 
