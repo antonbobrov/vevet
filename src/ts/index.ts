@@ -26,6 +26,7 @@ import { ProgressPreloader, NProgressPreloader } from './components/loading/Prog
 
 import { Dragger, NDragger } from './components/dragger/Dragger';
 import { DraggerMove, NDraggerMove } from './components/dragger/DraggerMove';
+import { DraggerDirection, NDraggerDirection } from './components/dragger/DraggerDirection';
 
 import { Ctx2D, NCtx2D } from './components/canvas/Ctx2D';
 import { Ctx2DPrerender, NCtx2DPrerender } from './components/canvas/Ctx2DPrerender';
@@ -70,6 +71,7 @@ export {
 
     Dragger, NDragger,
     DraggerMove, NDraggerMove,
+    DraggerDirection, NDraggerDirection,
 
     Ctx2D, NCtx2D,
     Ctx2DPrerender, NCtx2DPrerender,
