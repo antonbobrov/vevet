@@ -37,6 +37,8 @@ import { ScrollEventsBase, NScrollEventsBase } from './components/scroll/scrolla
 import { ScrollView, NScrollView } from './components/scroll/scrollable/ScrollView';
 import { SmoothScrollKeyboardPlugin, NSmoothScrollKeyboardPlugin } from './components/scroll/plugins/SmoothScrollKeyboardPlugin';
 
+import { SplitText, NSplitText } from './components/text/SplitText';
+
 const utils = {
     common,
     listeners,
@@ -81,4 +83,6 @@ export {
     ScrollEventsBase, NScrollEventsBase,
     ScrollView, NScrollView,
     SmoothScrollKeyboardPlugin, NSmoothScrollKeyboardPlugin,
+
+    SplitText, NSplitText,
 };
