@@ -65,6 +65,10 @@ switch (pageNameAttr) {
         import('../pages/components/scroll/scrollbar/sample');
         break;
 
+    case 'components-text-split':
+        import('../pages/components/text/split-text/sample');
+        break;
+
     default:
         break;
 }
