@@ -69,6 +69,10 @@ switch (pageNameAttr) {
         import('../pages/components/text/split-text/sample');
         break;
 
+    case 'components-cursor-CustomCursor':
+        import('../pages/components/cursor/custom-cursor/sample');
+        break;
+
     default:
         break;
 }
