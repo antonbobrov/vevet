@@ -39,6 +39,8 @@ import { SmoothScrollKeyboardPlugin, NSmoothScrollKeyboardPlugin } from './compo
 
 import { SplitText, NSplitText } from './components/text/SplitText';
 
+import { CustomCursor, NCustomCursor } from './components/cursor/CustomCursor';
+
 const utils = {
     common,
     listeners,
@@ -85,4 +87,6 @@ export {
     SmoothScrollKeyboardPlugin, NSmoothScrollKeyboardPlugin,
 
     SplitText, NSplitText,
+
+    CustomCursor, NCustomCursor,
 };
