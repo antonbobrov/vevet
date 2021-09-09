@@ -138,7 +138,6 @@ export class Module<
      * If the module is destroyed
      */
     protected _destroyed: boolean;
-
     get destroyed () {
         return this._destroyed;
     }
@@ -353,6 +352,9 @@ export class Module<
      * Destroy the module
      */
     public destroy () {
+        if (this.destroyed) {
+            return;
+        }
         this._destroy();
     }
 

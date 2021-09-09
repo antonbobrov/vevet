@@ -360,7 +360,7 @@ export class ProgressPreloader <
                 return;
             }
             setTimeout(() => {
-                if (this._destroyed) {
+                if (this.destroyed) {
                     return;
                 }
                 this._seekCustomResourceLoaded(el).then(() => {

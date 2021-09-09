@@ -148,7 +148,7 @@ export class AnimationFrame <
      * Launch the animation frame.
      */
     public play () {
-        if (this._destroyed) {
+        if (this.destroyed) {
             return;
         }
         if (this.prop.run) {
