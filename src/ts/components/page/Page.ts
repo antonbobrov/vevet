@@ -124,42 +124,49 @@ export class Page <
     public create (
         viaAJAX = false,
     ) {
-        // check if action is available
-        if (!this.canCreate()) {
-            return false;
-        }
+        this.canCreate().then(() => {
+            if (this.created) {
+                return;
+            }
+            // update vars
+            this._created = true;
+            this._shown = false;
+            this._hidden = false;
+            this._destroyed = false;
+            this._viaAJAX = viaAJAX;
 
-        // update vars
-        this._created = true;
-        this._shown = false;
-        this._hidden = false;
-        this._destroyed = false;
-        this._viaAJAX = viaAJAX;
+            // update page
+            this._app.page = this as unknown as Page;
+            // add page class
+            this._app.html.classList.add(this.pageClassName);
 
-        // update page
-        this._app.page = this as unknown as Page;
-        // add page class
-        this._app.html.classList.add(this.pageClassName);
+            // actions
+            this._create();
 
-        // launch events
-        this.callbacks.tbt('create', false);
-
-        // launch inner method
-        this._innerCreate();
-
-        return this;
+            // launch events
+            this.callbacks.tbt('create', false);
+        });
     }
 
     /**
-     * Inner method on page created
+     * Use this method to do some actions when creating a page
      */
-    protected _innerCreate () { }
+    protected _create () { }
 
     /**
      * Check if the page can be created.
      */
     public canCreate () {
-        return !this._created;
+        return new Promise((
+            resolve: (...arg: any) => void,
+            reject: (...arg: any) => void,
+        ) => {
+            if (this.created) {
+                reject();
+                return;
+            }
+            resolve();
+        });
     }
 
 
@@ -168,36 +175,43 @@ export class Page <
      * Show the page.
      */
     public show () {
-        // check if action is available
-        if (!this.canShow()) {
-            return false;
-        }
+        this.canShow().then(() => {
+            if (this.shown) {
+                return;
+            }
+            // update vars
+            this._created = true;
+            this._shown = true;
+            this._hidden = false;
+            this._destroyed = false;
 
-        // update vars
-        this._created = true;
-        this._shown = true;
-        this._hidden = false;
-        this._destroyed = false;
+            // acttions
+            this._show();
 
-        // launch events
-        this.callbacks.tbt('show', false);
-
-        // launch inner method
-        this._innerShow();
-
-        return true;
+            // launch events
+            this.callbacks.tbt('show', false);
+        });
     }
 
     /**
-     * Inner method on page shown
+     * Use this method to do some actions when showing a page
      */
-    protected _innerShow () { }
+    protected _show () { }
 
     /**
      * Check if the page can be shown.
      */
     public canShow () {
-        return this._created && !this._shown;
+        return new Promise((
+            resolve: (...arg: any) => void,
+            reject: (...arg: any) => void,
+        ) => {
+            if (this.created && !this.shown) {
+                resolve();
+                return;
+            }
+            reject();
+        });
     }
 
 
@@ -206,36 +220,43 @@ export class Page <
      * Hide the page.
      */
     public hide () {
-        // check if action is available
-        if (!this.canHide()) {
-            return false;
-        }
+        this.canHide().then(() => {
+            if (this.hidden) {
+                return;
+            }
+            // update vars
+            this._created = true;
+            this._shown = false;
+            this._hidden = true;
+            this._destroyed = false;
 
-        // update vars
-        this._created = true;
-        this._shown = false;
-        this._hidden = true;
-        this._destroyed = false;
+            // actions
+            this._hide();
 
-        // launch events
-        this.callbacks.tbt('hide', false);
-
-        // launch inner method
-        this._innerHide();
-
-        return true;
+            // launch events
+            this.callbacks.tbt('hide', false);
+        });
     }
 
     /**
-     * Inner method on page hidden
+     * Use this method to do some actions when hiding a page
      */
-    protected _innerHide () { }
+    protected _hide () { }
 
     /**
      * Check if the page can be hidden.
      */
     public canHide () {
-        return this._created && this._shown && !this._hidden;
+        return new Promise((
+            resolve: (...arg: any) => void,
+            reject: (...arg: any) => void,
+        ) => {
+            if (this.created && this.shown && !this.hidden) {
+                resolve();
+                return;
+            }
+            reject();
+        });
     }
 
 
@@ -244,39 +265,47 @@ export class Page <
      * Destroy the page.
      */
     public destroy () {
-        // check if action is available
-        if (!this.canDestroy()) {
-            return false;
-        }
-        super.destroy();
+        this.canDestroy().then(() => {
+            if (this.destroyed) {
+                return;
+            }
+            // change vars
+            this._created = false;
+            this._shown = false;
+            this._hidden = true;
+            this._destroyed = true;
 
-        // change vars
-        this._created = false;
-        this._shown = false;
-        this._hidden = true;
-        this._destroyed = true;
+            // update page
+            this._app.page = false;
+            // remove page class
+            this._app.html.classList.remove(this.pageClassName);
 
-        // update page
-        this._app.page = false;
-        // remove page class
-        this._app.html.classList.remove(this.pageClassName);
-
-        // launch inner method
-        this._innerDestroy();
-
-        return true;
+            // actions
+            this._destroy();
+        });
     }
 
     /**
-     * Inner method on page destroyed
+     * Use this method to do some actions when destroying a page
      */
-    protected _innerDestroy () { }
+    protected _destroy () {
+        super._destroy();
+    }
 
     /**
      * Check if the page can be destroyed.
      */
     public canDestroy () {
-        return this._created && this._hidden;
+        return new Promise((
+            resolve: (...arg: any) => void,
+            reject: (...arg: any) => void,
+        ) => {
+            if (this.created && this.hidden && !this.destroyed) {
+                resolve();
+                return;
+            }
+            reject();
+        });
     }
 
 
@@ -289,7 +318,7 @@ export class Page <
         return new Promise((
             resolve: (...arg: any) => void,
         ) => {
-            if (this._created) {
+            if (this.created) {
                 resolve();
             } else {
                 this.addCallback('create', () => {
@@ -307,7 +336,7 @@ export class Page <
         return new Promise((
             resolve: (...arg: any) => void,
         ) => {
-            if (this._shown) {
+            if (this.shown) {
                 resolve();
             } else {
                 this.addCallback('show', () => {
@@ -325,7 +354,7 @@ export class Page <
         return new Promise((
             resolve: (...arg: any) => void,
         ) => {
-            if (this._hidden) {
+            if (this.hidden) {
                 resolve();
             } else {
                 this.addCallback('hide', () => {
