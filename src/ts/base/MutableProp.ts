@@ -15,8 +15,8 @@ export namespace NMutableProp {
          *      <li>'d' - for desktop size</li>
          *      <li>'t' - for tablet size</li>
          *      <li>'p' - for phone size</li>
-         *      <li>'phone' - for phones</li>
-         *      <li>'tablet' - for tablets</li>
+         *      <li>'phone' - for phone devices</li>
+         *      <li>'tablet' - for tablet devices</li>
          *      <li>'mobile' - for phone or tablet devices</li>
          * </ul>
          */
