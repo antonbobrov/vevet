@@ -225,11 +225,21 @@ export default class CursorModule extends Module {
 
     /**
      * @description Event of mouseenter.
+     * @param {object} e - Event.
      * @protected
      */
-    _mouseenter() {
+    _mouseenter(e) {
 
         this._outer.classList.add(this._classes.show);
+
+        this._mouse.x = e.clientX;
+        this._mouse.y = e.clientY;
+
+        const prevEase = this.prop.ease;
+        this.prop.ease = 1;
+        this._animatePos();
+        this._render();
+        this.prop.ease = prevEase;
         
     }
 
