@@ -36,6 +36,7 @@ import { ScrollBar, NScrollBar } from './components/scroll/scrollbar/ScrollBar';
 import { ScrollEventsBase, NScrollEventsBase } from './components/scroll/scrollable/ScrollEventsBase';
 import { ScrollView, NScrollView } from './components/scroll/scrollable/ScrollView';
 import { SmoothScrollKeyboardPlugin, NSmoothScrollKeyboardPlugin } from './components/scroll/plugins/SmoothScrollKeyboardPlugin';
+import { SmoothScrollDragPlugin, NSmoothScrollDragPlugin } from './components/scroll/plugins/SmoothScrollDragPlugin';
 
 import { SplitText, NSplitText } from './components/text/SplitText';
 
@@ -85,6 +86,7 @@ export {
     ScrollEventsBase, NScrollEventsBase,
     ScrollView, NScrollView,
     SmoothScrollKeyboardPlugin, NSmoothScrollKeyboardPlugin,
+    SmoothScrollDragPlugin, NSmoothScrollDragPlugin,
 
     SplitText, NSplitText,
 
