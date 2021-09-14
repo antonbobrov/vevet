@@ -45,6 +45,9 @@ export abstract class Plugin<
 
 
     protected _component!: Component;
+    get component () {
+        return this._component;
+    }
 
 
 
