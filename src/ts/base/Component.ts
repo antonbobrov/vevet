@@ -52,7 +52,7 @@ export class Component<
      * Add a single plugin
      */
     public addPlugin (
-        plugin: Plugin,
+        plugin: any,
     ) {
         if (typeof this._plugins === 'undefined') {
             this._plugins = [];
