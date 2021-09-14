@@ -195,12 +195,12 @@ export abstract class Dragger <
 
         // cancel
         this._runtimeEvents.push(
-            addEventListener(window, 'touchcancel', this._end.bind(this), {
+            addEventListener(window, 'touchcancel', this.cancel.bind(this), {
                 passive: usePassive,
             }),
         );
         this._runtimeEvents.push(
-            addEventListener(window, 'blur', this._end.bind(this), {
+            addEventListener(window, 'blur', this.cancel.bind(this), {
                 passive: usePassive,
             }),
         );
@@ -286,14 +286,14 @@ export abstract class Dragger <
         if (!this.isDragging || evt.id !== this._pointerID) {
             return false;
         }
-        this._end();
+        this.cancel();
         return true;
     }
 
     /**
      * Cancel dragging
      */
-    protected _end () {
+    public cancel () {
         this._removeRuntimeEvents();
         this._isDragging = false;
         this.callbacks.tbt('end', false);
