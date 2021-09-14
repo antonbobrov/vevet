@@ -8,6 +8,10 @@
 
     &__container {
         width: 100%;
+        &.is-dragging {
+            pointer-events: none;
+            user-select: none;
+        }
     }
 
 }
