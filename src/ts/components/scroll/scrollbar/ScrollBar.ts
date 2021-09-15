@@ -273,6 +273,10 @@ export class ScrollBar <
     protected _destroy () {
         super._destroy();
 
+        // destroy bars
+        this._xBar.destroy();
+        this._yBar.destroy();
+
         // remove scrollbars parent
         if (!!this._scrollWrapper && this.container instanceof Element) {
             const { parentElement } = this._scrollWrapper;

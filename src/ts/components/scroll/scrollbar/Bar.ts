@@ -359,5 +359,6 @@ export default class Bar {
         if (this._dragger) {
             this._dragger.destroy();
         }
+        this._outer.remove();
     }
 }
