@@ -190,6 +190,7 @@ export default class TextSplitModule extends Module {
         if (this._text.length == 0) {
             this._text = outer.textContent;
         }
+        this._text = this._text.replace(/\s+\n/gm, '\n');
         /**
          * @description Inner HTML.
          * @protected
