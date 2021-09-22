@@ -14,11 +14,6 @@ export namespace NApplication {
      */
     export type Prop = {
         /**
-         * Page name
-         * @default 'home'
-         */
-        pagename: string;
-        /**
          * Tablet identification max width
          * @default 1199
          */
@@ -72,7 +67,6 @@ export class Application <
      */
     get defaultProp (): NApplication.Prop {
         return {
-            pagename: 'home',
             tablet: 1199,
             phone: 899,
             prefix: 'v-',
@@ -150,6 +144,12 @@ export class Application <
     constructor (
         data: Partial<NApplication.Prop> = {},
     ) {
+        // check if the application already exists
+        if (window.vevetApp) {
+            throw new Error('Vevet Application already exists!');
+        }
+
+        // set defaults
         this._prop = {
             ...this.defaultProp,
             ...data,
@@ -159,9 +159,6 @@ export class Application <
         // initialize the application
         // Define that you're using Vevet
         this._sayHi();
-
-        // set current page name
-        this._pagename = this.prop.pagename;
 
         // add the application to the window
         window.vevetApp = this;
@@ -223,41 +220,6 @@ export class Application <
      */
     get body () {
         return document.body;
-    }
-
-
-
-    /**
-     * Name of the current page.
-     */
-    protected _pagename = '';
-
-    /**
-     * Get name of the page.
-     */
-    get pagename () {
-        return this._pagename;
-    }
-
-    /**
-     * Check if the current page has the same name.
-     */
-    isPageName (val: string): boolean {
-        return this._pagename === val;
-    }
-
-    /**
-     * Set name of the page
-     */
-    protected _setPageName (name: string) {
-        // remove old classes
-        this.html.classList.remove(`${this.prefix}page_${this.pagename}`);
-
-        // set classes & push to pages
-        this.html.classList.add(`${this.prefix}page_${name}`);
-
-        // replace pages array
-        this._pagename = name;
     }
 
 
