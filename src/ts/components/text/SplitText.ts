@@ -95,7 +95,7 @@ export class SplitText <
     /**
      * Initial text
      */
-     protected _initText: string;
+    protected _initText: string;
     /**
      * Initial HTML content
      */
@@ -154,6 +154,7 @@ export class SplitText <
         // get initial text
         this._initHTML = this._container.innerHTML;
         this._initText = (this._container.innerText || 'no rendered text').trim();
+        this._initText = this._initText.replace(/\s+\n/gm, '\n');
 
         // set default vars
         this._isPrimarySplit = false;
