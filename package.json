@@ -21,6 +21,7 @@
   "types": "./build/types/index.d.ts",
   "module": "./build/es/index.js",
   "jsdelivr": "./build/cdn/index.js",
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/antonbobrov/vevet.git"
