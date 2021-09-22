@@ -1,7 +1,6 @@
 import * as Vevet from '../../../src/ts/index';
 
 export default new Vevet.Application({
-    pagename: 'sample-page',
     tablet: 1199,
     phone: 899,
     prefix: 'v-',
