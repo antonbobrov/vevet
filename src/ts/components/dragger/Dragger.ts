@@ -220,17 +220,19 @@ export abstract class Dragger <
      * Normalize event data.
      */
     protected _normalizeEvent (e: MouseEvent | TouchEvent) {
-        if (e instanceof TouchEvent) {
-            const touch = e.targetTouches[0] || e.changedTouches[0];
+        if (e.type.includes('touch')) {
+            const evt = e as TouchEvent;
+            const touch = evt.targetTouches[0] || evt.changedTouches[0];
             return {
                 x: touch.clientX,
                 y: touch.clientY,
                 id: touch.identifier,
             };
         }
+        const evt = e as MouseEvent;
         return {
-            x: e.clientX,
-            y: e.clientY,
+            x: evt.clientX,
+            y: evt.clientY,
             id: null,
         };
     }
