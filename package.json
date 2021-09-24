@@ -96,6 +96,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "cancelable-promise": "^4.2.1",
     "detect-browser": "^5.2.0",
     "easing-progress": "0.0.4",
     "get-image-pos": "0.0.9",
