@@ -124,48 +124,59 @@ export class Page <
     public create (
         viaAJAX = false,
     ) {
-        this.canCreate().then(() => {
-            if (this.created) {
-                return;
-            }
-            // update vars
-            this._created = true;
-            this._shown = false;
-            this._hidden = false;
-            this._destroyed = false;
-            this._viaAJAX = viaAJAX;
+        return new Promise<void>((
+            resolve, reject,
+        ) => {
+            this.canCreate().then(() => {
+                if (this.created) {
+                    return;
+                }
+                // update vars
+                this._created = true;
+                this._shown = false;
+                this._hidden = false;
+                this._destroyed = false;
+                this._viaAJAX = viaAJAX;
 
-            // update page
-            this._app.page = this as unknown as Page;
-            // add page class
-            this._app.html.classList.add(this.pageClassName);
+                // update page
+                this._app.page = this as unknown as Page;
+                // add page class
+                this._app.html.classList.add(this.pageClassName);
 
-            // actions
-            this._create();
-
-            // launch events
-            this.callbacks.tbt('create', false);
+                // actions
+                this._create().then(() => {
+                    this.callbacks.tbt('create', false);
+                    resolve();
+                });
+            }).catch(() => {
+                reject();
+            });
         });
     }
 
     /**
      * Use this method to do some actions when creating a page
      */
-    protected _create () { }
+    protected _create () {
+        return new Promise<void>((
+            resolve,
+        ) => {
+            resolve();
+        });
+    }
 
     /**
      * Check if the page can be created.
      */
     public canCreate () {
-        return new Promise((
-            resolve: (...arg: any) => void,
-            reject: (...arg: any) => void,
+        return new Promise<void>((
+            resolve, reject,
         ) => {
-            if (this.created) {
-                reject();
+            if (!this.created) {
+                resolve();
                 return;
             }
-            resolve();
+            reject();
         });
     }
 
@@ -175,36 +186,48 @@ export class Page <
      * Show the page.
      */
     public show () {
-        this.canShow().then(() => {
-            if (this.shown) {
-                return;
-            }
-            // update vars
-            this._created = true;
-            this._shown = true;
-            this._hidden = false;
-            this._destroyed = false;
+        return new Promise<void>((
+            resolve, reject,
+        ) => {
+            this.canShow().then(() => {
+                if (this.shown) {
+                    return;
+                }
+                // update vars
+                this._created = true;
+                this._shown = true;
+                this._hidden = false;
+                this._destroyed = false;
 
-            // acttions
-            this._show();
-
-            // launch events
-            this.callbacks.tbt('show', false);
+                // actions
+                this._show().then(() => {
+                    this.callbacks.tbt('show', false);
+                    resolve();
+                });
+                // launch events
+            }).catch(() => {
+                reject();
+            });
         });
     }
 
     /**
      * Use this method to do some actions when showing a page
      */
-    protected _show () { }
+    protected _show () {
+        return new Promise<void>((
+            resolve,
+        ) => {
+            resolve();
+        });
+    }
 
     /**
      * Check if the page can be shown.
      */
     public canShow () {
-        return new Promise((
-            resolve: (...arg: any) => void,
-            reject: (...arg: any) => void,
+        return new Promise<void>((
+            resolve, reject,
         ) => {
             if (this.created && !this.shown) {
                 resolve();
@@ -220,36 +243,48 @@ export class Page <
      * Hide the page.
      */
     public hide () {
-        this.canHide().then(() => {
-            if (this.hidden) {
-                return;
-            }
-            // update vars
-            this._created = true;
-            this._shown = false;
-            this._hidden = true;
-            this._destroyed = false;
+        return new Promise((
+            resolve: (...arg: any) => void,
+            reject: (...arg: any) => void,
+        ) => {
+            this.canHide().then(() => {
+                if (this.hidden) {
+                    return;
+                }
+                // update vars
+                this._created = true;
+                this._shown = false;
+                this._hidden = true;
+                this._destroyed = false;
 
-            // actions
-            this._hide();
-
-            // launch events
-            this.callbacks.tbt('hide', false);
+                // actions
+                this._hide().then(() => {
+                    this.callbacks.tbt('hide', false);
+                    resolve();
+                });
+            }).catch(() => {
+                reject();
+            });
         });
     }
 
     /**
      * Use this method to do some actions when hiding a page
      */
-    protected _hide () { }
+    protected _hide () {
+        return new Promise<void>((
+            resolve,
+        ) => {
+            resolve();
+        });
+    }
 
     /**
      * Check if the page can be hidden.
      */
     public canHide () {
-        return new Promise((
-            resolve: (...arg: any) => void,
-            reject: (...arg: any) => void,
+        return new Promise<void>((
+            resolve, reject,
         ) => {
             if (this.created && this.shown && !this.hidden) {
                 resolve();
@@ -265,23 +300,32 @@ export class Page <
      * Destroy the page.
      */
     public destroy () {
-        this.canDestroy().then(() => {
-            if (this.destroyed) {
-                return;
-            }
-            // change vars
-            this._created = false;
-            this._shown = false;
-            this._hidden = true;
-            this._destroyed = true;
+        return new Promise((
+            resolve: (...arg: any) => void,
+            reject: (...arg: any) => void,
+        ) => {
+            this.canDestroy().then(() => {
+                if (this.destroyed) {
+                    return;
+                }
+                // change vars
+                this._created = false;
+                this._shown = false;
+                this._hidden = true;
+                this._destroyed = true;
 
-            // update page
-            this._app.page = false;
-            // remove page class
-            this._app.html.classList.remove(this.pageClassName);
+                // update page
+                this._app.page = false;
+                // remove page class
+                this._app.html.classList.remove(this.pageClassName);
 
-            // actions
-            this._destroy();
+                // actions
+                this._destroy().then(() => {
+                    resolve();
+                });
+            }).catch(() => {
+                reject();
+            });
         });
     }
 
@@ -289,16 +333,20 @@ export class Page <
      * Use this method to do some actions when destroying a page
      */
     protected _destroy () {
-        super._destroy();
+        return new Promise<void>((
+            resolve,
+        ) => {
+            super._destroy();
+            resolve();
+        });
     }
 
     /**
      * Check if the page can be destroyed.
      */
     public canDestroy () {
-        return new Promise((
-            resolve: (...arg: any) => void,
-            reject: (...arg: any) => void,
+        return new Promise<void>((
+            resolve, reject,
         ) => {
             if (this.created && this.hidden && !this.destroyed) {
                 resolve();
@@ -315,14 +363,16 @@ export class Page <
      * If the callback was added after the page was created, it will be triggered immediately.
      */
     onCreate () {
-        return new Promise((
-            resolve: (...arg: any) => void,
+        return new Promise<void>((
+            resolve,
         ) => {
             if (this.created) {
                 resolve();
             } else {
                 this.addCallback('create', () => {
                     resolve();
+                }, {
+                    once: true,
                 });
             }
         });
@@ -333,14 +383,16 @@ export class Page <
      * If the callback was added after the page was shown, it will be triggered immediately.
      */
     onShow () {
-        return new Promise((
-            resolve: (...arg: any) => void,
+        return new Promise<void>((
+            resolve,
         ) => {
             if (this.shown) {
                 resolve();
             } else {
                 this.addCallback('show', () => {
                     resolve();
+                }, {
+                    once: true,
                 });
             }
         });
@@ -351,14 +403,16 @@ export class Page <
      * If the callback was added after the page was hidden, it will be triggered immediately.
      */
     onHide () {
-        return new Promise((
-            resolve: (...arg: any) => void,
+        return new Promise<void>((
+            resolve,
         ) => {
             if (this.hidden) {
                 resolve();
             } else {
                 this.addCallback('hide', () => {
                     resolve();
+                }, {
+                    once: true,
                 });
             }
         });
