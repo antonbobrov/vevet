@@ -1,4 +1,5 @@
 import { selectOne } from 'vevet-dom';
+import CancelablePromise from 'cancelable-promise';
 import { Component, NComponent } from '../../base/Component';
 import { RequiredModuleProp } from '../../utils/types/utility';
 import timeoutCallback from '../../utils/common/timeoutCallback';
@@ -169,7 +170,7 @@ export class Preloader <
      * Trace the moment when the page is fully loaded
      */
     protected _onLoaded () {
-        return new Promise((
+        return new CancelablePromise((
             resolve: (...arg: any) => void,
         ) => {
             if (this._app.pageLoad.loaded) {
@@ -203,7 +204,7 @@ export class Preloader <
     ) {
         this.callbacks.tbt('hide', false);
         this._toBeHidden = true;
-        return new Promise((
+        return new CancelablePromise((
             resolve: (...arg: any) => void,
         ) => {
             const container = this._container;

@@ -1,6 +1,7 @@
 import isMobileJs from 'ismobilejs';
 import { EasingType } from 'easing-progress';
 import { detect } from 'detect-browser';
+import { CancelablePromise } from 'cancelable-promise';
 import { Viewport } from './events/Viewport';
 import { PageLoad } from './events/PageLoad';
 import { Page } from '../components/page/Page';
@@ -257,7 +258,7 @@ export class Application <
      * Action on page created
      */
     public onPageCreated () {
-        return new Promise((
+        return new CancelablePromise((
             resolve: (page: PageInstance) => void,
         ) => {
             if (this._page) {
@@ -278,7 +279,7 @@ export class Application <
      * Action on page shown
      */
     public onPageShown () {
-        return new Promise((
+        return new CancelablePromise((
             resolve: (page: PageInstance) => void,
         ) => {
             this.onPageCreated().then(() => {
@@ -305,7 +306,7 @@ export class Application <
      * Action on page laoded
      */
     public onPageLoaded () {
-        return new Promise((
+        return new CancelablePromise((
             resolve: (...arg: any) => void,
         ) => {
             this._pageLoad.onLoaded(() => {

@@ -1,3 +1,4 @@
+import CancelablePromise from 'cancelable-promise';
 import { Component, NComponent } from '../../base/Component';
 import { RequiredModuleProp } from '../../utils/types/utility';
 
@@ -363,7 +364,7 @@ export class Page <
      * If the callback was added after the page was created, it will be triggered immediately.
      */
     onCreate () {
-        return new Promise<void>((
+        return new CancelablePromise<void>((
             resolve,
         ) => {
             if (this.created) {
@@ -383,7 +384,7 @@ export class Page <
      * If the callback was added after the page was shown, it will be triggered immediately.
      */
     onShow () {
-        return new Promise<void>((
+        return new CancelablePromise<void>((
             resolve,
         ) => {
             if (this.shown) {
@@ -403,7 +404,7 @@ export class Page <
      * If the callback was added after the page was hidden, it will be triggered immediately.
      */
     onHide () {
-        return new Promise<void>((
+        return new CancelablePromise<void>((
             resolve,
         ) => {
             if (this.hidden) {
