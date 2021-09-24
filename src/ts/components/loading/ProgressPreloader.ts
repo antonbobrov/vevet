@@ -34,7 +34,8 @@ export namespace NProgressPreloader {
             video?: boolean;
             /**
              * Selector for elements to be preloaded.
-             * These elements must have the property 'isLoaded' or 'isComplete'.
+             * These elements may have such properties as 'isLoaded' or 'isComplete'
+             * or attributes like 'data-is-loaded', 'is-loaded'.
              * @default '.js-preload'
              */
             custom?: string | false;
@@ -355,10 +356,19 @@ export class ProgressPreloader <
         return new Promise((
             resolve: (...arg: any) => void,
         ) => {
+            // check if the element is loaded
             if (el.isComplete || el.isLoaded) {
                 resolve();
                 return;
             }
+            if (
+                el.getAttribute('data-is-loaded')
+                || el.getAttribute('is-loaded')
+            ) {
+                resolve();
+                return;
+            }
+            // otherwise, seek the moment when it will be loaded
             setTimeout(() => {
                 if (this.destroyed) {
                     return;
