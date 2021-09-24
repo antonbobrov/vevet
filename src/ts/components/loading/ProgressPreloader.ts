@@ -1,5 +1,5 @@
 import { selectAll } from 'vevet-dom';
-import CancelablePromise from 'cancelable-promise';
+import PCancelable from 'p-cancelable';
 import { AnimationFrame } from '../animation-frame/AnimationFrame';
 import { RequiredModuleProp } from '../../utils/types/utility';
 import lerp from '../../utils/math/lerp';
@@ -249,7 +249,7 @@ export class ProgressPreloader <
      * Seek the moment when the page is fully loaded
      */
     protected _onLoaded () {
-        return new CancelablePromise((
+        return new PCancelable((
             resolve: (...arg: any) => void,
         ) => {
             let callbackLaunched = false;
