@@ -198,6 +198,7 @@ export class Callbacks<
     /**
      * Use it to implement some actions after adding a callback.
      */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected _onAdd (id: string) {
         // code
     }
@@ -238,6 +239,7 @@ export class Callbacks<
     /**
      * Use it to implement some actions after removing a callback.
      */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected _onRemove (id: string) {
         // code
     }
@@ -277,6 +279,7 @@ export class Callbacks<
     /**
      * Use it to implement some actions after enabling or disabling a callback.
      */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected _onTurn (id: string) {
         // code
     }
