@@ -6,7 +6,10 @@ const page = new Vevet.Page({
     name: 'page-instance',
 });
 
-page.create();
-page.show();
-page.hide();
-page.destroy();
+page.create().then(() => {
+    page.show().then(() => {
+        page.hide().then(() => {
+            page.destroy();
+        });
+    });
+});
