@@ -1,12 +1,12 @@
-.vscode
-
+config/
+examples-src/
 node_modules/
-webpack/
 
+.babelrc
 .eslintignore
 .eslintrc.json
 .gitignore
 .npmignore
-.stylelintrc.json
+
 package-lock.json
 tsconfig.json
