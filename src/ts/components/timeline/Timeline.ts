@@ -126,6 +126,7 @@ export class Timeline <
         this._isPlaying = false;
         this._isReversed = false;
         this._isPaused = false;
+        this._animationFrame = undefined;
         this._animationFrameLastTime = 0;
 
         if (init) {

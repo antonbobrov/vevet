@@ -109,6 +109,7 @@ export class SmoothScrollDragPlugin<
         initialProp?: (StaticProp & ChangeableProp),
     ) {
         super(initialProp);
+        this._dragger = undefined;
         this._componentEvents = [];
         this._currentLerp = false;
     }

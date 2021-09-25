@@ -101,6 +101,9 @@ export default class Bar {
             left: 0,
             top: 0,
         };
+        this._scrollEvent = undefined;
+        this._actionTimeout = undefined;
+        this._dragger = undefined;
 
         // create outer
         let outerClassNames = `${prefix} ${prefix}_${dir}`;

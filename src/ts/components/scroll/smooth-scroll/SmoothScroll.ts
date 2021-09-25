@@ -366,6 +366,8 @@ export class SmoothScroll <
         this._clientWidth = 0;
         this._clientHeight = 0;
         this._instant = false;
+        this._animationFrame = undefined;
+        this._outerAnimationFrameEvent = undefined;
         this._currentFPS = 60;
 
         // get outer elements

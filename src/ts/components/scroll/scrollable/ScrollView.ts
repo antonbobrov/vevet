@@ -129,6 +129,9 @@ export class ScrollView <
         init = true,
     ) {
         super(initialProp, false);
+
+        this._scrollEvent = undefined;
+        this._intersectionObserver = undefined;
         this._firstStart = true;
 
         // get view elements
@@ -244,7 +247,7 @@ export class ScrollView <
         });
         // update elements
         this._elements = Array.from(
-            selectAll(this.prop.elements, this.domParent || undefined),
+            selectAll(this.prop.elements as any, this.domParent || undefined),
         ).filter(
             (el) => !el.classList.contains(this.prop.classToToggle),
         );
