@@ -62,6 +62,7 @@ module.exports = merge(baseConfig, {
                         },
                     },
                 ],
+                sideEffects: true,
             },
 
         ],
