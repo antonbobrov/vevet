@@ -187,9 +187,10 @@ export class SmoothScrollDragPlugin<
         if (!component.prop.enabled) {
             return;
         }
-        // set classes
-        component.outer.classList.add(draggingClassName);
-        component.container.classList.add(draggingClassName);
+        // check scrollable area
+        if (component.maxScrollableWidth <= 0 && component.maxScrollableHeight <= 0) {
+            return;
+        }
         // change lerp
         const { lerp } = this.prop;
         if (typeof lerp !== 'boolean') {
@@ -212,6 +213,11 @@ export class SmoothScrollDragPlugin<
         if (!component.prop.enabled) {
             return;
         }
+        // check scrollable area
+        if (component.maxScrollableWidth <= 0 && component.maxScrollableHeight <= 0) {
+            return;
+        }
+
         const { speed, reverseDir } = this.prop;
         // get coordinates
         const x = data.step.x * speed;
@@ -219,6 +225,9 @@ export class SmoothScrollDragPlugin<
         // update scroll values
         component.targetLeft -= !reverseDir ? x : y;
         component.targetTop -= !reverseDir ? y : x;
+        // set classes
+        component.outer.classList.add(draggingClassName);
+        component.container.classList.add(draggingClassName);
     }
 
     /**
