@@ -507,6 +507,11 @@ export class SmoothScroll <
             this.targetTop = parseInt(this.targetTop.toFixed(0), 10);
         }
 
+        // set scroll classes
+        const hasScroll = this.maxScrollableHeight > 0 || this.maxScrollableWidth > 0;
+        outer.classList.toggle('has-scroll', hasScroll);
+        outer.classList.toggle('no-scroll', !hasScroll);
+
         // render elements
         this._updateElementsProp();
         // this.render();
