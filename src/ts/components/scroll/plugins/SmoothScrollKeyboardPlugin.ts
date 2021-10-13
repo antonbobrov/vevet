@@ -78,6 +78,18 @@ export class SmoothScrollKeyboardPlugin<
             }
         }
 
+        // check if the scroll container is in viewport
+        const { viewport } = this._app;
+        const bounding = component.outer.getBoundingClientRect();
+        if (!(
+            bounding.left < viewport.width
+            && bounding.right > 0
+            && bounding.top < viewport.height
+            && bounding.bottom > 0
+        )) {
+            return;
+        }
+
         // update scroll values
         const scrollIterator = 40;
         switch (e.keyCode) {
