@@ -19,6 +19,11 @@ switch (pageNameAttr) {
     case 'app-events-page-load':
         import('../pages/app/events/page-load/sample');
         break;
+
+    case 'handlers-wheel':
+        import('../pages/handlers/wheel/sample');
+        break;
+
     case 'components-page':
         import('../pages/components/page/sample');
         break;
