@@ -16,6 +16,8 @@ import { Plugin, NPlugin } from './base/Plugin';
 
 import { Page, NPage } from './components/page/Page';
 
+import { WheelHandler, NWheelHandler } from './handlers/wheel/WheelHandler';
+
 import { AnimationFrame, NAnimationFrame } from './components/animation-frame/AnimationFrame';
 
 import { StaticTimeline, NStaticTimeline } from './components/timeline/StaticTimeline';
@@ -65,6 +67,8 @@ export {
     Plugin, NPlugin,
 
     Page, NPage,
+
+    WheelHandler, NWheelHandler,
 
     AnimationFrame, NAnimationFrame,
 
