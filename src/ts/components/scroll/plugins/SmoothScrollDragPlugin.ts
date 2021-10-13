@@ -40,12 +40,24 @@ export namespace NSmoothScrollDragPlugin {
          * @default false
          */
         reverseDir?: boolean;
+        /**
+         * If need to reverse dragger direction
+         * @default false
+         */
+        stopPropagation?: false | {
+            threshold: number;
+            dir: 'x' | 'y';
+        };
     }
 
     /**
      * Available callbacks
      */
-    export interface CallbacksTypes extends NPlugin.CallbacksTypes {}
+    export interface CallbacksTypes extends NPlugin.CallbacksTypes {
+        start: false;
+        move: false;
+        end: false;
+    }
 
 }
 
@@ -76,6 +88,7 @@ export class SmoothScrollDragPlugin<
             speed: 1,
             lerp: false,
             reverseDir: false,
+            stopPropagation: false,
         };
     }
 
@@ -150,7 +163,9 @@ export class SmoothScrollDragPlugin<
             container: component.outer,
         });
         this._dragger.addCallback('start', this._handleDragStart.bind(this));
-        this._dragger.addCallback('move', this._handleDragMove.bind(this));
+        this._dragger.addCallback('move', (data) => {
+            this._handleDragMove(data);
+        });
         this._dragger.addCallback('end', this._handleDragEnd.bind(this));
 
         this._componentEvents.push(
@@ -201,6 +216,8 @@ export class SmoothScrollDragPlugin<
                 },
             });
         }
+        // launch events
+        this._callbacks.tbt('start', false);
     }
 
     /**
@@ -217,6 +234,27 @@ export class SmoothScrollDragPlugin<
         if (component.maxScrollableWidth <= 0 && component.maxScrollableHeight <= 0) {
             return;
         }
+        const { evt } = data;
+
+        // get difference between coordinates and decide
+        // if we need to stop propagation
+        const { stopPropagation } = this.prop;
+        if (stopPropagation) {
+            if (!evt.cancelable) {
+                return;
+            }
+            const diffX = Math.abs(data.coords.x - data.start.x);
+            const diffY = Math.abs(data.coords.y - data.start.y);
+            if (
+                ((diffX > stopPropagation.threshold) && stopPropagation.dir === 'x')
+                || ((diffY > stopPropagation.threshold) && stopPropagation.dir === 'y')
+            ) {
+                if (evt.cancelable) {
+                    evt.preventDefault();
+                    evt.stopPropagation();
+                }
+            }
+        }
 
         const { speed, reverseDir } = this.prop;
         // get coordinates
@@ -228,6 +266,9 @@ export class SmoothScrollDragPlugin<
         // set classes
         component.outer.classList.add(draggingClassName);
         component.container.classList.add(draggingClassName);
+
+        // launch events
+        this._callbacks.tbt('move', false);
     }
 
     /**
@@ -247,6 +288,8 @@ export class SmoothScrollDragPlugin<
             });
             this._currentLerp = false;
         }
+        // launch events
+        this._callbacks.tbt('end', false);
     }
 
 
