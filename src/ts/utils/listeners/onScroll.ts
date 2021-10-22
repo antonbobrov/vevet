@@ -15,7 +15,7 @@ export default function onScroll (
         scrollTop: number,
         scrollLeft: number
     }) => void,
-    props: Props,
+    props?: Props,
 ): IRemovable {
     const listeners: IAddEventListener[] = [];
 
@@ -47,9 +47,9 @@ export default function onScroll (
                         scrollLeft,
                     });
                 },
-                {
+                props ? {
                     passive: props.passive,
-                },
+                } : undefined,
             ));
         }
     }
