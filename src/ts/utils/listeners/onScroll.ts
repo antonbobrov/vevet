@@ -2,6 +2,10 @@ import { addEventListener, IAddEventListener, selectOne } from 'vevet-dom';
 import { SmoothScroll } from '../../components/scroll/smooth-scroll/SmoothScroll';
 import { IRemovable } from '../types/general';
 
+interface Props {
+    passive?: boolean;
+}
+
 /**
  * Add OnScroll event
  */
@@ -11,6 +15,7 @@ export default function onScroll (
         scrollTop: number,
         scrollLeft: number
     }) => void,
+    props: Props,
 ): IRemovable {
     const listeners: IAddEventListener[] = [];
 
@@ -41,6 +46,9 @@ export default function onScroll (
                         scrollTop,
                         scrollLeft,
                     });
+                },
+                {
+                    passive: props.passive,
                 },
             ));
         }
