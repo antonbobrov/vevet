@@ -68,6 +68,10 @@ export class Ctx2DPrerender <
     }
 
     protected _prerender () {
+        // check if can render
+        if (this.width === 0 || this.height === 0) {
+            return;
+        }
         // check if media exists
         const { media } = this.prop;
         if (!media) {
