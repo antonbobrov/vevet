@@ -1,6 +1,6 @@
 {
   "name": "vevet",
-  "version": "2.0.1-dev.9",
+  "version": "2.0.1-dev.10",
   "description": "VEVET - A JavaScript library",
   "browserslist": [
     "since 2015"
