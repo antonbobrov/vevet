@@ -52,6 +52,11 @@ export class Page <
     ChangeableProp,
     CallbacksTypes
 > {
+    protected _blocked: boolean;
+    protected get blocked () {
+        return this._blocked;
+    }
+
     /**
      * If the page is created
      */
@@ -95,6 +100,7 @@ export class Page <
         super(initialProp, false);
 
         // set default vars
+        this._blocked = false;
         this._created = false;
         this._shown = false;
         this._hidden = false;
@@ -129,11 +135,12 @@ export class Page <
             resolve, reject,
         ) => {
             this.canCreate().then(() => {
-                if (this.created) {
+                if (this.created || this.blocked) {
+                    reject();
                     return;
                 }
                 // update vars
-                this._created = true;
+                this._blocked = true;
                 this._shown = false;
                 this._hidden = false;
                 this._destroyed = false;
@@ -147,7 +154,11 @@ export class Page <
                 // actions
                 this._create().then(() => {
                     this.callbacks.tbt('create', false);
+                    this._blocked = false;
+                    this._created = true;
                     resolve();
+                }).catch(() => {
+                    reject();
                 });
             }).catch(() => {
                 reject();
@@ -191,19 +202,24 @@ export class Page <
             resolve, reject,
         ) => {
             this.canShow().then(() => {
-                if (this.shown) {
+                if (this.shown || this.blocked) {
+                    reject();
                     return;
                 }
                 // update vars
+                this._blocked = true;
                 this._created = true;
-                this._shown = true;
                 this._hidden = false;
                 this._destroyed = false;
 
                 // actions
                 this._show().then(() => {
                     this.callbacks.tbt('show', false);
+                    this._blocked = false;
+                    this._shown = true;
                     resolve();
+                }).catch(() => {
+                    reject();
                 });
                 // launch events
             }).catch(() => {
@@ -249,19 +265,24 @@ export class Page <
             reject: (...arg: any) => void,
         ) => {
             this.canHide().then(() => {
-                if (this.hidden) {
+                if (this.hidden || this.blocked) {
+                    reject();
                     return;
                 }
                 // update vars
+                this._blocked = true;
                 this._created = true;
                 this._shown = false;
-                this._hidden = true;
                 this._destroyed = false;
 
                 // actions
                 this._hide().then(() => {
                     this.callbacks.tbt('hide', false);
+                    this._blocked = false;
+                    this._hidden = true;
                     resolve();
+                }).catch(() => {
+                    reject();
                 });
             }).catch(() => {
                 reject();
@@ -306,14 +327,15 @@ export class Page <
             reject: (...arg: any) => void,
         ) => {
             this.canDestroy().then(() => {
-                if (this.destroyed) {
+                if (this.destroyed || this.blocked) {
+                    reject();
                     return;
                 }
                 // change vars
+                this._blocked = true;
                 this._created = false;
                 this._shown = false;
                 this._hidden = true;
-                this._destroyed = true;
 
                 // update page
                 this._app.page = false;
@@ -322,7 +344,11 @@ export class Page <
 
                 // actions
                 this._destroy().then(() => {
+                    this._blocked = false;
+                    this._destroyed = true;
                     resolve();
+                }).catch(() => {
+                    reject();
                 });
             }).catch(() => {
                 reject();
