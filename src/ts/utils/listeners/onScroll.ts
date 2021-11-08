@@ -1,4 +1,5 @@
 import { addEventListener, IAddEventListener, selectOne } from 'vevet-dom';
+import { NCallbacks } from '../..';
 import { SmoothScroll } from '../../components/scroll/smooth-scroll/SmoothScroll';
 import { IRemovable } from '../types/general';
 
@@ -18,9 +19,10 @@ export default function onScroll (
     props?: Props,
 ): IRemovable {
     const listeners: IAddEventListener[] = [];
+    let smoothScrollEvent: NCallbacks.AddedCallback | undefined;
 
     if (selector instanceof SmoothScroll) {
-        selector.addCallback('scroll', () => {
+        smoothScrollEvent = selector.addCallback('scroll', () => {
             callback({
                 scrollTop: selector.scrollTop,
                 scrollLeft: selector.scrollLeft,
@@ -59,6 +61,7 @@ export default function onScroll (
             listeners.forEach((listener) => {
                 listener.remove();
             });
+            smoothScrollEvent?.remove();
         },
     };
 }
