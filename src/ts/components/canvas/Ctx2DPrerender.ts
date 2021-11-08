@@ -13,7 +13,7 @@ export namespace NCtx2DPrerender {
         /**
          * Media element
          */
-        media: BaseProp['source'] | false;
+        media: BaseProp['source'] | Ctx2DPrerender | false;
     }
 
     /**
@@ -78,9 +78,23 @@ export class Ctx2DPrerender <
             return;
         }
 
+        // get source info
+        let source: BaseProp['source'];
+        let sourceWidth: number | undefined;
+        let sourceHeight: number | undefined;
+        if (media instanceof Ctx2D) {
+            source = media.canvas;
+            sourceWidth = media.width;
+            sourceHeight = media.height;
+        } else {
+            source = media;
+        }
+
         // get media sizes
         const size = getPos({
-            source: media,
+            source,
+            sourceWidth,
+            sourceHeight,
             rule: this.prop.posRule,
             scale: 1,
             width: this.width,
@@ -89,7 +103,7 @@ export class Ctx2DPrerender <
         this._ctx.clearRect(0, 0, this.width, this.height);
         // render the media
         this._ctx.drawImage(
-            media,
+            source,
             0, 0,
             size.sourceWidth, size.sourceHeight,
             size.x, size.y, size.width, size.height,
