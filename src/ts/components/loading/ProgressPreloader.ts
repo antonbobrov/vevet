@@ -40,6 +40,13 @@ export namespace NProgressPreloader {
              * @default '.js-preload'
              */
             custom?: string | false;
+            /**
+             * If you enable images, video, or custom loaders,
+             * all these resources will be preloaded. In cases when you may want not
+             * to preload a certain resource, you can add to it the class name specified here.
+             * @default 'js-preload-ignore'
+             */
+            ignoreClassName?: string;
         };
         /**
          * Smooth calculation settings
@@ -107,6 +114,7 @@ export class ProgressPreloader <
                 img: true,
                 video: true,
                 custom: '.js-preload',
+                ignoreClassName: 'js-preload-ignore',
             },
             calc: {
                 lerp: 0.1,
@@ -275,6 +283,9 @@ export class ProgressPreloader <
         if (loaders.img) {
             const imgs = selectAll('img');
             imgs.forEach((img) => {
+                if (img.classList.contains(loaders.ignoreClassName)) {
+                    return;
+                }
                 this._imgs.push(img);
                 this._resourcesTotal += 1;
             });
@@ -284,6 +295,9 @@ export class ProgressPreloader <
         if (loaders.video) {
             const videos = selectAll('video');
             videos.forEach((video) => {
+                if (video.classList.contains(loaders.ignoreClassName)) {
+                    return;
+                }
                 this._videos.push(video);
                 this._resourcesTotal += 1;
             });
@@ -291,7 +305,12 @@ export class ProgressPreloader <
 
         // get custom resources
         if (loaders.custom) {
-            this._customResources = Array.from(selectAll(loaders.custom));
+            this._customResources = Array.from(selectAll(loaders.custom)).filter((el) => {
+                if (el.classList.contains(loaders.ignoreClassName)) {
+                    return false;
+                }
+                return true;
+            });
             this._resourcesTotal += this._customResources.length;
         }
     }
@@ -318,7 +337,7 @@ export class ProgressPreloader <
                 img.addEventListener('error', () => {
                     this._handleLoadedResource();
                 });
-                image.src = img.src;
+                image.src = img.currentSrc || img.src;
             }
         });
 
