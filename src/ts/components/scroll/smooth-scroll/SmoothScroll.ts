@@ -401,9 +401,11 @@ export class SmoothScroll <
         }
         this._elementsLength = this._elements.length;
         // add will-change
-        this._elements.forEach((el) => {
-            el.style.willChange = 'transform';
-        });
+        if (this.prop.useWillChange) {
+            this._elements.forEach((el) => {
+                el.style.willChange = 'transform';
+            });
+        }
 
         // initialize the class
         if (init) {
