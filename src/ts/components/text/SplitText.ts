@@ -1,4 +1,5 @@
 import { createElement, selectOne } from 'vevet-dom';
+import { NViewport } from '../../app/events/Viewport';
 import { Component, NComponent } from '../../base/Component';
 import { RequiredModuleProp } from '../../utils/types/utility';
 
@@ -25,6 +26,11 @@ export namespace NSplitText {
          * @default false
          */
         appendLines?: boolean;
+        /**
+         * Viewport resize event target
+         * @default ''
+         */
+        viewportTarget?: keyof NViewport.CallbacksTypes;
     }
 
     /**
@@ -84,6 +90,7 @@ export class SplitText <
             container: `#${this.prefix}`,
             appendLetters: true,
             appendLines: false,
+            viewportTarget: '',
         };
     }
 
@@ -174,7 +181,7 @@ export class SplitText <
         // split the text
         this.splitText();
         if (this.prop.appendLines) {
-            this.addViewportCallback('', () => {
+            this.addViewportCallback(this.prop.viewportTarget, () => {
                 this.splitText();
             });
         }
