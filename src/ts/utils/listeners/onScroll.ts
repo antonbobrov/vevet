@@ -29,21 +29,20 @@ export default function onScroll (
             });
         });
     } else {
-        let outer: Element | Window;
+        let outer: any;
         if (typeof selector === 'string') {
             outer = selectOne(selector) as Element;
         } else {
             outer = selector;
         }
         if (outer) {
+            const isWindow = outer instanceof Window;
             listeners.push(addEventListener(
                 outer,
                 'scroll',
                 () => {
-                    const scrollTop = outer instanceof Window
-                        ? outer.pageYOffset : outer.scrollTop;
-                    const scrollLeft = outer instanceof Window
-                        ? outer.pageXOffset : outer.scrollLeft;
+                    const scrollTop = isWindow ? outer.pageYOffset : outer.scrollTop;
+                    const scrollLeft = isWindow ? outer.pageXOffset : outer.scrollLeft;
                     callback({
                         scrollTop,
                         scrollLeft,
