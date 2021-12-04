@@ -1,66 +1,127 @@
-import { addEventListener, IAddEventListener, selectOne } from 'vevet-dom';
-import { NCallbacks } from '../..';
-import { SmoothScroll } from '../../components/scroll/smooth-scroll/SmoothScroll';
+import { addEventListener, selectOne } from 'vevet-dom';
 import { IRemovable } from '../types/general';
+import { SmoothScroll } from '../../components/scroll/smooth-scroll/SmoothScroll';
+import { randID } from '../common';
+
+type Container = string | Element | SmoothScroll | Window;
+
+interface ArgData {
+    scrollTop: number;
+    scrollLeft: number;
+}
+
+interface Instance {
+    id: string;
+    container: Container;
+    callbacks: {
+        id: string;
+        callback: (
+            data: ArgData,
+        ) => void;
+    }[];
+    isPassive: boolean;
+    listeners: IRemovable[];
+}
 
 interface Props {
-    passive?: boolean;
+    container: Container;
+    callback: (data: ArgData) => void;
+    isPassive?: boolean;
 }
+
+let instances: Instance[] = [];
 
 /**
  * Add OnScroll event
  */
-export default function onScroll (
-    selector: string | Element | SmoothScroll | Window,
-    callback: (arg: {
-        scrollTop: number,
-        scrollLeft: number
-    }) => void,
-    props?: Props,
-): IRemovable {
-    const listeners: IAddEventListener[] = [];
-    let smoothScrollEvent: NCallbacks.AddedCallback | undefined;
+export default function onScroll ({
+    container,
+    callback,
+    isPassive = false,
+}: Props): IRemovable {
+    // check if listeners for this element already exist
+    let instance = instances.find((data) => (
+        data.container === container && data.isPassive === isPassive
+    ))!;
+    const callbackId = randID('scroll-event');
 
-    if (selector instanceof SmoothScroll) {
-        smoothScrollEvent = selector.addCallback('scroll', () => {
-            callback({
-                scrollTop: selector.scrollTop,
-                scrollLeft: selector.scrollLeft,
-            });
+    // if a listener exists, we just add a new callback to its stack
+    if (instance) {
+        instance.callbacks.push({
+            id: callbackId,
+            callback,
         });
     } else {
-        let outer: any;
-        if (typeof selector === 'string') {
-            outer = selectOne(selector) as Element;
+        // otherwise we create a new instance
+        instance = {
+            id: randID('scroll-event-instance'),
+            container,
+            callbacks: [{
+                id: callbackId,
+                callback,
+            }],
+            isPassive,
+            listeners: [],
+        };
+        instances.push(instance);
+
+        // vars
+        const { listeners } = instance;
+
+        // smooth scroll events
+        if (container instanceof SmoothScroll) {
+            listeners.push(
+                container.addCallback('scroll', () => {
+                    const { scrollTop, scrollLeft } = container;
+                    for (let index = 0; index < instance.callbacks.length; index += 1) {
+                        instance.callbacks[index].callback({
+                            scrollTop,
+                            scrollLeft,
+                        });
+                    }
+                }),
+            );
         } else {
-            outer = selector;
-        }
-        if (outer) {
-            const isWindow = outer instanceof Window;
+            // dom scroll events
+            const isWindow = container instanceof Window;
+            const domContainer = selectOne(container) as any;
             listeners.push(addEventListener(
-                outer,
+                domContainer,
                 'scroll',
                 () => {
-                    const scrollTop = isWindow ? outer.pageYOffset : outer.scrollTop;
-                    const scrollLeft = isWindow ? outer.pageXOffset : outer.scrollLeft;
-                    callback({
-                        scrollTop,
-                        scrollLeft,
-                    });
+                    const scrollTop = isWindow
+                        ? domContainer.pageYOffset : domContainer.scrollTop;
+                    const scrollLeft = isWindow
+                        ? domContainer.pageXOffset : domContainer.scrollLeft;
+                    for (let index = 0; index < instance.callbacks.length; index += 1) {
+                        instance.callbacks[index].callback({
+                            scrollTop,
+                            scrollLeft,
+                        });
+                    }
                 },
-                props ? {
-                    passive: props.passive,
-                } : undefined,
+                {
+                    passive: isPassive,
+                },
             ));
         }
     }
 
     return {
         remove: () => {
-            listeners.forEach((listener) => {
-                listener.remove();
+            const newCallbacks = instance.callbacks.filter((item) => {
+                if (item.id !== callbackId) {
+                    return true;
+                }
+                return false;
             });
-            smoothScrollEvent?.remove();
+            instance.callbacks = newCallbacks;
+            if (newCallbacks.length === 0) {
+                instance.listeners.forEach((listener) => {
+                    listener.remove();
+                });
+                instances = instances.filter((item) => item.id !== instance.id);
+            }
         },
     };
 }

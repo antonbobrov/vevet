@@ -201,7 +201,10 @@ export class ScrollView <
             }
         } else {
             // set scroll bounding events
-            this._scrollEvent = onScroll(this.prop.container, this._handleScroll.bind(this));
+            this._scrollEvent = onScroll({
+                container: this.prop.container,
+                callback: this._handleScroll.bind(this),
+            });
         }
     }
 

@@ -163,8 +163,11 @@ export default class Bar {
         this._listeners.push(addEventListener(this.outer, 'mouseleave', this._handleHover.bind(this, false)));
 
         // set scroll events
-        this._scrollEvent = onScroll(this.prop.container, (data) => {
-            this._handleScroll(data);
+        this._scrollEvent = onScroll({
+            container: this.prop.container,
+            callback: (data) => {
+                this._handleScroll(data);
+            },
         });
 
         // set dragger
