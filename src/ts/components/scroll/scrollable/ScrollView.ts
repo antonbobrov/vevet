@@ -1,4 +1,3 @@
-import { selectAll, SelectorAll } from 'vevet-dom';
 import { ScrollEventsBase, NScrollEventsBase } from './ScrollEventsBase';
 import { IRemovable } from '../../../utils/types/general';
 import { RequiredModuleProp } from '../../../utils/types/utility';
@@ -16,10 +15,17 @@ export namespace NScrollView {
      */
     export interface StaticProp extends NScrollEventsBase.StaticProp {
         /**
-         * Elements to seek
-         * @default '.v-scroll-view__el'
+         * If enabled, scrolling events will be created.
+         * You can use "false" to create just an instance of the ScrollView
+         * and later enable animations.
+         * @default true
          */
-        elements?: SelectorAll;
+        enabled?: boolean;
+        /**
+         * View elements.
+         * @default []
+         */
+        elements?: Element[];
         /**
          * The moment at which the element is considered to be in the viewport.
          * The value is calculated from top to bottom or from left to right.
@@ -96,8 +102,9 @@ export class ScrollView <
     > (): T {
         return {
             ...super._getDefaultProp(),
+            enabled: true,
             container: window,
-            elements: `.${this.prefix}__el`,
+            elements: [],
             threshold: 0.9,
             states: 'in',
             classToToggle: 'viewed',
@@ -122,6 +129,14 @@ export class ScrollView <
      */
     protected _firstStart: boolean;
 
+    protected _elements: NScrollView.El[];
+    /**
+     * Elements to seek
+     */
+    get elements () {
+        return this._elements;
+    }
+
 
 
     constructor (
@@ -133,9 +148,7 @@ export class ScrollView <
         this._scrollEvent = undefined;
         this._intersectionObserver = undefined;
         this._firstStart = true;
-
-        // get view elements
-        this.updateElements();
+        this._elements = [...this.prop.elements];
 
         // initialize the class
         if (init) {
@@ -145,7 +158,6 @@ export class ScrollView <
 
     public init () {
         super.init();
-        this.seekBounding();
     }
 
     // Set Module Events
@@ -159,9 +171,7 @@ export class ScrollView <
 
     protected _onPropMutate () {
         super._onPropMutate();
-        this._removeViewEvents();
-        this.updateElements();
-        this._setViewEvents();
+        this.resize();
     }
 
     /**
@@ -169,7 +179,10 @@ export class ScrollView <
      */
     public resize () {
         this._removeViewEvents();
-        this._setViewEvents();
+        if (this.prop.enabled) {
+            this._setViewEvents();
+            this.seekBounding();
+        }
     }
 
     /**
@@ -194,11 +207,9 @@ export class ScrollView <
                 },
             );
             // add elements
-            if (this.elements) {
-                this.elements.forEach((el) => {
-                    this._intersectionObserver?.observe(el);
-                });
-            }
+            this.elements.forEach((el) => {
+                this._intersectionObserver?.observe(el);
+            });
         } else {
             // set scroll bounding events
             this._scrollEvent = onScroll({
@@ -223,46 +234,6 @@ export class ScrollView <
             this._intersectionObserver = undefined;
         }
     }
-
-
-
-    protected _elements!: NScrollView.El[];
-    /**
-     * Element to seek
-     */
-    get elements () {
-        return this._elements;
-    }
-
-    /**
-     * Update elements
-     */
-    public updateElements () {
-        // check if elements exist
-        if (typeof this.elements === 'undefined') {
-            this._elements = [];
-        }
-        // unobserve old elements
-        this.elements.forEach((el) => {
-            if (this._intersectionObserver) {
-                this._intersectionObserver.unobserve(el);
-            }
-        });
-        // update elements
-        this._elements = Array.from(
-            selectAll(this.prop.elements as any, this.domParent || undefined),
-        ).filter(
-            (el) => !el.classList.contains(this.prop.classToToggle),
-        );
-        // add them to the observer
-        this._elements.forEach((el) => {
-            if (this._intersectionObserver) {
-                this._intersectionObserver.observe(el);
-            }
-        });
-    }
-
-
 
     /**
      * Event on IntersectionObserver
@@ -374,8 +345,6 @@ export class ScrollView <
         };
     }
 
-
-
     /**
      * Event that is triggered when an element appears or disappears
      */
@@ -396,9 +365,11 @@ export class ScrollView <
         el.scrollViewIn = inViewport;
 
         // toggle classes
-        timeoutCallback(() => {
-            el.classList.toggle(this.prop.classToToggle, inViewport);
-        }, delay);
+        if (this.prop.classToToggle) {
+            timeoutCallback(() => {
+                el.classList.toggle(this.prop.classToToggle, inViewport);
+            }, delay);
+        }
 
         // process callbacks
         if (inViewport && (states === 'in' || states === 'inout')) {
@@ -427,6 +398,43 @@ export class ScrollView <
             }
         });
         this._elements = this._elements.filter((el) => !el.scrollViewIn);
+    }
+
+
+    /**
+     * Add a view element
+     */
+    public addElement (
+        element: Element,
+    ) {
+        this._elements.push(element);
+        if (this._intersectionObserver) {
+            this._intersectionObserver.observe(element);
+        }
+    }
+
+    /**
+     * Remove a view element
+     */
+    public removeElement (
+        element: Element,
+    ) {
+        this._elements = this._elements.filter((el) => el !== element);
+        if (this._intersectionObserver) {
+            this._intersectionObserver.unobserve(element);
+        }
+    }
+
+    /**
+     * Remove all view elements
+     */
+    public removeElements () {
+        this._elements.forEach((el) => {
+            if (this._intersectionObserver) {
+                this._intersectionObserver.unobserve(el);
+            }
+        });
+        this._elements = [];
     }
 
 
