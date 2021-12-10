@@ -104,9 +104,8 @@ export class Ctx2DPrerender <
         // render the media
         this._ctx.drawImage(
             source,
-            0, 0,
-            size.sourceWidth, size.sourceHeight,
-            size.x, size.y, size.width, size.height,
+            size.x, size.y,
+            size.width, size.height,
         );
         // launch callbacks on prerender
         this.callbacks.tbt('prerender', false);
