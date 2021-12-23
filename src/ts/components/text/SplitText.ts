@@ -235,6 +235,7 @@ export class SplitText <
             // get type of the char
             const charCode = char.charCodeAt(0);
             const isWhitespace = charCode === 32 || charCode === 160;
+            const isSeparator = [45, 8208, 8211, 8212, 8722].includes(charCode);
             const isNewLine = charCode === 10;
 
             // add elements
@@ -258,6 +259,23 @@ export class SplitText <
             if (!this.prop.appendLetters) {
                 currentWord.el.innerHTML = currentWord.content;
             }
+
+            // go to next word if needed
+            if (isSeparator) {
+                wordIndex += 1;
+            }
+        });
+
+        // only filled words
+        this._words = this._words.filter((word, index) => {
+            if (word.content.length === 0) {
+                if (index > 0) {
+                    this._words[index - 1].whitespace = word.whitespace;
+                    this._words[index - 1].br = word.br;
+                }
+                return false;
+            }
+            return true;
         });
     }
 
