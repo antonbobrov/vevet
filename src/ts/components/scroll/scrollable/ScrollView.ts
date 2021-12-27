@@ -407,10 +407,20 @@ export class ScrollView <
     public addElement (
         element: Element,
     ) {
+        const viewEl = element as NScrollView.El;
+        viewEl.scrollViewIn = undefined;
         this._elements.push(element);
         if (this._intersectionObserver) {
             this._intersectionObserver.observe(element);
         }
+        if (this.prop.enabled) {
+            this.seekBounding();
+        }
+        return {
+            remove: () => {
+                this.removeElement(element);
+            },
+        };
     }
 
     /**
@@ -419,6 +429,8 @@ export class ScrollView <
     public removeElement (
         element: Element,
     ) {
+        const viewEl = element as NScrollView.El;
+        viewEl.scrollViewIn = undefined;
         this._elements = this._elements.filter((el) => el !== element);
         if (this._intersectionObserver) {
             this._intersectionObserver.unobserve(element);
