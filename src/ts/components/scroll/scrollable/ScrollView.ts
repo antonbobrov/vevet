@@ -406,7 +406,7 @@ export class ScrollView <
      */
     public addElement (
         element: Element,
-    ) {
+    ): IRemovable {
         const viewEl = element as NScrollView.El;
         viewEl.scrollViewIn = undefined;
         this._elements.push(element);
