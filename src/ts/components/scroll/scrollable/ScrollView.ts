@@ -120,9 +120,13 @@ export class ScrollView <
      */
     protected _scrollEvent?: IRemovable;
     /**
-     * Intersection observer
+     * Intersection observer - type IN
      */
-    protected _intersectionObserver?: IntersectionObserver;
+    protected _intersectionObserverIn?: IntersectionObserver;
+    /**
+     * Intersection observer - type OUT
+     */
+    protected _intersectionObserverOut?: IntersectionObserver;
 
     /**
      * If first start
@@ -146,7 +150,8 @@ export class ScrollView <
         super(initialProp, false);
 
         this._scrollEvent = undefined;
-        this._intersectionObserver = undefined;
+        this._intersectionObserverIn = undefined;
+        this._intersectionObserverOut = undefined;
         this._firstStart = true;
         this._elements = [...this.prop.elements];
 
@@ -197,19 +202,31 @@ export class ScrollView <
                 ? 0 : scrollContainerBounding.width * (1 - this.prop.threshold) * -1;
             const yMargin = this._firstStart
                 ? 0 : scrollContainerBounding.height * (1 - this.prop.threshold) * -1;
-            // create intersection observer
-            this._intersectionObserver = new IntersectionObserver(
-                this._handleIntersectionObserver.bind(this),
+            // create intersection observers
+            this._intersectionObserverIn = new IntersectionObserver(
+                this._handleIntersectionObserverIn.bind(this),
                 {
                     root: this.intersectionRoot,
                     threshold: 0,
                     rootMargin: `0px ${xMargin}px ${yMargin}px 0px`,
                 },
             );
-            // add elements
             this.elements.forEach((el) => {
-                this._intersectionObserver?.observe(el);
+                this._intersectionObserverIn?.observe(el);
             });
+            if (this.prop.states === 'inout') {
+                this._intersectionObserverOut = new IntersectionObserver(
+                    this._handleIntersectionObserverOut.bind(this),
+                    {
+                        root: this.intersectionRoot,
+                        threshold: 0,
+                        rootMargin: '0px 0px 0px 0px',
+                    },
+                );
+                this.elements.forEach((el) => {
+                    this._intersectionObserverOut?.observe(el);
+                });
+            }
         } else {
             // set scroll bounding events
             this._scrollEvent = onScroll({
@@ -228,17 +245,17 @@ export class ScrollView <
             this._scrollEvent.remove();
             this._scrollEvent = undefined;
         }
-        // destroy intersection observer
-        if (this._intersectionObserver) {
-            this._intersectionObserver.disconnect();
-            this._intersectionObserver = undefined;
-        }
+        // destroy intersection observers
+        this._intersectionObserverIn?.disconnect();
+        this._intersectionObserverIn = undefined;
+        this._intersectionObserverOut?.disconnect();
+        this._intersectionObserverOut = undefined;
     }
 
     /**
      * Event on IntersectionObserver
      */
-    protected _handleIntersectionObserver (
+    protected _handleIntersectionObserverIn (
         data: IntersectionObserverEntry[],
     ) {
         const parentBounding = this._firstStart ? this.scrollContainerBounding : false;
@@ -248,17 +265,37 @@ export class ScrollView <
             if (this._firstStart && !!parentBounding && entry.isIntersecting) {
                 delay = this._elementInViewportData(entry.target, parentBounding).delay;
             }
-            this._handleInOut(
-                entry.target,
-                entry.isIntersecting,
-                delay,
-            );
+            if (entry.isIntersecting) {
+                this._handleInOut(
+                    entry.target,
+                    entry.isIntersecting,
+                    delay,
+                );
+            }
         }
         this._processUnusedElements();
         // change states
         if (this._firstStart) {
             this._firstStart = false;
             this.resize();
+        }
+    }
+
+    /**
+     * Event on IntersectionObserver
+     */
+    protected _handleIntersectionObserverOut (
+        data: IntersectionObserverEntry[],
+    ) {
+        for (let index = 0; index < data.length; index += 1) {
+            const entry = data[index];
+            if (!entry.isIntersecting) {
+                this._handleInOut(
+                    entry.target,
+                    entry.isIntersecting,
+                    0,
+                );
+            }
         }
     }
 
@@ -287,7 +324,9 @@ export class ScrollView <
             const el = this.elements[index];
             const elData = this._elementInViewportData(el, scrollContainerBounding);
             const delay = elData.isIntersecting ? elData.delay : 0;
-            this._handleInOut(el, elData.isIntersecting, delay);
+            if (typeof elData.isIntersecting === 'boolean') {
+                this._handleInOut(el, elData.isIntersecting, delay);
+            }
         }
         this._processUnusedElements();
 
@@ -309,7 +348,7 @@ export class ScrollView <
         const bounding = el.getBoundingClientRect();
 
         // check if the element is intersecting
-        let isIntersecting = false;
+        let isIntersecting: undefined | boolean;
         if (
             bounding.top < parentBounding.top + parentBounding.height * threshold
             && bounding.left < parentBounding.left + parentBounding.width * threshold
@@ -324,6 +363,11 @@ export class ScrollView <
             } else {
                 isIntersecting = true;
             }
+        } else if (
+            bounding.top > parentBounding.top + parentBounding.height
+            || bounding.left > parentBounding.left + parentBounding.width
+        ) {
+            isIntersecting = false;
         }
 
         // calculate delay only if it is enabled & calculations
@@ -393,9 +437,8 @@ export class ScrollView <
         // remove unused elements
         const elementsToRemove = this._elements.filter((el) => el.scrollViewIn);
         elementsToRemove.forEach((el) => {
-            if (this._intersectionObserver) {
-                this._intersectionObserver.unobserve(el);
-            }
+            this._intersectionObserverIn?.unobserve(el);
+            this._intersectionObserverOut?.unobserve(el);
         });
         this._elements = this._elements.filter((el) => !el.scrollViewIn);
     }
@@ -410,9 +453,8 @@ export class ScrollView <
         const viewEl = element as NScrollView.El;
         viewEl.scrollViewIn = undefined;
         this._elements.push(element);
-        if (this._intersectionObserver) {
-            this._intersectionObserver.observe(element);
-        }
+        this._intersectionObserverIn?.observe(element);
+        this._intersectionObserverOut?.observe(element);
         if (this.prop.enabled) {
             this.seekBounding();
         }
@@ -432,9 +474,8 @@ export class ScrollView <
         const viewEl = element as NScrollView.El;
         viewEl.scrollViewIn = undefined;
         this._elements = this._elements.filter((el) => el !== element);
-        if (this._intersectionObserver) {
-            this._intersectionObserver.unobserve(element);
-        }
+        this._intersectionObserverIn?.unobserve(element);
+        this._intersectionObserverOut?.unobserve(element);
     }
 
     /**
@@ -442,9 +483,7 @@ export class ScrollView <
      */
     public removeElements () {
         this._elements.forEach((el) => {
-            if (this._intersectionObserver) {
-                this._intersectionObserver.unobserve(el);
-            }
+            this.removeElement(el);
         });
         this._elements = [];
     }
