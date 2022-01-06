@@ -162,6 +162,9 @@ export class SplitText <
         this._initHTML = this._container.innerHTML;
         this._initText = (this._container.innerText || this._container.innerHTML || 'no rendered text').trim();
         this._initText = this._initText.replace(/\s+\n/gm, '\n');
+        this._initText = this._initText.replace(/<br>/gm, String.fromCharCode(10));
+        this._initText = this._initText.replace(/<br\/>/gm, String.fromCharCode(10));
+        this._initText = this._initText.replace(/<br \/>/gm, String.fromCharCode(10));
 
         // set default vars
         this._isPrimarySplit = false;
