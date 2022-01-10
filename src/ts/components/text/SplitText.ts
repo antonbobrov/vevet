@@ -160,7 +160,8 @@ export class SplitText <
 
         // get initial text
         this._initHTML = this._container.innerHTML;
-        this._initText = (this._container.innerText || this._container.innerHTML || 'no rendered text').trim();
+        const innerText = this._container.innerText.trim() || this._container.innerHTML.trim();
+        this._initText = innerText || 'no rendered text';
         this._initText = this._initText.replace(/\s+\n/gm, '\n');
         this._initText = this._initText.replace(/<br>/gm, String.fromCharCode(10));
         this._initText = this._initText.replace(/<br\/>/gm, String.fromCharCode(10));
