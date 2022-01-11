@@ -1,5 +1,5 @@
 import { Component, NComponent } from '../../base/Component';
-import { boundVal } from '../../utils/math';
+import { clamp } from '../../utils/math';
 import { RequiredModuleProp } from '../../utils/types/utility';
 
 
@@ -237,7 +237,7 @@ export class AnimationFrame <
 
         // calculate real fps
         const timeDiff = currentTime - this._prevFrameTime;
-        const realFPS = boundVal(
+        const realFPS = clamp(
             timeDiff === 0 ? 1000 / 60 : Math.floor(1000 / timeDiff),
             [1, Infinity],
         );
