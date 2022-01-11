@@ -1,6 +1,6 @@
 import { StaticTimeline, NStaticTimeline } from './StaticTimeline';
 import { RequiredModuleProp } from '../../utils/types/utility';
-import boundVal from '../../utils/math/boundVal';
+import clamp from '../../utils/math/clamp';
 
 
 
@@ -205,7 +205,7 @@ export class Timeline <
 
         // calculate current progress
         const progressIterator = frameDiff / this.prop.duration / (isReversed ? -1 : 1);
-        const progressTarget = boundVal(
+        const progressTarget = clamp(
             this.progress + progressIterator,
             [0, 1],
         );

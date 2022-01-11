@@ -3,7 +3,7 @@ import { IRemovable } from '../../../utils/types/general';
 import { RequiredModuleProp } from '../../../utils/types/utility';
 import onScroll from '../../../utils/listeners/onScroll';
 import { intersectionObserverSupported } from '../../../utils/listeners';
-import boundVal from '../../../utils/math/boundVal';
+import clamp from '../../../utils/math/clamp';
 import timeoutCallback from '../../../utils/common/timeoutCallback';
 
 
@@ -374,7 +374,7 @@ export class ScrollView <
         // are done for the first time
         let delay = 0;
         if (!!useDelay && this._firstStart) {
-            const progress = boundVal(
+            const progress = clamp(
                 useDelay.dir === 'x'
                     ? (bounding.left - parentBounding.left) / parentBounding.width
                     : (bounding.top - parentBounding.top) / parentBounding.height,

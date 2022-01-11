@@ -2,8 +2,8 @@ import easingProgress from 'easing-progress';
 import { NApplication } from '../../app/Application';
 import { Component, NComponent } from '../../base/Component';
 import { RequiredModuleProp } from '../../utils/types/utility';
-import scopeProgress from '../../utils/math/scopeProgress';
-import boundVal from '../../utils/math/boundVal';
+import scoped from '../../utils/math/scoped';
+import clamp from '../../utils/math/clamp';
 
 
 
@@ -174,8 +174,8 @@ export class StaticTimeline <
         for (let index = 0, l = length; index < l; index += 1) {
             const tm = this._nestedTimelines[index];
             // calculate progress of this very timeline
-            const tmProgress = boundVal(
-                scopeProgress(progressForNested, tm.prop.nestedScope),
+            const tmProgress = clamp(
+                scoped(progressForNested, tm.prop.nestedScope),
                 [0, 1],
             );
             tm.progress = tmProgress;

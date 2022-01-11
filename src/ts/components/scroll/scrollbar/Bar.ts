@@ -1,7 +1,7 @@
 import { addEventListener, createElement, IAddEventListener } from 'vevet-dom';
 import { IRemovable } from '../../../utils/types/general';
 import onScroll from '../../../utils/listeners/onScroll';
-import boundVal from '../../../utils/math/boundVal';
+import clamp from '../../../utils/math/clamp';
 import { DraggerMove, NDraggerMove } from '../../dragger/DraggerMove';
 import { SmoothScroll } from '../smooth-scroll/SmoothScroll';
 
@@ -293,7 +293,7 @@ export default class Bar {
      */
     protected _renderThumb () {
         // calculate progress
-        const progress = boundVal(
+        const progress = clamp(
             this._scrollVal / this.scrollLine,
             [0, 1],
         );
@@ -321,7 +321,7 @@ export default class Bar {
         // calculate thumb sizes
         if (this.prop.autoSize) {
             if (this.isX) {
-                const barSize = boundVal(
+                const barSize = clamp(
                     this._outerWidth / (this.scrollWidth / (
                         this.scrollWidth - scrollLine
                     )),
@@ -329,7 +329,7 @@ export default class Bar {
                 );
                 thumb.style.width = `${barSize}px`;
             } else {
-                const barSize = boundVal(
+                const barSize = clamp(
                     this._outerHeight / (this.scrollHeight / (
                         this.scrollHeight - scrollLine
                     )),

@@ -1,9 +1,9 @@
 /**
- * Bound a value between two points
+ * Clamp the value between two points
  */
-export default function boundVal (
+export default function clamp (
     val: number,
-    scope: [number, number] = [0, 1],
+    scope = [0, 1],
 ) {
     if (val < scope[0]) {
         return scope[0];

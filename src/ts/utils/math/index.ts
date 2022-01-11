@@ -1,13 +1,17 @@
-import boundVal from './boundVal';
+import clamp from './clamp';
 import lerp from './lerp';
-import scopeProgress from './scopeProgress';
-import spreadScopeProgress from './spreadScopeProgress';
+import scoped from './scoped';
+import spreadScope from './spreadScope';
+import inScope from './inScope';
+import clampScope from './clampScope';
 import wrap from './wrap';
 
 export {
-    boundVal,
+    clamp,
     lerp,
-    scopeProgress,
-    spreadScopeProgress,
+    scoped,
+    spreadScope,
+    inScope,
+    clampScope,
     wrap,
 };

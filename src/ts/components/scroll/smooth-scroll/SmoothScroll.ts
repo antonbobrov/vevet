@@ -6,7 +6,7 @@ import { Component, NComponent } from '../../../base/Component';
 import { RequiredModuleProp } from '../../../utils/types/utility';
 import { AnimationFrame } from '../../animation-frame/AnimationFrame';
 import { ScrollableElement } from '../types';
-import boundVal from '../../../utils/math/boundVal';
+import clamp from '../../../utils/math/clamp';
 import { NCallbacks } from '../../../base/Callbacks';
 import { lerp } from '../../../utils/math';
 
@@ -215,7 +215,7 @@ export class SmoothScroll <
             ? -this.prop.overscroll.max : 0;
         const max = this.maxScrollableWidth
             + (!!this.prop.overscroll && this.prop.isHorizontal ? this.prop.overscroll.max : 0);
-        this._targetLeft = boundVal(
+        this._targetLeft = clamp(
             val,
             [min, max],
         );
@@ -247,7 +247,7 @@ export class SmoothScroll <
             ? -this.prop.overscroll.max : 0;
         const max = this.maxScrollableHeight
             + (!!this.prop.overscroll && !this.prop.isHorizontal ? this.prop.overscroll.max : 0);
-        this._targetTop = boundVal(
+        this._targetTop = clamp(
             val,
             [min, max],
         );
@@ -492,8 +492,8 @@ export class SmoothScroll <
         // get sizes
         this._clientWidth = outer.clientWidth;
         this._clientHeight = outer.clientHeight;
-        this._scrollWidth = boundVal(container.clientWidth, [this.clientWidth, Infinity]);
-        this._scrollHeight = boundVal(container.clientHeight, [this.clientHeight, Infinity]);
+        this._scrollWidth = clamp(container.clientWidth, [this.clientWidth, Infinity]);
+        this._scrollHeight = clamp(container.clientHeight, [this.clientHeight, Infinity]);
 
         // force instant change
         // it means that after resizing, scrolling will be instantaneous for a while
