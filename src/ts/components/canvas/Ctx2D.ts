@@ -26,6 +26,10 @@ export namespace NCtx2D {
          * @default false
          */
         updateOnResize?: boolean | keyof NViewport.CallbacksTypes;
+        /**
+         * @default 0
+         */
+        resizeTimeout?: number;
     }
 
     /**
@@ -173,6 +177,7 @@ export class Ctx2D <
             container: false,
             append: true,
             updateOnResize: false,
+            resizeTimeout: 0,
             width: false,
             height: false,
             dpr: false,
@@ -186,6 +191,8 @@ export class Ctx2D <
             const viewportTarget: keyof NViewport.CallbacksTypes = typeof this.prop.updateOnResize === 'boolean' ? '' : this.prop.updateOnResize;
             this.addViewportCallback(viewportTarget, () => {
                 this.resize();
+            }, {
+                timeout: this.prop.resizeTimeout,
             });
             this.resize();
         }

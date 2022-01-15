@@ -31,6 +31,10 @@ export namespace NSplitText {
          * @default ''
          */
         viewportTarget?: keyof NViewport.CallbacksTypes;
+        /**
+         * @default 0
+         */
+        resizeTimeout?: number;
     }
 
     /**
@@ -91,6 +95,7 @@ export class SplitText <
             appendLetters: true,
             appendLines: false,
             viewportTarget: '',
+            resizeTimeout: 0,
         };
     }
 
@@ -187,6 +192,8 @@ export class SplitText <
         if (this.prop.appendLines) {
             this.addViewportCallback(this.prop.viewportTarget, () => {
                 this.splitText();
+            }, {
+                timeout: this.prop.resizeTimeout,
             });
         }
     }

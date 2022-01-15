@@ -55,6 +55,10 @@ export namespace NScrollView {
          * @default true
          */
         useIntersectionObserver?: boolean;
+        /**
+         * @default 0
+         */
+        resizeTimeout?: number;
     }
 
     /**
@@ -110,6 +114,7 @@ export class ScrollView <
             classToToggle: 'viewed',
             useDelay: false,
             useIntersectionObserver: true,
+            resizeTimeout: 0,
         };
     }
 
@@ -171,6 +176,8 @@ export class ScrollView <
         this.resize();
         this.addViewportCallback('', () => {
             this.resize();
+        }, {
+            timeout: this.prop.resizeTimeout,
         });
     }
 

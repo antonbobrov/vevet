@@ -51,6 +51,10 @@ export namespace NScrollBar {
          */
         optimizeCalculations?: boolean;
         /**
+         * @default 0
+         */
+        resizeTimeout?: number;
+        /**
          * If the scroll bar is draggable
          * @default true
          */
@@ -101,6 +105,7 @@ export class ScrollBar <
             autoHide: true,
             minSize: 50,
             optimizeCalculations: false,
+            resizeTimeout: 0,
             isDraggable: true,
             draggableScrollBehavior: 'smooth',
         };
@@ -245,6 +250,8 @@ export class ScrollBar <
         } else {
             this.addViewportCallback('', () => {
                 this.resize();
+            }, {
+                timeout: this.prop.resizeTimeout,
             });
         }
         this.resize();

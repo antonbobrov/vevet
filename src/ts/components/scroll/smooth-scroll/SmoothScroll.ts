@@ -41,6 +41,10 @@ export namespace NSmoothScroll {
          * @default false
          */
         animationFrame?: false | AnimationFrame;
+        /**
+         * @default 0
+         */
+        resizeTimeout?: number;
     }
 
     /**
@@ -425,6 +429,7 @@ export class SmoothScroll <
             enabled: true,
             animationFrame: false,
             recalculateSizes: true,
+            resizeTimeout: 0,
             useWheel: true,
             autoStop: true,
             isHorizontal: false,
@@ -455,6 +460,8 @@ export class SmoothScroll <
         this.resize();
         this.addViewportCallback('', () => {
             this.resize(true);
+        }, {
+            timeout: this.prop.resizeTimeout,
         });
 
         // wheel

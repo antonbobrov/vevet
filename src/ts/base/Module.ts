@@ -299,12 +299,13 @@ export class Module<
     public addViewportCallback (
         target: Parameters<Viewport['add']>[0],
         func: Parameters<Viewport['add']>[1],
-        data: Parameters<Viewport['add']>[2] = {
-            name: this.constructor.name,
-        },
+        data: Parameters<Viewport['add']>[2] = {},
 
     ) {
-        const callback = this._app.viewport.add(target, func, data);
+        const callback = this._app.viewport.add(target, func, {
+            ...data,
+            name: this.constructor.name,
+        });
         this._viewportCallbacks.push(callback);
         return callback;
     }
