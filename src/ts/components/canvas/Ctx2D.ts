@@ -27,6 +27,11 @@ export namespace NCtx2D {
          */
         updateOnResize?: boolean | keyof NViewport.CallbacksTypes;
         /**
+         * If need to resize when initializing
+         * @default true
+         */
+        initialResize?: boolean;
+        /**
          * @default 0
          */
         resizeTimeout?: number;
@@ -161,7 +166,9 @@ export class Ctx2D <
         });
         this._ctx = this._canvas.getContext('2d')!;
         // and resize it for the first time
-        this.resize();
+        if (this.prop.initialResize) {
+            this.resize();
+        }
 
         // initialize the class
         if (init) {
@@ -177,6 +184,7 @@ export class Ctx2D <
             container: false,
             append: true,
             updateOnResize: false,
+            initialResize: true,
             resizeTimeout: 0,
             width: false,
             height: false,
