@@ -17,7 +17,7 @@
     "prepare:cdn": "webpack --config ./config/webpack.cdn.js",
     "lint:js": "eslint . --ext .ts,.js",
     "prepare": "npm run prepare:all",
-    "release": "npm version prerelease --preid=dev && npm publish"
+    "release": "npm version patch && npm publish"
   },
   "main": "./build/cjs/index.js",
   "types": "./build/types/index.d.ts",
