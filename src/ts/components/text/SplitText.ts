@@ -288,6 +288,20 @@ export class SplitText <
             }
             return true;
         });
+
+        // post-processing
+        let prevWord: NSplitText.Word | undefined;
+        this._words.forEach((word) => {
+            if (prevWord) {
+                if (prevWord.whitespace) {
+                    word.el.classList.add('pre-whitespace');
+                }
+            }
+            if (word.whitespace) {
+                word.el.classList.add('has-whitespace');
+            }
+            prevWord = word;
+        });
     }
 
     /**
