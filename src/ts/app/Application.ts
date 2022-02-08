@@ -14,6 +14,7 @@ export namespace NApplication {
      * Properties
      */
     export type Prop = {
+        sayHi: boolean;
         /**
          * Tablet identification max width
          * @default 1199
@@ -68,6 +69,7 @@ export class Application <
      */
     get defaultProp (): NApplication.Prop {
         return {
+            sayHi: true,
             tablet: 1199,
             phone: 899,
             prefix: 'v-',
@@ -329,6 +331,10 @@ export class Application <
      * Defines that you're using Vevet.
      */
     protected _sayHi () {
+        if (!this.prop.sayHi) {
+            return;
+        }
+
         const msg = 'Vevet';
 
         const style = [
