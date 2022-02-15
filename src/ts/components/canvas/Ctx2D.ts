@@ -146,7 +146,7 @@ export class Ctx2D <
      * Canvas height without DPR
      */
     get clientHeight () {
-        return this.width / this.dpr;
+        return this.height / this.dpr;
     }
 
     /**
