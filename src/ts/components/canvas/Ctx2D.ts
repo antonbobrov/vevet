@@ -122,6 +122,12 @@ export class Ctx2D <
     get nonDPRWidth () {
         return this.width / this.dpr;
     }
+    /**
+     * Canvas width without DPR
+     */
+    get clientWidth () {
+        return this.width / this.dpr;
+    }
 
     /**
      * The height of the canvas
@@ -135,6 +141,12 @@ export class Ctx2D <
      */
     get nonDPRHeight () {
         return this.height / this.dpr;
+    }
+    /**
+     * Canvas height without DPR
+     */
+    get clientHeight () {
+        return this.width / this.dpr;
     }
 
     /**
