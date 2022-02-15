@@ -157,6 +157,13 @@ export class Ctx2D <
         return this._dpr;
     }
 
+    /**
+     * Check if width and height are not zero for content to be rendered
+     */
+    get canRender () {
+        return this.width > 0 && this.height > 0;
+    }
+
 
 
     constructor (
