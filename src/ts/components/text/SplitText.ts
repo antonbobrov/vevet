@@ -158,6 +158,9 @@ export class SplitText <
             }
         }
 
+        // disable translation
+        this._container.translate = false;
+
         // add classes
         if (this._container) {
             this._container.classList.add(this.prefix);
@@ -171,6 +174,7 @@ export class SplitText <
         this._initText = this._initText.replace(/<br>/gm, String.fromCharCode(10));
         this._initText = this._initText.replace(/<br\/>/gm, String.fromCharCode(10));
         this._initText = this._initText.replace(/<br \/>/gm, String.fromCharCode(10));
+        this._container.ariaLabel = this._initText;
 
         // set default vars
         this._isPrimarySplit = false;
@@ -237,6 +241,9 @@ export class SplitText <
                 hasNewLine: false,
                 el: createElement('span', {
                     class: `${this.prefix}__word`,
+                    attr: [
+                        ['aria-hidden', 'true'],
+                    ],
                 }),
                 letters: [],
             };
@@ -354,6 +361,9 @@ export class SplitText <
                     el: createElement('span', {
                         class: `${this.prefix}__letter`,
                         html: char,
+                        attr: [
+                            ['aria-hidden', 'true'],
+                        ],
                     }),
                     content: char,
                     word,
@@ -404,6 +414,9 @@ export class SplitText <
                 currentLine = {
                     el: createElement('span', {
                         class: `${this.prefix}__line`,
+                        attr: [
+                            ['aria-hidden', 'true'],
+                        ],
                     }),
                     content: '',
                     words: [],
