@@ -4,13 +4,21 @@
  */
 export default function timeoutCallback (
     callback: Function,
-    timeout: number,
+    delay: number,
 ) {
-    if (timeout === 0) {
+    let timeout: NodeJS.Timeout | undefined;
+    if (delay === 0) {
         callback();
     } else {
-        setTimeout(() => {
+        timeout = setTimeout(() => {
             callback();
-        }, timeout);
+        }, delay);
     }
+    return {
+        clear: () => {
+            if (timeout) {
+                clearTimeout(timeout);
+            }
+        },
+    };
 }

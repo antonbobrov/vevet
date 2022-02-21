@@ -178,6 +178,8 @@ export class Viewport extends Callbacks<
         return this.dpr;
     }
 
+    protected _resizeTimeout?: ReturnType<typeof timeoutCallback>;
+
 
 
     constructor () {
@@ -200,7 +202,10 @@ export class Viewport extends Callbacks<
     // Set events on resize
     protected _setEvents () {
         window.addEventListener('resize', () => {
-            timeoutCallback(() => {
+            if (this._resizeTimeout) {
+                this._resizeTimeout.clear();
+            }
+            this._resizeTimeout = timeoutCallback(() => {
                 this._onResize();
             }, this._app.prop.viewportResizeTimeout);
         });
