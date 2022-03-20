@@ -2,6 +2,7 @@ import { selectAll } from 'vevet-dom';
 import PCancelable from 'p-cancelable';
 import { AnimationFrame } from '../animation-frame/AnimationFrame';
 import { RequiredModuleProp } from '../../utils/types/utility';
+import clamp from '../../utils/math/clamp';
 import lerp from '../../utils/math/lerp';
 import { Preloader, NPreloader } from './Preloader';
 import { Timeline } from '../timeline/Timeline';
@@ -35,8 +36,10 @@ export namespace NProgressPreloader {
             video?: boolean;
             /**
              * Selector for elements to be preloaded.
-             * These elements may have such properties as 'isLoaded' or 'isComplete'
-             * or attributes like 'data-is-loaded', 'is-loaded'.
+             * These elements may have such properties
+             * as 'isLoaded' or 'isComplete' (numeral or boolean)
+             * or an attribute like 'data-is-loaded'
+             * (string with float or non-empty string for true).
              * @default '.js-preload'
              */
             custom?: string | false;
@@ -84,8 +87,13 @@ export namespace NProgressPreloader {
     }
 
     export interface CustomResource extends Element {
-        isLoaded?: boolean;
-        isComplete?: boolean;
+        isLoaded?: boolean | number;
+        isComplete?: boolean | number;
+    }
+
+    export interface CustomResourceData {
+        el: NProgressPreloader.CustomResource,
+        targetProgress: number;
     }
 
 }
@@ -147,7 +155,7 @@ export class ProgressPreloader <
     get customResources () {
         return this._customResources;
     }
-    protected _customResources: NProgressPreloader.CustomResource[];
+    protected _customResources: NProgressPreloader.CustomResourceData[];
 
 
 
@@ -305,11 +313,19 @@ export class ProgressPreloader <
 
         // get custom resources
         if (loaders.custom) {
-            this._customResources = Array.from(selectAll(loaders.custom)).filter((el) => {
-                if (el.classList.contains(loaders.ignoreClassName)) {
-                    return false;
+            Array.from(selectAll(loaders.custom)).forEach((el) => {
+                // note that each custom resource may have the attribute "data-load-count"
+                // which defines how many resources should be added to the loading queue.
+                // here we check this quantity and duplicate elements
+                let loadCount = parseInt(el.getAttribute('data-load-count') || '1', 10);
+                loadCount = Number.isNaN(loadCount) ? 1 : clamp(loadCount, [1, Infinity]);
+                for (let index = 1; index <= loadCount; index += 1) {
+                    const targetProgress = index / loadCount;
+                    this._customResources.push({
+                        el,
+                        targetProgress,
+                    });
                 }
-                return true;
             });
             this._resourcesTotal += this._customResources.length;
         }
@@ -360,8 +376,8 @@ export class ProgressPreloader <
         });
 
         // preload custom resources
-        this._customResources.forEach((el) => {
-            this._seekCustomResourceLoaded(el).then(() => {
+        this._customResources.forEach((data) => {
+            this._seekCustomResourceLoaded(data).then(() => {
                 this._handleLoadedResource();
             });
         });
@@ -371,29 +387,65 @@ export class ProgressPreloader <
      * Seek the moment when a custom resource is loaded
      */
     protected _seekCustomResourceLoaded (
-        el: NProgressPreloader.CustomResource,
+        data: NProgressPreloader.CustomResourceData,
     ) {
         return new Promise((
             resolve: (...arg: any) => void,
         ) => {
-            // check if the element is loaded
-            if (el.isComplete || el.isLoaded) {
+            const { el, targetProgress } = data;
+
+            // get loaded value
+            let loadProgress = 0;
+
+            // from "isComplete" property
+            if (typeof el.isComplete !== 'undefined') {
+                if (typeof el.isComplete === 'boolean') {
+                    if (el.isComplete) {
+                        loadProgress = targetProgress;
+                    }
+                } else if (typeof el.isComplete === 'number') {
+                    loadProgress = el.isComplete;
+                }
+            } else if (typeof el.isLoaded !== 'undefined') {
+                // from "isLoaded" property
+                if (typeof el.isLoaded === 'boolean') {
+                    if (el.isLoaded) {
+                        loadProgress = targetProgress;
+                    }
+                } else if (typeof el.isLoaded === 'number') {
+                    loadProgress = el.isLoaded;
+                }
+            }
+
+            // if loadProgress is still incomplete,
+            // we check the "data-is-loaded" attribute
+            if (loadProgress === 0) {
+                const isLoadedAttr = el.getAttribute('data-is-loaded');
+                if (isLoadedAttr !== null && isLoadedAttr !== '') {
+                    const isLoadedAttrNum = parseFloat(isLoadedAttr);
+                    // if the value is non-numeric, we define the the resource is loaded
+                    if (Number.isNaN(isLoadedAttrNum)) {
+                        loadProgress = targetProgress;
+                    } else {
+                        loadProgress = isLoadedAttrNum;
+                    }
+                }
+            }
+
+            // console.log(loadProgress, targetLoadProgress);
+
+            // and we finally check if the target progress was reached
+            if (loadProgress >= targetProgress) {
                 resolve();
                 return;
             }
-            if (
-                el.getAttribute('data-is-loaded')
-                || el.getAttribute('is-loaded')
-            ) {
-                resolve();
-                return;
-            }
+
             // otherwise, seek the moment when it will be loaded
             setTimeout(() => {
                 if (this.destroyed) {
                     return;
                 }
-                this._seekCustomResourceLoaded(el).then(() => {
+                this._seekCustomResourceLoaded(data).then(() => {
                     resolve();
                 });
             }, 50);
