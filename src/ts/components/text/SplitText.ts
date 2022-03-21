@@ -17,6 +17,11 @@ export namespace NSplitText {
          */
         container?: string | Element;
         /**
+         * Text content
+         * @default 'innerText'
+         */
+        textSource?: 'textContent' | 'innerText' | 'innerHTML';
+        /**
          * If need to split text into letters.
          * @default true
          */
@@ -92,6 +97,7 @@ export class SplitText <
         return {
             ...super._getDefaultProp(),
             container: `#${this.prefix}`,
+            textSource: 'innerText',
             appendLetters: true,
             appendLines: false,
             viewportTarget: '',
@@ -168,7 +174,7 @@ export class SplitText <
 
         // get initial text
         this._initHTML = this._container.innerHTML;
-        const innerText = this._container.innerText.trim() || this._container.innerHTML.trim();
+        const innerText = this._container[this.prop.textSource]!.trim();
         this._initText = innerText || 'no rendered text';
         this._initText = this._initText.replace(/\s+\n/gm, '\n');
         this._initText = this._initText.replace(/<br>/gm, String.fromCharCode(10));
