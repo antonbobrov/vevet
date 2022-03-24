@@ -323,7 +323,12 @@ export class Viewport extends Callbacks<
     /**
      * Launch callbacks on resize.
      */
-    protected _onResize () {
+    protected _onResize (
+        /**
+         * force all callbacks
+         */
+        force = false,
+    ) {
         // copy previous values
         const prevWidth = this._prevSize.w;
         const prevHeight = this._prevSize.h;
@@ -342,29 +347,36 @@ export class Viewport extends Callbacks<
         };
 
         // only when width is changed
-        if (width !== prevWidth && height === prevHeight) {
+        if (force || (width !== prevWidth && height === prevHeight)) {
             this.tbt('w_', changes);
         }
         // only when height is changed
-        if (height !== prevHeight && width === prevWidth) {
+        if (force || (height !== prevHeight && width === prevWidth)) {
             this.tbt('h_', changes);
         }
         // when height & width are changed
-        if (width !== prevWidth && height !== prevHeight) {
+        if (force || (width !== prevWidth && height !== prevHeight)) {
             this.tbt('wh', changes);
             this.tbt('hw', changes);
         }
         // when width is changed
-        if (width !== prevWidth) {
+        if (force || width !== prevWidth) {
             this.tbt('w', changes);
         }
         // when height changed
-        if (height !== prevHeight) {
+        if (force || height !== prevHeight) {
             this.tbt('h', changes);
         }
 
         // on any change
         this.tbt('', changes);
+    }
+
+    /**
+     * Force launching all callbacks
+     */
+    public forceResize () {
+        this._onResize(true);
     }
 }
 
