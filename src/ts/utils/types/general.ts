@@ -5,3 +5,8 @@ export interface IRemovable {
 export interface IDestroyable {
     destroy: () => void;
 }
+
+export interface ScrollLike {
+    scrollTop: number;
+    scrollLeft: number;
+}
