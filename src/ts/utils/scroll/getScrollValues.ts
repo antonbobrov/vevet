@@ -1,5 +1,8 @@
 import type { SmoothScroll } from '../../components/scroll/smooth-scroll/SmoothScroll';
 
+/**
+ * Get scroll values of a certain element
+ */
 export default function getScrollValues (
     selector: (Window | Element | SmoothScroll | undefined),
 ) {
