@@ -1,10 +1,10 @@
-import type { SmoothScroll } from '../../components/scroll/smooth-scroll/SmoothScroll';
+import { ScrollLike } from '../types/general';
 
 /**
  * Get scroll values of a certain element
  */
 export default function getScrollValues (
-    selector: (Window | Element | SmoothScroll | undefined),
+    selector: (Window | Element | ScrollLike | undefined),
 ) {
     if (selector) {
         const scrollTop = selector instanceof Window
