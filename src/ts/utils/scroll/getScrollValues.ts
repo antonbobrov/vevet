@@ -4,7 +4,7 @@ import { ScrollLike } from '../types/general';
  * Get scroll values of a certain element
  */
 export default function getScrollValues (
-    selector: (Window | Element | ScrollLike | undefined),
+    selector: (Window | Element | ScrollLike | undefined) = window,
 ) {
     if (selector) {
         const scrollTop = selector instanceof Window
