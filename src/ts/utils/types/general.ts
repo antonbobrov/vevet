@@ -9,4 +9,6 @@ export interface IDestroyable {
 export interface ScrollLike {
     scrollTop: number;
     scrollLeft: number;
+    scrollTo(options: ScrollToOptions): void;
+    scrollTo(x: number, y: number): void;
 }
