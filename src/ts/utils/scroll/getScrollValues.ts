@@ -3,7 +3,7 @@ import { ScrollLike } from '../types/general';
 /**
  * Get scroll values of a certain element
  */
-export default function getValues (
+export default function getScrollValues (
     selector: (Window | Element | ScrollLike | undefined) = window,
 ) {
     if (selector) {
