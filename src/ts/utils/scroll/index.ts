@@ -1,5 +1,5 @@
-import getScrollValues from './getScrollValues';
+import getValues from './getValues';
 
 export {
-    getScrollValues,
+    getValues,
 };
