@@ -1,8 +1,6 @@
-export interface ScrollableElement {
-    scrollTop: number;
-    scrollTo(options: ScrollToOptions): void;
-    scrollTo(x: number, y: number): void;
-    scrollLeft: number;
+import { ScrollLike } from '../../utils/types/general';
+
+export interface ScrollableElement extends ScrollLike {
     scrollWidth: number;
     scrollHeight: number;
     clientWidth: number;
