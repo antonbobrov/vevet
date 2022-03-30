@@ -40,6 +40,7 @@ import { ScrollEventsBase, NScrollEventsBase } from './components/scroll/scrolla
 import { ScrollView, NScrollView } from './components/scroll/scrollable/ScrollView';
 import { SmoothScrollKeyboardPlugin, NSmoothScrollKeyboardPlugin } from './components/scroll/plugins/SmoothScrollKeyboardPlugin';
 import { SmoothScrollDragPlugin, NSmoothScrollDragPlugin } from './components/scroll/plugins/SmoothScrollDragPlugin';
+import { ScrollSectionProgress, NScrollSectionProgress } from './components/scroll/section/ScrollSectionProgress';
 
 import { SplitText, NSplitText } from './components/text/SplitText';
 
@@ -93,6 +94,7 @@ export {
     ScrollView, NScrollView,
     SmoothScrollKeyboardPlugin, NSmoothScrollKeyboardPlugin,
     SmoothScrollDragPlugin, NSmoothScrollDragPlugin,
+    ScrollSectionProgress, NScrollSectionProgress,
 
     SplitText, NSplitText,
 
