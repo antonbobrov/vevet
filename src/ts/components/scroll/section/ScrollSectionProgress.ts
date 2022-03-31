@@ -27,8 +27,8 @@ export namespace NScrollSectionProgress {
          */
         section: string | Element;
         /**
-         * Update sizes on resize
-         * @default false
+         * Viewport target on resize
+         * @default ''
          */
         viewportTarget?: keyof NViewport.CallbacksTypes;
         /**
