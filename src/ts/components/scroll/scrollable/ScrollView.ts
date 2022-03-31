@@ -5,6 +5,7 @@ import onScroll from '../../../utils/listeners/onScroll';
 import { intersectionObserverSupported } from '../../../utils/listeners';
 import clamp from '../../../utils/math/clamp';
 import timeoutCallback from '../../../utils/common/timeoutCallback';
+import { NViewport } from '../../../app/events/Viewport';
 
 
 
@@ -55,6 +56,11 @@ export namespace NScrollView {
          * @default true
          */
         useIntersectionObserver?: boolean;
+        /**
+         * Viewport target on resize
+         * @default ''
+         */
+        viewportTarget?: keyof NViewport.CallbacksTypes;
         /**
          * @default 0
          */
@@ -114,6 +120,7 @@ export class ScrollView <
             classToToggle: 'viewed',
             useDelay: false,
             useIntersectionObserver: true,
+            viewportTarget: '',
             resizeTimeout: 0,
         };
     }
@@ -174,7 +181,7 @@ export class ScrollView <
     protected _setEvents () {
         super._setEvents();
         this.resize();
-        this.addViewportCallback('', () => {
+        this.addViewportCallback(this.prop.viewportTarget, () => {
             this.resize();
         }, {
             timeout: this.prop.resizeTimeout,
