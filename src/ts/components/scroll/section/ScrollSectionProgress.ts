@@ -75,7 +75,7 @@ export class ScrollSectionProgress <
         return {
             ...super._getDefaultProp(),
             container: window,
-            updateOnResize: '',
+            viewportTarget: '',
             resizeTimeout: 0,
         };
     }
