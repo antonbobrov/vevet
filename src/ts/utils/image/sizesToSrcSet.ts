@@ -7,7 +7,10 @@ export default function imageSizesToSrcSet (
     const keys = Object.keys(sizes);
     const srcParts = keys.map((key) => {
         const value = sizes[key];
-        return `${value} ${key}w`;
+        if (value) {
+            return `${value} ${key}w`;
+        }
+        return undefined;
     });
-    return srcParts.join(', ');
+    return srcParts.filter((item) => !!item).join(', ');
 }
