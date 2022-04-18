@@ -12,3 +12,16 @@ export interface ScrollLike {
     scrollTo(options: ScrollToOptions): void;
     scrollTo(x: number, y: number): void;
 }
+
+export interface ImagePaths {
+    original: string;
+    thumb?: string;
+    thumbWebp?: string;
+}
+
+export interface ImageAdaptivePaths<
+    S extends Record<string | number, string> = {}
+> extends ImagePaths {
+    sizes?: S;
+    sizesWebp?: S;
+}
