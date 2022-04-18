@@ -40,6 +40,11 @@ export namespace NApplication {
          * @default [.25, .1, .25, 1]
          */
         easing: EasingType;
+        /**
+         * Check if the browser supports WebP
+         * @default false
+         */
+        webpSupport: boolean;
     }
 
 }
@@ -75,6 +80,7 @@ export class Application <
             prefix: 'v-',
             easing: [0.25, 0.1, 0.25, 1],
             viewportResizeTimeout: 0,
+            webpSupport: false,
         };
     }
 
@@ -134,6 +140,16 @@ export class Application <
     protected _browserName: string;
     get browserName () {
         return this._browserName;
+    }
+
+
+
+    /**
+     * WebP Support
+     */
+    protected _supportsWebp?: boolean;
+    get supportsWebp () {
+        return this._supportsWebp;
     }
 
 
@@ -200,6 +216,20 @@ export class Application <
         // create default helpers
         this._pageLoad = new PageLoad();
         this._viewport = new Viewport();
+
+        // check webp support
+        if (this.prop.webpSupport) {
+            const testWebP = new Image();
+            testWebP.onload = () => {
+                this._supportsWebp = testWebP.width === 1;
+            };
+            testWebP.onerror = () => {
+                this._supportsWebp = false;
+            };
+            testWebP.src = 'data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA=';
+        } else {
+            this._supportsWebp = false;
+        }
     }
 
 
