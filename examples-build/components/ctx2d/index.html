@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-page-name="components-ctx2d">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Example of Ctx2D</title>
+    <link rel="icon" type="image/png" href="/image/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/image/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/image/favicon-64x64.png" sizes="64x64">
+    <link rel="icon" type="image/png" href="/image/favicon-96x96.png" sizes="96x96">
+    <link rel="apple-touch-icon" href="/image/192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="description">
+    <meta name="keywords">
+    <meta property="og:site_name" content="Example of Ctx2D">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Example of Ctx2D">
+    <meta property="og:description">
+    <meta property="og:image" content="null">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Example of Ctx2D">
+    <meta name="twitter:description">
+    <meta name="twitter:image" content="null">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlightjs-themes@1.0.0/darkula.css">
+  <link href="/assets/css/index.css" rel="stylesheet"></head>
+  <body>
+    <div class="container">
+      <h1>Ctx2D</h1>
+      <p class="lead"><b>Ctx2D </b>is a way to create a canvas & its 2D rendering context.</p>
+      <p>The class allows you to:
+        <ul> 
+          <li>Set automatic resize of the canvas element according to: 
+            <ul> 
+              <li>its container size;</li>
+              <li>viewport size;</li>
+              <li>manually set size.</li>
+            </ul>
+          </li>
+          <li>Manually resize the canvas;</li>
+          <li>Manually set canvas DPR.</li>
+        </ul>
+      </p>
+      <hr>
+      <h2>Example</h2>
+      <div class="ctx2d-container" style="border: 2px solid #000; width: 200px; height: 200px;" id="ctx2d-container"></div>
+      <style>
+         .ctx2d-container canvas { width: 100%; height: 100% }</style><br>
+      <p><b>DPR: </b><i id="ctx2d-dpr"></i></p>
+      <p><b>Width: </b><i id="ctx2d-width"></i></p>
+      <p><b>Height: </b><i id="ctx2d-height"></i></p>
+      <hr>
+      <pre class="ts"><code>import * as Vevet from '../../../../src/ts/index';
+
+new Vevet.Application();
+
+const container = document.querySelector('#ctx2d-container');
+const ctx2d = new Vevet.Ctx2D({
+    container: container || undefined,
+    updateOnResize: true,
+});
+
+render();
+ctx2d.addCallback('resize', () => {
+    render();
+});
+
+updateData();
+ctx2d.addCallback('resize', () => {
+    updateData();
+});
+
+function render () {
+    const { ctx, width, height } = ctx2d;
+    ctx.clearRect(0, 0, width, height);
+    ctx.beginPath();
+    ctx.fillStyle = '#ccc';
+    ctx.fillRect(width / 2, height / 2, width / 4, height / 4);
+    ctx.closePath();
+}
+
+function updateData () {
+    const dprEl = document.querySelector('#ctx2d-dpr');
+    if (dprEl) {
+        dprEl.innerHTML = `${ctx2d.dpr}`;
+    }
+    const widthEl = document.querySelector('#ctx2d-width');
+    if (widthEl) {
+        widthEl.innerHTML = `${ctx2d.width}`;
+    }
+    const heightEl = document.querySelector('#ctx2d-height');
+    if (heightEl) {
+        heightEl.innerHTML = `${ctx2d.width}`;
+    }
+}
+</code></pre>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  <script defer src="/assets/js/index.js"></script></body>
+</html>

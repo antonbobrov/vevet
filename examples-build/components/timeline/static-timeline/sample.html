@@ -1,0 +1,26 @@
+<head><link href="/assets/css/index.css" rel="stylesheet"></head>
+<div>
+  <input type="range" id="timeline-range" min="0" max="1" step="0.0001" value="0.25" style="width: 100%;"/>
+</div>
+<div class="timeline-visualizer" id="timeline-visualizer">
+  <div class="timeline-visualizer-thumb" id="timeline-visualizer-thumb"></div>
+</div>
+<style> .timeline-visualizer {
+    position: relative;
+    margin-top: 10px;
+    width: 100%;
+    height: 20px;
+    background-color: #dedede;
+}
+
+.timeline-visualizer-thumb {
+    position: absolute;
+    top: -5px;
+    left: 0;
+    width: 10px;
+    height: 30px;
+    transform: translate(-50%, 0);
+    background-color: #000;
+}
+
+</style><script defer src="/assets/js/index.js"></script>

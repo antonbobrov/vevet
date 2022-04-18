@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-page-name="components-timeline">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Example of Timeline</title>
+    <link rel="icon" type="image/png" href="/image/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/image/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/image/favicon-64x64.png" sizes="64x64">
+    <link rel="icon" type="image/png" href="/image/favicon-96x96.png" sizes="96x96">
+    <link rel="apple-touch-icon" href="/image/192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="description">
+    <meta name="keywords">
+    <meta property="og:site_name" content="Example of Timeline">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Example of Timeline">
+    <meta property="og:description">
+    <meta property="og:image" content="null">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Example of Timeline">
+    <meta name="twitter:description">
+    <meta name="twitter:image" content="null">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlightjs-themes@1.0.0/darkula.css">
+  <link href="/assets/css/index.css" rel="stylesheet"></head>
+  <body>
+    <div class="container">
+      <h1>Timeline</h1>
+      <p class="lead"><b>Timeline </b>is an animation helper</p>
+      <hr>
+      <h2>Example</h2>
+      <div class="timeline-visualizer" id="timeline-visualizer">
+        <div class="timeline-visualizer-thumb" id="timeline-visualizer-thumb"></div>
+      </div><br>
+      <div class="btn-group">
+        <button class="btn btn-success" type="button" id="timeline-play">play</button>
+        <button class="btn btn-secondary" type="button" id="timeline-pause">pause</button>
+        <button class="btn btn-primary" type="button" id="timeline-reverse">reverse</button>
+      </div>
+      <style> .timeline-visualizer {
+    position: relative;
+    margin-top: 10px;
+    width: 100%;
+    height: 20px;
+    background-color: #dedede;
+}
+
+.timeline-visualizer-thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, 0);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #000;
+}
+
+      </style>
+      <hr>
+      <pre class="pug"><code>div#timeline-visualizer.timeline-visualizer
+    div#timeline-visualizer-thumb.timeline-visualizer-thumb
+
+br
+.btn-group
+    button(type="button").btn.btn-success#timeline-play play
+    button(type="button").btn.btn-secondary#timeline-pause pause
+    button(type="button").btn.btn-primary#timeline-reverse reverse
+
+style 
+    = readFile('./sample.css', dir)</code></pre>
+      <pre class="css"><code>.timeline-visualizer {
+    position: relative;
+    margin-top: 10px;
+    width: 100%;
+    height: 20px;
+    background-color: #dedede;
+}
+
+.timeline-visualizer-thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, 0);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #000;
+}
+</code></pre>
+      <pre class="ts"><code>import { Easing } from 'easing-progress';
+import * as Vevet from '../../../../src/ts/index';
+
+new Vevet.Application();
+
+// get visualizer
+const visualizerThumb = document.querySelector<HTMLElement>('#timeline-visualizer-thumb');
+
+// create a timeline
+const timeline = new Vevet.Timeline({
+    duration: 2000,
+    easing: Easing.easeOutBounce,
+});
+timeline.addCallback('progress', (data) => {
+    if (visualizerThumb) {
+        visualizerThumb.style.left = `${data.easing * 100}%`;
+    }
+});
+timeline.play();
+
+// controls
+const playButton = document.querySelector('#timeline-play');
+if (playButton) {
+    playButton.addEventListener('click', () => {
+        timeline.play();
+    });
+}
+const pauseButton = document.querySelector('#timeline-pause');
+if (pauseButton) {
+    pauseButton.addEventListener('click', () => {
+        timeline.pause();
+    });
+}
+const reverseButton = document.querySelector('#timeline-reverse');
+if (reverseButton) {
+    reverseButton.addEventListener('click', () => {
+        timeline.reverse();
+    });
+}
+</code></pre>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  <script defer src="/assets/js/index.js"></script></body>
+</html>

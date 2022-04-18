@@ -1,0 +1,44 @@
+<head><link href="/assets/css/index.css" rel="stylesheet"></head>
+<div>
+  <input type="range" id="timeline-range" min="0" max="1" step="0.0001" value="0" style="width: 100%;"/>
+</div><br/>
+<div class="btn-group">
+  <button class="btn btn-success" type="button" id="timeline-play">play</button>
+  <button class="btn btn-secondary" type="button" id="timeline-pause">pause</button>
+  <button class="btn btn-primary" type="button" id="timeline-reverse">reverse</button>
+</div><br/><br/>
+<div class="nested-timeline">
+  <div class="nested-timeline__item"></div>
+  <div class="nested-timeline__item"></div>
+  <div class="nested-timeline__item"></div>
+  <div class="nested-timeline__item"></div>
+  <div class="nested-timeline__item"></div>
+</div>
+<style> .nested-timeline {
+    width: 100%;
+}
+
+.nested-timeline__item {
+    width: 100%;
+    height: 50px;
+    background-color: #000;
+    transform: scale(0);
+}
+
+.nested-timeline__item:nth-child(1) {
+    background-color: #F7DBA7;
+}
+.nested-timeline__item:nth-child(2) {
+    background-color: #F1AB86;
+}
+.nested-timeline__item:nth-child(3) {
+    background-color: #C57B57;
+}
+.nested-timeline__item:nth-child(4) {
+    background-color: #1E2D2F;
+}
+.nested-timeline__item:nth-child(5) {
+    background-color: #041F1E;
+}
+
+</style><script defer src="/assets/js/index.js"></script>

@@ -1,0 +1,37 @@
+<head><link href="/assets/css/index.css" rel="stylesheet"></head>
+<div class="dragger-area" id="dragger-area">
+  <div class="dragger-thumb" id="dragger-thumb"><span>Drag me</span></div>
+</div>
+<style> .dragger-area {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #ccc;
+}
+
+.dragger-thumb {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+    color: #fff;
+    transition: transform .35s;
+}
+
+.dragger-thumb.is-dragging {
+    background-color: #3f3f3f;
+    transition: 0s;
+}
+
+</style><script defer src="/assets/js/index.js"></script>

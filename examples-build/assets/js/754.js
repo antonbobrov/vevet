@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkvevet=self.webpackChunkvevet||[]).push([[754],{754:(e,n,t)=>{t.r(n);var a=t(345);new a.Application;var c=new a.Page({name:"page-instance"});c.create().then((function(){c.show().then((function(){c.hide().then((function(){c.destroy()}))}))}))}}]);
