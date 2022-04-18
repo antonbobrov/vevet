@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const pug = require('pug');
-const { PATHS } = require('../../config/paths');
+const { PATHS } = require('../../paths');
 const getPagesPaths = require('./getPagesPaths');
 const readFile = require('./readFile');
 

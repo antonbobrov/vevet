@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const { PATHS } = require('../../config/paths');
+const { PATHS } = require('../../paths');
 
 const rootDir = PATHS.pages.pages;
 

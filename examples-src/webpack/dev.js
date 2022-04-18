@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const baseConfig = require('./base');
-const { PATHS } = require('../../config/paths');
+const { PATHS } = require('../../paths');
 
 module.exports = merge(baseConfig, {
 
@@ -24,9 +24,6 @@ module.exports = merge(baseConfig, {
         },
         hot: false,
         liveReload: true,
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-        },
     },
 
     plugins: [

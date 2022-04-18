@@ -1,13 +1,7 @@
-/* eslint-disable import/no-extraneous-dependencies */
-
-const { merge } = require('webpack-merge');
-const webpack = require('webpack');
-
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-
-const preamble = require('./preamble');
-const baseConfig = require('./webpack.base.conf');
+const { merge } = require('webpack-merge');
+const baseConfig = require('./base');
 
 module.exports = merge(baseConfig, {
 
@@ -29,7 +23,6 @@ module.exports = merge(baseConfig, {
                         format: {
                             beautify: false,
                             comments: false,
-                            preamble,
                         },
                         mangle: true,
                         safari10: true,
@@ -42,7 +35,6 @@ module.exports = merge(baseConfig, {
     },
 
     plugins: [
-        new webpack.ProgressPlugin({ percentBy: 'entries' }),
         new CleanWebpackPlugin({
             verbose: false,
             cleanStaleWebpackAssets: true,

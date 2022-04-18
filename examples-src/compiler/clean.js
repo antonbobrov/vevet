@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { PATHS } = require('../../config/paths');
+const { PATHS } = require('../../paths');
 
 // create html dir
 if (!fs.existsSync(PATHS.pages.html)) {

@@ -1,15 +1,31 @@
 const { merge } = require('webpack-merge');
+const fs = require('fs');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
-const { PATHS } = require('../../config/paths');
+const { PATHS } = require('../../paths');
 const getPagesPaths = require('../compiler/getPagesPaths');
 const baseConfig = require('../../config/webpack.base.conf');
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const PAGES = getPagesPaths();
+
+const copyPaths = [];
+if (fs.existsSync(PATHS.pages.static)) {
+    copyPaths.push({
+        from: PATHS.pages.static,
+        to: '',
+    });
+}
+
+const plugins = [];
+if (copyPaths.length > 0) {
+    plugins.push(new CopyPlugin({
+        patterns: copyPaths,
+    }));
+}
 
 module.exports = merge(baseConfig, {
 
@@ -80,14 +96,7 @@ module.exports = merge(baseConfig, {
             minify: false,
             inject: 'body',
         })),
-        new CopyPlugin({
-            patterns: [
-                {
-                    from: PATHS.pages.static,
-                    to: '',
-                },
-            ],
-        }),
+        ...plugins,
     ],
 
 });

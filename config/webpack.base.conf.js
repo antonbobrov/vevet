@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+
 module.exports = {
 
     target: 'web',
@@ -25,5 +27,9 @@ module.exports = {
 
         ],
     },
+
+    plugins: [
+        new webpack.ProgressPlugin({ percentBy: 'entries' }),
+    ],
 
 };

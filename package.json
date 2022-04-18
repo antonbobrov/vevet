@@ -6,17 +6,19 @@
     "since 2015"
   ],
   "scripts": {
-    "pages-build": "node ./examples-src/compiler/index.js && webpack --config ./examples-src/webpack/webpack.prod.js",
+    "pages-build": "node ./examples-src/compiler/index.js && webpack --config ./examples-src/webpack/prod.js",
     "pages-dev": "npm-run-all --parallel pages-dev:pug pages-dev:webpack",
     "pages-dev:pug": "nodemon --watch ./examples-src/pages --watch ./examples-src/compiler --ext pug,json,ts,js,html,css ./examples-src/compiler/index.js",
-    "pages-dev:webpack": "webpack serve --config ./examples-src/webpack/webpack.dev.js",
-    "watch-tsc": "nodemon --watch ./src/ts --ext ts,js --exec \"npm run prepare:es\"",
+    "pages-dev:webpack": "webpack serve --config ./examples-src/webpack/dev.js",
     "prepare:all": "npm run prepare:es && npm run prepare:cjs && npm run prepare:cdn",
     "prepare:es": "tsc ./src/ts/index.ts --outDir ./build/es --target es6 --module es6 --moduleResolution node --esModuleInterop true --allowSyntheticDefaultImports true --declaration true --declarationDir ./build/types --declarationMap true",
     "prepare:cjs": "tsc ./src/ts/index.ts --outDir ./build/cjs --target es5 --module commonjs --moduleResolution node --esModuleInterop true --allowSyntheticDefaultImports true",
     "prepare:cdn": "webpack --config ./config/webpack.cdn.js",
     "lint:js": "eslint . --ext .ts,.js",
-    "prepare": "npm run prepare:all",
+    "docs": "typedoc --out examples-build/docs ./src/ts --theme default --hideGenerator",
+    "gh-pages": "git add examples-build/* && git commit -m \"Update github pages\" && npm run gh-pages:push",
+    "gh-pages:push": "git subtree split --prefix examples-build/ -b gh-pages-temp && git push -f origin gh-pages-temp:gh-pages && git branch -D gh-pages-temp",
+    "prepare": "npm run lint:js && npm run prepare:all && npm run pages-build && npm run docs && npm run gh-pages",
     "release": "npm publish"
   },
   "main": "./build/cjs/index.js",
@@ -57,6 +59,10 @@
     "text animation",
     "timeline"
   ],
+  "files": [
+    "src",
+    "build"
+  ],
   "author": "Anton Bobrov <anton.bobrov@hotmail.com>",
   "license": "MIT",
   "devDependencies": {
@@ -90,6 +96,7 @@
     "style-loader": "^3.2.1",
     "terser-webpack-plugin": "^5.1.4",
     "ts-loader": "^9.2.3",
+    "typedoc": "^0.22.15",
     "typescript": "^4.3.5",
     "webpack": "^5.41.1",
     "webpack-cli": "^4.7.2",
