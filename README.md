@@ -1,6 +1,7 @@
 # Vevet - a collection of ready-to-use solutions for Web Development
 
-## Documentation: https://antonbobrov.github.io/vevet/
+### Demo: https://antonbobrov.github.io/vevet/
+### Documentation: https://antonbobrov.github.io/vevet/docs/
 
 
 
