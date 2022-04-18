@@ -1,0 +1,71 @@
+<head><link href="/assets/css/index.css" rel="stylesheet"></head>
+<h2>Window scroll</h2>
+<p class="v-view v-view-window">
+   This paragraph is shown when it is in the viewport. Used for ScrollView in "window".</p>
+<h2>SmoothScroll</h2>
+<div class="v-smooth-scroll p-container" id="v-smooth-scroll">
+  <p class="v-view v-view-smooth-scroll">0&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-smooth-scroll">1&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-smooth-scroll">2&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-smooth-scroll">3&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-smooth-scroll">4&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-smooth-scroll">5&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-smooth-scroll">6&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-smooth-scroll">7&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-smooth-scroll">8&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-smooth-scroll">9&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-smooth-scroll">10&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-smooth-scroll">11&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-smooth-scroll">12&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-smooth-scroll">13&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-smooth-scroll">14&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+</div><br/>
+<h2>Wrapper scroll</h2>
+<div class="wrapper-scroll" id="wrapper-scroll">
+  <p class="v-view v-view-wrapper-scroll">0&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-wrapper-scroll">1&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-wrapper-scroll">2&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-wrapper-scroll">3&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-wrapper-scroll">4&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-wrapper-scroll">5&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-wrapper-scroll">6&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-wrapper-scroll">7&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-wrapper-scroll">8&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-wrapper-scroll">9&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-wrapper-scroll">10&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-wrapper-scroll">11&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-wrapper-scroll">12&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-wrapper-scroll">13&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+  <p class="v-view v-view-wrapper-scroll">14&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+</div>
+<style> .v-smooth-scroll {
+    height: 300px;
+    box-sizing: border-box;
+    border: 1px solid #000;
+}
+
+.wrapper-scroll {
+    height: 300px;
+    box-sizing: border-box;
+    border: 1px solid #000;
+    overflow: auto;
+}
+
+.p-container p {
+    padding: 0 20px;
+}
+
+.v-smooth-scroll p + p {
+    margin-top: 5px;
+}
+
+.v-view {
+    background-color: #dedede;
+    opacity: 0;
+    transition: opacity 1s, transform 1s;
+}
+
+.v-view.viewed {
+    opacity: 1;
+}
+</style><script defer src="/assets/js/index.js"></script>

@@ -1,0 +1,21 @@
+{
+	"name": "Vevet",
+	"short_name": "Vevet",
+	"start_url": "",
+	"display": "fullscreen",
+	"background_color": "#f5f5f5",
+	"theme_color": "#f5f5f5",
+	"icons": [
+		{
+			"src": "/image/192x192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "any maskable"
+		},
+		{
+			"src": "/image/512x512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	]
+}

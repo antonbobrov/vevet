@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-page-name="components-dragger">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Example of DraggerMove</title>
+    <link rel="icon" type="image/png" href="/image/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/image/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/image/favicon-64x64.png" sizes="64x64">
+    <link rel="icon" type="image/png" href="/image/favicon-96x96.png" sizes="96x96">
+    <link rel="apple-touch-icon" href="/image/192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="description">
+    <meta name="keywords">
+    <meta property="og:site_name" content="Example of DraggerMove">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Example of DraggerMove">
+    <meta property="og:description">
+    <meta property="og:image" content="null">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Example of DraggerMove">
+    <meta name="twitter:description">
+    <meta name="twitter:image" content="null">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlightjs-themes@1.0.0/darkula.css">
+  <link href="/assets/css/index.css" rel="stylesheet"></head>
+  <body>
+    <div class="container">
+      <h1>Dragger with 'move' events</h1>
+      <hr>
+      <h2>Example</h2>
+      <div class="dragger-area" id="dragger-area">
+        <div class="dragger-thumb" id="dragger-thumb"><span>Drag me</span></div>
+      </div>
+      <style> .dragger-area {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #ccc;
+}
+
+.dragger-thumb {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+    color: #fff;
+    transition: transform .35s;
+}
+
+.dragger-thumb.is-dragging {
+    background-color: #3f3f3f;
+    transition: 0s;
+}
+
+      </style>
+      <hr>
+      <pre class="pug"><code>.dragger-area#dragger-area
+    .dragger-thumb#dragger-thumb
+        span Drag me
+
+style 
+    = readFile('./sample.css', dir)</code></pre>
+      <pre class="css"><code>.dragger-area {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #ccc;
+}
+
+.dragger-thumb {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+    color: #fff;
+    transition: transform .35s;
+}
+
+.dragger-thumb.is-dragging {
+    background-color: #3f3f3f;
+    transition: 0s;
+}
+</code></pre>
+      <pre class="ts"><code>import * as Vevet from '../../../../src/ts/index';
+
+new Vevet.Application();
+
+const container = document.querySelector('#dragger-thumb') as HTMLElement;
+let currentX = 0;
+let currentY = 0;
+
+const dragger = new Vevet.DraggerMove({
+    container,
+});
+dragger.addCallback('start', () => {
+    container.classList.add('is-dragging');
+});
+dragger.addCallback('move', (data) => {
+    data.evt.preventDefault();
+    currentX += data.step.x;
+    currentY += data.step.y;
+    render();
+});
+dragger.addCallback('end', () => {
+    container.classList.remove('is-dragging');
+    currentX = 0;
+    currentY = 0;
+    render();
+});
+
+function render () {
+    container.style.transform = `translate(${currentX}px, ${currentY}px)`;
+}
+</code></pre>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  <script defer src="/assets/js/index.js"></script></body>
+</html>

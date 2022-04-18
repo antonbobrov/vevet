@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-page-name="components-animation-frame">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Example of AnimationFrame</title>
+    <link rel="icon" type="image/png" href="/image/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/image/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/image/favicon-64x64.png" sizes="64x64">
+    <link rel="icon" type="image/png" href="/image/favicon-96x96.png" sizes="96x96">
+    <link rel="apple-touch-icon" href="/image/192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="description">
+    <meta name="keywords">
+    <meta property="og:site_name" content="Example of AnimationFrame">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Example of AnimationFrame">
+    <meta property="og:description">
+    <meta property="og:image" content="null">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Example of AnimationFrame">
+    <meta name="twitter:description">
+    <meta name="twitter:image" content="null">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlightjs-themes@1.0.0/darkula.css">
+  <link href="/assets/css/index.css" rel="stylesheet"></head>
+  <body>
+    <div class="container">
+      <h1>AnimationFrame</h1>
+      <p class="lead"><b>AnimationFrame </b>is a convenient way to launch an animation with a definite FPS.</p>
+      <p>The class allows you to:
+        <ul> 
+          <li>Start animation;</li>
+          <li>Pause animation;</li>
+          <li>Set a definite FPS;</li>
+          <li>Change the FPS at any time;</li>
+          <li>Make FPS responsive according to the type of device or viewport size.</li>
+        </ul>
+      </p>
+      <hr>
+      <h2>Example</h2>
+      <p>Resize your viewport to desktop, tablet, and mobile sizes to see the change of FPS.</p>
+      <p><b>Previous frame time: </b><i id="animation-frame-prev-time">0</i></p>
+      <p><b>Target FPS: </b><i id="animation-frame-target-fps">0</i></p>
+      <p><b>Real FPS: </b><i id="animation-frame-real-fps">0</i></p>
+      <div>
+        <button class="btn btn-success" type="button" id="animation-frame-play">Play</button>
+        <button class="btn btn-danger" type="button" id="animation-frame-pause">Pause</button>
+      </div>
+      <hr>
+      <pre class="ts"><code>import * as Vevet from '../../../../src/ts/index';
+
+new Vevet.Application();
+
+const frame = new Vevet.AnimationFrame({
+    fps: 60,
+}, false);
+frame.addResponsiveProp({
+    breakpoint: 'd',
+    settings: {
+        fps: 60,
+    },
+});
+frame.addResponsiveProp({
+    breakpoint: 't',
+    settings: {
+        fps: 30,
+    },
+});
+frame.addResponsiveProp({
+    breakpoint: 'p',
+    settings: {
+        fps: 10,
+    },
+});
+frame.init();
+
+// get interactive elements
+const prevTimeEl = document.querySelector('#animation-frame-prev-time');
+const targetFPSEl = document.querySelector('#animation-frame-target-fps');
+const realFPSEl = document.querySelector('#animation-frame-real-fps');
+const playButton = document.querySelector<HTMLButtonElement>('#animation-frame-play');
+const pauseButton = document.querySelector<HTMLButtonElement>('#animation-frame-pause');
+
+// set events
+if (playButton) {
+    playButton.addEventListener('click', () => {
+        frame.play();
+    });
+}
+if (pauseButton) {
+    pauseButton.addEventListener('click', () => {
+        frame.pause();
+    });
+}
+
+// set animation callbacks
+frame.addCallback('frame', (data) => {
+    if (prevTimeEl) {
+        prevTimeEl.innerHTML = `${data.prevFrameDuration}`;
+    }
+    if (targetFPSEl) {
+        targetFPSEl.innerHTML = `${data.fps}`;
+    }
+    if (realFPSEl) {
+        realFPSEl.innerHTML = `${data.realFPS}`;
+    }
+});
+frame.play();
+</code></pre>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  <script defer src="/assets/js/index.js"></script></body>
+</html>

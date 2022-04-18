@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-page-name="components-ctx2d-prerender">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Example of Ctx2DPrerender</title>
+    <link rel="icon" type="image/png" href="/image/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/image/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/image/favicon-64x64.png" sizes="64x64">
+    <link rel="icon" type="image/png" href="/image/favicon-96x96.png" sizes="96x96">
+    <link rel="apple-touch-icon" href="/image/192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="description">
+    <meta name="keywords">
+    <meta property="og:site_name" content="Example of Ctx2DPrerender">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Example of Ctx2DPrerender">
+    <meta property="og:description">
+    <meta property="og:image" content="null">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Example of Ctx2DPrerender">
+    <meta name="twitter:description">
+    <meta name="twitter:image" content="null">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlightjs-themes@1.0.0/darkula.css">
+  <link href="/assets/css/index.css" rel="stylesheet"></head>
+  <body>
+    <div class="container">
+      <h1>Ctx2DPrerender</h1>
+      <p class="lead"><b>Ctx2DPrerender </b>allows you to prerender media for further use with reduced payloads.</p>
+      <hr>
+      <h2>Example</h2>
+      <div class="ctx2d-container" style="border: 2px solid #000; width: 200px; height: 200px;" id="ctx2d-container"></div>
+      <style>
+         .ctx2d-container canvas { width: 100%; height: 100% }</style>
+      <p>Change position rule</p>
+      <div class="btn-group">
+        <button class="btn btn-primary js-ctx2d-prerender-pos" type="button" data-pos-rule="cover">cover</button>
+        <button class="btn btn-primary js-ctx2d-prerender-pos" type="button" data-pos-rule="contain">contain</button>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary js-ctx2d-prerender-pos" type="button" data-pos-rule="top-left">top-left</button>
+        <button class="btn btn-primary js-ctx2d-prerender-pos" type="button" data-pos-rule="top-right">top-right</button>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary js-ctx2d-prerender-pos" type="button" data-pos-rule="bottom-left">bottom-left</button>
+        <button class="btn btn-primary js-ctx2d-prerender-pos" type="button" data-pos-rule="bottom-right">bottom-right</button>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary js-ctx2d-prerender-pos" type="button" data-pos-rule="center">center</button>
+      </div>
+      <hr>
+      <pre class="ts"><code>import * as Vevet from '../../../../src/ts/index';
+
+new Vevet.Application();
+
+const container = document.querySelector('#ctx2d-container');
+
+const image = new Image();
+image.onload = () => {
+    const ctx2d = new Vevet.Ctx2DPrerender({
+        media: image,
+        container: container || undefined,
+        updateOnResize: true,
+    });
+
+    // get buttons that change position of the media
+    const posButtons = document.querySelectorAll('.js-ctx2d-prerender-pos');
+    posButtons.forEach((button) => {
+        const posRule = button.getAttribute('data-pos-rule') as Vevet.NCtx2DPrerender.ChangeableProp['posRule'];
+        if (posRule) {
+            button.addEventListener('click', () => {
+                ctx2d.changeProp({
+                    posRule,
+                });
+            });
+        }
+    });
+
+    setActivePosButton();
+    ctx2d.addCallback('changeProp', () => {
+        setActivePosButton();
+    });
+
+    function setActivePosButton () {
+        const pos = ctx2d.prop.posRule;
+        posButtons.forEach((button) => {
+            const posRule = button.getAttribute('data-pos-rule') as Vevet.NCtx2DPrerender.ChangeableProp['posRule'];
+            button.classList.toggle('active', posRule === pos);
+        });
+    }
+};
+image.crossOrigin = 'anonymous';
+image.src = 'https://picsum.photos/150/120';
+</code></pre>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  <script defer src="/assets/js/index.js"></script></body>
+</html>

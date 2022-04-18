@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-page-name="components-scroll-view">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Example of ScrollView</title>
+    <link rel="icon" type="image/png" href="/image/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/image/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/image/favicon-64x64.png" sizes="64x64">
+    <link rel="icon" type="image/png" href="/image/favicon-96x96.png" sizes="96x96">
+    <link rel="apple-touch-icon" href="/image/192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="description">
+    <meta name="keywords">
+    <meta property="og:site_name" content="Example of ScrollView">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Example of ScrollView">
+    <meta property="og:description">
+    <meta property="og:image" content="null">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Example of ScrollView">
+    <meta name="twitter:description">
+    <meta name="twitter:image" content="null">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlightjs-themes@1.0.0/darkula.css">
+  <link href="/assets/css/index.css" rel="stylesheet"></head>
+  <body>
+    <div class="container">
+      <h1>ScrollView</h1>
+      <hr>
+      <h2>Window scroll</h2>
+      <p class="v-view v-view-window">
+         This paragraph is shown when it is in the viewport. Used for ScrollView in "window".</p>
+      <h2>SmoothScroll</h2>
+      <div class="v-smooth-scroll p-container" id="v-smooth-scroll">
+        <p class="v-view v-view-smooth-scroll">0&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-smooth-scroll">1&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-smooth-scroll">2&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-smooth-scroll">3&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-smooth-scroll">4&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-smooth-scroll">5&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-smooth-scroll">6&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-smooth-scroll">7&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-smooth-scroll">8&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-smooth-scroll">9&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-smooth-scroll">10&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-smooth-scroll">11&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-smooth-scroll">12&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-smooth-scroll">13&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-smooth-scroll">14&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+      </div><br>
+      <h2>Wrapper scroll</h2>
+      <div class="wrapper-scroll" id="wrapper-scroll">
+        <p class="v-view v-view-wrapper-scroll">0&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-wrapper-scroll">1&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-wrapper-scroll">2&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-wrapper-scroll">3&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-wrapper-scroll">4&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-wrapper-scroll">5&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-wrapper-scroll">6&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-wrapper-scroll">7&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-wrapper-scroll">8&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-wrapper-scroll">9&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-wrapper-scroll">10&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-wrapper-scroll">11&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-wrapper-scroll">12&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-wrapper-scroll">13&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+        <p class="v-view v-view-wrapper-scroll">14&nbsp;- This paragraph has been shown because it reached the scrolling rect.</p>
+      </div>
+      <style> .v-smooth-scroll {
+    height: 300px;
+    box-sizing: border-box;
+    border: 1px solid #000;
+}
+
+.wrapper-scroll {
+    height: 300px;
+    box-sizing: border-box;
+    border: 1px solid #000;
+    overflow: auto;
+}
+
+.p-container p {
+    padding: 0 20px;
+}
+
+.v-smooth-scroll p + p {
+    margin-top: 5px;
+}
+
+.v-view {
+    background-color: #dedede;
+    opacity: 0;
+    transition: opacity 1s, transform 1s;
+}
+
+.v-view.viewed {
+    opacity: 1;
+}
+      </style>
+      <hr>
+      <pre class="pug"><code>h2 Window scroll
+p.v-view.v-view-window 
+    | This paragraph is shown when it is in the viewport. Used for ScrollView in "window".
+
+h2 SmoothScroll
+div.v-smooth-scroll#v-smooth-scroll.p-container
+    - var n = 0;
+    while n < 15
+        p.v-view.v-view-smooth-scroll= n++ 
+            | &nbsp;- This paragraph has been shown because it reached the scrolling rect.
+
+br
+h2 Wrapper scroll
+div.wrapper-scroll#wrapper-scroll
+    - var n = 0;
+    while n < 15
+        p.v-view.v-view-wrapper-scroll= n++ 
+            | &nbsp;- This paragraph has been shown because it reached the scrolling rect.
+
+style 
+    = readFile('./sample.css', dir)
+</code></pre>
+      <pre class="css"><code>.v-smooth-scroll {
+    height: 300px;
+    box-sizing: border-box;
+    border: 1px solid #000;
+}
+
+.wrapper-scroll {
+    height: 300px;
+    box-sizing: border-box;
+    border: 1px solid #000;
+    overflow: auto;
+}
+
+.p-container p {
+    padding: 0 20px;
+}
+
+.v-smooth-scroll p + p {
+    margin-top: 5px;
+}
+
+.v-view {
+    background-color: #dedede;
+    opacity: 0;
+    transition: opacity 1s, transform 1s;
+}
+
+.v-view.viewed {
+    opacity: 1;
+}</code></pre>
+      <pre class="ts"><code>import * as Vevet from '../../../../../src/ts/index';
+
+const app = new Vevet.Application();
+
+app.pageLoad.onLoaded(() => {
+    // set ScrollView for Window
+    new Vevet.ScrollView({
+        container: window,
+        elements: Array.from(document.querySelectorAll('.v-view-window')),
+    });
+
+
+    // set ScrollView for SmoothScroll
+    const customScroll = new Vevet.SmoothScroll();
+    new Vevet.ScrollBar({
+        container: customScroll,
+    });
+    new Vevet.ScrollView({
+        container: customScroll,
+        elements: Array.from(document.querySelectorAll('.v-view-smooth-scroll')),
+        useDelay: {
+            max: 500,
+            dir: 'y',
+        },
+    });
+
+    // set ScrollView for wrapper scroll
+    new Vevet.ScrollView({
+        container: '#wrapper-scroll',
+        elements: Array.from(document.querySelectorAll('.v-view-wrapper-scroll')),
+        useDelay: {
+            max: 1200,
+            dir: 'y',
+        },
+    });
+});
+</code></pre>
+    </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  <script defer src="/assets/js/index.js"></script></body>
+</html>
