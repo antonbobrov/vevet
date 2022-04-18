@@ -2,6 +2,7 @@ import * as common from './utils/common';
 import * as listeners from './utils/listeners';
 import * as math from './utils/math';
 import * as scroll from './utils/scroll';
+import * as image from './utils/image';
 
 import * as GeneralTypes from './utils/types/general';
 
@@ -51,6 +52,7 @@ const utils = {
     listeners,
     math,
     scroll,
+    image,
 };
 
 
