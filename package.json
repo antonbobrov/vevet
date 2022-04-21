@@ -6,10 +6,10 @@
     "since 2015"
   ],
   "scripts": {
-    "pages-build": "node ./examples-src/compiler/index.js && webpack --config ./examples-src/webpack/prod.js",
+    "pages-build": "node ./examples-src/compiler/index.js && NODE_ENV=production webpack --config ./examples-src/webpack/prod.js",
     "pages-dev": "npm-run-all --parallel pages-dev:pug pages-dev:webpack",
     "pages-dev:pug": "nodemon --watch ./examples-src/pages --watch ./examples-src/compiler --ext pug,json,ts,js,html,css ./examples-src/compiler/index.js",
-    "pages-dev:webpack": "webpack serve --config ./examples-src/webpack/dev.js",
+    "pages-dev:webpack": "NODE_ENV=development webpack serve --config ./examples-src/webpack/dev.js",
     "prepare:all": "npm run prepare:es && npm run prepare:cjs && npm run prepare:cdn",
     "prepare:es": "tsc ./src/ts/index.ts --outDir ./build/es --target es6 --module es6 --moduleResolution node --esModuleInterop true --allowSyntheticDefaultImports true --declaration true --declarationDir ./build/types --declarationMap true",
     "prepare:cjs": "tsc ./src/ts/index.ts --outDir ./build/cjs --target es5 --module commonjs --moduleResolution node --esModuleInterop true --allowSyntheticDefaultImports true",
@@ -73,6 +73,7 @@
     "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@typescript-eslint/parser": "^4.28.1",
     "babel-loader": "^8.2.2",
+    "base-href-webpack-plugin": "^3.0.1",
     "bootstrap": "^5.1.3",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "copy-webpack-plugin": "^9.0.1",

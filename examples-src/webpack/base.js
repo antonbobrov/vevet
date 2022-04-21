@@ -5,12 +5,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
+const { BaseHrefWebpackPlugin } = require('base-href-webpack-plugin');
 const { PATHS } = require('../../paths');
 const getPagesPaths = require('../compiler/getPagesPaths');
 const baseConfig = require('../../config/webpack.base.conf');
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const PAGES = getPagesPaths();
+
+const pageBaseHref = NODE_ENV === 'development' ? '/' : '/vevet/';
 
 const copyPaths = [];
 if (fs.existsSync(PATHS.pages.static)) {
@@ -37,7 +40,7 @@ module.exports = merge(baseConfig, {
             ? 'assets/js/[name].js'
             : 'assets/js/[name].[contenthash].js',
         path: PATHS.pages.build,
-        publicPath: '/',
+        publicPath: pageBaseHref,
     },
 
     module: {
@@ -96,6 +99,7 @@ module.exports = merge(baseConfig, {
             minify: false,
             inject: 'body',
         })),
+        new BaseHrefWebpackPlugin({ baseHref: pageBaseHref }),
         ...plugins,
     ],
 
