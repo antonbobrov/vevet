@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkvevet=self.webpackChunkvevet||[]).push([[471],{471:(e,t,n)=>{n.r(t);var p=n(345);new p.Application;var a=document.querySelector("#v-split-text");new p.SplitText({container:a,appendLines:!0,appendLetters:!1})}}]);

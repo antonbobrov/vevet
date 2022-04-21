@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkvevet=self.webpackChunkvevet||[]).push([[823],{823:(e,r,s)=>{s.r(r);var a=s(345);new a.Application,new a.CustomCursor({container:"#cursor-area",render:{lerpToFixed:2},hideNativeCursor:!0})}}]);
