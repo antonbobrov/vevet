@@ -1,32 +1,32 @@
 extends ../../_layout/page
 
 block variables
-    - var title = 'Example of Ctx2D';
-    - var pageName = 'components-ctx2d';
+    - var title = 'Ctx2D';
+    - var pageName = 'components/ctx2d';
 
 block content
+
+    h1 Ctx2D
+
+    p.lead
+        a(href="https://antonbobrov.github.io/vevet/docs/classes/Ctx2D.html") See the doc
     
-    .container
+    //- description
+    p.lead
+        b Ctx2D 
+        | is a way to create a canvas & its 2D rendering context.
+    p The class allows you to:
+        ul 
+            li Automatically resize the canvas element according to: 
+                ul 
+                    li its container size;
+                    li viewport size.
+            li Manually resize the canvas;
+            li Manually set canvas DPR.
 
-        h1 Ctx2D
-        
-        //- description
-        p.lead
-            b Ctx2D 
-            | is a way to create a canvas & its 2D rendering context.
-        p The class allows you to:
-            ul 
-                li Set automatic resize of the canvas element according to: 
-                    ul 
-                        li its container size;
-                        li viewport size;
-                        li manually set size.
-                li Manually resize the canvas;
-                li Manually set canvas DPR.
-
-        hr
-        h2 Example
-        include ./sample.pug
-        hr
-        pre.ts
-            code!= readFile('./sample.ts', dir)
+    hr
+    h2 Example
+    include ./sample.pug
+    hr
+    pre.ts
+        code!= readFile('./sample.ts', dir)

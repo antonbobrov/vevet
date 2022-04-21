@@ -11,73 +11,107 @@ declare global {
 
 window.history.scrollRestoration = 'manual';
 
-
-
 const pageNameAttr = document.documentElement.getAttribute('data-page-name');
 
-switch (pageNameAttr) {
-    case 'app-events-page-load':
-        import('../pages/app/events/page-load/sample');
-        break;
+// get app
+if (pageNameAttr?.includes('app/')) {
+    const componentName = pageNameAttr.split('app/')[1];
 
-    case 'handlers-wheel':
-        import('../pages/handlers/wheel/sample');
-        break;
+    switch (componentName) {
+        case 'index':
+            import('../pages/app/sample');
+            break;
 
-    case 'components-page':
-        import('../pages/components/page/sample');
-        break;
-    case 'components-animation-frame':
-        import('../pages/components/animation-frame/sample');
-        break;
-    case 'components-ctx2d':
-        import('../pages/components/ctx2d/sample');
-        break;
-    case 'components-ctx2d-prerender':
-        import('../pages/components/ctx2d-prerender/sample');
-        break;
-    case 'components-smooth-scroll':
-        import('../pages/components/scroll/smooth-scroll/sample');
-        break;
-    case 'components-scroll-view':
-        import('../pages/components/scroll/scroll-view/sample');
-        break;
-    case 'components-timeline':
-        import('../pages/components/timeline/sample');
-        break;
-    case 'components-static-timeline':
-        import('../pages/components/timeline/static-timeline/sample');
-        break;
-    case 'components-nested-timeline':
-        import('../pages/components/timeline/nested-timeline/sample');
-        break;
+        case 'page-load':
+            import('../pages/app/page-load/sample');
+            break;
 
-    case 'components-preloader':
-        import('../pages/components/loading/preloader/sample');
-        break;
-    case 'components-progress-preloader':
-        import('../pages/components/loading/progress-preloader/sample');
-        break;
+        case 'viewport':
+            import('../pages/app/viewport/sample');
+            break;
 
-    case 'components-dragger':
-        import('../pages/components/dragger/sample');
-        break;
-    case 'components-dragger-direction':
-        import('../pages/components/dragger/direction/sample');
-        break;
+        default:
+            break;
+    }
+}
 
-    case 'components-scrollbar':
-        import('../pages/components/scroll/scrollbar/sample');
-        break;
+// get components
+if (pageNameAttr?.includes('components/')) {
+    const componentName = pageNameAttr.split('components/')[1];
 
-    case 'components-text-split':
-        import('../pages/components/text/split-text/sample');
-        break;
+    switch (componentName) {
+        case 'animation-frame':
+            import('../pages/components/animation-frame/sample');
+            break;
 
-    case 'components-cursor-CustomCursor':
-        import('../pages/components/cursor/custom-cursor/sample');
-        break;
+        case 'ctx2d':
+            import('../pages/components/ctx2d/sample');
+            break;
+        case 'ctx2d-prerender':
+            import('../pages/components/ctx2d-prerender/sample');
+            break;
 
-    default:
-        break;
+        case 'custom-cursor':
+            import('../pages/components/custom-cursor/sample');
+            break;
+
+        case 'dragger-direction':
+            import('../pages/components/dragger-direction/sample');
+            break;
+        case 'dragger-move':
+            import('../pages/components/dragger-move/sample');
+            break;
+
+        case 'preloader':
+            import('../pages/components/preloader/sample');
+            break;
+        case 'preloader-progress':
+            import('../pages/components/progress-preloader/sample');
+            break;
+
+        case 'page':
+            import('../pages/components/page/sample');
+            break;
+
+        case 'scroll-view':
+            import('../pages/components/scroll-view/sample');
+            break;
+        case 'scrollbar':
+            import('../pages/components/scrollbar/sample');
+            break;
+        case 'smooth-scroll':
+            import('../pages/components/smooth-scroll/sample');
+            break;
+
+        case 'split-text':
+            import('../pages/components/split-text/sample');
+            break;
+
+        case 'timeline':
+            import('../pages/components/timeline/sample');
+            break;
+        case 'timeline-static':
+            import('../pages/components/timeline-static/sample');
+            break;
+        case 'timeline-nested':
+            import('../pages/components/timeline-nested/sample');
+            break;
+
+        default:
+            break;
+    }
+}
+
+// get handlers
+if (pageNameAttr?.includes('handlers/')) {
+    const componentName = pageNameAttr.split('handlers/')[1];
+
+    switch (componentName) {
+        case 'wheel':
+            import('../pages/handlers/wheel/sample');
+            break;
+
+        default:
+            break;
+    }
 }

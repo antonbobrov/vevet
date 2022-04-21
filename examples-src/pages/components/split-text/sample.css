@@ -1,0 +1,14 @@
+.v-split-text {
+    width: 500px;
+    max-width: 100%;
+    color: #fff;
+}
+
+.v-split-text__line {
+    margin-top: 10px;
+    background-color: #0d6efd;
+}
+
+.v-split-text__word {
+    background-color: #5f25806d;
+}

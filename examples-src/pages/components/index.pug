@@ -1,0 +1,51 @@
+extends ../_layout/page
+
+block variables
+    - var title = 'Components';
+    - var pageName = 'components/index';
+
+block content
+
+    h1 Vevet Components
+    
+    //- description
+    p.lead
+        | Vevet consists of several components that can be used in your project. This page contains a list of all components.
+        br
+        | A component is an independent class that describes a curtain behaviour of some element.
+    p The full list of Vevet components:
+        ul 
+            li
+                a(href="/components/animation-frame") AnimationFrame
+            li
+                a(href="/components/ctx2d") Ctx2D
+            li
+                a(href="/components/ctx2d-prerender") Ctx2DPrerender
+            li
+                a(href="/components/custom-cursor") CustomCursor
+            li
+                a(href="/components/dragger-direction") DraggerDirection
+            li
+                a(href="/components/dragger-move") DraggerMove
+            li
+                a(href="/components/dragger-direction") DraggerDirection
+            li
+                a(href="/components/page") Page
+            li
+                a(href="/components/preloader") Preloader
+            li
+                a(href="/components/progress-preloader") ProgressPreloader
+            li
+                a(href="/components/scroll-view") ScrollView
+            li
+                a(href="/components/scrollbar") ScrollBar
+            li
+                a(href="/components/smooth-scroll") SmoothScroll
+            li
+                a(href="/components/split-text") SplitText
+            li
+                a(href="/components/timeline") Timeline
+            li
+                a(href="/components/timeline-nested") Nested timelines
+            li
+                a(href="/components/timeline-static") StaticTimeline

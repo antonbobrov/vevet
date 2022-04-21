@@ -95,10 +95,6 @@ html(
         link(rel="manifest", href="/manifest.webmanifest")
 
         //- Styles
-        //- link(
-        //-     rel="stylesheet",
-        //-     href="https://cdn.jsdelivr.net/npm/highlightjs-themes@1.0.0/darkula.css",
-        //- )
         link(
             rel="stylesheet",
             href="https://cdn.jsdelivr.net/npm/highlightjs-themes@1.0.0/darkula.css",
@@ -106,7 +102,10 @@ html(
 
     body
 
-        block content
+        .row.m-0
+            include ./_sidebar.pug
+            .col-9.p-4
+                block content
 
         script(
             src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js",

@@ -1,0 +1,25 @@
+extends ../../_layout/page
+
+block variables
+    - var title = 'ProgressPreloader';
+    - var pageName = 'components/preloader-progress';
+
+block content
+
+    h1 ProgressPreloader
+
+    p.lead
+        a(href="https://antonbobrov.github.io/vevet/docs/classes/ProgressPreloader.html") See the doc
+    
+    //- description
+    p.lead
+        b ProgressPreloader 
+        | is a page preloader that counts resources loaded.
+
+    hr
+    include ./sample.pug
+    hr
+    pre.pug
+        code!= readFile('./sample.pug', dir)
+    pre.ts
+        code!= readFile('./sample.ts', dir)

@@ -1,26 +1,27 @@
 extends ../../_layout/page
 
 block variables
-    - var title = 'Example of Page instance';
-    - var pageName = 'components-page';
+    - var title = 'Page instance';
+    - var pageName = 'components/page';
 
 block content
+
+    h1 Page instance
+
+    p.lead
+        a(href="https://antonbobrov.github.io/vevet/docs/classes/Page.html") See the doc
     
-    .container
+    //- description
+    p.lead
+        b Page 
+        | is a class that may be used to initialize a page.
+    p The reason to use this class is that it allows to set a definite name for the page and manipulate 
+        | with its states: create, show, hide, and destroy.
+    p Notice that the states must be called in a definite order: create -> show -> hide -> destroy 
+        | and vice versa. 
 
-        h1 Page instance
-        
-        //- description
-        p.lead
-            b Page 
-            | is a class that may be used to initialize a page.
-        p The reason to use this class is that it allows to set a definite name for the page and manipulate 
-            | with its states: creation, show, hide, and destruction.
-        p Notice that the states must be called a definite order: create -> show -> hide -> destroy 
-            | and vice versa. 
-
-        hr
-        h2 Example
-        hr
-        pre.ts
-            code!= readFile('./sample.ts', dir)
+    hr
+    h2 Example
+    hr
+    pre.ts
+        code!= readFile('./sample.ts', dir)
