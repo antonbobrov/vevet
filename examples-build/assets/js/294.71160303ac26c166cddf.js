@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkvevet=self.webpackChunkvevet||[]).push([[294],{294:(e,r,l)=>{l.r(r);var o=l(832);new o.Application,new o.ScrollBar({container:window});var n=new o.SmoothScroll({selectors:{outer:"#v-smooth-scroll"}});new o.ScrollBar({container:n}),new o.ScrollBar({container:"#wrapper-scroll"}),new o.ScrollBar({container:"#textarea-scroll"})}}]);
