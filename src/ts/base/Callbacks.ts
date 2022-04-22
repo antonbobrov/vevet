@@ -1,5 +1,5 @@
 import { Application } from '../app/Application';
-import { timeoutCallback, randID } from '../utils/common';
+import { timeoutCallback, id as orderId } from '../utils/common';
 
 
 
@@ -174,7 +174,7 @@ export class Callbacks<
         func: NCallbacks.CallbackSettings<Types, Target>['do'],
         data: NCallbacks.CallbackBaseSettings = {},
     ): NCallbacks.AddedCallback {
-        const id = randID('callback');
+        const id = orderId('callback');
         const obj: NCallbacks.CallbacksData<Types> = {
             id,
             on: true,

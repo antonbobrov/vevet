@@ -1,7 +1,7 @@
 import { addEventListener, selectOne } from 'vevet-dom';
 import { IRemovable } from '../types/general';
 import { SmoothScroll } from '../../components/scroll/smooth-scroll/SmoothScroll';
-import { randID } from '../common';
+import { id as orderId } from '../common';
 
 type Container = string | Element | SmoothScroll | Window;
 
@@ -43,7 +43,7 @@ export default function onScroll ({
     let instance = instances.find((data) => (
         data.container === container && data.isPassive === isPassive
     ))!;
-    const callbackId = randID('scroll-event');
+    const callbackId = orderId('scroll-event');
 
     // if a listener exists, we just add a new callback to its stack
     if (instance) {
@@ -54,7 +54,7 @@ export default function onScroll ({
     } else {
         // otherwise we create a new instance
         instance = {
-            id: randID('scroll-event-instance'),
+            id: orderId('scroll-event-instance'),
             container,
             callbacks: [{
                 id: callbackId,
