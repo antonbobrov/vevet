@@ -93,6 +93,14 @@ export class Viewport extends Callbacks<
     }
 
     /**
+     * Current Viewport radius
+     */
+    protected _radius: number;
+    get radius () {
+        return Math.sqrt(this.width ** 2 + this.height ** 2) / 2;
+    }
+
+    /**
      * Get VW value
      */
     get vw () {
@@ -103,6 +111,12 @@ export class Viewport extends Callbacks<
      */
     get vh () {
         return this.height / 100;
+    }
+    /**
+     * Get VR value (viewport radius / 100)
+     */
+    get vr () {
+        return this.radius / 100;
     }
 
     /**
@@ -186,6 +200,7 @@ export class Viewport extends Callbacks<
         super(false);
         this._width = 0;
         this._height = 0;
+        this._radius = 0;
         this._prevSize = { w: 0, h: 0 };
         this._isDesktop = false;
         this._isTablet = false;
@@ -316,6 +331,7 @@ export class Viewport extends Callbacks<
         const { html } = this._app;
         html.style.setProperty('--vw', `${this.vw}px`);
         html.style.setProperty('--vh', `${this.vh}px`);
+        html.style.setProperty('--vr', `${this.vr}px`);
     }
 
 
