@@ -27,6 +27,7 @@ export namespace NPage {
      */
     export interface CallbacksTypes extends NComponent.CallbacksTypes {
         'create': false;
+        'beforeshow': false;
         'show': false;
         'hide': false;
         'destroy': false;
@@ -66,6 +67,13 @@ export class Page <
     }
 
     /**
+     * If 'beforeshow' callback is called
+     */
+    protected _beforeShown: boolean;
+    get beforeShown () {
+        return this._beforeShown;
+    }
+    /**
      * If the page is shown
      */
     protected _shown: boolean;
@@ -102,6 +110,7 @@ export class Page <
         // set default vars
         this._blocked = false;
         this._created = false;
+        this._beforeShown = false;
         this._shown = false;
         this._hidden = false;
         this._destroyed = false;
@@ -141,6 +150,7 @@ export class Page <
                 }
                 // update vars
                 this._blocked = true;
+                this._beforeShown = false;
                 this._shown = false;
                 this._hidden = false;
                 this._destroyed = false;
@@ -213,6 +223,8 @@ export class Page <
                 this._destroyed = false;
 
                 // actions
+                this.callbacks.tbt('beforeshow', false);
+                this._beforeShown = true;
                 this._show().then(() => {
                     this.callbacks.tbt('show', false);
                     this._blocked = false;
@@ -272,6 +284,7 @@ export class Page <
                 // update vars
                 this._blocked = true;
                 this._created = true;
+                this._beforeShown = false;
                 this._shown = false;
                 this._destroyed = false;
 
@@ -334,6 +347,7 @@ export class Page <
                 // change vars
                 this._blocked = true;
                 this._created = false;
+                this._beforeShown = false;
                 this._shown = false;
                 this._hidden = true;
 
@@ -417,6 +431,26 @@ export class Page <
                 resolve();
             } else {
                 this.addCallback('show', () => {
+                    resolve();
+                }, {
+                    once: true,
+                });
+            }
+        });
+    }
+
+    /**
+     * Add a 'show' callback.
+     * If the callback was added after the page was shown, it will be triggered immediately.
+     */
+    onBeforeShow () {
+        return new PCancelable<void>((
+            resolve,
+        ) => {
+            if (this.shown || this.beforeShown) {
+                resolve();
+            } else {
+                this.addCallback('beforeshow', () => {
                     resolve();
                 }, {
                     once: true,
