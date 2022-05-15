@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkvevet=self.webpackChunkvevet||[]).push([[408],{408:(e,t,i)=>{i.r(t),i.d(t,{default:()=>p});const p=new(i(832).Application)({tablet:1199,phone:899,prefix:"v-",viewportResizeTimeout:100,easing:[.25,.1,.25,1]})}}]);
