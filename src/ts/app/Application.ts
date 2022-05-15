@@ -5,6 +5,7 @@ import PCancelable from 'p-cancelable';
 import { Viewport } from './events/Viewport';
 import { PageLoad } from './events/PageLoad';
 import { Page } from '../components/page/Page';
+import version from '../version';
 
 
 
@@ -57,6 +58,10 @@ export namespace NApplication {
 export class Application <
     PageInstance extends Page = Page
 > {
+    get version () {
+        return version;
+    }
+
     /**
      * Application properties.
      */
@@ -365,7 +370,7 @@ export class Application <
             return;
         }
 
-        const msg = 'Vevet';
+        const msg = `Vevet ${this.version}`;
 
         const style = [
             'padding: 1rem 1.5rem;',
