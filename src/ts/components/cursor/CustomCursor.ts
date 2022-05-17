@@ -396,7 +396,7 @@ export class CustomCursor <
             this._y = parseFloat(this._y.toFixed(fixed));
         }
 
-        // calcu;ate real coordinates
+        // calculate real coordinates
         let x = this._x;
         let y = this._y;
         if (!this._containerIsWindow) {
