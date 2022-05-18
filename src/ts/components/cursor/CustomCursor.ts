@@ -1,8 +1,9 @@
-import { createElement, selectOne } from 'vevet-dom';
+import { addEventListener, createElement, selectOne } from 'vevet-dom';
 import { AnimationFrame } from '../animation-frame/AnimationFrame';
 import { Component, NComponent } from '../../base/Component';
 import { RequiredModuleProp } from '../../utils/types/utility';
 import lerp from '../../utils/math/lerp';
+import { timeoutCallback } from '../../utils/common';
 
 
 
@@ -33,6 +34,16 @@ export namespace NCustomCursor {
      * Changeable properties
      */
     export interface ChangeableProp extends NComponent.ChangeableProp {
+        size?: {
+            /**
+             * @default 50
+             */
+            width?: number;
+            /**
+             * @default 50
+             */
+            height?: number;
+        };
         render?: {
             /**
              * Linear interpolation of coordinates. Speed
@@ -52,12 +63,25 @@ export namespace NCustomCursor {
              * @default false
              */
             normalizeLerp?: boolean;
-        }
+        };
         /**
          * Automatically stop rendering after the target and current values are approximated.
          * @default true
          */
         autoStop?: boolean;
+        /**
+         * @default false
+         */
+        hover?: {
+            /**
+             * @default false
+             */
+            sticky?: boolean;
+            /**
+             * @default false
+             */
+            autoSize?: boolean;
+        };
     }
 
     /**
@@ -98,10 +122,18 @@ export class CustomCursor <
             container: window,
             run: true,
             hideNativeCursor: false,
+            size: {
+                width: 50,
+                height: 50,
+            },
             render: {
                 lerp: 0.2,
                 lerpToFixed: 2,
                 normalizeLerp: false,
+            },
+            hover: {
+                sticky: false,
+                autoSize: false,
             },
             autoStop: true,
         };
@@ -157,6 +189,23 @@ export class CustomCursor <
     }
     protected _innerCursor!: HTMLElement;
 
+    /**
+     * Hovered element
+     */
+    protected _hoveredEl?: {
+        el: Element;
+        size?: {
+            width: number;
+            height: number;
+        };
+    };
+    get hoveredEl () {
+        return this._hoveredEl;
+    }
+    set hoveredEl (val) {
+        this._hoveredEl = val;
+    }
+
 
 
     /**
@@ -173,28 +222,51 @@ export class CustomCursor <
     protected _canPlay: boolean;
 
     /**
-     * Current X coordinate relative to Window
+     * Current cursor coordinates
      */
-    get x () {
-        return this._x;
+    protected _coords: {
+        x: number;
+        y: number;
+        w: number;
+        h: number;
+    };
+    get coords () {
+        return this._coords;
     }
-    protected _x: number;
-    /**
-     * Target coordinate
-     */
-    protected _xTarget: number;
 
     /**
-     * Current Y coordinate relative to Window
+     * Target cursor coordinates
      */
-    get y () {
-        return this._y;
+    protected _targetCoords: {
+        x: number;
+        y: number;
+        w: number;
+        h: number;
+    };
+    get targetCoords () {
+        const { hoveredEl, prop } = this;
+        const sizes = prop.size;
+
+        let { x } = this._targetCoords;
+        let { y } = this._targetCoords;
+        let w = sizes.width;
+        let h = sizes.height;
+        if (hoveredEl) {
+            const bounding = hoveredEl.el.getBoundingClientRect();
+            if (prop.hover.sticky) {
+                x = bounding.left + bounding.width / 2;
+                y = bounding.top + bounding.height / 2;
+            }
+            if (prop.hover.autoSize) {
+                w = this.hoveredEl?.size?.width || bounding.width;
+                h = this.hoveredEl?.size?.height || bounding.height;
+            }
+        }
+
+        return {
+            x, y, w, h,
+        };
     }
-    protected _y: number;
-    /**
-     * Target coordinate
-     */
-    protected _yTarget: number;
 
 
 
@@ -214,10 +286,12 @@ export class CustomCursor <
         this._containerIsWindow = container instanceof Window;
 
         // set default vars
-        this._x = 0;
-        this._xTarget = 0;
-        this._y = 0;
-        this._yTarget = 0;
+        this._coords = {
+            x: 0, y: 0, w: 0, h: 0,
+        };
+        this._targetCoords = {
+            x: 0, y: 0, w: 0, h: 0,
+        };
         this._currentFPS = 60;
         this._canPlay = this.prop.run;
 
@@ -258,6 +332,42 @@ export class CustomCursor <
         this.addEventListeners(domContainer, 'mousedown', this._handleMouseDown.bind(this));
         this.addEventListeners(domContainer, 'mouseup', this._handleMouseUp.bind(this));
         this.addEventListeners(window, 'blur', this._handleWindowBlur.bind(this));
+    }
+
+    /**
+     * Set hover events on an element
+     */
+    public addHoverEl (
+        el: Element,
+        size?: {
+            width: number;
+            height: number;
+        },
+        enterTimeout = 100,
+    ) {
+        let timeout: ReturnType<typeof timeoutCallback> | undefined;
+        const mouseEnter = addEventListener(el, 'mouseenter', () => {
+            timeout = timeoutCallback(() => {
+                this.hoveredEl = { el, size };
+            }, enterTimeout);
+        });
+        const mouseLeave = addEventListener(el, 'mouseleave', () => {
+            this.hoveredEl = undefined;
+            if (timeout) {
+                timeout.clear();
+            }
+        });
+
+        return {
+            remove: () => {
+                if (this.hoveredEl?.el === el) {
+                    this.hoveredEl = undefined;
+                }
+                mouseEnter.remove();
+                mouseLeave.remove();
+                timeout?.clear();
+            },
+        };
     }
 
 
@@ -316,10 +426,10 @@ export class CustomCursor <
         evt: MouseEvent,
     ) {
         // update coordinates
-        this._xTarget = evt.clientX;
-        this._x = this._xTarget;
-        this._yTarget = evt.clientY;
-        this._y = this._yTarget;
+        this._coords.x = evt.clientX;
+        this._coords.y = evt.clientY;
+        this._targetCoords.x = evt.clientX;
+        this._targetCoords.y = evt.clientY;
         // set classes
         this.outerCursor.classList.add('in-action');
     }
@@ -337,8 +447,8 @@ export class CustomCursor <
     protected _handleMouseMove (
         evt: MouseEvent,
     ) {
-        this._xTarget = evt.clientX;
-        this._yTarget = evt.clientY;
+        this._targetCoords.x = evt.clientX;
+        this._targetCoords.y = evt.clientY;
         // set classes
         this.outerCursor.classList.add('in-action');
         // launch animation
@@ -381,24 +491,66 @@ export class CustomCursor <
      */
     public render () {
         // props
-        const { prop } = this;
-        const { domContainer } = this;
-        const { normalizeLerp, lerp: ease, lerpToFixed } = prop.render;
-        const fpsMultiplier = normalizeLerp ? 60 / this._currentFPS : 1;
+        const { prop, targetCoords } = this;
 
-        // interpolate coordinates
-        this._x = lerp(this._x, this._xTarget, ease * fpsMultiplier, 0.02);
-        this._y = lerp(this._y, this._yTarget, ease * fpsMultiplier, 0.02);
+        this._calcCoords();
+        const realCoords = this._renderElements();
+
+        // auto stop
+        if (
+            prop.autoStop
+            && this.coords.x === targetCoords.x && this.coords.y === targetCoords.y
+            && this.coords.w === targetCoords.w && this.coords.h === targetCoords.h
+        ) {
+            this._animationFrame.pause();
+        }
+
+        // launch render events
+        this._callbacks.tbt('render', realCoords);
+    }
+
+    /**
+     * Recalculate current coordinates
+     */
+    protected _calcCoords () {
+        this._coords.x = this._lerp(this._coords.x, this.targetCoords.x);
+        this._coords.y = this._lerp(this._coords.y, this.targetCoords.y);
+        this._coords.w = this._lerp(this._coords.w, this.targetCoords.w);
+        this._coords.h = this._lerp(this._coords.h, this.targetCoords.h);
+    }
+
+    /**
+     * Linear interpolation
+     */
+    protected _lerp (
+        current: number,
+        target: number,
+    ) {
+        const { normalizeLerp, lerp: ease, lerpToFixed } = this.prop.render;
+
+        const fpsMultiplier = normalizeLerp ? 60 / this._currentFPS : 1;
+        let val = lerp(current, target, ease * fpsMultiplier, 0.02);
+
         // round the values
         if (typeof lerpToFixed === 'number') {
             const fixed = Math.round(Math.abs(lerpToFixed));
-            this._x = parseFloat(this._x.toFixed(fixed));
-            this._y = parseFloat(this._y.toFixed(fixed));
+            val = parseFloat(val.toFixed(fixed));
         }
 
+        return val;
+    }
+
+    /**
+     * Render cursor elements
+     */
+    protected _renderElements () {
+        const { domContainer, outerCursor } = this;
+
         // calculate real coordinates
-        let x = this._x;
-        let y = this._y;
+        let {
+            x, y,
+        } = this.coords;
+        const { w, h } = this.coords;
         if (!this._containerIsWindow) {
             const bounding = domContainer.getBoundingClientRect();
             x -= bounding.left;
@@ -406,18 +558,13 @@ export class CustomCursor <
         }
 
         // update dom coordinates
-        this.outerCursor.style.transform = `translate(${x}px, ${y}px)`;
+        outerCursor.style.transform = `translate(${x}px, ${y}px)`;
+        outerCursor.style.setProperty('--cursor-w', `${w}px`);
+        outerCursor.style.setProperty('--cursor-h', `${h}px`);
 
-        // auto stop
-        if (
-            prop.autoStop
-            && this._x === this._xTarget && this._y === this._yTarget
-        ) {
-            this._animationFrame.pause();
-        }
-
-        // launch render events
-        this._callbacks.tbt('render', { x, y });
+        return {
+            x, y, w, h,
+        };
     }
 
 

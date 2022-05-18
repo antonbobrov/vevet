@@ -1,10 +1,9 @@
 @import '../../mixins/index';
 
-$custom-cursor-inner-size: 50px;
-$custom-cursor-alpha-duration: 0.25s;
-$custom-cursor-scale-duration: 0.5s;
-$custom-cursor-alpha: 0.5;
-$custom-cursor-color: #000;
+$custom-cursor-alpha-duration: 0.25s !default;
+$custom-cursor-scale-duration: 0.5s !default;
+$custom-cursor-alpha: 0.5 !default;
+$custom-cursor-color: #000 !default;
 
 
 
@@ -20,6 +19,8 @@ $custom-cursor-color: #000;
 }
 
 .#{$prefix}custom-cursor {
+    --cursor-w: 50px;
+    --cursor-h: 50px;
 
     &.in-window {
         position: fixed;
@@ -43,11 +44,10 @@ $custom-cursor-color: #000;
     }
     
     &__inner {
-        width: $custom-cursor-inner-size;
-        height: $custom-cursor-inner-size;
-        margin-top: $custom-cursor-inner-size / -2;
-        margin-left: $custom-cursor-inner-size / -2;
-        border-radius: 50%;
+        width: var(--cursor-w);
+        height: var(--cursor-h);
+        margin-left: calc(var(--cursor-w) / -2);
+        margin-top: calc(var(--cursor-h) / -2);
 
         background-color: $custom-cursor-color;
         opacity: $custom-cursor-alpha;
