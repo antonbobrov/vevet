@@ -194,10 +194,9 @@ export class CustomCursor <
      */
     protected _hoveredEl?: {
         el: Element;
-        size?: {
-            width: number;
-            height: number;
-        };
+        width?: number;
+        height?: number;
+        padding?: number;
     };
     get hoveredEl () {
         return this._hoveredEl;
@@ -251,6 +250,7 @@ export class CustomCursor <
         let { y } = this._targetCoords;
         let w = sizes.width;
         let h = sizes.height;
+        let padding = 0;
         if (hoveredEl) {
             const bounding = hoveredEl.el.getBoundingClientRect();
             if (prop.hover.sticky) {
@@ -258,10 +258,14 @@ export class CustomCursor <
                 y = bounding.top + bounding.height / 2;
             }
             if (prop.hover.autoSize) {
-                w = this.hoveredEl?.size?.width || bounding.width;
-                h = this.hoveredEl?.size?.height || bounding.height;
+                w = this.hoveredEl?.width || bounding.width;
+                h = this.hoveredEl?.height || bounding.height;
+                padding = this.hoveredEl?.padding || 0;
             }
         }
+
+        w += padding * 2;
+        h += padding * 2;
 
         return {
             x, y, w, h,
@@ -338,17 +342,15 @@ export class CustomCursor <
      * Set hover events on an element
      */
     public addHoverEl (
-        el: Element,
-        size?: {
-            width: number;
-            height: number;
-        },
+        settings: NonNullable<CustomCursor['hoveredEl']>,
         enterTimeout = 100,
     ) {
+        const { el } = settings;
+
         let timeout: ReturnType<typeof timeoutCallback> | undefined;
         const mouseEnter = addEventListener(el, 'mouseenter', () => {
             timeout = timeoutCallback(() => {
-                this.hoveredEl = { el, size };
+                this.hoveredEl = { ...settings };
             }, enterTimeout);
         });
         const mouseLeave = addEventListener(el, 'mouseleave', () => {
