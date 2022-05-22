@@ -117,7 +117,7 @@ export class ScrollSectionProgress <
      * 'In' scope relative to the global progress
      */
     protected _scopeIn: [number, number];
-    protected get scopeIn () {
+    get scopeIn () {
         return this._scopeIn;
     }
 
