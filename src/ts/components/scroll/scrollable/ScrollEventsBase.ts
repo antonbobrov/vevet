@@ -16,6 +16,12 @@ export namespace NScrollEventsBase {
          * @default window
          */
         container?: string | Element | SmoothScroll | Window;
+        /**
+         * Intersection root element. If false, the element is found
+         * automatically
+         * @default false
+         */
+        intersectionRoot?: false | null | Element;
     }
 
     /**
@@ -60,6 +66,7 @@ export abstract class ScrollEventsBase <
         return {
             ...super._getDefaultProp(),
             container: window,
+            intersectionRoot: false,
         };
     }
 
@@ -97,14 +104,17 @@ export abstract class ScrollEventsBase <
      * Used as a "root" for IntersectionObserver
      */
     protected get intersectionRoot () {
-        const { scrollContainer } = this;
-        if (scrollContainer instanceof Window) {
-            return null;
+        if (this.prop.intersectionRoot === false) {
+            const { scrollContainer } = this;
+            if (scrollContainer instanceof Window) {
+                return null;
+            }
+            if (scrollContainer instanceof Element) {
+                return scrollContainer;
+            }
+            return scrollContainer.outer;
         }
-        if (scrollContainer instanceof Element) {
-            return scrollContainer;
-        }
-        return scrollContainer.outer;
+        return this.prop.intersectionRoot;
     }
 
     /**
