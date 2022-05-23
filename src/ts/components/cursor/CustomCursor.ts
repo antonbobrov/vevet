@@ -98,6 +98,16 @@ export namespace NCustomCursor {
         };
     }
 
+    /**
+     * Hovered element
+     */
+    export interface HoveredEl {
+        el: Element;
+        width?: number;
+        height?: number;
+        padding?: number;
+    }
+
 }
 
 
@@ -192,16 +202,11 @@ export class CustomCursor <
     /**
      * Hovered element
      */
-    protected _hoveredEl?: {
-        el: Element;
-        width?: number;
-        height?: number;
-        padding?: number;
-    };
-    get hoveredEl () {
+    protected _hoveredEl?: NCustomCursor.HoveredEl | undefined;
+    get hoveredEl (): NCustomCursor.HoveredEl | undefined {
         return this._hoveredEl;
     }
-    set hoveredEl (val) {
+    set hoveredEl (val: NCustomCursor.HoveredEl | undefined) {
         this._hoveredEl = val;
     }
 
