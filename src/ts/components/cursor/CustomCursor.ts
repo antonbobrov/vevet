@@ -581,9 +581,6 @@ export class CustomCursor <
      */
     public enable () {
         this._canPlay = true;
-        if (this._animationFrame.isPlaying) {
-            return;
-        }
         this.outerCursor.classList.remove('disabled');
         this.innerCursor.classList.remove('disabled');
         this._animationFrame.play();
@@ -595,9 +592,6 @@ export class CustomCursor <
      */
     public disable () {
         this._canPlay = false;
-        if (!this._animationFrame.isPlaying) {
-            return;
-        }
         this.outerCursor.classList.add('disabled');
         this.innerCursor.classList.add('disabled');
         this._animationFrame.pause();
