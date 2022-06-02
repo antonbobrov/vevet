@@ -1,4 +1,5 @@
 import PCancelable from 'p-cancelable';
+import { selectAll } from 'vevet-dom';
 import { Component, NComponent } from '../../base/Component';
 import { RequiredModuleProp } from '../../utils/types/utility';
 
@@ -244,10 +245,42 @@ export class Page <
      * Use this method to do some actions when showing a page
      */
     protected _show () {
-        return new Promise<void>((
-            resolve,
-        ) => {
-            resolve();
+        const interactivePromise = this._ignorePreventPageShow();
+        this.addCallback('destroy', () => {
+            interactivePromise.cancel();
+        });
+        return new Promise<void>((resolve, reject) => {
+            interactivePromise.then(() => {
+                resolve();
+            }).catch(() => {
+                reject();
+            });
+        });
+    }
+
+    /**
+     * Some elements may have the attribute `data-prevent-page-show="true"`
+     * This means that the page should not be interactive (and scrollable).
+     * Here we search for such elements.
+     * When there's no elements with this attribute, the page is interactive.
+     */
+    protected _ignorePreventPageShow () {
+        return new PCancelable<void>((resolve, reject) => {
+            if (this._destroyed) {
+                reject();
+            }
+            const elements = selectAll('[data-prevent-page-show]');
+            if (elements.length === 0) {
+                resolve();
+            } else {
+                setTimeout(() => {
+                    this._ignorePreventPageShow().then(() => {
+                        resolve();
+                    }).catch(() => {
+                        reject();
+                    });
+                }, 30);
+            }
         });
     }
 
