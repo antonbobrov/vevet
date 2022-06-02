@@ -2,6 +2,7 @@ import PCancelable from 'p-cancelable';
 import { selectAll } from 'vevet-dom';
 import { Component, NComponent } from '../../base/Component';
 import { RequiredModuleProp } from '../../utils/types/utility';
+import { ProgressPreloader } from '../loading/ProgressPreloader';
 
 
 
@@ -16,6 +17,7 @@ export namespace NPage {
          * @default 'home'
          */
         name?: string;
+        hasInnerPreloader?: boolean;
     }
 
     /**
@@ -129,6 +131,7 @@ export class Page <
         return {
             ...super._getDefaultProp(),
             name: 'home',
+            hasInnerPreloader: false,
         };
     }
 
@@ -292,7 +295,27 @@ export class Page <
             resolve, reject,
         ) => {
             if (this.created && !this.shown) {
-                resolve();
+                // inner preloader
+                if (this.prop.hasInnerPreloader) {
+                    const preloader = new ProgressPreloader({
+                        parent: this,
+                        container: false,
+                        hide: false,
+                        loaders: {
+                            img: false,
+                            video: false,
+                            custom: '.js-preload-inner',
+                        },
+                        calc: {
+                            lerp: false,
+                        },
+                    });
+                    preloader.addCallback('loaded', () => {
+                        resolve();
+                    });
+                } else {
+                    resolve();
+                }
                 return;
             }
             reject();
