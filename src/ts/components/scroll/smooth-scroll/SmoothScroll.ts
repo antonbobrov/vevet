@@ -105,7 +105,7 @@ export namespace NSmoothScroll {
             /**
              * @default 0.1
              */
-            approximation?: 0.1;
+            approximation?: number;
             /**
              * On different screens with different FPS, scrolling may be faster or slower.
              * This property is to normalize scrolling speed across different FPS.
