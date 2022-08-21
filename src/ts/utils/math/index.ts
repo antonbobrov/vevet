@@ -5,6 +5,7 @@ import spreadScope from './spreadScope';
 import inScope from './inScope';
 import clampScope from './clampScope';
 import wrap from './wrap';
+import easing from './easing';
 
 export {
     clamp,
@@ -14,4 +15,5 @@ export {
     inScope,
     clampScope,
     wrap,
+    easing,
 };
