@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkvevet=self.webpackChunkvevet||[]).push([[836],{836:(e,r,a)=>{a.r(r);var n=a(532);new n.Application,new n.Preloader({container:"#v-preloader"})}}]);
