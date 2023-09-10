@@ -1,9 +1,0 @@
-.wheel-area {
-    background-color: #ccc;
-    width: 200px;
-    height: 200px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
