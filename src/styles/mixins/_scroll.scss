@@ -1,0 +1,11 @@
+@mixin hide-scroll-bars {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+    appearance: none;
+    width: 0;
+    height: 0;
+  }
+}

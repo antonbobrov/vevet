@@ -1,0 +1,60 @@
+@import '../mixins/index';
+
+$custom-cursor-alpha-duration: 0.25s !default;
+$custom-cursor-scale-duration: 0.5s !default;
+$custom-cursor-alpha: 0.5 !default;
+$custom-cursor-color: #000 !default;
+
+.#{$prefix}custom-cursor-container {
+  &.#{$prefix}custom-cursor-hide-defaut-cursor {
+    cursor: none;
+
+    * {
+      cursor: none;
+    }
+  }
+}
+
+.#{$prefix}custom-cursor {
+  --cursor-w: 50px;
+  --cursor-h: 50px;
+
+  &.in-window {
+    position: fixed;
+  }
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  z-index: 999;
+  pointer-events: none;
+
+  @include transition(opacity $custom-cursor-alpha-duration);
+  opacity: 0;
+
+  &.#{$prefix}custom-cursor-in-action {
+    opacity: 1;
+  }
+
+  &.#{$prefix}custom-cursor-disabled {
+    opacity: 0;
+  }
+    
+  &__inner {
+    width: var(--cursor-w);
+    height: var(--cursor-h);
+    margin-left: calc(var(--cursor-w) / -2);
+    margin-top: calc(var(--cursor-h) / -2);
+
+    background-color: $custom-cursor-color;
+    opacity: $custom-cursor-alpha;
+
+    @include transition(transform $custom-cursor-scale-duration);
+
+    &.#{$prefix}custom-cursor-click {
+      transform: scale(0.75);
+    }
+  }
+}

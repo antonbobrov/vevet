@@ -1,0 +1,18 @@
+
+@include viewport-desktop {
+  .desktop-hide {
+    display: none !important;
+  }
+}
+
+@include viewport-tablet {
+  .tablet-hide {
+    display: none !important;
+  }
+}
+
+@include viewport-phone {
+  .phone-hide {
+    display: none !important;
+  }
+}
