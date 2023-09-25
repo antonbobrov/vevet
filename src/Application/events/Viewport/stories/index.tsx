@@ -18,7 +18,7 @@ export const Component: FC = () => {
       'isLandscape',
       'isPortrait',
       'dpr',
-      'lowerDpr',
+      'lowerDesktopDpr',
       'vh',
       'vw',
       'vr',

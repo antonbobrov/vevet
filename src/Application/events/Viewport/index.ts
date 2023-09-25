@@ -80,7 +80,7 @@ export class Viewport extends Callbacks<NViewport.ICallbacksTypes> {
   /**
    * Device pixel ratio. For non-mobile devices it is always 1.
    */
-  get lowerDpr() {
+  get lowerDesktopDpr() {
     if (this.app.isDesktop) {
       return 1;
     }
