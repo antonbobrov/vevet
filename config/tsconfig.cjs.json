@@ -4,6 +4,7 @@
     "target": "ES5",
     "module": "CommonJS",
     "outDir": "../lib/cjs",
+    "esModuleInterop": true,
     "sourceMap": true
   }
 }

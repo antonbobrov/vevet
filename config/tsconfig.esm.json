@@ -4,6 +4,7 @@
     "target": "ES6",
     "module": "ESNext",
     "outDir": "../lib/esm",
+    "esModuleInterop": true,
     "sourceMap": true
   }
 }
