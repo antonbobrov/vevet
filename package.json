@@ -1,6 +1,6 @@
 {
   "name": "vevet",
-  "version": "3.0.0-beta.2",
+  "version": "3.0.0-beta.3",
   "description": "Vevet - a JavaScript library of ready-made solutions and helpers",
   "scripts": {
     "storybook": "storybook dev -p 6006",
@@ -21,7 +21,7 @@
   },
   "main": "./lib/cjs/index.js",
   "types": "./lib/types/index.d.ts",
-  "module": "./lib/es/index.js",
+  "module": "./lib/esm/index.js",
   "sideEffects": false,
   "repository": {
     "type": "git",
