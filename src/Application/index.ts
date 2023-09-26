@@ -1,6 +1,6 @@
 import PCancelable from 'p-cancelable';
-import { Viewport } from './events/Viewport';
-import { PageLoad } from './events/PageLoad';
+import { Viewport, NViewport } from './events/Viewport';
+import { PageLoad, NPageLoad } from './events/PageLoad';
 import version from '../version';
 import { NApplication } from './types';
 import { getDeviceInfo } from '@/utils/internal/getDeviceInfo';
@@ -215,7 +215,7 @@ export class Application {
   }
 }
 
-export type { NApplication };
+export type { NApplication, NViewport, NPageLoad };
 
 declare global {
   interface Window {
