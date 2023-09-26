@@ -1,4 +1,4 @@
-import { NViewport } from 'src/Application/events/Viewport';
+import { NViewport } from '@/src/Application/events/Viewport';
 import { NCallbacks } from '@/base/Callbacks';
 
 export type TOnResizeTarget = keyof NViewport.ICallbacksTypes;
