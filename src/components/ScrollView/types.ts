@@ -1,5 +1,5 @@
 import { NComponent } from '@/base/Component/types';
-import { TOnResizeTarget } from '@/utils/internal/onResize';
+import { TOnResizeTarget } from '@/utils/listeners/onResize';
 
 export namespace NScrollView {
   export interface IStaticProps extends NComponent.IStaticProps {

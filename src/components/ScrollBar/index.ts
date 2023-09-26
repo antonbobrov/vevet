@@ -4,7 +4,7 @@ import Bar from './Bar';
 import { NScrollBar } from './types';
 import { Component as ComponentClass } from '@/base/Component';
 import { IBarProps } from './Bar/types';
-import { onResize } from '@/utils/internal/onResize';
+import { onResize } from '@/utils/listeners/onResize';
 
 export type { NScrollBar };
 

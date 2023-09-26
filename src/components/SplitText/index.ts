@@ -1,7 +1,7 @@
 import { selectOne } from 'vevet-dom';
 import { Component as ComponentClass } from '@/base/Component';
 import { NSplitText } from './types';
-import { onResize } from '@/utils/internal/onResize';
+import { onResize } from '@/utils/listeners/onResize';
 
 export type { NSplitText };
 

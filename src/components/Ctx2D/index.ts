@@ -1,6 +1,6 @@
 import { Component as ComponentClass } from '@/base/Component';
 import { NCtx2D } from './types';
-import { onResize } from '@/utils/internal/onResize';
+import { onResize } from '@/utils/listeners/onResize';
 
 export type { NCtx2D };
 

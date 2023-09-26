@@ -6,7 +6,7 @@ import { clamp, lerp } from '@/utils/math';
 import { normalizeWheel } from '@/utils/scroll';
 import { Elements } from './Elements';
 import { AnimationFrame } from './AnimatonFrame';
-import { onResize } from '@/utils/internal/onResize';
+import { onResize } from '@/utils/listeners/onResize';
 
 export type { NSmoothScroll };
 

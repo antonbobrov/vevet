@@ -1,6 +1,6 @@
 import { NComponent } from '@/base/Component/types';
 import { AnimationFrame } from '../AnimationFrame';
-import { TOnResizeTarget } from '@/utils/internal/onResize';
+import { TOnResizeTarget } from '@/utils/listeners/onResize';
 
 export namespace NSmoothScroll {
   export interface IStaticProps extends NComponent.IStaticProps {

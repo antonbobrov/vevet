@@ -1,6 +1,6 @@
 import { NComponent } from '@/base/Component/types';
 import type { SmoothScroll } from '../SmoothScroll';
-import { TOnResizeTarget } from '@/utils/internal/onResize';
+import { TOnResizeTarget } from '@/utils/listeners/onResize';
 
 export namespace NScrollSectionProgress {
   export interface IStaticProps extends NComponent.IStaticProps {

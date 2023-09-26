@@ -4,7 +4,7 @@ import { NScrollSectionProgress } from './types';
 import { Component as ComponentClass } from '@/base/Component';
 import { clampScope } from '@/utils/math';
 import { IGetScrollValues, getScrollValues, onScroll } from '@/utils/scroll';
-import { onResize } from '@/utils/internal/onResize';
+import { onResize } from '@/utils/listeners/onResize';
 
 export type { NScrollSectionProgress };
 
