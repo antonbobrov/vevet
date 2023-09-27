@@ -15,3 +15,15 @@
 ```sh
 npm install vevet
 ```
+
+## Import styles
+
+### Base styles
+```scss
+@import '~vevet/lib/styles/base';
+```
+
+### All styles
+```scss
+@import '~vevet/lib/styles/index';
+```
