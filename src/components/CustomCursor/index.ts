@@ -20,8 +20,8 @@ export class CustomCursor<
       container: window,
       isEnabled: true,
       isNativeCursorHidden: false,
-      width: 50,
-      height: 50,
+      width: 36,
+      height: 36,
       lerp: 0.2,
       isFpsNormalized: true,
       isAutoStop: true,
@@ -83,9 +83,6 @@ export class CustomCursor<
 
   /** Animation frame */
   private _animationFrame!: AnimationFrame;
-
-  /** If can play animation */
-  private _canPlay: boolean;
 
   /** Current cursor coordinates */
   private _coords: NCustomCursor.ICoords;
@@ -150,7 +147,6 @@ export class CustomCursor<
     // set default vars
     this._coords = { x: 0, y: 0, width: 0, height: 0 };
     this._targetCoords = { x: 0, y: 0, width: 0, height: 0 };
-    this._canPlay = this.props.isEnabled;
 
     if (canInit) {
       this.init();
@@ -167,7 +163,18 @@ export class CustomCursor<
 
     // enable by default
     if (this.props.isEnabled) {
-      this.enable();
+      this._enable();
+    }
+  }
+
+  /** Handle properties mutation */
+  protected _onPropsMutate() {
+    super._onPropsMutate();
+
+    if (this.props.isEnabled) {
+      this._enable();
+    } else {
+      this._disable();
     }
   }
 
@@ -279,7 +286,7 @@ export class CustomCursor<
 
     this.outerElement.classList.add(this.className('-in-action'));
 
-    if (this._canPlay) {
+    if (this.props.isEnabled) {
       this._animationFrame.play();
     }
   }
@@ -414,9 +421,7 @@ export class CustomCursor<
   }
 
   /** Enable cursor animation */
-  public enable() {
-    this._canPlay = true;
-
+  protected _enable() {
     this.outerElement.classList.remove(this.className('-disabled'));
     this.innerElement.classList.remove(this.className('-disabled'));
 
@@ -424,9 +429,7 @@ export class CustomCursor<
   }
 
   /** Disable cursor animation */
-  public disable() {
-    this._canPlay = false;
-
+  protected _disable() {
     this.outerElement.classList.add(this.className('-disabled'));
     this.innerElement.classList.add(this.className('-disabled'));
 

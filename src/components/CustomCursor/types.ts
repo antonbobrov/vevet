@@ -8,11 +8,6 @@ export namespace NCustomCursor {
      */
     container: Window | Element | string;
     /**
-     * If need to launch cursor animation after anitialization
-     * @default true
-     */
-    isEnabled?: boolean;
-    /**
      * If need to hide the native cursor
      * @default false
      */
@@ -20,6 +15,11 @@ export namespace NCustomCursor {
   }
 
   export interface IChangeableProps extends NComponent.IChangeableProps {
+    /**
+     * Custom cursor is enabled
+     * @default true
+     */
+    isEnabled?: boolean;
     /**
      * @default 50
      */
