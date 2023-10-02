@@ -12,6 +12,31 @@ export interface IScrollToElementProps extends IScrollToProps {
 
 /**
  * Scroll to element
+ *
+ * @example
+ *
+ * // static duration
+ * scrollToElement({
+ *   container: window,
+ *   element: document.getElementById('element_20')!,
+ *   top: 60,
+ *   duration: 500,
+ * });
+ *
+ * // dynamic duration
+ * scrollToElement({
+ *   element: document.getElementById('element_20')!,
+ *   top: 60,
+ *   duration: (px) => px,
+ * });
+ *
+ * // use promise
+ * scrollToElement({
+ *   element: document.getElementById('element_20')!,
+ *   top: 60,
+ * })
+ *   .then(() => console.log('done'))
+ *   .catch(() => {});
  */
 export function scrollToElement({
   container = window,

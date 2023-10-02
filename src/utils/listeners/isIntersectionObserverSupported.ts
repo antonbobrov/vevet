@@ -1,4 +1,6 @@
-/** Check if intersection observer is supported */
+/**
+ * Check if intersection observer is supported
+ */
 export function isIntersectionObserverSupported() {
   if (
     !('IntersectionObserver' in window) ||

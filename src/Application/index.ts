@@ -7,7 +7,8 @@ import { getDeviceInfo } from '@/utils/internal/getDeviceInfo';
 import { fetchWebpSupport } from '@/utils/internal/fetchWebpSupport';
 
 /**
- * Vevet Application
+ * Vevet Application. This is the base Vevet class
+ * that should be initialized first.
  */
 export class Application {
   /** Vevet version */

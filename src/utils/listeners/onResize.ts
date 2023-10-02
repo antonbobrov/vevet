@@ -42,6 +42,26 @@ export interface IOnResize {
  * Add events on resize.
  * If `element` is provided, `ResizeObserver` will be used (first callback will not be fired).
  * Otherwise, viewport callbacks will be used.
+ *
+ * @example
+ *
+ * const handler = onResize({
+ *   onResize: () => console.log('resize'),
+ *   element: document.getElementById('app')!,
+ *   viewportTarget: 'any',
+ *   hasBothEvents: true,   // trace both element and viewport sizes
+ *   resizeDebounce: 100,
+ * });
+ *
+ * // resize with timeout called twice, but `onResize` will be called only once
+ * handler.debounceResize();
+ * handler.debounceResize();
+ *
+ * // resize without timeout
+ * handler.resize();
+ *
+ * // remove listeners
+ * handler.remove();
  */
 export function onResize({
   onResize: handleResize,

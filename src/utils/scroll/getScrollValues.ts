@@ -7,6 +7,10 @@ export interface IGetScrollValues {
 
 /**
  * Get scroll values of a certain element
+ *
+ * @example
+ *
+ * getScrollValues(window); // => { scrollTop: 0, scrollLeft: 0 }
  */
 export function getScrollValues(
   selector: Window | Element | IScrollLike | undefined = window

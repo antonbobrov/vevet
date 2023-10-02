@@ -1,9 +1,6 @@
 import { EasingType } from 'easing-progress';
 
 export namespace NApplication {
-  /**
-   * Properties
-   */
   export interface IProps {
     isVersionPrinted: boolean;
     /**

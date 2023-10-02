@@ -18,6 +18,17 @@ type TLoadImageProps = {
 
 /**
  * Load an image
+ *
+ * @example
+ *
+ * const loaderWithoutCache = loadImage('/image.jpg');
+ *
+ * loaderWithoutCache.then((img) => console.log(img)).catch(() => {});
+ *
+ * const loaderWithCache = loadImage('/image.jpg', {
+ *   crossOrigin: 'anonymous',
+ *   useCache: true,
+ * });
  */
 export function loadImage(
   source: string | HTMLImageElement,
@@ -38,6 +49,7 @@ export function loadImage(
     (resolve: (img: HTMLImageElement) => void, reject: () => void) => {
       const cachedImage =
         loadProps.useCache && cachedImages.find((img) => img.src === imageSrc);
+
       // get image from cache
       if (cachedImage) {
         resolve(cachedImage.image);
@@ -48,19 +60,19 @@ export function loadImage(
       // load the image by src
       if (typeof source === 'string') {
         const img = new Image();
+
         img.crossOrigin = loadProps.crossOrigin;
+
         img.onload = () => {
           if (loadProps.useCache) {
-            cachedImages.push({
-              src: imageSrc,
-              image: img,
-            });
+            cachedImages.push({ src: imageSrc, image: img });
           }
+
           resolve(img);
         };
-        img.onerror = () => {
-          reject();
-        };
+
+        img.onerror = () => reject();
+
         img.src = source;
 
         return;
@@ -73,16 +85,13 @@ export function loadImage(
         } else {
           source.addEventListener('load', () => {
             if (loadProps.useCache) {
-              cachedImages.push({
-                src: imageSrc,
-                image: source,
-              });
+              cachedImages.push({ src: imageSrc, image: source });
             }
+
             resolve(source);
           });
-          source.addEventListener('error', () => {
-            reject();
-          });
+
+          source.addEventListener('error', () => reject());
         }
       }
     }

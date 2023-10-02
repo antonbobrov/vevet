@@ -26,6 +26,26 @@ export interface IScrollToProps {
 
 /**
  * Scroll to coordinates
+ *
+ * @example
+ *
+ * // static duration
+ * scrollTo({
+ *   container: window,
+ *   top: 500,
+ *   duration: 500,
+ * });
+ *
+ * // dynamic duration
+ * scrollTo({
+ *   top: 1000,
+ *   duration: (px) => px,
+ * });
+ *
+ * // use promise
+ * scrollTo({ top: 500 })
+ *   .then(() => console.log('done'))
+ *   .catch(() => {});
  */
 export function scrollTo({
   container = window,

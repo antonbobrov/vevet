@@ -32,6 +32,14 @@ let instances: IInstance[] = [];
 
 /**
  * Add `onScroll` event
+ *
+ * @example
+ *
+ * onScroll({
+ *   container: window,
+ *   callback: ({ scrollLeft, scrollTop }) => console.log(scrollLeft, scrollTop),
+ *   isPassive: true,
+ * });
  */
 export function onScroll({
   container,
