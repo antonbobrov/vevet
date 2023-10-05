@@ -1,7 +1,9 @@
 import normalizeWheelFunc from 'normalize-wheel';
 
 /**
- * Normalize wheel delta
+ * Normalize wheel delta. This function is reexported from `normalize-wheel` for convenience.
+ *
+ * @see https://www.npmjs.com/package/normalize-wheel
  *
  * @example
  *
