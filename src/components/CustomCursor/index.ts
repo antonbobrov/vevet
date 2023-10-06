@@ -145,8 +145,9 @@ export class CustomCursor<
     this._isContainerWindow = container instanceof Window;
 
     // set default vars
-    this._coords = { x: 0, y: 0, width: 0, height: 0 };
-    this._targetCoords = { x: 0, y: 0, width: 0, height: 0 };
+    const { width, height } = this.props;
+    this._coords = { x: 0, y: 0, width, height };
+    this._targetCoords = { x: 0, y: 0, width, height };
 
     if (canInit) {
       this.init();
