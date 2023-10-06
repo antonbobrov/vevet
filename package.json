@@ -1,6 +1,6 @@
 {
   "name": "vevet",
-  "version": "3.0.0-beta.10",
+  "version": "3.0.0-beta.11",
   "description": "Vevet - a JavaScript library of ready-made solutions and helpers",
   "scripts": {
     "storybook": "storybook dev -p 6006",

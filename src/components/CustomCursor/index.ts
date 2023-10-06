@@ -46,7 +46,7 @@ export class CustomCursor<
   /** DOM parent for the cursor element */
   get domContainer(): HTMLElement {
     if (this.container instanceof Window) {
-      return this.app.html;
+      return this.app.body;
     }
 
     return this.container as HTMLElement;
