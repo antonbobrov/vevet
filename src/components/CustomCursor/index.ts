@@ -357,20 +357,28 @@ export class CustomCursor<
     return { remove };
   }
 
-  /** Render the scene */
-  public render() {
-    const { props, coords, targetCoords } = this;
+  /**
+   * If all coordinates are interpolated
+   */
+  public get isCoordsInterpolated() {
+    const { coords, targetCoords } = this;
 
-    this._calculateCoords();
-    const realCoords = this._renderElements();
-
-    if (
-      props.shouldAutoStop &&
+    return (
       coords.x === targetCoords.x &&
       coords.y === targetCoords.y &&
       coords.width === targetCoords.width &&
       coords.height === targetCoords.height
-    ) {
+    );
+  }
+
+  /** Render the scene */
+  public render() {
+    const { props } = this;
+
+    this._calculateCoords();
+    const realCoords = this._renderElements();
+
+    if (props.shouldAutoStop && this.isCoordsInterpolated) {
       this._animationFrame.pause();
     }
 
@@ -434,6 +442,6 @@ export class CustomCursor<
     this.outerElement.classList.add(this.className('-disabled'));
     this.innerElement.classList.add(this.className('-disabled'));
 
-    this._animationFrame.destroy();
+    this._animationFrame.pause();
   }
 }
