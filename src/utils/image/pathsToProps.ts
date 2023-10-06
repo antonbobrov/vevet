@@ -49,7 +49,7 @@ export interface IImageAdaptivePaths<
  * // => {"src":"/thumb.webp","srcSet":"/640.webp 640w, /750.webp 750w, /1024.webp 1024w, /1440.webp 1440w, /1920.webp 1920w, /2560.webp 2560w"}
  */
 export function imagePathsToProps(data: IImagePaths | IImageAdaptivePaths) {
-  const app = window.vevetApp;
+  const app = typeof window !== 'undefined' ? window.vevetApp : undefined;
 
   // get src
   let src = data.original;
