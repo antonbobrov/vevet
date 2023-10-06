@@ -4,7 +4,6 @@
     "outDir": "../lib/types",
     "module": "ESNext",
     "emitDeclarationOnly": true,
-    "declaration": true,
-    "declarationMap": true
+    "declaration": true
   }
 }
