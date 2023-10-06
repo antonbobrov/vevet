@@ -13,7 +13,7 @@ export namespace NCtx2D {
      * Defines if you need to append the canvas element to the parent element
      * @default true
      */
-    isAppend?: boolean;
+    shouldAppend?: boolean;
     /**
      * Resize on init
      * @default true

@@ -18,7 +18,7 @@ export class Ctx2D<
     return {
       ...super._getDefaultProps(),
       container: false,
-      isAppend: true,
+      shouldAppend: true,
       hasInitialResize: true,
       hasResize: false,
       viewportTarget: 'any',
@@ -92,7 +92,7 @@ export class Ctx2D<
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
 
-    const { isAppend, container } = this.props;
+    const { shouldAppend, container } = this.props;
 
     // set default values
     this._width = 0;
@@ -108,7 +108,7 @@ export class Ctx2D<
     this._canvas.style.height = '100%';
 
     // append canvas
-    if (isAppend && container instanceof Element) {
+    if (shouldAppend && container instanceof Element) {
       container.append(this._canvas);
 
       this.addDestroyableAction(() => this.canvas.remove());

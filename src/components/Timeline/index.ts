@@ -16,7 +16,7 @@ export class Timeline<
     return {
       ...super._getDefaultProps(),
       duration: 1000,
-      isDestroyOnEnd: false,
+      shouldDestroyOnEnd: false,
     };
   }
 
@@ -165,7 +165,7 @@ export class Timeline<
     if (this.progress === 1) {
       this.callbacks.tbt('end', undefined);
 
-      if (this.props.isDestroyOnEnd) {
+      if (this.props.shouldDestroyOnEnd) {
         this.destroy();
       }
     }

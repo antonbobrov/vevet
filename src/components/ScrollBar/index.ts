@@ -23,7 +23,7 @@ export class ScrollBar<
       domParent: false,
       resizeDebounce: 16,
       isDraggable: true,
-      hasAutoSize: true,
+      shouldAutoSize: true,
       canAutoHide: true,
       minSize: 50,
       scrollBehavior: 'smooth',

@@ -16,7 +16,7 @@ export const WithHorizontalComponent: FC = () => {
       container: containerRef.current,
       elements: '.js-element',
       direction: 'horizontal',
-      isInverseHandlerDirection: true,
+      isInversedHandlerDirection: true,
     });
 
     setSmoothScroll(instance);

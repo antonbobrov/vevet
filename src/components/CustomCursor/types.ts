@@ -43,7 +43,7 @@ export namespace NCustomCursor {
      * Automatically stop rendering after the target and current values are approximated.
      * @default true
      */
-    isAutoStop?: boolean;
+    shouldAutoStop?: boolean;
   }
 
   export interface ICallbacksTypes extends NComponent.ICallbacksTypes {

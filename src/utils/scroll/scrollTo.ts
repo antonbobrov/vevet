@@ -72,7 +72,7 @@ export function scrollTo({
 
     const timeline = new Timeline({
       duration: finalDuration,
-      isDestroyOnEnd: true,
+      shouldDestroyOnEnd: true,
     });
 
     timeline.addCallback('progress', ({ easing }) => {

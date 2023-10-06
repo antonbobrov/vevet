@@ -2,7 +2,7 @@ import { EasingType } from 'easing-progress';
 
 export namespace NApplication {
   export interface IProps {
-    isVersionPrinted: boolean;
+    shouldPrintVersion: boolean;
     /**
      * Tablet identification max width
      * @default 1199
@@ -32,6 +32,6 @@ export namespace NApplication {
      * Check if the browser supports WebP
      * @default false
      */
-    hasWebpSupportCheck: boolean;
+    shouldCheckWebpSupport: boolean;
   }
 }

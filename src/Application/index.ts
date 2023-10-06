@@ -26,13 +26,13 @@ export class Application {
   /** Default properties */
   get defaultProps(): NApplication.IProps {
     return {
-      isVersionPrinted: true,
+      shouldPrintVersion: true,
       tablet: 1199,
       phone: 899,
       prefix: 'v-',
       easing: [0.25, 0.1, 0.25, 1],
       resizeDebounce: 16,
-      hasWebpSupportCheck: true,
+      shouldCheckWebpSupport: true,
     };
   }
 
@@ -165,7 +165,7 @@ export class Application {
     html.classList.toggle(`${prefix}desktop`, this._isDesktop);
 
     // check webp support
-    if (this.props.hasWebpSupportCheck) {
+    if (this.props.shouldCheckWebpSupport) {
       fetchWebpSupport()
         .then(() => {
           this._isWebpSupported = true;
@@ -198,7 +198,7 @@ export class Application {
 
   /** Output current version */
   private _printVersion() {
-    if (!this.props.isVersionPrinted) {
+    if (!this.props.shouldPrintVersion) {
       return;
     }
 

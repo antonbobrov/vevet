@@ -6,7 +6,7 @@ export namespace NTimeline {
      * Destroy the timeline on animation end
      * @default false
      */
-    isDestroyOnEnd?: boolean;
+    shouldDestroyOnEnd?: boolean;
   }
 
   export interface IChangeableProps extends NBaseTimeline.IChangeableProps {

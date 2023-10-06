@@ -4,7 +4,7 @@ import { IBarProps } from './Bar/types';
 
 type TPickedProps =
   | 'isDraggable'
-  | 'hasAutoSize'
+  | 'shouldAutoSize'
   | 'canAutoHide'
   | 'minSize'
   | 'scrollBehavior';

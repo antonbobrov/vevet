@@ -10,7 +10,7 @@ export interface IBarProps {
   /** Hide scrollbars when not active */
   canAutoHide: boolean;
   /** Use auto-size */
-  hasAutoSize: boolean;
+  shouldAutoSize: boolean;
   /**
    * Minimum size of the scrollbar thumb.
    * Works when `hasAutoSize` is `true`

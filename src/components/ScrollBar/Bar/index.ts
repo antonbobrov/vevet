@@ -260,14 +260,14 @@ export default class Bar {
       isHorizontal,
     } = this;
 
-    const { minSize, hasAutoSize } = this.props;
+    const { minSize, shouldAutoSize } = this.props;
 
     // get outer sizes
     this._outerHeight = outer.clientHeight;
     this._outerWidth = outer.clientWidth;
 
     // calculate thumb sizes
-    if (hasAutoSize) {
+    if (shouldAutoSize) {
       if (isHorizontal) {
         const barSize = clamp(
           this._outerWidth / (scrollWidth / (scrollWidth - scrollLine)),

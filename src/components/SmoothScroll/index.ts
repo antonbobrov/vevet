@@ -34,8 +34,8 @@ export class SmoothScroll<
       isEnabled: true,
       hasWheel: true,
       direction: 'vertical',
-      isInverseHandlerDirection: false,
-      isAutoStop: true,
+      isInversedHandlerDirection: false,
+      shouldAutoStop: true,
       hasStopPropagation: true,
       lerp: 0.1,
       isFpsNormalized: true,
@@ -398,7 +398,7 @@ export class SmoothScroll<
       isEnabled,
       hasWheel,
       hasStopPropagation,
-      isInverseHandlerDirection,
+      isInversedHandlerDirection,
     } = this.props;
 
     if (!isEnabled || !hasWheel || !this.hasScroll) {
@@ -420,8 +420,8 @@ export class SmoothScroll<
     const { pixelX, pixelY } = normalizeWheel(event);
 
     // set new scroll targets
-    const leftIterator = isInverseHandlerDirection ? pixelY : pixelX;
-    const topIterator = isInverseHandlerDirection ? pixelX : pixelY;
+    const leftIterator = isInversedHandlerDirection ? pixelY : pixelX;
+    const topIterator = isInversedHandlerDirection ? pixelX : pixelY;
     this.setTargetLeft(this.targetLeft + leftIterator);
     this.setTargetTop(this.targetTop + topIterator);
 
@@ -508,7 +508,7 @@ export class SmoothScroll<
 
   /** Make auto stop if the target and current values are equal */
   protected _checkAutoStop() {
-    if (!this.props.isAutoStop) {
+    if (!this.props.shouldAutoStop) {
       return;
     }
 

@@ -24,7 +24,7 @@ export class CustomCursor<
       height: 36,
       lerp: 0.2,
       isFpsNormalized: true,
-      isAutoStop: true,
+      shouldAutoStop: true,
     };
   }
 
@@ -364,7 +364,7 @@ export class CustomCursor<
     const realCoords = this._renderElements();
 
     if (
-      props.isAutoStop &&
+      props.shouldAutoStop &&
       coords.x === targetCoords.x &&
       coords.y === targetCoords.y &&
       coords.width === targetCoords.width &&

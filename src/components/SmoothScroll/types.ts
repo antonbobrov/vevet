@@ -68,12 +68,12 @@ export namespace NSmoothScroll {
      * Inverse scrolling values
      * @default false
      */
-    isInverseHandlerDirection?: boolean;
+    isInversedHandlerDirection?: boolean;
     /**
      * Automatically stop animation frame when the target and current values are equal
      * @default true
      */
-    isAutoStop?: boolean;
+    shouldAutoStop?: boolean;
     /**
      * Stop propagation when scrolling
      * @default true
