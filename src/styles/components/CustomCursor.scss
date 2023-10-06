@@ -19,7 +19,7 @@ $custom-cursor-color: #000 !default;
   --cursor-w: 50px;
   --cursor-h: 50px;
 
-  &.in-window {
+  &.#{$prefix}custom-cursor-in-window {
     position: fixed;
   }
 
