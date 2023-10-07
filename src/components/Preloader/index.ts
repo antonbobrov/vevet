@@ -1,5 +1,5 @@
 import { selectOne } from 'vevet-dom';
-import PCancelable from 'p-cancelable';
+import { PCancelable } from '@/utils/common/PCancelable';
 import { NPreloader } from './types';
 import { Component as ComponentClass } from '@/base/Component';
 import { normalizedTimeoutCallback } from '@/utils/common';

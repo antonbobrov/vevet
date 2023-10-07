@@ -1,10 +1,10 @@
-import PCancelable from 'p-cancelable';
 import { Viewport, NViewport } from './events/Viewport';
 import { PageLoad, NPageLoad } from './events/PageLoad';
 import version from '../version';
 import { NApplication } from './types';
 import { getDeviceInfo } from '@/utils/internal/getDeviceInfo';
 import { fetchWebpSupport } from '@/utils/internal/fetchWebpSupport';
+import { PCancelable } from '@/utils/common/PCancelable';
 
 /**
  * Vevet Application. This is the base Vevet class

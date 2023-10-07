@@ -1,4 +1,4 @@
-import PCancelable from 'p-cancelable';
+import { PCancelable } from '@/utils/common/PCancelable';
 
 export function fetchWebpSupport() {
   return new PCancelable((resolve, reject) => {

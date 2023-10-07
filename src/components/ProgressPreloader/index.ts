@@ -1,5 +1,5 @@
 import { selectAll } from 'vevet-dom';
-import PCancelable from 'p-cancelable';
+import { PCancelable } from '@/utils/common/PCancelable';
 import { AnimationFrame } from '../AnimationFrame';
 import { Preloader } from '../Preloader';
 import { Timeline } from '../Timeline';

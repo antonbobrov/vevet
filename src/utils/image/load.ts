@@ -1,4 +1,4 @@
-import PCancelable from 'p-cancelable';
+import { PCancelable } from '@/utils/common/PCancelable';
 
 const cachedImages: {
   src: string;
