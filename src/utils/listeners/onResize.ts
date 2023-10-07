@@ -3,9 +3,15 @@ import { NCallbacks } from '@/base/Callbacks';
 
 export type TOnResizeTarget = keyof NViewport.ICallbacksTypes;
 
+export interface IOnResizeCallbackProps {
+  trigger: 'unknown' | 'Viewport' | 'ResizeObserver';
+}
+
+export type TOnResizeCallback = (props: IOnResizeCallbackProps) => void;
+
 export interface IOnResizeProps {
   /** Callback on resize */
-  onResize: () => void;
+  onResize: TOnResizeCallback;
   /** Observable element */
   element?: Element | Element[] | false;
   /**
@@ -76,12 +82,15 @@ export function onResize({
 
   let viewportCallback: NCallbacks.IAddedCallback | undefined;
 
-  const debounceResize = () => {
+  const debounceResize = (props?: IOnResizeCallbackProps, delay?: number) => {
     if (timeout) {
       clearTimeout(timeout);
     }
 
-    timeout = setTimeout(() => handleResize(), resizeDebounce);
+    timeout = setTimeout(
+      () => handleResize(props ?? { trigger: 'unknown' }),
+      delay ?? resizeDebounce
+    );
   };
 
   if (
@@ -96,7 +105,10 @@ export function onResize({
         return;
       }
 
-      debounceResize();
+      debounceResize(
+        { trigger: 'ResizeObserver' },
+        window.vevetApp.props.resizeDebounce
+      );
     });
 
     if (Array.isArray(element)) {
@@ -108,7 +120,7 @@ export function onResize({
 
   if (hasBothEvents || !resizeObserver) {
     viewportCallback = window.vevetApp.viewport.add(viewportTarget, () =>
-      debounceResize()
+      debounceResize({ trigger: 'Viewport' })
     );
   }
 
@@ -121,8 +133,8 @@ export function onResize({
       resizeObserver?.disconnect();
       viewportCallback?.remove();
     },
-    resize: () => handleResize(),
-    debounceResize,
+    resize: () => handleResize({ trigger: 'unknown' }),
+    debounceResize: () => debounceResize(),
     hasResizeObserver: !!resizeObserver,
   };
 }
