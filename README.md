@@ -1,16 +1,29 @@
-# Vevet - a collection of ready-to-use solutions for Web Development
+# Vevet is a JavaScript library of ready-made solutions and helpers
 
-### Demo: https://antonbobrov.github.io/vevet/
-### Documentation: https://antonbobrov.github.io/vevet/docs/
+![NPM](https://img.shields.io/npm/v/vevet?style=flat-squar)
+![Minzip](https://img.shields.io/bundlephobia/minzip/vevet)
+![Language](https://img.shields.io/github/languages/top/antonbobrov/vevet)
 
+* [See Demo](https://antonbobrov.github.io/vevet/)
+* [See Documentation](https://antonbobrov.github.io/vevet/docs/)
 
+## Dev Config
+* node v16.13.0
+* npm v8.1.0
 
 ## How to start with NPM
 ```sh
 npm install vevet
 ```
 
-## How to start with CDN
-```html
-<script src="https://cdn.jsdelivr.net/npm/vevet/dist/cdn/index.min.js"></script>
+## Import styles
+
+### Base styles
+```scss
+@import '~vevet/lib/styles/base';
+```
+
+### All styles
+```scss
+@import '~vevet/lib/styles/index';
 ```

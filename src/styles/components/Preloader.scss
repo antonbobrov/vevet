@@ -1,0 +1,13 @@
+@import '../mixins/index';
+
+$preloader-bg-color: #000 !default;
+
+.#{$prefix}preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  background-color: $preloader-bg-color;
+}

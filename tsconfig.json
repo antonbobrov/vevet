@@ -1,16 +1,37 @@
 {
-    "compilerOptions": {
-        "target": "ESNext",
-        "lib": ["dom", "dom.iterable", "esnext"],
-        "strict": true,
-        "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true,
-        "module": "ESNext",
-        "moduleResolution": "node"
-    },
-    "exclude": [
-        "node_modules",
-        "build"
-    ],
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "ES5",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "moduleResolution": "Node",
+    "skipLibCheck": true,
+    "strict": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@/base/*": [
+        "./src/base/*"
+      ],
+      "@/components/*": [
+        "./src/components/*"
+      ],
+      "@/styles/*": [
+        "./src/styles/*"
+      ],
+      "@/types/*": [
+        "./src/types/*"
+      ],
+      "@/utils/*": [
+        "./src/utils/*"
+      ],
+      "@/src/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "include": ["src", "**/*.ts"],
+  "exclude": ["node_modules", "lib"]
 }
-
