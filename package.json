@@ -17,7 +17,7 @@
     "build:docs": "typedoc --out build/docs ./src --theme default --hideGenerator",
     "version": "node ./config/version.js && git add ./src/version.ts && git commit -m \"Update version\"",
     "deploy": "gh-pages -d build",
-    "prepublishOnly": "run-s version lint build"
+    "prepublishOnly": "run-s version lint build deploy"
   },
   "main": "./lib/cjs/index.js",
   "types": "./lib/types/index.d.ts",
