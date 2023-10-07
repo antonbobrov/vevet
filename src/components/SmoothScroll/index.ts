@@ -293,10 +293,11 @@ export class SmoothScroll<
 
     // resize handler
     const resizeHandler = onResize({
-      onResize: () => this.resize(true),
+      onResize: ({ trigger }) => this.resize(trigger !== 'ResizeObserver'),
       element: [this.container, this.wrapper],
       viewportTarget,
       resizeDebounce,
+      hasBothEvents: true,
     });
     this.addDestroyableAction(() => resizeHandler.remove());
 
