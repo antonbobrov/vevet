@@ -112,6 +112,10 @@ export class SmoothScroll<
   set scrollLeft(value) {
     this.setTargetLeft(value);
     this._scrollLeft = this._targetLeft;
+
+    this._isInstant = true;
+    this._isEqualLerp = true;
+
     this._enable();
   }
 
@@ -126,6 +130,10 @@ export class SmoothScroll<
   set scrollTop(value) {
     this.setTargetTop(value);
     this._scrollTop = this._targetTop;
+
+    this._isInstant = true;
+    this._isEqualLerp = true;
+
     this._enable();
   }
 
@@ -193,6 +201,9 @@ export class SmoothScroll<
 
   /** Equal lerp for all elements */
   protected _isEqualLerp: boolean;
+
+  /** `_disable` timeout */
+  protected _disableDelayDebounce?: NodeJS.Timeout;
 
   get isSmoothScroll() {
     return true;
@@ -555,7 +566,6 @@ export class SmoothScroll<
       if (behavior === 'smooth') {
         this.setTargetLeft(left);
       } else {
-        this._isEqualLerp = true;
         this.scrollLeft = left;
       }
     }
@@ -564,7 +574,6 @@ export class SmoothScroll<
       if (behavior === 'smooth') {
         this.setTargetTop(top);
       } else {
-        this._isEqualLerp = true;
         this.scrollTop = top;
       }
     }
