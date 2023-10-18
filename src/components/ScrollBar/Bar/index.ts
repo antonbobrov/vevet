@@ -262,6 +262,9 @@ export default class Bar {
 
     const { minSize, shouldAutoSize } = this.props;
 
+    // define if empty before other calculations
+    outer.classList.toggle(this.className('_is-empty'), scrollLine === 0);
+
     // get outer sizes
     this._outerHeight = outer.clientHeight;
     this._outerWidth = outer.clientWidth;
@@ -286,9 +289,6 @@ export default class Bar {
     // get thumb sizes
     this._thumbHeight = thumb.clientHeight;
     this._thumbWidth = thumb.clientWidth;
-
-    // define if empty
-    outer.classList.toggle(this.className('_is-empty'), scrollLine === 0);
 
     // render elements
     this._renderThumb();
