@@ -107,7 +107,7 @@ export function onResize({
 
       debounceResize(
         { trigger: 'ResizeObserver' },
-        window.vevetApp.props.resizeDebounce
+        window.vevetApp.props.resizeDebounce + resizeDebounce
       );
     });
 
