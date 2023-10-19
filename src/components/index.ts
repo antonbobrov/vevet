@@ -5,6 +5,7 @@ export * from './Ctx2DPrerender';
 export * from './CustomCursor';
 export * from './DraggerDirection';
 export * from './DraggerMove';
+export * from './Marquee';
 export * from './Preloader';
 export * from './ProgressPreloader';
 export * from './ScrollBar';
