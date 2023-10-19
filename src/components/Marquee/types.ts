@@ -18,6 +18,11 @@ export namespace NMarquee {
      * @default 0
      */
     resizeDebounce?: number;
+    /**
+     * Prepend a whitespace
+     * @default true
+     */
+    prependWhitespace?: boolean;
   }
 
   export interface IChangeableProps extends NComponent.IChangeableProps {
@@ -36,11 +41,6 @@ export namespace NMarquee {
      * @default false
      */
     pauseOnHover?: boolean;
-    /**
-     * Prepend a whitespace
-     * @default true
-     */
-    prependWhitespace?: boolean;
     /**
      * On different screens with different FPS, animation may be slower or faster.
      * This property is to normalize animation speed across different screens.

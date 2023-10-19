@@ -7,7 +7,6 @@ export const Component: FC<IProps> = ({
   speed,
   isEnabled,
   pauseOnHover,
-  prependWhitespace,
   isFpsNormalized,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -25,14 +24,13 @@ export const Component: FC<IProps> = ({
       speed,
       isEnabled,
       pauseOnHover,
-      prependWhitespace,
       isFpsNormalized,
     });
 
     setMarquee(instance);
 
     return () => instance.destroy();
-  }, [isEnabled, isFpsNormalized, pauseOnHover, prependWhitespace, speed]);
+  }, [isEnabled, isFpsNormalized, pauseOnHover, speed]);
 
   return (
     <>
