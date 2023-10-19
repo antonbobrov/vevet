@@ -11,7 +11,7 @@ export namespace NAnimationFrame {
     fps?: 'auto' | number;
     /**
      * How many frames to be tested to detect real FPS
-     * @default 50
+     * @default 10
      */
     autoFpsFrames?: number;
     /**

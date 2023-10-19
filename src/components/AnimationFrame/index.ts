@@ -15,7 +15,7 @@ export class AnimationFrame<
     return {
       ...super._getDefaultProps(),
       fps: 'auto',
-      autoFpsFrames: 50,
+      autoFpsFrames: 10,
       isEnabled: false,
     };
   }
