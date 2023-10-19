@@ -110,11 +110,7 @@ export class Marquee<
   /** Set module event */
   protected _setEvents() {
     const { container, props } = this;
-    const {
-      pauseOnHover: hasPauseOnHover,
-      viewportTarget,
-      resizeDebounce,
-    } = props;
+    const { viewportTarget, resizeDebounce } = props;
 
     // create animation frame
     this._animationFrame = new AnimationFrame();
@@ -128,7 +124,7 @@ export class Marquee<
 
     // pause on hover
     this.addEventListener(container, 'mouseenter', () => {
-      if (hasPauseOnHover) {
+      if (this.props.pauseOnHover) {
         this._canPlay = false;
       }
     });
