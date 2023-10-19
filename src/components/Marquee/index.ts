@@ -143,9 +143,19 @@ export class Marquee<
       hasBothEvents: true,
     });
     this.addDestroyableAction(() => resizeHandler.remove());
+
+    // resize on page load
+    this.app
+      .onPageLoad()
+      .then(() => this.resize())
+      .catch(() => {});
   }
 
   public resize() {
+    if (this.isDestroyed) {
+      return;
+    }
+
     this._createItems();
   }
 
