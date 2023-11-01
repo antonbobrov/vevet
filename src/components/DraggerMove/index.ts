@@ -106,7 +106,7 @@ export class DraggerMove<
     this._togglePointerEvents(true);
   }
 
-  private _togglePointerEvents(isEnabledProp: boolean) {
+  protected _togglePointerEvents(isEnabledProp: boolean) {
     if (typeof this.props.disablePointerEventsAt !== 'number') {
       return;
     }

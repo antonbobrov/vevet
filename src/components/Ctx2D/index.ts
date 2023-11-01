@@ -35,7 +35,7 @@ export class Ctx2D<
   }
 
   /** The Canvas element itself */
-  private _canvas: HTMLCanvasElement;
+  protected _canvas: HTMLCanvasElement;
 
   /** The Canvas element itself */
   get canvas() {
@@ -43,7 +43,7 @@ export class Ctx2D<
   }
 
   /** 2D Context */
-  private _ctx: CanvasRenderingContext2D;
+  protected _ctx: CanvasRenderingContext2D;
 
   /** 2D Context */
   get ctx() {
@@ -51,7 +51,7 @@ export class Ctx2D<
   }
 
   /* Canvas width (with DPR) */
-  private _width: number;
+  protected _width: number;
 
   /* Canvas width (with DPR) */
   get width() {
@@ -64,7 +64,7 @@ export class Ctx2D<
   }
 
   /* Canvas height (with DPR) */
-  private _height: number;
+  protected _height: number;
 
   /* Canvas height (with DPR) */
   get height() {
@@ -77,7 +77,7 @@ export class Ctx2D<
   }
 
   /** Device pixel ratio */
-  private _dpr: number;
+  protected _dpr: number;
 
   /** Device pixel ratio */
   get dpr() {
@@ -135,7 +135,7 @@ export class Ctx2D<
   }
 
   /** Set resize events */
-  private _setResize() {
+  protected _setResize() {
     const { hasInitialResize, hasResize, viewportTarget, resizeDebounce } =
       this.props;
 

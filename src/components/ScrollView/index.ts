@@ -127,7 +127,7 @@ export class ScrollView<
   }
 
   /** Set view events */
-  private _setViewEvents() {
+  protected _setViewEvents() {
     if (!this._isIntersectionObserverSupported) {
       return;
     }

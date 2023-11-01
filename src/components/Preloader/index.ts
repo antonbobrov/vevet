@@ -27,7 +27,7 @@ export class Preloader<
   }
 
   /** Preloader container */
-  private _container?: HTMLElement | false;
+  protected _container?: HTMLElement | false;
 
   /** Preloader container */
   get container() {
@@ -35,7 +35,7 @@ export class Preloader<
   }
 
   /** Preloader start time */
-  private _startTime: number;
+  protected _startTime: number;
 
   /** Preloader start time */
   get startTime() {
@@ -43,7 +43,7 @@ export class Preloader<
   }
 
   /** Preloader end time */
-  private _endTime: number;
+  protected _endTime: number;
 
   /** Preloader end time */
   get endTime() {
@@ -58,10 +58,10 @@ export class Preloader<
   }
 
   /** Preloader is to be hidden */
-  private _isToBeHidden: boolean;
+  protected _isToBeHidden: boolean;
 
   /** Preloader is hidden */
-  private _isHidden: boolean;
+  protected _isHidden: boolean;
 
   /** Preloader is hidden */
   get isHidden() {
@@ -123,7 +123,7 @@ export class Preloader<
   }
 
   /** When the page is fully loaded */
-  private _handleLoaded() {
+  protected _handleLoaded() {
     this.callbacks.tbt('loaded', undefined);
 
     // hide the preloader
@@ -169,7 +169,7 @@ export class Preloader<
   }
 
   /** Handle the moment when the preloader is hidden */
-  private _handleHidden() {
+  protected _handleHidden() {
     this._isHidden = true;
     this.callbacks.tbt('hidden', undefined);
   }

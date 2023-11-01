@@ -32,7 +32,7 @@ export abstract class DraggerBase<
   }
 
   /** Preloader container */
-  private _container: Element | Window;
+  protected _container: Element | Window;
 
   /** Preloader container */
   get container() {
@@ -48,7 +48,7 @@ export abstract class DraggerBase<
   }
 
   /** Current pointer id */
-  private _pointerID: number | null;
+  protected _pointerID: number | null;
 
   /** Current pointer id */
   protected get pointerID() {
@@ -56,7 +56,7 @@ export abstract class DraggerBase<
   }
 
   /** Current coordinates */
-  private _coords: NDraggerBase.IVector2;
+  protected _coords: NDraggerBase.IVector2;
 
   /** Current coordinates */
   get coords() {
@@ -69,7 +69,7 @@ export abstract class DraggerBase<
   }
 
   /** Last coordinates */
-  private _prevCoords: NDraggerBase.IVector2;
+  protected _prevCoords: NDraggerBase.IVector2;
 
   /** Last coordinates */
   get prevCoords() {
@@ -82,7 +82,7 @@ export abstract class DraggerBase<
   }
 
   /** Coordinates on drag start */
-  private _startCoords: NDraggerBase.IVector2;
+  protected _startCoords: NDraggerBase.IVector2;
 
   /** Coordinates on drag start */
   get startCoords() {
@@ -90,10 +90,10 @@ export abstract class DraggerBase<
   }
 
   /** Timeout of `handleEnd` */
-  private _handleEndTimeout?: NodeJS.Timeout;
+  protected _handleEndTimeout?: NodeJS.Timeout;
 
   /** Current event type */
-  private _type?: 'mouse' | 'touch';
+  protected _type?: 'mouse' | 'touch';
 
   /** Current event type */
   get type() {
@@ -173,7 +173,7 @@ export abstract class DraggerBase<
   }
 
   /** Remove runtime events */
-  private _removeRuntimeEvents() {
+  protected _removeRuntimeEvents() {
     this._runtimeListeners.forEach((listener) => listener.remove());
 
     this._runtimeListeners = [];
@@ -202,7 +202,7 @@ export abstract class DraggerBase<
   }
 
   /** Event on drag start */
-  private _handleStart(event: NDraggerBase.TEvent) {
+  protected _handleStart(event: NDraggerBase.TEvent) {
     if (!this.props.isEnabled || this.isDragging) {
       return false;
     }
@@ -242,7 +242,7 @@ export abstract class DraggerBase<
   }
 
   /** Event on drag end */
-  private handleEnd(event: NDraggerBase.TEvent) {
+  protected handleEnd(event: NDraggerBase.TEvent) {
     if (this._handleEndTimeout) {
       return;
     }

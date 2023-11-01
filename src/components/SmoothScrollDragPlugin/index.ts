@@ -31,10 +31,10 @@ export class SmoothScrollDragPlugin<
   }
 
   /** Dragger component */
-  private _dragger?: DraggerMove;
+  protected _dragger?: DraggerMove;
 
   /** Component callbacks */
-  private _componentCallbacks?: NCallbacks.IAddedCallback[];
+  protected _componentCallbacks?: NCallbacks.IAddedCallback[];
 
   /** If is dragging at the moment */
   get isDragging() {
@@ -44,7 +44,7 @@ export class SmoothScrollDragPlugin<
   /**
    * Current lerp of SmoothScroll
    */
-  private _prevComponentLerp?: number;
+  protected _prevComponentLerp?: number;
 
   /** Initialize the class */
   protected _init() {
@@ -60,7 +60,7 @@ export class SmoothScrollDragPlugin<
   }
 
   /** Add or remove dragger */
-  private _toggleDragger() {
+  protected _toggleDragger() {
     if (this.props.isEnabled) {
       this._addDragger();
     } else {
@@ -69,7 +69,7 @@ export class SmoothScrollDragPlugin<
   }
 
   /** Add dragger */
-  private _addDragger() {
+  protected _addDragger() {
     if (this._dragger) {
       return;
     }
@@ -98,7 +98,7 @@ export class SmoothScrollDragPlugin<
   }
 
   /** Remove dragger */
-  private _removeDragger() {
+  protected _removeDragger() {
     if (!this._dragger) {
       return;
     }
@@ -111,7 +111,7 @@ export class SmoothScrollDragPlugin<
   }
 
   /** Check if dragging is available */
-  private _getIsDragAvailable() {
+  protected _getIsDragAvailable() {
     const { component } = this;
 
     if (!component.props.isEnabled) {
@@ -130,7 +130,7 @@ export class SmoothScrollDragPlugin<
   }
 
   /** Callback on dragging start */
-  private _handleDragStart() {
+  protected _handleDragStart() {
     if (!this._getIsDragAvailable()) {
       return;
     }
@@ -148,7 +148,7 @@ export class SmoothScrollDragPlugin<
   }
 
   /** Callback on drag move */
-  private _handleDragMove({
+  protected _handleDragMove({
     event,
     coords,
     start,
@@ -199,7 +199,7 @@ export class SmoothScrollDragPlugin<
   /**
    * Callback on dragging end
    */
-  private _handleDragEnd() {
+  protected _handleDragEnd() {
     const { component } = this;
 
     // update styles

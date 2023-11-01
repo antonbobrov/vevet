@@ -24,7 +24,7 @@ export class BaseTimeline<
   }
 
   /** Global timeline progress */
-  private _progress: number;
+  protected _progress: number;
 
   /** Global timeline progress */
   get progress() {
@@ -38,7 +38,7 @@ export class BaseTimeline<
   }
 
   /** Easing progress */
-  private _easing: number;
+  protected _easing: number;
 
   /** Easing progress */
   get easing() {
@@ -46,7 +46,7 @@ export class BaseTimeline<
   }
 
   /** Nested timelines */
-  private _nestedTimelines: { id: string; timeline: BaseTimeline }[];
+  protected _nestedTimelines: { id: string; timeline: BaseTimeline }[];
 
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
@@ -89,7 +89,7 @@ export class BaseTimeline<
   }
 
   /** Render nested timelines */
-  private _renderNestedTimelines() {
+  protected _renderNestedTimelines() {
     const { length } = this._nestedTimelines;
     if (length === 0) {
       return;

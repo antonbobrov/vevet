@@ -21,10 +21,10 @@ export class Timeline<
   }
 
   /** The animation frame */
-  private _animationFrame?: number;
+  protected _animationFrame?: number;
 
   /** Last time when animationFrame callback has been called */
-  private _animationFrameLastTime: number;
+  protected _animationFrameLastTime: number;
 
   /** Timeline is playing */
   get isPlaying() {
@@ -32,7 +32,7 @@ export class Timeline<
   }
 
   /** Timeline is reversed */
-  private _isReversed: boolean;
+  protected _isReversed: boolean;
 
   /** Timeline is reversed */
   get isReversed() {
@@ -40,7 +40,7 @@ export class Timeline<
   }
 
   /** Timeline is paused */
-  private _isPaused: boolean;
+  protected _isPaused: boolean;
 
   /** Timeline is paused */
   get isPaused() {
@@ -116,7 +116,7 @@ export class Timeline<
   }
 
   /** Start animation */
-  private _animate() {
+  protected _animate() {
     if (this.isPaused) {
       return;
     }

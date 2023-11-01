@@ -48,14 +48,14 @@ export class SmoothScroll<
   }
 
   /** Scroll container */
-  private _container: HTMLElement;
+  protected _container: HTMLElement;
 
   /** Scroll container */
   get container() {
     return this._container;
   }
 
-  private _elements: Elements;
+  protected _elements: Elements;
 
   /**
    * Scroll wrapper. If the element does not exist indide the `container`,
@@ -194,7 +194,7 @@ export class SmoothScroll<
   protected _isInstant?: boolean;
 
   /** Animation frame */
-  private _animationFrame: AnimationFrame;
+  protected _animationFrame: AnimationFrame;
 
   /** Frame index */
   protected _frameIndex: number;
@@ -299,7 +299,7 @@ export class SmoothScroll<
   }
 
   /** Set resize events */
-  private _setResize() {
+  protected _setResize() {
     const { viewportTarget, resizeDebounce } = this.props;
 
     // resize handler

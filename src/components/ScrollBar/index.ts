@@ -35,7 +35,7 @@ export class ScrollBar<
   }
 
   /** Scroll container */
-  private _container: Element | Window | SmoothScroll;
+  protected _container: Element | Window | SmoothScroll;
 
   /** Scroll container */
   get container() {
@@ -81,10 +81,10 @@ export class ScrollBar<
   }
 
   /** Horizontal scrollbar */
-  private _xBar: Bar;
+  protected _xBar: Bar;
 
   /** Vertical scrollbar */
-  private _yBar: Bar;
+  protected _yBar: Bar;
 
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
@@ -139,7 +139,7 @@ export class ScrollBar<
   }
 
   // Set Module Events
-  private _setEvents() {
+  protected _setEvents() {
     const { container, props } = this;
 
     // default resize handler

@@ -31,16 +31,16 @@ export class SplitText<
   }
 
   /** Initial text */
-  private _initialText: string;
+  protected _initialText: string;
 
   /** Initial HTML content */
-  private _initialHTML: string;
+  protected _initialHTML: string;
 
   /** If the text is already split into letters and words */
-  private _isBaseSplit: boolean;
+  protected _isBaseSplit: boolean;
 
   /** Text container */
-  private _container: HTMLElement;
+  protected _container: HTMLElement;
 
   /** Text container */
   get container() {
@@ -48,7 +48,7 @@ export class SplitText<
   }
 
   /** Letters */
-  private _letters: NSplitText.ILetter[];
+  protected _letters: NSplitText.ILetter[];
 
   /** Letters */
   get letters() {
@@ -56,7 +56,7 @@ export class SplitText<
   }
 
   /** Words */
-  private _words: NSplitText.IWord[];
+  protected _words: NSplitText.IWord[];
 
   /** Words */
   get words() {
@@ -64,7 +64,7 @@ export class SplitText<
   }
 
   /** Lines */
-  private _lines: NSplitText.ILine[];
+  protected _lines: NSplitText.ILine[];
 
   /** Lines */
   get lines() {
@@ -112,7 +112,7 @@ export class SplitText<
   }
 
   /** Set resize events */
-  private _setResize() {
+  protected _setResize() {
     const { viewportTarget, resizeDebounce, hasLines } = this.props;
 
     if (!hasLines) {
@@ -156,7 +156,7 @@ export class SplitText<
   }
 
   /** Split the text into words */
-  private _splitIntoWords() {
+  protected _splitIntoWords() {
     const chars = this._initialText.split('');
 
     // create words
@@ -244,7 +244,7 @@ export class SplitText<
   }
 
   /** Split the text into letters */
-  private _splitIntoLetters() {
+  protected _splitIntoLetters() {
     // check if need to have letters
     if (!this.props.hasLetters) {
       return;
@@ -283,7 +283,7 @@ export class SplitText<
   }
 
   /** Append split words to the container */
-  private _appendWords() {
+  protected _appendWords() {
     this._words.forEach((word) => {
       this.container.appendChild(word.element);
 
@@ -298,7 +298,7 @@ export class SplitText<
   }
 
   /** Split the text into lines */
-  private _splitIntoLines() {
+  protected _splitIntoLines() {
     // first of all, remove all previous lines
     this._removeLines();
 
@@ -371,7 +371,7 @@ export class SplitText<
   }
 
   /** Remove all lines */
-  private _removeLines() {
+  protected _removeLines() {
     this._lines.forEach(({ element }) => element.remove());
     this._lines = [];
 

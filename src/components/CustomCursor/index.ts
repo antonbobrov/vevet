@@ -38,10 +38,10 @@ export class CustomCursor<
   }
 
   /** Cursor container */
-  private _container: Element | Window;
+  protected _container: Element | Window;
 
   /** The container is window */
-  private _isContainerWindow: boolean;
+  protected _isContainerWindow: boolean;
 
   /** DOM parent for the cursor element */
   get domContainer(): HTMLElement {
@@ -58,7 +58,7 @@ export class CustomCursor<
   }
 
   /** Outer cursor element */
-  private _outerElement!: HTMLElement;
+  protected _outerElement!: HTMLElement;
 
   /** Cursor element (inner element) */
   get innerElement() {
@@ -66,10 +66,10 @@ export class CustomCursor<
   }
 
   /** Inner cursor element */
-  private _innerElement!: HTMLElement;
+  protected _innerElement!: HTMLElement;
 
   /** Hovered element */
-  private _hoveredElement?: NCustomCursor.IHoveredElement | undefined;
+  protected _hoveredElement?: NCustomCursor.IHoveredElement | undefined;
 
   /** Hovered element */
   get hoveredElement(): NCustomCursor.IHoveredElement | undefined {
@@ -82,10 +82,10 @@ export class CustomCursor<
   }
 
   /** Animation frame */
-  private _animationFrame!: AnimationFrame;
+  protected _animationFrame!: AnimationFrame;
 
   /** Current cursor coordinates */
-  private _coords: NCustomCursor.ICoords;
+  protected _coords: NCustomCursor.ICoords;
 
   /** Current cursor coordinates */
   get coords() {
@@ -93,7 +93,7 @@ export class CustomCursor<
   }
 
   /** Target cursor coordinates */
-  private _targetCoords: NCustomCursor.ICoords;
+  protected _targetCoords: NCustomCursor.ICoords;
 
   /** Target cursor coordinates */
   get targetCoords() {
@@ -180,7 +180,7 @@ export class CustomCursor<
   }
 
   /** Create custom cursor */
-  private _createCursor() {
+  protected _createCursor() {
     const { container, domContainer } = this;
 
     // hide native cursor
@@ -225,7 +225,7 @@ export class CustomCursor<
   }
 
   /** Set module events */
-  private _setEvents() {
+  protected _setEvents() {
     const { domContainer } = this;
 
     this._animationFrame = new AnimationFrame();
@@ -266,7 +266,7 @@ export class CustomCursor<
   }
 
   /** Event on mouse enter */
-  private _handleMouseEnter(evt: MouseEvent) {
+  protected _handleMouseEnter(evt: MouseEvent) {
     this._coords.x = evt.clientX;
     this._coords.y = evt.clientY;
     this._targetCoords.x = evt.clientX;
@@ -276,12 +276,12 @@ export class CustomCursor<
   }
 
   /** Event on mouse leave */
-  private _handleMouseLeave() {
+  protected _handleMouseLeave() {
     this.outerElement.classList.remove(this.className('-in-action'));
   }
 
   /** Event on mouse move */
-  private _handleMouseMove(evt: MouseEvent) {
+  protected _handleMouseMove(evt: MouseEvent) {
     this._targetCoords.x = evt.clientX;
     this._targetCoords.y = evt.clientY;
 
@@ -293,7 +293,7 @@ export class CustomCursor<
   }
 
   /** Event on mouse down */
-  private _handleMouseDown(evt: MouseEvent) {
+  protected _handleMouseDown(evt: MouseEvent) {
     if (evt.which === 1) {
       this.outerElement.classList.add(this.className('-click'));
       this.innerElement.classList.add(this.className('-click'));
@@ -301,13 +301,13 @@ export class CustomCursor<
   }
 
   /** Event on mouse up */
-  private _handleMouseUp() {
+  protected _handleMouseUp() {
     this.outerElement.classList.remove(this.className('-click'));
     this.innerElement.classList.remove(this.className('-click'));
   }
 
   /** Event on window blur */
-  private _handleWindowBlur() {
+  protected _handleWindowBlur() {
     this._handleMouseUp();
   }
 
@@ -387,7 +387,7 @@ export class CustomCursor<
   }
 
   /** Recalculate current coordinates */
-  private _calculateCoords() {
+  protected _calculateCoords() {
     const { targetCoords, _coords: coords } = this;
 
     coords.x = this._lerp(coords.x, targetCoords.x);
@@ -397,7 +397,7 @@ export class CustomCursor<
   }
 
   /** Linear interpolation */
-  private _lerp(current: number, target: number) {
+  protected _lerp(current: number, target: number) {
     const { isFpsNormalized, lerp: ease } = this.props;
 
     const fpsMultiplier = isFpsNormalized
@@ -410,7 +410,7 @@ export class CustomCursor<
   }
 
   /** Render elements */
-  private _renderElements(): NCustomCursor.ICoords {
+  protected _renderElements(): NCustomCursor.ICoords {
     const { domContainer, outerElement } = this;
     let { x, y } = this.coords;
     const { width, height } = this.coords;

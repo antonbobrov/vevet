@@ -21,29 +21,29 @@ export class AnimationFrame<
   }
 
   /** If the frame is launched */
-  private _isPlaying: boolean;
+  protected _isPlaying: boolean;
 
   get isPlaying() {
     return this._isPlaying;
   }
 
   /** The animation frame */
-  private _frame: number | null;
+  protected _frame: number | null;
 
   /** Last frame time */
-  private _frameIndex: number;
+  protected _frameIndex: number;
 
   /** First frame time */
-  private _firstFrameTime: null | number;
+  protected _firstFrameTime: null | number;
 
   /** Last frame time */
-  private _lastFrameTime: null | number;
+  protected _lastFrameTime: null | number;
 
   /** Array of frame time durations */
-  private _frameDurations: number[];
+  protected _frameDurations: number[];
 
   /** Computed fps */
-  private _computedFPS: number;
+  protected _computedFPS: number;
 
   /** Computed real time fps */
   get computedFPS() {
@@ -107,7 +107,7 @@ export class AnimationFrame<
   }
 
   /** Play animation */
-  private _play() {
+  protected _play() {
     if (this.isPlaying) {
       return;
     }
@@ -130,7 +130,7 @@ export class AnimationFrame<
   }
 
   /** Pause animation */
-  private _pause() {
+  protected _pause() {
     if (!this.isPlaying) {
       return;
     }
@@ -147,7 +147,7 @@ export class AnimationFrame<
   }
 
   /** Launch the animation frame */
-  private _animate() {
+  protected _animate() {
     if (!this._isPlaying) {
       return;
     }
@@ -186,7 +186,7 @@ export class AnimationFrame<
   }
 
   /** Compute real-time FPS */
-  private _computeFPS(startTime: number) {
+  protected _computeFPS(startTime: number) {
     const lastFrameDuration = startTime - (this._lastFrameTime ?? startTime);
 
     // skip frames that seem not real

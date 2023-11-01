@@ -33,7 +33,7 @@ export class ProgressPreloader<
   }
 
   /** Images to be preloaded */
-  private _images: HTMLImageElement[];
+  protected _images: HTMLImageElement[];
 
   /** Images to be preloaded */
   get images() {
@@ -41,7 +41,7 @@ export class ProgressPreloader<
   }
 
   /** Videos to be preloaded */
-  private _videos: HTMLVideoElement[];
+  protected _videos: HTMLVideoElement[];
 
   /** Videos to be preloaded */
   get videos() {
@@ -49,14 +49,14 @@ export class ProgressPreloader<
   }
 
   /** Custom resources to be preloaded */
-  private _customResources: NProgressPreloader.ICustomResourceData[];
+  protected _customResources: NProgressPreloader.ICustomResourceData[];
 
   /** Custom resources to be preloaded */
   get customResources() {
     return this._customResources;
   }
 
-  private _resourcesQuantity: number;
+  protected _resourcesQuantity: number;
 
   /** Quantity of resources to be preloader */
   get resourcesQuantity() {
@@ -71,7 +71,7 @@ export class ProgressPreloader<
   }
 
   /** Quantity of loaded resources  */
-  private _loadedResourcesQuantity: number;
+  protected _loadedResourcesQuantity: number;
 
   /** Quantity of loaded resources  */
   get loadedResourcesQuantity() {
@@ -84,7 +84,7 @@ export class ProgressPreloader<
   }
 
   /** Preloader progress */
-  private _progress: number;
+  protected _progress: number;
 
   /** Preloader progress */
   get progress() {
@@ -98,10 +98,10 @@ export class ProgressPreloader<
   }
 
   /** Animation frame for smooth progress calculation */
-  private _animationFrame?: AnimationFrame;
+  protected _animationFrame?: AnimationFrame;
 
   /** Timeline to finish progress animation */
-  private _endTimeline?: Timeline;
+  protected _endTimeline?: Timeline;
 
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
@@ -255,7 +255,7 @@ export class ProgressPreloader<
   }
 
   /** Event on resource loaded */
-  private _handleLoadedResource({
+  protected _handleLoadedResource({
     element,
     isSuccess,
   }: NProgressPreloader.IHandleLoadedResourceParameter) {

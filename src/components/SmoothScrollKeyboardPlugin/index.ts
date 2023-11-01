@@ -25,7 +25,7 @@ export class SmoothScrollKeyboardPlugin<
     };
   }
 
-  private _tabDebounceTimeout?: NodeJS.Timeout;
+  protected _tabDebounceTimeout?: NodeJS.Timeout;
 
   /** Initialize the class */
   protected _init() {
@@ -37,7 +37,7 @@ export class SmoothScrollKeyboardPlugin<
   }
 
   /** Check if keyboard events may be ignored */
-  private _canIgnoreKeyboardEvents() {
+  protected _canIgnoreKeyboardEvents() {
     const { activeElement } = document;
 
     return (
@@ -48,7 +48,7 @@ export class SmoothScrollKeyboardPlugin<
   }
 
   /** Check if scroll container is in viewport */
-  private _checkScrollContainerInViewport() {
+  protected _checkScrollContainerInViewport() {
     const { viewport } = this.app;
 
     const bounding = this.component.container.getBoundingClientRect();
@@ -62,7 +62,7 @@ export class SmoothScrollKeyboardPlugin<
   }
 
   /** Check if scroll ended */
-  private _checkIsEndOfScroll() {
+  protected _checkIsEndOfScroll() {
     const { component } = this;
 
     return (

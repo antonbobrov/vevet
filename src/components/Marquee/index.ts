@@ -63,7 +63,7 @@ export class Marquee<
   protected _canPlay: boolean;
 
   /** Animation frame */
-  private _animationFrame?: AnimationFrame;
+  protected _animationFrame?: AnimationFrame;
 
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
