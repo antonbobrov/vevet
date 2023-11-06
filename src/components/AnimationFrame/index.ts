@@ -7,9 +7,12 @@ export type { NAnimationFrame };
  * Launch an animation frame with a certain FPS
  */
 export class AnimationFrame<
-  StaticProps extends NAnimationFrame.IStaticProps = NAnimationFrame.IStaticProps,
-  ChangeableProps extends NAnimationFrame.IChangeableProps = NAnimationFrame.IChangeableProps,
-  CallbacksTypes extends NAnimationFrame.ICallbacksTypes = NAnimationFrame.ICallbacksTypes
+  StaticProps extends
+    NAnimationFrame.IStaticProps = NAnimationFrame.IStaticProps,
+  ChangeableProps extends
+    NAnimationFrame.IChangeableProps = NAnimationFrame.IChangeableProps,
+  CallbacksTypes extends
+    NAnimationFrame.ICallbacksTypes = NAnimationFrame.ICallbacksTypes,
 > extends ComponentClass<StaticProps, ChangeableProps, CallbacksTypes> {
   protected _getDefaultProps() {
     return {
@@ -164,7 +167,7 @@ export class AnimationFrame<
     const minFrameDuration =
       this.props.fps === 'auto' ? 1 : 1000 / this.props.fps;
     const newFrameIndex = Math.floor(
-      (startTime - this._firstFrameTime) / minFrameDuration
+      (startTime - this._firstFrameTime) / minFrameDuration,
     );
 
     // break if frame index the same
@@ -201,7 +204,7 @@ export class AnimationFrame<
     }
 
     const totalFramesDuration = this._frameDurations.reduce(
-      (prev, curr) => prev + curr
+      (prev, curr) => prev + curr,
     );
 
     const approximateFrameDuration =

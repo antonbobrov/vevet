@@ -9,8 +9,9 @@ export type { NTimeline };
  */
 export class Timeline<
   StaticProps extends NTimeline.IStaticProps = NTimeline.IStaticProps,
-  ChangeableProps extends NTimeline.IChangeableProps = NTimeline.IChangeableProps,
-  CallbacksTypes extends NTimeline.ICallbacksTypes = NTimeline.ICallbacksTypes
+  ChangeableProps extends
+    NTimeline.IChangeableProps = NTimeline.IChangeableProps,
+  CallbacksTypes extends NTimeline.ICallbacksTypes = NTimeline.ICallbacksTypes,
 > extends BaseTimeline<StaticProps, ChangeableProps, CallbacksTypes> {
   protected _getDefaultProps() {
     return {
@@ -148,7 +149,7 @@ export class Timeline<
 
     // continue animation
     this._animationFrame = window.requestAnimationFrame(
-      this._animate.bind(this)
+      this._animate.bind(this),
     );
   }
 

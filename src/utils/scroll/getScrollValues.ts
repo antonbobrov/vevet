@@ -13,7 +13,7 @@ export interface IGetScrollValues {
  * getScrollValues(window); // => { scrollTop: 0, scrollLeft: 0 }
  */
 export function getScrollValues(
-  selector: Window | Element | IScrollLike | undefined = window
+  selector: Window | Element | IScrollLike | undefined = window,
 ): IGetScrollValues | undefined {
   if (!selector) {
     return undefined;

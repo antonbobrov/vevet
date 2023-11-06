@@ -48,7 +48,7 @@ function getLoadProgress({
 
 export function preloadCustomElement(
   data: NProgressPreloader.ICustomResourceData,
-  instance: Module<any, any, any>
+  instance: Module<any, any, any>,
 ) {
   return new Promise<void>((resolve) => {
     const { targetProgress } = data;

@@ -9,9 +9,12 @@ export type { NSmoothScrollKeyboardPlugin };
  * Add keyboard navigation
  */
 export class SmoothScrollKeyboardPlugin<
-  StaticProps extends NSmoothScrollKeyboardPlugin.IStaticProps = NSmoothScrollKeyboardPlugin.IStaticProps,
-  ChangeableProps extends NSmoothScrollKeyboardPlugin.IChangeableProps = NSmoothScrollKeyboardPlugin.IChangeableProps,
-  CallbacksTypes extends NSmoothScrollKeyboardPlugin.ICallbacksTypes = NSmoothScrollKeyboardPlugin.ICallbacksTypes
+  StaticProps extends
+    NSmoothScrollKeyboardPlugin.IStaticProps = NSmoothScrollKeyboardPlugin.IStaticProps,
+  ChangeableProps extends
+    NSmoothScrollKeyboardPlugin.IChangeableProps = NSmoothScrollKeyboardPlugin.IChangeableProps,
+  CallbacksTypes extends
+    NSmoothScrollKeyboardPlugin.ICallbacksTypes = NSmoothScrollKeyboardPlugin.ICallbacksTypes,
 > extends Plugin<
   StaticProps,
   ChangeableProps,
@@ -32,7 +35,7 @@ export class SmoothScrollKeyboardPlugin<
     super._init();
 
     this.addEventListener(window, 'keydown', (event) =>
-      this._handleKeydown(event)
+      this._handleKeydown(event),
     );
   }
 

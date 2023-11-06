@@ -80,7 +80,7 @@ export const WithHorizontalComponent: FC = () => {
                   Lorem ipsum
                 </div>
               ),
-              20
+              20,
             )}
           </div>
         </div>

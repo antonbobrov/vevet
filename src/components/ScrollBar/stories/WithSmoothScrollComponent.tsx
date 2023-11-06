@@ -41,7 +41,7 @@ export const WithSmoothScrollComponent: FC = () => {
               mollitia illum?
             </div>
           ),
-          40
+          40,
         )}
       </div>
     </div>

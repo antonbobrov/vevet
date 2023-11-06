@@ -15,8 +15,10 @@ export type { NDraggerBase };
  */
 export abstract class DraggerBase<
   StaticProps extends NDraggerBase.IStaticProps = NDraggerBase.IStaticProps,
-  ChangeableProps extends NDraggerBase.IChangeableProps = NDraggerBase.IChangeableProps,
-  CallbacksTypes extends NDraggerBase.ICallbacksTypes = NDraggerBase.ICallbacksTypes
+  ChangeableProps extends
+    NDraggerBase.IChangeableProps = NDraggerBase.IChangeableProps,
+  CallbacksTypes extends
+    NDraggerBase.ICallbacksTypes = NDraggerBase.ICallbacksTypes,
 > extends ComponentClass<StaticProps, ChangeableProps, CallbacksTypes> {
   protected _getDefaultProps() {
     return {
@@ -132,14 +134,14 @@ export abstract class DraggerBase<
       this.container,
       'mousedown',
       (event) => this._handleStart(event),
-      { passive: this.props.isPassive }
+      { passive: this.props.isPassive },
     );
 
     this.addEventListener(
       this.container,
       'touchstart',
       (event) => this._handleStart(event),
-      { passive: this.props.isPassive }
+      { passive: this.props.isPassive },
     );
   }
 
@@ -150,25 +152,25 @@ export abstract class DraggerBase<
     this._runtimeListeners.push(
       addEventListener(window, 'mouseup', (event) => this.handleEnd(event), {
         passive: isPassive,
-      })
+      }),
     );
 
     this._runtimeListeners.push(
       addEventListener(window, 'touchend', (event) => this.handleEnd(event), {
         passive: isPassive,
-      })
+      }),
     );
 
     this._runtimeListeners.push(
       addEventListener(window, 'touchcancel', () => this.cancel(), {
         passive: isPassive,
-      })
+      }),
     );
 
     this._runtimeListeners.push(
       addEventListener(window, 'blur', () => this.cancel(), {
         passive: isPassive,
-      })
+      }),
     );
   }
 

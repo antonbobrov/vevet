@@ -20,7 +20,7 @@ export const WithDefaultComponent: FC = () => {
             mollitia illum?
           </div>
         ),
-        200
+        200,
       )}
     </div>
   );

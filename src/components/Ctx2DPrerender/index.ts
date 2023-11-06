@@ -8,9 +8,12 @@ export type { NCtx2DPrerender } from './types';
  * The class allows you to prerender media for further use with reduced payloads.
  */
 export class Ctx2DPrerender<
-  StaticProps extends NCtx2DPrerender.IStaticProps = NCtx2DPrerender.IStaticProps,
-  ChangeableProps extends NCtx2DPrerender.IChangeableProps = NCtx2DPrerender.IChangeableProps,
-  CallbacksTypes extends NCtx2DPrerender.ICallbacksTypes = NCtx2DPrerender.ICallbacksTypes
+  StaticProps extends
+    NCtx2DPrerender.IStaticProps = NCtx2DPrerender.IStaticProps,
+  ChangeableProps extends
+    NCtx2DPrerender.IChangeableProps = NCtx2DPrerender.IChangeableProps,
+  CallbacksTypes extends
+    NCtx2DPrerender.ICallbacksTypes = NCtx2DPrerender.ICallbacksTypes,
 > extends Ctx2D<StaticProps, ChangeableProps, CallbacksTypes> {
   protected _getDefaultProps() {
     return {

@@ -1,6 +1,6 @@
 export function preloadVideo(
   video: HTMLVideoElement,
-  action: (isSuccess: boolean) => void
+  action: (isSuccess: boolean) => void,
 ) {
   if (video.readyState > 0) {
     action(true);

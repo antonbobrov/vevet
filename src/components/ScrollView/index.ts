@@ -12,8 +12,10 @@ export type { NScrollView };
  */
 export class ScrollView<
   StaticProps extends NScrollView.IStaticProps = NScrollView.IStaticProps,
-  ChangeableProps extends NScrollView.IChangeableProps = NScrollView.IChangeableProps,
-  CallbacksTypes extends NScrollView.ICallbacksTypes = NScrollView.ICallbacksTypes
+  ChangeableProps extends
+    NScrollView.IChangeableProps = NScrollView.IChangeableProps,
+  CallbacksTypes extends
+    NScrollView.ICallbacksTypes = NScrollView.ICallbacksTypes,
 > extends ComponentClass<StaticProps, ChangeableProps, CallbacksTypes> {
   protected _getDefaultProps() {
     return {
@@ -148,11 +150,11 @@ export class ScrollView<
         root: props.intersectionRoot,
         threshold: 0,
         rootMargin: `0px ${xMargin}px ${yMargin}px 0px`,
-      }
+      },
     );
 
-    this.elements.forEach((element) =>
-      this._intersectionObserverIn?.observe(element)
+    this.elements.forEach(
+      (element) => this._intersectionObserverIn?.observe(element),
     );
 
     if (props.states === 'inout') {
@@ -162,11 +164,11 @@ export class ScrollView<
           root: props.intersectionRoot,
           threshold: 0,
           rootMargin: '0px 0px 0px 0px',
-        }
+        },
       );
 
-      this.elements.forEach((element) =>
-        this._intersectionObserverOut?.observe(element)
+      this.elements.forEach(
+        (element) => this._intersectionObserverOut?.observe(element),
       );
     }
   }
@@ -219,7 +221,7 @@ export class ScrollView<
       props.direction === 'horizontal'
         ? (bounding.left - rootBounding.left) / rootBounding.width
         : (bounding.top - rootBounding.top) / rootBounding.height,
-      [0, 1]
+      [0, 1],
     );
 
     return progress * props.maxDelay;
@@ -243,7 +245,7 @@ export class ScrollView<
   protected _handleInOut(
     elementProp: NScrollView.IElement,
     isInViewport: boolean,
-    delay = 0
+    delay = 0,
   ) {
     const { classToToggle } = this.props;
     const element = elementProp;

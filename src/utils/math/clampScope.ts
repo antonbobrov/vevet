@@ -12,7 +12,7 @@ import { clamp } from './clamp';
 export function clampScope(
   value: number,
   scopeProp = [0, 1],
-  clampProp = [0, 1]
+  clampProp = [0, 1],
 ) {
   return clamp(scoped(value, scopeProp), clampProp);
 }

@@ -7,9 +7,12 @@ export type { NDraggerDirection };
  * `Dragger` that detects swipe direction
  */
 export class DraggerDirection<
-  StaticProps extends NDraggerDirection.IStaticProps = NDraggerDirection.IStaticProps,
-  ChangeableProps extends NDraggerDirection.IChangeableProps = NDraggerDirection.IChangeableProps,
-  CallbacksTypes extends NDraggerDirection.ICallbacksTypes = NDraggerDirection.ICallbacksTypes
+  StaticProps extends
+    NDraggerDirection.IStaticProps = NDraggerDirection.IStaticProps,
+  ChangeableProps extends
+    NDraggerDirection.IChangeableProps = NDraggerDirection.IChangeableProps,
+  CallbacksTypes extends
+    NDraggerDirection.ICallbacksTypes = NDraggerDirection.ICallbacksTypes,
 > extends DraggerBase<StaticProps, ChangeableProps, CallbacksTypes> {
   protected _getDefaultProps() {
     return {

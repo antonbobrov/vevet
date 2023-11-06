@@ -32,7 +32,7 @@ type TLoadImageProps = {
  */
 export function loadImage(
   source: string | HTMLImageElement,
-  props?: TLoadImageProps
+  props?: TLoadImageProps,
 ) {
   const defaultLoadProps: Required<TLoadImageProps> = {
     crossOrigin: null,
@@ -94,6 +94,6 @@ export function loadImage(
           source.addEventListener('error', () => reject());
         }
       }
-    }
+    },
   );
 }

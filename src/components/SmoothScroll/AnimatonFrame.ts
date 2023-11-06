@@ -32,7 +32,7 @@ export class AnimationFrame {
         this._animationFrameEvent = this.props.outerAnimationFrame.addCallback(
           'frame',
           () => this.props.callback(),
-          { name: 'SmoothScroll' }
+          { name: 'SmoothScroll' },
         );
       }
 
@@ -43,7 +43,7 @@ export class AnimationFrame {
     if (!this._innerAnimationFrame) {
       this._innerAnimationFrame = new AnimationFrameClass({ fps: 'auto' });
       this._innerAnimationFrame.addCallback('frame', () =>
-        this.props.callback()
+        this.props.callback(),
       );
     }
 

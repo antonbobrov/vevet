@@ -15,9 +15,9 @@ export const Default: StoryFn<typeof DefaultComponent> = (props) => (
 );
 
 export const WithInnerLerp: StoryFn<typeof WithInnerLerpComponent> = (
-  props
+  props,
 ) => <WithInnerLerpComponent {...props} />;
 
 export const WithHorizontal: StoryFn<typeof WithHorizontalComponent> = (
-  props
+  props,
 ) => <WithHorizontalComponent {...props} />;

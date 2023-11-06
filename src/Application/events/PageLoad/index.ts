@@ -40,7 +40,7 @@ export class PageLoad extends Callbacks<NPageLoad.ICallbacksTypes> {
     }
 
     this._loadListener = addEventListener(window, 'load', () =>
-      this._handleLoaded()
+      this._handleLoaded(),
     );
   }
 

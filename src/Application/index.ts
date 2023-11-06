@@ -192,7 +192,7 @@ export class Application {
   /** Action on page loaded */
   public onPageLoad() {
     return new PCancelable((resolve: (...arg: any) => void) =>
-      this._pageLoad.onLoad(resolve)
+      this._pageLoad.onLoad(resolve),
     );
   }
 

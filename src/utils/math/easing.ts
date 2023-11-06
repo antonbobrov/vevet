@@ -13,5 +13,5 @@ export { Easing } from 'easing-progress';
  */
 export const easing: typeof easingProgress = (
   progress,
-  easingType = window.vevetApp?.props.easing ?? false
+  easingType = window.vevetApp?.props.easing ?? false,
 ) => easingProgress(progress, easingType);

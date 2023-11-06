@@ -11,8 +11,10 @@ export type { NBaseTimeline };
  */
 export class BaseTimeline<
   StaticProps extends NBaseTimeline.IStaticProps = NBaseTimeline.IStaticProps,
-  ChangeableProps extends NBaseTimeline.IChangeableProps = NBaseTimeline.IChangeableProps,
-  CallbacksTypes extends NBaseTimeline.ICallbacksTypes = NBaseTimeline.ICallbacksTypes
+  ChangeableProps extends
+    NBaseTimeline.IChangeableProps = NBaseTimeline.IChangeableProps,
+  CallbacksTypes extends
+    NBaseTimeline.ICallbacksTypes = NBaseTimeline.ICallbacksTypes,
 > extends ComponentClass<StaticProps, ChangeableProps, CallbacksTypes> {
   protected _getDefaultProps() {
     return {
@@ -70,7 +72,7 @@ export class BaseTimeline<
     return {
       remove: () => {
         this._nestedTimelines = this._nestedTimelines.filter(
-          ({ id: nestedTimelineId }) => nestedTimelineId !== id
+          ({ id: nestedTimelineId }) => nestedTimelineId !== id,
         );
       },
     };
@@ -103,7 +105,7 @@ export class BaseTimeline<
       const timelineProgress = clampScope(
         progressForNestedTimeline,
         timeline.props.nestedScope,
-        [0, 1]
+        [0, 1],
       );
 
       // eslint-disable-next-line no-param-reassign

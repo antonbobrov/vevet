@@ -22,7 +22,7 @@ export const Component: FC = () => {
         weight: 70,
         height: 175,
       },
-      false
+      false,
     );
 
     module.addResponsiveProps({

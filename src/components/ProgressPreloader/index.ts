@@ -15,9 +15,12 @@ export type { NProgressPreloader };
  * Page preloader with smooth progress calculation
  */
 export class ProgressPreloader<
-  StaticProps extends NProgressPreloader.IStaticProps = NProgressPreloader.IStaticProps,
-  ChangeableProps extends NProgressPreloader.IChangeableProps = NProgressPreloader.IChangeableProps,
-  CallbacksTypes extends NProgressPreloader.ICallbacksTypes = NProgressPreloader.ICallbacksTypes
+  StaticProps extends
+    NProgressPreloader.IStaticProps = NProgressPreloader.IStaticProps,
+  ChangeableProps extends
+    NProgressPreloader.IChangeableProps = NProgressPreloader.IChangeableProps,
+  CallbacksTypes extends
+    NProgressPreloader.ICallbacksTypes = NProgressPreloader.ICallbacksTypes,
 > extends Preloader<StaticProps, ChangeableProps, CallbacksTypes> {
   protected _getDefaultProps() {
     return {
@@ -190,7 +193,7 @@ export class ProgressPreloader<
 
         let loadCount = parseInt(
           element.getAttribute('data-load-count') || '1',
-          10
+          10,
         );
 
         loadCount = Number.isNaN(loadCount)
@@ -224,7 +227,7 @@ export class ProgressPreloader<
             resolve();
           }
         },
-        { isProtected: true, name: this.name }
+        { isProtected: true, name: this.name },
       );
     });
   }
@@ -233,22 +236,25 @@ export class ProgressPreloader<
   protected _preloadResources() {
     this.images.forEach((image) =>
       preloadImage(image, (isSuccess) =>
-        this._handleLoadedResource({ element: image, isSuccess })
-      )
+        this._handleLoadedResource({ element: image, isSuccess }),
+      ),
     );
 
     // preload videos
     this.videos.forEach((video) =>
       preloadVideo(video, (isSuccess) =>
-        this._handleLoadedResource({ element: video, isSuccess })
-      )
+        this._handleLoadedResource({ element: video, isSuccess }),
+      ),
     );
 
     // preload custom resources
     this._customResources.forEach((data) => {
       preloadCustomElement(data, this)
         .then(() =>
-          this._handleLoadedResource({ element: data.element, isSuccess: true })
+          this._handleLoadedResource({
+            element: data.element,
+            isSuccess: true,
+          }),
         )
         .catch(() => {});
     });

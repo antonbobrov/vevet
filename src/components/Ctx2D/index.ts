@@ -12,7 +12,7 @@ export type { NCtx2D };
 export class Ctx2D<
   StaticProps extends NCtx2D.IStaticProps = NCtx2D.IStaticProps,
   ChangeableProps extends NCtx2D.IChangeableProps = NCtx2D.IChangeableProps,
-  CallbacksTypes extends NCtx2D.ICallbacksTypes = NCtx2D.ICallbacksTypes
+  CallbacksTypes extends NCtx2D.ICallbacksTypes = NCtx2D.ICallbacksTypes,
 > extends ComponentClass<StaticProps, ChangeableProps, CallbacksTypes> {
   protected _getDefaultProps() {
     return {

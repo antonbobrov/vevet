@@ -9,8 +9,10 @@ export type { NComponent };
  */
 export class Component<
   StaticProps extends NComponent.IStaticProps = NComponent.IStaticProps,
-  ChangeableProps extends NComponent.IChangeableProps = NComponent.IChangeableProps,
-  CallbacksTypes extends NComponent.ICallbacksTypes = NComponent.ICallbacksTypes
+  ChangeableProps extends
+    NComponent.IChangeableProps = NComponent.IChangeableProps,
+  CallbacksTypes extends
+    NComponent.ICallbacksTypes = NComponent.ICallbacksTypes,
 > extends Module<StaticProps, ChangeableProps, CallbacksTypes> {
   /** Inner plugins */
   private _plugins?: Plugin[];

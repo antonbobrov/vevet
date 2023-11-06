@@ -55,7 +55,7 @@ export const DefaultComponent: FC = () => {
                 dolores placeat mollitia illum?
               </div>
             ),
-            40
+            40,
           )}
         </div>
       </div>

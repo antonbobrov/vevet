@@ -9,8 +9,10 @@ export type { NDraggerMove };
  */
 export class DraggerMove<
   StaticProps extends NDraggerMove.IStaticProps = NDraggerMove.IStaticProps,
-  ChangeableProps extends NDraggerMove.IChangeableProps = NDraggerMove.IChangeableProps,
-  CallbacksTypes extends NDraggerMove.ICallbacksTypes = NDraggerMove.ICallbacksTypes
+  ChangeableProps extends
+    NDraggerMove.IChangeableProps = NDraggerMove.IChangeableProps,
+  CallbacksTypes extends
+    NDraggerMove.ICallbacksTypes = NDraggerMove.ICallbacksTypes,
 > extends DraggerBase<StaticProps, ChangeableProps, CallbacksTypes> {
   protected _getDefaultProps() {
     return {
@@ -52,8 +54,8 @@ export class DraggerMove<
         },
         {
           passive: isPassive,
-        }
-      )
+        },
+      ),
     );
 
     this._runtimeListeners.push(
@@ -67,8 +69,8 @@ export class DraggerMove<
         },
         {
           passive: isPassive,
-        }
-      )
+        },
+      ),
     );
   }
 

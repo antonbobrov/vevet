@@ -61,8 +61,8 @@ export class Elements {
       this._elements = Array.from(
         selectAll(
           this.props.elements,
-          this.props.container
-        ) as NodeListOf<NSmoothScroll.IElement>
+          this.props.container,
+        ) as NodeListOf<NSmoothScroll.IElement>,
       );
     } else {
       this._elements = [this._wrapper as NSmoothScroll.IElement];
@@ -123,7 +123,7 @@ export class Elements {
     return array.every(
       ({ smoothScrollLeft, smoothScrollTop }) =>
         smoothScrollLeft === array[0].smoothScrollLeft &&
-        smoothScrollTop === array[0].smoothScrollTop
+        smoothScrollTop === array[0].smoothScrollTop,
     );
   }
 

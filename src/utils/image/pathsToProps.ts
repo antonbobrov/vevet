@@ -7,7 +7,7 @@ export interface IImagePaths {
 }
 
 export interface IImageAdaptivePaths<
-  S extends Record<string | number, string> = {}
+  S extends Record<string | number, string> = {},
 > extends IImagePaths {
   sizes?: S;
   sizesWebp?: S;

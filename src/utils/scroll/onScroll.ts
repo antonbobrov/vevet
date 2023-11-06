@@ -48,7 +48,7 @@ export function onScroll({
 }: IOnScrollProps): IRemovable {
   // check if listeners for this element already exist
   let instance = instances.find(
-    (data) => data.container === container && data.isPassive === isPassive
+    (data) => data.container === container && data.isPassive === isPassive,
   )!;
 
   const callbackId = uid('scroll-event');
@@ -76,11 +76,11 @@ export function onScroll({
             const { scrollTop, scrollLeft } = container;
 
             instance.callbacks.forEach((item) =>
-              item.callback({ scrollTop, scrollLeft })
+              item.callback({ scrollTop, scrollLeft }),
             );
           },
-          { name: 'onScroll' }
-        )
+          { name: 'onScroll' },
+        ),
       );
     } else {
       // dom scroll events
@@ -98,15 +98,15 @@ export function onScroll({
 
             instance.callbacks.forEach((item) => item.callback(data));
           },
-          { passive: isPassive }
-        )
+          { passive: isPassive },
+        ),
       );
     }
   }
 
   const remove = () => {
     const newCallbacks = instance.callbacks.filter(
-      (item) => item.id !== callbackId
+      (item) => item.id !== callbackId,
     );
 
     instance.callbacks = newCallbacks;

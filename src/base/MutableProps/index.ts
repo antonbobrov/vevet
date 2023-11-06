@@ -48,7 +48,7 @@ export class MutableProps<
    * Mutable Properties
    * (may change on window resize or through {@linkcode MutableProps.changeProps})
    */
-  ChangeableProps extends Record<string, any>
+  ChangeableProps extends Record<string, any>,
 > {
   /**
    * Vevet Application.
@@ -120,7 +120,7 @@ export class MutableProps<
     /**
      * Name of the responsive properties.
      */
-    private _name = 'Responsive Props'
+    private _name = 'Responsive Props',
   ) {
     this._app = window.vevetApp;
     this._refProps = mergeWithoutArrays({}, _initProps);
@@ -144,7 +144,7 @@ export class MutableProps<
     this._viewportCallback = this._app.viewport.add(
       'width',
       this._responseProps.bind(this),
-      { name: this._name }
+      { name: this._name },
     );
   }
 

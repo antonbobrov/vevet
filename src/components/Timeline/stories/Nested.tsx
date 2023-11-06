@@ -25,7 +25,7 @@ export const Nested: FC = () => {
 
     if (containerRef.current) {
       const children = Array.from(
-        containerRef.current.children
+        containerRef.current.children,
       ) as HTMLElement[];
 
       const scopes = spreadScope(children.length, 0.9);

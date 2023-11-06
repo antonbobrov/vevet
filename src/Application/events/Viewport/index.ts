@@ -159,12 +159,12 @@ export class Viewport extends Callbacks<NViewport.ICallbacksTypes> {
     if (this.isLandscape) {
       this._updateBreakpointClassNames(
         EOrientationTypes.Landscape,
-        orientationTypes
+        orientationTypes,
       );
     } else if (this.isPortrait) {
       this._updateBreakpointClassNames(
         EOrientationTypes.Portrait,
-        orientationTypes
+        orientationTypes,
       );
     } else {
       this._updateBreakpointClassNames('', orientationTypes);
@@ -195,7 +195,7 @@ export class Viewport extends Callbacks<NViewport.ICallbacksTypes> {
   /** Launch callbacks on resize. */
   private _onResize(
     /** force all callbacks */
-    force = false
+    force = false,
   ) {
     const { _width: prevWidth, _height: prevHeight } = this;
 

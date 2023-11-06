@@ -123,10 +123,10 @@ export default class Bar {
     const { outer, thumb, props } = this;
 
     this._listeners.push(
-      addEventListener(outer, 'mouseenter', () => this._handleHover(true))
+      addEventListener(outer, 'mouseenter', () => this._handleHover(true)),
     );
     this._listeners.push(
-      addEventListener(outer, 'mouseleave', () => this._handleHover(false))
+      addEventListener(outer, 'mouseleave', () => this._handleHover(false)),
     );
 
     this._scrollEvent = onScroll({
@@ -189,7 +189,7 @@ export default class Bar {
 
       this._actionTimeout = setTimeout(
         () => this.outer.classList.remove(actionClassName),
-        500
+        500,
       );
     }
 
@@ -274,13 +274,13 @@ export default class Bar {
       if (isHorizontal) {
         const barSize = clamp(
           this._outerWidth / (scrollWidth / (scrollWidth - scrollLine)),
-          [minSize, Infinity]
+          [minSize, Infinity],
         );
         thumb.style.width = `${barSize}px`;
       } else {
         const barSize = clamp(
           this._outerHeight / (scrollHeight / (scrollHeight - scrollLine)),
-          [minSize, Infinity]
+          [minSize, Infinity],
         );
         thumb.style.height = `${barSize}px`;
       }

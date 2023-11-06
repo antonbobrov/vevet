@@ -89,7 +89,7 @@ export function onResize({
 
     timeout = setTimeout(
       () => handleResize(props ?? { trigger: 'unknown' }),
-      delay ?? resizeDebounce
+      delay ?? resizeDebounce,
     );
   };
 
@@ -107,7 +107,7 @@ export function onResize({
 
       debounceResize(
         { trigger: 'ResizeObserver' },
-        window.vevetApp.props.resizeDebounce + resizeDebounce
+        window.vevetApp.props.resizeDebounce + resizeDebounce,
       );
     });
 
@@ -120,7 +120,7 @@ export function onResize({
 
   if (hasBothEvents || !resizeObserver) {
     viewportCallback = window.vevetApp.viewport.add(viewportTarget, () =>
-      debounceResize({ trigger: 'Viewport' })
+      debounceResize({ trigger: 'Viewport' }),
     );
   }
 

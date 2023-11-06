@@ -11,8 +11,10 @@ export type { NCustomCursor };
  */
 export class CustomCursor<
   StaticProps extends NCustomCursor.IStaticProps = NCustomCursor.IStaticProps,
-  ChangeableProps extends NCustomCursor.IChangeableProps = NCustomCursor.IChangeableProps,
-  CallbacksTypes extends NCustomCursor.ICallbacksTypes = NCustomCursor.ICallbacksTypes
+  ChangeableProps extends
+    NCustomCursor.IChangeableProps = NCustomCursor.IChangeableProps,
+  CallbacksTypes extends
+    NCustomCursor.ICallbacksTypes = NCustomCursor.ICallbacksTypes,
 > extends ComponentClass<StaticProps, ChangeableProps, CallbacksTypes> {
   protected _getDefaultProps() {
     return {
@@ -197,7 +199,7 @@ export class CustomCursor<
       class: this.className(
         '',
         container instanceof Window ? '-in-window' : '-in-element',
-        '-disabled'
+        '-disabled',
       ),
       parent: domContainer,
     });
@@ -235,31 +237,31 @@ export class CustomCursor<
     this.addEventListener(
       domContainer,
       'mouseenter',
-      this._handleMouseEnter.bind(this)
+      this._handleMouseEnter.bind(this),
     );
 
     this.addEventListener(
       domContainer,
       'mouseleave',
-      this._handleMouseLeave.bind(this)
+      this._handleMouseLeave.bind(this),
     );
 
     this.addEventListener(
       domContainer,
       'mousemove',
-      this._handleMouseMove.bind(this)
+      this._handleMouseMove.bind(this),
     );
 
     this.addEventListener(
       domContainer,
       'mousedown',
-      this._handleMouseDown.bind(this)
+      this._handleMouseDown.bind(this),
     );
 
     this.addEventListener(
       domContainer,
       'mouseup',
-      this._handleMouseUp.bind(this)
+      this._handleMouseUp.bind(this),
     );
 
     this.addEventListener(window, 'blur', this._handleWindowBlur.bind(this));
@@ -314,7 +316,7 @@ export class CustomCursor<
   /** Set hover events on an element */
   public addHoverElement(
     settingsProp: NCustomCursor.IHoveredElement,
-    enterTimeout = 100
+    enterTimeout = 100,
   ) {
     const settings: NCustomCursor.IHoveredElement = {
       width: 'auto',

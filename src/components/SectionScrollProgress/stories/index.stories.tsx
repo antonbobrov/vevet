@@ -14,5 +14,5 @@ export const Default: StoryFn<typeof DefalultComponent> = (props) => (
 );
 
 export const WithCustomScroll: StoryFn<typeof WithCustomScrollComponent> = (
-  props
+  props,
 ) => <WithCustomScrollComponent {...props} />;

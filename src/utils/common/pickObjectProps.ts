@@ -7,7 +7,7 @@
  */
 export function pickObjectProps<
   T extends Record<string, any>,
-  K extends keyof T
+  K extends keyof T,
 >(source: T, keys: K[]): Pick<T, K> {
   const result: any = {};
 

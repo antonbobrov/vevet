@@ -15,8 +15,10 @@ export type { NSmoothScroll };
  */
 export class SmoothScroll<
     StaticProps extends NSmoothScroll.IStaticProps = NSmoothScroll.IStaticProps,
-    ChangeableProps extends NSmoothScroll.IChangeableProps = NSmoothScroll.IChangeableProps,
-    CallbacksTypes extends NSmoothScroll.ICallbacksTypes = NSmoothScroll.ICallbacksTypes
+    ChangeableProps extends
+      NSmoothScroll.IChangeableProps = NSmoothScroll.IChangeableProps,
+    CallbacksTypes extends
+      NSmoothScroll.ICallbacksTypes = NSmoothScroll.ICallbacksTypes,
   >
   extends ComponentClass<StaticProps, ChangeableProps, CallbacksTypes>
   implements IScrollLike
@@ -288,7 +290,7 @@ export class SmoothScroll<
 
     // wheel
     this.addEventListener(this.container, 'wheel', (event) =>
-      this.handleWheel(event)
+      this.handleWheel(event),
     );
 
     // prevent native scroll
@@ -324,7 +326,7 @@ export class SmoothScroll<
             this._recalculateScrollSizes();
           }
         }) as any,
-        { isProtected: true, name: this.name }
+        { isProtected: true, name: this.name },
       );
     }
   }
@@ -365,7 +367,7 @@ export class SmoothScroll<
   /** Resize the scene */
   protected _resize(
     /** If the method was called natively on window resize */
-    isNative = false
+    isNative = false,
   ) {
     const { container, wrapper } = this;
 
@@ -507,13 +509,13 @@ export class SmoothScroll<
       element.smoothScrollLeft = this._lerp(
         element.smoothScrollLeft,
         this._targetLeft,
-        elementLerp
+        elementLerp,
       );
 
       element.smoothScrollTop = this._lerp(
         element.smoothScrollTop,
         this._targetTop,
-        elementLerp
+        elementLerp,
       );
     }
   }

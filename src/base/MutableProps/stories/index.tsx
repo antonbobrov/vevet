@@ -27,7 +27,7 @@ export const Component: FC = () => {
         console.log('changed on viewport resize', { ...props.props });
 
         setFeatures({ ...props.props });
-      }
+      },
     );
 
     props.changeProps({ name: 'second name' });

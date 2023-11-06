@@ -37,7 +37,7 @@ export const WithInnerScrollComponent: FC = () => {
             mollitia illum?
           </div>
         ),
-        40
+        40,
       )}
     </div>
   );

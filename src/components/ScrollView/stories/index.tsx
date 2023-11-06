@@ -39,7 +39,7 @@ export const Component: FC = () => {
             {index} Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </div>
         ),
-        200
+        200,
       )}
     </div>
   );

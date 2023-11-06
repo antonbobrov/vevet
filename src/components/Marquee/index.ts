@@ -13,7 +13,7 @@ export type { NMarquee };
 export class Marquee<
   StaticProps extends NMarquee.IStaticProps = NMarquee.IStaticProps,
   ChangeableProps extends NMarquee.IChangeableProps = NMarquee.IChangeableProps,
-  CallbacksTypes extends NMarquee.ICallbacksTypes = NMarquee.ICallbacksTypes
+  CallbacksTypes extends NMarquee.ICallbacksTypes = NMarquee.ICallbacksTypes,
 > extends ComponentClass<StaticProps, ChangeableProps, CallbacksTypes> {
   protected _getDefaultProps() {
     return {
@@ -190,7 +190,7 @@ export class Marquee<
     // get items quantity
     if (itemWidth < container.clientWidth) {
       this._quantity = Math.ceil(
-        (container.clientWidth + itemWidth) / itemWidth
+        (container.clientWidth + itemWidth) / itemWidth,
       );
     }
     this._quantity = Math.max(this._quantity, 4);

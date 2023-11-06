@@ -10,7 +10,7 @@ export abstract class Plugin<
   StaticProps extends NPlugin.IStaticProps = NPlugin.IStaticProps,
   ChangeableProps extends NPlugin.IChangeableProps = NPlugin.IChangeableProps,
   CallbacksTypes extends NPlugin.ICallbacksTypes = NPlugin.ICallbacksTypes,
-  Component = any
+  Component = any,
 > extends Module<StaticProps, ChangeableProps, CallbacksTypes> {
   constructor(initialProps?: StaticProps & ChangeableProps) {
     super(initialProps, false);
@@ -29,7 +29,7 @@ export abstract class Plugin<
   public init() {
     if (!this.component) {
       throw new Error(
-        'Component is unknown. Be sure that `plugin.component` is non-nullable.'
+        'Component is unknown. Be sure that `plugin.component` is non-nullable.',
       );
     }
 

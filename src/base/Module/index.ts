@@ -22,7 +22,7 @@ type TViewportAdd = Viewport['add'];
 export class Module<
   StaticProps extends NModule.IStaticProps = NModule.IStaticProps,
   ChangeableProps extends NModule.IChangeableProps = NModule.IChangeableProps,
-  CallbacksTypes extends NModule.ICallbacksTypes = NModule.ICallbacksTypes
+  CallbacksTypes extends NModule.ICallbacksTypes = NModule.ICallbacksTypes,
 > {
   /**
    * Get Default properties (should be extended)
@@ -139,13 +139,13 @@ export class Module<
      * Defines if you need to call {@linkcode Module.init} at the constructor's end.
      * If you want to add responsive properties, set this parameter to `false`.
      */
-    canInit = true
+    canInit = true,
   ) {
     if (window.vevetApp) {
       this._app = window.vevetApp;
     } else {
       throw new Error(
-        'Vevet.Application does not exist yet. Call "new Vevet.Application()" before using all the stuff'
+        'Vevet.Application does not exist yet. Call "new Vevet.Application()" before using all the stuff',
       );
     }
 
@@ -156,13 +156,13 @@ export class Module<
 
     const props = mergeWithoutArrays(
       this._getDefaultProps(),
-      initialProps || {}
+      initialProps || {},
     );
 
     this._mutableProps = new MutableProps(
       props as StaticProps & ChangeableProps,
       () => this._onPropsMutate(),
-      this.name
+      this.name,
     );
 
     if (canInit) {
@@ -174,7 +174,7 @@ export class Module<
   public addResponsiveProps(rules: NMutableProps.IResponsive<ChangeableProps>) {
     if (this.isInitialized) {
       throw new Error(
-        'Responsive properties cannot be added after `init` is called'
+        'Responsive properties cannot be added after `init` is called',
       );
     } else {
       this._mutableProps.addResponsiveProps(rules);
@@ -232,7 +232,7 @@ export class Module<
   public addViewportCallback(
     target: Parameters<TViewportAdd>[0],
     action: Parameters<TViewportAdd>[1],
-    data: Parameters<TViewportAdd>[2] = {}
+    data: Parameters<TViewportAdd>[2] = {},
   ) {
     const callback = this._app.viewport.add(target, action, {
       ...data,
@@ -246,7 +246,7 @@ export class Module<
   public addCallback<T extends keyof CallbacksTypes>(
     target: T,
     action: NCallbacks.TAction<CallbacksTypes[T]>,
-    settings: NCallbacks.ISettings = {}
+    settings: NCallbacks.ISettings = {},
   ) {
     return this.callbacks.add(target, action, settings);
   }
@@ -255,12 +255,12 @@ export class Module<
   public addEventListener<
     El extends ListenerElement,
     Target extends keyof HTMLElementEventMap,
-    Callback extends (evt: HTMLElementEventMap[Target]) => void
+    Callback extends (evt: HTMLElementEventMap[Target]) => void,
   >(
     el: El,
     target: Target,
     callback: Callback,
-    options?: IAddEventListenerOptions
+    options?: IAddEventListenerOptions,
   ): IAddEventListener {
     const listener = addEventListener(el, target, callback, options);
     this._listeners.push(listener);
@@ -269,7 +269,7 @@ export class Module<
       ...listener,
       remove: () => {
         this._listeners = this._listeners.filter(
-          (item) => item.id !== listener.id
+          (item) => item.id !== listener.id,
         );
 
         return listener.remove();
@@ -285,7 +285,7 @@ export class Module<
   protected toggleClassName(
     element: Element,
     className: string,
-    isActive: boolean
+    isActive: boolean,
   ) {
     const isAlreadyExists = element.classList.contains(className);
 
@@ -316,7 +316,7 @@ export class Module<
     this._listeners.forEach((listener) => listener.remove());
 
     this._classNamesToRemove.forEach(({ element, className }) =>
-      element.classList.remove(className)
+      element.classList.remove(className),
     );
 
     this._isDestroyed = true;

@@ -65,7 +65,7 @@ export const Component: FC = () => {
                 <button type="button">Test button</button>
               </div>
             ),
-            40
+            40,
           )}
 
           <button type="button">Test button</button>

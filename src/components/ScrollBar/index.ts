@@ -13,8 +13,10 @@ export type { NScrollBar };
  */
 export class ScrollBar<
   StaticProps extends NScrollBar.IStaticProps = NScrollBar.IStaticProps,
-  ChangeableProps extends NScrollBar.IChangeableProps = NScrollBar.IChangeableProps,
-  CallbacksTypes extends NScrollBar.ICallbacksTypes = NScrollBar.ICallbacksTypes
+  ChangeableProps extends
+    NScrollBar.IChangeableProps = NScrollBar.IChangeableProps,
+  CallbacksTypes extends
+    NScrollBar.ICallbacksTypes = NScrollBar.ICallbacksTypes,
 > extends ComponentClass<StaticProps, ChangeableProps, CallbacksTypes> {
   protected _getDefaultProps() {
     return {
@@ -123,7 +125,7 @@ export class ScrollBar<
     this.toggleClassName(
       this.scrollableElement,
       this.className('-parent'),
-      true
+      true,
     );
 
     // initialize the class
@@ -157,7 +159,7 @@ export class ScrollBar<
         ? container.addCallback(
             'resize',
             () => resizeHandler.debounceResize(),
-            { name: this.name }
+            { name: this.name },
           )
         : undefined;
 

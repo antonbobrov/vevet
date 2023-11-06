@@ -11,8 +11,10 @@ export type { NSplitText };
  */
 export class SplitText<
   StaticProps extends NSplitText.IStaticProps = NSplitText.IStaticProps,
-  ChangeableProps extends NSplitText.IChangeableProps = NSplitText.IChangeableProps,
-  CallbacksTypes extends NSplitText.ICallbacksTypes = NSplitText.ICallbacksTypes
+  ChangeableProps extends
+    NSplitText.IChangeableProps = NSplitText.IChangeableProps,
+  CallbacksTypes extends
+    NSplitText.ICallbacksTypes = NSplitText.ICallbacksTypes,
 > extends ComponentClass<StaticProps, ChangeableProps, CallbacksTypes> {
   protected _getDefaultProps() {
     return {
@@ -88,7 +90,7 @@ export class SplitText<
     this._initialText = this._initialText.replace(/\s+\n/gm, '\n');
     this._initialText = this._initialText.replace(
       /<br( ?)(\/?)>/gm,
-      String.fromCharCode(10)
+      String.fromCharCode(10),
     );
 
     // a11y

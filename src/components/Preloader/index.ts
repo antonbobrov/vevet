@@ -11,8 +11,10 @@ export type { NPreloader };
  */
 export class Preloader<
   StaticProps extends NPreloader.IStaticProps = NPreloader.IStaticProps,
-  ChangeableProps extends NPreloader.IChangeableProps = NPreloader.IChangeableProps,
-  CallbacksTypes extends NPreloader.ICallbacksTypes = NPreloader.ICallbacksTypes
+  ChangeableProps extends
+    NPreloader.IChangeableProps = NPreloader.IChangeableProps,
+  CallbacksTypes extends
+    NPreloader.ICallbacksTypes = NPreloader.ICallbacksTypes,
 > extends ComponentClass<StaticProps, ChangeableProps, CallbacksTypes> {
   protected _getDefaultProps() {
     return {
@@ -136,7 +138,7 @@ export class Preloader<
   public hide(
     duration = typeof this.props.hideAnimation !== 'boolean'
       ? this.props.hideAnimation
-      : 250
+      : 250,
   ) {
     this._isToBeHidden = true;
     this.callbacks.tbt('hide', undefined);

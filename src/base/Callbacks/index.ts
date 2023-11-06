@@ -64,7 +64,7 @@ export class Callbacks<Types extends NCallbacks.ITypes = NCallbacks.ITypes> {
   public add<T extends keyof Types>(
     target: T,
     action: NCallbacks.TAction<Types[T]>,
-    settings: NCallbacks.ISettings = {}
+    settings: NCallbacks.ISettings = {},
   ): NCallbacks.IAddedCallback {
     const id = uid('callback');
 
@@ -160,7 +160,7 @@ export class Callbacks<Types extends NCallbacks.ITypes = NCallbacks.ITypes> {
    */
   private _callAction(
     { id, isEnabled, timeout, isOnce, action }: NCallbacks.ICallback<Types>,
-    parameter: Types[keyof Types]
+    parameter: Types[keyof Types],
   ) {
     if (!isEnabled) {
       return;

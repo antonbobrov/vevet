@@ -60,7 +60,7 @@ export const WithInnerLerpComponent: FC = () => {
                 dolores placeat mollitia illum?
               </div>
             ),
-            40
+            40,
           )}
         </div>
       </div>

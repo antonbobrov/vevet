@@ -20,6 +20,6 @@ export function wrap(min: number, max: number, value: number) {
 
   return conditionalReturn(
     value,
-    (val) => ((range + ((val - min) % range)) % range) + min
+    (val) => ((range + ((val - min) % range)) % range) + min,
   ) as number;
 }

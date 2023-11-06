@@ -1,6 +1,6 @@
 export function preloadImage(
   imageProp: HTMLImageElement,
-  action: (isSuccess: boolean) => void
+  action: (isSuccess: boolean) => void,
 ) {
   if (imageProp.complete) {
     action(true);

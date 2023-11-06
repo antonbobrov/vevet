@@ -10,9 +10,12 @@ export type { NSmoothScrollDragPlugin };
  * Add dragger to `SmoothScroll`
  */
 export class SmoothScrollDragPlugin<
-  StaticProp extends NSmoothScrollDragPlugin.IStaticProps = NSmoothScrollDragPlugin.IStaticProps,
-  ChangeableProp extends NSmoothScrollDragPlugin.IChangeableProps = NSmoothScrollDragPlugin.IChangeableProps,
-  CallbacksTypes extends NSmoothScrollDragPlugin.ICallbacksTypes = NSmoothScrollDragPlugin.ICallbacksTypes
+  StaticProp extends
+    NSmoothScrollDragPlugin.IStaticProps = NSmoothScrollDragPlugin.IStaticProps,
+  ChangeableProp extends
+    NSmoothScrollDragPlugin.IChangeableProps = NSmoothScrollDragPlugin.IChangeableProps,
+  CallbacksTypes extends
+    NSmoothScrollDragPlugin.ICallbacksTypes = NSmoothScrollDragPlugin.ICallbacksTypes,
 > extends Plugin<
   StaticProp,
   ChangeableProp,
@@ -93,7 +96,7 @@ export class SmoothScrollDragPlugin<
     this._componentCallbacks.push(
       component.addCallback('wheel', () => this._dragger?.cancel(), {
         name: this.name,
-      })
+      }),
     );
   }
 

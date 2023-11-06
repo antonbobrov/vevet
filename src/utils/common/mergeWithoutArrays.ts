@@ -10,7 +10,7 @@ import mergeWith from 'lodash.mergewith';
  */
 export function mergeWithoutArrays<
   A extends Record<string, any>,
-  B extends Record<string, any>
+  B extends Record<string, any>,
 >(object: A, source: B): A & B {
   return mergeWith(object, source, (objValue, srcValue) => {
     if (Array.isArray(objValue)) {

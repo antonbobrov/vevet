@@ -12,9 +12,12 @@ export type { NScrollSectionProgress };
  * Trace scroll progress of a section
  */
 export class SectionScrollProgress<
-  StaticProps extends NScrollSectionProgress.IStaticProps = NScrollSectionProgress.IStaticProps,
-  ChangeableProps extends NScrollSectionProgress.IChangeableProps = NScrollSectionProgress.IChangeableProps,
-  CallbacksTypes extends NScrollSectionProgress.ICallbacksTypes = NScrollSectionProgress.ICallbacksTypes
+  StaticProps extends
+    NScrollSectionProgress.IStaticProps = NScrollSectionProgress.IStaticProps,
+  ChangeableProps extends
+    NScrollSectionProgress.IChangeableProps = NScrollSectionProgress.IChangeableProps,
+  CallbacksTypes extends
+    NScrollSectionProgress.ICallbacksTypes = NScrollSectionProgress.ICallbacksTypes,
 > extends ComponentClass<StaticProps, ChangeableProps, CallbacksTypes> {
   protected _getDefaultProps() {
     return {
