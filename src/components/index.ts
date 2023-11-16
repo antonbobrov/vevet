@@ -11,6 +11,7 @@ export * from './ProgressPreloader';
 export * from './ScrollBar';
 export * from './ScrollView';
 export * from './SectionScrollProgress';
+export * from './SlideProgress';
 export * from './SmoothScroll';
 export * from './SmoothScrollDragPlugin';
 export * from './SmoothScrollKeyboardPlugin';
