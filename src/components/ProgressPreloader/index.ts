@@ -168,7 +168,11 @@ export class ProgressPreloader<
     if (canPreloadImages) {
       const images = selectAll('img');
       images.forEach((image) => {
-        if (!image.classList.contains(preloadIgnoreClassName)) {
+        const shouldPreload =
+          !image.classList.contains(preloadIgnoreClassName) &&
+          image.loading !== 'lazy';
+
+        if (shouldPreload) {
           this._images.push(image);
         }
       });

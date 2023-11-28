@@ -57,8 +57,18 @@ export const Component: FC = () => {
       </div>
 
       <img src="https://picsum.photos/400/600" alt="" crossOrigin="anonymous" />
-      <img src="https://picsum.photos/400/601" alt="" crossOrigin="anonymous" />
-      <img src="https://picsum.photos/400/602" alt="" crossOrigin="anonymous" />
+      <img
+        src="https://picsum.photos/400/601"
+        alt=""
+        crossOrigin="anonymous"
+        loading="lazy"
+      />
+      <img
+        src="https://picsum.photos/400/602"
+        alt=""
+        crossOrigin="anonymous"
+        className="js-preload-ignore"
+      />
 
       {isTestElementInDom && (
         <video
