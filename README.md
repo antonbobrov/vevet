@@ -26,3 +26,8 @@ npm install vevet
 ```scss
 @import '~vevet/lib/styles/index';
 ```
+
+## Initialize Vevet
+```js
+window.vevetApplication = new Application()
+```
