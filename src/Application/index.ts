@@ -1,10 +1,10 @@
 import { Viewport, NViewport } from './events/Viewport';
-import { PageLoad, NPageLoad } from './events/PageLoad';
 import version from '../version';
 import { NApplication } from './types';
 import { getDeviceInfo } from '@/utils/internal/getDeviceInfo';
 import { fetchWebpSupport } from '@/utils/internal/fetchWebpSupport';
 import { PCancelable } from '@/utils/common/PCancelable';
+import { createPageLoad } from './events/PageLoad';
 
 /**
  * Vevet Application. This is the base Vevet class
@@ -97,7 +97,7 @@ export class Application {
     return this._isWebpSupported;
   }
 
-  private _pageLoad: PageLoad;
+  private _pageLoad: ReturnType<typeof createPageLoad>;
 
   /** Page Load Callbacks */
   get pageLoad() {
@@ -137,7 +137,7 @@ export class Application {
     window.vevetApp = this;
 
     // create default helpers
-    this._pageLoad = new PageLoad();
+    this._pageLoad = createPageLoad();
     this._viewport = new Viewport();
   }
 
@@ -216,7 +216,7 @@ export class Application {
   }
 }
 
-export type { NApplication, NViewport, NPageLoad };
+export type { NApplication, NViewport };
 
 declare global {
   interface Window {
