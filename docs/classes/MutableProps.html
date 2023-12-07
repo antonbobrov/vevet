@@ -29,7 +29,7 @@ with help of <a href="MutableProps.html#addResponsiveProps" class="tsd-kind-meth
 </ul>
 </div>
 <div class="tsd-comment tsd-typography">
-<h4>Example</h4><pre><code class="language-ts"><span class="hl-5">interface</span><span class="hl-1"> </span><span class="hl-8">IStatic</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-6">static</span><span class="hl-1">: </span><span class="hl-8">string</span><span class="hl-1">;</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-5">interface</span><span class="hl-1"> </span><span class="hl-8">IChangeable</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-6">changeable</span><span class="hl-1">: </span><span class="hl-8">string</span><span class="hl-1">;</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-7">props</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-0">MutableProps</span><span class="hl-1">&lt;</span><span class="hl-8">IStatic</span><span class="hl-1">, </span><span class="hl-8">IChangeable</span><span class="hl-1">&gt;({</span><br/><span class="hl-1">  </span><span class="hl-6">static:</span><span class="hl-1"> </span><span class="hl-2">&#39;&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-6">changeable:</span><span class="hl-1"> </span><span class="hl-2">&#39;something&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-6">props</span><span class="hl-1">.</span><span class="hl-0">addResponsiveProps</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-6">breakpoint:</span><span class="hl-1"> </span><span class="hl-2">&#39;viewport_phone&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-6">settings:</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-6">changeable:</span><span class="hl-1"> </span><span class="hl-2">&#39;phone&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-6">props</span><span class="hl-1">.</span><span class="hl-0">changeProps</span><span class="hl-1">({ </span><span class="hl-6">changeable:</span><span class="hl-1"> </span><span class="hl-2">&#39;changed&#39;</span><span class="hl-1"> });</span>
+<h4>Example</h4><pre><code class="language-ts"><span class="hl-5">interface</span><span class="hl-1"> </span><span class="hl-8">IStatic</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-4">static</span><span class="hl-1">: </span><span class="hl-8">string</span><span class="hl-1">;</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-5">interface</span><span class="hl-1"> </span><span class="hl-8">IChangeable</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-4">changeable</span><span class="hl-1">: </span><span class="hl-8">string</span><span class="hl-1">;</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-7">props</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-0">MutableProps</span><span class="hl-1">&lt;</span><span class="hl-8">IStatic</span><span class="hl-1">, </span><span class="hl-8">IChangeable</span><span class="hl-1">&gt;({</span><br/><span class="hl-1">  </span><span class="hl-4">static:</span><span class="hl-1"> </span><span class="hl-2">&#39;&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">changeable:</span><span class="hl-1"> </span><span class="hl-2">&#39;something&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-4">props</span><span class="hl-1">.</span><span class="hl-0">addResponsiveProps</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-4">breakpoint:</span><span class="hl-1"> </span><span class="hl-2">&#39;viewport_phone&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">settings:</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-4">changeable:</span><span class="hl-1"> </span><span class="hl-2">&#39;phone&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-4">props</span><span class="hl-1">.</span><span class="hl-0">changeProps</span><span class="hl-1">({ </span><span class="hl-4">changeable:</span><span class="hl-1"> </span><span class="hl-2">&#39;changed&#39;</span><span class="hl-1"> });</span>
 </code><button>Copy</button></pre>
 </div></section> 
 <section class="tsd-panel">
@@ -44,7 +44,7 @@ with help of <a href="MutableProps.html#addResponsiveProps" class="tsd-kind-meth
 <ul class="tsd-hierarchy">
 <li><span class="target">MutableProps</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a16044f/src/base/MutableProps/index.ts#L42">src/base/MutableProps/index.ts:42</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/779b184/src/base/MutableProps/index.ts#L41">src/base/MutableProps/index.ts:41</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -121,11 +121,11 @@ These properties will nevet change.</p>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="MutableProps.html" class="tsd-signature-type tsd-kind-class">MutableProps</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">StaticProps</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">ChangeableProps</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography">
-<h4>Example</h4><pre><code class="language-ts"><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-7">static</span><span class="hl-1"> = {</span><br/><span class="hl-1">  </span><span class="hl-6">myProp:</span><span class="hl-1"> </span><span class="hl-5">true</span><span class="hl-1">,</span><br/><span class="hl-1">};</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-7">responsive</span><span class="hl-1"> = [</span><br/><span class="hl-1">  {</span><br/><span class="hl-1">    </span><span class="hl-6">breakpoint:</span><span class="hl-1"> </span><span class="hl-2">&#39;m&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-6">settings:</span><span class="hl-1"> {</span><br/><span class="hl-1">      </span><span class="hl-6">myProp:</span><span class="hl-1"> </span><span class="hl-5">false</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">];</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-7">props</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-0">MutableProps</span><span class="hl-1">(</span><span class="hl-6">static</span><span class="hl-1">, </span><span class="hl-6">responsive</span><span class="hl-1">);</span>
+<h4>Example</h4><pre><code class="language-ts"><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-7">static</span><span class="hl-1"> = {</span><br/><span class="hl-1">  </span><span class="hl-4">myProp:</span><span class="hl-1"> </span><span class="hl-5">true</span><span class="hl-1">,</span><br/><span class="hl-1">};</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-7">responsive</span><span class="hl-1"> = [</span><br/><span class="hl-1">  {</span><br/><span class="hl-1">    </span><span class="hl-4">breakpoint:</span><span class="hl-1"> </span><span class="hl-2">&#39;m&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">settings:</span><span class="hl-1"> {</span><br/><span class="hl-1">      </span><span class="hl-4">myProp:</span><span class="hl-1"> </span><span class="hl-5">false</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">];</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-7">props</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-0">MutableProps</span><span class="hl-1">(</span><span class="hl-4">static</span><span class="hl-1">, </span><span class="hl-4">responsive</span><span class="hl-1">);</span>
 </code><button>Copy</button></pre>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a16044f/src/base/MutableProps/index.ts#L110">src/base/MutableProps/index.ts:110</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/779b184/src/base/MutableProps/index.ts#L109">src/base/MutableProps/index.ts:109</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="_activeBreakpoints" class="tsd-anchor"></a>
@@ -135,7 +135,7 @@ These properties will nevet change.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a16044f/src/base/MutableProps/index.ts#L90">src/base/MutableProps/index.ts:90</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/779b184/src/base/MutableProps/index.ts#L89">src/base/MutableProps/index.ts:89</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="_app" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>_app</span><a href="#_app" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">_app</span><span class="tsd-signature-symbol">:</span> <a href="Application.html" class="tsd-signature-type tsd-kind-class">Application</a></div>
@@ -143,7 +143,7 @@ These properties will nevet change.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a16044f/src/base/MutableProps/index.ts#L56">src/base/MutableProps/index.ts:56</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/779b184/src/base/MutableProps/index.ts#L55">src/base/MutableProps/index.ts:55</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="_initProps" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>_init<wbr/>Props</span><a href="#_initProps" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">_init<wbr/>Props</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type tsd-kind-type-parameter">StaticProps</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type tsd-kind-type-parameter">ChangeableProps</span></div>
@@ -152,7 +152,7 @@ These properties will nevet change.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a16044f/src/base/MutableProps/index.ts#L115">src/base/MutableProps/index.ts:115</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/779b184/src/base/MutableProps/index.ts#L114">src/base/MutableProps/index.ts:114</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="_name" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>_name</span><a href="#_name" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">_name</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &#39;Responsive Props&#39;</span></div>
@@ -160,7 +160,7 @@ These properties will nevet change.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a16044f/src/base/MutableProps/index.ts#L123">src/base/MutableProps/index.ts:123</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/779b184/src/base/MutableProps/index.ts#L122">src/base/MutableProps/index.ts:122</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="_onMutate" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>_on<wbr/>Mutate</span><a href="#_onMutate" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">_on<wbr/>Mutate</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> = ...</span></div>
@@ -176,7 +176,7 @@ These properties will nevet change.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div></li></ul></li></ul></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a16044f/src/base/MutableProps/index.ts#L119">src/base/MutableProps/index.ts:119</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/779b184/src/base/MutableProps/index.ts#L118">src/base/MutableProps/index.ts:118</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="_props" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>_props</span><a href="#_props" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">_props</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type tsd-kind-type-parameter">StaticProps</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type tsd-kind-type-parameter">ChangeableProps</span></div>
@@ -185,7 +185,7 @@ These properties may change both on <a href="MutableProps.html#changeProps" clas
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a16044f/src/base/MutableProps/index.ts#L68">src/base/MutableProps/index.ts:68</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/779b184/src/base/MutableProps/index.ts#L67">src/base/MutableProps/index.ts:67</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="_refProps" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>_ref<wbr/>Props</span><a href="#_refProps" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">_ref<wbr/>Props</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type tsd-kind-type-parameter">StaticProps</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type tsd-kind-type-parameter">ChangeableProps</span></div>
@@ -194,7 +194,7 @@ These properties may change only through <a href="MutableProps.html#changeProps"
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a16044f/src/base/MutableProps/index.ts#L62">src/base/MutableProps/index.ts:62</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/779b184/src/base/MutableProps/index.ts#L61">src/base/MutableProps/index.ts:61</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="_responsiveRules" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>_responsive<wbr/>Rules</span><a href="#_responsiveRules" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">_responsive<wbr/>Rules</span><span class="tsd-signature-symbol">:</span> <a href="../interfaces/NMutableProps.IResponsive.html" class="tsd-signature-type tsd-kind-interface">IResponsive</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">ChangeableProps</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
@@ -202,7 +202,7 @@ These properties may change only through <a href="MutableProps.html#changeProps"
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a16044f/src/base/MutableProps/index.ts#L73">src/base/MutableProps/index.ts:73</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/779b184/src/base/MutableProps/index.ts#L72">src/base/MutableProps/index.ts:72</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="_viewportCallback" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <code class="tsd-tag ts-flagOptional">Optional</code> <span>_viewport<wbr/>Callback</span><a href="#_viewportCallback" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">_viewport<wbr/>Callback</span><span class="tsd-signature-symbol">?:</span> <a href="../interfaces/NCallbacks.IAddedCallback.html" class="tsd-signature-type tsd-kind-interface">IAddedCallback</a></div>
@@ -210,7 +210,7 @@ These properties may change only through <a href="MutableProps.html#changeProps"
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a16044f/src/base/MutableProps/index.ts#L85">src/base/MutableProps/index.ts:85</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/779b184/src/base/MutableProps/index.ts#L84">src/base/MutableProps/index.ts:84</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Accessors</h2>
 <section class="tsd-panel tsd-member"><a id="props" class="tsd-anchor"></a>
@@ -223,7 +223,7 @@ These properties may change only through <a href="MutableProps.html#changeProps"
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type tsd-kind-type-parameter">StaticProps</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type tsd-kind-type-parameter">ChangeableProps</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a16044f/src/base/MutableProps/index.ts#L78">src/base/MutableProps/index.ts:78</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/779b184/src/base/MutableProps/index.ts#L77">src/base/MutableProps/index.ts:77</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="_responseProps" class="tsd-anchor"></a>
@@ -236,7 +236,7 @@ These properties may change only through <a href="MutableProps.html#changeProps"
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a16044f/src/base/MutableProps/index.ts#L154">src/base/MutableProps/index.ts:154</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/779b184/src/base/MutableProps/index.ts#L153">src/base/MutableProps/index.ts:153</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="addResponsiveProps" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>add<wbr/>Responsive<wbr/>Props</span><a href="#addResponsiveProps" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -252,7 +252,7 @@ These properties may change only through <a href="MutableProps.html#changeProps"
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a16044f/src/base/MutableProps/index.ts#L135">src/base/MutableProps/index.ts:135</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/779b184/src/base/MutableProps/index.ts#L134">src/base/MutableProps/index.ts:134</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="changeProps" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>change<wbr/>Props</span><a href="#changeProps" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -268,7 +268,7 @@ These properties may change only through <a href="MutableProps.html#changeProps"
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a16044f/src/base/MutableProps/index.ts#L217">src/base/MutableProps/index.ts:217</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/779b184/src/base/MutableProps/index.ts#L216">src/base/MutableProps/index.ts:216</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="destroy" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>destroy</span><a href="#destroy" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -279,7 +279,7 @@ These properties may change only through <a href="MutableProps.html#changeProps"
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a16044f/src/base/MutableProps/index.ts#L227">src/base/MutableProps/index.ts:227</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/779b184/src/base/MutableProps/index.ts#L226">src/base/MutableProps/index.ts:226</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -396,7 +396,6 @@ These properties may change only through <a href="MutableProps.html#changeProps"
 <li><a href="../functions/isIntersectionObserverSupported.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>is<wbr/>Intersection<wbr/>Observer<wbr/>Supported</span></a></li>
 <li><a href="../functions/lerp.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>lerp</span></a></li>
 <li><a href="../functions/loadImage.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>load<wbr/>Image</span></a></li>
-<li><a href="../functions/mergeWithoutArrays.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>merge<wbr/>Without<wbr/>Arrays</span></a></li>
 <li><a href="../functions/normalizeNestedScope.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>normalize<wbr/>Nested<wbr/>Scope</span></a></li>
 <li><a href="../functions/normalizeWheel.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>normalize<wbr/>Wheel</span></a></li>
 <li><a href="../functions/normalizedTimeoutCallback.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-64"></use></svg><span>normalized<wbr/>Timeout<wbr/>Callback</span></a></li>
