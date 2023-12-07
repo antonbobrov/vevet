@@ -30,7 +30,9 @@ export const Component: FC = () => {
       },
     );
 
-    props.changeProps({ name: 'second name' });
+    const timeout = setTimeout(() => {
+      props.changeProps({ name: 'second name' });
+    }, 1000);
 
     props.addResponsiveProps({
       breakpoint: 'device_mobile',
@@ -62,7 +64,10 @@ export const Component: FC = () => {
       settings: { viewport: 'phone' },
     });
 
-    return () => props.destroy();
+    return () => {
+      clearTimeout(timeout);
+      props.destroy();
+    };
   }, []);
 
   return (

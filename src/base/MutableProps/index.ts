@@ -1,4 +1,3 @@
-import { mergeWithoutArrays } from '@/utils/common';
 import { NCallbacks } from '../Callbacks/types';
 import { NMutableProps } from './types';
 
@@ -123,8 +122,8 @@ export class MutableProps<
     private _name = 'Responsive Props',
   ) {
     this._app = window.vevetApp;
-    this._refProps = mergeWithoutArrays({}, _initProps);
-    this._props = mergeWithoutArrays({}, _initProps);
+    this._refProps = { ..._initProps };
+    this._props = { ..._initProps };
 
     this._activeBreakpoints = [];
   }
@@ -156,7 +155,7 @@ export class MutableProps<
     const { viewport } = app;
 
     let newProps: (StaticProps & ChangeableProps) | false = false;
-    const statProp = mergeWithoutArrays({}, this._refProps);
+    const statProp = { ...this._refProps };
 
     const prevActiveBreakpointsString = [...this._activeBreakpoints].join('_');
     this._activeBreakpoints = [];
@@ -167,7 +166,7 @@ export class MutableProps<
       if (typeof breakpoint === 'number') {
         if (viewport.width <= breakpoint) {
           this._activeBreakpoints.push(breakpoint);
-          newProps = mergeWithoutArrays(statProp, settings);
+          newProps = { ...statProp, ...settings };
         }
       } else if (typeof breakpoint === 'string') {
         // viewport size
@@ -177,7 +176,7 @@ export class MutableProps<
           (breakpoint === 'viewport_phone' && viewport.isPhone)
         ) {
           this._activeBreakpoints.push(breakpoint);
-          newProps = mergeWithoutArrays(statProp, settings);
+          newProps = { ...(newProps || statProp), ...settings };
         }
 
         // device type
@@ -187,7 +186,7 @@ export class MutableProps<
           (breakpoint === 'device_mobile' && app.isMobile)
         ) {
           this._activeBreakpoints.push(breakpoint);
-          newProps = mergeWithoutArrays(statProp, settings);
+          newProps = { ...(newProps || statProp), ...settings };
         }
       }
     });
@@ -199,10 +198,10 @@ export class MutableProps<
 
     // if there's no breakpoint, restore the props
     if (!newProps) {
-      this._props = mergeWithoutArrays(this._props, this._refProps);
+      this._props = { ...this._props, ...this._refProps };
     } else {
       // otherwise, change the properties
-      this._props = mergeWithoutArrays(this._props, newProps);
+      this._props = { ...this._props, ...(newProps as any) };
     }
 
     // callback
@@ -215,8 +214,8 @@ export class MutableProps<
    * This method allows you to change the properties manually.
    */
   public changeProps(props: Partial<ChangeableProps>) {
-    this._props = mergeWithoutArrays(this._props, props);
-    this._refProps = mergeWithoutArrays(this._refProps, props);
+    this._props = { ...this._props, ...props };
+    this._refProps = { ...this._refProps, ...props };
 
     this._onMutate();
   }

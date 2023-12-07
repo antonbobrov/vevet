@@ -1,4 +1,3 @@
-export * from './mergeWithoutArrays';
 export * from './normalizedTimeoutCallback';
 export * from './objectKeys';
 export * from './PCancelable';

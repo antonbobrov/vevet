@@ -8,7 +8,6 @@ import { DeepRequired } from 'ts-essentials';
 import { NModule } from './types';
 import { MutableProps, NMutableProps } from '../MutableProps';
 import { Callbacks, NCallbacks } from '../Callbacks';
-import { mergeWithoutArrays } from '@/utils/common';
 import { Viewport } from '@/src/Application/events/Viewport';
 import { TRequiredModuleProp } from '@/types/utility';
 
@@ -154,10 +153,10 @@ export class Module<
     this._destroyableActions = [];
     this._classNamesToRemove = [];
 
-    const props = mergeWithoutArrays(
-      this._getDefaultProps(),
-      initialProps || {},
-    );
+    const props = {
+      ...this._getDefaultProps(),
+      ...(initialProps || {}),
+    };
 
     this._mutableProps = new MutableProps(
       props as StaticProps & ChangeableProps,
