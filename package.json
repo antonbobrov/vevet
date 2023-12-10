@@ -59,7 +59,7 @@
   "dependencies": {
     "@anton.bobrov/p-cancelable": "^4.0.1-1",
     "detect-browser": "^5.3.0",
-    "easing-progress": "^0.0.4",
+    "easing-progress": "^1.0.0",
     "get-image-pos": "^0.0.11",
     "ismobilejs": "^1.1.1",
     "lodash.mergewith": "^4.6.2",

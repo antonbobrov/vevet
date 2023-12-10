@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { BaseTimeline } from '..';
-import { Easing, spreadScope } from '@/utils/math';
+import { EaseInOutBounce, spreadScope } from '@/utils/math';
 
 export const Nested: FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -8,7 +8,7 @@ export const Nested: FC = () => {
 
   useEffect(() => {
     const instance = new BaseTimeline({
-      easing: Easing.easeInOutBounce,
+      easing: EaseInOutBounce,
       hasNestedEasingProgress: true,
     });
     setTimeline(instance);
@@ -23,7 +23,7 @@ export const Nested: FC = () => {
       children.forEach((child, index) => {
         const nestedTm = new BaseTimeline({
           nestedScope: scopes[index],
-          easing: Easing.easeInOutBounce,
+          easing: EaseInOutBounce,
         });
 
         nestedTm.addCallback('progress', ({ easing }) => {

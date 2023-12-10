@@ -1,4 +1,4 @@
-import { EasingType } from 'easing-progress';
+import { TEasingType } from '@/utils/math';
 
 export namespace NApplication {
   export interface IProps {
@@ -27,7 +27,7 @@ export namespace NApplication {
      * Easing function that is used in animation as the default value
      * @default [.25, .1, .25, 1]
      */
-    easing: EasingType;
+    easing: TEasingType;
     /**
      * Check if the browser supports WebP
      * @default false

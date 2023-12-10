@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { Timeline } from '..';
-import { Easing } from '@/utils/math';
+import { EaseInOutBounce } from '@/utils/math';
 
 export const Basic: FC = () => {
   const thumbRef = useRef<HTMLDivElement>(null);
@@ -11,7 +11,7 @@ export const Basic: FC = () => {
   useEffect(() => {
     const instance = new Timeline({
       duration: 3500,
-      easing: Easing.easeInOutBounce,
+      easing: EaseInOutBounce,
     });
 
     setTimeline(instance);
