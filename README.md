@@ -1,7 +1,7 @@
 # Vevet is a JavaScript library of ready-made solutions and helpers
 
-![NPM](https://img.shields.io/npm/v/vevet?style=flat-squar)
 ![Language](https://img.shields.io/github/languages/top/antonbobrov/vevet)
+![gzip](https://img.shields.io/bundlejs/size/vevet)
 
 * [See Demo](https://antonbobrov.github.io/vevet/)
 * [See Documentation](https://antonbobrov.github.io/vevet/docs/)
