@@ -48,6 +48,10 @@ export class Timeline<
     return this._isPaused;
   }
 
+  get duration() {
+    return Math.max(this.props.duration, 1);
+  }
+
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
 
@@ -130,8 +134,7 @@ export class Timeline<
     this._animationFrameLastTime = currentTime;
 
     // calculate current progress
-    const progressIterator =
-      frameDiff / this.props.duration / (isReversed ? -1 : 1);
+    const progressIterator = frameDiff / this.duration / (isReversed ? -1 : 1);
     const progressTarget = clamp(this.progress + progressIterator, [0, 1]);
     this.progress = progressTarget;
 
