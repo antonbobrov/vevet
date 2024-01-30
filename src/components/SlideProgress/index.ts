@@ -190,6 +190,8 @@ export class SlideProgress<
     onProgress,
     onEnd,
   }: NSlideProgress.IToProps) {
+    this._timelineTo?.destroy();
+
     const startValue = this._progressLerp.current;
 
     const timeline = new Timeline({ duration });
