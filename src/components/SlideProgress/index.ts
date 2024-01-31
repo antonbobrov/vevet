@@ -31,6 +31,7 @@ export class SlideProgress<
       dragDirection: 'y',
       hasWheel: true,
       wheelSpeed: 1,
+      stickyEndDuration: 500,
     };
   }
 
@@ -56,6 +57,9 @@ export class SlideProgress<
   /** Progress timeline */
   protected _timelineTo?: Timeline;
 
+  /** Sticky timeout */
+  protected _stickyEndTimeout?: NodeJS.Timeout;
+
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
 
@@ -70,9 +74,8 @@ export class SlideProgress<
     // create dragger
     this._dragger = new DraggerMove({ container });
     this._dragger.addCallback('move', (event) => this._handleDrag(event));
-    this._dragger.addCallback('start', (event) =>
-      event.event.stopPropagation(),
-    );
+    this._dragger.addCallback('start', ({ event }) => event.stopPropagation());
+    this._dragger.addCallback('end', () => this._goStickyEnd());
 
     // add wheel event
     this.addEventListener(container, 'wheel', (event) =>
@@ -97,15 +100,26 @@ export class SlideProgress<
       return;
     }
 
+    // clear sticky timeout
+    if (this._stickyEndTimeout) {
+      clearTimeout(this._stickyEndTimeout);
+      this._stickyEndTimeout = undefined;
+    }
+
+    // vars
     const { _progressLerp: progress } = this;
     const { container, min, max, wheelSpeed } = this.props;
 
+    // normalize wheel
     const wheel = normalizeWheel(event);
     const y = (wheel.pixelY / container.clientHeight) * wheelSpeed;
 
+    // update target
     progress.target = clamp(progress.target + y, [min, max]);
-
     this._animationFrame.play();
+
+    // go sticky
+    this._stickyEndTimeout = setTimeout(() => this._goStickyEnd(), 100);
   }
 
   /** Handler drag move event */
@@ -185,22 +199,44 @@ export class SlideProgress<
     }
   }
 
+  /** Sticky to the nearest step */
+  protected _goStickyEnd() {
+    const { stickyEndDuration } = this.props;
+
+    if (!stickyEndDuration) {
+      return;
+    }
+
+    const startValue = this._progressLerp.current;
+    const endValue = this._getNearestStep(startValue);
+
+    if (startValue === endValue) {
+      return;
+    }
+
+    this.to({ value: endValue, duration: stickyEndDuration });
+  }
+
   /** Animate progress to a certain value */
   public to({
-    value,
-    duration = 500,
+    value: endValue,
+    duration: durationProp = 500,
     onProgress,
     onEnd,
   }: NSlideProgress.IToProps) {
     this._timelineTo?.destroy();
 
     const startValue = this._progressLerp.current;
+    const diff = Math.abs(startValue - endValue);
+
+    const durationMultiplier = diff / this.props.step / 0.5;
+    const duration = durationProp * durationMultiplier;
 
     const timeline = new Timeline({ duration });
     this._timelineTo = timeline;
 
     timeline.addCallback('progress', (data) => {
-      this._progressLerp.target = lerp(startValue, value, data.easing);
+      this._progressLerp.target = lerp(startValue, endValue, data.easing);
       this._updateCurrentProgress(1);
 
       onProgress?.(data);
@@ -226,5 +262,10 @@ export class SlideProgress<
     this._dragger.destroy();
 
     this._timelineTo?.destroy();
+
+    if (this._stickyEndTimeout) {
+      clearTimeout(this._stickyEndTimeout);
+      this._stickyEndTimeout = undefined;
+    }
   }
 }

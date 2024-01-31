@@ -49,6 +49,11 @@ export namespace NSlideProgress {
      * @default 1
      */
     wheelSpeed?: number;
+    /**
+     * Duration of sticky animation to the nearest step. If zero, the animation is disabled.
+     * @default 500
+     */
+    stickyEndDuration?: number;
   }
 
   export interface ICallbacksTypes extends NComponent.ICallbacksTypes {
