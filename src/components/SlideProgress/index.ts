@@ -123,8 +123,10 @@ export class SlideProgress<
     }
 
     const defaultIterator = dragDirection === 'y' ? step.y : step.x;
-    const iterator = (defaultIterator * dragSpeed) / container.clientHeight;
+    const iteratorDivider =
+      dragDirection === 'y' ? container.clientHeight : container.clientWidth;
 
+    const iterator = (defaultIterator * dragSpeed) / iteratorDivider;
     progress.target = clamp(progress.target - iterator, [min, max]);
 
     this._animationFrame.play();
