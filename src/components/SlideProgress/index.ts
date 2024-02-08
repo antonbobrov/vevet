@@ -123,7 +123,7 @@ export class SlideProgress<
   }
 
   /** Handler drag move event */
-  protected _handleDrag({ step }: NDraggerMove.IMoveParameter) {
+  protected _handleDrag({ event, step }: NDraggerMove.IMoveParameter) {
     if (this._timelineTo) {
       return;
     }
@@ -139,6 +139,10 @@ export class SlideProgress<
     const defaultIterator = dragDirection === 'y' ? step.y : step.x;
     const iteratorDivider =
       dragDirection === 'y' ? container.clientHeight : container.clientWidth;
+
+    if (Math.abs(defaultIterator) > 3) {
+      event.preventDefault();
+    }
 
     const iterator = (defaultIterator * dragSpeed) / iteratorDivider;
     progress.target = clamp(progress.target - iterator, [min, max]);
