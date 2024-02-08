@@ -164,6 +164,7 @@ export class SlideProgress<
         progress.target,
         nearestSteppedProgress,
         friction * ease * easeMultiplier,
+        0,
       );
 
       this._updateCurrentProgress(ease * easeMultiplier);
@@ -190,7 +191,7 @@ export class SlideProgress<
 
     const prevSteppedProgress = this._getNearestStep(progress.current);
 
-    progress.current = lerp(progress.current, progress.target, ease);
+    progress.current = lerp(progress.current, progress.target, ease, 0);
 
     const nextSteppedProgress = this._getNearestStep(progress.current);
 
@@ -236,7 +237,7 @@ export class SlideProgress<
     this._timelineTo = timeline;
 
     timeline.addCallback('progress', (data) => {
-      this._progressLerp.target = lerp(startValue, endValue, data.easing);
+      this._progressLerp.target = lerp(startValue, endValue, data.easing, 0);
       this._updateCurrentProgress(1);
 
       onProgress?.(data);
