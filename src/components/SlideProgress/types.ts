@@ -50,10 +50,10 @@ export namespace NSlideProgress {
      */
     wheelSpeed?: number;
     /**
-     * Duration of sticky animation to the nearest step. If zero, the animation is disabled.
+     * Duration of sticky animation to the nearest step. If nullable, the animation is disabled.
      * @default 500
      */
-    stickyEndDuration?: number;
+    stickyEndDuration?: TDuration | null;
   }
 
   export interface ICallbacksTypes extends NComponent.ICallbacksTypes {
@@ -66,10 +66,12 @@ export namespace NSlideProgress {
     target: number;
   }
 
+  export type TDuration = number | ((multiplier: number) => number);
+
   export interface IToProps {
     value: number;
     /** @default 500 */
-    duration?: number;
+    duration?: TDuration;
     onProgress?: (props: NTimeline.ICallbacksTypes['progress']) => void;
     onEnd?: () => void;
   }

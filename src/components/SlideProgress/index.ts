@@ -229,9 +229,12 @@ export class SlideProgress<
 
     const startValue = this._progressLerp.current;
     const diff = Math.abs(startValue - endValue);
+    const multiplier = diff / this.props.step;
 
-    const durationMultiplier = diff / this.props.step / 0.5;
-    const duration = durationProp * durationMultiplier;
+    const duration =
+      typeof durationProp === 'number'
+        ? durationProp * multiplier
+        : durationProp(multiplier);
 
     const timeline = new Timeline({ duration });
     this._timelineTo = timeline;
