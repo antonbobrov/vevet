@@ -51,7 +51,7 @@ export class Viewport extends Callbacks<NViewport.ICallbacksTypes> {
 
   /** Is desktop size */
   get isDesktop() {
-    return this.width >= this.app.props.tablet;
+    return this.width > this.app.props.tablet;
   }
 
   /** Is tablet size */
@@ -124,10 +124,16 @@ export class Viewport extends Callbacks<NViewport.ICallbacksTypes> {
 
   /** Set viewport values */
   private _updateValues() {
-    const { html } = this.app;
+    const { html, props } = this.app;
+
+    // get width
+    const width =
+      props.widthDetection === 'boundingRect'
+        ? parseFloat(html.getBoundingClientRect().width.toFixed(3))
+        : html.clientWidth;
 
     // set sizes
-    this._width = html.clientWidth;
+    this._width = width;
     this._height = html.clientHeight;
 
     // update states

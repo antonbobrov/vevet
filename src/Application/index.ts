@@ -33,6 +33,7 @@ export class Application {
       easing: [0.25, 0.1, 0.25, 1],
       resizeDebounce: 16,
       shouldCheckWebpSupport: true,
+      widthDetection: 'boundingRect',
     };
   }
 

@@ -33,5 +33,10 @@ export namespace NApplication {
      * @default false
      */
     shouldCheckWebpSupport: boolean;
+    /**
+     * Check if the browser supports WebP
+     * @default 'boundingRect'
+     */
+    widthDetection: 'boundingRect' | 'clientWidth';
   }
 }

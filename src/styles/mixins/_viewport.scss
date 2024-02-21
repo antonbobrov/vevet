@@ -2,13 +2,13 @@ $viewport-phone: 899px !default;
 $viewport-tablet: 1199px !default;
 
 @mixin viewport-desktop () {
-  @media (min-width: $viewport-tablet + 1) {
+  @media (min-width: ($viewport-tablet + 0.001)) {
     @content;
   }
 }
 
 @mixin viewport-tablet () {
-  @media (min-width: $viewport-phone + 1) and (max-width: $viewport-tablet) {
+  @media (min-width: ($viewport-phone + 0.001)) and (max-width: $viewport-tablet) {
     @content;
   }
 }
@@ -20,7 +20,7 @@ $viewport-tablet: 1199px !default;
 }
 
 @mixin viewport-tablet-min () {
-  @media (min-width: $viewport-phone + 1) {
+  @media (min-width: ($viewport-phone + 0.001)) {
     @content;
   }
 }
