@@ -1,5 +1,7 @@
 import { NComponent } from '@/base/Component/types';
 import { NTimeline } from '../Timeline';
+import { TNormalizeWheel } from '@/utils/scroll/normalizeWheel';
+import { NDraggerMove } from '../DraggerMove';
 
 export namespace NSlideProgress {
   export interface IStaticProps extends NComponent.IStaticProps {
@@ -59,6 +61,8 @@ export namespace NSlideProgress {
   export interface ICallbacksTypes extends NComponent.ICallbacksTypes {
     render: undefined;
     step: undefined;
+    wheel: TNormalizeWheel;
+    dragMove: NDraggerMove.IMoveParameter;
   }
 
   export interface IWithLerp {

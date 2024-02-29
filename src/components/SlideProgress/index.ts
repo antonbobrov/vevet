@@ -120,14 +120,18 @@ export class SlideProgress<
 
     // go sticky
     this._stickyEndTimeout = setTimeout(() => this._goStickyEnd(), 100);
+
+    // callbacks
+    this.callbacks.tbt('wheel', wheel);
   }
 
   /** Handler drag move event */
-  protected _handleDrag({ event, step }: NDraggerMove.IMoveParameter) {
+  protected _handleDrag(data: NDraggerMove.IMoveParameter) {
     if (this._timelineTo) {
       return;
     }
 
+    const { event, step } = data;
     const { _progressLerp: progress } = this;
     const { container, dragSpeed, hasDrag, dragDirection, min, max } =
       this.props;
@@ -148,6 +152,9 @@ export class SlideProgress<
     progress.target = clamp(progress.target - iterator, [min, max]);
 
     this._animationFrame.play();
+
+    // callbacks
+    this.callbacks.tbt('dragMove', data);
   }
 
   /** Get nearest stepped value to given progress */
