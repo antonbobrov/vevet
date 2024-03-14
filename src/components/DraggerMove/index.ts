@@ -37,6 +37,13 @@ export class DraggerMove<
     };
   }
 
+  protected _absDiff: NDraggerBase.IVector2 = { x: 0, y: 0 };
+
+  /** Absolute difference between start and current coords */
+  get absDiff() {
+    return this._absDiff;
+  }
+
   /** Add runtime events */
   protected _addRuntimeEvents() {
     super._addRuntimeEvents();
@@ -86,6 +93,10 @@ export class DraggerMove<
     this.prevCoords = { x: this.coords.x, y: this.coords.y };
     this.coords = { x, y };
 
+    // update absolute difference
+    this._absDiff.x += Math.abs(this.stepCoords.x);
+    this._absDiff.y += Math.abs(this.stepCoords.y);
+
     // disable pointer events
     this._togglePointerEvents(false);
 
@@ -96,6 +107,7 @@ export class DraggerMove<
       coords: this.coords,
       step: this.stepCoords,
       diff: this.diffCoords,
+      absDiff: this.absDiff,
     });
 
     return true;
@@ -104,6 +116,9 @@ export class DraggerMove<
   /** Event on drag end */
   protected _handleEnd(event: NDraggerBase.TEvent) {
     super._handleEnd(event);
+
+    // reset absolute difference
+    this._absDiff = { x: 0, y: 0 };
 
     this._togglePointerEvents(true);
   }

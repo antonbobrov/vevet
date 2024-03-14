@@ -20,5 +20,6 @@ export namespace NDraggerMove {
   export interface IMoveParameter extends NDraggerBase.IStartParameter {
     step: NDraggerBase.IVector2;
     diff: NDraggerBase.IVector2;
+    absDiff: NDraggerBase.IVector2;
   }
 }
