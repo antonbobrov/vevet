@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import React, { FC, useEffect, useRef } from 'react';
 import { SlideProgress } from '..';
+import { times } from '@/utils/common';
 
 export const Component: FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -18,14 +19,18 @@ export const Component: FC = () => {
       min: 0,
       max: length - 1,
       step: 0.5,
+      dragDirection: 'x',
+      friction: 0,
+      stickyEndDuration: 250,
+      ease: 0.5,
     });
 
     const elements = Array.from(containerRef.current.children) as HTMLElement[];
 
     instance.addCallback('render', () => {
       elements.forEach((element, index) => {
-        const y = instance.progress * -100 + index * 100;
-        element.style.transform = `translate(0, ${y}%)`;
+        const x = instance.progress * -100 + index * 100;
+        element.style.transform = `translate(${x}%, 0)`;
       });
     });
 
@@ -38,6 +43,13 @@ export const Component: FC = () => {
     <>
       <p>Scroll the block below</p>
 
+      {times(
+        (index) => (
+          <br key={index} />
+        ),
+        15,
+      )}
+
       <div
         ref={containerRef}
         style={{
@@ -45,6 +57,7 @@ export const Component: FC = () => {
           width: 300,
           height: 300,
           overflow: 'hidden',
+          userSelect: 'none',
         }}
       >
         {colors.map((color) => (
@@ -57,10 +70,23 @@ export const Component: FC = () => {
               width: '100%',
               height: '100%',
               backgroundColor: color,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
-          />
+          >
+            Drag me horizontally
+          </div>
         ))}
       </div>
+
+      {times(
+        (index) => (
+          <br key={index} />
+        ),
+        50,
+      )}
     </>
   );
 };

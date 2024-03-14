@@ -56,6 +56,11 @@ export namespace NSlideProgress {
      * @default 500
      */
     stickyEndDuration?: TDuration | null;
+    /**
+     * Drag threshold
+     * @default 3
+     */
+    dragThreshold?: number;
   }
 
   export interface ICallbacksTypes extends NComponent.ICallbacksTypes {

@@ -2,9 +2,11 @@ import { Component as ComponentClass } from '@/base/Component';
 import { NSlideProgress } from './types';
 import { clamp, lerp } from '@/utils/math';
 import { normalizeWheel } from '@/utils/scroll/normalizeWheel';
+import { isPageScrolling } from '@/utils/scroll/isPageScrolling';
 import { AnimationFrame } from '../AnimationFrame';
 import { DraggerMove, NDraggerMove } from '../DraggerMove';
 import { Timeline } from '../Timeline';
+import { NDraggerBase } from '../DraggerBase';
 
 export type { NSlideProgress };
 
@@ -32,6 +34,7 @@ export class SlideProgress<
       hasWheel: true,
       wheelSpeed: 1,
       stickyEndDuration: 500,
+      dragThreshold: 3,
     };
   }
 
@@ -60,6 +63,9 @@ export class SlideProgress<
   /** Sticky timeout */
   protected _stickyEndTimeout?: NodeJS.Timeout;
 
+  /** Can drag */
+  protected _canDragMove = false;
+
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
 
@@ -75,7 +81,7 @@ export class SlideProgress<
     this._dragger = new DraggerMove({ container });
     this._dragger.addCallback('move', (event) => this._handleDrag(event));
     this._dragger.addCallback('start', ({ event }) => event.stopPropagation());
-    this._dragger.addCallback('end', () => this._goStickyEnd());
+    this._dragger.addCallback('end', () => this._handleDragEnd());
 
     // add wheel event
     this.addEventListener(container, 'wheel', (event) =>
@@ -125,28 +131,51 @@ export class SlideProgress<
     this.callbacks.tbt('wheel', wheel);
   }
 
-  /** Handler drag move event */
+  /** Check if can move */
+  protected _checkCanDragMove(absDiff: NDraggerBase.IVector2) {
+    const { dragDirection, dragThreshold } = this.props;
+
+    if (this._canDragMove) {
+      return true;
+    }
+
+    if (absDiff.x < dragThreshold && absDiff.y < dragThreshold) {
+      return false;
+    }
+
+    if (dragDirection === 'x' && absDiff.x > absDiff.y) {
+      this._canDragMove = true;
+    }
+
+    if (dragDirection === 'y' && absDiff.y > absDiff.x) {
+      this._canDragMove = true;
+    }
+
+    return false;
+  }
+
+  /** Handle drag move event */
   protected _handleDrag(data: NDraggerMove.IMoveParameter) {
-    if (this._timelineTo) {
+    if (this._timelineTo || !this.props.hasDrag || isPageScrolling()) {
       return;
     }
 
+    if (!this._checkCanDragMove(data.absDiff)) {
+      return;
+    }
+
+    const { _progressLerp: progress, props } = this;
+    const { container, dragSpeed, dragDirection, min, max } = props;
     const { event, step } = data;
-    const { _progressLerp: progress } = this;
-    const { container, dragSpeed, hasDrag, dragDirection, min, max } =
-      this.props;
 
-    if (!hasDrag) {
-      return;
+    if (event.cancelable) {
+      event.preventDefault();
     }
+    event.stopPropagation();
 
     const defaultIterator = dragDirection === 'y' ? step.y : step.x;
     const iteratorDivider =
       dragDirection === 'y' ? container.clientHeight : container.clientWidth;
-
-    if (Math.abs(defaultIterator) > 3) {
-      event.preventDefault();
-    }
 
     const iterator = (defaultIterator * dragSpeed) / iteratorDivider;
     progress.target = clamp(progress.target - iterator, [min, max]);
@@ -155,6 +184,13 @@ export class SlideProgress<
 
     // callbacks
     this.callbacks.tbt('dragMove', data);
+  }
+
+  /** Handler drag end event */
+  private _handleDragEnd() {
+    this._canDragMove = false;
+
+    this._goStickyEnd();
   }
 
   /** Get nearest stepped value to given progress */
