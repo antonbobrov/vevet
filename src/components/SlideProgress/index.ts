@@ -262,7 +262,13 @@ export class SlideProgress<
       return;
     }
 
-    this.to({ value: endValue, duration: stickyEndDuration });
+    this.to({
+      value: endValue,
+      duration:
+        typeof stickyEndDuration === 'number'
+          ? stickyEndDuration * 2
+          : stickyEndDuration,
+    });
   }
 
   /** Animate progress to a certain value */
@@ -278,10 +284,12 @@ export class SlideProgress<
     const diff = Math.abs(startValue - endValue);
     const multiplier = diff / this.props.step;
 
-    const duration =
+    const duration = Math.max(
       typeof durationProp === 'number'
         ? durationProp * multiplier
-        : durationProp(multiplier);
+        : durationProp(multiplier),
+      100,
+    );
 
     const timeline = new Timeline({ duration });
     this._timelineTo = timeline;
