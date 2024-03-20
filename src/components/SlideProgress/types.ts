@@ -17,6 +17,11 @@ export namespace NSlideProgress {
     /** Progress step */
     step: number;
     /**
+     * Step threshold (from 0.001 to 0.5)
+     * @default 0.1
+     */
+    stepThreshold?: number;
+    /**
      * Linear interpolation ease
      * @default 0.1
      */

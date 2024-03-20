@@ -26,6 +26,7 @@ export class SlideProgress<
       min: 0,
       max: 3,
       step: 1,
+      stepThreshold: 0.1,
       ease: 0.1,
       friction: 0.5,
       hasDrag: true,
@@ -65,6 +66,12 @@ export class SlideProgress<
 
   /** Can drag */
   protected _canDragMove = false;
+
+  /** Direction */
+  protected _direction: 1 | -1 = 1;
+
+  /** Wheel intensity */
+  protected _wheelIntensity = 0;
 
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
@@ -120,12 +127,19 @@ export class SlideProgress<
     const wheel = normalizeWheel(event);
     const y = (wheel.pixelY / container.clientHeight) * wheelSpeed;
 
+    // update direction
+    this._wheelIntensity += y;
+    this._direction = this._wheelIntensity > 0 ? 1 : -1;
+
     // update target
     progress.target = clamp(progress.target + y, [min, max]);
     this._animationFrame.play();
 
     // go sticky
-    this._stickyEndTimeout = setTimeout(() => this._goStickyEnd(), 100);
+    this._stickyEndTimeout = setTimeout(() => {
+      this._wheelIntensity = 0;
+      this._goStickyEnd();
+    }, 100);
 
     // callbacks
     this.callbacks.tbt('wheel', wheel);
@@ -166,7 +180,7 @@ export class SlideProgress<
 
     const { _progressLerp: progress, props } = this;
     const { container, dragSpeed, dragDirection, min, max } = props;
-    const { event, step } = data;
+    const { event, step, diff } = data;
 
     if (event.cancelable) {
       event.preventDefault();
@@ -179,6 +193,9 @@ export class SlideProgress<
 
     const iterator = (defaultIterator * dragSpeed) / iteratorDivider;
     progress.target = clamp(progress.target - iterator, [min, max]);
+
+    const dragDiff = dragDirection === 'y' ? diff.y : diff.x;
+    this._direction = dragDiff < 0 ? 1 : -1;
 
     this._animationFrame.play();
 
@@ -195,6 +212,22 @@ export class SlideProgress<
 
   /** Get nearest stepped value to given progress */
   protected _getNearestStep(value: number) {
+    const { step, stepThreshold: stepThresholdProp } = this.props;
+    const threshold = clamp(stepThresholdProp, [0.001, 0.5]);
+
+    const diff =
+      this._direction === 1
+        ? Math.abs(value - Math.floor(value / step) * step)
+        : Math.abs(value - Math.ceil(value / step) * step);
+
+    if (diff > threshold) {
+      if (this._direction === 1) {
+        return Math.ceil(value / step) * step;
+      }
+
+      return Math.floor(value / step) * step;
+    }
+
     return Math.round(value / this.props.step) * this.props.step;
   }
 
