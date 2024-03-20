@@ -73,6 +73,9 @@ export class SlideProgress<
   /** Wheel intensity */
   protected _wheelIntensity = 0;
 
+  /** Current handler */
+  protected _currentHandler: 'wheel' | 'drag' = 'wheel';
+
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
 
@@ -122,6 +125,9 @@ export class SlideProgress<
     // vars
     const { _progressLerp: progress } = this;
     const { container, min, max, wheelSpeed } = this.props;
+
+    // update handler
+    this._currentHandler = 'wheel';
 
     // normalize wheel
     const wheel = normalizeWheel(event);
@@ -187,6 +193,11 @@ export class SlideProgress<
     }
     event.stopPropagation();
 
+    // update handler
+    this._currentHandler = 'drag';
+
+    // drag logic
+
     const defaultIterator = dragDirection === 'y' ? step.y : step.x;
     const iteratorDivider =
       dragDirection === 'y' ? container.clientHeight : container.clientWidth;
@@ -212,16 +223,21 @@ export class SlideProgress<
 
   /** Get nearest stepped value to given progress */
   protected _getNearestStep(value: number) {
-    const { step, stepThreshold: stepThresholdProp } = this.props;
+    const { step, stepThreshold: stepThresholdProp, dragSpeed } = this.props;
     const threshold = clamp(stepThresholdProp, [0.001, 0.5]);
 
+    let direction = this._direction as number;
+    if (this._currentHandler === 'drag') {
+      direction = dragSpeed < 0 ? this._direction * -1 : this._direction;
+    }
+
     const diff =
-      this._direction === 1
+      direction === 1
         ? Math.abs(value - Math.floor(value / step) * step)
         : Math.abs(value - Math.ceil(value / step) * step);
 
     if (diff > threshold) {
-      if (this._direction === 1) {
+      if (direction === 1) {
         return Math.ceil(value / step) * step;
       }
 
