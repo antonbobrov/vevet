@@ -26,7 +26,6 @@ export class Application {
   /** Default properties */
   get defaultProps(): NApplication.IProps {
     return {
-      shouldPrintVersion: true,
       tablet: 1199,
       phone: 899,
       prefix: 'v-',
@@ -130,8 +129,6 @@ export class Application {
     this._isWebpSupported = false;
 
     // initialize the application
-    // Define that you're using Vevet
-    this._printVersion();
     this._setDeviceFeatures();
 
     // add the application to the window
@@ -195,25 +192,6 @@ export class Application {
     return new PCancelable((resolve: (...arg: any) => void) =>
       this._pageLoad.onLoad(resolve),
     );
-  }
-
-  /** Output current version */
-  private _printVersion() {
-    if (!this.props.shouldPrintVersion) {
-      return;
-    }
-
-    const msg = `Vevet ${this.version}`;
-
-    const style = [
-      'padding: 1rem 1.5rem;',
-      'background: #5F2580;',
-      'font: 1rem/1 Arial;',
-      'color: #ffffff;',
-    ].join('');
-
-    // eslint-disable-next-line no-console
-    console.log('%c%s', style, msg);
   }
 }
 

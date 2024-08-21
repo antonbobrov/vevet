@@ -2,7 +2,6 @@ import { TEasingType } from '@/utils/math';
 
 export namespace NApplication {
   export interface IProps {
-    shouldPrintVersion: boolean;
     /**
      * Tablet identification max width
      * @default 1199
