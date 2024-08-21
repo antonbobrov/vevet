@@ -1,26 +1,44 @@
+/* eslint-disable react/no-danger */
 import React, { FC, useEffect, useRef } from 'react';
-import { SplitText, NSplitText } from '..';
+import { NSplitText } from '../types';
+import { SplitText } from '..';
 
 interface IProps extends Omit<NSplitText.IStaticProps, 'parent' | 'container'> {
   text: string;
 }
 
-export const Component: FC<IProps> = ({ text, ...props }) => {
+export const Component: FC<IProps> = ({ text, hasLetters, hasLines }) => {
   const ref = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    if (!ref.current) {
+    const container = ref.current;
+    if (!container) {
       return undefined;
     }
 
     const instance = new SplitText({
-      ...props,
-      container: ref.current,
+      container,
+      hasLetters,
+      hasLines,
     });
 
     return () => instance.destroy();
-  }, [props]);
+  }, [hasLetters, hasLines]);
 
-  // eslint-disable-next-line react/no-danger
-  return <h1 ref={ref} dangerouslySetInnerHTML={{ __html: text }} />;
+  const style = { fontSize: '30px', fontKerning: 'none' } as any;
+
+  return (
+    <>
+      <h1>Vevet</h1>
+
+      <div ref={ref} style={style} dangerouslySetInnerHTML={{ __html: text }} />
+
+      <br />
+      <br />
+
+      <h1>Reference text</h1>
+
+      <div style={style} dangerouslySetInnerHTML={{ __html: text }} />
+    </>
+  );
 };
