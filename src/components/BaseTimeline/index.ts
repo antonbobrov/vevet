@@ -21,7 +21,7 @@ export class BaseTimeline<
     return {
       ...super._getDefaultProps(),
       easing: getApp().props.easing,
-      scope: [0, 1],
+      nestedScope: [0, 1],
       hasNestedEasingProgress: false,
     };
   }
