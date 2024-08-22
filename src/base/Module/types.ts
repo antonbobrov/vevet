@@ -4,12 +4,13 @@ export namespace NModule {
   /**
    * Mutable Properties (may change on window resize or through {@linkcode Module.changeProps})
    */
-  export interface IChangeableProps {}
+  export interface IChangeableProps {
+    __fixHelperChangeableProps?: any;
+  }
 
   /** Static properties */
   export interface IStaticProps {
-    /** Parent module */
-    parent?: any;
+    __fixHelperStaticProps?: any;
   }
 
   /** Available callbacks */

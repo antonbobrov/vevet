@@ -4,7 +4,6 @@ import {
   IAddEventListenerOptions,
   ListenerElement,
 } from 'vevet-dom';
-import { DeepRequired } from 'ts-essentials';
 import { NModule } from './types';
 import { MutableProps, NMutableProps } from '../MutableProps';
 import { Callbacks, NCallbacks } from '../Callbacks';
@@ -27,7 +26,7 @@ export class Module<
    * Get Default properties (should be extended)
    */
   protected _getDefaultProps() {
-    return { parent: null } as DeepRequired<StaticProps & ChangeableProps>;
+    return {};
   }
 
   /** Current properties */
@@ -207,14 +206,6 @@ export class Module<
     this._isInitialized = true;
 
     this._init();
-
-    // destroy the current module on parent destroy
-    if (this.props.parent) {
-      this.props.parent.addCallback('destroy', () => this.destroy(), {
-        isProtected: true,
-        name: this.name,
-      });
-    }
   }
 
   /** Inner extra initialization */
