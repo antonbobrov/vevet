@@ -67,19 +67,11 @@ export class Callbacks<Types extends NCallbacks.ITypes = NCallbacks.ITypes> {
       ...settings,
     });
 
-    this._onAdd(id);
-
     return {
       id,
       remove: () => this.remove(id),
     };
   }
-
-  /**
-   * Use it to implement some actions after adding a callback
-   */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected _onAdd(id: string) {}
 
   /** Remove a callback */
   public remove(callbackId: string) {
@@ -99,7 +91,6 @@ export class Callbacks<Types extends NCallbacks.ITypes = NCallbacks.ITypes> {
         return true;
       }
 
-      this._onRemove(id);
       isRemoved = true;
 
       return false;
@@ -107,12 +98,6 @@ export class Callbacks<Types extends NCallbacks.ITypes = NCallbacks.ITypes> {
 
     return isRemoved;
   }
-
-  /**
-   * Use it to implement some actions after removing a callback
-   */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected _onRemove(id: string) {}
 
   /** Remove all callbacks */
   private _removeAll() {
@@ -130,14 +115,7 @@ export class Callbacks<Types extends NCallbacks.ITypes = NCallbacks.ITypes> {
     }
 
     callback.isEnabled = isEnabled;
-    this._onTurn(id);
   }
-
-  /**
-   * Use it to implement some actions after enabling or disabling a callback.
-   */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected _onTurn(id: string) {}
 
   /** Get a callback by id */
   public get(callbackId: string): undefined | NCallbacks.ICallback<Types> {
