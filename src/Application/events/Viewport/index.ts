@@ -71,11 +71,7 @@ export class Viewport extends Callbacks<NViewport.ICallbacksTypes> {
    * Device pixel ratio
    */
   get dpr() {
-    if (typeof window.devicePixelRatio !== 'undefined') {
-      return window.devicePixelRatio;
-    }
-
-    return 1;
+    return window.devicePixelRatio;
   }
 
   /**
