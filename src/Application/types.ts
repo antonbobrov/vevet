@@ -23,7 +23,7 @@ export namespace NApplication {
      */
     resizeDebounce: number;
     /**
-     * Easing function that is used in animation as the default value
+     * Easing function that is used in animations by default
      * @default [.25, .1, .25, 1]
      */
     easing: TEasingType;
