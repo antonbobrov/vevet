@@ -33,7 +33,7 @@ export namespace NApplication {
      */
     shouldCheckWebpSupport: boolean;
     /**
-     * Check if the browser supports WebP
+     * How to detect the width of the viewport
      * @default 'boundingRect'
      */
     widthDetection: 'boundingRect' | 'clientWidth';
