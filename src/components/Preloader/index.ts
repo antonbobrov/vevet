@@ -37,29 +37,6 @@ export class Preloader<
     return this._container;
   }
 
-  /** Preloader start time */
-  protected _startTime: number;
-
-  /** Preloader start time */
-  get startTime() {
-    return this._startTime;
-  }
-
-  /** Preloader end time */
-  protected _endTime: number;
-
-  /** Preloader end time */
-  get endTime() {
-    return this._endTime;
-  }
-
-  /**
-   * Total time of page loading before the preloader is to be hidden
-   */
-  get totalTime() {
-    return this.endTime - this.startTime;
-  }
-
   /** Preloader is to be hidden */
   protected _isToBeHidden: boolean;
 
@@ -85,8 +62,6 @@ export class Preloader<
     }
 
     // set default vars
-    this._startTime = +new Date();
-    this._endTime = Infinity;
     this._isToBeHidden = false;
     this._isHidden = false;
 
@@ -112,7 +87,6 @@ export class Preloader<
           return;
         }
 
-        this._endTime = +new Date();
         this._handleLoaded();
       })
       .catch(() => {});
