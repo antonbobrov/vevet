@@ -18,6 +18,7 @@
 <section class="tsd-panel tsd-comment">
 <div class="tsd-comment tsd-typography"><p>Split text into letters, words &amp; lines.
 Usually used for text animation.</p>
+<p>Apply <code>fontKerning: none</code> to your container to prevent large layout shifts</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></section> 
 <section class="tsd-panel">
@@ -36,7 +37,7 @@ Usually used for text animation.</p>
 <ul class="tsd-hierarchy">
 <li><span class="target">SplitText</span></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L12">src/components/SplitText/index.ts:12</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L17">src/components/SplitText/index.ts:17</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -50,38 +51,37 @@ Usually used for text animation.</p>
 <h3 class="tsd-index-heading">Properties</h3>
 <div class="tsd-index-list"><a href="SplitText.html#_container" class="tsd-index-link tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-1024"><rect fill="var(--color-icon-background)" stroke="#FF984D" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12"></rect><path d="M9.354 16V7.24H12.174C12.99 7.24 13.638 7.476 14.118 7.948C14.606 8.412 14.85 9.036 14.85 9.82C14.85 10.604 14.606 11.232 14.118 11.704C13.638 12.168 12.99 12.4 12.174 12.4H10.434V16H9.354ZM10.434 11.428H12.174C12.646 11.428 13.022 11.284 13.302 10.996C13.59 10.7 13.734 10.308 13.734 9.82C13.734 9.324 13.59 8.932 13.302 8.644C13.022 8.356 12.646 8.212 12.174 8.212H10.434V11.428Z" fill="var(--color-text)"></path></g></svg><span>_container</span></a>
 <a href="SplitText.html#_initialHTML" class="tsd-index-link tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>_initialHTML</span></a>
-<a href="SplitText.html#_initialText" class="tsd-index-link tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>_initial<wbr/>Text</span></a>
 <a href="SplitText.html#_isBaseSplit" class="tsd-index-link tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>_is<wbr/>Base<wbr/>Split</span></a>
 <a href="SplitText.html#_letters" class="tsd-index-link tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>_letters</span></a>
+<a href="SplitText.html#_lineWrapper" class="tsd-index-link tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>_line<wbr/>Wrapper?</span></a>
 <a href="SplitText.html#_lines" class="tsd-index-link tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>_lines</span></a>
 <a href="SplitText.html#_words" class="tsd-index-link tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>_words</span></a>
 </div></section>
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Accessors</h3>
-<div class="tsd-index-list"><a href="SplitText.html#app" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-262144"><rect fill="var(--color-icon-background)" stroke="#FF4D4D" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12"></rect><path d="M8.85 16L11.13 7.24H12.582L14.85 16H13.758L13.182 13.672H10.53L9.954 16H8.85ZM10.746 12.76H12.954L12.282 10.06C12.154 9.548 12.054 9.12 11.982 8.776C11.91 8.432 11.866 8.208 11.85 8.104C11.834 8.208 11.79 8.432 11.718 8.776C11.646 9.12 11.546 9.544 11.418 10.048L10.746 12.76Z" fill="var(--color-text)"></path></g></svg><span>app</span></a>
-<a href="SplitText.html#callbacks" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>callbacks</span></a>
+<div class="tsd-index-list"><a href="SplitText.html#callbacks" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-262144"><rect fill="var(--color-icon-background)" stroke="#FF4D4D" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12"></rect><path d="M8.85 16L11.13 7.24H12.582L14.85 16H13.758L13.182 13.672H10.53L9.954 16H8.85ZM10.746 12.76H12.954L12.282 10.06C12.154 9.548 12.054 9.12 11.982 8.776C11.91 8.432 11.866 8.208 11.85 8.104C11.834 8.208 11.79 8.432 11.718 8.776C11.646 9.12 11.546 9.544 11.418 10.048L10.746 12.76Z" fill="var(--color-text)"></path></g></svg><span>callbacks</span></a>
 <a href="SplitText.html#container" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>container</span></a>
 <a href="SplitText.html#isDestroyed" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>is<wbr/>Destroyed</span></a>
 <a href="SplitText.html#isInitialized" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>is<wbr/>Initialized</span></a>
+<a href="SplitText.html#letterClassName" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>letter<wbr/>Class<wbr/>Name</span></a>
 <a href="SplitText.html#letters" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>letters</span></a>
-<a href="SplitText.html#lines" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>lines</span></a>
+<a href="SplitText.html#lineClassName" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>line<wbr/>Class<wbr/>Name</span></a>
+<a href="SplitText.html#lines-1" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>lines</span></a>
 <a href="SplitText.html#name" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>name</span></a>
 <a href="SplitText.html#prefix" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>prefix</span></a>
 <a href="SplitText.html#props" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>props</span></a>
+<a href="SplitText.html#wordClassName" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>word<wbr/>Class<wbr/>Name</span></a>
 <a href="SplitText.html#words" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>words</span></a>
 </div></section>
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Methods</h3>
-<div class="tsd-index-list"><a href="SplitText.html#_appendWords" class="tsd-index-link tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-2048"><rect fill="var(--color-icon-background)" stroke="#FF4DB8" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12"></rect><path d="M9.162 16V7.24H10.578L11.514 10.072C11.602 10.328 11.674 10.584 11.73 10.84C11.794 11.088 11.842 11.28 11.874 11.416C11.906 11.28 11.954 11.088 12.018 10.84C12.082 10.584 12.154 10.324 12.234 10.06L13.122 7.24H14.538V16H13.482V12.82C13.482 12.468 13.49 12.068 13.506 11.62C13.53 11.172 13.558 10.716 13.59 10.252C13.622 9.78 13.654 9.332 13.686 8.908C13.726 8.476 13.762 8.1 13.794 7.78L12.366 12.16H11.334L9.894 7.78C9.934 8.092 9.97 8.456 10.002 8.872C10.042 9.28 10.078 9.716 10.11 10.18C10.142 10.636 10.166 11.092 10.182 11.548C10.206 12.004 10.218 12.428 10.218 12.82V16H9.162Z" fill="var(--color-text)"></path></g></svg><span>_append<wbr/>Words</span></a>
-<a href="SplitText.html#_destroy" class="tsd-index-link tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_destroy</span></a>
+<div class="tsd-index-list"><a href="SplitText.html#_destroy" class="tsd-index-link tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-2048"><rect fill="var(--color-icon-background)" stroke="#FF4DB8" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12"></rect><path d="M9.162 16V7.24H10.578L11.514 10.072C11.602 10.328 11.674 10.584 11.73 10.84C11.794 11.088 11.842 11.28 11.874 11.416C11.906 11.28 11.954 11.088 12.018 10.84C12.082 10.584 12.154 10.324 12.234 10.06L13.122 7.24H14.538V16H13.482V12.82C13.482 12.468 13.49 12.068 13.506 11.62C13.53 11.172 13.558 10.716 13.59 10.252C13.622 9.78 13.654 9.332 13.686 8.908C13.726 8.476 13.762 8.1 13.794 7.78L12.366 12.16H11.334L9.894 7.78C9.934 8.092 9.97 8.456 10.002 8.872C10.042 9.28 10.078 9.716 10.11 10.18C10.142 10.636 10.166 11.092 10.182 11.548C10.206 12.004 10.218 12.428 10.218 12.82V16H9.162Z" fill="var(--color-text)"></path></g></svg><span>_destroy</span></a>
 <a href="SplitText.html#_getDefaultProps" class="tsd-index-link tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_get<wbr/>Default<wbr/>Props</span></a>
 <a href="SplitText.html#_init" class="tsd-index-link tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_init</span></a>
 <a href="SplitText.html#_onPropsMutate" class="tsd-index-link tsd-is-protected tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_on<wbr/>Props<wbr/>Mutate</span></a>
-<a href="SplitText.html#_removeLines" class="tsd-index-link tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_remove<wbr/>Lines</span></a>
 <a href="SplitText.html#_setResize" class="tsd-index-link tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_set<wbr/>Resize</span></a>
-<a href="SplitText.html#_splitIntoLetters" class="tsd-index-link tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_split<wbr/>Into<wbr/>Letters</span></a>
+<a href="SplitText.html#_splitBase" class="tsd-index-link tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_split<wbr/>Base</span></a>
 <a href="SplitText.html#_splitIntoLines" class="tsd-index-link tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_split<wbr/>Into<wbr/>Lines</span></a>
-<a href="SplitText.html#_splitIntoWords" class="tsd-index-link tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_split<wbr/>Into<wbr/>Words</span></a>
 <a href="SplitText.html#addCallback" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>add<wbr/>Callback</span></a>
 <a href="SplitText.html#addDestroyableAction" class="tsd-index-link tsd-is-protected tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>add<wbr/>Destroyable<wbr/>Action</span></a>
 <a href="SplitText.html#addEventListener" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>add<wbr/>Event<wbr/>Listener</span></a>
@@ -90,7 +90,7 @@ Usually used for text animation.</p>
 <a href="SplitText.html#addViewportCallback" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>add<wbr/>Viewport<wbr/>Callback</span></a>
 <a href="SplitText.html#changeProps" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>change<wbr/>Props</span></a>
 <a href="SplitText.html#className" class="tsd-index-link tsd-is-protected tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>class<wbr/>Name</span></a>
-<a href="SplitText.html#destroy" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>destroy</span></a>
+<a href="SplitText.html#destroy-1" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>destroy</span></a>
 <a href="SplitText.html#init" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>init</span></a>
 <a href="SplitText.html#splitText" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>split<wbr/>Text</span></a>
 <a href="SplitText.html#toggleClassName" class="tsd-index-link tsd-is-protected tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>toggle<wbr/>Class<wbr/>Name</span></a>
@@ -121,7 +121,7 @@ Usually used for text animation.</p>
 <h4 class="tsd-returns-title">Returns <a href="SplitText.html" class="tsd-signature-type tsd-kind-class">SplitText</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">StaticProps</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">ChangeableProps</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">CallbacksTypes</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Overrides <a href="Component.html">Component</a>.<a href="Component.html#constructor">constructor</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L76">src/components/SplitText/index.ts:76</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L95">src/components/SplitText/index.ts:95</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-is-protected"><a id="_container" class="tsd-anchor"></a>
@@ -131,7 +131,7 @@ Usually used for text animation.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L45">src/components/SplitText/index.ts:45</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L61">src/components/SplitText/index.ts:61</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-protected"><a id="_initialHTML" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_initialHTML</span><a href="#_initialHTML" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">_initialHTML</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
@@ -139,23 +139,15 @@ Usually used for text animation.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L39">src/components/SplitText/index.ts:39</a></li></ul></aside></section>
-<section class="tsd-panel tsd-member tsd-is-protected"><a id="_initialText" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_initial<wbr/>Text</span><a href="#_initialText" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">_initial<wbr/>Text</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-<div class="tsd-comment tsd-typography"><p>Initial text</p>
-</div>
-<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
-<ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L36">src/components/SplitText/index.ts:36</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L55">src/components/SplitText/index.ts:55</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-protected"><a id="_isBaseSplit" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_is<wbr/>Base<wbr/>Split</span><a href="#_isBaseSplit" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">_is<wbr/>Base<wbr/>Split</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-<div class="tsd-comment tsd-typography"><p>If the text is already split into letters and words</p>
+<div class="tsd-signature"><span class="tsd-kind-property">_is<wbr/>Base<wbr/>Split</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
+<div class="tsd-comment tsd-typography"><p>If the text is already split into words &amp; letters</p>
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L42">src/components/SplitText/index.ts:42</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L58">src/components/SplitText/index.ts:58</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-protected"><a id="_letters" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_letters</span><a href="#_letters" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">_letters</span><span class="tsd-signature-symbol">:</span> <a href="../interfaces/NSplitText.ILetter.html" class="tsd-signature-type tsd-kind-interface">ILetter</a><span class="tsd-signature-symbol">[]</span></div>
@@ -163,7 +155,28 @@ Usually used for text animation.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L53">src/components/SplitText/index.ts:53</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L69">src/components/SplitText/index.ts:69</a></li></ul></aside></section>
+<section class="tsd-panel tsd-member tsd-is-protected"><a id="_lineWrapper" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <code class="tsd-tag ts-flagOptional">Optional</code> <span>_line<wbr/>Wrapper</span><a href="#_lineWrapper" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<div class="tsd-signature"><span class="tsd-kind-property">_line<wbr/>Wrapper</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">destroy</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">lines</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">ILine</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></div>
+<div class="tsd-comment tsd-typography"><p>What <code>wrapLines</code> returns</p>
+</div>
+<div class="tsd-type-declaration">
+<h4>Type declaration</h4>
+<ul class="tsd-parameters">
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">destroy</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></h5>
+<ul class="tsd-parameters">
+<li class="tsd-parameter-signature">
+<ul class="tsd-signatures">
+<li class="tsd-signature" id="_lineWrapper.__type.destroy.__type-1.__type-2"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+<li class="tsd-description">
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4></li></ul></li></ul></li>
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">lines</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">ILine</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L93">src/components/SplitText/index.ts:93</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-protected"><a id="_lines" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_lines</span><a href="#_lines" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">_lines</span><span class="tsd-signature-symbol">:</span> <a href="../interfaces/NSplitText.ILine.html" class="tsd-signature-type tsd-kind-interface">ILine</a><span class="tsd-signature-symbol">[]</span></div>
@@ -171,7 +184,7 @@ Usually used for text animation.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L69">src/components/SplitText/index.ts:69</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L85">src/components/SplitText/index.ts:85</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-protected"><a id="_words" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_words</span><a href="#_words" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">_words</span><span class="tsd-signature-symbol">:</span> <a href="../interfaces/NSplitText.IWord.html" class="tsd-signature-type tsd-kind-interface">IWord</a><span class="tsd-signature-symbol">[]</span></div>
@@ -179,21 +192,9 @@ Usually used for text animation.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L61">src/components/SplitText/index.ts:61</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L77">src/components/SplitText/index.ts:77</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Accessors</h2>
-<section class="tsd-panel tsd-member tsd-is-inherited"><a id="app" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>app</span><a href="#app" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<ul class="tsd-signatures tsd-is-inherited">
-<li class="tsd-signature" id="app.app-1"><span class="tsd-signature-symbol">get</span> app<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Application.html" class="tsd-signature-type tsd-kind-class">Application</a></li>
-<li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Vevet Application</p>
-</div>
-<h4 class="tsd-returns-title">Returns <a href="Application.html" class="tsd-signature-type tsd-kind-class">Application</a></h4>
-<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
-<p>Inherited from ComponentClass.app</p>
-<ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/base/Module/index.ts#L68">src/base/Module/index.ts:68</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="callbacks" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>callbacks</span><a href="#callbacks" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
@@ -205,7 +206,7 @@ Usually used for text animation.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from ComponentClass.callbacks</p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/base/Module/index.ts#L47">src/base/Module/index.ts:47</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/base/Module/index.ts#L47">src/base/Module/index.ts:47</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="container" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>container</span><a href="#container" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -216,7 +217,7 @@ Usually used for text animation.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">HTMLElement</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L48">src/components/SplitText/index.ts:48</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L64">src/components/SplitText/index.ts:64</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="isDestroyed" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Destroyed</span><a href="#isDestroyed" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
@@ -228,7 +229,7 @@ Usually used for text animation.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from ComponentClass.isDestroyed</p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/base/Module/index.ts#L94">src/base/Module/index.ts:94</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/base/Module/index.ts#L86">src/base/Module/index.ts:86</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="isInitialized" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Initialized</span><a href="#isInitialized" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
@@ -240,7 +241,15 @@ Usually used for text animation.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from ComponentClass.isInitialized</p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/base/Module/index.ts#L86">src/base/Module/index.ts:86</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/base/Module/index.ts#L78">src/base/Module/index.ts:78</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="letterClassName" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>letter<wbr/>Class<wbr/>Name</span><a href="#letterClassName" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature" id="letterClassName.letterClassName-1"><span class="tsd-signature-symbol">get</span> letterClassName<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+<li class="tsd-description">
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L42">src/components/SplitText/index.ts:42</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="letters" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>letters</span><a href="#letters" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -251,18 +260,26 @@ Usually used for text animation.</p>
 <h4 class="tsd-returns-title">Returns <a href="../interfaces/NSplitText.ILetter.html" class="tsd-signature-type tsd-kind-interface">ILetter</a><span class="tsd-signature-symbol">[]</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L56">src/components/SplitText/index.ts:56</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member"><a id="lines" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>lines</span><a href="#lines" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L72">src/components/SplitText/index.ts:72</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="lineClassName" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>line<wbr/>Class<wbr/>Name</span><a href="#lineClassName" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature" id="lines.lines-1"><span class="tsd-signature-symbol">get</span> lines<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/NSplitText.ILine.html" class="tsd-signature-type tsd-kind-interface">ILine</a><span class="tsd-signature-symbol">[]</span></li>
+<li class="tsd-signature" id="lineClassName.lineClassName-1"><span class="tsd-signature-symbol">get</span> lineClassName<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+<li class="tsd-description">
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L50">src/components/SplitText/index.ts:50</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="lines-1" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>lines</span><a href="#lines-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature" id="lines-1.lines-2"><span class="tsd-signature-symbol">get</span> lines<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/NSplitText.ILine.html" class="tsd-signature-type tsd-kind-interface">ILine</a><span class="tsd-signature-symbol">[]</span></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Lines</p>
 </div>
 <h4 class="tsd-returns-title">Returns <a href="../interfaces/NSplitText.ILine.html" class="tsd-signature-type tsd-kind-interface">ILine</a><span class="tsd-signature-symbol">[]</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L72">src/components/SplitText/index.ts:72</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L88">src/components/SplitText/index.ts:88</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="name" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>name</span><a href="#name" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
@@ -274,7 +291,7 @@ Usually used for text animation.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from ComponentClass.name</p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/base/Module/index.ts#L73">src/base/Module/index.ts:73</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/base/Module/index.ts#L65">src/base/Module/index.ts:65</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="prefix" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>prefix</span><a href="#prefix" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -286,7 +303,7 @@ Usually used for text animation.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides ComponentClass.prefix</p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L31">src/components/SplitText/index.ts:31</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L38">src/components/SplitText/index.ts:38</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="props" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>props</span><a href="#props" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
@@ -298,7 +315,15 @@ Usually used for text animation.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from ComponentClass.props</p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/base/Module/index.ts#L34">src/base/Module/index.ts:34</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/base/Module/index.ts#L34">src/base/Module/index.ts:34</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="wordClassName" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>word<wbr/>Class<wbr/>Name</span><a href="#wordClassName" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature" id="wordClassName.wordClassName-1"><span class="tsd-signature-symbol">get</span> wordClassName<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+<li class="tsd-description">
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L46">src/components/SplitText/index.ts:46</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="words" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>words</span><a href="#words" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -309,20 +334,9 @@ Usually used for text animation.</p>
 <h4 class="tsd-returns-title">Returns <a href="../interfaces/NSplitText.IWord.html" class="tsd-signature-type tsd-kind-interface">IWord</a><span class="tsd-signature-symbol">[]</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L64">src/components/SplitText/index.ts:64</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L80">src/components/SplitText/index.ts:80</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
-<section class="tsd-panel tsd-member tsd-is-protected"><a id="_appendWords" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_append<wbr/>Words</span><a href="#_appendWords" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<ul class="tsd-signatures tsd-is-protected">
-<li class="tsd-signature tsd-anchor-link" id="_appendWords._appendWords-1"><span class="tsd-kind-call-signature">_append<wbr/>Words</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#_appendWords._appendWords-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
-<li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Append split words to the container</p>
-</div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
-<ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L288">src/components/SplitText/index.ts:288</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-protected"><a id="_destroy" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_destroy</span><a href="#_destroy" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-protected">
@@ -334,19 +348,36 @@ Usually used for text animation.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides <a href="Component.html">Component</a>.<a href="Component.html#_destroy">_destroy</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L384">src/components/SplitText/index.ts:384</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L214">src/components/SplitText/index.ts:214</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-protected"><a id="_getDefaultProps" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_get<wbr/>Default<wbr/>Props</span><a href="#_getDefaultProps" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-protected">
-<li class="tsd-signature tsd-anchor-link" id="_getDefaultProps._getDefaultProps-1"><span class="tsd-kind-call-signature">_get<wbr/>Default<wbr/>Props</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">DeepRequired</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">StaticProps</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type tsd-kind-type-parameter">ChangeableProps</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">container</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">hasLetters</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">hasLines</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">resizeDebounce</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">textSource</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">viewportTarget</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><a href="#_getDefaultProps._getDefaultProps-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="_getDefaultProps._getDefaultProps-1"><span class="tsd-kind-call-signature">_get<wbr/>Default<wbr/>Props</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">container</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">hasLetters</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">hasLines</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">letterTag</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">lineTag</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">resizeDebounce</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">viewportTarget</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">wordTag</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><a href="#_getDefaultProps._getDefaultProps-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Get Default properties (should be extended)</p>
 </div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">DeepRequired</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">StaticProps</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type tsd-kind-type-parameter">ChangeableProps</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">container</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">hasLetters</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">hasLines</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">resizeDebounce</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">textSource</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">viewportTarget</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></h4>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">container</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">hasLetters</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">hasLines</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">letterTag</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">lineTag</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">resizeDebounce</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">viewportTarget</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">wordTag</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></h4>
+<ul class="tsd-parameters">
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">container</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5></li>
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">has<wbr/>Letters</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5></li>
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">has<wbr/>Lines</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5></li>
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">letter<wbr/>Tag</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5></li>
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">line<wbr/>Tag</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5></li>
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">resize<wbr/>Debounce</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5></li>
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">viewport<wbr/>Target</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5></li>
+<li class="tsd-parameter">
+<h5><span class="tsd-kind-property">word<wbr/>Tag</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5></li></ul>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides <a href="Component.html">Component</a>.<a href="Component.html#_getDefaultProps">_getDefaultProps</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L19">src/components/SplitText/index.ts:19</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L24">src/components/SplitText/index.ts:24</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-protected"><a id="_init" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_init</span><a href="#_init" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-protected">
@@ -358,7 +389,7 @@ Usually used for text animation.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Overrides <a href="Component.html">Component</a>.<a href="Component.html#_init">_init</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L110">src/components/SplitText/index.ts:110</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L118">src/components/SplitText/index.ts:118</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-protected tsd-is-inherited"><a id="_onPropsMutate" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_on<wbr/>Props<wbr/>Mutate</span><a href="#_onPropsMutate" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-protected tsd-is-inherited">
@@ -370,18 +401,7 @@ Usually used for text animation.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from <a href="Component.html">Component</a>.<a href="Component.html#_onPropsMutate">_onPropsMutate</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/base/Module/index.ts#L197">src/base/Module/index.ts:197</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member tsd-is-protected"><a id="_removeLines" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_remove<wbr/>Lines</span><a href="#_removeLines" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<ul class="tsd-signatures tsd-is-protected">
-<li class="tsd-signature tsd-anchor-link" id="_removeLines._removeLines-1"><span class="tsd-kind-call-signature">_remove<wbr/>Lines</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#_removeLines._removeLines-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
-<li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Remove all lines</p>
-</div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
-<ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L376">src/components/SplitText/index.ts:376</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/base/Module/index.ts#L187">src/base/Module/index.ts:187</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-protected"><a id="_setResize" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_set<wbr/>Resize</span><a href="#_setResize" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-protected">
@@ -392,18 +412,18 @@ Usually used for text animation.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L117">src/components/SplitText/index.ts:117</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member tsd-is-protected"><a id="_splitIntoLetters" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_split<wbr/>Into<wbr/>Letters</span><a href="#_splitIntoLetters" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<ul class="tsd-signatures tsd-is-protected">
-<li class="tsd-signature tsd-anchor-link" id="_splitIntoLetters._splitIntoLetters-1"><span class="tsd-kind-call-signature">_split<wbr/>Into<wbr/>Letters</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#_splitIntoLetters._splitIntoLetters-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L125">src/components/SplitText/index.ts:125</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-is-private"><a id="_splitBase" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>_split<wbr/>Base</span><a href="#_splitBase" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-is-private">
+<li class="tsd-signature tsd-anchor-link" id="_splitBase._splitBase-1"><span class="tsd-kind-call-signature">_split<wbr/>Base</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#_splitBase._splitBase-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Split the text into letters</p>
+<div class="tsd-comment tsd-typography"><p>Split base</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L249">src/components/SplitText/index.ts:249</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L160">src/components/SplitText/index.ts:160</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-protected"><a id="_splitIntoLines" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_split<wbr/>Into<wbr/>Lines</span><a href="#_splitIntoLines" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-protected">
@@ -414,18 +434,7 @@ Usually used for text animation.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L303">src/components/SplitText/index.ts:303</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member tsd-is-protected"><a id="_splitIntoWords" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_split<wbr/>Into<wbr/>Words</span><a href="#_splitIntoWords" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<ul class="tsd-signatures tsd-is-protected">
-<li class="tsd-signature tsd-anchor-link" id="_splitIntoWords._splitIntoWords-1"><span class="tsd-kind-call-signature">_split<wbr/>Into<wbr/>Words</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#_splitIntoWords._splitIntoWords-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
-<li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Split the text into words</p>
-</div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
-<ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L161">src/components/SplitText/index.ts:161</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L197">src/components/SplitText/index.ts:197</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="addCallback" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>add<wbr/>Callback</span><a href="#addCallback" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
@@ -451,7 +460,7 @@ Usually used for text animation.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from <a href="Component.html">Component</a>.<a href="Component.html#addCallback">addCallback</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/base/Module/index.ts#L245">src/base/Module/index.ts:245</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/base/Module/index.ts#L227">src/base/Module/index.ts:227</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-protected tsd-is-inherited"><a id="addDestroyableAction" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>add<wbr/>Destroyable<wbr/>Action</span><a href="#addDestroyableAction" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-protected tsd-is-inherited">
@@ -474,7 +483,7 @@ Usually used for text animation.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from <a href="Component.html">Component</a>.<a href="Component.html#addDestroyableAction">addDestroyableAction</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/base/Module/index.ts#L224">src/base/Module/index.ts:224</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/base/Module/index.ts#L206">src/base/Module/index.ts:206</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="addEventListener" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>add<wbr/>Event<wbr/>Listener</span><a href="#addEventListener" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
@@ -506,7 +515,7 @@ Usually used for text animation.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from <a href="Component.html">Component</a>.<a href="Component.html#addEventListener">addEventListener</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/base/Module/index.ts#L254">src/base/Module/index.ts:254</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/base/Module/index.ts#L236">src/base/Module/index.ts:236</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="addPlugin" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>add<wbr/>Plugin</span><a href="#addPlugin" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
@@ -528,7 +537,7 @@ Usually used for text animation.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from <a href="Component.html">Component</a>.<a href="Component.html#addPlugin">addPlugin</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/base/Component/index.ts#L21">src/base/Component/index.ts:21</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/base/Component/index.ts#L21">src/base/Component/index.ts:21</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="addResponsiveProps" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>add<wbr/>Responsive<wbr/>Props</span><a href="#addResponsiveProps" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
@@ -545,7 +554,7 @@ Usually used for text animation.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from <a href="Component.html">Component</a>.<a href="Component.html#addResponsiveProps">addResponsiveProps</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/base/Module/index.ts#L173">src/base/Module/index.ts:173</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/base/Module/index.ts#L163">src/base/Module/index.ts:163</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="addViewportCallback" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>add<wbr/>Viewport<wbr/>Callback</span><a href="#addViewportCallback" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
@@ -577,7 +586,7 @@ Usually used for text animation.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from <a href="Component.html">Component</a>.<a href="Component.html#addViewportCallback">addViewportCallback</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/base/Module/index.ts#L231">src/base/Module/index.ts:231</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/base/Module/index.ts#L213">src/base/Module/index.ts:213</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="changeProps" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>change<wbr/>Props</span><a href="#changeProps" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
@@ -594,7 +603,7 @@ Usually used for text animation.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from <a href="Component.html">Component</a>.<a href="Component.html#changeProps">changeProps</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/base/Module/index.ts#L184">src/base/Module/index.ts:184</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/base/Module/index.ts#L174">src/base/Module/index.ts:174</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-protected tsd-is-inherited"><a id="className" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>class<wbr/>Name</span><a href="#className" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-protected tsd-is-inherited">
@@ -608,11 +617,11 @@ Usually used for text animation.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="Component.html">Component</a>.<a href="Component.html#className">className</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/base/Module/index.ts#L279">src/base/Module/index.ts:279</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member tsd-is-inherited"><a id="destroy" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>destroy</span><a href="#destroy" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/base/Module/index.ts#L261">src/base/Module/index.ts:261</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member tsd-is-inherited"><a id="destroy-1" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>destroy</span><a href="#destroy-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
-<li class="tsd-signature tsd-anchor-link" id="destroy.destroy-1"><span class="tsd-kind-call-signature">destroy</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#destroy.destroy-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="destroy-1.destroy-2"><span class="tsd-kind-call-signature">destroy</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#destroy-1.destroy-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Destroy the module</p>
 </div>
@@ -620,7 +629,7 @@ Usually used for text animation.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from <a href="Component.html">Component</a>.<a href="Component.html#destroy">destroy</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/base/Module/index.ts#L299">src/base/Module/index.ts:299</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/base/Module/index.ts#L281">src/base/Module/index.ts:281</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="init" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>init</span><a href="#init" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited">
@@ -632,7 +641,7 @@ Usually used for text animation.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from <a href="Component.html">Component</a>.<a href="Component.html#init">init</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/base/Module/index.ts#L202">src/base/Module/index.ts:202</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/base/Module/index.ts#L192">src/base/Module/index.ts:192</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="splitText" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>split<wbr/>Text</span><a href="#splitText" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -643,7 +652,7 @@ Usually used for text animation.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/components/SplitText/index.ts#L139">src/components/SplitText/index.ts:139</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/components/SplitText/index.ts#L147">src/components/SplitText/index.ts:147</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-protected tsd-is-inherited"><a id="toggleClassName" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>toggle<wbr/>Class<wbr/>Name</span><a href="#toggleClassName" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-protected tsd-is-inherited">
@@ -664,7 +673,7 @@ Usually used for text animation.</p>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from <a href="Component.html">Component</a>.<a href="Component.html#toggleClassName">toggleClassName</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/ac5075e/src/base/Module/index.ts#L284">src/base/Module/index.ts:284</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/a81389a/src/base/Module/index.ts#L266">src/base/Module/index.ts:266</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -687,32 +696,31 @@ Usually used for text animation.</p>
 <li><a href="#constructor" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-512"></use></svg><span>constructor</span></a></li>
 <li><a href="#_container" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>_container</span></a></li>
 <li><a href="#_initialHTML" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>_initialHTML</span></a></li>
-<li><a href="#_initialText" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>_initial<wbr/>Text</span></a></li>
 <li><a href="#_isBaseSplit" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>_is<wbr/>Base<wbr/>Split</span></a></li>
 <li><a href="#_letters" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>_letters</span></a></li>
+<li><a href="#_lineWrapper" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>_line<wbr/>Wrapper</span></a></li>
 <li><a href="#_lines" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>_lines</span></a></li>
 <li><a href="#_words" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>_words</span></a></li>
-<li><a href="#app" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>app</span></a></li>
 <li><a href="#callbacks" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>callbacks</span></a></li>
 <li><a href="#container" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>container</span></a></li>
 <li><a href="#isDestroyed" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>is<wbr/>Destroyed</span></a></li>
 <li><a href="#isInitialized" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>is<wbr/>Initialized</span></a></li>
+<li><a href="#letterClassName" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>letter<wbr/>Class<wbr/>Name</span></a></li>
 <li><a href="#letters" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>letters</span></a></li>
-<li><a href="#lines" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>lines</span></a></li>
+<li><a href="#lineClassName" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>line<wbr/>Class<wbr/>Name</span></a></li>
+<li><a href="#lines-1" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>lines</span></a></li>
 <li><a href="#name" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>name</span></a></li>
 <li><a href="#prefix" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>prefix</span></a></li>
 <li><a href="#props" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>props</span></a></li>
+<li><a href="#wordClassName" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>word<wbr/>Class<wbr/>Name</span></a></li>
 <li><a href="#words" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>words</span></a></li>
-<li><a href="#_appendWords" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_append<wbr/>Words</span></a></li>
 <li><a href="#_destroy" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_destroy</span></a></li>
 <li><a href="#_getDefaultProps" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_get<wbr/>Default<wbr/>Props</span></a></li>
 <li><a href="#_init" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_init</span></a></li>
 <li><a href="#_onPropsMutate" class="tsd-is-protected tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_on<wbr/>Props<wbr/>Mutate</span></a></li>
-<li><a href="#_removeLines" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_remove<wbr/>Lines</span></a></li>
 <li><a href="#_setResize" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_set<wbr/>Resize</span></a></li>
-<li><a href="#_splitIntoLetters" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_split<wbr/>Into<wbr/>Letters</span></a></li>
+<li><a href="#_splitBase" class="tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_split<wbr/>Base</span></a></li>
 <li><a href="#_splitIntoLines" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_split<wbr/>Into<wbr/>Lines</span></a></li>
-<li><a href="#_splitIntoWords" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_split<wbr/>Into<wbr/>Words</span></a></li>
 <li><a href="#addCallback" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>add<wbr/>Callback</span></a></li>
 <li><a href="#addDestroyableAction" class="tsd-is-protected tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>add<wbr/>Destroyable<wbr/>Action</span></a></li>
 <li><a href="#addEventListener" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>add<wbr/>Event<wbr/>Listener</span></a></li>
@@ -721,7 +729,7 @@ Usually used for text animation.</p>
 <li><a href="#addViewportCallback" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>add<wbr/>Viewport<wbr/>Callback</span></a></li>
 <li><a href="#changeProps" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>change<wbr/>Props</span></a></li>
 <li><a href="#className" class="tsd-is-protected tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>class<wbr/>Name</span></a></li>
-<li><a href="#destroy" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>destroy</span></a></li>
+<li><a href="#destroy-1" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>destroy</span></a></li>
 <li><a href="#init" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>init</span></a></li>
 <li><a href="#splitText" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>split<wbr/>Text</span></a></li>
 <li><a href="#toggleClassName" class="tsd-is-protected tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>toggle<wbr/>Class<wbr/>Name</span></a></li></ul></div></details></div>
