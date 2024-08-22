@@ -8,6 +8,7 @@ import { clamp, lerp } from '@/utils/math';
 import { preloadImage } from './utils/preloadImage';
 import { preloadVideo } from './utils/preloadVideo';
 import { preloadCustomElement } from './utils/preloadCustomElement';
+import { getApp } from '@/utils/internal/getApp';
 
 export type { NProgressPreloader };
 
@@ -146,7 +147,7 @@ export class ProgressPreloader<
     }
 
     // iterate resources on page load
-    this.app
+    getApp()
       .onPageLoad()
       .then(() => this._handleLoadedResource({ isSuccess: true }))
       .catch(() => {});

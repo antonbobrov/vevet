@@ -4,6 +4,7 @@ import { NSplitText } from './types';
 import { onResize } from '@/utils/listeners/onResize';
 import { splitBase } from './utils/splitBase';
 import { wrapLines } from './utils/wrapLines';
+import { getApp } from '@/utils/internal/getApp';
 
 export type { NSplitText };
 
@@ -35,7 +36,7 @@ export class SplitText<
   }
 
   get prefix() {
-    return `${this.app.prefix}split-text`;
+    return `${getApp().prefix}split-text`;
   }
 
   get letterClassName() {

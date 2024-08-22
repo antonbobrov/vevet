@@ -7,14 +7,6 @@ export type { NCallbacks };
  * A set of callbacks
  */
 export class Callbacks<Types extends NCallbacks.ITypes = NCallbacks.ITypes> {
-  /** Vevet Application */
-  private _app: typeof window.vevetApp;
-
-  /** Vevet Application */
-  get app() {
-    return this._app;
-  }
-
   /** List of callbacks */
   private _callbacks: NCallbacks.ICallback<Types>[];
 
@@ -43,7 +35,6 @@ export class Callbacks<Types extends NCallbacks.ITypes = NCallbacks.ITypes> {
    * });
    */
   constructor(canInit = true) {
-    this._app = window.vevetApp;
     this._callbacks = [];
 
     if (canInit) {

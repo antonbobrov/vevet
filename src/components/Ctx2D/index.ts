@@ -1,6 +1,7 @@
 import { Component as ComponentClass } from '@/base/Component';
 import { NCtx2D } from './types';
 import { onResize } from '@/utils/listeners/onResize';
+import { getApp } from '@/utils/internal/getApp';
 
 export type { NCtx2D };
 
@@ -165,8 +166,7 @@ export class Ctx2D<
       return;
     }
 
-    const { app } = this;
-    const { viewport } = app;
+    const { viewport } = getApp();
 
     // calculate dpr
     if (typeof props.dpr === 'number') {

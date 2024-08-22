@@ -3,6 +3,7 @@ import { PCancelable } from '@/utils/common/PCancelable';
 import { NPreloader } from './types';
 import { Component as ComponentClass } from '@/base/Component';
 import { normalizedTimeoutCallback } from '@/utils/common';
+import { getApp } from '@/utils/internal/getApp';
 
 export type { NPreloader };
 
@@ -25,7 +26,7 @@ export class Preloader<
   }
 
   get prefix() {
-    return `${this.app.prefix}preloader`;
+    return `${getApp().prefix}preloader`;
   }
 
   /** Preloader container */
@@ -121,7 +122,7 @@ export class Preloader<
 
   /** Catch the moment when the page is fully loaded */
   protected _onLoaded() {
-    return this.app.onPageLoad();
+    return getApp().onPageLoad();
   }
 
   /** When the page is fully loaded */

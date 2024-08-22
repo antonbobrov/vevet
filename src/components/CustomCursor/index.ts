@@ -3,6 +3,7 @@ import { AnimationFrame } from '../AnimationFrame';
 import { NCustomCursor } from './types';
 import { Component as ComponentClass } from '@/base/Component';
 import { lerp } from '@/utils/math';
+import { getApp } from '@/utils/internal/getApp';
 
 export type { NCustomCursor };
 
@@ -31,7 +32,7 @@ export class CustomCursor<
   }
 
   get prefix() {
-    return `${this.app.prefix}custom-cursor`;
+    return `${getApp().prefix}custom-cursor`;
   }
 
   /** Cursor container */
@@ -48,7 +49,7 @@ export class CustomCursor<
   /** DOM parent for the cursor element */
   get domContainer(): HTMLElement {
     if (this.container instanceof Window) {
-      return this.app.body;
+      return getApp().body;
     }
 
     return this.container as HTMLElement;

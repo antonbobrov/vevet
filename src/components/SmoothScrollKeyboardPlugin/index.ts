@@ -2,6 +2,7 @@ import { childOf } from 'vevet-dom';
 import { Plugin } from '@/base/Plugin';
 import { NSmoothScrollKeyboardPlugin } from './types';
 import type { SmoothScroll as SmoothScrollInstance } from '../SmoothScroll';
+import { getApp } from '@/utils/internal/getApp';
 
 export type { NSmoothScrollKeyboardPlugin };
 
@@ -52,7 +53,7 @@ export class SmoothScrollKeyboardPlugin<
 
   /** Check if scroll container is in viewport */
   protected _checkScrollContainerInViewport() {
-    const { viewport } = this.app;
+    const { viewport } = getApp();
 
     const bounding = this.component.container.getBoundingClientRect();
 

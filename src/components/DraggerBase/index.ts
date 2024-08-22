@@ -7,6 +7,7 @@ import {
 } from 'vevet-dom';
 import { NDraggerBase } from './types';
 import { Component as ComponentClass } from '@/base/Component';
+import { getApp } from '@/utils/internal/getApp';
 
 export type { NDraggerBase };
 
@@ -30,7 +31,7 @@ export abstract class DraggerBase<
   }
 
   get prefix() {
-    return `${this.app.prefix}dragger`;
+    return `${getApp().prefix}dragger`;
   }
 
   /** Preloader container */

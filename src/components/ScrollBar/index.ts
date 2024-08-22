@@ -5,6 +5,7 @@ import { NScrollBar } from './types';
 import { Component as ComponentClass } from '@/base/Component';
 import { IBarProps } from './Bar/types';
 import { onResize } from '@/utils/listeners/onResize';
+import { getApp } from '@/utils/internal/getApp';
 
 export type { NScrollBar };
 
@@ -33,7 +34,7 @@ export class ScrollBar<
   }
 
   get prefix() {
-    return `${this.app.prefix}scrollbar`;
+    return `${getApp().prefix}scrollbar`;
   }
 
   /** Scroll container */
@@ -49,7 +50,7 @@ export class ScrollBar<
     const { container } = this;
 
     if (container instanceof Window) {
-      return this.app.body;
+      return getApp().body;
     }
 
     if (container instanceof Element) {
@@ -72,7 +73,7 @@ export class ScrollBar<
     const { container } = this;
 
     if (container instanceof Window) {
-      return this.app.body;
+      return getApp().body;
     }
 
     if (container instanceof Element) {

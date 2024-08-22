@@ -1,3 +1,4 @@
+import { getApp } from '@/utils/internal/getApp';
 import { NCallbacks } from '../Callbacks/types';
 import { NMutableProps } from './types';
 
@@ -49,11 +50,6 @@ export class MutableProps<
    */
   ChangeableProps extends Record<string, any>,
 > {
-  /**
-   * Vevet Application.
-   */
-  private _app: typeof window.vevetApp;
-
   /**
    * Reference properties.
    * These properties may change only through {@linkcode MutableProps.changeProps}.
@@ -121,7 +117,6 @@ export class MutableProps<
      */
     private _name = 'Responsive Props',
   ) {
-    this._app = window.vevetApp;
     this._refProps = { ..._initProps };
     this._props = { ..._initProps };
 
@@ -140,7 +135,7 @@ export class MutableProps<
       return;
     }
 
-    this._viewportCallback = this._app.viewport.add(
+    this._viewportCallback = getApp().viewport.add(
       'width',
       this._responseProps.bind(this),
       { name: this._name },
@@ -151,7 +146,7 @@ export class MutableProps<
    * Change properties according to the "responsive" settings
    */
   private _responseProps() {
-    const app = this._app;
+    const app = getApp();
     const { viewport } = app;
 
     let newProps: (StaticProps & ChangeableProps) | false = false;

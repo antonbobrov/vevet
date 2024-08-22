@@ -2,6 +2,7 @@ import { Component as ComponentClass } from '@/base/Component';
 import { NBaseTimeline } from './types';
 import { clampScope, easing } from '@/utils/math';
 import { uid } from '@/utils/common';
+import { getApp } from '@/utils/internal/getApp';
 
 export type { NBaseTimeline };
 
@@ -19,7 +20,7 @@ export class BaseTimeline<
   protected _getDefaultProps() {
     return {
       ...super._getDefaultProps(),
-      easing: this.app.props.easing,
+      easing: getApp().props.easing,
       scope: [0, 1],
       hasNestedEasingProgress: false,
     };

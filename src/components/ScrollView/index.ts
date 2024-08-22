@@ -4,6 +4,7 @@ import { isIntersectionObserverSupported } from '@/utils/listeners';
 import { clamp } from '@/utils/math';
 import { normalizedTimeoutCallback } from '@/utils/common';
 import { IRemovable } from '@/types/general';
+import { getApp } from '@/utils/internal/getApp';
 
 export type { NScrollView };
 
@@ -105,7 +106,7 @@ export class ScrollView<
 
   /** Root bounding rect */
   protected get rootBounding() {
-    const { app, props } = this;
+    const { props } = this;
 
     if (props.intersectionRoot) {
       const bounding = props.intersectionRoot.getBoundingClientRect();
@@ -118,7 +119,7 @@ export class ScrollView<
       };
     }
 
-    const { viewport } = app;
+    const { viewport } = getApp();
 
     return {
       top: 0,

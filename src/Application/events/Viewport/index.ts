@@ -1,6 +1,7 @@
 import { IAddEventListener, addEventListener } from 'vevet-dom';
 import { Callbacks } from '@/base/Callbacks';
 import { EOrientationTypes, ESizeTypes, NViewport } from './types';
+import { getApp } from '@/utils/internal/getApp';
 
 export type { NViewport };
 
@@ -51,19 +52,19 @@ export class Viewport extends Callbacks<NViewport.ICallbacksTypes> {
 
   /** Is desktop size */
   get isDesktop() {
-    return this.width > this.app.props.tablet;
+    return this.width > getApp().props.tablet;
   }
 
   /** Is tablet size */
   get isTablet() {
     return (
-      this.width <= this.app.props.tablet && this.width > this.app.props.phone
+      this.width <= getApp().props.tablet && this.width > getApp().props.phone
     );
   }
 
   /** Is phone size */
   get isPhone() {
-    return this.width <= this.app.props.phone;
+    return this.width <= getApp().props.phone;
   }
 
   /**
@@ -81,7 +82,7 @@ export class Viewport extends Callbacks<NViewport.ICallbacksTypes> {
    * Device pixel ratio. For non-mobile devices it is always 1.
    */
   get lowerDesktopDpr() {
-    if (this.app.isDesktop) {
+    if (getApp().isDesktop) {
       return 1;
     }
 
@@ -118,13 +119,13 @@ export class Viewport extends Callbacks<NViewport.ICallbacksTypes> {
       this._resizeTimeout = setTimeout(() => {
         this._onResize();
         this._resizeTimeout = undefined;
-      }, this.app.props.resizeDebounce);
+      }, getApp().props.resizeDebounce);
     });
   }
 
   /** Set viewport values */
   private _updateValues() {
-    const { html, props } = this.app;
+    const { html, props } = getApp();
 
     // get width
     const width =
@@ -179,7 +180,7 @@ export class Viewport extends Callbacks<NViewport.ICallbacksTypes> {
 
   /** Change breakpoint classes of the document element */
   private _updateBreakpointClassNames(activeType: string, types: string[]) {
-    const { html, prefix } = this.app;
+    const { html, prefix } = getApp();
 
     types.forEach((type) => {
       if (type === activeType) {
@@ -192,7 +193,8 @@ export class Viewport extends Callbacks<NViewport.ICallbacksTypes> {
 
   /** Update CSS vars */
   private _updateCSSVars() {
-    const { html } = this.app;
+    const { html } = getApp();
+
     html.style.setProperty('--vw', `${this.vw}px`);
     html.style.setProperty('--vh', `${this.vh}px`);
     html.style.setProperty('--vr', `${this.vr}px`);

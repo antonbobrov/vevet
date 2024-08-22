@@ -1,6 +1,7 @@
 import { IAddEventListener, addEventListener } from 'vevet-dom';
 import { Callbacks } from '@/base/Callbacks';
 import { NPageLoad } from './types';
+import { getApp } from '@/utils/internal/getApp';
 
 export type { NPageLoad };
 
@@ -46,7 +47,7 @@ export class PageLoad extends Callbacks<NPageLoad.ICallbacksTypes> {
 
   /** Callback on page loaded */
   protected _handleLoaded() {
-    const { app } = this;
+    const app = getApp();
     const { prefix } = app;
 
     this._isLoaded = true;

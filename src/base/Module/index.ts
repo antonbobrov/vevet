@@ -9,6 +9,7 @@ import { MutableProps, NMutableProps } from '../MutableProps';
 import { Callbacks, NCallbacks } from '../Callbacks';
 import { Viewport } from '@/src/Application/events/Viewport';
 import { TRequiredModuleProp } from '@/types/utility';
+import { getApp } from '@/utils/internal/getApp';
 
 export type { NModule };
 
@@ -59,14 +60,6 @@ export class Module<
    * Classnames to remove
    */
   private _classNamesToRemove: NModule.IClassNamesToRemove[];
-
-  /** Vevet Application */
-  private _app!: typeof window.vevetApp;
-
-  /** Vevet Application */
-  get app() {
-    return this._app;
-  }
 
   /** Module name */
   get name() {
@@ -139,9 +132,7 @@ export class Module<
      */
     canInit = true,
   ) {
-    if (window.vevetApp) {
-      this._app = window.vevetApp;
-    } else {
+    if (!getApp()) {
       throw new Error(
         'Vevet.Application does not exist yet. Call "new Vevet.Application()" before using all the stuff',
       );
@@ -224,7 +215,7 @@ export class Module<
     action: Parameters<TViewportAdd>[1],
     data: Parameters<TViewportAdd>[2] = {},
   ) {
-    const callback = this._app.viewport.add(target, action, {
+    const callback = getApp().viewport.add(target, action, {
       ...data,
       name: this.constructor.name,
     });

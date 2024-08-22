@@ -7,6 +7,7 @@ import { normalizeWheel } from '@/utils/scroll';
 import { Elements } from './Elements';
 import { AnimationFrame } from './AnimatonFrame';
 import { onResize } from '@/utils/listeners/onResize';
+import { getApp } from '@/utils/internal/getApp';
 
 export type { NSmoothScroll };
 
@@ -46,7 +47,7 @@ export class SmoothScroll<
   }
 
   get prefix() {
-    return `${this.app.prefix}smooth-scroll`;
+    return `${getApp().prefix}smooth-scroll`;
   }
 
   /** Scroll container */

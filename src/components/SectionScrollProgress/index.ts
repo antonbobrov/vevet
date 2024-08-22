@@ -5,6 +5,7 @@ import { Component as ComponentClass } from '@/base/Component';
 import { clampScope } from '@/utils/math';
 import { IGetScrollValues, getScrollValues, onScroll } from '@/utils/scroll';
 import { onResize } from '@/utils/listeners/onResize';
+import { getApp } from '@/utils/internal/getApp';
 
 export type { NScrollSectionProgress };
 
@@ -141,7 +142,7 @@ export class SectionScrollProgress<
       resizeDebounce,
     });
 
-    const loadEvent = this.app.onPageLoad();
+    const loadEvent = getApp().onPageLoad();
     loadEvent.then(() => resizeHandler.debounceResize()).catch(() => {});
 
     // set scroll events
@@ -195,7 +196,7 @@ export class SectionScrollProgress<
 
   /** Calculate scopes */
   protected _calculateScopes({ scrollTop }: IGetScrollValues) {
-    const { height: vHeight } = this.app.viewport;
+    const { height: vHeight } = getApp().viewport;
     const sectionBounding = this.section.getBoundingClientRect();
 
     // calculate scroll scope

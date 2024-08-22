@@ -4,6 +4,7 @@ import { Component as ComponentClass } from '@/base/Component';
 import { wrap } from '@/utils/math';
 import { onResize } from '@/utils/listeners/onResize';
 import { AnimationFrame } from '../AnimationFrame';
+import { getApp } from '@/utils/internal/getApp';
 
 export type { NMarquee };
 
@@ -30,7 +31,7 @@ export class Marquee<
   }
 
   get prefix() {
-    return `${this.app.prefix}marquee`;
+    return `${getApp().prefix}marquee`;
   }
 
   /** Marquee container */
@@ -145,7 +146,7 @@ export class Marquee<
     this.addDestroyableAction(() => resizeHandler.remove());
 
     // resize on page load
-    this.app
+    getApp()
       .onPageLoad()
       .then(() => this.resize())
       .catch(() => {});
