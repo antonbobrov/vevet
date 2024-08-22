@@ -18,6 +18,21 @@ export namespace NSplitText {
      */
     hasLines?: boolean;
     /**
+     * Letter tagName
+     * @default `span`
+     */
+    letterTag?: keyof HTMLElementTagNameMap;
+    /**
+     * Word tagName
+     * @default `span`
+     */
+    wordTag?: keyof HTMLElementTagNameMap;
+    /**
+     * Line tagName
+     * @default `span`
+     */
+    lineTag?: keyof HTMLElementTagNameMap;
+    /**
      * Viewport target
      * @default 'any'
      */

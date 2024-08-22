@@ -4,10 +4,11 @@ import { NSplitText } from '../types';
 interface IProps {
   container: ChildNode;
   classname: string;
+  tagName: keyof HTMLElementTagNameMap;
 }
 
 /** Wrap each word inside the container */
-export function wrapWords({ container, classname }: IProps) {
+export function wrapWords({ container, classname, tagName }: IProps) {
   const whitespace = String.fromCharCode(32);
 
   const words: NSplitText.IWord[] = [];
@@ -38,7 +39,7 @@ export function wrapWords({ container, classname }: IProps) {
 
       splitWords.forEach((splitWord, index) => {
         if (splitWord) {
-          const element = document.createElement('span');
+          const element = document.createElement(tagName);
           element.style.display = 'inline-block';
           element.classList.add(classname);
           element.appendChild(document.createTextNode(splitWord));

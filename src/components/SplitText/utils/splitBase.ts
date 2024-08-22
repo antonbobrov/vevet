@@ -8,6 +8,8 @@ interface IProps {
   letterClassName: string;
   wordClassName: string;
   hasLetters: boolean;
+  letterTag: keyof HTMLElementTagNameMap;
+  wordTag: keyof HTMLElementTagNameMap;
 }
 
 /** Split text into letters & words */
@@ -16,15 +18,26 @@ export function splitBase({
   letterClassName,
   wordClassName,
   hasLetters,
+  letterTag,
+  wordTag,
 }: IProps) {
   const helper = container.cloneNode(true) as HTMLElement;
 
-  const words = wrapWords({ container: helper, classname: wordClassName });
+  const words = wrapWords({
+    container: helper,
+    classname: wordClassName,
+    tagName: wordTag,
+  });
 
   const letters: NSplitText.ILetter[] = [];
 
   if (hasLetters) {
-    const wrappedLetters = wrapLetters({ words, classname: letterClassName });
+    const wrappedLetters = wrapLetters({
+      words,
+      classname: letterClassName,
+      tagName: letterTag,
+    });
+
     letters.push(...wrappedLetters.letters);
   }
 
@@ -34,5 +47,3 @@ export function splitBase({
     letters,
   };
 }
-
-// todo: optimize when only words

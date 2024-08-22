@@ -3,10 +3,11 @@ import { NSplitText } from '../types';
 interface IProps {
   words: NSplitText.IWord[];
   classname: string;
+  tagName: keyof HTMLElementTagNameMap;
 }
 
 /** Wrap each word inside the container */
-export function wrapLetters({ words, classname }: IProps) {
+export function wrapLetters({ words, classname, tagName }: IProps) {
   const letters: NSplitText.ILetter[] = [];
 
   words.forEach((word) => {
@@ -20,7 +21,7 @@ export function wrapLetters({ words, classname }: IProps) {
     const slitLetters = text.split('');
 
     slitLetters.forEach((splitLetter) => {
-      const element = document.createElement('span');
+      const element = document.createElement(tagName);
       element.style.display = 'inline-block';
       element.classList.add(classname);
       element.appendChild(document.createTextNode(splitLetter));

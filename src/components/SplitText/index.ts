@@ -26,6 +26,9 @@ export class SplitText<
       container: `#${this.prefix}`,
       hasLetters: true,
       hasLines: false,
+      letterTag: 'span',
+      wordTag: 'span',
+      lineTag: 'span',
       viewportTarget: 'any',
       resizeDebounce: 0,
     };
@@ -159,6 +162,7 @@ export class SplitText<
     }
 
     const { container, letterClassName, wordClassName } = this;
+    const { letterTag, wordTag } = this.props;
 
     this._isBaseSplit = true;
 
@@ -169,6 +173,8 @@ export class SplitText<
       letterClassName,
       wordClassName,
       hasLetters: this.props.hasLetters,
+      letterTag,
+      wordTag,
     });
 
     // append nodes
@@ -182,8 +188,6 @@ export class SplitText<
     }
 
     // update elements
-    // todo
-
     this._words = words;
     this._letters = letters;
   }
@@ -191,6 +195,7 @@ export class SplitText<
   /** Split the text into lines */
   protected _splitIntoLines() {
     const { container, words, lineClassName } = this;
+    const { lineTag } = this.props;
 
     this._lineWrapper?.destroy();
 
@@ -198,6 +203,7 @@ export class SplitText<
       container,
       words,
       className: lineClassName,
+      tagName: lineTag,
     });
 
     this._lines = this._lineWrapper.lines;

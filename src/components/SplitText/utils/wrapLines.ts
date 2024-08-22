@@ -6,6 +6,7 @@ interface IProps {
   container: HTMLElement;
   words: NSplitText.IWord[];
   className: string;
+  tagName: keyof HTMLElementTagNameMap;
 }
 
 interface ILine extends NSplitText.ILine {
@@ -21,7 +22,7 @@ function getTopParent(ref: Element | null, topParent: Element): Element {
 }
 
 /** Wrap each word inside the container */
-export function wrapLines({ container, words, className }: IProps) {
+export function wrapLines({ container, words, className, tagName }: IProps) {
   const lines: ILine[] = [];
   let lineIndex = -1;
   let prevTop = Infinity;
@@ -35,7 +36,7 @@ export function wrapLines({ container, words, className }: IProps) {
       prevTop = currentTop;
       lineIndex += 1;
 
-      const element = document.createElement('span');
+      const element = document.createElement(tagName);
       element.style.display = 'block';
       element.classList.add(className);
 
