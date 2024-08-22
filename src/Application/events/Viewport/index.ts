@@ -197,10 +197,7 @@ export class Viewport extends Callbacks<NViewport.ICallbacksTypes> {
   }
 
   /** Launch callbacks on resize. */
-  private _onResize(
-    /** force all callbacks */
-    force = false,
-  ) {
+  private _onResize() {
     const { _width: prevWidth, _height: prevHeight } = this;
 
     this._updateValues();
@@ -214,30 +211,23 @@ export class Viewport extends Callbacks<NViewport.ICallbacksTypes> {
       isOrientationChanged: width > height !== prevWidth > prevHeight,
     };
 
-    if (force || (width !== prevWidth && height === prevHeight)) {
+    if (width !== prevWidth && height === prevHeight) {
       this.tbt('widthOnly', changes);
     }
-    if (force || (height !== prevHeight && width === prevWidth)) {
+    if (height !== prevHeight && width === prevWidth) {
       this.tbt('heightOnly', changes);
     }
-    if (force || (width !== prevWidth && height !== prevHeight)) {
+    if (width !== prevWidth && height !== prevHeight) {
       this.tbt('both', changes);
     }
-    if (force || width !== prevWidth) {
+    if (width !== prevWidth) {
       this.tbt('width', changes);
     }
-    if (force || height !== prevHeight) {
+    if (height !== prevHeight) {
       this.tbt('height', changes);
     }
 
     this.tbt('any', changes);
-  }
-
-  /**
-   * Force launching all callbacks
-   */
-  public forceResize() {
-    this._onResize(true);
   }
 
   public destroy() {
