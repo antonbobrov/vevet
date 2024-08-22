@@ -344,7 +344,7 @@ export class SlideProgress<
     this._timelineTo = timeline;
 
     timeline.addCallback('progress', (data) => {
-      this._progressLerp.target = lerp(startValue, endValue, data.easing, 0);
+      this._progressLerp.target = lerp(startValue, endValue, data.e, 0);
       this._updateCurrentProgress(1);
 
       onProgress?.(data);

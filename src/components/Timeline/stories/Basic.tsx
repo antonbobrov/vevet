@@ -16,13 +16,13 @@ export const Basic: FC = () => {
 
     setTimeline(instance);
 
-    instance.addCallback('progress', ({ easing, progress }) => {
+    instance.addCallback('progress', ({ e, p }) => {
       if (inputRef.current) {
-        inputRef.current.value = `${progress}`;
+        inputRef.current.value = `${p}`;
       }
 
       if (thumbRef.current) {
-        thumbRef.current.style.left = `${easing * 100}%`;
+        thumbRef.current.style.left = `${e * 100}%`;
       }
     });
 
@@ -54,7 +54,7 @@ export const Basic: FC = () => {
         style={{ width: '100%' }}
         onChange={(event) => {
           if (timeline) {
-            timeline.progress = parseFloat(event.currentTarget.value);
+            timeline.p = parseFloat(event.currentTarget.value);
           }
         }}
       />

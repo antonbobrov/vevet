@@ -68,7 +68,7 @@ export class Timeline<
 
   /** Play the timeline */
   public play() {
-    if (this.isDestroyed || this.progress === 1) {
+    if (this.isDestroyed || this.p === 1) {
       return;
     }
 
@@ -83,7 +83,7 @@ export class Timeline<
 
   /** Reverse timeline */
   public reverse() {
-    if (this.isDestroyed || this.progress === 0) {
+    if (this.isDestroyed || this.p === 0) {
       return;
     }
 
@@ -117,7 +117,7 @@ export class Timeline<
     }
 
     this.pause();
-    this.progress = 0;
+    this.p = 0;
   }
 
   /** Start animation */
@@ -135,8 +135,8 @@ export class Timeline<
 
     // calculate current progress
     const progressIterator = frameDiff / this.duration / (isReversed ? -1 : 1);
-    const progressTarget = clamp(this.progress + progressIterator, [0, 1]);
-    this.progress = progressTarget;
+    const progressTarget = clamp(this.p + progressIterator, [0, 1]);
+    this.p = progressTarget;
 
     // end animation
     if (
@@ -160,13 +160,13 @@ export class Timeline<
   protected _handleProgressUpdate() {
     super._handleProgressUpdate();
 
-    if (this.progress === 0) {
+    if (this.p === 0) {
       this.callbacks.tbt('start', undefined);
 
       return;
     }
 
-    if (this.progress === 1) {
+    if (this.p === 1) {
       this.callbacks.tbt('end', undefined);
 
       if (this.props.shouldDestroyOnEnd) {

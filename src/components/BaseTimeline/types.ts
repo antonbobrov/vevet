@@ -26,8 +26,8 @@ export namespace NBaseTimeline {
   export interface IChangeableProps extends NComponent.IChangeableProps {}
 
   export interface IProgressParameter {
-    progress: number;
-    easing: number;
+    p: number;
+    e: number;
   }
 
   export interface ICallbacksTypes extends NComponent.ICallbacksTypes {

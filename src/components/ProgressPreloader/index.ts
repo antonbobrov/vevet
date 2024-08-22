@@ -338,9 +338,9 @@ export class ProgressPreloader<
       this._endTimeline = new Timeline({ duration: this.props.forceEnd });
       const startProgress = this.progress;
 
-      this._endTimeline.addCallback('progress', (data) => {
+      this._endTimeline.addCallback('progress', ({ p }) => {
         const diff = 1 - startProgress;
-        this.progress = startProgress + diff * data.progress;
+        this.progress = startProgress + diff * p;
       });
 
       this._endTimeline.play();

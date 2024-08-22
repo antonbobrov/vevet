@@ -26,9 +26,9 @@ export const Nested: FC = () => {
           easing: EaseInOutBounce,
         });
 
-        nestedTm.addCallback('progress', ({ easing }) => {
+        nestedTm.addCallback('progress', ({ e }) => {
           // eslint-disable-next-line no-param-reassign
-          child.style.transform = `scale(${easing}, 1)`;
+          child.style.transform = `scale(${e}, 1)`;
         });
 
         instance.addNestedTimeline(nestedTm);
@@ -49,7 +49,7 @@ export const Nested: FC = () => {
         style={{ width: '100%' }}
         onChange={(event) => {
           if (timeline) {
-            timeline.progress = parseFloat(event.currentTarget.value);
+            timeline.p = parseFloat(event.currentTarget.value);
           }
         }}
       />

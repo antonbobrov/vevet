@@ -75,14 +75,14 @@ export function scrollTo({
       shouldDestroyOnEnd: true,
     });
 
-    timeline.addCallback('progress', ({ easing }) => {
+    timeline.addCallback('progress', ({ e }) => {
       if (!container) {
         return;
       }
 
       container.scrollTo({
-        top: startValues.scrollTop + topDiff * easing,
-        left: startValues.scrollLeft + leftDiff * easing,
+        top: startValues.scrollTop + topDiff * e,
+        left: startValues.scrollLeft + leftDiff * e,
         behavior: 'auto',
       });
     });

@@ -11,12 +11,12 @@ export const Basic: FC = () => {
     const instance = new BaseTimeline({ easing: EaseInOutBounce });
     setTimeline(instance);
 
-    instance.addCallback('progress', ({ easing }) => {
+    instance.addCallback('progress', ({ e }) => {
       if (!thumbRef.current) {
         return;
       }
 
-      thumbRef.current.style.left = `${easing * 100}%`;
+      thumbRef.current.style.left = `${e * 100}%`;
     });
 
     return () => instance.destroy();
@@ -33,7 +33,7 @@ export const Basic: FC = () => {
         style={{ width: '100%' }}
         onChange={(event) => {
           if (timeline) {
-            timeline.progress = parseFloat(event.currentTarget.value);
+            timeline.p = parseFloat(event.currentTarget.value);
           }
         }}
       />

@@ -27,25 +27,25 @@ export class BaseTimeline<
   }
 
   /** Global timeline progress */
-  protected _progress: number;
+  protected _p: number;
 
   /** Global timeline progress */
-  get progress() {
-    return this._progress;
+  get p() {
+    return this._p;
   }
 
-  set progress(val: number) {
-    this._progress = val;
+  set p(val: number) {
+    this._p = val;
 
     this._handleProgressUpdate();
   }
 
   /** Easing progress */
-  protected _easing: number;
+  protected _e: number;
 
   /** Easing progress */
-  get easing() {
-    return this._easing;
+  get e() {
+    return this._e;
   }
 
   /** Nested timelines */
@@ -55,8 +55,8 @@ export class BaseTimeline<
     super(initialProps, false);
 
     // set default vars
-    this._progress = 0;
-    this._easing = 0;
+    this._p = 0;
+    this._e = 0;
     this._nestedTimelines = [];
 
     if (canInit) {
@@ -81,11 +81,11 @@ export class BaseTimeline<
 
   /** Handle progress event */
   protected _handleProgressUpdate() {
-    this._easing = easing(this._progress, this.props.easing);
+    this._e = easing(this._p, this.props.easing);
 
     this.callbacks.tbt('progress', {
-      progress: this._progress,
-      easing: this._easing,
+      p: this._p,
+      e: this._e,
     });
 
     this._renderNestedTimelines();
@@ -99,8 +99,8 @@ export class BaseTimeline<
     }
 
     const progressForNestedTimeline = this.props.hasNestedEasingProgress
-      ? this.easing
-      : this.progress;
+      ? this.e
+      : this.p;
 
     this._nestedTimelines.forEach(({ timeline }) => {
       const timelineProgress = clampScope(
@@ -110,7 +110,7 @@ export class BaseTimeline<
       );
 
       // eslint-disable-next-line no-param-reassign
-      timeline.progress = timelineProgress;
+      timeline.p = timelineProgress;
     });
   }
 
