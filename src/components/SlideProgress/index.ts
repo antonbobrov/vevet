@@ -2,7 +2,7 @@ import { Component as ComponentClass } from '@/base/Component';
 import { NSlideProgress } from './types';
 import { clamp, lerp } from '@/utils/math';
 import { normalizeWheel } from '@/utils/scroll/normalizeWheel';
-import { isPageScrolling } from '@/utils/scroll/isPageScrolling';
+import { createIsPageScrolling } from '@/utils/scroll/isPageScrolling';
 import { AnimationFrame } from '../AnimationFrame';
 import { DraggerMove, NDraggerMove } from '../DraggerMove';
 import { Timeline } from '../Timeline';
@@ -76,6 +76,9 @@ export class SlideProgress<
   /** Current handler */
   protected _currentHandler: 'wheel' | 'drag' = 'wheel';
 
+  /** If page is scrolling */
+  protected _createIsPageScrolling: ReturnType<typeof createIsPageScrolling>;
+
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
 
@@ -97,6 +100,9 @@ export class SlideProgress<
     this.addEventListener(container, 'wheel', (event) =>
       this._handleWheel(event),
     );
+
+    // create is page scrolling
+    this._createIsPageScrolling = createIsPageScrolling();
 
     // initialize the class
     if (canInit) {
@@ -176,7 +182,9 @@ export class SlideProgress<
 
   /** Handle drag move event */
   protected _handleDrag(data: NDraggerMove.IMoveParameter) {
-    if (this._timelineTo || !this.props.hasDrag || isPageScrolling()) {
+    const isPageScrolling = this._createIsPageScrolling.get();
+
+    if (this._timelineTo || !this.props.hasDrag || isPageScrolling) {
       return;
     }
 
@@ -365,6 +373,8 @@ export class SlideProgress<
   /** Destroy the module */
   protected _destroy() {
     super._destroy();
+
+    this._createIsPageScrolling.destroy();
 
     this._animationFrame.destroy();
     this._dragger.destroy();
