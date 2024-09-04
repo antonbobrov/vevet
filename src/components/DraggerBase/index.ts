@@ -103,6 +103,9 @@ export abstract class DraggerBase<
     return this._type;
   }
 
+  /** Styles to prevent user-select */
+  protected _fixStyles: HTMLStyleElement;
+
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
 
@@ -117,6 +120,12 @@ export abstract class DraggerBase<
     this._coords = { x: 0, y: 0 };
     this._prevCoords = { x: 0, y: 0 };
     this._startCoords = { x: 0, y: 0 };
+
+    // set fix styles
+    this._fixStyles = document.createElement('style');
+    this._fixStyles.innerHTML = `
+      * { user-select: none !important; }
+    `;
 
     if (canInit) {
       this.init();
@@ -234,6 +243,9 @@ export abstract class DraggerBase<
     // add runtime events
     this._addRuntimeEvents();
 
+    // add styles fix
+    getApp().body.append(this._fixStyles);
+
     // launch callbacks
     this.callbacks.tbt('start', {
       event,
@@ -273,6 +285,10 @@ export abstract class DraggerBase<
   public cancel() {
     this._removeRuntimeEvents();
 
+    // remove styles fix
+    this._fixStyles.remove();
+
+    // launch callbacks
     this.callbacks.tbt('end', undefined);
   }
 

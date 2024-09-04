@@ -72,7 +72,6 @@ export const Component: FC = () => {
             justifyContent: 'center',
             backgroundColor: '#000',
             cursor: 'pointer',
-            userSelect: 'none',
             textAlign: 'center',
             color: '#fff',
           }}
