@@ -3,12 +3,7 @@ import { Marquee, NMarquee } from '..';
 
 interface IProps extends NMarquee.IChangeableProps {}
 
-export const Component: FC<IProps> = ({
-  speed,
-  isEnabled,
-  pauseOnHover,
-  isFpsNormalized,
-}) => {
+export const Component: FC<IProps> = (props) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const [width, setWidth] = useState(400);
@@ -20,22 +15,19 @@ export const Component: FC<IProps> = ({
     }
 
     const instance = new Marquee({
+      ...props,
       container: ref.current,
-      speed,
-      isEnabled,
-      pauseOnHover,
-      isFpsNormalized,
     });
 
     setMarquee(instance);
 
     return () => instance.destroy();
-  }, [isEnabled, isFpsNormalized, pauseOnHover, speed]);
+  }, [props]);
 
   return (
     <>
       <button type="button" onClick={() => setWidth((val) => val + 20)}>
-        Rezize
+        Rezize (changes parent width)
       </button>
 
       <button
