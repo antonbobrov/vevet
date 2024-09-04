@@ -9,10 +9,17 @@ import { getApp } from '@/utils/internal/getApp';
 export type { NSplitText };
 
 /**
- * Split text into letters, words & lines.
- * Usually used for text animation.
+ * SplitText is a component that splits your text into lines, words, and letters so that you can animate them.
+ * It supports auto-resizing for lines and styled content when using html inside your text.
+ * It was inspired both by GSAP's SplitText plugin and SplitType.
  *
- * Apply `fontKerning: none` to your container to prevent large layout shifts
+ * P.S. Apply `fontKerning: none` to your container to prevent large layout shifts.
+ *
+ * @see Performance comparison of splitting your text into words: https://measurethat.net/Benchmarks/Show/31805/0/vevetsplittext-splittype-comparison-words-only
+ *
+ * @see Performance comparison of splitting your text into words and letters: https://measurethat.net/Benchmarks/Show/31806/0/vevetsplittext-splittype-comparison-words-letters
+ *
+ * @see Performance comparison of splitting your text into words and lines: https://measurethat.net/Benchmarks/Show/31847/0/vevetsplittext-splittype-comparison-words-lines
  */
 export class SplitText<
   StaticProps extends NSplitText.IStaticProps = NSplitText.IStaticProps,
