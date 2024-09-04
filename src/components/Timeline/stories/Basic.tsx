@@ -34,12 +34,15 @@ export const Basic: FC = () => {
       <button type="button" onClick={() => timeline?.play()}>
         Play
       </button>
+
       <button type="button" onClick={() => timeline?.pause()}>
         Pause
       </button>
+
       <button type="button" onClick={() => timeline?.reverse()}>
         Reverse
       </button>
+
       <button type="button" onClick={() => timeline?.reset()}>
         Reset
       </button>

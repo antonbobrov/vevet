@@ -41,6 +41,7 @@ export const Component: FC = () => {
       </button>
 
       <br />
+
       <br />
 
       <div
@@ -52,6 +53,7 @@ export const Component: FC = () => {
           <button type="button">Test button</button>
 
           <br />
+
           <br />
 
           <input type="text" placeholder="Test input" />
@@ -59,9 +61,12 @@ export const Component: FC = () => {
           {times(
             (index) => (
               <div key={index}>
-                Lorem ipsum dolor sit amet
+                {'Lorem ipsum dolor sit amet '}
+
                 <br />
+
                 <br />
+
                 <button type="button">Test button</button>
               </div>
             ),

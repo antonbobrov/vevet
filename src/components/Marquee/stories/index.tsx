@@ -49,6 +49,7 @@ export const Component: FC<IProps> = (props) => {
       </button>
 
       <br />
+
       <br />
 
       <div style={{ background: '#ccc', width }}>

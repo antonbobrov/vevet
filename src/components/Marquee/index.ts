@@ -290,7 +290,7 @@ export class Marquee<
     const { isFpsNormalized } = props;
 
     const fpsMultiplier = isFpsNormalized
-      ? this._animationFrame?.easeMultiplier ?? 1
+      ? (this._animationFrame?.easeMultiplier ?? 1)
       : 1;
 
     const defaultSpeed = props.speed * fpsMultiplier;

@@ -154,8 +154,8 @@ export class ScrollView<
       },
     );
 
-    this.elements.forEach(
-      (element) => this._intersectionObserverIn?.observe(element),
+    this.elements.forEach((element) =>
+      this._intersectionObserverIn?.observe(element),
     );
 
     if (props.states === 'inout') {
@@ -168,8 +168,8 @@ export class ScrollView<
         },
       );
 
-      this.elements.forEach(
-        (element) => this._intersectionObserverOut?.observe(element),
+      this.elements.forEach((element) =>
+        this._intersectionObserverOut?.observe(element),
       );
     }
   }

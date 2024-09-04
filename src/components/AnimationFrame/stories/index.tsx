@@ -67,7 +67,9 @@ export const Component: FC<IProps> = ({ fps }) => {
 
       <ul>
         <li>Target FPS: {targetFps}</li>
+
         <li>Computed FPS: {computedFps}</li>
+
         <li>Time: {time}</li>
       </ul>
     </div>

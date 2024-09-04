@@ -42,11 +42,7 @@ export const Component: FC = () => {
           const value = features[key];
           const stringValue = String(value);
 
-          return (
-            <div key={key}>
-              {key}: {stringValue}
-            </div>
-          );
+          return <div key={key}>{`${key}: ${stringValue}`}</div>;
         })}
     </div>
   );

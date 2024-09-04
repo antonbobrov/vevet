@@ -34,6 +34,7 @@ export const Component: FC<IProps> = ({ text, hasLetters, hasLines }) => {
       <div ref={ref} style={style} dangerouslySetInnerHTML={{ __html: text }} />
 
       <br />
+
       <br />
 
       <h1>Reference text</h1>

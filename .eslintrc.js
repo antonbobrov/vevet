@@ -11,46 +11,6 @@ module.exports = {
   rules: {
     'class-methods-use-this': 'off',
     'import/extensions': 'off',
-    '@typescript-eslint/naming-convention': [
-      'error',
-      { selector: 'typeAlias', format: ['PascalCase'], prefix: ['T'] },
-      {
-        selector: 'interface',
-        format: ['PascalCase'],
-        prefix: ['I'],
-        filter: {
-          regex: '^(Window)$',
-          match: false,
-        },
-      },
-      { selector: 'enum', format: ['PascalCase'], prefix: ['E'] },
-      {
-        selector: ['variable', 'function', 'parameter'],
-        format: ['camelCase', 'UPPER_CASE', 'PascalCase'],
-      },
-      {
-        selector: ['variable'],
-        types: ['boolean'],
-        format: ['camelCase', 'UPPER_CASE', 'PascalCase'],
-        prefix: [
-          'is',
-          'IS',
-          'Is',
-          'has',
-          'HAS',
-          'Has',
-          'can',
-          'CAN',
-          'Can',
-          'should',
-          'SHOULD',
-          'Should',
-          'will',
-          'WILL',
-          'Will',
-        ],
-      },
-    ],
   },
   overrides: [
     {

@@ -24,7 +24,9 @@ export const Component: FC<IProps> = ({ hideAnimation }) => {
       <div ref={ref} className="v-preloader" />
 
       <img src="https://picsum.photos/400/600" alt="" />
+
       <img src="https://picsum.photos/400/601" alt="" />
+
       <img src="https://picsum.photos/400/602" alt="" />
     </>
   );

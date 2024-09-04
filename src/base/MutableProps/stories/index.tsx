@@ -73,9 +73,7 @@ export const Component: FC = () => {
   return (
     <div>
       {Object.entries(features).map(([key, value]) => (
-        <div key={key}>
-          {key}: {String(value)}
-        </div>
+        <div key={key}>{`${key}: ${value}`}</div>
       ))}
     </div>
   );
