@@ -67,7 +67,7 @@
     "vevet-dom": "^0.0.15"
   },
   "devDependencies": {
-    "@anton.bobrov/eslint-config": "2.0.1",
+    "@anton.bobrov/eslint-config": "2.0.2",
     "@babel/preset-env": "^7.22.10",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.22.5",
