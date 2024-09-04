@@ -7,7 +7,7 @@ export const Component: FC = () => {
   const [ctx2d, setCtx2d] = useState<Ctx2DPrerender>();
   const [image, setImage] = useState<HTMLImageElement>();
   const [position, setPosition] =
-    useState<NCtx2DPrerender.IChangeableProps['posRule']>();
+    useState<NCtx2DPrerender.IChangeableProps['posRule']>('cover');
 
   useEffect(() => {
     if (!containerRef.current || !image) {
