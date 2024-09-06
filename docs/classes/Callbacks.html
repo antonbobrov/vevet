@@ -16,7 +16,7 @@
 <li><a href="Callbacks.html">Callbacks</a></li></ul>
 <h1>Class Callbacks&lt;Types&gt;</h1></div>
 <section class="tsd-panel tsd-comment">
-<div class="tsd-comment tsd-typography"><p>A set of callbacks</p>
+<div class="tsd-comment tsd-typography"><p>This class is responsible for adding, removing, and executing callbacks of different kinds.</p>
 </div>
 <div class="tsd-comment tsd-typography"></div></section> 
 <section class="tsd-panel">
@@ -29,7 +29,7 @@
 <ul class="tsd-hierarchy">
 <li><span class="target">Callbacks</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/d24154d/src/base/Callbacks/index.ts#L9">src/base/Callbacks/index.ts:9</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/7ce1bd3/src/base/Callbacks/index.ts#L9">src/base/Callbacks/index.ts:9</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -50,7 +50,6 @@
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Methods</h3>
 <div class="tsd-index-list"><a href="Callbacks.html#_callAction" class="tsd-index-link tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-2048"><rect fill="var(--color-icon-background)" stroke="#FF4DB8" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12"></rect><path d="M9.162 16V7.24H10.578L11.514 10.072C11.602 10.328 11.674 10.584 11.73 10.84C11.794 11.088 11.842 11.28 11.874 11.416C11.906 11.28 11.954 11.088 12.018 10.84C12.082 10.584 12.154 10.324 12.234 10.06L13.122 7.24H14.538V16H13.482V12.82C13.482 12.468 13.49 12.068 13.506 11.62C13.53 11.172 13.558 10.716 13.59 10.252C13.622 9.78 13.654 9.332 13.686 8.908C13.726 8.476 13.762 8.1 13.794 7.78L12.366 12.16H11.334L9.894 7.78C9.934 8.092 9.97 8.456 10.002 8.872C10.042 9.28 10.078 9.716 10.11 10.18C10.142 10.636 10.166 11.092 10.182 11.548C10.206 12.004 10.218 12.428 10.218 12.82V16H9.162Z" fill="var(--color-text)"></path></g></svg><span>_call<wbr/>Action</span></a>
-<a href="Callbacks.html#_init" class="tsd-index-link tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_init</span></a>
 <a href="Callbacks.html#_remove" class="tsd-index-link tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_remove</span></a>
 <a href="Callbacks.html#_removeAll" class="tsd-index-link tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_remove<wbr/>All</span></a>
 <a href="Callbacks.html#add" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>add</span></a>
@@ -65,29 +64,20 @@
 <section class="tsd-panel tsd-member"><a id="constructor" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>constructor</span><a href="#constructor" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><g stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" id="icon-anchor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5"></path></g></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="constructor.new_Callbacks"><span class="tsd-kind-constructor-signature">new <wbr/>Callbacks</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">Types</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">canInit</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Callbacks.html" class="tsd-signature-type tsd-kind-class">Callbacks</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">Types</span><span class="tsd-signature-symbol">&gt;</span><a href="#constructor.new_Callbacks" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="constructor.new_Callbacks"><span class="tsd-kind-constructor-signature">new <wbr/>Callbacks</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">Types</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Callbacks.html" class="tsd-signature-type tsd-kind-class">Callbacks</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">Types</span><span class="tsd-signature-symbol">&gt;</span><a href="#constructor.new_Callbacks" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <section class="tsd-panel">
 <h4>Type Parameters</h4>
 <ul class="tsd-type-parameter-list">
 <li>
 <h4><span class="tsd-kind-type-parameter">Types</span><span class="tsd-signature-symbol"> extends </span><a href="../interfaces/NCallbacks.ITypes.html" class="tsd-signature-type tsd-kind-interface">ITypes</a> = <a href="../interfaces/NCallbacks.ITypes.html" class="tsd-signature-type tsd-kind-interface">ITypes</a></h4></li></ul></section>
-<div class="tsd-parameters">
-<h4 class="tsd-parameters-title">Parameters</h4>
-<ul class="tsd-parameter-list">
-<li>
-<h5><span class="tsd-kind-parameter">canInit</span>: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = true</span></h5>
-<div class="tsd-comment tsd-typography"><p>Defines if you need to call <a href="Callbacks.html#_init" class="tsd-kind-method"><code>_init</code></a> at the constructor&#39;s end.
-If no, you will have to call <a href="Callbacks.html#_init" class="tsd-kind-method"><code>_init</code></a> manually.</p>
-</div>
-<div class="tsd-comment tsd-typography"></div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Callbacks.html" class="tsd-signature-type tsd-kind-class">Callbacks</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">Types</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography">
-<h4>Example</h4><pre><code class="language-ts"><span class="hl-5">interface</span><span class="hl-1"> </span><span class="hl-8">ITypes</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-4">render</span><span class="hl-1">: { </span><span class="hl-4">fps</span><span class="hl-1">: </span><span class="hl-8">number</span><span class="hl-1"> };</span><br/><span class="hl-1">  </span><span class="hl-4">empty</span><span class="hl-1">: </span><span class="hl-8">undefined</span><span class="hl-1">;</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-7">callbacks</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-0">Callbacks</span><span class="hl-1">&lt;</span><span class="hl-8">ITypes</span><span class="hl-1">&gt;();</span><br/><br/><span class="hl-4">callbacks</span><span class="hl-1">.</span><span class="hl-0">add</span><span class="hl-1">(</span><span class="hl-2">&#39;render&#39;</span><span class="hl-1">, ({ </span><span class="hl-4">fps</span><span class="hl-1"> }) </span><span class="hl-5">=&gt;</span><span class="hl-1"> </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-4">fps</span><span class="hl-1">));</span><br/><br/><span class="hl-4">callbacks</span><span class="hl-1">.</span><span class="hl-0">add</span><span class="hl-1">(</span><span class="hl-2">&#39;empty&#39;</span><span class="hl-1">, () </span><span class="hl-5">=&gt;</span><span class="hl-1"> {}, {</span><br/><span class="hl-1">  </span><span class="hl-4">timeout:</span><span class="hl-1"> </span><span class="hl-6">50</span><span class="hl-1">,</span><br/><span class="hl-1">});</span>
+<h4>Example</h4><pre><code class="language-ts"><span class="hl-5">interface</span><span class="hl-1"> </span><span class="hl-8">ICallbacks</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-4">onAdd</span><span class="hl-1">: </span><span class="hl-8">undefined</span><span class="hl-1">;</span><br/><span class="hl-1">  </span><span class="hl-4">onDelete</span><span class="hl-1">: </span><span class="hl-8">undefined</span><span class="hl-1">;</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-7">callbacks</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-0">Callbacks</span><span class="hl-1">&lt;</span><span class="hl-8">ICallbacks</span><span class="hl-1">&gt;();</span><br/><br/><span class="hl-4">callbacks</span><span class="hl-1">.</span><span class="hl-0">add</span><span class="hl-1">(</span><span class="hl-2">&#39;onAdd&#39;</span><span class="hl-1">, () </span><span class="hl-5">=&gt;</span><span class="hl-1"> </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;callback on add #1&#39;</span><span class="hl-1">));</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-7">addCallback2</span><span class="hl-1"> = </span><span class="hl-4">callbacks</span><span class="hl-1">.</span><span class="hl-0">add</span><span class="hl-1">(</span><span class="hl-2">&#39;onAdd&#39;</span><span class="hl-1">, () </span><span class="hl-5">=&gt;</span><br/><span class="hl-1">  </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;callback on add #2&#39;</span><span class="hl-1">),</span><br/><span class="hl-1">);</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-7">addCallback3</span><span class="hl-1"> = </span><span class="hl-4">callbacks</span><span class="hl-1">.</span><span class="hl-0">add</span><span class="hl-1">(</span><br/><span class="hl-1">  </span><span class="hl-2">&#39;onAdd&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  () </span><span class="hl-5">=&gt;</span><span class="hl-1"> </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;callback on add #3&#39;</span><span class="hl-1">),</span><br/><span class="hl-1">  { </span><span class="hl-4">isProtected:</span><span class="hl-1"> </span><span class="hl-5">true</span><span class="hl-1"> },</span><br/><span class="hl-1">);</span><br/><br/><span class="hl-4">callbacks</span><span class="hl-1">.</span><span class="hl-0">add</span><span class="hl-1">(</span><span class="hl-2">&#39;onDelete&#39;</span><span class="hl-1">, () </span><span class="hl-5">=&gt;</span><span class="hl-1"> </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;callback on delete&#39;</span><span class="hl-1">));</span><br/><br/><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;--- All callbacks by the target &quot;onAdd&quot; will be executed:&#39;</span><span class="hl-1">);</span><br/><span class="hl-4">callbacks</span><span class="hl-1">.</span><span class="hl-0">tbt</span><span class="hl-1">(</span><span class="hl-2">&#39;onAdd&#39;</span><span class="hl-1">, </span><span class="hl-5">undefined</span><span class="hl-1">);</span><br/><br/><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;--- addCallback2 will be removed:&#39;</span><span class="hl-1">);</span><br/><span class="hl-4">addCallback2</span><span class="hl-1">.</span><span class="hl-0">remove</span><span class="hl-1">();</span><br/><span class="hl-4">callbacks</span><span class="hl-1">.</span><span class="hl-0">tbt</span><span class="hl-1">(</span><span class="hl-2">&#39;onAdd&#39;</span><span class="hl-1">, </span><span class="hl-5">undefined</span><span class="hl-1">);</span><br/><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;---&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;--- addCallback3 cannot be removed because it is protected:&#39;</span><span class="hl-1">);</span><br/><span class="hl-4">addCallback3</span><span class="hl-1">.</span><span class="hl-0">remove</span><span class="hl-1">();</span><br/><span class="hl-4">callbacks</span><span class="hl-1">.</span><span class="hl-0">tbt</span><span class="hl-1">(</span><span class="hl-2">&#39;onAdd&#39;</span><span class="hl-1">, </span><span class="hl-5">undefined</span><span class="hl-1">);</span><br/><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;---&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;--- Execute all callbacks by the target &quot;onDelete&quot;:&#39;</span><span class="hl-1">);</span><br/><span class="hl-4">callbacks</span><span class="hl-1">.</span><span class="hl-0">tbt</span><span class="hl-1">(</span><span class="hl-2">&#39;onDelete&#39;</span><span class="hl-1">, </span><span class="hl-5">undefined</span><span class="hl-1">);</span>
 </code><button>Copy</button></pre>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/d24154d/src/base/Callbacks/index.ts#L37">src/base/Callbacks/index.ts:37</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/7ce1bd3/src/base/Callbacks/index.ts#L58">src/base/Callbacks/index.ts:58</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="_callbacks" class="tsd-anchor"></a>
@@ -97,7 +87,7 @@ If no, you will have to call <a href="Callbacks.html#_init" class="tsd-kind-meth
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/d24154d/src/base/Callbacks/index.ts#L11">src/base/Callbacks/index.ts:11</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/7ce1bd3/src/base/Callbacks/index.ts#L11">src/base/Callbacks/index.ts:11</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Accessors</h2>
 <section class="tsd-panel tsd-member"><a id="callbacks" class="tsd-anchor"></a>
@@ -110,7 +100,7 @@ If no, you will have to call <a href="Callbacks.html#_init" class="tsd-kind-meth
 <h4 class="tsd-returns-title">Returns <a href="../interfaces/NCallbacks.ICallback.html" class="tsd-signature-type tsd-kind-interface">ICallback</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">Types</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/d24154d/src/base/Callbacks/index.ts#L14">src/base/Callbacks/index.ts:14</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/7ce1bd3/src/base/Callbacks/index.ts#L14">src/base/Callbacks/index.ts:14</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="_callAction" class="tsd-anchor"></a>
@@ -130,18 +120,7 @@ If no, you will have to call <a href="Callbacks.html#_init" class="tsd-kind-meth
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/d24154d/src/base/Callbacks/index.ts#L130">src/base/Callbacks/index.ts:130</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member tsd-is-protected"><a id="_init" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_init</span><a href="#_init" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<ul class="tsd-signatures tsd-is-protected">
-<li class="tsd-signature tsd-anchor-link" id="_init._init-1"><span class="tsd-kind-call-signature">_init</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#_init._init-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
-<li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Initialize the class</p>
-</div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
-<ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/d24154d/src/base/Callbacks/index.ts#L46">src/base/Callbacks/index.ts:46</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/7ce1bd3/src/base/Callbacks/index.ts#L144">src/base/Callbacks/index.ts:144</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="_remove" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>_remove</span><a href="#_remove" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-private">
@@ -159,7 +138,7 @@ If no, you will have to call <a href="Callbacks.html#_init" class="tsd-kind-meth
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/d24154d/src/base/Callbacks/index.ts#L82">src/base/Callbacks/index.ts:82</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/7ce1bd3/src/base/Callbacks/index.ts#L96">src/base/Callbacks/index.ts:96</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="_removeAll" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>_remove<wbr/>All</span><a href="#_removeAll" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-private">
@@ -170,7 +149,7 @@ If no, you will have to call <a href="Callbacks.html#_init" class="tsd-kind-meth
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/d24154d/src/base/Callbacks/index.ts#L103">src/base/Callbacks/index.ts:103</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/7ce1bd3/src/base/Callbacks/index.ts#L117">src/base/Callbacks/index.ts:117</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="add" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>add</span><a href="#add" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -204,7 +183,7 @@ If no, you will have to call <a href="Callbacks.html#_init" class="tsd-kind-meth
 <h4 class="tsd-returns-title">Returns <a href="../interfaces/NCallbacks.IAddedCallback.html" class="tsd-signature-type tsd-kind-interface">IAddedCallback</a></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/d24154d/src/base/Callbacks/index.ts#L55">src/base/Callbacks/index.ts:55</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/7ce1bd3/src/base/Callbacks/index.ts#L69">src/base/Callbacks/index.ts:69</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="destroy" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>destroy</span><a href="#destroy" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -215,7 +194,7 @@ If no, you will have to call <a href="Callbacks.html#_init" class="tsd-kind-meth
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/d24154d/src/base/Callbacks/index.ts#L158">src/base/Callbacks/index.ts:158</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/7ce1bd3/src/base/Callbacks/index.ts#L172">src/base/Callbacks/index.ts:172</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="get" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get</span><a href="#get" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -231,7 +210,7 @@ If no, you will have to call <a href="Callbacks.html#_init" class="tsd-kind-meth
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/NCallbacks.ICallback.html" class="tsd-signature-type tsd-kind-interface">ICallback</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">Types</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/d24154d/src/base/Callbacks/index.ts#L121">src/base/Callbacks/index.ts:121</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/7ce1bd3/src/base/Callbacks/index.ts#L135">src/base/Callbacks/index.ts:135</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="remove" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>remove</span><a href="#remove" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -247,7 +226,7 @@ If no, you will have to call <a href="Callbacks.html#_init" class="tsd-kind-meth
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/d24154d/src/base/Callbacks/index.ts#L77">src/base/Callbacks/index.ts:77</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/7ce1bd3/src/base/Callbacks/index.ts#L91">src/base/Callbacks/index.ts:91</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="tbt" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>tbt</span><a href="#tbt" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -271,7 +250,7 @@ Trigger all enabled callbacks under a certain target name.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/d24154d/src/base/Callbacks/index.ts#L149">src/base/Callbacks/index.ts:149</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/7ce1bd3/src/base/Callbacks/index.ts#L163">src/base/Callbacks/index.ts:163</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="turn" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>turn</span><a href="#turn" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -289,7 +268,7 @@ Trigger all enabled callbacks under a certain target name.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/d24154d/src/base/Callbacks/index.ts#L110">src/base/Callbacks/index.ts:110</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/antonbobrov/vevet/blob/7ce1bd3/src/base/Callbacks/index.ts#L124">src/base/Callbacks/index.ts:124</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -313,7 +292,6 @@ Trigger all enabled callbacks under a certain target name.</p>
 <li><a href="#_callbacks" class="tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>_callbacks</span></a></li>
 <li><a href="#callbacks" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-262144"></use></svg><span>callbacks</span></a></li>
 <li><a href="#_callAction" class="tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_call<wbr/>Action</span></a></li>
-<li><a href="#_init" class="tsd-is-protected"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_init</span></a></li>
 <li><a href="#_remove" class="tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_remove</span></a></li>
 <li><a href="#_removeAll" class="tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>_remove<wbr/>All</span></a></li>
 <li><a href="#add" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>add</span></a></li>
@@ -338,7 +316,6 @@ Trigger all enabled callbacks under a certain target name.</p>
 <li><a href="../modules/NMarquee.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>NMarquee</span></a></li>
 <li><a href="../modules/NModule.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>NModule</span></a></li>
 <li><a href="../modules/NMutableProps.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>NMutable<wbr/>Props</span></a></li>
-<li><a href="../modules/NPageLoad.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>NPage<wbr/>Load</span></a></li>
 <li><a href="../modules/NPlugin.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>NPlugin</span></a></li>
 <li><a href="../modules/NPreloader.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>NPreloader</span></a></li>
 <li><a href="../modules/NProgressPreloader.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4"></use></svg><span>NProgress<wbr/>Preloader</span></a></li>
