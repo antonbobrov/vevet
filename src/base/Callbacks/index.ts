@@ -4,7 +4,7 @@ import { NCallbacks } from './types';
 export type { NCallbacks };
 
 /**
- * A set of callbacks
+ * This class is responsible for adding, removing, and executing callbacks of different kinds.
  */
 export class Callbacks<Types extends NCallbacks.ITypes = NCallbacks.ITypes> {
   /** List of callbacks */
@@ -16,34 +16,48 @@ export class Callbacks<Types extends NCallbacks.ITypes = NCallbacks.ITypes> {
   }
 
   /**
-   * @param canInit - Defines if you need to call {@linkcode Callbacks._init} at the constructor's end.
-   * If no, you will have to call {@linkcode Callbacks._init} manually.
-   *
    * @example
-   * 
-   * interface ITypes {
-   *   render: { fps: number };
-   *   empty: undefined;
+   *
+   * interface ICallbacks {
+   *   onAdd: undefined;
+   *   onDelete: undefined;
    * }
-
-   * const callbacks = new Callbacks<ITypes>();
-
-   * callbacks.add('render', ({ fps }) => console.log(fps));
-
-   * callbacks.add('empty', () => {}, {
-   *   timeout: 50,
-   * });
+   *
+   * const callbacks = new Callbacks<ICallbacks>();
+   *
+   * callbacks.add('onAdd', () => console.log('callback on add #1'));
+   *
+   * const addCallback2 = callbacks.add('onAdd', () =>
+   *   console.log('callback on add #2'),
+   * );
+   *
+   * const addCallback3 = callbacks.add(
+   *   'onAdd',
+   *   () => console.log('callback on add #3'),
+   *   { isProtected: true },
+   * );
+   *
+   * callbacks.add('onDelete', () => console.log('callback on delete'));
+   *
+   * console.log('--- All callbacks by the target "onAdd" will be executed:');
+   * callbacks.tbt('onAdd', undefined);
+   *
+   * console.log('--- addCallback2 will be removed:');
+   * addCallback2.remove();
+   * callbacks.tbt('onAdd', undefined);
+   * console.log('---');
+   *
+   * console.log('--- addCallback3 cannot be removed because it is protected:');
+   * addCallback3.remove();
+   * callbacks.tbt('onAdd', undefined);
+   * console.log('---');
+   *
+   * console.log('--- Execute all callbacks by the target "onDelete":');
+   * callbacks.tbt('onDelete', undefined);
    */
-  constructor(canInit = true) {
+  constructor() {
     this._callbacks = [];
-
-    if (canInit) {
-      this._init();
-    }
   }
-
-  /** Initialize the class */
-  protected _init() {}
 
   /**
    * Adds a callback

@@ -1,53 +1,48 @@
-import { FC, useEffect } from 'react';
+/* eslint-disable no-console */
+import React, { FC, useEffect } from 'react';
 import { Callbacks } from '..';
 
-interface ITypes {
-  render: { fps: number };
-  empty: undefined;
+interface ICallbacks {
+  onAdd: undefined;
+  onDelete: undefined;
 }
 
 export const Component: FC = () => {
   useEffect(() => {
-    const callbacks = new Callbacks<ITypes>();
+    const callbacks = new Callbacks<ICallbacks>();
 
-    const renderSimple = callbacks.add('render', () => {}, {
-      name: 'render simple',
-    });
+    callbacks.add('onAdd', () => console.log('callback on add #1'));
 
-    const emptySimple = callbacks.add('empty', () => {}, {
-      name: 'empty simple',
-    });
+    const addCallback2 = callbacks.add('onAdd', () =>
+      console.log('callback on add #2'),
+    );
 
-    callbacks.add('empty', () => {}, {
-      isOnce: true,
-      name: 'empty once',
-    });
+    const addCallback3 = callbacks.add(
+      'onAdd',
+      () => console.log('callback on add #3'),
+      { isProtected: true },
+    );
 
-    const emptyProtected = callbacks.add('empty', () => {}, {
-      isProtected: true,
-      name: 'empty protected',
-    });
+    callbacks.add('onDelete', () => console.log('callback on delete'));
 
-    callbacks.add('empty', () => {}, {
-      isProtected: true,
-      isOnce: true,
-      name: 'empty protected and once',
-    });
+    console.log('--- All callbacks by the target "onAdd" will be executed:');
+    callbacks.tbt('onAdd', undefined);
 
-    callbacks.tbt('empty', undefined);
-    callbacks.tbt('render', { fps: 10 });
+    console.log('--- addCallback2 will be removed:');
+    addCallback2.remove();
+    callbacks.tbt('onAdd', undefined);
+    console.log('---');
 
-    // eslint-disable-next-line no-console
-    console.log(callbacks.callbacks.map(({ name }) => name));
+    console.log('--- addCallback3 cannot be removed because it is protected:');
+    addCallback3.remove();
+    callbacks.tbt('onAdd', undefined);
+    console.log('---');
 
-    renderSimple.remove();
-    emptySimple.remove();
-    emptyProtected.remove();
-    // eslint-disable-next-line no-console
-    console.log(callbacks.callbacks.map(({ name }) => name));
+    console.log('--- Execute all callbacks by the target "onDelete":');
+    callbacks.tbt('onDelete', undefined);
 
     return () => callbacks.destroy();
   }, []);
 
-  return null;
+  return <p>Open the console to see the output</p>;
 };
