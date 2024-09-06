@@ -1,10 +1,10 @@
-import { Viewport, NViewport } from './events/Viewport';
-import { PageLoad, NPageLoad } from './events/PageLoad';
 import version from '../version';
 import { NApplication } from './types';
 import { getDeviceInfo } from '@/utils/internal/getDeviceInfo';
 import { fetchWebpSupport } from '@/utils/internal/fetchWebpSupport';
 import { PCancelable } from '@/utils/common/PCancelable';
+import { createOnPageLoad } from './events/createOnPageLoad';
+import { createViewport, NViewport } from './events/createViewport';
 
 /**
  * Vevet Application. This is the base Vevet class
@@ -97,14 +97,9 @@ export class Application {
     return this._isWebpSupported;
   }
 
-  private _pageLoad: PageLoad;
+  private _pageLoad: ReturnType<typeof createOnPageLoad>;
 
-  /** Page Load Callbacks */
-  get pageLoad() {
-    return this._pageLoad;
-  }
-
-  private _viewport: Viewport;
+  private _viewport: ReturnType<typeof createViewport>;
 
   /** Viewport Callbacks */
   get viewport() {
@@ -135,8 +130,8 @@ export class Application {
     window.vevetApp = this;
 
     // create default helpers
-    this._pageLoad = new PageLoad();
-    this._viewport = new Viewport();
+    this._pageLoad = createOnPageLoad();
+    this._viewport = createViewport();
   }
 
   /** Get and set device info */
@@ -187,15 +182,20 @@ export class Application {
     return document.body;
   }
 
-  /** Action on page loaded */
+  /** Action on page load */
   public onPageLoad() {
     return new PCancelable((resolve: (...arg: any) => void) =>
       this._pageLoad.onLoad(resolve),
     );
   }
+
+  /** Check if page is loaded */
+  get isPageLoaded() {
+    return this._pageLoad.getIsLoaded();
+  }
 }
 
-export type { NApplication, NViewport, NPageLoad };
+export type { NApplication, NViewport };
 
 declare global {
   interface Window {

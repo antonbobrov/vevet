@@ -7,13 +7,13 @@ import {
 import { NModule } from './types';
 import { MutableProps, NMutableProps } from '../MutableProps';
 import { Callbacks, NCallbacks } from '../Callbacks';
-import { Viewport } from '@/src/Application/events/Viewport';
 import { TRequiredModuleProp } from '@/types/utility';
 import { getApp } from '@/utils/internal/getApp';
+import { createViewport } from '@/src/Application/events/createViewport';
 
 export type { NModule };
 
-type TViewportAdd = Viewport['add'];
+type TViewportAdd = ReturnType<typeof createViewport>['callbacks']['add'];
 
 /**
  * Module base
@@ -215,7 +215,7 @@ export class Module<
     action: Parameters<TViewportAdd>[1],
     data: Parameters<TViewportAdd>[2] = {},
   ) {
-    const callback = getApp().viewport.add(target, action, {
+    const callback = getApp().viewport.callbacks.add(target, action, {
       ...data,
       name: this.constructor.name,
     });

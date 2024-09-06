@@ -17,22 +17,20 @@ export const Component: FC = () => {
       'browserName',
       'osName',
       'isWebpSupported',
+      'isPageLoaded',
     ]);
 
     setFeatures(object);
   }, []);
 
-  useEffect(() => {
-    updateFeatures();
-
-    const promise = vevet.onPageLoad();
-    promise.then(() => updateFeatures()).catch(() => {});
-
-    return () => promise.cancel();
-  }, [updateFeatures]);
+  useEffect(() => updateFeatures(), [updateFeatures]);
 
   return (
     <div>
+      <button type="button" onClick={updateFeatures}>
+        Update features
+      </button>
+
       {features &&
         Object.keys(features).map((key) => {
           const value = features[key];

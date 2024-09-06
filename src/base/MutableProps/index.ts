@@ -135,7 +135,7 @@ export class MutableProps<
       return;
     }
 
-    this._viewportCallback = getApp().viewport.add(
+    this._viewportCallback = getApp().viewport.callbacks.add(
       'width',
       this._responseProps.bind(this),
       { name: this._name },

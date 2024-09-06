@@ -30,7 +30,7 @@ export const Component: FC = () => {
   useEffect(() => {
     updateFeatures();
 
-    const callback = viewport.add('any', () => updateFeatures());
+    const callback = viewport.callbacks.add('any', () => updateFeatures());
 
     return () => callback.remove();
   }, [updateFeatures]);

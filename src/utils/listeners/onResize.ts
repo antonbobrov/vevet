@@ -1,4 +1,4 @@
-import { NViewport } from '@/src/Application/events/Viewport';
+import { NViewport } from '@/src/Application/events/createViewport';
 import { NCallbacks } from '@/base/Callbacks';
 
 export type TOnResizeTarget = keyof NViewport.ICallbacksTypes;
@@ -119,8 +119,9 @@ export function onResize({
   }
 
   if (hasBothEvents || !resizeObserver) {
-    viewportCallback = window.vevetApp.viewport.add(viewportTarget, () =>
-      debounceResize({ trigger: 'Viewport' }),
+    viewportCallback = window.vevetApp.viewport.callbacks.add(
+      viewportTarget,
+      () => debounceResize({ trigger: 'Viewport' }),
     );
   }
 
