@@ -152,6 +152,10 @@ export class SplitText<
 
   /** Split the text */
   public splitText() {
+    // launch callbacks
+    this.callbacks.tbt('beforeSplit', undefined);
+
+    // split intro base elements
     this._splitBase();
 
     // split text into lines

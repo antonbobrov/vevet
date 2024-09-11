@@ -47,6 +47,7 @@ export namespace NSplitText {
   export interface IChangeableProps extends NComponent.IChangeableProps {}
 
   export interface ICallbacksTypes extends NComponent.ICallbacksTypes {
+    beforeSplit: undefined;
     split: undefined;
   }
 
