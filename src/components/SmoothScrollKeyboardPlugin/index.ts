@@ -29,7 +29,7 @@ export class SmoothScrollKeyboardPlugin<
     };
   }
 
-  protected _tabDebounceTimeout?: NodeJS.Timeout;
+  protected _tabTimeout?: NodeJS.Timeout;
 
   /** Initialize the class */
   protected _init() {
@@ -41,7 +41,7 @@ export class SmoothScrollKeyboardPlugin<
   }
 
   /** Check if keyboard events may be ignored */
-  protected _canIgnoreKeyboardEvents() {
+  protected _canIgnoreEvents() {
     const { activeElement } = document;
 
     return (
@@ -52,7 +52,7 @@ export class SmoothScrollKeyboardPlugin<
   }
 
   /** Check if scroll container is in viewport */
-  protected _checkScrollContainerInViewport() {
+  protected _isInViewport() {
     const { viewport } = getApp();
 
     const bounding = this.component.container.getBoundingClientRect();
@@ -91,20 +91,27 @@ export class SmoothScrollKeyboardPlugin<
       return;
     }
 
+    // TAB
+    if (event.keyCode === 32) {
+      this._handleSpace(event);
+
+      return;
+    }
+
     // ignore key events for some elements
-    if (this._canIgnoreKeyboardEvents()) {
+    if (this._canIgnoreEvents()) {
       return;
     }
 
     // check if the scroll container is in viewport
-    if (!this._checkScrollContainerInViewport()) {
+    if (!this._isInViewport()) {
       return;
     }
 
     // prevent default behavior
     if (
       !this._checkIsEndOfScroll() &&
-      [38, 40, 39, 37, 34, 33, 36, 35, 32].includes(event.keyCode)
+      [38, 40, 39, 37, 34, 33, 36, 35].includes(event.keyCode)
     ) {
       event.preventDefault();
     }
@@ -149,11 +156,6 @@ export class SmoothScrollKeyboardPlugin<
         component.targetLeft = component.scrollWidth;
         break;
 
-      // SPACE
-      case 32:
-        component.targetTop += iterator * 5;
-        break;
-
       default:
         break;
     }
@@ -161,11 +163,11 @@ export class SmoothScrollKeyboardPlugin<
 
   /** Handle Tab key */
   protected _handleTab() {
-    if (this._tabDebounceTimeout) {
-      clearTimeout(this._tabDebounceTimeout);
+    if (this._tabTimeout) {
+      clearTimeout(this._tabTimeout);
     }
 
-    this._tabDebounceTimeout = setTimeout(() => {
+    this._tabTimeout = setTimeout(() => {
       const scroll = this.component;
       const { activeElement } = document;
 
@@ -194,12 +196,23 @@ export class SmoothScrollKeyboardPlugin<
     }, 120);
   }
 
+  /** Handle Whitespace key */
+  protected _handleSpace(event: KeyboardEvent) {
+    if (document.activeElement instanceof HTMLButtonElement) {
+      return;
+    }
+
+    event.preventDefault();
+
+    this.component.targetTop += this.props.iterator * 5;
+  }
+
   /** Destroy the plugin */
   protected _destroy() {
     super._destroy();
 
-    if (this._tabDebounceTimeout) {
-      clearTimeout(this._tabDebounceTimeout);
+    if (this._tabTimeout) {
+      clearTimeout(this._tabTimeout);
     }
   }
 }

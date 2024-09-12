@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { SmoothScrollKeyboardPlugin } from '..';
 import { SmoothScroll } from '@/components/SmoothScroll';
@@ -67,7 +68,15 @@ export const Component: FC = () => {
 
                 <br />
 
-                <button type="button">Test button</button>
+                <a href="/">Link</a>
+
+                <br />
+
+                <br />
+
+                <button type="button" onClick={() => alert('click')}>
+                  Test button
+                </button>
               </div>
             ),
             40,
