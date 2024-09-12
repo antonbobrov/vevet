@@ -31,19 +31,19 @@ export class AnimationFrame<
   }
 
   /** The animation frame */
-  protected _frame: number | null;
+  protected _raf: number | null;
 
   /** Last frame time */
-  protected _frameIndex: number;
+  protected _rafIndex: number;
 
   /** First frame time */
-  protected _firstFrameTime: null | number;
+  protected _rafFirst: null | number;
 
   /** Last frame time */
-  protected _lastFrameTime: null | number;
+  protected _rafLast: null | number;
 
   /** Array of frame time durations */
-  protected _frameDurations: number[];
+  protected _durations: number[];
 
   /** Computed fps */
   protected _computedFPS: number;
@@ -62,11 +62,11 @@ export class AnimationFrame<
     super(initialProps, false);
 
     this._isPlaying = false;
-    this._frame = null;
-    this._frameIndex = -1;
-    this._firstFrameTime = null;
-    this._lastFrameTime = null;
-    this._frameDurations = [];
+    this._raf = null;
+    this._rafIndex = -1;
+    this._rafFirst = null;
+    this._rafLast = null;
+    this._durations = [];
     this._computedFPS = this.props.fps !== 'auto' ? this.props.fps : 60;
 
     if (canInit) {
@@ -85,9 +85,9 @@ export class AnimationFrame<
   protected _onPropsMutate() {
     super._onPropsMutate();
 
-    this._frameIndex = -1;
-    this._firstFrameTime = null;
-    this._lastFrameTime = null;
+    this._rafIndex = -1;
+    this._rafFirst = null;
+    this._rafLast = null;
 
     if (this.props.isEnabled) {
       this._play();
@@ -120,7 +120,7 @@ export class AnimationFrame<
     this.callbacks.tbt('play', undefined);
     this.callbacks.tbt('toggle', undefined);
 
-    this._frame = window.requestAnimationFrame(this._animate.bind(this));
+    this._raf = window.requestAnimationFrame(this._animate.bind(this));
   }
 
   /** Pause animation */
@@ -138,9 +138,9 @@ export class AnimationFrame<
       return;
     }
 
-    if (this._frame) {
-      window.cancelAnimationFrame(this._frame);
-      this._frame = null;
+    if (this._raf) {
+      window.cancelAnimationFrame(this._raf);
+      this._raf = null;
     }
 
     this._isPlaying = false;
@@ -155,28 +155,28 @@ export class AnimationFrame<
       return;
     }
 
-    this._frame = window.requestAnimationFrame(this._animate.bind(this));
+    this._raf = window.requestAnimationFrame(this._animate.bind(this));
 
     // update time
-    const startTime = +new Date();
-    if (this._firstFrameTime === null) {
-      this._firstFrameTime = startTime;
+    const startTime = Date.now();
+    if (this._rafFirst === null) {
+      this._rafFirst = startTime;
     }
 
     // calculate frame index
     const minFrameDuration =
       this.props.fps === 'auto' ? 1 : 1000 / this.props.fps;
     const newFrameIndex = Math.floor(
-      (startTime - this._firstFrameTime) / minFrameDuration,
+      (startTime - this._rafFirst) / minFrameDuration,
     );
 
     // break if frame index the same
-    if (newFrameIndex <= this._frameIndex) {
+    if (newFrameIndex <= this._rafIndex) {
       return;
     }
 
     // update frame index
-    this._frameIndex = newFrameIndex;
+    this._rafIndex = newFrameIndex;
 
     // compute fps
     this._computeFPS(startTime);
@@ -185,30 +185,30 @@ export class AnimationFrame<
     this.callbacks.tbt('frame', undefined);
 
     // update vars
-    this._lastFrameTime = startTime;
+    this._rafLast = startTime;
   }
 
   /** Compute real-time FPS */
   protected _computeFPS(startTime: number) {
-    const lastFrameDuration = startTime - (this._lastFrameTime ?? startTime);
+    const lastFrameDuration = startTime - (this._rafLast ?? startTime);
 
     // skip frames that seem not real
     if (lastFrameDuration <= 0 || lastFrameDuration > 250) {
       return;
     }
 
-    this._frameDurations.push(lastFrameDuration);
+    this._durations.push(lastFrameDuration);
 
-    if (this._frameDurations.length < this.props.autoFpsFrames) {
+    if (this._durations.length < this.props.autoFpsFrames) {
       return;
     }
 
-    const totalFramesDuration = this._frameDurations.reduce(
+    const totalFramesDuration = this._durations.reduce(
       (prev, curr) => prev + curr,
     );
 
     const approximateFrameDuration =
-      totalFramesDuration / this._frameDurations.length;
+      totalFramesDuration / this._durations.length;
 
     const computedFPS = Math.floor(1000 / approximateFrameDuration);
     const normalizedFPS = Math.round(computedFPS / 10) * 10;
@@ -216,7 +216,7 @@ export class AnimationFrame<
     this._computedFPS = normalizedFPS;
 
     // clear durations
-    this._frameDurations = [];
+    this._durations = [];
   }
 
   /** Destroy the animation frame */

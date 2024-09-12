@@ -22,14 +22,14 @@ export class Timeline<
   }
 
   /** The animation frame */
-  protected _animationFrame?: number;
+  protected _raf?: number;
 
   /** Last time when animationFrame callback has been called */
-  protected _animationFrameLastTime: number;
+  protected _rafTime: number;
 
   /** Timeline is playing */
   get isPlaying() {
-    return typeof this._animationFrame !== 'undefined';
+    return typeof this._raf !== 'undefined';
   }
 
   /** Timeline is reversed */
@@ -56,8 +56,8 @@ export class Timeline<
     super(initialProps, false);
 
     // set default variables
-    this._animationFrame = undefined;
-    this._animationFrameLastTime = 0;
+    this._raf = undefined;
+    this._rafTime = 0;
     this._isReversed = false;
     this._isPaused = false;
 
@@ -76,7 +76,7 @@ export class Timeline<
     this._isPaused = false;
 
     if (!this.isPlaying) {
-      this._animationFrameLastTime = +new Date();
+      this._rafTime = Date.now();
       this._animate();
     }
   }
@@ -91,7 +91,7 @@ export class Timeline<
     this._isPaused = false;
 
     if (!this.isPlaying) {
-      this._animationFrameLastTime = +new Date();
+      this._rafTime = Date.now();
       this._animate();
     }
   }
@@ -104,10 +104,10 @@ export class Timeline<
 
     this._isPaused = true;
 
-    if (this._animationFrame) {
-      window.cancelAnimationFrame(this._animationFrame);
+    if (this._raf) {
+      window.cancelAnimationFrame(this._raf);
     }
-    this._animationFrame = undefined;
+    this._raf = undefined;
   }
 
   /** Reset timeline */
@@ -129,9 +129,9 @@ export class Timeline<
     const { isReversed } = this;
 
     // calculate difference between frames
-    const currentTime = +new Date();
-    const frameDiff = Math.abs(this._animationFrameLastTime - currentTime);
-    this._animationFrameLastTime = currentTime;
+    const currentTime = Date.now();
+    const frameDiff = Math.abs(this._rafTime - currentTime);
+    this._rafTime = currentTime;
 
     // calculate current progress
     const progressIterator = frameDiff / this.duration / (isReversed ? -1 : 1);
@@ -145,15 +145,13 @@ export class Timeline<
     ) {
       this._isReversed = false;
       this._isPaused = false;
-      this._animationFrame = undefined;
+      this._raf = undefined;
 
       return;
     }
 
     // continue animation
-    this._animationFrame = window.requestAnimationFrame(
-      this._animate.bind(this),
-    );
+    this._raf = window.requestAnimationFrame(this._animate.bind(this));
   }
 
   /** Events on progress */
