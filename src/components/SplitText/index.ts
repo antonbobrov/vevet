@@ -209,7 +209,7 @@ export class SplitText<
     const { container, words, lineClassName } = this;
     const { lineTag } = this.props;
 
-    const isHidden = window.getComputedStyle(container).display === 'none';
+    const isHidden = container.offsetParent === null;
     if (isHidden) {
       return;
     }
