@@ -3,20 +3,21 @@ import { NCallbacks } from '@/base/Callbacks';
 
 interface IProps {
   callback: () => void;
-  outerAnimationFrame: AnimationFrameClass | false;
+  raf: AnimationFrameClass | false;
 }
 
 export class AnimationFrame {
-  private _innerAnimationFrame?: AnimationFrameClass;
+  /** Inner animation frame */
+  private _raf?: AnimationFrameClass;
 
-  private _animationFrameEvent?: NCallbacks.IAddedCallback;
+  private _event?: NCallbacks.IAddedCallback;
 
-  private get animationFrame() {
-    return (this.props.outerAnimationFrame || this._innerAnimationFrame)!;
+  private get raf() {
+    return (this.props.raf || this._raf)!;
   }
 
-  get easeMultiplier() {
-    return this.animationFrame.easeMultiplier;
+  get ease() {
+    return this.raf.easeMultiplier;
   }
 
   private get props() {
@@ -27,9 +28,9 @@ export class AnimationFrame {
 
   public enable() {
     // set animation callback for the outer AnimationFrame
-    if (this.props.outerAnimationFrame) {
-      if (!this._animationFrameEvent) {
-        this._animationFrameEvent = this.props.outerAnimationFrame.addCallback(
+    if (this.props.raf) {
+      if (!this._event) {
+        this._event = this.props.raf.addCallback(
           'frame',
           () => this.props.callback(),
           { name: 'SmoothScroll' },
@@ -40,28 +41,26 @@ export class AnimationFrame {
     }
 
     // otherwise, check if inner AnimationFrame is created
-    if (!this._innerAnimationFrame) {
-      this._innerAnimationFrame = new AnimationFrameClass({ fps: 'auto' });
-      this._innerAnimationFrame.addCallback('frame', () =>
-        this.props.callback(),
-      );
+    if (!this._raf) {
+      this._raf = new AnimationFrameClass({ fps: 'auto' });
+      this._raf.addCallback('frame', () => this.props.callback());
     }
 
     // play
-    this._innerAnimationFrame.play();
+    this._raf.play();
   }
 
   /** Disable scrolling */
   public disable() {
-    this._animationFrameEvent?.remove();
-    this._animationFrameEvent = undefined;
+    this._event?.remove();
+    this._event = undefined;
 
-    this._innerAnimationFrame?.pause();
+    this._raf?.pause();
   }
 
   public destroy() {
     this.disable();
 
-    this._innerAnimationFrame?.destroy();
+    this._raf?.destroy();
   }
 }

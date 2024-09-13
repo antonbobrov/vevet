@@ -197,7 +197,7 @@ export class SmoothScroll<
   protected _isInstant?: boolean;
 
   /** Animation frame */
-  protected _animationFrame: AnimationFrame;
+  protected _raf: AnimationFrame;
 
   /** Frame index */
   protected _frameIndex: number;
@@ -254,12 +254,12 @@ export class SmoothScroll<
     });
 
     // set classnames
-    this._setDirectionClassNames(true);
+    this._setClassNames(true);
 
     // create animation frame
-    this._animationFrame = new AnimationFrame({
+    this._raf = new AnimationFrame({
       callback: () => this.render(),
-      outerAnimationFrame: animationFrame as any,
+      raf: animationFrame as any,
     });
 
     // initialize the class
@@ -275,7 +275,7 @@ export class SmoothScroll<
     this._toggle();
   }
 
-  protected _setDirectionClassNames(isActive: boolean) {
+  protected _setClassNames(isActive: boolean) {
     const { direction } = this.props;
 
     const isHorizontal = direction === 'horizontal' && isActive;
@@ -324,7 +324,7 @@ export class SmoothScroll<
         'render',
         (() => {
           if (this._frameIndex % 10 === 0) {
-            this._recalculateScrollSizes();
+            this._recalculate();
           }
         }) as any,
         { isProtected: true, name: this.name },
@@ -336,14 +336,14 @@ export class SmoothScroll<
   protected _onPropsMutate() {
     super._onPropsMutate();
 
-    this._setDirectionClassNames(true);
+    this._setClassNames(true);
 
     this.resize();
     this._toggle();
   }
 
   /** Recalculate scroll sizes */
-  protected _recalculateScrollSizes() {
+  protected _recalculate() {
     const { wrapper } = this;
 
     const height = wrapper.clientHeight;
@@ -404,7 +404,7 @@ export class SmoothScroll<
     container.classList.toggle(this.className('_no-scroll'), !this.hasScroll);
 
     // update elements
-    this._elements.updateElementsProp(this.scrollLeft, this.scrollTop);
+    this._elements.updateProps(this.scrollLeft, this.scrollTop);
   }
 
   /** Event on wheel */
@@ -462,12 +462,12 @@ export class SmoothScroll<
       return;
     }
 
-    this._animationFrame.enable();
+    this._raf.enable();
   }
 
   /** Disable scrolling */
   protected _disable() {
-    this._animationFrame.disable();
+    this._raf.disable();
   }
 
   /** Render elements */
@@ -531,7 +531,7 @@ export class SmoothScroll<
     const xDiff = Math.abs(this.targetLeft - this.scrollLeft);
 
     const isGlobalInterpolated = xDiff === 0 && yDiff === 0;
-    const isInnerInterpolated = this._elements.checkAllScrollValuesEqual();
+    const isInnerInterpolated = this._elements.getIsEqual();
 
     if (isGlobalInterpolated && isInnerInterpolated) {
       this._disable();
@@ -552,9 +552,7 @@ export class SmoothScroll<
   protected _getLerp(element?: NSmoothScroll.IElement) {
     const { lerp: lerpEase, isFpsNormalized } = this.props;
 
-    const fpsMultiplier = isFpsNormalized
-      ? this._animationFrame.easeMultiplier
-      : 1;
+    const fpsMultiplier = isFpsNormalized ? this._raf.ease : 1;
 
     if (this._isEqualLerp || !element) {
       return lerpEase * fpsMultiplier;
@@ -592,11 +590,13 @@ export class SmoothScroll<
 
     this._disable();
 
-    this._elements.destroy();
-    this._animationFrame.destroy();
+    const { container } = this;
 
-    this._setDirectionClassNames(false);
-    this._container.classList.remove(this.className('_has-scroll'));
-    this._container.classList.remove(this.className('_no-scroll'));
+    this._elements.destroy();
+    this._raf.destroy();
+
+    this._setClassNames(false);
+    container.classList.remove(this.className('_has-scroll'));
+    container.classList.remove(this.className('_no-scroll'));
   }
 }

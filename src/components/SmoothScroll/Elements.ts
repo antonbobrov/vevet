@@ -16,7 +16,7 @@ export class Elements {
     return this._wrapper;
   }
 
-  private _wrapperInitiallyExists!: boolean;
+  private _wrapperExists!: boolean;
 
   private _elements!: NSmoothScroll.IElement[];
 
@@ -41,7 +41,7 @@ export class Elements {
 
     if (existingWrapper instanceof HTMLElement) {
       this._wrapper = existingWrapper;
-      this._wrapperInitiallyExists = true;
+      this._wrapperExists = true;
 
       return;
     }
@@ -52,7 +52,7 @@ export class Elements {
       children: Array.from(container.children),
     });
 
-    this._wrapperInitiallyExists = false;
+    this._wrapperExists = false;
   }
 
   /** Create scrollable elements */
@@ -78,7 +78,7 @@ export class Elements {
   }
 
   /** Update elements' properties */
-  public updateElementsProp(scrollLeft: number, scrollTop: number) {
+  public updateProps(scrollLeft: number, scrollTop: number) {
     for (let index = 0; index < this.elements.length; index += 1) {
       const element = this.elements[index];
 
@@ -117,7 +117,7 @@ export class Elements {
   }
 
   /** Check if scroll values are interpolated */
-  public checkAllScrollValuesEqual() {
+  public getIsEqual() {
     const array = this.elements;
 
     return array.every(
@@ -129,7 +129,7 @@ export class Elements {
 
   public destroy() {
     // remove wrapper
-    if (!this._wrapperInitiallyExists) {
+    if (!this._wrapperExists) {
       while (this.wrapper.firstChild) {
         this.props.container.appendChild(this.wrapper.firstChild);
       }
