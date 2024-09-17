@@ -1,3 +1,4 @@
+import { getApp } from '../internal/getApp';
 import { imageSizesToSrcSet } from './sizesToSrcSet';
 
 export interface IImagePaths {
@@ -49,7 +50,7 @@ export interface IImageAdaptivePaths<
  * // => {"src":"/thumb.webp","srcSet":"/640.webp 640w, /750.webp 750w, /1024.webp 1024w, /1440.webp 1440w, /1920.webp 1920w, /2560.webp 2560w"}
  */
 export function imagePathsToProps(data: IImagePaths | IImageAdaptivePaths) {
-  const app = typeof window !== 'undefined' ? window.vevetApp : undefined;
+  const app = typeof window !== 'undefined' ? getApp() : undefined;
 
   // get src
   let src = data.original;

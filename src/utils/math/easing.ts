@@ -1,4 +1,5 @@
 import { easing as easingProgress } from 'easing-progress';
+import { getApp } from '../internal/getApp';
 
 export {
   EaseInBack,
@@ -50,5 +51,5 @@ export type {
  */
 export const easing: typeof easingProgress = (
   progress,
-  easingType = window.vevetApp?.props.easing ?? false,
+  easingType = getApp()?.props.easing ?? false,
 ) => easingProgress(progress, easingType);

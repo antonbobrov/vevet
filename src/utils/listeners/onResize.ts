@@ -1,5 +1,6 @@
 import { NViewport } from '@/src/Application/events/createViewport';
 import { NCallbacks } from '@/base/Callbacks';
+import { getApp } from '../internal/getApp';
 
 export type TOnResizeTarget = keyof NViewport.ICallbacksTypes;
 
@@ -107,7 +108,7 @@ export function onResize({
 
       debounceResize(
         { trigger: 'ResizeObserver' },
-        window.vevetApp.props.resizeDebounce + resizeDebounce,
+        getApp().props.resizeDebounce + resizeDebounce,
       );
     });
 
@@ -119,9 +120,8 @@ export function onResize({
   }
 
   if (hasBothEvents || !resizeObserver) {
-    viewportCallback = window.vevetApp.viewport.callbacks.add(
-      viewportTarget,
-      () => debounceResize({ trigger: 'Viewport' }),
+    viewportCallback = getApp().viewport.callbacks.add(viewportTarget, () =>
+      debounceResize({ trigger: 'Viewport' }),
     );
   }
 
