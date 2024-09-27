@@ -60,6 +60,11 @@ export namespace NSmoothScroll {
      */
     hasWheel?: boolean;
     /**
+     * Wheel speed
+     * @default 1
+     */
+    wheelSpeed?: number;
+    /**
      * Main scrolling direction
      * @default 'vertical'
      */
