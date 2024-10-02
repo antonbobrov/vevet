@@ -5,30 +5,34 @@ const cachedImages: {
   image: HTMLImageElement;
 }[] = [];
 
-type TLoadImageProps = {
+/** Image loading options */
+export type TLoadImageProps = {
   /**
+   * Specifies the `crossOrigin` attribute for the image.
+   * Can be `null` or a string such as 'anonymous' or 'use-credentials'.
    * @default null
    */
   crossOrigin?: string | null;
   /**
+   * When set to `true`, the image will be cached in memory and will not be loaded again for subsequent requests.
    * @default false
    */
   useCache?: boolean;
 };
 
 /**
- * Load an image
+ * Loads an image from a given source, either a URL or an HTMLImageElement.
+ * Supports caching and handling cross-origin requests.
  *
  * @example
- *
  * const loaderWithoutCache = loadImage('/image.jpg');
- *
  * loaderWithoutCache.then((img) => console.log(img)).catch(() => {});
  *
  * const loaderWithCache = loadImage('/image.jpg', {
  *   crossOrigin: 'anonymous',
  *   useCache: true,
  * });
+ * loaderWithCache.then((img) => console.log(img)).catch(() => {});
  */
 export function loadImage(
   source: string | HTMLImageElement,
@@ -38,6 +42,7 @@ export function loadImage(
     crossOrigin: null,
     useCache: false,
   };
+
   const loadProps = {
     ...defaultLoadProps,
     ...props,

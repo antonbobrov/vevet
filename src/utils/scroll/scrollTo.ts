@@ -4,48 +4,54 @@ import { Timeline } from '@/components/Timeline';
 
 export interface IScrollToProps {
   /**
+   * The container to scroll (window, element, or custom scroll-like object)
    * @default window
    */
   container?: Window | Element | IScrollLike;
+
   /**
-   * top padding
+   * The target top position to scroll to, with optional padding.
    * @default 0
    */
   top?: number;
+
   /**
-   * left padding
+   * The target left position to scroll to, with optional padding.
    * @default 0
    */
   left?: number;
+
   /**
-   * Scroll duration. Number (ms) of function (ms).
+   * The duration of the scroll animation in milliseconds.
+   * Can be either a fixed number or a function that takes the scroll distance and returns the duration.
    * @default 250
    */
   duration?: number | ((lengthPx: number) => number);
 }
 
 /**
- * Scroll to coordinates
+ * Smoothly scroll to the specified top and left coordinates inside the given container.
+ * Supports promises to handle the end of the scroll animation.
  *
  * @example
  *
- * // static duration
+ * // Scroll with a static duration
  * scrollTo({
  *   container: window,
  *   top: 500,
  *   duration: 500,
  * });
  *
- * // dynamic duration
+ * // Scroll with a dynamic duration based on distance
  * scrollTo({
  *   top: 1000,
  *   duration: (px) => px,
  * });
  *
- * // use promise
+ * // Use promise to handle when the scroll finishes
  * scrollTo({ top: 500 })
- *   .then(() => console.log('done'))
- *   .catch(() => {});
+ *   .then(() => console.log('Scroll complete'))
+ *   .catch(() => console.error('Scroll failed'));
  */
 export function scrollTo({
   container = window,
@@ -72,7 +78,7 @@ export function scrollTo({
 
     const timeline = new Timeline({
       duration: finalDuration,
-      shouldDestroyOnEnd: true,
+      isDestroyedOnEnd: true,
     });
 
     timeline.addCallback('progress', ({ e }) => {

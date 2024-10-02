@@ -5,7 +5,8 @@ import { NCtx2DPrerender } from './types';
 export type { NCtx2DPrerender } from './types';
 
 /**
- * The class allows you to prerender media for further use with reduced payloads.
+ * The `Ctx2DPrerender` class allows pre-rendering of media (such as images or video) onto a canvas.
+ * This can be useful for reducing payloads by preparing the media for further use in a more optimized form.
  */
 export class Ctx2DPrerender<
   StaticProps extends
@@ -23,21 +24,31 @@ export class Ctx2DPrerender<
     };
   }
 
-  /** Method called on resize */
+  /**
+   * Handles the canvas resize event and triggers the prerender process.
+   * This method is called when the canvas size changes and recalculates the
+   * rendering dimensions.
+   */
   protected _handleResize() {
     super._handleResize();
 
+    // Trigger rendering after resize
     this.render((props) => this._prerender(props));
   }
 
-  /** Prerender the scene */
+  /**
+   * Prerenders the media onto the canvas using the specified positioning rule.
+   * Clears the canvas, calculates the position and dimensions for the media,
+   * and then draws it on the canvas.
+   */
   protected _prerender({ width, height, ctx }: NCtx2D.IRenderProps) {
     const { media, posRule } = this.props;
 
-    // get source info
+    // Determine the media source and its dimensions
     let source: BaseProp['source'];
     let sourceWidth: number | undefined;
     let sourceHeight: number | undefined;
+
     if (media instanceof Ctx2D) {
       source = media.canvas;
       sourceWidth = media.width;
@@ -46,7 +57,7 @@ export class Ctx2DPrerender<
       source = media as any;
     }
 
-    // get media sizes
+    // Calculate media position and size based on the posRule
     const size = getPos({
       source,
       sourceWidth,
@@ -57,11 +68,11 @@ export class Ctx2DPrerender<
       height,
     });
 
-    // render media
+    // Clear the canvas and draw the media with the calculated size
     ctx.clearRect(0, 0, width, height);
     ctx.drawImage(source, size.x, size.y, size.width, size.height);
 
-    // launch callbacks on prerender
+    // Trigger prerender callback
     this.callbacks.tbt('prerender', undefined);
   }
 }

@@ -1,19 +1,25 @@
+/* eslint-disable no-param-reassign */
 import { NSplitText } from '../types';
 
-/* eslint-disable no-param-reassign */
 interface IProps {
   container: ChildNode;
   classname: string;
   tagName: keyof HTMLElementTagNameMap;
 }
 
-/** Wrap each word inside the container */
+/**
+ * Wraps each word inside the container in an HTML element with the specified tag and class.
+ */
 export function wrapWords({ container, classname, tagName }: IProps) {
-  const whitespace = String.fromCharCode(32);
+  const whitespace = String.fromCharCode(32); // ASCII for space
 
   const words: NSplitText.IWord[] = [];
 
+  /**
+   * Recursively processes each child node within the container to wrap words.
+   */
   function recursive(node: ChildNode) {
+    // If the node is an element, process its children
     if (node instanceof HTMLElement) {
       if (node.tagName !== 'BR') {
         node.style.display = 'inline-block';
@@ -25,11 +31,13 @@ export function wrapWords({ container, classname, tagName }: IProps) {
       return;
     }
 
+    // If the node is a text node, split it into words
     if (node.nodeType === 3) {
       const nodeParent = node.parentElement;
       const text = node.nodeValue ?? '';
       const splitWords = text.split(whitespace);
 
+      // Handle case where node contains only whitespace
       if (text === whitespace) {
         nodeParent?.insertBefore(document.createTextNode(whitespace), node);
         node.remove();
@@ -37,6 +45,7 @@ export function wrapWords({ container, classname, tagName }: IProps) {
         return;
       }
 
+      // Wrap each word in an element and insert it into the DOM
       splitWords.forEach((splitWord, index) => {
         if (splitWord) {
           const element = document.createElement(tagName);
@@ -49,6 +58,7 @@ export function wrapWords({ container, classname, tagName }: IProps) {
           nodeParent?.insertBefore(element, node);
         }
 
+        // Add a space between words, except after the last word
         if (index < splitWords.length - 1) {
           nodeParent?.insertBefore(document.createTextNode(whitespace), node);
         }
@@ -58,6 +68,7 @@ export function wrapWords({ container, classname, tagName }: IProps) {
     }
   }
 
+  // Begin processing the container
   recursive(container);
 
   return words;

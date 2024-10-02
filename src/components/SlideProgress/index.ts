@@ -11,7 +11,8 @@ import { NDraggerBase } from '../DraggerBase';
 export type { NSlideProgress };
 
 /**
- * Slide progress handler
+ * Slide progress handler.
+ * This class manages sliding progress with options like dragging, wheel interactions, and smooth transitions.
  */
 export class SlideProgress<
   StaticProps extends NSlideProgress.IStaticProps = NSlideProgress.IStaticProps,
@@ -39,44 +40,48 @@ export class SlideProgress<
     };
   }
 
-  /** Animation frame */
+  /** Animation frame for smooth animations */
   protected _animationFrame: AnimationFrame;
 
-  /** Dragger events */
+  /** Dragging behavior manager */
   protected _dragger: DraggerMove;
 
-  /** Progress (current and target) */
+  /** Stores the current and target progress values */
   protected _progressLerp: NSlideProgress.IWithLerp = { current: 0, target: 0 };
 
-  /** Progress */
+  /**
+   * Gets the current progress value.
+   */
   get progress() {
     return this._progressLerp.current;
   }
 
-  /** Stepped progress */
+  /**
+   * Gets the nearest stepped progress value.
+   */
   get steppedProgress() {
     return this._getNearestStep(this._progressLerp.current);
   }
 
-  /** Progress timeline */
+  /** Timeline for smooth transitions */
   protected _timelineTo?: Timeline;
 
-  /** Sticky timeout */
+  /** Timeout for sticky behavior at the end */
   protected _stickyEndTimeout?: NodeJS.Timeout;
 
-  /** Can drag */
+  /** Determines if dragging is allowed */
   protected _canDragMove = false;
 
-  /** Direction */
+  /** Direction of progress */
   protected _direction: 1 | -1 = 1;
 
-  /** Wheel intensity */
+  /** Intensity of wheel interaction */
   protected _wheelIntensity = 0;
 
-  /** Current handler */
+  /** Current handler for user interactions: 'wheel' or 'drag' */
   protected _currentHandler: 'wheel' | 'drag' = 'wheel';
 
-  /** If page is scrolling */
+  /** Checks if the page is scrolling */
   protected _createIsPageScrolling: ReturnType<typeof createIsPageScrolling>;
 
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
@@ -84,80 +89,88 @@ export class SlideProgress<
 
     const { container } = this.props;
 
-    // create animation frame
+    // Create the animation frame
     this._animationFrame = new AnimationFrame();
     this._animationFrame.addCallback('frame', () =>
       this._handleAnimationFrame(),
     );
 
-    // create dragger
+    // Create the dragger
     this._dragger = new DraggerMove({ container });
     this._dragger.addCallback('move', (event) => this._handleDrag(event));
     this._dragger.addCallback('start', ({ event }) => event.stopPropagation());
     this._dragger.addCallback('end', () => this._handleDragEnd());
 
-    // add wheel event
+    // Add wheel event listener
     this.addEventListener(container, 'wheel', (event) =>
       this._handleWheel(event),
     );
 
-    // create is page scrolling
+    // Create page scrolling check
     this._createIsPageScrolling = createIsPageScrolling();
 
-    // initialize the class
+    // Initialize the class
     if (canInit) {
       this.init();
     }
   }
 
+  /**
+   * Handles mutation of properties.
+   */
   protected _onPropsMutate() {
     super._onPropsMutate();
 
     this._dragger.changeProps({ isEnabled: this.props.hasDrag });
   }
 
-  /** Handle wheel event */
+  /**
+   * Handles wheel events for adjusting progress.
+   * @param event - The wheel event.
+   */
   protected _handleWheel(event: WheelEvent) {
     if (this._timelineTo || !this.props.hasWheel) {
       return;
     }
 
-    // clear sticky timeout
+    // Clear sticky timeout
     if (this._stickyEndTimeout) {
       clearTimeout(this._stickyEndTimeout);
       this._stickyEndTimeout = undefined;
     }
 
-    // vars
+    // Vars
     const { _progressLerp: progress } = this;
     const { container, min, max, wheelSpeed } = this.props;
 
-    // update handler
+    // Update handler
     this._currentHandler = 'wheel';
 
-    // normalize wheel
+    // Normalize wheel data
     const wheel = normalizeWheel(event);
     const y = (wheel.pixelY / container.clientHeight) * wheelSpeed;
 
-    // update direction
+    // Update direction and target progress
     this._wheelIntensity += y;
     this._direction = this._wheelIntensity > 0 ? 1 : -1;
-
-    // update target
     progress.target = clamp(progress.target + y, [min, max]);
+
     this._animationFrame.play();
 
-    // go sticky
+    // Set timeout for sticky behavior
     this._stickyEndTimeout = setTimeout(() => {
       this._wheelIntensity = 0;
       this._goStickyEnd();
     }, 100);
 
-    // callbacks
+    // Callbacks
     this.callbacks.tbt('wheel', wheel);
   }
 
-  /** Check if can move */
+  /**
+   * Checks if dragging is allowed.
+   * @param absDiff - Absolute difference in dragging distance.
+   */
   protected _checkCanDragMove(absDiff: NDraggerBase.IVector2) {
     const { dragDirection, dragThreshold } = this.props;
 
@@ -180,7 +193,10 @@ export class SlideProgress<
     return false;
   }
 
-  /** Handle drag move event */
+  /**
+   * Handles the drag movement for adjusting progress.
+   * @param data - The drag event data.
+   */
   protected _handleDrag(data: NDraggerMove.IMoveParameter) {
     const isPageScrolling = this._createIsPageScrolling.get();
 
@@ -201,11 +217,10 @@ export class SlideProgress<
     }
     event.stopPropagation();
 
-    // update handler
+    // Update handler
     this._currentHandler = 'drag';
 
-    // drag logic
-
+    // Drag logic
     const defaultIterator = dragDirection === 'y' ? step.y : step.x;
     const iteratorDivider =
       dragDirection === 'y' ? container.clientHeight : container.clientWidth;
@@ -218,18 +233,23 @@ export class SlideProgress<
 
     this._animationFrame.play();
 
-    // callbacks
+    // Callbacks
     this.callbacks.tbt('dragMove', data);
   }
 
-  /** Handler drag end event */
+  /**
+   * Handles the end of a drag event and triggers sticky behavior.
+   */
   private _handleDragEnd() {
     this._canDragMove = false;
 
     this._goStickyEnd();
   }
 
-  /** Get nearest stepped value to given progress */
+  /**
+   * Gets the nearest step value to the given progress value.
+   * @param value - The progress value.
+   */
   protected _getNearestStep(value: number) {
     const { step, stepThreshold: stepThresholdProp, dragSpeed } = this.props;
     const threshold = clamp(stepThresholdProp, [0.001, 0.5]);
@@ -255,11 +275,13 @@ export class SlideProgress<
     return Math.round(value / this.props.step) * this.props.step;
   }
 
-  /** Callback on animation frame */
+  /**
+   * Handles the animation frame and updates the progress values.
+   */
   protected _handleAnimationFrame() {
     const { _progressLerp: progress } = this;
     const { ease, friction, step } = this.props;
-    const { easeMultiplier } = this._animationFrame;
+    const { fpsMultiplier } = this._animationFrame;
 
     const nearestSteppedProgress = this._getNearestStep(progress.target);
 
@@ -267,11 +289,11 @@ export class SlideProgress<
       progress.target = lerp(
         progress.target,
         nearestSteppedProgress,
-        friction * ease * easeMultiplier,
+        friction * ease * fpsMultiplier,
         0,
       );
 
-      this._updateCurrentProgress(ease * easeMultiplier);
+      this._updateCurrentProgress(ease * fpsMultiplier);
 
       if (
         progress.current === progress.target &&
@@ -284,12 +306,17 @@ export class SlideProgress<
     this.render();
   }
 
-  /** Render scene */
+  /**
+   * Renders the component and triggers any necessary callbacks.
+   */
   public render() {
     this.callbacks.tbt('render', undefined);
   }
 
-  /** Interpolate current progress & launch callbacks if needed */
+  /**
+   * Updates the current progress and triggers callbacks if necessary.
+   * @param ease - The ease value for interpolation.
+   */
   protected _updateCurrentProgress(ease: number) {
     const progress = this._progressLerp;
 
@@ -304,7 +331,9 @@ export class SlideProgress<
     }
   }
 
-  /** Sticky to the nearest step */
+  /**
+   * Sticks the progress to the nearest step at the end of user interaction.
+   */
   protected _goStickyEnd() {
     const { stickyEndDuration } = this.props;
 
@@ -328,7 +357,9 @@ export class SlideProgress<
     });
   }
 
-  /** Animate progress to a certain value */
+  /**
+   * Animates the progress to a specific value.
+   */
   public to({
     value: endValue,
     duration: durationProp = 500,
@@ -370,7 +401,9 @@ export class SlideProgress<
     this._animationFrame.play();
   }
 
-  /** Destroy the module */
+  /**
+   * Destroys the component and clears all timeouts and resources.
+   */
   protected _destroy() {
     super._destroy();
 

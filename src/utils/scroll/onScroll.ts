@@ -1,10 +1,10 @@
 import { addEventListener, selectOne } from 'vevet-dom';
 import { IRemovable } from '@/types/general';
 import { uid } from '../common';
-import type { SmoothScroll } from '@/components/SmoothScroll';
+import type { CustomScroll } from '@/components/CustomScroll';
 import { getScrollValues } from './getScrollValues';
 
-type TContainer = string | Element | SmoothScroll | Window;
+export type TOnScrollContainer = string | Element | CustomScroll | Window;
 
 export interface IOnScrollCallbackParameter {
   scrollTop: number;
@@ -13,7 +13,7 @@ export interface IOnScrollCallbackParameter {
 
 interface IInstance {
   id: string;
-  container: TContainer;
+  container: TOnScrollContainer;
   callbacks: {
     id: string;
     callback: (data: IOnScrollCallbackParameter) => void;
@@ -23,7 +23,7 @@ interface IInstance {
 }
 
 export interface IOnScrollProps {
-  container: TContainer;
+  container: TOnScrollContainer;
   callback: (data: IOnScrollCallbackParameter) => void;
   isPassive?: boolean;
 }
@@ -31,7 +31,13 @@ export interface IOnScrollProps {
 let instances: IInstance[] = [];
 
 /**
- * Add `onScroll` event
+ * Add `onScroll` event listener to the provided container (DOM element, custom scroll, or window).
+ * It automatically manages multiple scroll listeners by stacking them in instances.
+ *
+ * If an instance already exists for the container, it adds the new callback to the existing stack.
+ * Otherwise, it creates a new scroll listener.
+ *
+ * This function supports both native scrollable elements and `CustomScroll` instances.
  *
  * @example
  *
@@ -46,18 +52,18 @@ export function onScroll({
   callback,
   isPassive = false,
 }: IOnScrollProps): IRemovable {
-  // check if listeners for this element already exist
+  // Check if a listener for this container already exists
   let instance = instances.find(
     (data) => data.container === container && data.isPassive === isPassive,
   )!;
 
   const callbackId = uid('scroll-event');
 
-  // if a listener exists, we just add a new callback to its stack
+  // If a listener exists, we just add a new callback to its stack
   if (instance) {
     instance.callbacks.push({ id: callbackId, callback });
   } else {
-    // otherwise we create a new instance
+    // Otherwise, create a new instance
     instance = {
       id: uid('scroll-event-instance'),
       container,
@@ -67,8 +73,8 @@ export function onScroll({
     };
     instances.push(instance);
 
-    // smooth scroll events
-    if (typeof container === 'object' && 'isSmoothScroll' in container) {
+    // Custom scroll events
+    if (typeof container === 'object' && 'isCustomScroll' in container) {
       instance.listeners.push(
         container.addCallback(
           'render',
@@ -83,7 +89,7 @@ export function onScroll({
         ),
       );
     } else {
-      // dom scroll events
+      // DOM scroll events
       const domContainer = selectOne(container) as any;
 
       instance.listeners.push(
@@ -104,6 +110,7 @@ export function onScroll({
     }
   }
 
+  // Removes the scroll listener
   const remove = () => {
     const newCallbacks = instance.callbacks.filter(
       (item) => item.id !== callbackId,

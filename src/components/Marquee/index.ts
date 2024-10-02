@@ -1,326 +1,395 @@
 import { selectOne } from 'vevet-dom';
 import { NMarquee } from './types';
 import { Component as ComponentClass } from '@/base/Component';
-import { wrap } from '@/utils/math';
-import { onResize } from '@/utils/listeners/onResize';
 import { AnimationFrame } from '../AnimationFrame';
 import { getApp } from '@/utils/internal/getApp';
+import { wrap } from '@/utils/math';
+import { onResize } from '@/utils/listeners';
 
 export type { NMarquee };
 
 /**
- * Custom Marquee
+ * A custom marquee component that smoothly scrolls its child elements.
+ *
+ * This component is designed to loop elements horizontally within a container,
+ * with support for customization such as speed, gap, pause on hover, and more.
  */
 export class Marquee<
   StaticProps extends NMarquee.IStaticProps = NMarquee.IStaticProps,
   ChangeableProps extends NMarquee.IChangeableProps = NMarquee.IChangeableProps,
   CallbacksTypes extends NMarquee.ICallbacksTypes = NMarquee.ICallbacksTypes,
 > extends ComponentClass<StaticProps, ChangeableProps, CallbacksTypes> {
+  /**
+   * Returns the default properties for the marquee.
+   */
   protected _getDefaultProps() {
     return {
       ...super._getDefaultProps(),
       container: `#${this.prefix}`,
-      viewportTarget: 'width',
       resizeDebounce: 0,
+      hasWillChange: true,
+      canCloneNodes: true,
       speed: 1,
+      gap: 0,
       isEnabled: true,
       pauseOnHover: false,
-      prependWhitespace: true,
       isFpsNormalized: true,
+      isCentered: false,
     };
   }
 
+  /**
+   * Returns the prefix for the marquee.
+   */
   get prefix() {
     return `${getApp().prefix}marquee`;
   }
 
-  /** Marquee container */
+  /** Marquee container element */
   protected _container: HTMLElement;
 
-  /** Marquee container */
+  /** Marquee container element */
   get container() {
     return this._container;
   }
 
-  /** Initial html */
-  protected _initialHTML: string;
+  /** Current container width */
+  private _width = 0;
 
-  /** Mutation observer */
-  protected _mutationObserver?: MutationObserver;
+  /** Initial child nodes of the container */
+  private _initialNodes: ChildNode[] = [];
 
-  /** Items quantity */
-  protected _quantity: number;
+  /** Array of marquee element nodes */
+  private _elements: HTMLElement[] = [];
 
-  /** Items */
-  protected _items: HTMLElement[];
+  /** Timeout for resize debounce */
+  private _resizeTimeout: NodeJS.Timeout | null = null;
 
-  /** Single item width */
-  protected _itemWidth: number;
+  /** Array of widths of each element in the marquee */
+  private _widths: number[] = [];
 
-  /** X Coordinate */
-  protected _xCoord: number;
+  /** Total width of all elements in the marquee */
+  private _totalWidth = 0;
 
-  /** Can play */
+  /** Total width of all elements in the marquee */
+  get totalWidth() {
+    return this._totalWidth;
+  }
+
+  /** Last setup handler for teardown */
+  private _lastSetup?: () => void;
+
+  /** Current animation X position */
+  protected _x: number;
+
+  /** Current animation X position */
+  get x() {
+    return this._x;
+  }
+
+  set x(value) {
+    this._x = value;
+    this.render(0);
+  }
+
+  /** Whether the marquee can play (used for pausing) */
   protected _canPlay: boolean;
 
-  /** Animation frame */
-  protected _animationFrame?: AnimationFrame;
+  /** Animation frame instance */
+  protected _raf: AnimationFrame;
 
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
 
     this._container = selectOne(this.props.container)! as HTMLElement;
-    if (!(this._container instanceof HTMLElement)) {
+    const container = this._container;
+    if (!(container instanceof HTMLElement)) {
       throw new Error('No container');
     }
 
-    this.toggleClassName(this._container, this.className(''), true);
+    this.toggleClassName(container, this.className(''), true);
 
-    this._initialHTML = this._container.innerHTML;
-    this._quantity = 0;
-    this._items = [];
-    this._itemWidth = 0;
-    this._xCoord = 0;
+    // Initialize internal variables
+    this._x = 0;
     this._canPlay = true;
 
-    this.resize();
+    // Apply base styles to the container
+    container.style.position = 'relative';
+    container.style.display = 'flex';
+    container.style.flexDirection = 'row';
+    container.style.alignItems = 'center';
+    container.style.justifyContent = 'flex-start';
+    container.style.width = '100%';
+    container.style.overflow = 'hidden';
 
+    // Setup elements in the marquee
+    this._setup();
+
+    // Create animation frame
+    this._raf = new AnimationFrame({
+      isEnabled: this.props.isEnabled,
+    });
+    this._raf.addCallback('frame', () => this._render());
+
+    // Initialize the component if canInit is true
     if (canInit) {
       this.init();
     }
   }
 
-  /** Init the class */
+  /** Initializes the component and sets up event listeners */
   protected _init() {
     super._init();
 
     this._setEvents();
   }
 
-  /** Handle properties mutation */
-  protected _onPropsMutate() {
-    super._onPropsMutate();
-
-    if (this.props.isEnabled) {
-      this._animationFrame?.play();
-    } else {
-      this._animationFrame?.pause();
-    }
-  }
-
-  /** Set module event */
+  /** Sets up event listeners for the marquee component */
   protected _setEvents() {
     const { container, props } = this;
-    const { viewportTarget, resizeDebounce } = props;
 
-    // create animation frame
-    this._animationFrame = new AnimationFrame();
-    this._animationFrame.addCallback('frame', () => this._render());
-    this.addDestroyableAction(() => this._animationFrame?.destroy());
-
-    // initial play
-    if (this.props.isEnabled) {
-      this._animationFrame.play();
-    }
-
-    // pause on hover
+    // Pause on hover
     this.addEventListener(container, 'mouseenter', () => {
-      if (this.props.pauseOnHover) {
+      if (props.pauseOnHover) {
         this._canPlay = false;
       }
     });
 
-    // play on mouseleave
+    // Resume on mouse leave
     this.addEventListener(container, 'mouseleave', () => {
       this._canPlay = true;
     });
-
-    // resize the scene
-    const resizeHandler = onResize({
-      onResize: () => this.resize(),
-      element: this.container,
-      viewportTarget,
-      resizeDebounce,
-      hasBothEvents: true,
-    });
-    this.addDestroyableAction(() => resizeHandler.remove());
-
-    // resize on page load
-    getApp()
-      .onPageLoad()
-      .then(() => this.resize())
-      .catch(() => {});
   }
 
+  /** Handles property changes and re-renders the component */
+  protected _onPropsMutate() {
+    super._onPropsMutate();
+
+    if (this.props.isEnabled) {
+      this._raf?.play();
+    } else {
+      this._raf?.pause();
+    }
+
+    // Rerender the elements
+    this.render(0);
+  }
+
+  /** Initializes the marquee setup, including resizing and cloning elements */
+  protected _setup() {
+    this._lastSetup?.();
+
+    if (this.isDestroyed) {
+      return;
+    }
+
+    const container = this._container;
+
+    // Save initial child nodes
+    this._initialNodes = [...Array.from(container.childNodes)];
+
+    // Wrap text node if necessary
+    this._wrapTextNode();
+
+    // Store element references
+    this._elements = Array.from(container.querySelectorAll('*'));
+
+    // Handle container resizing
+    const onContainerResize = onResize({
+      onResize: () => this._handleResize(),
+      element: container,
+      viewportTarget: 'width',
+      hasBothEvents: false,
+    });
+
+    // Resize on page load
+    getApp()
+      .onPageLoad()
+      .then(() => this._handleResize())
+      .catch(() => {});
+
+    // Set resize events for individual elements
+    const elementsResize = onResize({
+      onResize: () => this._handleResize(),
+      element: this._elements,
+      viewportTarget: 'width',
+      hasBothEvents: false,
+    });
+
+    // Add necessary styles to elements
+    this._elements.forEach((element, index) =>
+      this._addElementStyles(element, index !== 0),
+    );
+
+    // Setup cleanup function
+    this._lastSetup = () => {
+      onContainerResize.remove();
+      elementsResize.remove();
+    };
+  }
+
+  /**
+   * Wraps the first text node in the container in a span if no other elements exist.
+   */
+  private _wrapTextNode() {
+    const node = this._container.childNodes[0];
+
+    // Wrap text node if it's the first child and not already wrapped
+    if (!node || node.nodeType !== 3) {
+      return;
+    }
+
+    const wrapper = document.createElement('span');
+    wrapper.style.position = 'relative';
+    wrapper.style.display = 'block';
+    wrapper.style.width = 'max-content';
+    wrapper.style.whiteSpace = 'nowrap';
+    wrapper.appendChild(node);
+    this._container.appendChild(wrapper);
+  }
+
+  /**
+   * Adds necessary styles to a given element.
+   */
+  private _addElementStyles(element: HTMLElement, isAbsolute: boolean) {
+    const el = element;
+
+    el.style.position = isAbsolute ? 'absolute' : 'relative';
+    el.style.top = isAbsolute ? '50%' : '0';
+    el.style.left = '0';
+    el.style.width = element.style.width || 'max-content';
+    el.style.willChange = this.props.hasWillChange ? 'transform' : '';
+  }
+
+  /** Handles resize events and updates the layout accordingly */
+  private _handleResize() {
+    if (this.isDestroyed) {
+      return;
+    }
+
+    if (this._resizeTimeout) {
+      clearTimeout(this._resizeTimeout);
+    }
+
+    this._resizeTimeout = setTimeout(
+      () => this.resize(),
+      this.props.resizeDebounce,
+    );
+  }
+
+  /** Resizes the marquee, recalculating element positions and cloning if necessary */
   public resize() {
     if (this.isDestroyed) {
       return;
     }
 
-    this._createItems();
+    const { container, props } = this;
+
+    // Update container width
+    this._width = container.offsetWidth;
+
+    // Update element widths
+    this._widths = [];
+    this._elements.forEach((element, index) => {
+      this._widths[index] = element.offsetWidth + props.gap;
+    });
+    this._totalWidth = this._widths.reduce((a, b) => a + b, 0);
+
+    // Determine how many times to duplicate elements
+    const maxWidth = Math.max(...this._widths);
+    const copyQuantity = Math.ceil((this._width + maxWidth) / this._totalWidth);
+
+    // update total width
+    this._totalWidth = Math.max(this._totalWidth, this._width + maxWidth);
+
+    // Clone elements if necessary
+    if (props.canCloneNodes && copyQuantity > 1) {
+      for (let i = 1; i < copyQuantity; i += 1) {
+        this._elements.forEach((element) => {
+          const copy = element.cloneNode(true) as HTMLElement;
+          this._addElementStyles(copy, true);
+          container.appendChild(copy);
+        });
+      }
+
+      // Update element references after cloning
+      this._elements = Array.from(container.querySelectorAll('*'));
+      this.resize();
+    }
+
+    // Trigger resize callbacks
+    this.callbacks.tbt('resize', undefined);
+
+    // Rerender the marquee
+    this.render(0);
   }
 
-  protected _createItems() {
-    this._disconnectMutations();
-
-    const { container } = this;
-
-    // clear
-    this._quantity = 0;
-    this._items = [];
-    this.container.innerHTML = '';
-
-    // apply styles to the container
-    container.style.position = 'relative';
-    container.style.display = 'block';
-    container.style.width = '100%';
-    container.style.overflow = 'hidden';
-    container.style.whiteSpace = 'nowrap';
-
-    // create the first item and get its sizes
-    // to calculate the further quantity of inner elements
-    const firstItem = this._createItem(true);
-
-    // get first item width
-    let itemWidth = firstItem.clientWidth;
-    if (itemWidth <= 0) {
-      itemWidth = window.innerWidth;
-    }
-    this._itemWidth = itemWidth;
-
-    // get items quantity
-    if (itemWidth < container.clientWidth) {
-      this._quantity = Math.ceil(
-        (container.clientWidth + itemWidth) / itemWidth,
-      );
-    }
-    this._quantity = Math.max(this._quantity, 4);
-
-    // now when we know the total quantity,
-    // we can create the rest of the items
-    for (let index = 1; index < this._quantity; index += 1) {
-      this._createItem(false);
-    }
-
-    // render for the first time
-    this._render(0);
-
-    // enable mutation observer
-    this._observeMutations();
-  }
-
-  /** Create a single item */
-  protected _createItem(isFirst = false) {
-    const element = document.createElement('div');
-    element.classList.add(this.className('__element'));
-
-    if (!isFirst) {
-      element.setAttribute('aria-hidden', 'true');
-    }
-
-    const prefix = `${this.props.prependWhitespace ? '&nbsp;' : ''}`;
-    const body = this._initialHTML;
-
-    element.innerHTML = `${prefix}${body}`;
-
-    // apply styles
-    if (!isFirst) {
-      element.style.position = 'absolute';
-      element.style.top = '0';
-      element.style.left = '0';
-    }
-
-    element.style.display = 'inline-block';
-
-    // append the element
-    this.container.appendChild(element);
-    this._items.push(element);
-
-    return element;
-  }
-
-  /**
-   * Observe DOM changes
-   * If a change happens inside the parent element,
-   * we recreate the marquee element
-   */
-  protected _observeMutations() {
-    if (this._mutationObserver) {
-      return;
-    }
-
-    const config: MutationObserverInit = {
-      childList: true,
-    };
-
-    const callback: MutationCallback = (mutationsList) => {
-      mutationsList.forEach((mutation) => {
-        if (mutation.type === 'childList') {
-          this._initialHTML = this.container.innerHTML;
-
-          this._createItems();
-        }
-      });
-    };
-
-    this._mutationObserver = new MutationObserver(callback);
-    this._mutationObserver.observe(this.container, config);
-  }
-
-  /**
-   * Destroy mutation observer
-   */
-  protected _disconnectMutations() {
-    this._mutationObserver?.disconnect();
-    this._mutationObserver = undefined;
-  }
-
-  /** Render marquee */
-  public render(speed = this.props.speed) {
+  /** Renders the marquee, adjusting element positions */
+  public render(speed?: number) {
     this._render(speed);
   }
 
-  /** Render marquee */
-  protected _render(speedProp?: number) {
-    if (!this._canPlay) {
+  /**
+   * Renders the marquee, calculating element positions based on the provided speed.
+   */
+  protected _render(speedProp = this.props.speed) {
+    if (!this._canPlay || this.isDestroyed) {
       return;
     }
 
-    const { _quantity: qunantity, _itemWidth: itemWidth, props } = this;
-    const { isFpsNormalized } = props;
+    const { isFpsNormalized, isCentered } = this.props;
 
-    const fpsMultiplier = isFpsNormalized
-      ? (this._animationFrame?.easeMultiplier ?? 1)
-      : 1;
+    // Calculate speed, adjusting for frame rate if necessary
+    const fpsMultiplier = isFpsNormalized ? this._raf.fpsMultiplier : 1;
+    const speed = speedProp * fpsMultiplier;
 
-    const defaultSpeed = props.speed * fpsMultiplier;
-    const speed = speedProp ?? defaultSpeed;
+    // Update animation time
+    this._x -= speed;
 
-    this._xCoord -= speed;
+    // Calculate current position of the elements
+    const centerX = this._width * 0.5;
+    const position = this._x + (isCentered ? centerX : 0);
 
-    // get total width
-    const totalWidth = itemWidth * (qunantity - 1);
+    // Update each element's position
+    let prevStaticX = 0;
+    for (let index = 0; index < this._elements.length; index += 1) {
+      const element = this._elements[index];
+      const elementWidth = this._widths[index];
 
-    // render elements
-    for (let index = 0; index < qunantity; index += 1) {
-      const element = this._items[index];
+      const x = wrap(
+        -elementWidth,
+        this._totalWidth - elementWidth,
+        position + prevStaticX,
+      );
 
-      // calulate transforms
-      const x = wrap(-itemWidth, totalWidth, this._xCoord + itemWidth * index);
+      // Apply transformations to position the element
+      const y = element.style.position === 'relative' ? '0' : '-50%';
+      element.style.transform = `translate(${x}px, ${y})`;
 
-      // apply transforms
-      element.style.transform = `matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0, ${x}, 0, 0,1)`;
+      prevStaticX += elementWidth;
     }
 
-    // callbacks
+    // Trigger render callbacks
     this.callbacks.tbt('render', undefined);
   }
 
+  /** Destroys the marquee and removes all event listeners */
   protected _destroy() {
     super._destroy();
 
-    this._disconnectMutations();
+    this._raf?.destroy();
+    this._lastSetup?.();
 
-    this.container.innerHTML = this._initialHTML;
+    if (this._resizeTimeout) {
+      clearTimeout(this._resizeTimeout);
+      this._resizeTimeout = null;
+    }
+
+    // Remove all children and restore the initial nodes
+    while (this._container.firstChild) {
+      this._container.removeChild(this._container.firstChild);
+    }
+
+    this._initialNodes.forEach((node) => this._container.appendChild(node));
   }
 }

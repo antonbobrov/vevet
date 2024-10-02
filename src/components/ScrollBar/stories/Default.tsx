@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
-import { times } from '@/utils/common';
 import { ScrollBar } from '..';
+import { times } from '@/utils/internal/times';
 
 export const WithDefaultComponent: FC = () => {
   useEffect(() => {

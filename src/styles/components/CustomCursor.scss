@@ -5,8 +5,8 @@ $custom-cursor-scale-duration: 0.5s !default;
 $custom-cursor-alpha: 0.5 !default;
 $custom-cursor-color: #000 !default;
 
-.#{$prefix}custom-cursor-container {
-  &.#{$prefix}custom-cursor-hide-defaut-cursor {
+.v-custom-cursor-container {
+  &.v-custom-cursor-hide-default-cursor {
     cursor: none;
 
     * {
@@ -15,11 +15,11 @@ $custom-cursor-color: #000 !default;
   }
 }
 
-.#{$prefix}custom-cursor {
+.v-custom-cursor {
   --cursor-w: 50px;
   --cursor-h: 50px;
 
-  &.#{$prefix}custom-cursor-in-window {
+  &.v-custom-cursor-in-window {
     position: fixed;
   }
 
@@ -34,11 +34,11 @@ $custom-cursor-color: #000 !default;
   @include transition(opacity $custom-cursor-alpha-duration);
   opacity: 0;
 
-  &.#{$prefix}custom-cursor-in-action {
+  &.v-custom-cursor-in-action {
     opacity: 1;
   }
 
-  &.#{$prefix}custom-cursor-disabled {
+  &.v-custom-cursor-disabled {
     opacity: 0;
   }
     
@@ -53,7 +53,7 @@ $custom-cursor-color: #000 !default;
 
     @include transition(transform $custom-cursor-scale-duration);
 
-    &.#{$prefix}custom-cursor-click {
+    &.v-custom-cursor-click {
       transform: scale(0.75);
     }
   }

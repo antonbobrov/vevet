@@ -13,6 +13,9 @@ interface ILine extends NSplitText.ILine {
   nodes: Node[];
 }
 
+/**
+ * Recursively retrieves the top parent element of a given element within a container.
+ */
 function getTopParent(ref: Element | null, topParent: Element): Element {
   if (ref?.parentElement === topParent) {
     return ref;
@@ -21,13 +24,15 @@ function getTopParent(ref: Element | null, topParent: Element): Element {
   return getTopParent(ref?.parentElement ?? null, topParent);
 }
 
-/** Wrap each word inside the container */
+/**
+ * Wraps each word in the container into lines, based on their vertical position.
+ */
 export function wrapLines({ container, words, className, tagName }: IProps) {
   const lines: ILine[] = [];
   let lineIndex = -1;
   let prevTop = Infinity;
 
-  // create lines
+  // Create lines by wrapping words
   words.forEach((word) => {
     const currentTop = Math.round(word.element.getBoundingClientRect().top);
     const topParent = getTopParent(word.element, container);
@@ -56,14 +61,14 @@ export function wrapLines({ container, words, className, tagName }: IProps) {
     }
   });
 
-  // append lines
+  // Append line elements to the container
   lines.forEach((line) => {
     container.insertBefore(line.element, line.nodes[0]);
 
     line.element.append(...line.nodes);
   });
 
-  // hide extra br
+  // Hide any extra <br> elements after lines
   const hiddenBr: HTMLBRElement[] = [];
   lines.forEach((line) => {
     const nextSibling = line.element.nextElementSibling;
@@ -73,13 +78,14 @@ export function wrapLines({ container, words, className, tagName }: IProps) {
     }
   });
 
-  // add words
+  // Associate words with the corresponding lines
   lines.forEach((line) => {
     line.words.push(
       ...words.filter((word) => childOf(word.element, line.element)),
     );
   });
 
+  // Destroy method to undo the line wrapping
   const destroy = () => {
     hiddenBr.forEach((br) => {
       br.style.display = '';

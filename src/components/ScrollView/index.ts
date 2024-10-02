@@ -9,7 +9,9 @@ import { getApp } from '@/utils/internal/getApp';
 export type { NScrollView };
 
 /**
- * Detect when elements enter or leave the viewport
+ * `ScrollView` detects when elements enter or leave the viewport.
+ * It uses the `IntersectionObserver` API for efficient detection and triggers events when elements are visible or hidden.
+ * Supports adding custom delay and class toggling when elements are in view.
  */
 export class ScrollView<
   StaticProps extends NScrollView.IStaticProps = NScrollView.IStaticProps,
@@ -34,30 +36,44 @@ export class ScrollView<
     };
   }
 
-  /** Intersection observer - type IN */
+  /**
+   * Intersection observer for detecting when elements come into view.
+   */
   protected _intersectionObserverIn?: IntersectionObserver;
 
-  /** Intersection observer - type OUT */
+  /**
+   * Intersection observer for detecting when elements leave the view.
+   */
   protected _intersectionObserverOut?: IntersectionObserver;
 
-  /** If first start */
+  /**
+   * Tracks if this is the first time the elements are being observed.
+   */
   protected _isFirstStart: boolean;
 
-  /** If first start */
+  /**
+   * Returns whether this is the first start of observing elements.
+   */
   get isFirstStart() {
     return this._isFirstStart;
   }
 
-  /** Elements */
+  /**
+   * Stores the elements being observed for entering and leaving the viewport.
+   */
   protected _elements: NScrollView.IElement[];
 
-  /** If intersection observer is supported */
-  protected _isIntersectionObserverSupported: boolean;
-
-  /** Elements */
+  /**
+   * Returns the elements being observed by the `ScrollView`.
+   */
   get elements() {
     return this._elements;
   }
+
+  /**
+   * Indicates whether the `IntersectionObserver` API is supported in the current environment.
+   */
+  protected _isIntersectionObserverSupported: boolean;
 
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
@@ -66,7 +82,7 @@ export class ScrollView<
     this._elements = [];
     this._isIntersectionObserverSupported = isIntersectionObserverSupported();
 
-    // initialize the class
+    // initialize the class if requested
     if (canInit) {
       this.init();
     }
@@ -84,18 +100,23 @@ export class ScrollView<
     this.resize();
   }
 
-  /** Set class events */
+  /**
+   * Sets up the events needed for viewport resizing and element observation.
+   */
   protected _setEvents() {
     const { viewportTarget, resizeDebounce } = this.props;
 
     this.resize();
 
+    // Set up a viewport callback to trigger the resize method
     this.addViewportCallback(viewportTarget, () => this.resize(), {
       timeout: resizeDebounce,
     });
   }
 
-  /** Resize the scene */
+  /**
+   * Triggers a resize event to update the `ScrollView` tracking of elements.
+   */
   public resize() {
     this._removeViewEvents();
 
@@ -104,7 +125,9 @@ export class ScrollView<
     }
   }
 
-  /** Root bounding rect */
+  /**
+   * Returns the bounding rectangle for the root element or the viewport.
+   */
   protected get rootBounding() {
     const { props } = this;
 
@@ -129,7 +152,9 @@ export class ScrollView<
     };
   }
 
-  /** Set view events */
+  /**
+   * Sets up the `IntersectionObserver` to detect when elements come into view.
+   */
   protected _setViewEvents() {
     if (!this._isIntersectionObserverSupported) {
       return;
@@ -137,6 +162,7 @@ export class ScrollView<
 
     const { rootBounding, isFirstStart, props } = this;
 
+    // Calculate margins for intersection detection
     const xMargin = isFirstStart
       ? 0
       : rootBounding.width * props.rootMargin * -1;
@@ -174,7 +200,9 @@ export class ScrollView<
     }
   }
 
-  /** Remove View events */
+  /**
+   * Removes the view observation events by disconnecting the `IntersectionObserver`.
+   */
   protected _removeViewEvents() {
     this._intersectionObserverIn?.disconnect();
     this._intersectionObserverIn = undefined;
@@ -183,7 +211,11 @@ export class ScrollView<
     this._intersectionObserverOut = undefined;
   }
 
-  /** Event on IntersectionObserver In */
+  /**
+   * Handles when elements come into the viewport.
+   *
+   * @param data - The intersection data for the observed elements.
+   */
   protected _handleIntersectionIn(data: IntersectionObserverEntry[]) {
     data.forEach((entry) => {
       if (!entry.isIntersecting) {
@@ -200,7 +232,7 @@ export class ScrollView<
       }
     });
 
-    // change states
+    // Mark first start complete and trigger resize
     if (this.isFirstStart) {
       this._isFirstStart = false;
       this.resize();
@@ -228,7 +260,11 @@ export class ScrollView<
     return progress * props.maxDelay;
   }
 
-  /** Event on IntersectionObserver Out */
+  /**
+   * Handles when elements leave the viewport.
+   *
+   * @param data - The intersection data for the observed elements.
+   */
   protected _handleIntersectionOut(data: IntersectionObserverEntry[]) {
     data.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -241,7 +277,7 @@ export class ScrollView<
   }
 
   /**
-   * Event that is triggered when an element appears or disappears
+   * Toggles classes and triggers callbacks when elements enter or leave the viewport.
    */
   protected _handleInOut(
     elementProp: NScrollView.IElement,
@@ -258,17 +294,17 @@ export class ScrollView<
       return;
     }
 
-    // update props
+    // Update element's viewport state
     element.isScrollViewIn = isInViewport;
 
-    // toggle classes
+    // Toggle class for the element
     if (classToToggle) {
       normalizedTimeoutCallback(() => {
         element.classList.toggle(classToToggle, isInViewport);
       }, delay);
     }
 
-    // process callbacks
+    // Trigger appropriate callback
     if (isInViewport) {
       normalizedTimeoutCallback(() => {
         this.callbacks.tbt('in', { element });
@@ -280,7 +316,9 @@ export class ScrollView<
     }
   }
 
-  /** Add an element */
+  /**
+   * Adds an element to the observer list and starts tracking its visibility in the viewport.
+   */
   public addElement(elementProp: Element): IRemovable {
     const element = elementProp as NScrollView.IElement;
 
@@ -300,7 +338,11 @@ export class ScrollView<
     };
   }
 
-  /** Remove an element */
+  /**
+   * Stops observing an element and removes it from the observer list.
+   *
+   * @param {Element} elementProp - The element to stop observing.
+   */
   public removeElement(elementProp: Element) {
     const element = elementProp as NScrollView.IElement;
 
@@ -311,13 +353,17 @@ export class ScrollView<
     this._elements = this._elements.filter((el) => el !== element);
   }
 
-  /** Remove all elements */
+  /**
+   * Stops observing all elements and clears the observer list.
+   */
   public removeElements() {
     this._elements.forEach((element) => this.removeElement(element));
     this._elements = [];
   }
 
-  /** Destroy the module */
+  /**
+   * Destroys the `ScrollView` and disconnects all observers and listeners.
+   */
   protected _destroy() {
     super._destroy();
 

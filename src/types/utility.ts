@@ -1,4 +1,4 @@
-interface IModuleLike {
+export interface IModuleLike {
   prop: any;
   prefix: string;
   name: string;
@@ -24,7 +24,7 @@ export declare type TBuiltin =
   | Window
   | IModuleLike;
 
-declare type TDeepRequired<T> = T extends TBuiltin
+export declare type TDeepRequired<T> = T extends TBuiltin
   ? NonNullable<T>
   : T extends Map<infer K, infer V>
     ? Map<TDeepRequired<K>, TDeepRequired<V>>

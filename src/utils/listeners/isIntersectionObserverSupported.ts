@@ -1,5 +1,5 @@
 /**
- * Check if intersection observer is supported
+ * Check if `IntersectionObserver` is supported
  */
 export function isIntersectionObserverSupported() {
   if (

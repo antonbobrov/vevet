@@ -1,53 +1,102 @@
-import { clamp } from '@/utils/math';
-import { BaseTimeline } from '../BaseTimeline';
+import { clamp, easing } from '@/utils/math';
 import { NTimeline } from './types';
+import { getApp } from '@/utils/internal/getApp';
+import { Component as ComponentClass } from '@/base/Component';
 
 export type { NTimeline };
 
 /**
- * Animation timeline
+ * Animation timeline that handles time-based animations with progress, easing, play, reverse, and pause functionality.
  */
 export class Timeline<
   StaticProps extends NTimeline.IStaticProps = NTimeline.IStaticProps,
   ChangeableProps extends
     NTimeline.IChangeableProps = NTimeline.IChangeableProps,
   CallbacksTypes extends NTimeline.ICallbacksTypes = NTimeline.ICallbacksTypes,
-> extends BaseTimeline<StaticProps, ChangeableProps, CallbacksTypes> {
+> extends ComponentClass<StaticProps, ChangeableProps, CallbacksTypes> {
   protected _getDefaultProps() {
     return {
       ...super._getDefaultProps(),
+      easing: getApp().props.easing,
+      isDestroyedOnEnd: false,
       duration: 1000,
-      shouldDestroyOnEnd: false,
     };
   }
 
-  /** The animation frame */
+  /**
+   * Global timeline progress, from 0 (start) to 1 (end).
+   */
+  protected _p: number;
+
+  /**
+   * Global timeline progress. Can be manually set, triggering updates.
+   */
+  get p() {
+    return this._p;
+  }
+
+  set p(val: number) {
+    this._p = val;
+
+    this._handleProgressUpdate();
+  }
+
+  /**
+   * Eased progress of the timeline, calculated based on the easing function.
+   */
+  protected _e: number;
+
+  /**
+   * Eased progress, which applies the easing function to the global progress.
+   */
+  get e() {
+    return this._e;
+  }
+
+  /**
+   * Stores the requestAnimationFrame ID for the ongoing animation.
+   */
   protected _raf?: number;
 
-  /** Last time when animationFrame callback has been called */
+  /**
+   * Stores the time of the last animation frame.
+   */
   protected _rafTime: number;
 
-  /** Timeline is playing */
+  /**
+   * Indicates if the timeline is currently playing.
+   */
   get isPlaying() {
     return typeof this._raf !== 'undefined';
   }
 
-  /** Timeline is reversed */
+  /**
+   * Indicates if the timeline is playing in reverse.
+   */
   protected _isReversed: boolean;
 
-  /** Timeline is reversed */
+  /**
+   * Returns whether the timeline is reversed.
+   */
   get isReversed() {
     return this._isReversed;
   }
 
-  /** Timeline is paused */
+  /**
+   * Indicates if the timeline is paused.
+   */
   protected _isPaused: boolean;
 
-  /** Timeline is paused */
+  /**
+   * Returns whether the timeline is paused.
+   */
   get isPaused() {
     return this._isPaused;
   }
 
+  /**
+   * Returns the duration of the timeline, ensuring a minimum duration of 1 ms.
+   */
   get duration() {
     return Math.max(this.props.duration, 1);
   }
@@ -55,7 +104,9 @@ export class Timeline<
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
 
-    // set default variables
+    // Set default variables
+    this._p = 0;
+    this._e = 0;
     this._raf = undefined;
     this._rafTime = 0;
     this._isReversed = false;
@@ -66,7 +117,10 @@ export class Timeline<
     }
   }
 
-  /** Play the timeline */
+  /**
+   * Plays the timeline, advancing progress from its current state toward completion.
+   * Will not play if the timeline has already been destroyed or has fully completed.
+   */
   public play() {
     if (this.isDestroyed || this.p === 1) {
       return;
@@ -81,7 +135,10 @@ export class Timeline<
     }
   }
 
-  /** Reverse timeline */
+  /**
+   * Reverses the timeline, moving progress from its current state toward the start.
+   * Will not reverse if the timeline has already been destroyed or is at the start.
+   */
   public reverse() {
     if (this.isDestroyed || this.p === 0) {
       return;
@@ -96,7 +153,9 @@ export class Timeline<
     }
   }
 
-  /** Pause animation */
+  /**
+   * Pauses the timeline's progress, stopping the animation at its current state.
+   */
   public pause() {
     if (this.isDestroyed) {
       return;
@@ -110,7 +169,9 @@ export class Timeline<
     this._raf = undefined;
   }
 
-  /** Reset timeline */
+  /**
+   * Resets the timeline to the beginning (progress = 0).
+   */
   public reset() {
     if (this.isDestroyed) {
       return;
@@ -120,7 +181,9 @@ export class Timeline<
     this.p = 0;
   }
 
-  /** Start animation */
+  /**
+   * Starts the animation process, updating the timeline's progress based on elapsed time.
+   */
   protected _animate() {
     if (this.isPaused) {
       return;
@@ -128,17 +191,17 @@ export class Timeline<
 
     const { isReversed } = this;
 
-    // calculate difference between frames
+    // Calculate time difference between frames
     const currentTime = Date.now();
     const frameDiff = Math.abs(this._rafTime - currentTime);
     this._rafTime = currentTime;
 
-    // calculate current progress
+    // Calculate current progress
     const progressIterator = frameDiff / this.duration / (isReversed ? -1 : 1);
     const progressTarget = clamp(this.p + progressIterator, [0, 1]);
     this.p = progressTarget;
 
-    // end animation
+    // End animation if progress reaches start or end
     if (
       (progressTarget === 1 && !isReversed) ||
       (progressTarget === 0 && isReversed)
@@ -150,13 +213,20 @@ export class Timeline<
       return;
     }
 
-    // continue animation
+    // Continue animation
     this._raf = window.requestAnimationFrame(this._animate.bind(this));
   }
 
-  /** Events on progress */
+  /**
+   * Handles updates to the timeline's progress and triggers associated callbacks.
+   */
   protected _handleProgressUpdate() {
-    super._handleProgressUpdate();
+    this._e = easing(this._p, this.props.easing);
+
+    this.callbacks.tbt('progress', {
+      p: this._p,
+      e: this._e,
+    });
 
     if (this.p === 0) {
       this.callbacks.tbt('start', undefined);
@@ -167,13 +237,15 @@ export class Timeline<
     if (this.p === 1) {
       this.callbacks.tbt('end', undefined);
 
-      if (this.props.shouldDestroyOnEnd) {
+      if (this.props.isDestroyedOnEnd) {
         this.destroy();
       }
     }
   }
 
-  /** Destroy the timeline */
+  /**
+   * Destroys the timeline, pausing any ongoing animation and cleaning up resources.
+   */
   protected _destroy() {
     this.pause();
 

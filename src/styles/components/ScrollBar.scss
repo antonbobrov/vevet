@@ -7,11 +7,11 @@ $scrollbar-track-size: 10px !default;
 $scrollbar-thumb-size: 50px !default;
 $scrollbar-thumb-radius: 5px !default;
 
-.#{$prefix}scrollbar-parent {
+.v-scrollbar-parent {
   @include hide-scroll-bars;
 }
 
-.#{$prefix}scrollbar {
+.v-scrollbar {
   position: absolute;
   z-index: 9;
 
@@ -27,8 +27,8 @@ $scrollbar-thumb-radius: 5px !default;
     opacity: 0;
     @include transition(opacity $scrollbar-duration);
 
-    &.#{$prefix}scrollbar_is-hovered,
-    &.#{$prefix}scrollbar_in-action {
+    &.v-scrollbar_is-hovered,
+    &.v-scrollbar_in-action {
       opacity: 1;
     }
   }

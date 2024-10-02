@@ -1,5 +1,5 @@
 import { NComponent } from '@/base/Component/types';
-import type { SmoothScroll } from '../SmoothScroll';
+import type { CustomScroll } from '../CustomScroll';
 import { IBarProps } from './Bar/types';
 
 type TPickedProps =
@@ -14,18 +14,22 @@ export namespace NScrollBar {
     extends NComponent.IStaticProps,
       Partial<Pick<IBarProps, TPickedProps>> {
     /**
-     * The scrollable element
+     * The scrollable element to which the scroll bar will be applied.
+     * Can be the window, a custom scroll instance, or an HTML element.
      * @default window
      */
-    container?: Window | SmoothScroll | Element | string;
+    container?: Window | CustomScroll | Element | string;
+
     /**
-     * The element that will contain the scrollbar.
-     * If false, the property 'container' will be taken.
+     * The element where the scroll bars will be rendered.
+     * If `false`, the scroll bar will be appended to the `container`.
      * @default false
      */
     domParent?: false | Element;
+
     /**
-     * Timeout of resize event
+     * Timeout value (in milliseconds) to debounce the resize event.
+     * This helps avoid multiple rapid invocations of resize handling.
      * @default 16
      */
     resizeDebounce?: number;

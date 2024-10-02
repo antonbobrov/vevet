@@ -41,7 +41,10 @@ export type {
 } from 'easing-progress';
 
 /**
- * Easing progress
+ * Calculates easing progress using a specified easing function, bezier curve, or custom easing function.
+ *
+ * @param progress - The current progress value (between 0 and 1).
+ * @param easingType - The easing type to apply. It can be a predefined easing function, a bezier array, or a custom easing function. Defaults to the global app's easing settings if available.
  *
  * @example
  *

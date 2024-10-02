@@ -7,7 +7,7 @@ module.exports = {
   parserOptions: {
     project: './tsconfig.eslint.json',
   },
-  ignorePatterns: ['lib/**', 'build/**'],
+  ignorePatterns: ['lib/**', 'docs/**'],
   rules: {
     'class-methods-use-this': 'off',
     'import/extensions': 'off',

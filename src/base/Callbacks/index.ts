@@ -4,18 +4,26 @@ import { NCallbacks } from './types';
 export type { NCallbacks };
 
 /**
- * This class is responsible for adding, removing, and executing callbacks of different kinds.
+ * Manages the registration and execution of callbacks for specific event types.
+ * Supports adding, removing, and triggering callbacks, with optional features such as protected callbacks,
+ * one-time execution, and execution delays.
  */
 export class Callbacks<Types extends NCallbacks.ITypes = NCallbacks.ITypes> {
-  /** List of callbacks */
+  /**
+   * Internal storage for registered callbacks.
+   */
   private _callbacks: NCallbacks.ICallback<Types>[];
 
-  /** List of callbacks */
+  /**
+   * Returns an array of currently registered callbacks.
+   */
   get callbacks() {
     return this._callbacks;
   }
 
   /**
+   * Initializes a new `Callbacks` instance with an empty list of callbacks.
+   *
    * @example
    *
    * interface ICallbacks {
@@ -25,46 +33,26 @@ export class Callbacks<Types extends NCallbacks.ITypes = NCallbacks.ITypes> {
    *
    * const callbacks = new Callbacks<ICallbacks>();
    *
-   * callbacks.add('onAdd', () => console.log('callback on add #1'));
+   * callbacks.add('onAdd', () => console.log('Callback for add'));
+   * callbacks.add('onDelete', () => console.log('Callback for delete'));
    *
-   * const addCallback2 = callbacks.add('onAdd', () =>
-   *   console.log('callback on add #2'),
-   * );
-   *
-   * const addCallback3 = callbacks.add(
-   *   'onAdd',
-   *   () => console.log('callback on add #3'),
-   *   { isProtected: true },
-   * );
-   *
-   * callbacks.add('onDelete', () => console.log('callback on delete'));
-   *
-   * console.log('--- All callbacks by the target "onAdd" will be executed:');
-   * callbacks.tbt('onAdd', undefined);
-   *
-   * console.log('--- addCallback2 will be removed:');
-   * addCallback2.remove();
-   * callbacks.tbt('onAdd', undefined);
-   * console.log('---');
-   *
-   * console.log('--- addCallback3 cannot be removed because it is protected:');
-   * addCallback3.remove();
-   * callbacks.tbt('onAdd', undefined);
-   * console.log('---');
-   *
-   * console.log('--- Execute all callbacks by the target "onDelete":');
-   * callbacks.tbt('onDelete', undefined);
+   * callbacks.tbt('onAdd', undefined); // Trigger all "onAdd" callbacks
+   * callbacks.tbt('onDelete', undefined); // Trigger all "onDelete" callbacks
    */
   constructor() {
     this._callbacks = [];
   }
 
   /**
-   * Adds a callback
+   * Registers a new callback for a specific target event.
    *
-   * @param target - Callback target name
-   * @param action - Callback function
-   * @param settings - Callback settings
+   * @param target - The event name or target to associate the callback with.
+   * @param action - The function to be executed when the event is triggered.
+   * @param [settings={}] - Additional settings, such as whether the callback is protected or should execute only once.
+   *
+   * @example
+   * const callback = callbacks.add('onAdd', () => console.log('Callback added'));
+   * callback.remove(); // Removes this specific callback
    */
   public add<T extends keyof Types>(
     target: T,
@@ -87,12 +75,23 @@ export class Callbacks<Types extends NCallbacks.ITypes = NCallbacks.ITypes> {
     };
   }
 
-  /** Remove a callback */
-  public remove(callbackId: string) {
-    return this._remove(callbackId);
+  /**
+   * Removes a callback by its unique ID.
+   *
+   * @param id - The unique identifier of the callback to remove.
+   * @returns {boolean} `true` if the callback was successfully removed; `false` otherwise.
+   */
+  public remove(id: string) {
+    return this._remove(id);
   }
 
-  /** Remove a callback */
+  /**
+   * Removes a callback from the list, with an option to force removal even if it's protected.
+   *
+   * @param callbackId - The unique identifier of the callback to remove.
+   * @param canRemoveProtected - If `true`, will forcibly remove protected callbacks.
+   * @returns {boolean} `true` if the callback was successfully removed; `false` otherwise.
+   */
   private _remove(callbackId: string, canRemoveProtected = false): boolean {
     let isRemoved = false;
 
@@ -113,15 +112,22 @@ export class Callbacks<Types extends NCallbacks.ITypes = NCallbacks.ITypes> {
     return isRemoved;
   }
 
-  /** Remove all callbacks */
+  /**
+   * Removes all registered callbacks, including protected ones.
+   */
   private _removeAll() {
     while (this._callbacks.length > 0) {
       this._remove(this._callbacks[0].id, true);
     }
   }
 
-  /** Enable/disable a callback */
-  public turn(id: string, isEnabled = true) {
+  /**
+   * Enables or disables a callback by its ID.
+   *
+   * @param id - The unique identifier of the callback.
+   * @param isEnabled - Set to `false` to disable the callback; `true` to enable it.
+   */
+  public turn(id: string, isEnabled: boolean) {
     const callback = this.get(id);
 
     if (!callback) {
@@ -131,15 +137,21 @@ export class Callbacks<Types extends NCallbacks.ITypes = NCallbacks.ITypes> {
     callback.isEnabled = isEnabled;
   }
 
-  /** Get a callback by id */
-  public get(callbackId: string): undefined | NCallbacks.ICallback<Types> {
-    const callbacks = this._callbacks.filter(({ id }) => id === callbackId);
-
-    return callbacks[0] || undefined;
+  /**
+   * Retrieves a callback by its ID.
+   *
+   * @param callbackId - The unique identifier of the callback.
+   * @returns The matching callback, or `undefined` if not found.
+   */
+  public get(callbackId: string): NCallbacks.ICallback<Types> | undefined {
+    return this._callbacks.find(({ id }) => id === callbackId);
   }
 
   /**
-   * Launch callback action. It will work only if the callback is enabled
+   * Executes the action of a callback if it is enabled, optionally removing it if it's set to execute only once.
+   *
+   * @param callback - The callback to execute.
+   * @param parameter - The parameter to pass to the callback function.
    */
   private _callAction(
     { id, isEnabled, timeout, isOnce, action }: NCallbacks.ICallback<Types>,
@@ -157,8 +169,13 @@ export class Callbacks<Types extends NCallbacks.ITypes = NCallbacks.ITypes> {
   }
 
   /**
-   * Trigger by target.
-   * Trigger all enabled callbacks under a certain target name.
+   * Triggers all callbacks associated with the specified target.
+   *
+   * @param target - The target event name for which callbacks should be executed.
+   * @param arg - The argument to pass to each callback.
+   *
+   * @example
+   * callbacks.tbt('onAdd', undefined); // Trigger all "onAdd" callbacks
    */
   public tbt<T extends keyof Types>(target: T, arg: Types[T]) {
     this._callbacks.forEach((callback) => {
@@ -168,7 +185,9 @@ export class Callbacks<Types extends NCallbacks.ITypes = NCallbacks.ITypes> {
     });
   }
 
-  /** Destroy the callbacks */
+  /**
+   * Removes all registered callbacks and cleans up internal data.
+   */
   public destroy() {
     this._removeAll();
   }

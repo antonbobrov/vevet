@@ -1,5 +1,5 @@
 import { selectOne } from 'vevet-dom';
-import type { SmoothScroll } from '../SmoothScroll';
+import type { CustomScroll } from '../CustomScroll';
 import { NScrollSectionProgress } from './types';
 import { Component as ComponentClass } from '@/base/Component';
 import { clampScope } from '@/utils/math';
@@ -10,7 +10,8 @@ import { getApp } from '@/utils/internal/getApp';
 export type { NScrollSectionProgress };
 
 /**
- * Trace scroll progress of a section
+ * `SectionScrollProgress` is a component that traces the scroll progress of a specified section.
+ * It provides the progress of entering the viewport, moving within it, and exiting it.
  */
 export class SectionScrollProgress<
   StaticProps extends
@@ -23,67 +24,99 @@ export class SectionScrollProgress<
   protected _getDefaultProps() {
     return {
       ...super._getDefaultProps(),
-      container: window,
+      scrollContainer: window,
       viewportTarget: 'any',
       resizeTimeout: 0,
     };
   }
 
-  /** Scroll container */
-  protected _scrollContainer: Element | SmoothScroll | Window;
+  /**
+   * The container element in which the section is being scrolled.
+   */
+  protected _scrollContainer: Element | CustomScroll | Window;
 
-  /** Scroll container */
+  /**
+   * Returns the scroll container.
+   *
+   * @returns {Element | CustomScroll | Window} The scroll container.
+   */
   get scrollContainer() {
     return this._scrollContainer;
   }
 
-  /** Section element */
+  /**
+   * The section element that is being tracked for scroll progress.
+   */
   protected _section: Element;
 
-  /** Section element */
+  /**
+   * Returns the section element being tracked.
+   */
   get section() {
     return this._section;
   }
 
-  /** Scrolling scope */
+  /**
+   * Global scope of the scrolling section, from the point it enters to the point it exits the viewport.
+   */
   protected _scopeGlobal: [number, number];
 
-  /** Scrolling scope */
+  /**
+   * Returns the global scope of the scrolling section.
+   */
   get scopeGlobal() {
     return this._scopeGlobal;
   }
 
-  /** Scope of element appearing from bottom to top */
+  /**
+   * Scope representing the section appearing from the bottom to the top of the viewport.
+   */
   protected _scopeIn: [number, number];
 
-  /** Scope of element appearing from bottom to top */
+  /**
+   * Returns the scope of the section appearing in the viewport.
+   */
   get scopeIn() {
     return this._scopeIn;
   }
 
-  /** Scope of element moving */
+  /**
+   * Scope representing the movement of the section within the viewport.
+   */
   protected _scopeMove: [number, number];
 
-  /** Scope of element moving */
+  /**
+   * Returns the scope of the section moving through the viewport.
+   */
   get scopeMove() {
     return this._scopeMove;
   }
 
-  /** Scope of element disappearing from bottom to top */
+  /**
+   * Scope representing the section disappearing from the viewport, from bottom to top.
+   */
   protected _scopeOut: [number, number];
 
-  /** Scope of element disappearing from bottom to top */
+  /**
+   * Returns the scope of the section disappearing from the viewport.
+   */
   get scopeOut() {
     return this._scopeOut;
   }
 
-  /** Previous global progress */
+  /**
+   * Tracks the previous progress of the global scroll.
+   */
   protected _prevProgressGlobal: number;
 
-  /** Global progress */
+  /**
+   * Tracks the current global progress of the scroll through the section.
+   */
   protected _progressGlobal: number;
 
-  /** Global progress */
+  /**
+   * Returns the current global progress of the scroll.
+   */
   get progressGlobal() {
     return this._progressGlobal;
   }
@@ -92,24 +125,27 @@ export class SectionScrollProgress<
     this._progressGlobal = value;
   }
 
+  /**
+   * Throttling index to control how often the section's rendering calculations are performed.
+   */
   protected _frameThrottleIndex: number;
 
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
 
-    const { container, section } = this.props;
+    const { scrollContainer, section } = this.props;
 
-    // get scroll container
-    if (typeof container === 'string') {
-      this._scrollContainer = selectOne(container) as Element;
+    // Get the scroll container
+    if (typeof scrollContainer === 'string') {
+      this._scrollContainer = selectOne(scrollContainer) as Element;
     } else {
-      this._scrollContainer = container as any;
+      this._scrollContainer = scrollContainer as any;
     }
 
-    // get section element
+    // Get the section element
     this._section = selectOne(section) as Element;
 
-    // set defaults
+    // Set default values
     this._prevProgressGlobal = -0.001;
     this._progressGlobal = -0.001;
     this._scopeGlobal = [0, 0];
@@ -118,19 +154,24 @@ export class SectionScrollProgress<
     this._scopeOut = [0, 0];
     this._frameThrottleIndex = 0;
 
-    // initialize the class
+    // Initialize the component
     if (canInit) {
       this.init();
     }
   }
 
+  /**
+   * Initializes the `SectionScrollProgress` component and sets up scroll and resize events.
+   */
   protected _init() {
     super._init();
 
     this._setEvents();
   }
 
-  /** Set events */
+  /**
+   * Sets the resize and scroll events for monitoring the section's scroll progress.
+   */
   protected _setEvents() {
     const { viewportTarget, resizeDebounce } = this.props;
 
@@ -145,13 +186,13 @@ export class SectionScrollProgress<
     const loadEvent = getApp().onPageLoad();
     loadEvent.then(() => resizeHandler.debounceResize()).catch(() => {});
 
-    // set scroll events
+    // Set up scroll event
     const scrollEvent = onScroll({
       container: this.scrollContainer,
       callback: (data) => this._render(data),
     });
 
-    // destroy events
+    // Clean up actions on destroy
     this.addDestroyableAction(() => {
       resizeHandler.remove();
       loadEvent.cancel();
@@ -165,58 +206,72 @@ export class SectionScrollProgress<
     this.resize();
   }
 
-  /** 'in' progress */
+  /**
+   * Returns the progress of the section as it appears in the viewport.
+   */
   get progressIn() {
     return clampScope(this.progressGlobal, this.scopeIn) || 0;
   }
 
-  /** 'out' progress */
+  /**
+   * Returns the progress of the section as it exits the viewport.
+   */
   get progressOut() {
     return clampScope(this.progressGlobal, this.scopeOut) || 0;
   }
 
-  /** 'move' progress */
+  /**
+   * Returns the progress of the section as it moves through the viewport.
+   */
   get progressMove() {
     return clampScope(this.progressGlobal, this.scopeMove) || 0;
   }
 
-  /** Resize the scene */
+  /**
+   * Resizes the section and recalculates the scroll progress.
+   */
   public resize() {
     const scrollValues = getScrollValues(this.scrollContainer);
     if (!scrollValues) {
       return;
     }
 
-    // launch callbacks
+    // Trigger resize callback
     this.callbacks.tbt('resize', undefined);
 
-    // render the scene
+    // Render the section
     this._render(scrollValues, true);
   }
 
-  /** Calculate scopes */
+  /**
+   * Calculates the scroll scopes for the section.
+   */
   protected _calculateScopes({ scrollTop }: IGetScrollValues) {
     const { height: vHeight } = getApp().viewport;
     const sectionBounding = this.section.getBoundingClientRect();
 
-    // calculate scroll scope
+    // Calculate scroll scopes
     const inStart = scrollTop + sectionBounding.top - vHeight;
     const moveEnd = scrollTop + sectionBounding.top + sectionBounding.height;
     const scrollLine = moveEnd - inStart;
     this._scopeGlobal = [inStart, moveEnd];
 
-    // calculate other scopes
+    // Calculate individual scopes
     this._scopeIn = [0, vHeight / scrollLine];
     this._scopeOut = [1 - vHeight / scrollLine, 1];
     this._scopeMove = [this._scopeIn[1], this._scopeOut[0]];
   }
 
-  /** Check if the section can be rendered */
+  /**
+   * Determines whether the section can be rendered based on scroll progress changes.
+   */
   protected _canRender(isForce = false) {
     return isForce || this.progressGlobal !== this._prevProgressGlobal;
   }
 
-  /** Render the scene */
+  /**
+   * Renders the section by updating its scroll progress and triggering callbacks.
+   */
   protected _render(scrollValues: IGetScrollValues, isForce = false) {
     this._frameThrottleIndex += 1;
 
@@ -231,6 +286,7 @@ export class SectionScrollProgress<
       return;
     }
 
+    // Trigger render callback
     this.callbacks.tbt('render', undefined);
   }
 }

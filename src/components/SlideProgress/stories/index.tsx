@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import React, { FC, useEffect, useRef } from 'react';
 import { SlideProgress } from '..';
-import { times } from '@/utils/common';
+import { times } from '@/utils/internal/times';
 
 export const Component: FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);

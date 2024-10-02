@@ -1,5 +1,4 @@
 import { NComponent } from '@/base/Component/types';
-import { TOnResizeTarget } from '@/utils/listeners/onResize';
 
 export namespace NMarquee {
   export interface IStaticProps extends NComponent.IStaticProps {
@@ -9,20 +8,20 @@ export namespace NMarquee {
      */
     container?: string | HTMLElement;
     /**
-     * Viewport target
-     * @default 'width'
-     */
-    viewportTarget?: TOnResizeTarget;
-    /**
      * Timeout of resize event
      * @default 0
      */
     resizeDebounce?: number;
     /**
-     * Prepend a whitespace
+     * If `true`, the `will-change` CSS property will be applied to the elements to improve performance.
      * @default true
      */
-    prependWhitespace?: boolean;
+    hasWillChange?: boolean;
+    /**
+     * If need to clone nodes for a better animation. May be useful to set `false` when using with such frameworks as React.
+     * @default true
+     */
+    canCloneNodes?: boolean;
   }
 
   export interface IChangeableProps extends NComponent.IChangeableProps {
@@ -31,6 +30,11 @@ export namespace NMarquee {
      * @default 1
      */
     speed?: number;
+    /**
+     * Gap between elements
+     * @default 0
+     */
+    gap?: number;
     /**
      * Enable animation
      * @default true
@@ -47,9 +51,15 @@ export namespace NMarquee {
      * @default true
      */
     isFpsNormalized?: boolean;
+    /**
+     * If need to center elements
+     * @default false
+     */
+    isCentered?: boolean;
   }
 
   export interface ICallbacksTypes extends NComponent.ICallbacksTypes {
     render: undefined;
+    resize: undefined;
   }
 }
