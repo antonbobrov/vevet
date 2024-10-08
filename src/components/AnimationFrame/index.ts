@@ -4,7 +4,8 @@ import { NAnimationFrame } from './types';
 export type { NAnimationFrame };
 
 /**
- * Launch an animation frame with a certain FPS
+ * Launches an animation frame with a specified FPS, allowing
+ * control over playback and FPS calculations in real-time.
  */
 export class AnimationFrame<
   StaticProps extends
@@ -23,38 +24,39 @@ export class AnimationFrame<
     };
   }
 
-  /** If the frame is launched */
+  /** Whether the animation frame is currently playing */
   protected _isPlaying: boolean;
 
+  /** Returns the current playback state of the animation frame */
   get isPlaying() {
     return this._isPlaying;
   }
 
-  /** The animation frame */
+  /** The ID of the currently active requestAnimationFrame, or `null` if inactive */
   protected _raf: number | null;
 
-  /** Last frame time */
+  /** Index of the current animation frame */
   protected _rafIndex: number;
 
-  /** First frame time */
+  /** The timestamp of the first frame in the animation sequence */
   protected _rafFirst: null | number;
 
-  /** Last frame time */
+  /** The timestamp of the last frame in the animation sequence */
   protected _rafLast: null | number;
 
-  /** Array of frame time durations */
+  /** Array storing the duration of each frame in milliseconds */
   protected _durations: number[];
 
-  /** Computed fps */
+  /** The computed frames per second based on real-time performance */
   protected _computedFPS: number;
 
-  /** Computed real time fps */
+  /** Returns the current computed FPS, which may differ from the set FPS */
   get computedFPS() {
     return this._computedFPS;
   }
 
-  /** Coefficient of standard fps (60) divided by computed fps */
-  get easeMultiplier() {
+  /** Coefficient that scales based on a target of 60 FPS compared to the computed FPS */
+  get fpsMultiplier() {
     return 60 / this.computedFPS;
   }
 
@@ -78,7 +80,7 @@ export class AnimationFrame<
     super._init();
 
     if (this.props.isEnabled) {
-      this.play();
+      this._play();
     }
   }
 
@@ -96,7 +98,7 @@ export class AnimationFrame<
     }
   }
 
-  /** Play animation */
+  /** Begins the animation loop */
   public play() {
     if (this.isDestroyed) {
       return;
@@ -109,7 +111,7 @@ export class AnimationFrame<
     this.changeProps({ isEnabled: true } as ChangeableProps);
   }
 
-  /** Play animation */
+  /** Internal method to start the animation loop */
   protected _play() {
     if (this.isPlaying) {
       return;
@@ -123,7 +125,7 @@ export class AnimationFrame<
     this._raf = window.requestAnimationFrame(this._animate.bind(this));
   }
 
-  /** Pause animation */
+  /** Pauses the animation loop */
   public pause() {
     if (!this.props.isEnabled) {
       return;
@@ -132,7 +134,7 @@ export class AnimationFrame<
     this.changeProps({ isEnabled: false } as ChangeableProps);
   }
 
-  /** Pause animation */
+  /** Internal method to pause the animation loop */
   protected _pause() {
     if (!this.isPlaying) {
       return;
@@ -149,7 +151,7 @@ export class AnimationFrame<
     this.callbacks.tbt('toggle', undefined);
   }
 
-  /** Launch the animation frame */
+  /** Handles each frame of the animation, calculates FPS, and triggers callbacks */
   protected _animate() {
     if (!this._isPlaying) {
       return;
@@ -157,42 +159,34 @@ export class AnimationFrame<
 
     this._raf = window.requestAnimationFrame(this._animate.bind(this));
 
-    // update time
     const startTime = Date.now();
     if (this._rafFirst === null) {
       this._rafFirst = startTime;
     }
 
-    // calculate frame index
     const minFrameDuration =
       this.props.fps === 'auto' ? 1 : 1000 / this.props.fps;
     const newFrameIndex = Math.floor(
       (startTime - this._rafFirst) / minFrameDuration,
     );
 
-    // break if frame index the same
     if (newFrameIndex <= this._rafIndex) {
       return;
     }
 
-    // update frame index
     this._rafIndex = newFrameIndex;
 
-    // compute fps
     this._computeFPS(startTime);
 
-    // launch callbacks
     this.callbacks.tbt('frame', undefined);
 
-    // update vars
     this._rafLast = startTime;
   }
 
-  /** Compute real-time FPS */
+  /** Computes the real-time FPS based on the duration between frames */
   protected _computeFPS(startTime: number) {
     const lastFrameDuration = startTime - (this._rafLast ?? startTime);
 
-    // skip frames that seem not real
     if (lastFrameDuration <= 0 || lastFrameDuration > 250) {
       return;
     }
@@ -215,11 +209,10 @@ export class AnimationFrame<
 
     this._computedFPS = normalizedFPS;
 
-    // clear durations
     this._durations = [];
   }
 
-  /** Destroy the animation frame */
+  /** Destroys the animation frame and stops the loop */
   protected _destroy() {
     this.pause();
 

@@ -12,7 +12,8 @@ import { getApp } from '@/utils/internal/getApp';
 export type { NDraggerBase };
 
 /**
- * Drag & Swipe events
+ * Abstract class to handle drag and swipe events on elements or window.
+ * Handles mouse and touch events, with runtime events to track dragging.
  */
 export abstract class DraggerBase<
   StaticProps extends NDraggerBase.IStaticProps = NDraggerBase.IStaticProps,
@@ -34,98 +35,133 @@ export abstract class DraggerBase<
     return `${getApp().prefix}dragger`;
   }
 
-  /** Preloader container */
+  /**
+   * The container element or window where the drag events occur.
+   */
   protected _container: Element | Window;
 
-  /** Preloader container */
+  /**
+   * Returns the dragger's container element or window.
+   */
   get container() {
     return this._container;
   }
 
-  /** Runtime events */
+  /**
+   * Stores runtime event listeners added during dragging.
+   */
   protected _runtimeListeners: IAddEventListener[];
 
-  /** Dragging at the moment */
+  /**
+   * Indicates whether dragging is currently happening.
+   */
   get isDragging() {
     return this._runtimeListeners.length > 0;
   }
 
-  /** Current pointer id */
+  /**
+   * Stores the pointer ID of the current drag operation.
+   */
   protected _pointerID: number | null;
 
-  /** Current pointer id */
+  /**
+   * Returns the current pointer ID.
+   */
   protected get pointerID() {
     return this._pointerID;
   }
 
-  /** Current coordinates */
+  /**
+   * The current coordinates of the pointer during dragging.
+   */
   protected _coords: NDraggerBase.IVector2;
 
-  /** Current coordinates */
+  /**
+   * Returns the current pointer coordinates.
+   */
   get coords() {
     return this._coords;
   }
 
-  /** Current coordinates */
+  /**
+   * Sets the current pointer coordinates.
+   */
   protected set coords(value) {
     this._coords = value;
   }
 
-  /** Last coordinates */
+  /**
+   * The previous coordinates of the pointer before the current event.
+   */
   protected _prevCoords: NDraggerBase.IVector2;
 
-  /** Last coordinates */
+  /**
+   * Returns the previous pointer coordinates.
+   */
   get prevCoords() {
     return this._prevCoords;
   }
 
-  /** Last coordinates */
+  /**
+   * Sets the previous pointer coordinates.
+   */
   protected set prevCoords(value) {
     this._prevCoords = value;
   }
 
-  /** Coordinates on drag start */
+  /**
+   * The coordinates where the drag operation started.
+   */
   protected _startCoords: NDraggerBase.IVector2;
 
-  /** Coordinates on drag start */
+  /**
+   * Returns the starting pointer coordinates at the beginning of the drag.
+   */
   get startCoords() {
     return this._startCoords;
   }
 
-  /** Timeout of `handleEnd` */
+  /**
+   * Timeout handler for handling drag end events.
+   */
   protected _handleEndTimeout?: NodeJS.Timeout;
 
-  /** Current event type */
+  /**
+   * The type of drag event, either 'mouse' or 'touch'.
+   */
   protected _type?: 'mouse' | 'touch';
 
-  /** Current event type */
+  /**
+   * Returns the type of event ('mouse' or 'touch') being handled.
+   */
   get type() {
     return this._type;
   }
 
-  /** Styles to prevent user-select */
+  /**
+   * Styles injected to prevent user selection during dragging.
+   */
   protected _fixStyles: HTMLStyleElement;
 
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
 
+    // Get the dragger container
     this._container = selectOne(this.props.container)!;
     if (!isElement(this._container) && !isWindow(this._container)) {
       throw new Error('No container');
     }
 
-    // set default vars
+    // Initialize default variables
     this._runtimeListeners = [];
     this._pointerID = null;
     this._coords = { x: 0, y: 0 };
     this._prevCoords = { x: 0, y: 0 };
     this._startCoords = { x: 0, y: 0 };
 
-    // set fix styles
+    // Set styles to prevent user-select during drag
     this._fixStyles = document.createElement('style');
-    this._fixStyles.innerHTML = `
-      * { user-select: none !important; }
-    `;
+    this._fixStyles.innerHTML = '* { user-select: none !important; }';
 
     if (canInit) {
       this.init();
@@ -138,7 +174,9 @@ export abstract class DraggerBase<
     this._setEvents();
   }
 
-  /** Set dragger events */
+  /**
+   * Sets up the dragger events for mouse and touch start.
+   */
   protected _setEvents() {
     this.addEventListener(
       this.container,
@@ -155,7 +193,9 @@ export abstract class DraggerBase<
     );
   }
 
-  /** Add runtime events */
+  /**
+   * Adds runtime events for mouseup, touchend, and other events during dragging.
+   */
   protected _addRuntimeEvents() {
     const { isPassive } = this.props;
 
@@ -184,14 +224,21 @@ export abstract class DraggerBase<
     );
   }
 
-  /** Remove runtime events */
+  /**
+   * Removes runtime events after the drag operation ends or is canceled.
+   */
   protected _removeRuntimeEvents() {
     this._runtimeListeners.forEach((listener) => listener.remove());
 
     this._runtimeListeners = [];
   }
 
-  /** Get normalized event coordinates */
+  /**
+   * Normalizes event coordinates based on the event type (mouse or touch).
+   *
+   * @param event - The event from which to extract coordinates.
+   * @returns The pointer coordinates and pointer ID.
+   */
   protected _getEventCoords(event: NDraggerBase.TEvent) {
     if (event.type.includes('touch')) {
       const evt = event as TouchEvent;
@@ -213,7 +260,12 @@ export abstract class DraggerBase<
     };
   }
 
-  /** Event on drag start */
+  /**
+   * Handles the start of a drag event.
+   *
+   * @param event - The event that initiated the drag (mouse or touch).
+   * @returns A boolean indicating whether the drag started successfully.
+   */
   protected _handleStart(event: NDraggerBase.TEvent) {
     if (!this.props.isEnabled || this.isDragging) {
       return false;
@@ -233,20 +285,20 @@ export abstract class DraggerBase<
       }
     }
 
-    // update coordinates
+    // Update coordinates
     const { x, y, pointerId } = this._getEventCoords(event);
     this._coords = { x, y };
     this._prevCoords = { x, y };
     this._startCoords = { x, y };
     this._pointerID = pointerId;
 
-    // add runtime events
+    // Add runtime events for drag
     this._addRuntimeEvents();
 
-    // add styles fix
+    // Apply styles to prevent user-select
     getApp().body.append(this._fixStyles);
 
-    // launch callbacks
+    // Trigger start callback
     this.callbacks.tbt('start', {
       event,
       start: this.startCoords,
@@ -256,7 +308,11 @@ export abstract class DraggerBase<
     return true;
   }
 
-  /** Event on drag end */
+  /**
+   * Handles the end of a drag event and initiates cleanup.
+   *
+   * @param event - The event that ended the drag (mouse or touch).
+   */
   protected handleEnd(event: NDraggerBase.TEvent) {
     if (this._handleEndTimeout) {
       return;
@@ -275,13 +331,19 @@ export abstract class DraggerBase<
     }, 1);
   }
 
-  /** Event on drag end */
+  /**
+   * Handles the cleanup process when dragging ends.
+   *
+   * @param event - The event that ended the drag.
+   */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected _handleEnd(event: NDraggerBase.TEvent) {
     this.cancel();
   }
 
-  /** Cancel dragging */
+  /**
+   * Cancels the current drag operation and removes runtime events and styles.
+   */
   public cancel() {
     this._removeRuntimeEvents();
 
@@ -292,7 +354,9 @@ export abstract class DraggerBase<
     this.callbacks.tbt('end', undefined);
   }
 
-  /** Destroy the module */
+  /**
+   * Destroys the dragger component, removing events and cleaning up resources.
+   */
   protected _destroy() {
     this.cancel();
 

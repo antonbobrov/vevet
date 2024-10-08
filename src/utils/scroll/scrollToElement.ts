@@ -5,17 +5,19 @@ import { IScrollToProps, scrollTo } from './scrollTo';
 
 export interface IScrollToElementProps extends IScrollToProps {
   /**
-   * The target element
+   * The target element to scroll to.
    */
   element: Element | string;
 }
 
 /**
- * Scroll to element
+ * Smoothly scroll to a specific element inside a container.
+ * It uses the element's bounding box to calculate the scroll position
+ * and allows for custom top and left padding as well as scroll duration.
  *
  * @example
  *
- * // static duration
+ * // Scroll to an element with a static duration
  * scrollToElement({
  *   container: window,
  *   element: document.getElementById('element_20')!,
@@ -23,20 +25,20 @@ export interface IScrollToElementProps extends IScrollToProps {
  *   duration: 500,
  * });
  *
- * // dynamic duration
+ * // Scroll to an element with a dynamic duration
  * scrollToElement({
  *   element: document.getElementById('element_20')!,
  *   top: 60,
  *   duration: (px) => px,
  * });
  *
- * // use promise
+ * // Use promise to handle when the scroll finishes
  * scrollToElement({
  *   element: document.getElementById('element_20')!,
  *   top: 60,
  * })
- *   .then(() => console.log('done'))
- *   .catch(() => {});
+ *   .then(() => console.log('Scroll complete'))
+ *   .catch(() => console.error('Scroll failed'));
  */
 export function scrollToElement({
   container = window,

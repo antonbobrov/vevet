@@ -10,8 +10,9 @@ export type { NSplitText };
 
 /**
  * SplitText is a component that splits your text into lines, words, and letters so that you can animate them.
- * It supports auto-resizing for lines and styled content when using html inside your text.
- * It was inspired both by GSAP's SplitText plugin and SplitType.
+ * It supports auto-resizing for lines and styled content when using HTML inside your text.
+ *
+ * Inspired by GSAP's SplitText plugin and SplitType.
  *
  * P.S. Apply `fontKerning: none` to your container to prevent large layout shifts.
  *
@@ -46,73 +47,105 @@ export class SplitText<
     return `${getApp().prefix}split-text`;
   }
 
+  /**
+   * Class name used for individual letters.
+   */
   get letterClassName() {
     return this.className('__letter');
   }
 
+  /**
+   * Class name used for individual words.
+   */
   get wordClassName() {
     return this.className('__word');
   }
 
+  /**
+   * Class name used for individual lines.
+   */
   get lineClassName() {
     return this.className('__line');
   }
 
-  /** Initial HTML content */
+  /**
+   * Initial HTML content of the container before splitting.
+   */
   protected _initialHTML: string;
 
-  /** If the text is already split into words & letters */
+  /**
+   * Tracks if the text has already been split into base elements (words & letters).
+   */
   protected _isBaseSplit = false;
 
-  /** Text container */
+  /**
+   * The text container where the split text is stored.
+   */
   protected _container: HTMLElement;
 
-  /** Text container */
+  /**
+   * Returns the text container element.
+   */
   get container() {
     return this._container;
   }
 
-  /** Letters */
+  /**
+   * List of letter elements generated after splitting.
+   */
   protected _letters: NSplitText.ILetter[];
 
-  /** Letters */
+  /**
+   * Returns the list of letter elements.
+   */
   get letters() {
     return this._letters;
   }
 
-  /** Words */
+  /**
+   * List of word elements generated after splitting.
+   */
   protected _words: NSplitText.IWord[];
 
-  /** Words */
+  /**
+   * Returns the list of word elements.
+   */
   get words() {
     return this._words;
   }
 
-  /** Lines */
+  /**
+   * List of line elements generated after splitting.
+   */
   protected _lines: NSplitText.ILine[];
 
-  /** Lines */
+  /**
+   * Returns the list of line elements.
+   */
   get lines() {
     return this._lines;
   }
 
-  /** What `wrapLines` returns */
+  /**
+   * Result from `wrapLines` utility used to manage the split lines.
+   * @ignore
+   */
   protected _lineWrapper?: ReturnType<typeof wrapLines>;
 
   constructor(initialProps: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
 
-    // get text container
+    // Get text container
     this._container = selectOne(this.props.container) as HTMLElement;
     this.toggleClassName(this._container, this.className(''), true);
 
-    // attributes
+    // Disable translation for text elements
     this._container.translate = false;
 
-    // save initial html
+    // Store initial HTML content
     this._initialHTML = this._container.innerHTML;
 
-    // set default vars
+    // Initialize default properties
     this._letters = [];
     this._words = [];
     this._lines = [];
@@ -122,13 +155,18 @@ export class SplitText<
     }
   }
 
+  /**
+   * Initializes the component.
+   */
   protected _init() {
     super._init();
 
     this._setResize();
   }
 
-  /** Set resize events */
+  /**
+   * Sets up resize events for the component, allowing it to respond to viewport or container size changes.
+   */
   protected _setResize() {
     const { viewportTarget, resizeDebounce, hasLines } = this.props;
 
@@ -150,24 +188,24 @@ export class SplitText<
     this.addDestroyableAction(() => resizeHandler.remove());
   }
 
-  /** Split the text */
+  /**
+   * Splits the text in the container into letters, words, and optionally lines, based on the component properties.
+   */
   public splitText() {
-    // launch callbacks
     this.callbacks.tbt('beforeSplit', undefined);
 
-    // split intro base elements
     this._splitBase();
 
-    // split text into lines
     if (this.props.hasLines) {
       this._splitIntoLines();
     }
 
-    // launch callbacks
     this.callbacks.tbt('split', undefined);
   }
 
-  /** Split base */
+  /**
+   * Splits the text into base elements (letters and words).
+   */
   private _splitBase() {
     if (this._isBaseSplit) {
       return;
@@ -178,8 +216,6 @@ export class SplitText<
 
     this._isBaseSplit = true;
 
-    // split text
-
     const { helper, words, letters } = splitBase({
       container,
       letterClassName,
@@ -189,22 +225,24 @@ export class SplitText<
       wordTag,
     });
 
-    // append nodes
-
+    // Clear the original content
     while (container.childNodes[0]) {
       container.childNodes[0].remove();
     }
 
+    // Append the new elements
     while (helper.childNodes[0]) {
       container.appendChild(helper.childNodes[0]);
     }
 
-    // update elements
+    // Update elements
     this._words = words;
     this._letters = letters;
   }
 
-  /** Split the text into lines */
+  /**
+   * Splits the text into lines by wrapping word elements into line containers.
+   */
   protected _splitIntoLines() {
     const { container, words, lineClassName } = this;
     const { lineTag } = this.props;
@@ -226,7 +264,9 @@ export class SplitText<
     this._lines = this._lineWrapper.lines;
   }
 
-  /** Destroy the module */
+  /**
+   * Destroys the component, restoring the container to its initial HTML state.
+   */
   protected _destroy() {
     super._destroy();
 

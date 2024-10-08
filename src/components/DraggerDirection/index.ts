@@ -4,7 +4,8 @@ import { NDraggerDirection } from './types';
 export type { NDraggerDirection };
 
 /**
- * `Dragger` that detects swipe direction
+ * A draggable component that detects the swipe direction (up, down, left, or right) based on the drag event.
+ * Extends the base dragger functionality to determine the direction of the drag after it ends.
  */
 export class DraggerDirection<
   StaticProps extends
@@ -21,32 +22,37 @@ export class DraggerDirection<
     };
   }
 
-  /** Event on drag end */
+  /**
+   * Handles the end of the drag event and detects the swipe direction by comparing the start and end coordinates.
+   * If the drag distance is greater than or equal to `minLength`, the corresponding direction callback is triggered.
+   */
   protected _handleEnd(event: NDraggerBase.TEvent) {
     const { x, y } = this._getEventCoords(event);
     const { startCoords } = this;
     const min = Math.abs(this.props.minLength);
 
-    // up
+    // Detect swipe direction
+    // Swipe up
     if (startCoords.y > y && Math.abs(y - startCoords.y) >= min) {
       this.callbacks.tbt('up', undefined);
     }
 
-    // down
+    // Swipe down
     if (startCoords.y < y && Math.abs(y - startCoords.y) >= min) {
       this.callbacks.tbt('down', undefined);
     }
 
-    // left
+    // Swipe left
     if (startCoords.x > x && Math.abs(x - startCoords.x) >= min) {
       this.callbacks.tbt('left', undefined);
     }
 
-    // right
+    // Swipe right
     if (startCoords.x < x && Math.abs(x - startCoords.x) >= min) {
       this.callbacks.tbt('right', undefined);
     }
 
+    // Call the parent class's `_handleEnd` method for further cleanup
     super._handleEnd(event);
   }
 }

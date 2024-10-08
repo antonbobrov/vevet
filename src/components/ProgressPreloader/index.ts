@@ -13,7 +13,10 @@ import { getApp } from '@/utils/internal/getApp';
 export type { NProgressPreloader };
 
 /**
- * Page preloader with smooth progress calculation
+ * Page preloader that calculates the loading progress of page resources such as images, videos, and custom elements.
+ * Provides smooth progress calculation using an animation frame and optionally a timeline for forced completion.
+ *
+ * @requires Requires styles: `@import '~vevet/lib/styles/components/Preloader';`
  */
 export class ProgressPreloader<
   StaticProps extends
@@ -36,33 +39,50 @@ export class ProgressPreloader<
     };
   }
 
-  /** Images to be preloaded */
+  /**
+   * List of images to be preloaded.
+   */
   protected _images: HTMLImageElement[];
 
-  /** Images to be preloaded */
+  /**
+   * Returns the list of images to be preloaded.
+   */
   get images() {
     return this._images;
   }
 
-  /** Videos to be preloaded */
+  /**
+   * List of videos to be preloaded.
+   */
   protected _videos: HTMLVideoElement[];
 
-  /** Videos to be preloaded */
+  /**
+   * Returns the list of videos to be preloaded.
+   */
   get videos() {
     return this._videos;
   }
 
-  /** Custom resources to be preloaded */
+  /**
+   * List of custom resources to be preloaded based on custom selectors.
+   */
   protected _customResources: NProgressPreloader.ICustomResourceData[];
 
-  /** Custom resources to be preloaded */
+  /**
+   * Returns the list of custom resources to be preloaded.
+   */
   get customResources() {
     return this._customResources;
   }
 
+  /**
+   * The total quantity of resources to be preloaded, including images, videos, custom elements, and user-defined amounts.
+   */
   protected _resourcesQuantity: number;
 
-  /** Quantity of resources to be preloader */
+  /**
+   * Returns the total number of resources to be preloaded, accounting for user-defined resources and automatic resources.
+   */
   get resourcesQuantity() {
     return (
       this._resourcesQuantity +
@@ -74,43 +94,59 @@ export class ProgressPreloader<
     );
   }
 
-  /** Quantity of loaded resources  */
+  /**
+   * The quantity of loaded resources.
+   */
   protected _loadedResourcesQuantity: number;
 
-  /** Quantity of loaded resources  */
+  /**
+   * Returns the number of resources that have been successfully loaded.
+   */
   get loadedResourcesQuantity() {
     return clamp(this._loadedResourcesQuantity, [0, this.resourcesQuantity]);
   }
 
-  /** Loading progress */
+  /**
+   * The current loading progress as a fraction between 0 and 1.
+   */
   get loadProgress() {
     return this.loadedResourcesQuantity / this.resourcesQuantity;
   }
 
-  /** Preloader progress */
+  /**
+   * The preloader's current progress value.
+   */
   protected _progress: number;
 
-  /** Preloader progress */
+  /**
+   * Returns the current preloader progress value.
+   */
   get progress() {
     return this._progress;
   }
 
+  /**
+   * Sets the preloader's progress value and triggers progress change handling.
+   */
   protected set progress(val: number) {
     this._progress = val;
 
     this._handleProgressChange();
   }
 
-  /** Animation frame for smooth progress calculation */
-  protected _animationFrame?: AnimationFrame;
+  /**
+   * Animation frame instance used for smooth progress calculation.
+   */
+  protected _raf?: AnimationFrame;
 
-  /** Timeline to finish progress animation */
+  /**
+   * Timeline used to finish progress animation if forced.
+   */
   protected _endTimeline?: Timeline;
 
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
 
-    // set default vars
     this._images = [];
     this._videos = [];
     this._customResources = [];
@@ -123,27 +159,32 @@ export class ProgressPreloader<
     }
   }
 
+  /**
+   * Initializes the preloader and retrieves the resources to be preloaded.
+   */
   protected _init() {
     this._getResources();
 
     super._init();
   }
 
-  /** Set events */
+  /**
+   * Sets up event listeners and handles resource preloading.
+   */
   protected _setEvents() {
     super._setEvents();
 
     const { lerp: lerpProp } = this.props;
 
     // create animation frame if needed
-    if (typeof lerpProp === 'number') {
-      this._animationFrame = new AnimationFrame();
+    if (typeof lerpProp === 'number' && lerpProp < 1) {
+      this._raf = new AnimationFrame();
 
-      this._animationFrame.addCallback('frame', () => {
+      this._raf.addCallback('frame', () => {
         this.progress = lerp(this.progress, this.loadProgress, lerpProp);
       });
 
-      this._animationFrame.play();
+      this._raf.play();
     }
 
     // iterate resources on page load
@@ -156,7 +197,9 @@ export class ProgressPreloader<
     this._preloadResources();
   }
 
-  /** Get resources to be preloaded */
+  /**
+   * Searches for all the images, videos, and custom elements that need to be preloaded.
+   */
   protected _getResources() {
     const {
       canPreloadImages,
@@ -165,7 +208,7 @@ export class ProgressPreloader<
       preloadIgnoreClassName,
     } = this.props;
 
-    // get images
+    // Get images
     if (canPreloadImages) {
       const images = selectAll('img');
       images.forEach((image) => {
@@ -179,7 +222,7 @@ export class ProgressPreloader<
       });
     }
 
-    // get videos
+    // Get videos
     if (canPreloadVideos) {
       const videos = selectAll('video');
       videos.forEach((video) => {
@@ -189,7 +232,7 @@ export class ProgressPreloader<
       });
     }
 
-    // get custom resources
+    // Get custom resources
     if (preloadCustomSelector) {
       Array.from(selectAll(preloadCustomSelector)).forEach((element) => {
         if (element.classList.contains(preloadIgnoreClassName)) {
@@ -217,7 +260,7 @@ export class ProgressPreloader<
     }
   }
 
-  /** Catch the moment when the page is fully loaded */
+  /** Catch the moment when the page is fully loaded. */
   protected _onLoaded() {
     return new PCancelable((resolve: (...arg: any) => void) => {
       let isCallbackDone = false;
@@ -225,8 +268,8 @@ export class ProgressPreloader<
       this.callbacks.add(
         'progress',
         // @ts-ignore
-        ({ progress }) => {
-          if (progress >= 1 && !isCallbackDone) {
+        (data) => {
+          if (data.progress >= 1 && !isCallbackDone) {
             isCallbackDone = true;
 
             resolve();
@@ -237,7 +280,9 @@ export class ProgressPreloader<
     });
   }
 
-  /** Preload all resources */
+  /**
+   * Preloads all gathered resources including images, videos, and custom elements.
+   */
   protected _preloadResources() {
     this.images.forEach((image) =>
       preloadImage(image, (isSuccess) =>
@@ -245,14 +290,12 @@ export class ProgressPreloader<
       ),
     );
 
-    // preload videos
     this.videos.forEach((video) =>
       preloadVideo(video, (isSuccess) =>
         this._handleLoadedResource({ element: video, isSuccess }),
       ),
     );
 
-    // preload custom resources
     this._customResources.forEach((data) => {
       preloadCustomElement(data, this)
         .then(() =>
@@ -265,7 +308,9 @@ export class ProgressPreloader<
     });
   }
 
-  /** Event on resource loaded */
+  /**
+   * Handles a resource being fully loaded and updates the loaded resource count.
+   */
   protected _handleLoadedResource({
     element,
     isSuccess,
@@ -283,12 +328,16 @@ export class ProgressPreloader<
     });
 
     // update progress if no animation frame
-    if (!this._animationFrame) {
+    if (!this._raf) {
       this.progress = this.loadProgress;
     }
   }
 
-  /** Iterate quantity of loaded resources */
+  /**
+   * Increments the loaded resources count by a given quantity.
+   *
+   * @param quantity - The number of resources to consider as loaded.
+   */
   public iterateLoadedResources(quantityProp = 1) {
     const quantity = Math.abs(quantityProp);
 
@@ -297,12 +346,18 @@ export class ProgressPreloader<
     }
   }
 
-  /** Iterate quantity of total resources */
+  /**
+   * Increments the total resource count by a given quantity.
+   *
+   * @param quantity - The number of resources to add to the total.
+   */
   public iterateResourcesQuantity(quantity = 1) {
     this._resourcesQuantity += quantity;
   }
 
-  /** Event on progress change */
+  /**
+   * Handles the change in preloader progress, triggering callbacks and determining when to hide the preloader.
+   */
   protected _handleProgressChange() {
     this.callbacks.tbt('progress', {
       progress: this.progress,
@@ -313,25 +368,24 @@ export class ProgressPreloader<
     // we hide the preloader
     if (this.progress >= 1) {
       // destroy animations
-      if (this._animationFrame) {
-        this._animationFrame.destroy();
-        this._animationFrame = undefined;
+      if (this._raf) {
+        this._raf.destroy();
+        this._raf = undefined;
       }
 
       return;
     }
 
-    // otherwise, we check if there's a need to launch a timeline
-    // to end the animation
+    // otherwise, we check if there's a need to launch a timeline to finish the animation
     if (
       typeof this.props.forceEnd === 'number' &&
       this.loadProgress >= 1 &&
       !this._endTimeline
     ) {
-      // destroy animation frame
-      if (this._animationFrame) {
-        this._animationFrame.destroy();
-        this._animationFrame = undefined;
+      // destroy the animation frame
+      if (this._raf) {
+        this._raf.destroy();
+        this._raf = undefined;
       }
 
       // create a timeline
@@ -347,11 +401,13 @@ export class ProgressPreloader<
     }
   }
 
-  /** Destroy the component */
+  /**
+   * Destroys the component and cleans up any remaining resources or animations.
+   */
   protected _destroy() {
     super._destroy();
 
-    this._animationFrame?.destroy();
+    this._raf?.destroy();
     this._endTimeline?.destroy();
   }
 }

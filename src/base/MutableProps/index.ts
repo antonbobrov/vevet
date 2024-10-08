@@ -5,133 +5,102 @@ import { NMutableProps } from './types';
 export type { NMutableProps };
 
 /**
- * A class for creating mutable properties that can change on window resize. <br><br>
- *
- * There are two ways to change properties:
- * - To set a resize-listener on window (or use {@linkcode Viewport}).
- * When the window is resized, change the properties with the help of
- * {@linkcode MutableProps.changeProps}
- * 
- * - The second way is to use the MutableProps and add responsive properties
- * with help of {@linkcode MutableProps.addResponsiveProps}.
+ * A class for managing mutable properties that can change based on window size (responsive design).
+ * This allows certain properties to update dynamically when the window is resized or in response to manual changes.
  *
  * @example
- * 
+ *
  * interface IStatic {
  *   static: string;
  * }
-
+ *
  * interface IChangeable {
  *   changeable: string;
  * }
-
+ *
  * const props = new MutableProps<IStatic, IChangeable>({
  *   static: '',
  *   changeable: 'something',
  * });
-
+ *
  * props.addResponsiveProps({
  *   breakpoint: 'viewport_phone',
  *   settings: {
  *     changeable: 'phone',
  *   },
  * });
-
+ *
  * props.changeProps({ changeable: 'changed' });
  */
 export class MutableProps<
-  /**
-   * Static Properties (they never change)
-   */
   StaticProps extends Record<string, any>,
-  /**
-   * Mutable Properties
-   * (may change on window resize or through {@linkcode MutableProps.changeProps})
-   */
   ChangeableProps extends Record<string, any>,
 > {
   /**
-   * Reference properties.
-   * These properties may change only through {@linkcode MutableProps.changeProps}.
+   * A reference to the original properties (both static and changeable).
+   * These properties are only updated manually via {@linkcode changeProps}.
    */
   private _refProps: StaticProps & ChangeableProps;
 
   /**
-   * Current properties.
-   * These properties may change both on {@linkcode MutableProps.changeProps} and resize.
+   * The current active properties. These can be updated through both window resizing
+   * (via responsive rules) and manual changes through {@linkcode changeProps}.
    */
   private _props: StaticProps & ChangeableProps;
 
   /**
-   * A set of responsive rules
+   * A set of responsive rules defining how properties should change based on viewport size or device type.
+   * Each rule is defined by a breakpoint and corresponding property settings.
    */
   private _responsiveRules: NMutableProps.IResponsive<ChangeableProps>[] = [];
 
   /**
-   * Get current properties
+   * The active breakpoints currently applied to the properties.
+   */
+  private _activeBreakpoints: (string | number)[];
+
+  /**
+   * A callback used to update properties when the viewport size changes.
+   */
+  private _viewportCallback?: NCallbacks.IAddedCallback;
+
+  /**
+   * Initializes the `MutableProps` instance with static and changeable properties,
+   * and sets up a mutation callback to be called when properties change.
+   *
+   * @param initProps - Initial properties, including both static and changeable properties.
+   * @param _onMutate - Callback function triggered whenever the properties change.
+   * @param _name - The name used to identify the set of responsive properties.
+   */
+  constructor(
+    initProps: StaticProps & ChangeableProps,
+    private _onMutate: () => void = () => {},
+    private _name = 'Responsive Props',
+  ) {
+    this._refProps = { ...initProps };
+    this._props = { ...initProps };
+    this._activeBreakpoints = [];
+  }
+
+  /**
+   * Retrieves the current properties.
+   * These may change either due to responsive rules or through manual updates.
    */
   get props() {
     return this._props;
   }
 
   /**
-   * Viewport callback
-   */
-  private _viewportCallback?: NCallbacks.IAddedCallback;
-
-  /**
-   * Active breakpoints used to define if properties have changed
-   */
-  private _activeBreakpoints: (string | number)[];
-
-  /**
-   * @example
+   * Adds responsive rules that define how the properties should change based on viewport breakpoints.
    *
-   * const static = {
-   *   myProp: true,
-   * };
-   *
-   * const responsive = [
-   *   {
-   *     breakpoint: 'm',
-   *     settings: {
-   *       myProp: false
-   *     }
-   *   }
-   * ];
-   *
-   * const props = new MutableProps(static, responsive);
-   */
-  constructor(
-    /**
-     * The properties that were set while initialization.
-     * These properties will nevet change.
-     */
-    private _initProps: StaticProps & ChangeableProps,
-    /**
-     * A callback that is launched when properties are changed
-     */
-    private _onMutate: () => void = () => {},
-    /**
-     * Name of the responsive properties.
-     */
-    private _name = 'Responsive Props',
-  ) {
-    this._refProps = { ..._initProps };
-    this._props = { ..._initProps };
-
-    this._activeBreakpoints = [];
-  }
-
-  /**
-   * Add responsive rules
+   * @param rules - Responsive rules specifying breakpoints and corresponding property settings.
    */
   public addResponsiveProps(rules: NMutableProps.IResponsive<ChangeableProps>) {
     this._responsiveRules.push(rules);
 
     this._responseProps();
 
-    if (typeof this._viewportCallback !== 'undefined') {
+    if (this._viewportCallback) {
       return;
     }
 
@@ -143,7 +112,8 @@ export class MutableProps<
   }
 
   /**
-   * Change properties according to the "responsive" settings
+   * Handles updating the properties based on the current viewport size.
+   * It checks all responsive rules and applies the appropriate settings for active breakpoints.
    */
   private _responseProps() {
     const app = getApp();
@@ -155,8 +125,7 @@ export class MutableProps<
     const prevActiveBreakpointsString = [...this._activeBreakpoints].join('_');
     this._activeBreakpoints = [];
 
-    // go through all breakpoints
-    // and check if a proper breakpoint exists
+    // Evaluate each responsive rule to see if it should be applied
     this._responsiveRules.forEach(({ settings, breakpoint }) => {
       if (typeof breakpoint === 'number') {
         if (viewport.width <= breakpoint) {
@@ -199,14 +168,16 @@ export class MutableProps<
       this._props = { ...this._props, ...(newProps as any) };
     }
 
-    // callback
+    // Call the mutation callback if properties have changed
     if (isPropsChanged) {
       this._onMutate();
     }
   }
 
   /**
-   * This method allows you to change the properties manually.
+   * Manually changes the properties. The updated properties persist and trigger the mutation callback.
+   *
+   * @param props - A partial set of changeable properties to be updated.
    */
   public changeProps(props: Partial<ChangeableProps>) {
     this._props = { ...this._props, ...props };
@@ -216,7 +187,7 @@ export class MutableProps<
   }
 
   /**
-   * Destroy the responsive properties.
+   * Cleans up and destroys the responsive properties.
    */
   public destroy() {
     if (this._viewportCallback) {

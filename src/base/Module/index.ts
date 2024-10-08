@@ -9,14 +9,46 @@ import { MutableProps, NMutableProps } from '../MutableProps';
 import { Callbacks, NCallbacks } from '../Callbacks';
 import { TRequiredModuleProp } from '@/types/utility';
 import { getApp } from '@/utils/internal/getApp';
-import { createViewport } from '@/src/Application/events/createViewport';
+import { createViewport } from '@/src/Vevet/events/createViewport';
 
 export type { NModule };
 
 type TViewportAdd = ReturnType<typeof createViewport>['callbacks']['add'];
 
 /**
- * Module base
+ * A base class for modules that handle responsive properties, event listeners, and custom callbacks.
+ * This class provides a structure for modules that can dynamically respond to viewport changes, property mutations, and various lifecycle events.
+ *
+ * @example
+ *
+ * interface IStaticProps extends NModule.IStaticProps {
+ *   staticName: 'My name';
+ * }
+ *
+ * interface IChangeableProps extends NModule.IChangeableProps {
+ *   weight: number;
+ *   height: number;
+ * }
+ *
+ * interface ICallbacks extends NModule.ICallbacksTypes {}
+ *
+ * const module = new Module<IStaticProps, IChangeableProps, ICallbacks>({
+ *   staticName: 'My name',
+ *   weight: 70,
+ *   height: 175,
+ * }, false);
+ *
+ * module.addResponsiveProps({
+ *   breakpoint: 'viewport_phone',
+ *   settings: {
+ *     weight: 80,
+ *   },
+ * });
+ *
+ * module.init();
+ *
+ * module.addCallback('propsMutate', () => console.log('mutate props'));
+ * module.addCallback('destroy', () => console.log('destroy'));
  */
 export class Module<
   StaticProps extends NModule.IStaticProps = NModule.IStaticProps,
@@ -24,118 +56,83 @@ export class Module<
   CallbacksTypes extends NModule.ICallbacksTypes = NModule.ICallbacksTypes,
 > {
   /**
-   * Get Default properties (should be extended)
+   * Retrieves the default properties for the module. This method is intended to be overridden in subclasses to provide default values for the module's properties.
    */
   protected _getDefaultProps() {
     return {};
   }
 
-  /** Current properties */
+  /**
+   * The current properties of the module, which include both static and changeable properties.
+   * These can be retrieved dynamically during the module's lifecycle.
+   */
   get props() {
     return this._mutableProps.props as TRequiredModuleProp<
       StaticProps & ChangeableProps
     >;
   }
 
-  /** Responsive properties */
+  /** Manages the module's mutable properties */
   private _mutableProps: MutableProps<StaticProps, ChangeableProps>;
 
-  /** Module Callbacks */
+  /** Manages the module's callbacks */
   private _callbacks: Callbacks<CallbacksTypes>;
 
-  /** Module Callbacks */
+  /**
+   * Retrieves the module's registered callbacks.
+   */
   get callbacks() {
     return this._callbacks;
   }
 
-  /** Module listeners */
+  /** Holds the list of event listeners added to the module */
   private _listeners: IAddEventListener[];
 
-  /**
-   * Destroyable actions
-   */
+  /** Stores actions that need to be executed when the module is destroyed */
   private _destroyableActions: (() => void)[];
 
-  /**
-   * Classnames to remove
-   */
+  /** Stores the class names to be removed when the module is destroyed */
   private _classNamesToRemove: NModule.IClassNamesToRemove[];
 
-  /** Module name */
+  /** The name of the module, derived from the class name */
   get name() {
     return this.constructor.name;
   }
 
-  /** Module prefix */
+  /** Optional prefix for class names used by the module */
   get prefix() {
     return '';
   }
 
-  /** The module is initialized */
+  /** Tracks whether the module has been initialized */
   private _isInitialized = false;
 
-  /** The module is initialized */
+  /**
+   * Checks if the module has been initialized.
+   */
   get isInitialized() {
     return this._isInitialized;
   }
 
-  /** The module is destroyed */
+  /** Tracks whether the module has been destroyed */
   private _isDestroyed = false;
 
-  /** The module is destroyed */
+  /**
+   * Checks if the module has been destroyed.
+   */
   get isDestroyed() {
     return this._isDestroyed;
   }
 
   /**
-   * @example
-   * 
-   * interface IStaticProps extends NModule.IStaticProps {
-   *   staticName: 'My name';
-   * }
-
-   * interface IChangeableProps extends NModule.IChangeableProps {
-   *   weight: number;
-   *   height: number;
-   * }
-
-   * interface ICallbacks extends NModule.ICallbacksTypes {}
-
-   * const module = new Module<IStaticProps, IChangeableProps, ICallbacks>(
-   *   {
-   *     staticName: 'My name',
-   *     weight: 70,
-   *     height: 175,
-   *   },
-   *   false
-   * );
-
-   * module.addResponsiveProps({
-   *   breakpoint: 'viewport_phone',
-   *   settings: {
-   *     weight: 80,
-   *   },
-   * });
-
-   * module.init();
-
-   * module.addCallback('propsMutate', () => console.log('mutate props'));
-
-   * module.addCallback('destroy', () => console.log('destroy'));
+   * Creates a new instance of the Module class.
+   *
+   * @param initialProps - The initial static and changeable properties to be used by the module.
+   * @param canInit - Whether to automatically initialize the module after construction. Set this to `false` if you want to add responsive properties before initializing.
    */
-  constructor(
-    /** Initial properties */
-    initialProps?: StaticProps & ChangeableProps,
-    /**
-     * Defines if you need to call {@linkcode Module.init} at the constructor's end.
-     * If you want to add responsive properties, set this parameter to `false`.
-     */
-    canInit = true,
-  ) {
+  constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     if (!getApp()) {
-      throw new Error(
-        'Vevet.Application does not exist yet. Call "new Vevet.Application()" before using all the stuff',
-      );
+      throw new Error('Vevet.Application does not exist yet');
     }
 
     this._callbacks = new Callbacks<CallbacksTypes>();
@@ -159,7 +156,11 @@ export class Module<
     }
   }
 
-  /** Add responsive rules */
+  /**
+   * Adds responsive property rules to the module. This must be done before initialization.
+   *
+   * @param rules - The responsive property rules to be added.
+   */
   public addResponsiveProps(rules: NMutableProps.IResponsive<ChangeableProps>) {
     if (this.isInitialized) {
       throw new Error(
@@ -170,7 +171,11 @@ export class Module<
     }
   }
 
-  /** Change module properties */
+  /**
+   * Updates the changeable properties of the module.
+   *
+   * @param props - The properties to be updated.
+   */
   public changeProps(props: Partial<ChangeableProps>) {
     if (this.isDestroyed) {
       return;
@@ -182,13 +187,15 @@ export class Module<
   }
 
   /**
-   * This method is called on properties change
+   * This method is called internally when the module's properties change.
    */
   protected _onPropsMutate() {
     this._callbacks.tbt('propsMutate', undefined);
   }
 
-  /** Initializes the class */
+  /**
+   * Initializes the module. Calls the internal `_init` method and marks the module as initialized.
+   */
   public init() {
     if (this.isInitialized) {
       return;
@@ -199,16 +206,26 @@ export class Module<
     this._init();
   }
 
-  /** Inner extra initialization */
+  /**
+   * Additional initialization logic that can be overridden in subclasses.
+   */
   protected _init() {}
 
-  /** Add destroyable actions */
+  /**
+   * Adds an action to the list of actions to be executed when the module is destroyed.
+   *
+   * @param action - The function to execute during destruction.
+   */
   protected addDestroyableAction(action: () => void) {
     this._destroyableActions.push(action);
   }
 
   /**
-   * Add a viewport callback that will be removed on class destroy
+   * Adds a viewport callback that will be automatically removed when the module is destroyed.
+   *
+   * @param target - The viewport target (e.g., width or height).
+   * @param action - The callback function to execute when the viewport target changes.
+   * @param data - Additional data for the callback.
    */
   public addViewportCallback(
     target: Parameters<TViewportAdd>[0],
@@ -223,7 +240,13 @@ export class Module<
     this.addDestroyableAction(() => callback.remove());
   }
 
-  /** Add a module callback */
+  /**
+   * Adds a custom callback to the module.
+   *
+   * @param target - The event type to listen for (e.g., 'propsChange', 'destroy').
+   * @param action - The function to execute when the event is triggered.
+   * @param settings - Additional settings for the callback.
+   */
   public addCallback<T extends keyof CallbacksTypes>(
     target: T,
     action: NCallbacks.TAction<CallbacksTypes[T]>,
@@ -232,7 +255,14 @@ export class Module<
     return this.callbacks.add(target, action, settings);
   }
 
-  /** Add a DOM event listener */
+  /**
+   * Adds a DOM event listener that will be automatically removed when the module is destroyed.
+   *
+   * @param el - The target element for the event listener.
+   * @param target - The event type to listen for (e.g., 'click', 'resize').
+   * @param callback - The callback function to execute when the event is triggered.
+   * @param options - Additional options for the event listener.
+   */
   public addEventListener<
     El extends ListenerElement,
     Target extends keyof HTMLElementEventMap,
@@ -258,11 +288,23 @@ export class Module<
     };
   }
 
+  /**
+   * Helper function to generate class names with the module's prefix.
+   *
+   * @param classNames - The class names to generate.
+   * @returns A string of class names with the module's prefix applied.
+   */
   protected className(...classNames: string[]) {
     return classNames.map((value) => `${this.prefix}${value}`).join(' ');
   }
 
-  /** Toggle classList */
+  /**
+   * Toggles a class name on an element, and keeps track of it for removal when the module is destroyed.
+   *
+   * @param element - The target DOM element.
+   * @param className - The class name to toggle.
+   * @param isActive - Whether the class should be added or removed.
+   */
   protected toggleClassName(
     element: Element,
     className: string,
@@ -277,7 +319,9 @@ export class Module<
     }
   }
 
-  /** Destroy the module */
+  /**
+   * Destroys the module, cleaning up resources, callbacks, and event listeners.
+   */
   public destroy() {
     if (this.isDestroyed) {
       return;
@@ -286,7 +330,10 @@ export class Module<
     this._destroy();
   }
 
-  /** Destroy the module */
+  /**
+   * Internal method to handle the destruction of the module.
+   * It removes all callbacks, destroys properties, and cleans up event listeners and class names.
+   */
   protected _destroy() {
     this._callbacks.tbt('destroy', undefined);
     this._callbacks.destroy();

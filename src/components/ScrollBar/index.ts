@@ -1,6 +1,6 @@
 import { selectOne } from 'vevet-dom';
-import type { SmoothScroll } from '../SmoothScroll';
-import Bar from './Bar';
+import type { CustomScroll } from '../CustomScroll';
+import { Bar } from './Bar';
 import { NScrollBar } from './types';
 import { Component as ComponentClass } from '@/base/Component';
 import { IBarProps } from './Bar/types';
@@ -10,7 +10,11 @@ import { getApp } from '@/utils/internal/getApp';
 export type { NScrollBar };
 
 /**
- * Create custom scroll bar
+ * A custom scroll bar component that can be added to custom or native scroll containers.
+ * It supports both horizontal and vertical scroll bars, auto-hide functionality,
+ * and drag-to-scroll.
+ *
+ * @requires Requires styles: `@import '~vevet/lib/styles/components/ScrollBar';`
  */
 export class ScrollBar<
   StaticProps extends NScrollBar.IStaticProps = NScrollBar.IStaticProps,
@@ -38,30 +42,17 @@ export class ScrollBar<
   }
 
   /** Scroll container */
-  protected _container: Element | Window | SmoothScroll;
+  protected _container: Element | Window | CustomScroll;
 
-  /** Scroll container */
+  /**
+   * The container element or window where the scroll is applied.
+   */
   get container() {
     return this._container;
   }
 
-  /** Scrollable element */
-  get scrollableElement() {
-    const { container } = this;
-
-    if (container instanceof Window) {
-      return getApp().body;
-    }
-
-    if (container instanceof Element) {
-      return container;
-    }
-
-    return container.container;
-  }
-
   /**
-   * The element where scrollbars will be appended
+   * Returns the DOM element where the scroll bars will be appended.
    */
   get domParent() {
     const { domParent } = this.props;
@@ -83,11 +74,33 @@ export class ScrollBar<
     return container.container;
   }
 
-  /** Horizontal scrollbar */
+  /**
+   * Horizontal scrollbar instance
+   * @ignore
+   */
   protected _xBar: Bar;
 
-  /** Vertical scrollbar */
+  /**
+   * Returns the horizontal scroll bar instance.
+   * @ignore
+   */
+  get xBar() {
+    return this._xBar;
+  }
+
+  /**
+   * Vertical scrollbar instance
+   * @ignore
+   */
   protected _yBar: Bar;
+
+  /**
+   * Returns the vertical scroll bar instance.
+   * @ignore
+   */
+  get yBar() {
+    return this._yBar;
+  }
 
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
@@ -100,7 +113,7 @@ export class ScrollBar<
       if (element) {
         this._container = element;
       } else {
-        throw new Error('No scroll container');
+        throw new Error('No scroll container found');
       }
     } else {
       this._container = container as any;
@@ -113,21 +126,30 @@ export class ScrollBar<
       domParent: this.domParent,
       prefix: this.prefix,
     };
+
     this._xBar = new Bar({
       ...barProps,
       direction: 'x',
     });
+
     this._yBar = new Bar({
       ...barProps,
       direction: 'y',
     });
 
     // add classnames
-    this.toggleClassName(
-      this.scrollableElement,
-      this.className('-parent'),
-      true,
-    );
+    if (this.container instanceof Window) {
+      this.toggleClassName(getApp().html, this.className('-parent'), true);
+      this.toggleClassName(getApp().body, this.className('-parent'), true);
+    } else if (this.container instanceof Element) {
+      this.toggleClassName(this.container, this.className('-parent'), true);
+    } else {
+      this.toggleClassName(
+        this.container.container,
+        this.className('-parent'),
+        true,
+      );
+    }
 
     // initialize the class
     if (canInit) {
@@ -135,28 +157,33 @@ export class ScrollBar<
     }
   }
 
+  /**
+   * Initializes the ScrollBar component.
+   */
   protected _init() {
     super._init();
 
     this._setEvents();
   }
 
-  // Set Module Events
+  /**
+   * Sets event listeners for the component.
+   */
   protected _setEvents() {
     const { container, props } = this;
 
     // default resize handler
     const resizeHandler = onResize({
       onResize: () => this.resize(),
-      element: [this._xBar.outer, this._yBar.outer],
+      element: [this.xBar.outer, this.yBar.outer],
       viewportTarget: 'any',
       hasBothEvents: true,
       resizeDebounce: props.resizeDebounce,
     });
 
-    // resize for smoothscroll
-    const smoothScrollResize =
-      'isSmoothScroll' in container
+    // resize for custom scroll
+    const scrollResize =
+      'isCustomScroll' in container
         ? container.addCallback(
             'resize',
             () => resizeHandler.debounceResize(),
@@ -166,25 +193,33 @@ export class ScrollBar<
 
     this.addDestroyableAction(() => {
       resizeHandler.remove();
-      smoothScrollResize?.remove();
+      scrollResize?.remove();
     });
 
     // initial resize
     resizeHandler.resize();
   }
 
+  /**
+   * Handles the mutation of the properties and updates the component accordingly.
+   */
   protected _onPropsMutate() {
     super._onPropsMutate();
+
     this.resize();
   }
 
-  /** Resize the scene */
+  /**
+   * Resizes the scene and updates the scroll bars.
+   */
   public resize() {
-    this._xBar.resize();
-    this._yBar.resize();
+    this.xBar.resize();
+    this.yBar.resize();
   }
 
-  /** Destroy the module */
+  /**
+   * Destroys the scroll bar component and cleans up.
+   */
   protected _destroy() {
     super._destroy();
 

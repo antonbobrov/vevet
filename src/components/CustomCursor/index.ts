@@ -8,7 +8,10 @@ import { getApp } from '@/utils/internal/getApp';
 export type { NCustomCursor };
 
 /**
- * Creates a smooth custom cursor
+ * Creates a smooth custom cursor that replaces the native cursor and follows mouse movements with smoothing and animations.
+ * The cursor's appearance and behavior can be customized, and it supports interacting with hoverable elements.
+ *
+ * @requires Requires styles: `@import '~vevet/lib/styles/components/CustomCursor';`
  */
 export class CustomCursor<
   StaticProps extends NCustomCursor.IStaticProps = NCustomCursor.IStaticProps,
@@ -35,18 +38,18 @@ export class CustomCursor<
     return `${getApp().prefix}custom-cursor`;
   }
 
-  /** Cursor container */
+  /** The cursor container. */
   get container() {
     return this._container;
   }
 
-  /** Cursor container */
+  /** The cursor container. */
   protected _container: Element | Window;
 
-  /** The container is window */
+  /** Boolean flag to indicate whether the cursor container is the window. */
   protected _isContainerWindow: boolean;
 
-  /** DOM parent for the cursor element */
+  /** Returns the DOM parent for the cursor element. */
   get domContainer(): HTMLElement {
     if (this.container instanceof Window) {
       return getApp().body;
@@ -55,50 +58,61 @@ export class CustomCursor<
     return this.container as HTMLElement;
   }
 
-  /** Cursor element (outer element) */
+  /**
+   * The outer element of the custom cursor.
+   * This is the visual element that represents the cursor on screen.
+   */
   get outerElement() {
     return this._outerElement;
   }
 
-  /** Outer cursor element */
+  /** The outer element of the custom cursor */
   protected _outerElement!: HTMLElement;
 
-  /** Cursor element (inner element) */
+  /**
+   * The inner element of the custom cursor.
+   * This element is nested inside the outer element and can provide additional styling.
+   */
   get innerElement() {
     return this._innerElement;
   }
 
-  /** Inner cursor element */
+  /** The inner element of the custom cursor. */
   protected _innerElement!: HTMLElement;
 
-  /** Hovered element */
+  /** The currently hovered elementю */
   protected _hoveredElement?: NCustomCursor.IHoveredElement | undefined;
 
-  /** Hovered element */
+  /**
+   * The currently hovered element.
+   * Stores information about the element that the cursor is currently interacting with.
+   */
   get hoveredElement(): NCustomCursor.IHoveredElement | undefined {
     return this._hoveredElement;
   }
 
-  /** Hovered element */
   set hoveredElement(value: NCustomCursor.IHoveredElement | undefined) {
     this._hoveredElement = value;
   }
 
-  /** Animation frame */
-  protected _animationFrame!: AnimationFrame;
+  /** Handler for managing animation frames of the cursor movement. */
+  protected _raf!: AnimationFrame;
 
-  /** Current cursor coordinates */
+  /** The current coordinates */
   protected _coords: NCustomCursor.ICoords;
 
-  /** Current cursor coordinates */
+  /**
+   * The current coordinates (x, y, width, height).
+   * These are updated during cursor movement.
+   */
   get coords() {
     return this._coords;
   }
 
-  /** Target cursor coordinates */
+  /** Target coordinates of the cursor for interpolation. */
   protected _targetCoords: NCustomCursor.ICoords;
 
-  /** Target cursor coordinates */
+  /** Target coordinates of the cursor for interpolation. */
   get targetCoords() {
     const { hoveredElement, props } = this;
 
@@ -138,40 +152,41 @@ export class CustomCursor<
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
 
-    // get cursor container
+    // Get cursor container
     const container = selectOne(this.props.container);
     if (container) {
       this._container = container;
     } else {
-      throw new Error(`No cursor container for ${this.props.container}`);
+      throw new Error(`No cursor container found for ${this.props.container}`);
     }
     this._isContainerWindow = container instanceof Window;
 
-    // set default vars
+    // Set default variables
     const { width, height } = this.props;
     this._coords = { x: 0, y: 0, width, height };
     this._targetCoords = { x: 0, y: 0, width, height };
 
+    // Initialize the class
     if (canInit) {
       this.init();
     }
   }
 
-  /** Init the class */
   protected _init() {
     super._init();
 
-    // create
+    // Create cursor
     this._createCursor();
+
+    // Set events
     this._setEvents();
 
-    // enable by default
+    // Enable by default
     if (this.props.isEnabled) {
       this._enable();
     }
   }
 
-  /** Handle properties mutation */
   protected _onPropsMutate() {
     super._onPropsMutate();
 
@@ -182,20 +197,20 @@ export class CustomCursor<
     }
   }
 
-  /** Create custom cursor */
+  /** Creates the custom cursor and appends it to the DOM. */
   protected _createCursor() {
     const { container, domContainer } = this;
 
-    // hide native cursor
+    // Hide native cursor
     if (this.props.isNativeCursorHidden) {
       domContainer.style.cursor = 'none';
-      domContainer.classList.add(this.className('-hide-defaut-cursor'));
+      domContainer.classList.add(this.className('-hide-default-cursor'));
     }
 
-    // set classnames
+    // Set class names
     domContainer.classList.add(this.className('-container'));
 
-    // create outer element
+    // Create outer element
     this._outerElement = createElement('div', {
       class: this.className(
         '',
@@ -205,21 +220,22 @@ export class CustomCursor<
       parent: domContainer,
     });
 
-    // create inner element
+    // Create inner element
     this._innerElement = createElement('div', {
       class: this.className('__inner', '-disabled'),
       parent: this._outerElement,
     });
 
-    // launch events
+    // Call events
     this.callbacks.tbt('create', {
       outerElement: this.outerElement,
       innerElement: this.innerElement,
     });
 
+    // Destroy the cursor
     this.addDestroyableAction(() => {
       domContainer.style.cursor = '';
-      domContainer.classList.remove(this.className('-hide-defaut-cursor'));
+      domContainer.classList.remove(this.className('-hide-default-cursor'));
       domContainer.classList.remove(this.className('-container'));
 
       this._outerElement.remove();
@@ -227,13 +243,13 @@ export class CustomCursor<
     });
   }
 
-  /** Set module events */
+  /** Sets up the various event listeners for the cursor, such as mouse movements and clicks. */
   protected _setEvents() {
     const { domContainer } = this;
 
-    this._animationFrame = new AnimationFrame();
-    this._animationFrame.addCallback('frame', () => this.render());
-    this.addDestroyableAction(() => this._animationFrame.destroy());
+    this._raf = new AnimationFrame();
+    this._raf.addCallback('frame', () => this.render());
+    this.addDestroyableAction(() => this._raf.destroy());
 
     this.addEventListener(
       domContainer,
@@ -268,7 +284,7 @@ export class CustomCursor<
     this.addEventListener(window, 'blur', this._handleWindowBlur.bind(this));
   }
 
-  /** Event on mouse enter */
+  /** Handles mouse enter events. */
   protected _handleMouseEnter(evt: MouseEvent) {
     this._coords.x = evt.clientX;
     this._coords.y = evt.clientY;
@@ -278,12 +294,12 @@ export class CustomCursor<
     this.outerElement.classList.add(this.className('-in-action'));
   }
 
-  /** Event on mouse leave */
+  /** Handles mouse leave events. */
   protected _handleMouseLeave() {
     this.outerElement.classList.remove(this.className('-in-action'));
   }
 
-  /** Event on mouse move */
+  /** Handles mouse move events. */
   protected _handleMouseMove(evt: MouseEvent) {
     this._targetCoords.x = evt.clientX;
     this._targetCoords.y = evt.clientY;
@@ -291,11 +307,11 @@ export class CustomCursor<
     this.outerElement.classList.add(this.className('-in-action'));
 
     if (this.props.isEnabled) {
-      this._animationFrame.play();
+      this._raf.play();
     }
   }
 
-  /** Event on mouse down */
+  /** Handles mouse down events. */
   protected _handleMouseDown(evt: MouseEvent) {
     if (evt.which === 1) {
       this.outerElement.classList.add(this.className('-click'));
@@ -303,18 +319,23 @@ export class CustomCursor<
     }
   }
 
-  /** Event on mouse up */
+  /** Handles mouse up events. */
   protected _handleMouseUp() {
     this.outerElement.classList.remove(this.className('-click'));
     this.innerElement.classList.remove(this.className('-click'));
   }
 
-  /** Event on window blur */
+  /** Handles window blur events. */
   protected _handleWindowBlur() {
     this._handleMouseUp();
   }
 
-  /** Set hover events on an element */
+  /**
+   * Sets hover events on an element.
+   * @param settingsProp The settings for the hovered element.
+   * @param {number} [enterTimeout=100] The timeout before the hover effect is applied.
+   * @returns {Object} An object containing a remove method to unregister the hover events.
+   */
   public addHoverElement(
     settingsProp: NCustomCursor.IHoveredElement,
     enterTimeout = 100,
@@ -361,7 +382,8 @@ export class CustomCursor<
   }
 
   /**
-   * If all coordinates are interpolated
+   * Checks if all coordinates are interpolated.
+   * @returns {boolean} True if all coordinates are interpolated, false otherwise.
    */
   public get isCoordsInterpolated() {
     const { coords, targetCoords } = this;
@@ -374,7 +396,7 @@ export class CustomCursor<
     );
   }
 
-  /** Render the scene */
+  /** Renders the scene. */
   public render() {
     const { props } = this;
 
@@ -382,14 +404,14 @@ export class CustomCursor<
     const realCoords = this._renderElements();
 
     if (props.shouldAutoStop && this.isCoordsInterpolated) {
-      this._animationFrame.pause();
+      this._raf.pause();
     }
 
-    // launch render events
+    // Launch render events
     this.callbacks.tbt('render', realCoords);
   }
 
-  /** Recalculate current coordinates */
+  /** Recalculates current coordinates. */
   protected _calculateCoords() {
     const { targetCoords, _coords: coords } = this;
 
@@ -399,20 +421,23 @@ export class CustomCursor<
     coords.height = this._lerp(coords.height, targetCoords.height);
   }
 
-  /** Linear interpolation */
+  /**
+   * Performs linear interpolation.
+   * @param {number} current The current value.
+   * @param {number} target The target value.
+   * @returns {number} The interpolated value.
+   */
   protected _lerp(current: number, target: number) {
     const { isFpsNormalized, lerp: ease } = this.props;
 
-    const fpsMultiplier = isFpsNormalized
-      ? this._animationFrame.easeMultiplier
-      : 1;
+    const fpsMultiplier = isFpsNormalized ? this._raf.fpsMultiplier : 1;
 
     const value = lerp(current, target, ease * fpsMultiplier, 0.02);
 
     return value;
   }
 
-  /** Render elements */
+  /** Renders the cursor elements. */
   protected _renderElements(): NCustomCursor.ICoords {
     const { domContainer, outerElement } = this;
     let { x, y } = this.coords;
@@ -424,7 +449,7 @@ export class CustomCursor<
       y -= bounding.top;
     }
 
-    // update dom coordinates
+    // Update DOM coordinates
     outerElement.style.transform = `translate(${x}px, ${y}px)`;
     outerElement.style.setProperty('--cursor-w', `${width}px`);
     outerElement.style.setProperty('--cursor-h', `${height}px`);
@@ -432,19 +457,19 @@ export class CustomCursor<
     return { x, y, width, height };
   }
 
-  /** Enable cursor animation */
+  /** Enables cursor animation. */
   protected _enable() {
     this.outerElement.classList.remove(this.className('-disabled'));
     this.innerElement.classList.remove(this.className('-disabled'));
 
-    this._animationFrame.play();
+    this._raf.play();
   }
 
-  /** Disable cursor animation */
+  /** Disables cursor animation. */
   protected _disable() {
     this.outerElement.classList.add(this.className('-disabled'));
     this.innerElement.classList.add(this.className('-disabled'));
 
-    this._animationFrame.pause();
+    this._raf.pause();
   }
 }

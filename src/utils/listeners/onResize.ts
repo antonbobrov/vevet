@@ -1,8 +1,8 @@
-import { NViewport } from '@/src/Application/events/createViewport';
 import { NCallbacks } from '@/base/Callbacks';
 import { getApp } from '../internal/getApp';
+import { IViewportCallbackTypes } from '@/src/Vevet/events/createViewport/types';
 
-export type TOnResizeTarget = keyof NViewport.ICallbacksTypes;
+export type TOnResizeTarget = keyof IViewportCallbackTypes;
 
 export interface IOnResizeCallbackProps {
   trigger: 'unknown' | 'Viewport' | 'ResizeObserver';
@@ -17,13 +17,12 @@ export interface IOnResizeProps {
   element?: Element | Element[] | false;
   /**
    * Viewport target on resize.
-   * It will be used if `element` is not provided
-   * or `ResizeObserver` is not supported.
+   * It will be used if `element` is not provided or `ResizeObserver` is not supported.
    * @default 'any'
    */
   viewportTarget?: TOnResizeTarget;
   /**
-   * Has both `vewport resize` and `ResizeObserver`
+   * Has both `viewport` callbacks and `ResizeObserver`
    * @default false
    */
   hasBothEvents?: boolean;
@@ -46,9 +45,9 @@ export interface IOnResize {
 }
 
 /**
- * Add events on resize.
- * If `element` is provided, `ResizeObserver` will be used (first callback will not be fired).
- * Otherwise, viewport callbacks will be used.
+ * Adds resize event listeners to either an element (using `ResizeObserver`) or the viewport (using custom resize events).
+ * It handles debouncing and allows the removal of listeners when no longer needed.
+ * If both `element` and `hasBothEvents` are provided, both `ResizeObserver` and viewport resize events will be used.
  *
  * @example
  *
@@ -56,18 +55,18 @@ export interface IOnResize {
  *   onResize: () => console.log('resize'),
  *   element: document.getElementById('app')!,
  *   viewportTarget: 'any',
- *   hasBothEvents: true,   // trace both element and viewport sizes
+ *   hasBothEvents: true,   // Trace both element and viewport sizes
  *   resizeDebounce: 100,
  * });
  *
- * // resize with timeout called twice, but `onResize` will be called only once
+ * // Trigger resize with debounce
  * handler.debounceResize();
  * handler.debounceResize();
  *
- * // resize without timeout
+ * // Trigger resize without debounce
  * handler.resize();
  *
- * // remove listeners
+ * // Remove listeners
  * handler.remove();
  */
 export function onResize({
@@ -94,11 +93,7 @@ export function onResize({
     );
   };
 
-  if (
-    element &&
-    (element instanceof Element || Array.isArray(element)) &&
-    'ResizeObserver' in window
-  ) {
+  if (element && (element instanceof Element || Array.isArray(element))) {
     resizeObserver = new ResizeObserver(() => {
       if (isFirstResizeObserverCallback) {
         isFirstResizeObserverCallback = false;

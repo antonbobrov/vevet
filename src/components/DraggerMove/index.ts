@@ -5,7 +5,8 @@ import { NDraggerMove } from './types';
 export type { NDraggerMove };
 
 /**
- * `Dragger` with 'move' callbacks
+ * A draggable component that triggers 'move' callbacks during drag operations.
+ * It extends the base `Dragger` functionality by providing movement-related data such as the step and difference in coordinates.
  */
 export class DraggerMove<
   StaticProps extends NDraggerMove.IStaticProps = NDraggerMove.IStaticProps,
@@ -21,7 +22,9 @@ export class DraggerMove<
     };
   }
 
-  /** Move step */
+  /**
+   * Returns the difference between the current pointer coordinates and the previous coordinates (the step of movement).
+   */
   get stepCoords() {
     return {
       x: this.coords.x - this.prevCoords.x,
@@ -29,7 +32,9 @@ export class DraggerMove<
     };
   }
 
-  /** Difference between start and current coords */
+  /**
+   * Returns the difference between the starting coordinates and the current coordinates.
+   */
   get diffCoords() {
     return {
       x: this.coords.x - this.startCoords.x,
@@ -37,14 +42,22 @@ export class DraggerMove<
     };
   }
 
+  /**
+   * Stores the absolute difference between the start coordinates and the current coordinates during dragging.
+   */
   protected _absDiff: NDraggerBase.IVector2 = { x: 0, y: 0 };
 
-  /** Absolute difference between start and current coords */
+  /**
+   * Returns the absolute difference in coordinates (the total movement made) during dragging.
+   */
   get absDiff() {
     return this._absDiff;
   }
 
-  /** Add runtime events */
+  /**
+   * Adds runtime events to track pointer movement (for both mouse and touch events).
+   * Triggers the `move` callback during the drag to provide updates about the movement.
+   */
   protected _addRuntimeEvents() {
     super._addRuntimeEvents();
 
@@ -81,7 +94,12 @@ export class DraggerMove<
     );
   }
 
-  /** Event on move */
+  /**
+   * Handles the movement during dragging, updating the current coordinates and calculating the step and total movement.
+   * Disables pointer events if necessary based on the `disablePointerEventsAt` threshold.
+   *
+   * @param event - The event representing the movement (either `MouseEvent` or `TouchEvent`).
+   */
   protected _handleMove(event: NDraggerBase.TEvent) {
     const { x, y, pointerId } = this._getEventCoords(event);
 
@@ -89,18 +107,18 @@ export class DraggerMove<
       return false;
     }
 
-    // update coordinates
+    // Update previous and current coordinates
     this.prevCoords = { x: this.coords.x, y: this.coords.y };
     this.coords = { x, y };
 
-    // update absolute difference
+    // Update absolute difference in movement
     this._absDiff.x += Math.abs(this.stepCoords.x);
     this._absDiff.y += Math.abs(this.stepCoords.y);
 
-    // disable pointer events
+    // Optionally disable pointer events during movement
     this._togglePointerEvents(false);
 
-    // launch callbacks
+    // Trigger 'move' callback with relevant data
     this.callbacks.tbt('move', {
       event,
       start: this.startCoords,
@@ -113,16 +131,27 @@ export class DraggerMove<
     return true;
   }
 
-  /** Event on drag end */
+  /**
+   * Handles the end of the drag operation, resetting the absolute difference in coordinates.
+   * Re-enables pointer events if they were disabled during movement.
+   *
+   * @param event - The event representing the end of the drag (either `MouseEvent` or `TouchEvent`).
+   */
   protected _handleEnd(event: NDraggerBase.TEvent) {
     super._handleEnd(event);
 
-    // reset absolute difference
+    // Reset absolute movement difference
     this._absDiff = { x: 0, y: 0 };
 
+    // Re-enable pointer events
     this._togglePointerEvents(true);
   }
 
+  /**
+   * Toggles pointer events on or off based on the movement threshold defined by `disablePointerEventsAt`.
+   *
+   * @param isEnabledProp - If true, pointer events will be re-enabled.
+   */
   protected _togglePointerEvents(isEnabledProp: boolean) {
     if (typeof this.props.disablePointerEventsAt !== 'number') {
       return;
@@ -140,7 +169,9 @@ export class DraggerMove<
     this.container.style.pointerEvents = isEnabled ? '' : 'none';
   }
 
-  /** Destroy the module */
+  /**
+   * Destroys the dragger, cleaning up all associated events and resources.
+   */
   protected _destroy() {
     super._destroy();
   }

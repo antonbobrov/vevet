@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { Marquee, NMarquee } from '..';
+import { times } from '@/utils/internal/times';
 
 interface IProps extends NMarquee.IChangeableProps {}
 
@@ -17,6 +18,8 @@ export const Component: FC<IProps> = (props) => {
     const instance = new Marquee({
       ...props,
       container: ref.current,
+      gap: 10,
+      isCentered: true,
     });
 
     setMarquee(instance);
@@ -48,12 +51,23 @@ export const Component: FC<IProps> = (props) => {
         Manual render
       </button>
 
-      <br />
+      <button type="button" onClick={() => marquee?.destroy()}>
+        Destroy
+      </button>
 
       <br />
 
-      <div style={{ background: '#ccc', width }}>
-        <span ref={ref}>Marquee</span>
+      <br />
+
+      <div style={{ background: '#ccc', width, fontSize: 20 }}>
+        <div ref={ref}>
+          {times(
+            (index) => (
+              <div key={index}>Text {index}</div>
+            ),
+            3,
+          )}
+        </div>
       </div>
     </>
   );

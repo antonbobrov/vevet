@@ -15,9 +15,6 @@ export const Component: FC = () => {
       container: ref.current,
     });
 
-    // @ts-ignore
-    window.instance = instance;
-
     if (refWithSize.current) {
       instance.addHoverElement({
         element: refWithSize.current,

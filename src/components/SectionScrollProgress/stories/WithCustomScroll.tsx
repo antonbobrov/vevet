@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import React, { FC, useEffect, useRef } from 'react';
-import { SmoothScroll } from '../../SmoothScroll';
+import { CustomScroll } from '../../CustomScroll';
 import { SectionScrollProgress } from '..';
 
 export const WithCustomScrollComponent: FC = () => {
@@ -11,7 +11,7 @@ export const WithCustomScrollComponent: FC = () => {
       return undefined;
     }
 
-    const smoothScroll = new SmoothScroll({
+    const scroll = new CustomScroll({
       container: containerRef.current,
     });
 
@@ -19,7 +19,7 @@ export const WithCustomScrollComponent: FC = () => {
 
     const sectionHandlers = Array.from(sections).map((section) => {
       const handler = new SectionScrollProgress({
-        container: smoothScroll,
+        scrollContainer: scroll,
         section,
       });
 
@@ -40,7 +40,7 @@ export const WithCustomScrollComponent: FC = () => {
     });
 
     return () => {
-      smoothScroll.destroy();
+      scroll.destroy();
       sectionHandlers.forEach((handler) => handler.destroy());
     };
   }, []);
@@ -48,10 +48,10 @@ export const WithCustomScrollComponent: FC = () => {
   return (
     <div
       ref={containerRef}
-      className="v-smooth-scroll"
+      className="v-custom-scroll"
       style={{ height: '100vh', backgroundColor: '#ccc' }}
     >
-      <div className="v-smooth-scroll__wrapper">
+      <div className="v-custom-scroll__wrapper">
         <div
           className="js-section"
           style={{
