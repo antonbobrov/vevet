@@ -44,6 +44,7 @@ export class CustomScroll<
       isEnabled: true,
       hasWheel: true,
       wheelSpeed: 1,
+      wheelDirection: 'default',
       direction: 'vertical',
       isInversedHandlerDirection: false,
       shouldAutoStop: true,
@@ -427,13 +428,7 @@ export class CustomScroll<
 
   /** Event on wheel */
   public handleWheel(event: WheelEvent) {
-    const {
-      isEnabled,
-      hasWheel,
-      hasStopPropagation,
-      isInversedHandlerDirection,
-      wheelSpeed,
-    } = this.props;
+    const { isEnabled, hasWheel, hasStopPropagation } = this.props;
 
     if (!isEnabled || !hasWheel || !this.hasScroll) {
       return;
@@ -450,22 +445,29 @@ export class CustomScroll<
       event.preventDefault();
     }
 
-    // get normalized delta
-    const { pixelX, pixelY } = normalizeWheel(event);
-
-    // set new scroll targets
-    const leftIterator =
-      (isInversedHandlerDirection ? pixelY : pixelX) * wheelSpeed;
-    const topIterator =
-      (isInversedHandlerDirection ? pixelX : pixelY) * wheelSpeed;
-    this.setTargetLeft(this.targetLeft + leftIterator);
-    this.setTargetTop(this.targetTop + topIterator);
+    // iterate wheel
+    this._iterateWheel(event);
 
     // play animation frame
     this._enable();
 
     // launch events
     this.callbacks.tbt('wheel', { event });
+  }
+
+  /** Iterate wheel */
+  protected _iterateWheel(event: WheelEvent) {
+    const { isInversedHandlerDirection, wheelSpeed } = this.props;
+
+    // get normalized delta
+    const { pixelX, pixelY } = normalizeWheel(event);
+
+    // set new scroll targets
+    const leftIterator = isInversedHandlerDirection ? pixelY : pixelX;
+    const topIterator = isInversedHandlerDirection ? pixelX : pixelY;
+
+    this.setTargetLeft(this.targetLeft + leftIterator * wheelSpeed);
+    this.setTargetTop(this.targetTop + topIterator * wheelSpeed);
   }
 
   /** Toggle animation: Enable / Disable scrolling */
