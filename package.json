@@ -1,6 +1,6 @@
 {
   "name": "vevet",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Vevet is a flexible and powerful JavaScript library designed for creative web development",
   "scripts": {
     "storybook": "storybook dev -p 6006",
