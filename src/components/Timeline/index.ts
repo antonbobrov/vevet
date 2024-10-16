@@ -7,6 +7,10 @@ export type { NTimeline };
 
 /**
  * Animation timeline that handles time-based animations with progress, easing, play, reverse, and pause functionality.
+ *
+ * @link See examples https://antonbobrov.github.io/vevet-demo/timeline/
+ *
+ * @link See docs https://antonbobrov.github.io/vevet/classes/Timeline.html
  */
 export class Timeline<
   StaticProps extends NTimeline.IStaticProps = NTimeline.IStaticProps,

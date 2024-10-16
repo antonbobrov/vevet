@@ -6,6 +6,10 @@ export type { NAnimationFrame };
 /**
  * Launches an animation frame with a specified FPS, allowing
  * control over playback and FPS calculations in real-time.
+ *
+ * @link See examples https://antonbobrov.github.io/vevet-demo/animation-frame/
+ *
+ * @link See docs https://antonbobrov.github.io/vevet/classes/AnimationFrame.html
  */
 export class AnimationFrame<
   StaticProps extends

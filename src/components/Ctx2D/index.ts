@@ -8,6 +8,10 @@ export type { NCtx2D };
 /**
  * A class that simplifies working with an HTML5 Canvas element and its 2D context.
  * It can handle automatic resizing and provides helper methods for rendering and managing canvas properties.
+ *
+ * @link See examples https://antonbobrov.github.io/vevet-demo/ctx2d/
+ *
+ * @link See docs https://antonbobrov.github.io/vevet/classes/Ctx2D.html
  */
 export class Ctx2D<
   StaticProps extends NCtx2D.IStaticProps = NCtx2D.IStaticProps,

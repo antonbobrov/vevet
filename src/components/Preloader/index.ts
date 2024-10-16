@@ -12,6 +12,10 @@ export type { NPreloader };
  * It can hide the preloader after the page is fully loaded and trigger related events.
  *
  * @requires Requires styles: `@import '~vevet/lib/styles/components/Preloader';`
+ *
+ * @link See examples https://antonbobrov.github.io/vevet-demo/preloader/
+ *
+ * @link See docs https://antonbobrov.github.io/vevet/classes/Preloader.html
  */
 export class Preloader<
   StaticProps extends NPreloader.IStaticProps = NPreloader.IStaticProps,

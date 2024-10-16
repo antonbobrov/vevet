@@ -25,7 +25,7 @@ npm install vevet
 
 ## Library Contents
 
-### Core Features:
+### Core Features [Demo](https://antonbobrov.github.io/vevet-demo/application/) / [Docs](https://antonbobrov.github.io/vevet/interfaces/IVevet.html):
 - **Device Detection**
   - `vevet.isPhone`, `vevet.isTablet`, `vevet.isDesktop`, `vevet.isMobile`
 - **Browser Information**
@@ -37,19 +37,19 @@ npm install vevet
   - `vevet.viewport` (Handles resize events efficiently)
 
 ### Animation and Graphics:
-- **AnimationFrame**: Simplifies the use of `requestAnimationFrame`, offering custom FPS control.
+- **AnimationFrame** [Demo](https://antonbobrov.github.io/vevet-demo/animation-frame/) / [Docs](https://antonbobrov.github.io/vevet/classes/AnimationFrame.html): Simplifies the use of `requestAnimationFrame`, offering custom FPS control.
 - **Ctx2D**: Manages canvas creation and 2D context with automatic resizing.
 - **Ctx2DPrerender**: Optimizes texture handling by pre-rendering images for better performance.
 
 ### Interactive Components:
 - **CustomCursor**: Create a custom, smooth cursor for your website.
-- **DraggerDirection**: Detects the direction of swipes.
-- **DraggerMove**: Ideal for building custom carousels with easy drag handling.
-- **Marquee**: Efficiently creates continuously running text.
-- **Preloader**: Hides content until the page is fully loaded.
-- **ProgressPreloader**: A more powerful version, displaying real-time loading progress.
-- **ScrollBar**: Customizes scrollbars by hiding default system bars.
-- **ScrollView**: Manages elements' visibility in and out of the viewport.
+- **DraggerDirection** [Demo](https://antonbobrov.github.io/vevet-demo/dragger-direction/) / [Docs](https://antonbobrov.github.io/vevet/classes/DraggerDirection.html): Detects the direction of swipes.
+- **DraggerMove** [Demo](https://antonbobrov.github.io/vevet-demo/dragger-move/) / [Docs](https://antonbobrov.github.io/vevet/classes/DraggerMove.html): Ideal for building custom carousels with easy drag handling.
+- **Marquee** [Demo](https://antonbobrov.github.io/vevet-demo/marquee/) / [Docs](https://antonbobrov.github.io/vevet/classes/Marquee.html): Efficiently creates continuously running text.
+- **Preloader** [Demo](https://antonbobrov.github.io/vevet-demo/preloader/) / [Docs](https://antonbobrov.github.io/vevet/classes/Preloader.html): Hides content until the page is fully loaded.
+- **ProgressPreloader** [Demo](https://antonbobrov.github.io/vevet-demo/progress-preloader/) / [Docs](https://antonbobrov.github.io/vevet/classes/ProgressPreloader.html): A more powerful version, displaying real-time loading progress.
+- **ScrollBar** [Demo](https://antonbobrov.github.io/vevet-demo/scrollbar/) / [Docs](https://antonbobrov.github.io/vevet/classes/ScrollBar.html): Customizes scrollbars by hiding default system bars.
+- **ScrollView** [Demo](https://antonbobrov.github.io/vevet-demo/scroll-view/) / [Docs](https://antonbobrov.github.io/vevet/classes/ScrollView.html): Manages elements' visibility in and out of the viewport.
 - **SectionScrollProgress**: Tracks scroll progress within a specific section.
 - **SlideProgress**: Helps you create a draggable carousel.
 - **CustomScroll**: Provides simple and smooth scrolling functionality.

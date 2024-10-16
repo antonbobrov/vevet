@@ -16,6 +16,10 @@ export type { NSplitText };
  *
  * P.S. Apply `fontKerning: none` to your container to prevent large layout shifts.
  *
+ * @link See examples https://antonbobrov.github.io/vevet-demo/split-text/
+ *
+ * @link See docs https://antonbobrov.github.io/vevet/classes/SplitText.html
+ *
  * @see Performance comparison of splitting your text into words: https://measurethat.net/Benchmarks/Show/31805/0/vevetsplittext-splittype-comparison-words-only
  *
  * @see Performance comparison of splitting your text into words and letters: https://measurethat.net/Benchmarks/Show/31806/0/vevetsplittext-splittype-comparison-words-letters

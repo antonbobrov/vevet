@@ -7,6 +7,10 @@ export type { NDraggerMove };
 /**
  * A draggable component that triggers 'move' callbacks during drag operations.
  * It extends the base `Dragger` functionality by providing movement-related data such as the step and difference in coordinates.
+ *
+ * @link See examples https://antonbobrov.github.io/vevet-demo/dragger-move/
+ *
+ * @link See docs https://antonbobrov.github.io/vevet/classes/DraggerMove.html
  */
 export class DraggerMove<
   StaticProps extends NDraggerMove.IStaticProps = NDraggerMove.IStaticProps,

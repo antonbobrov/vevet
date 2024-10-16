@@ -13,6 +13,10 @@ export type { NMarquee };
  *
  * This component is designed to loop elements horizontally within a container,
  * with support for customization such as speed, gap, pause on hover, and more.
+ *
+ * @link See examples https://antonbobrov.github.io/vevet-demo/marquee/
+ *
+ * @link See docs https://antonbobrov.github.io/vevet/classes/Marquee.html
  */
 export class Marquee<
   StaticProps extends NMarquee.IStaticProps = NMarquee.IStaticProps,

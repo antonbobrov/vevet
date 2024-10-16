@@ -12,6 +12,10 @@ export type { NCustomCursor };
  * The cursor's appearance and behavior can be customized, and it supports interacting with hoverable elements.
  *
  * @requires Requires styles: `@import '~vevet/lib/styles/components/CustomCursor';`
+ *
+ * @link See examples https://antonbobrov.github.io/vevet-demo/custom-cursor/
+ *
+ * @link See docs https://antonbobrov.github.io/vevet/classes/CustomCursor.html
  */
 export class CustomCursor<
   StaticProps extends NCustomCursor.IStaticProps = NCustomCursor.IStaticProps,

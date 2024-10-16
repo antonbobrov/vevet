@@ -12,6 +12,10 @@ export type { NScrollView };
  * `ScrollView` detects when elements enter or leave the viewport.
  * It uses the `IntersectionObserver` API for efficient detection and triggers events when elements are visible or hidden.
  * Supports adding custom delay and class toggling when elements are in view.
+ *
+ * @link See examples https://antonbobrov.github.io/vevet-demo/scroll-view/
+ *
+ * @link See docs https://antonbobrov.github.io/vevet/classes/ScrollView.html
  */
 export class ScrollView<
   StaticProps extends NScrollView.IStaticProps = NScrollView.IStaticProps,

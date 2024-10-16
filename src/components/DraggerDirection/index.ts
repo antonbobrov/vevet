@@ -6,6 +6,10 @@ export type { NDraggerDirection };
 /**
  * A draggable component that detects the swipe direction (up, down, left, or right) based on the drag event.
  * Extends the base dragger functionality to determine the direction of the drag after it ends.
+ *
+ * @link See examples https://antonbobrov.github.io/vevet-demo/dragger-direction/
+ *
+ * @link See docs https://antonbobrov.github.io/vevet/classes/DraggerDirection.html
  */
 export class DraggerDirection<
   StaticProps extends

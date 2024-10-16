@@ -16,6 +16,10 @@ export type { NCustomScroll };
  * It provides smooth interpolation, custom scroll events, and integration with other elements.
  *
  * @requires Requires styles: `@import '~vevet/lib/styles/components/CustomScroll';`
+ *
+ * @link See examples https://antonbobrov.github.io/vevet-demo/custom-scroll/
+ *
+ * @link See docs https://antonbobrov.github.io/vevet/classes/CustomScroll.html
  */
 export class CustomScroll<
     StaticProps extends NCustomScroll.IStaticProps = NCustomScroll.IStaticProps,

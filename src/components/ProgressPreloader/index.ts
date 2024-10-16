@@ -17,6 +17,10 @@ export type { NProgressPreloader };
  * Provides smooth progress calculation using an animation frame and optionally a timeline for forced completion.
  *
  * @requires Requires styles: `@import '~vevet/lib/styles/components/Preloader';`
+ *
+ * @link See examples https://antonbobrov.github.io/vevet-demo/progress-preloader/
+ *
+ * @link See docs https://antonbobrov.github.io/vevet/classes/ProgressPreloader.html
  */
 export class ProgressPreloader<
   StaticProps extends

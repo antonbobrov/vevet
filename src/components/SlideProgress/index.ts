@@ -13,6 +13,10 @@ export type { NSlideProgress };
 /**
  * Slide progress handler.
  * This class manages sliding progress with options like dragging, wheel interactions, and smooth transitions.
+ *
+ * @link See examples https://antonbobrov.github.io/vevet-demo/slide-progress/
+ *
+ * @link See docs https://antonbobrov.github.io/vevet/classes/SlideProgress.html
  */
 export class SlideProgress<
   StaticProps extends NSlideProgress.IStaticProps = NSlideProgress.IStaticProps,

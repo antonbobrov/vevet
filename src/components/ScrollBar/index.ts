@@ -15,6 +15,10 @@ export type { NScrollBar };
  * and drag-to-scroll.
  *
  * @requires Requires styles: `@import '~vevet/lib/styles/components/ScrollBar';`
+ *
+ * @link See examples https://antonbobrov.github.io/vevet-demo/scrollbar/
+ *
+ * @link See docs https://antonbobrov.github.io/vevet/classes/ScrollBar.html
  */
 export class ScrollBar<
   StaticProps extends NScrollBar.IStaticProps = NScrollBar.IStaticProps,

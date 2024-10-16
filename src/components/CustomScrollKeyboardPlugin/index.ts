@@ -9,6 +9,10 @@ export type { NCustomScrollKeyboardPlugin };
 /**
  * CustomScrollKeyboardPlugin adds keyboard navigation functionality to the `CustomScroll` component.
  * It allows scrolling the container using keyboard arrow keys, space bar, page up/down, home, end, and tab.
+ *
+ * @link See examples https://antonbobrov.github.io/vevet-demo/custom-scroll/
+ *
+ * @link See docs https://antonbobrov.github.io/vevet/classes/CustomScrollKeyboardPlugin.html
  */
 export class CustomScrollKeyboardPlugin<
   StaticProps extends

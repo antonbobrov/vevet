@@ -9,6 +9,10 @@ export type { NCustomScrollDragPlugin };
 /**
  * Plugin to add dragging functionality to a `CustomScroll` instance.
  * It allows the user to control the scroll by dragging within the container.
+ *
+ * @link See examples https://antonbobrov.github.io/vevet-demo/custom-scroll/
+ *
+ * @link See docs https://antonbobrov.github.io/vevet/classes/CustomScrollDragPlugin.html
  */
 export class CustomScrollDragPlugin<
   StaticProp extends

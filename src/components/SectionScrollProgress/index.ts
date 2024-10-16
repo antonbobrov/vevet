@@ -12,6 +12,10 @@ export type { NScrollSectionProgress };
 /**
  * `SectionScrollProgress` is a component that traces the scroll progress of a specified section.
  * It provides the progress of entering the viewport, moving within it, and exiting it.
+ *
+ * @link See examples https://antonbobrov.github.io/vevet-demo/section-scroll-progress/
+ *
+ * @link See docs https://antonbobrov.github.io/vevet/classes/SectionScrollProgress.html
  */
 export class SectionScrollProgress<
   StaticProps extends

@@ -14,6 +14,8 @@ export type { NDraggerBase };
 /**
  * Abstract class to handle drag and swipe events on elements or window.
  * Handles mouse and touch events, with runtime events to track dragging.
+ *
+ * @link See docs https://antonbobrov.github.io/vevet/classes/DraggerBase.html
  */
 export abstract class DraggerBase<
   StaticProps extends NDraggerBase.IStaticProps = NDraggerBase.IStaticProps,

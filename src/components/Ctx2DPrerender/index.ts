@@ -7,6 +7,10 @@ export type { NCtx2DPrerender } from './types';
 /**
  * The `Ctx2DPrerender` class allows pre-rendering of media (such as images or video) onto a canvas.
  * This can be useful for reducing payloads by preparing the media for further use in a more optimized form.
+ *
+ * @link See examples https://antonbobrov.github.io/vevet-demo/ctx2d-prerender/
+ *
+ * @link See docs https://antonbobrov.github.io/vevet/classes/Ctx2DPrerender.html
  */
 export class Ctx2DPrerender<
   StaticProps extends
