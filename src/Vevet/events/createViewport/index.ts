@@ -23,10 +23,8 @@ export function createViewport(
     callbacks,
     width: 0,
     height: 0,
-    radius: 0,
     vw: 0,
     vh: 0,
-    vr: 0,
     isLandscape: false,
     isPortrait: false,
     isDesktop: false,
@@ -93,10 +91,8 @@ export function createViewport(
     // set sizes
     data.width = width;
     data.height = html.clientHeight;
-    data.radius = Math.sqrt(data.width ** 2 + data.height ** 2) / 2;
     data.vw = data.width / 100;
     data.vh = data.height / 100;
-    data.vr = data.radius / 100;
     data.isLandscape = data.width > data.height;
     data.isPortrait = data.width < data.height;
     data.isDesktop = data.width > props.tablet;
@@ -156,7 +152,6 @@ export function createViewport(
   function updateCSSVars() {
     html.style.setProperty('--vw', `${data.vw}px`);
     html.style.setProperty('--vh', `${data.vh}px`);
-    html.style.setProperty('--vr', `${data.vr}px`);
   }
 
   return data;

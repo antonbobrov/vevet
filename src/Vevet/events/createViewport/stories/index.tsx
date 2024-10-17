@@ -14,14 +14,12 @@ export const Component: FC = () => {
       'isPhone',
       'width',
       'height',
-      'radius',
       'isLandscape',
       'isPortrait',
       'dpr',
       'lowerDpr',
       'vh',
       'vw',
-      'vr',
     ]);
 
     setFeatures(object);
