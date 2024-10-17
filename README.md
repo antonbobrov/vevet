@@ -1,12 +1,13 @@
 # Vevet - A JavaScript Library for Creative Developers
 
-**Vevet** is a flexible and powerful JavaScript library designed for creative web development. It offers pre-built solutions like smooth scrolling, text splitting, custom cursors, and other interactive components, allowing developers to enhance the visual and functional aspects of their websites.
+**Vevet** is a flexible JavaScript library designed for creative web development. It offers pre-built solutions like smooth scrolling, text splitting, custom cursors, and other interactive components, allowing developers to enhance the visual and functional aspects of their websites.
 
 Vevet is highly customizable, seamlessly integrates into existing projects, and provides basic and advanced functionalities for developers aiming to boost site interactivity.
 
 ![Top Language](https://img.shields.io/github/languages/top/antonbobrov/vevet) ![Gzipped Size](https://img.shields.io/bundlephobia/minzip/vevet)
 
 ### Links
+- [Demo](https://antonbobrov.github.io/vevet-demo/)
 - [Documentation](https://antonbobrov.github.io/vevet/)
 
 ---
@@ -51,12 +52,12 @@ npm install vevet
 - **ScrollBar** [Demo](https://antonbobrov.github.io/vevet-demo/scrollbar/) / [Docs](https://antonbobrov.github.io/vevet/classes/ScrollBar.html): Customizes scrollbars by hiding default system bars.
 - **ScrollView** [Demo](https://antonbobrov.github.io/vevet-demo/scroll-view/) / [Docs](https://antonbobrov.github.io/vevet/classes/ScrollView.html): Manages elements' visibility in and out of the viewport.
 - **SectionScrollProgress**: Tracks scroll progress within a specific section.
-- **SlideProgress**: Helps you create a draggable carousel.
+- **SlideProgress** [Demo](https://antonbobrov.github.io/vevet-demo/slide-progress/) / [Docs](https://antonbobrov.github.io/vevet/classes/SlideProgress.html): Helps you create a draggable carousel.
 - **CustomScroll**: Provides simple and smooth scrolling functionality.
   - **CustomScrollDragPlugin**: Adds drag-based navigation to smooth scrolling.
   - **CustomScrollKeyboardPlugin**: Enables keyboard-based scrolling.
-- **SplitText**: Splits text into letters, words, or lines, offering high performance for animations, similar to SplitText or SplitType, but free and optimized.
-- **Timeline**: Helps create simple, timeline-based animations.
+- **SplitText** [Demo](https://antonbobrov.github.io/vevet-demo/split-text/) / [Docs](https://antonbobrov.github.io/vevet/classes/SplitText.html): Splits text into letters, words, or lines, offering high performance for animations, similar to SplitText or SplitType, but free and optimized.
+- **Timeline** [Demo](https://antonbobrov.github.io/vevet-demo/timeline/) / [Docs](https://antonbobrov.github.io/vevet/classes/Timeline.html): Helps create simple, timeline-based animations.
 
 ---
 
