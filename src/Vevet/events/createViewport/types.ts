@@ -68,14 +68,10 @@ export interface IViewport {
   width: number;
   /** Current viewport height */
   height: number;
-  /** Current viewport outer radius */
-  radius: number;
   /** Current viewport width divided by 100 */
   vw: number;
   /** Current viewport height divided by 100 */
   vh: number;
-  /** Current viewport radius divided by 100 */
-  vr: number;
   /** Is viewport in landscape mode */
   isLandscape: boolean;
   /** Is viewport in portrait mode */
