@@ -1,4 +1,4 @@
-# Vevet - A JavaScript Library for Creative Developers
+# Vevet - a JavaScript Library for Creative Development
 
 **Vevet** is a flexible JavaScript library designed for creative web development. It offers pre-built solutions like smooth scrolling, text splitting, custom cursors, and other interactive components, allowing developers to enhance the visual and functional aspects of their websites.
 
@@ -9,20 +9,6 @@ Vevet is highly customizable, seamlessly integrates into existing projects, and 
 ### Links
 - [Demo](https://antonbobrov.github.io/vevet-demo/)
 - [Documentation](https://antonbobrov.github.io/vevet/)
-
----
-
-## Development Environment
-- **Node.js**: v20.17.0
-
-## Installation via NPM
-To install Vevet, use the following command:
-
-```bash
-npm install vevet
-```
-
----
 
 ## Library Contents
 
@@ -35,30 +21,40 @@ npm install vevet
   - `vevet.isPageLoaded`, `vevet.onPageLoad`
 - **Viewport Management**
   - `vevet.viewport` (Handles resize events efficiently)
+    - `width`, `height`, `vw`, `vh`, `isDesktop`, `isTablet`, `isPhone`, `isPortrait`, `isLandscape`, `dpr`, `lowerDpr `
 
-### Animation and Graphics:
+### Animation:
 - **AnimationFrame** [Demo](https://antonbobrov.github.io/vevet-demo/animation-frame/) / [Docs](https://antonbobrov.github.io/vevet/classes/AnimationFrame.html): Simplifies the use of `requestAnimationFrame`, offering custom FPS control.
-- **Ctx2D**: Manages canvas creation and 2D context with automatic resizing.
-- **Ctx2DPrerender**: Optimizes texture handling by pre-rendering images for better performance.
+- **Timeline** [Demo](https://antonbobrov.github.io/vevet-demo/timeline/) / [Docs](https://antonbobrov.github.io/vevet/classes/Timeline.html): Helps create simple, timeline-based animations.
 
-### Interactive Components:
-- **CustomCursor**: Create a custom, smooth cursor for your website.
+### Graphics:
+- **Ctx2D** [Demo](https://antonbobrov.github.io/vevet-demo/ctx2d/) / [Docs](https://antonbobrov.github.io/vevet/classes/Ctx2D.html): Manages canvas creation and 2D context with automatic resizing.
+- **Ctx2DPrerender** [Demo](https://antonbobrov.github.io/vevet-demo/ctx2d-prerender/) / [Docs](https://antonbobrov.github.io/vevet/classes/Ctx2DPrerender.html): Optimizes texture handling by pre-rendering images for better performance.
+
+### Events:
 - **DraggerDirection** [Demo](https://antonbobrov.github.io/vevet-demo/dragger-direction/) / [Docs](https://antonbobrov.github.io/vevet/classes/DraggerDirection.html): Detects the direction of swipes.
 - **DraggerMove** [Demo](https://antonbobrov.github.io/vevet-demo/dragger-move/) / [Docs](https://antonbobrov.github.io/vevet/classes/DraggerMove.html): Ideal for building custom carousels with easy drag handling.
+- **ScrollView** [Demo](https://antonbobrov.github.io/vevet-demo/scroll-view/) / [Docs](https://antonbobrov.github.io/vevet/classes/ScrollView.html): Manages elements' visibility in and out of the viewport.
+- **SectionScrollProgress** [Demo](https://antonbobrov.github.io/vevet-demo/section-scroll-progress/) / [Docs](https://antonbobrov.github.io/vevet/classes/SectionScrollProgress.html): Tracks scroll progress within a specific section.
+- **SlideProgress** [Demo](https://antonbobrov.github.io/vevet-demo/slide-progress/) / [Docs](https://antonbobrov.github.io/vevet/classes/SlideProgress.html): Helps you create a draggable carousel.
+
+### Components:
+- **CustomCursor** [Demo](https://antonbobrov.github.io/vevet-demo/custom-cursor/) / [Docs](https://antonbobrov.github.io/vevet/classes/CustomCursor.html): Create a custom, smooth cursor for your website.
 - **Marquee** [Demo](https://antonbobrov.github.io/vevet-demo/marquee/) / [Docs](https://antonbobrov.github.io/vevet/classes/Marquee.html): Efficiently creates continuously running text.
 - **Preloader** [Demo](https://antonbobrov.github.io/vevet-demo/preloader/) / [Docs](https://antonbobrov.github.io/vevet/classes/Preloader.html): Hides content until the page is fully loaded.
 - **ProgressPreloader** [Demo](https://antonbobrov.github.io/vevet-demo/progress-preloader/) / [Docs](https://antonbobrov.github.io/vevet/classes/ProgressPreloader.html): A more powerful version, displaying real-time loading progress.
 - **ScrollBar** [Demo](https://antonbobrov.github.io/vevet-demo/scrollbar/) / [Docs](https://antonbobrov.github.io/vevet/classes/ScrollBar.html): Customizes scrollbars by hiding default system bars.
-- **ScrollView** [Demo](https://antonbobrov.github.io/vevet-demo/scroll-view/) / [Docs](https://antonbobrov.github.io/vevet/classes/ScrollView.html): Manages elements' visibility in and out of the viewport.
-- **SectionScrollProgress**: Tracks scroll progress within a specific section.
-- **SlideProgress** [Demo](https://antonbobrov.github.io/vevet-demo/slide-progress/) / [Docs](https://antonbobrov.github.io/vevet/classes/SlideProgress.html): Helps you create a draggable carousel.
-- **CustomScroll**: Provides simple and smooth scrolling functionality.
+- **CustomScroll** [Demo](https://antonbobrov.github.io/vevet-demo/custom-scroll/) / [Docs](https://antonbobrov.github.io/vevet/classes/CustomScroll.html): Provides simple and smooth scrolling functionality.
   - **CustomScrollDragPlugin**: Adds drag-based navigation to smooth scrolling.
   - **CustomScrollKeyboardPlugin**: Enables keyboard-based scrolling.
 - **SplitText** [Demo](https://antonbobrov.github.io/vevet-demo/split-text/) / [Docs](https://antonbobrov.github.io/vevet/classes/SplitText.html): Splits text into letters, words, or lines, offering high performance for animations, similar to SplitText or SplitType, but free and optimized.
-- **Timeline** [Demo](https://antonbobrov.github.io/vevet-demo/timeline/) / [Docs](https://antonbobrov.github.io/vevet/classes/Timeline.html): Helps create simple, timeline-based animations.
 
----
+## Installation via NPM
+To install Vevet, use the following command:
+
+```bash
+npm install vevet
+```
 
 ## Importing Styles
 
@@ -80,8 +76,6 @@ For example, to import styles for the custom cursor:
 @import '~vevet/lib/styles/components/CustomCursor';
 ```
 
----
-
 ## Example: Initializing a Component
 
 Below is an example of how to initialize the `CustomCursor` component:
@@ -93,6 +87,9 @@ const instance = new CustomCursor({
   container: document.getElementById('container')!,
 });
 ```
+
+## Development Environment
+- **Node.js**: v20.17.0
 
 ## License
 
