@@ -49,7 +49,6 @@ export function Vevet(input: Partial<IVevetProps>): IVevet {
     osName,
     browserName,
     isWebpSupported: false,
-    pageLoad,
     isPageLoaded: false,
     viewport,
     doc: document,
@@ -63,7 +62,7 @@ export function Vevet(input: Partial<IVevetProps>): IVevet {
 
   // update props on page load
 
-  output.pageLoad.onLoad(() => {
+  pageLoad.onLoad(() => {
     output.isPageLoaded = true;
   });
 

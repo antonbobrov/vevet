@@ -1,4 +1,3 @@
-import { IOnPageLoad } from './events/createOnPageLoad/types';
 import { IViewport } from './events/createViewport/types';
 import { IVevetProps } from './types';
 import { PCancelable } from '@/utils/common/PCancelable';
@@ -25,8 +24,6 @@ export interface IVevet {
   browserName: string;
   /** If WebP is supported in the browser */
   isWebpSupported: boolean;
-  /** Page load handler */
-  pageLoad: IOnPageLoad;
   /** If the page is loaded */
   isPageLoaded: boolean;
   /** Viewport handler */

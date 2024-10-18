@@ -32,7 +32,6 @@ npm install vevet
 - **Browser Information**
   - `vevet.osName`, `vevet.browserName`, `vevet.isWebpSupported` (Check WebP support)
 - **Page Load Detection**
-  - `vevet.pageLoad` (Detects when the page has loaded)
   - `vevet.isPageLoaded`, `vevet.onPageLoad`
 - **Viewport Management**
   - `vevet.viewport` (Handles resize events efficiently)
