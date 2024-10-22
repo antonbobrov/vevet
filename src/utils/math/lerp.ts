@@ -18,7 +18,7 @@ export function lerp(
   current: number,
   target: number,
   factor: number,
-  approximationLeft = 0.001,
+  approximationLeft = 0,
 ) {
   const value = current * (1 - factor) + target * factor;
   const difference = Math.abs(target - value);
