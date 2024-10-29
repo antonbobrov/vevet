@@ -14,11 +14,13 @@ export const Component: FC = () => {
       'isPhone',
       'width',
       'height',
+      'sHeight',
       'isLandscape',
       'isPortrait',
       'dpr',
       'lowerDpr',
       'vh',
+      'svh',
       'vw',
     ]);
 
