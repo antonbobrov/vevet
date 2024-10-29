@@ -16,7 +16,6 @@ export function Vevet(input: Partial<IVevetProps>): IVevet {
     easing: [0.25, 0.1, 0.25, 1],
     resizeDebounce: 16,
     checkWebpSupport: true,
-    widthDetection: 'boundingRect',
   };
 
   const props = { ...defaultProps, ...input };
@@ -34,7 +33,7 @@ export function Vevet(input: Partial<IVevetProps>): IVevet {
   // events
 
   const pageLoad = createOnPageLoad(prefix);
-  const viewport = createViewport(props, isDesktop, prefix);
+  const viewport = createViewport(props, isMobile, prefix);
 
   // output
 

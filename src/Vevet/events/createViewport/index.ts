@@ -10,10 +10,16 @@ import { IVevetProps } from '../../types';
 
 export function createViewport(
   props: IVevetProps,
-  isDesktopDevice: boolean,
+  isMobileDevice: boolean,
   prefix: string,
 ): IViewport {
   const html = document.documentElement;
+
+  const mqDesktop = window.matchMedia(`(min-width: ${props.tablet + 0.001}px)`);
+  const mqTablet = window.matchMedia(
+    `(min-width: ${props.phone + 0.001}px) and (max-width: ${props.tablet}px)`,
+  );
+  const mqPhone = window.matchMedia(`(max-width: ${props.phone}px)`);
 
   // create callbacks
   const callbacks = new Callbacks<IViewportCallbackTypes>();
@@ -23,8 +29,10 @@ export function createViewport(
     callbacks,
     width: 0,
     height: 0,
+    sHeight: 0,
     vw: 0,
     vh: 0,
+    svh: 0,
     isLandscape: false,
     isPortrait: false,
     isDesktop: false,
@@ -82,29 +90,26 @@ export function createViewport(
 
   /** Update viewport values */
   function updateValues() {
-    // get width
-    const width =
-      props.widthDetection === 'boundingRect'
-        ? parseFloat(html.getBoundingClientRect().width.toFixed(3))
-        : html.clientWidth;
+    const { width: prevWidth } = data;
 
-    // set sizes
-    data.width = width;
-    data.height = html.clientHeight;
+    data.width = window.innerWidth;
+    data.height = window.innerHeight;
     data.vw = data.width / 100;
     data.vh = data.height / 100;
     data.isLandscape = data.width > data.height;
     data.isPortrait = data.width < data.height;
-    data.isDesktop = data.width > props.tablet;
-    data.isTablet = data.width <= props.tablet && data.width > props.phone;
-    data.isPhone = data.width <= props.phone;
+    data.isDesktop = mqDesktop.matches;
+    data.isTablet = mqTablet.matches;
+    data.isPhone = mqPhone.matches;
     data.dpr = window.devicePixelRatio;
-    data.lowerDpr = data.dpr < 1 ? 1 : data.dpr;
-    data.isDesktop = data.width > props.tablet;
-    data.isTablet = data.width <= props.tablet && data.width > props.phone;
-    data.isPhone = data.width <= props.phone;
-    data.dpr = window.devicePixelRatio;
-    data.lowerDpr = isDesktopDevice ? 1 : Math.min(data.dpr, 2);
+    data.lowerDpr = !isMobileDevice ? 1 : Math.min(data.dpr, 2);
+
+    // update sHeight && svh only when the width changes
+    // or for desktop
+    if (prevWidth !== data.width || !data.sHeight || !isMobileDevice) {
+      data.sHeight = document.documentElement.clientHeight;
+      data.svh = data.sHeight / 100;
+    }
 
     // update states
     updateClassNames();
@@ -152,6 +157,7 @@ export function createViewport(
   function updateCSSVars() {
     html.style.setProperty('--vw', `${data.vw}px`);
     html.style.setProperty('--vh', `${data.vh}px`);
+    html.style.setProperty('--svh', `${data.svh}px`);
   }
 
   return data;

@@ -38,11 +38,4 @@ export interface IVevetProps {
    * @default false
    */
   checkWebpSupport: boolean;
-
-  /**
-   * Method for detecting the viewport width.
-   * Can be 'boundingRect' or 'clientWidth'.
-   * @default 'boundingRect'
-   */
-  widthDetection: 'boundingRect' | 'clientWidth';
 }
