@@ -30,11 +30,3 @@ $viewport-tablet: 1199px !default;
     @content;
   }
 }
-
-@function calc-vw ($val) {
-  @return calc(#{$val} * var(--vw));
-}
-
-@function calc-vh ($val) {
-  @return calc(#{$val} * var(--vh));
-}
