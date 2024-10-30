@@ -21,7 +21,7 @@ Vevet is highly customizable, seamlessly integrates into existing projects, and 
   - `vevet.isPageLoaded`, `vevet.onPageLoad`
 - **Viewport Management**
   - `vevet.viewport` (Handles resize events efficiently)
-    - `width`, `height`, `vw`, `vh`, `isDesktop`, `isTablet`, `isPhone`, `isPortrait`, `isLandscape`, `dpr`, `lowerDpr `
+    - `width`, `height`, `sHeight`, `vw`, `vh`, `svh`, `isDesktop`, `isTablet`, `isPhone`, `isPortrait`, `isLandscape`, `dpr`, `lowerDpr `
 
 ### Animation:
 - **AnimationFrame** [Demo](https://antonbobrov.github.io/vevet-demo/animation-frame/) / [Docs](https://antonbobrov.github.io/vevet/classes/AnimationFrame.html): Simplifies the use of `requestAnimationFrame`, offering custom FPS control.
