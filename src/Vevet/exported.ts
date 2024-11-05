@@ -5,6 +5,9 @@ import {
   IViewportCallbackTypes,
   IViewport,
 } from './events/createViewport/types';
+import { viewportCssVarsScript } from './events/createViewport/viewportCssVarsScript';
+
+export { viewportCssVarsScript };
 
 export type {
   IVevetProps,
