@@ -1,10 +1,10 @@
-import { selectOne } from 'vevet-dom';
 import { NMarquee } from './types';
 import { Component as ComponentClass } from '@/base/Component';
 import { AnimationFrame } from '../AnimationFrame';
 import { getApp } from '@/utils/internal/getApp';
 import { wrap } from '@/utils/math';
 import { onResize } from '@/utils/listeners';
+import { selectOne } from '@/utils/dom/selectOne';
 
 export type { NMarquee };
 

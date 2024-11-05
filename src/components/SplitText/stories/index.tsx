@@ -29,7 +29,7 @@ export const Component: FC<IProps> = ({ text, hasLetters, hasLines }) => {
 
   return (
     <>
-      <h1>Vevet</h1>
+      <h1>Vevet Split Text</h1>
 
       <div ref={ref} style={style} dangerouslySetInnerHTML={{ __html: text }} />
 

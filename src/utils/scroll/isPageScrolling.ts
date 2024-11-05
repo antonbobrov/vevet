@@ -1,11 +1,10 @@
-import { addEventListener } from 'vevet-dom';
-import { IRemovable } from '@/types/general';
 import { uid } from '../common';
+import { addEventListener } from '../dom/addEventListener';
 
 let ids: string[] = [];
 
 let timeout: NodeJS.Timeout | null = null;
-let listener: IRemovable | undefined;
+let listener: (() => void) | undefined;
 
 let isScrolling = false;
 
@@ -34,7 +33,7 @@ function createListener() {
  */
 function destroyListener() {
   if (ids.length === 0) {
-    listener?.remove();
+    listener?.();
     listener = undefined;
   }
 }

@@ -1,15 +1,10 @@
-import {
-  addEventListener,
-  IAddEventListener,
-  IAddEventListenerOptions,
-  ListenerElement,
-} from 'vevet-dom';
 import { NModule } from './types';
 import { MutableProps, NMutableProps } from '../MutableProps';
 import { Callbacks, NCallbacks } from '../Callbacks';
 import { TRequiredModuleProp } from '@/types/utility';
 import { getApp } from '@/utils/internal/getApp';
 import { createViewport } from '@/src/Vevet/events/createViewport';
+import { addEventListener } from '@/utils/dom/addEventListener';
 
 export type { NModule };
 
@@ -86,7 +81,7 @@ export class Module<
   }
 
   /** Holds the list of event listeners added to the module */
-  private _listeners: IAddEventListener[];
+  private _listeners: (() => void)[];
 
   /** Stores actions that need to be executed when the module is destroyed */
   private _destroyableActions: (() => void)[];
@@ -258,34 +253,24 @@ export class Module<
   /**
    * Adds a DOM event listener that will be automatically removed when the module is destroyed.
    *
-   * @param el - The target element for the event listener.
+   * @param element - The target element for the event listener.
    * @param target - The event type to listen for (e.g., 'click', 'resize').
    * @param callback - The callback function to execute when the event is triggered.
    * @param options - Additional options for the event listener.
    */
   public addEventListener<
-    El extends ListenerElement,
     Target extends keyof HTMLElementEventMap,
-    Callback extends (evt: HTMLElementEventMap[Target]) => void,
+    Listener extends (event: DocumentEventMap[Target]) => void,
   >(
-    el: El,
+    element: Document | Element | Window,
     target: Target,
-    callback: Callback,
-    options?: IAddEventListenerOptions,
-  ): IAddEventListener {
-    const listener = addEventListener(el, target, callback, options);
+    callback: Listener,
+    options?: boolean | AddEventListenerOptions,
+  ) {
+    const listener = addEventListener(element, target, callback, options);
     this._listeners.push(listener);
 
-    return {
-      ...listener,
-      remove: () => {
-        this._listeners = this._listeners.filter(
-          (item) => item.id !== listener.id,
-        );
-
-        return listener.remove();
-      },
-    };
+    return listener;
   }
 
   /**
@@ -341,7 +326,7 @@ export class Module<
     this._mutableProps.destroy();
 
     this._destroyableActions.forEach((action) => action());
-    this._listeners.forEach((listener) => listener.remove());
+    this._listeners.forEach((listener) => listener());
 
     this._classNamesToRemove.forEach(({ element, className }) =>
       element.classList.remove(className),

@@ -1,10 +1,10 @@
-import { selectOne } from 'vevet-dom';
 import { Component as ComponentClass } from '@/base/Component';
 import { NSplitText } from './types';
 import { onResize } from '@/utils/listeners/onResize';
 import { splitBase } from './utils/splitBase';
 import { wrapLines } from './utils/wrapLines';
 import { getApp } from '@/utils/internal/getApp';
+import { selectOne } from '@/utils/dom/selectOne';
 
 export type { NSplitText };
 

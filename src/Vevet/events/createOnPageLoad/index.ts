@@ -1,6 +1,6 @@
-import { addEventListener } from 'vevet-dom';
 import { Callbacks } from '@/base/Callbacks';
 import { ICallbacksTypes, IOnPageLoad } from './types';
+import { addEventListener } from '@/utils/dom/addEventListener';
 
 export function createOnPageLoad(prefix: string): IOnPageLoad {
   const callbacks = new Callbacks<ICallbacksTypes>();

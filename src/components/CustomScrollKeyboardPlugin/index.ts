@@ -1,8 +1,8 @@
-import { childOf } from 'vevet-dom';
 import { Plugin } from '@/base/Plugin';
 import { NCustomScrollKeyboardPlugin } from './types';
 import type { CustomScroll as CustomScrollInstance } from '../CustomScroll';
 import { getApp } from '@/utils/internal/getApp';
+import { childOf } from '@/utils/dom/childOf';
 
 export type { NCustomScrollKeyboardPlugin };
 

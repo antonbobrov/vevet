@@ -1,12 +1,9 @@
-import {
-  IAddEventListener,
-  addEventListener,
-  isElement,
-  isWindow,
-  selectOne,
-} from 'vevet-dom';
+import { addEventListener } from '@/utils/dom/addEventListener';
 import { NDraggerBase } from './types';
 import { Component as ComponentClass } from '@/base/Component';
+import { isElement } from '@/utils/dom/isElement';
+import { isWindow } from '@/utils/dom/isWindow';
+import { selectOne } from '@/utils/dom/selectOne';
 import { getApp } from '@/utils/internal/getApp';
 
 export type { NDraggerBase };
@@ -52,7 +49,7 @@ export abstract class DraggerBase<
   /**
    * Stores runtime event listeners added during dragging.
    */
-  protected _runtimeListeners: IAddEventListener[];
+  protected _runtimeListeners: (() => void)[];
 
   /**
    * Indicates whether dragging is currently happening.
@@ -230,7 +227,7 @@ export abstract class DraggerBase<
    * Removes runtime events after the drag operation ends or is canceled.
    */
   protected _removeRuntimeEvents() {
-    this._runtimeListeners.forEach((listener) => listener.remove());
+    this._runtimeListeners.forEach((listener) => listener());
 
     this._runtimeListeners = [];
   }

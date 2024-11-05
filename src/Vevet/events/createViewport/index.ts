@@ -1,4 +1,3 @@
-import { addEventListener } from 'vevet-dom';
 import {
   EOrientationTypes,
   ESizeTypes,
@@ -7,6 +6,7 @@ import {
 } from './types';
 import { Callbacks } from '@/base/Callbacks';
 import { IVevetProps } from '../../types';
+import { addEventListener } from '@/utils/dom/addEventListener';
 
 export function createViewport(
   props: IVevetProps,

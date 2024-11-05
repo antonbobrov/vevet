@@ -1,8 +1,10 @@
-import { addEventListener, selectOne } from 'vevet-dom';
+/* eslint-disable no-underscore-dangle */
 import { IRemovable } from '@/types/general';
 import { uid } from '../common';
 import type { CustomScroll } from '@/components/CustomScroll';
 import { getScrollValues } from './getScrollValues';
+import { selectOne } from '../dom/selectOne';
+import { addEventListener } from '../dom/addEventListener';
 
 export type TOnScrollContainer = string | Element | CustomScroll | Window;
 
@@ -28,7 +30,15 @@ export interface IOnScrollProps {
   isPassive?: boolean;
 }
 
-let instances: IInstance[] = [];
+declare global {
+  interface Window {
+    __vevetOnScrollInstances: IInstance[];
+  }
+}
+
+if (typeof window !== 'undefined') {
+  window.__vevetOnScrollInstances = [];
+}
 
 /**
  * Add `onScroll` event listener to the provided container (DOM element, custom scroll, or window).
@@ -53,7 +63,7 @@ export function onScroll({
   isPassive = false,
 }: IOnScrollProps): IRemovable {
   // Check if a listener for this container already exists
-  let instance = instances.find(
+  let instance = window.__vevetOnScrollInstances.find(
     (data) => data.container === container && data.isPassive === isPassive,
   )!;
 
@@ -71,7 +81,7 @@ export function onScroll({
       isPassive,
       listeners: [],
     };
-    instances.push(instance);
+    window.__vevetOnScrollInstances.push(instance);
 
     // Custom scroll events
     if (typeof container === 'object' && 'isCustomScroll' in container) {
@@ -92,21 +102,25 @@ export function onScroll({
       // DOM scroll events
       const domContainer = selectOne(container) as any;
 
-      instance.listeners.push(
-        addEventListener(
-          domContainer,
-          'scroll',
-          () => {
-            const data = getScrollValues(domContainer);
-            if (!data) {
-              return;
-            }
+      const listener = addEventListener(
+        domContainer,
+        'scroll',
+        () => {
+          const data = getScrollValues(domContainer);
+          if (!data) {
+            return;
+          }
 
-            instance.callbacks.forEach((item) => item.callback(data));
-          },
-          { passive: isPassive },
-        ),
+          instance.callbacks.forEach((item) => item.callback(data));
+        },
+        { passive: isPassive },
       );
+
+      const removeListener = {
+        remove: listener,
+      };
+
+      instance.listeners.push(removeListener);
     }
   }
 
@@ -120,7 +134,9 @@ export function onScroll({
 
     if (newCallbacks.length === 0) {
       instance.listeners.forEach((listener) => listener.remove());
-      instances = instances.filter((item) => item.id !== instance.id);
+      window.__vevetOnScrollInstances = window.__vevetOnScrollInstances.filter(
+        (item) => item.id !== instance.id,
+      );
     }
   };
 

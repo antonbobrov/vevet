@@ -1,4 +1,4 @@
-import { addEventListener } from 'vevet-dom';
+import { addEventListener } from '@/utils/dom/addEventListener';
 import { DraggerBase, NDraggerBase } from '../DraggerBase';
 import { NDraggerMove } from './types';
 

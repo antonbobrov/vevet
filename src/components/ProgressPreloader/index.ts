@@ -1,4 +1,3 @@
-import { selectAll } from 'vevet-dom';
 import { PCancelable } from '@/utils/common/PCancelable';
 import { AnimationFrame } from '../AnimationFrame';
 import { Preloader } from '../Preloader';
@@ -9,6 +8,7 @@ import { preloadImage } from './utils/preloadImage';
 import { preloadVideo } from './utils/preloadVideo';
 import { preloadCustomElement } from './utils/preloadCustomElement';
 import { getApp } from '@/utils/internal/getApp';
+import { selectAll } from '@/utils/dom/selectAll';
 
 export type { NProgressPreloader };
 

@@ -1,10 +1,10 @@
-import { IAddEventListener, addEventListener } from 'vevet-dom';
 import { IBarProps } from './types';
 import { IRemovable } from '@/types/general';
 import { DraggerMove, NDraggerMove } from '@/components/DraggerMove';
 import { IOnScrollCallbackParameter, onScroll } from '@/utils/scroll/onScroll';
 import { clamp } from '@/utils/math';
 import { getScrollValues } from '@/utils/scroll';
+import { addEventListener } from '@/utils/dom/addEventListener';
 
 /**
  * Represents a custom scroll bar with a draggable thumb.
@@ -49,7 +49,7 @@ export class Bar {
   private _coordsAtDragStart = { scrollLeft: 0, scrollTop: 0 };
 
   /** Stores the list of event listeners */
-  private _listeners: IAddEventListener[] = [];
+  private _listeners: (() => void)[] = [];
 
   /** The scroll event handler */
   private _scrollEvent?: IRemovable;
@@ -184,7 +184,7 @@ export class Bar {
    * Removes all the event listeners for the scroll bar.
    */
   private _removeEvents() {
-    this._listeners?.forEach((listener) => listener.remove());
+    this._listeners?.forEach((listener) => listener());
     this._scrollEvent?.remove();
     this._dragger?.destroy();
   }

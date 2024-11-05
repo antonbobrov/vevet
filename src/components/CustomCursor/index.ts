@@ -1,9 +1,10 @@
-import { addEventListener, createElement, selectOne } from 'vevet-dom';
 import { AnimationFrame } from '../AnimationFrame';
 import { NCustomCursor } from './types';
 import { Component as ComponentClass } from '@/base/Component';
 import { lerp } from '@/utils/math';
 import { getApp } from '@/utils/internal/getApp';
+import { selectOne } from '@/utils/dom/selectOne';
+import { addEventListener } from '@/utils/dom/addEventListener';
 
 export type { NCustomCursor };
 
@@ -215,20 +216,24 @@ export class CustomCursor<
     domContainer.classList.add(this.className('-container'));
 
     // Create outer element
-    this._outerElement = createElement('div', {
-      class: this.className(
-        '',
+    const outer = document.createElement('div');
+    this._outerElement = outer;
+    domContainer.append(outer);
+    outer.classList.add(this.className(''));
+    outer.classList.add(
+      this.className(
         container instanceof Window ? '-in-window' : '-in-element',
-        '-disabled',
       ),
-      parent: domContainer,
-    });
+    );
+    outer.classList.add(this.className('-disabled'));
 
     // Create inner element
-    this._innerElement = createElement('div', {
-      class: this.className('__inner', '-disabled'),
-      parent: this._outerElement,
-    });
+    const inner = document.createElement('div');
+    this._innerElement = inner;
+    outer.append(inner);
+    inner.classList.add(this.className('__inner'));
+    inner.classList.add(this.className('-disabled'));
+    outer.append(inner);
 
     // Call events
     this.callbacks.tbt('create', {
@@ -372,8 +377,8 @@ export class CustomCursor<
         this.hoveredElement = undefined;
       }
 
-      mouseEnter.remove();
-      mouseLeave.remove();
+      mouseEnter();
+      mouseLeave();
 
       if (timeout) {
         clearTimeout(timeout);

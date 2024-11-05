@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { childOf } from 'vevet-dom';
+import { childOf } from '@/utils/dom/childOf';
 import { NSplitText } from '../types';
 
 interface IProps {

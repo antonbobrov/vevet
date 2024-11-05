@@ -1,5 +1,6 @@
-import { createElement, selectAll, selectOne } from 'vevet-dom';
+import { selectOne } from '@/utils/dom/selectOne';
 import { NCustomScroll } from './types';
+import { selectAll } from '@/utils/dom/selectAll';
 
 type TPickedProps = 'elements' | 'hasWillChange' | 'translatePrecision';
 
@@ -16,8 +17,6 @@ export class Elements {
     return this._wrapper;
   }
 
-  private _wrapperExists!: boolean;
-
   private _elements!: NCustomScroll.IElement[];
 
   get elements() {
@@ -29,30 +28,21 @@ export class Elements {
   }
 
   constructor(private _props: IProps) {
-    this._createWrapper();
+    this._getWrapper();
     this._createElements();
   }
 
-  /** Create scrollable wrapper */
-  private _createWrapper() {
+  /** Get scrollable wrapper */
+  private _getWrapper() {
     const { wrapperClassName, container } = this.props;
 
     const existingWrapper = selectOne(`.${wrapperClassName}`, container);
 
-    if (existingWrapper instanceof HTMLElement) {
+    if (!(existingWrapper instanceof HTMLElement)) {
+      throw new Error(`No wrapper found: .${wrapperClassName}`);
+    } else {
       this._wrapper = existingWrapper;
-      this._wrapperExists = true;
-
-      return;
     }
-
-    this._wrapper = createElement('div', {
-      class: wrapperClassName,
-      parent: container,
-      children: Array.from(container.children),
-    });
-
-    this._wrapperExists = false;
   }
 
   /** Create scrollable elements */
@@ -128,15 +118,6 @@ export class Elements {
   }
 
   public destroy() {
-    // remove wrapper
-    if (!this._wrapperExists) {
-      while (this.wrapper.firstChild) {
-        this.props.container.appendChild(this.wrapper.firstChild);
-      }
-
-      this._wrapper.remove();
-    }
-
     // reset styles
     this._elements.forEach((element) => {
       // eslint-disable-next-line no-param-reassign

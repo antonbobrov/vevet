@@ -1,4 +1,3 @@
-import { selectOne } from 'vevet-dom';
 import { Component as ComponentClass } from '@/base/Component';
 import { NCustomScroll } from './types';
 import { IScrollLike } from '@/types/general';
@@ -8,6 +7,7 @@ import { Elements } from './Elements';
 import { AnimationFrame } from './AnimatonFrame';
 import { onResize } from '@/utils/listeners/onResize';
 import { getApp } from '@/utils/internal/getApp';
+import { selectOne } from '@/utils/dom/selectOne';
 
 export type { NCustomScroll };
 

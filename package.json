@@ -65,8 +65,7 @@
     "get-image-pos": "^0.0.11",
     "ismobilejs": "^1.1.1",
     "normalize-wheel": "^1.0.1",
-    "ts-essentials": "^9.3.2",
-    "vevet-dom": "^0.0.15"
+    "ts-essentials": "^9.3.2"
   },
   "devDependencies": {
     "@anton.bobrov/eslint-config": "2.0.2",

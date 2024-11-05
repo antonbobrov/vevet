@@ -1,9 +1,9 @@
-import { selectOne } from 'vevet-dom';
 import { PCancelable } from '@/utils/common/PCancelable';
 import { NPreloader } from './types';
 import { Component as ComponentClass } from '@/base/Component';
 import { normalizedTimeoutCallback } from '@/utils/common';
 import { getApp } from '@/utils/internal/getApp';
+import { selectOne } from '@/utils/dom/selectOne';
 
 export type { NPreloader };
 

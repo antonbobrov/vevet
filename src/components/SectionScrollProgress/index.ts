@@ -1,4 +1,3 @@
-import { selectOne } from 'vevet-dom';
 import type { CustomScroll } from '../CustomScroll';
 import { NScrollSectionProgress } from './types';
 import { Component as ComponentClass } from '@/base/Component';
@@ -6,6 +5,7 @@ import { clampScope } from '@/utils/math';
 import { IGetScrollValues, getScrollValues, onScroll } from '@/utils/scroll';
 import { onResize } from '@/utils/listeners/onResize';
 import { getApp } from '@/utils/internal/getApp';
+import { selectOne } from '@/utils/dom/selectOne';
 
 export type { NScrollSectionProgress };
 

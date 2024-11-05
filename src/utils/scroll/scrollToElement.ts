@@ -1,7 +1,7 @@
-import { selectOne } from 'vevet-dom';
 import { getScrollValues } from './getScrollValues';
 import { clamp } from '../math/clamp';
 import { IScrollToProps, scrollTo } from './scrollTo';
+import { selectOne } from '../dom/selectOne';
 
 export interface IScrollToElementProps extends IScrollToProps {
   /**
