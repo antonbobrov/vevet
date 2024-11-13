@@ -63,7 +63,9 @@ export const Component: FC<IProps> = (props) => {
         <div ref={ref}>
           {times(
             (index) => (
-              <div key={index}>Text {index}</div>
+              <div key={index}>
+                <span>Text {index}</span>
+              </div>
             ),
             3,
           )}

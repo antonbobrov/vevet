@@ -196,7 +196,7 @@ export class Marquee<
     this._wrapTextNode();
 
     // Store element references
-    this._elements = Array.from(container.querySelectorAll('*'));
+    this._elements = Array.from(this._container.children) as any;
 
     // Handle container resizing
     const onContainerResize = onResize({
@@ -317,7 +317,7 @@ export class Marquee<
       }
 
       // Update element references after cloning
-      this._elements = Array.from(container.querySelectorAll('*'));
+      this._elements = Array.from(this._container.children) as any;
       this.resize();
     }
 
