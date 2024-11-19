@@ -13,6 +13,7 @@ export namespace NMutableProps {
      *   <li><code>'viewport_phone'</code> - When the viewport width is categorized as phone size.</li>
      *   <li><code>'device_phone'</code> - When the user is on a phone device, regardless of viewport size.</li>
      *   <li><code>'device_tablet'</code> - When the user is on a tablet device, regardless of viewport size.</li>
+     *   <li><code>'device_desktop'</code> - When the user is on a desktop device, regardless of viewport size.</li>
      *   <li><code>'device_mobile'</code> - When the user is on any mobile device (either phone or tablet).</li>
      * </ul>
      */
@@ -23,6 +24,7 @@ export namespace NMutableProps {
       | 'viewport_phone'
       | 'device_phone'
       | 'device_tablet'
+      | 'device_desktop'
       | 'device_mobile';
 
     /**
