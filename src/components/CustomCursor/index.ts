@@ -242,7 +242,7 @@ export class CustomCursor<
     });
 
     // Destroy the cursor
-    this.addDestroyableAction(() => {
+    this.addDestroyable(() => {
       domContainer.style.cursor = '';
       domContainer.classList.remove(this.className('-hide-default-cursor'));
       domContainer.classList.remove(this.className('-container'));
@@ -257,8 +257,8 @@ export class CustomCursor<
     const { domContainer } = this;
 
     this._raf = new AnimationFrame();
-    this._raf.addCallback('frame', () => this.render());
-    this.addDestroyableAction(() => this._raf.destroy());
+    this._raf.on('frame', () => this.render());
+    this.addDestroyable(() => this._raf.destroy());
 
     this.addEventListener(
       domContainer,
@@ -385,9 +385,9 @@ export class CustomCursor<
       }
     };
 
-    this.addDestroyableAction(() => remove());
+    this.addDestroyable(() => remove());
 
-    return { remove };
+    return () => remove();
   }
 
   /**
