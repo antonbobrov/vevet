@@ -118,7 +118,7 @@ export class Ctx2D<
     // append canvas to container if required
     if (shouldAppend && container instanceof Element) {
       container.append(this._canvas);
-      this.addDestroyableAction(() => this.canvas.remove());
+      this.addDestroyable(() => this.canvas.remove());
     }
 
     // create 2D context
@@ -148,21 +148,19 @@ export class Ctx2D<
     const { hasInitialResize, hasResize, viewportTarget, resizeDebounce } =
       this.props;
 
-    if (!hasResize) {
-      return;
+    if (hasInitialResize) {
+      this.resize();
     }
 
-    const resizeHandler = onResize({
-      onResize: () => this.resize(),
-      element: this.container,
-      viewportTarget,
-      resizeDebounce,
-    });
+    if (hasResize) {
+      const resizeHandler = onResize({
+        onResize: () => this.resize(),
+        element: this.container,
+        viewportTarget,
+        resizeDebounce,
+      });
 
-    this.addDestroyableAction(() => resizeHandler.remove());
-
-    if (hasInitialResize) {
-      resizeHandler.resize();
+      this.addDestroyable(() => resizeHandler.remove());
     }
   }
 
@@ -176,13 +174,13 @@ export class Ctx2D<
       return;
     }
 
-    const { viewport } = getApp();
+    const app = getApp();
 
     // calculate DPR
     if (typeof props.dpr === 'number') {
       this._dpr = props.dpr;
     } else {
-      this._dpr = viewport.dpr;
+      this._dpr = app.dpr;
     }
 
     // calculate new width and height
@@ -196,8 +194,8 @@ export class Ctx2D<
       newWidth = this.container.clientWidth;
       newHeight = this.container.clientHeight;
     } else {
-      newWidth = viewport.width;
-      newHeight = viewport.height;
+      newWidth = app.width;
+      newHeight = app.height;
     }
 
     // apply DPR

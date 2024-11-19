@@ -17,7 +17,7 @@ export namespace NCtx2D {
     shouldAppend?: boolean;
 
     /**
-     * Resizes the canvas during initialization.
+     * Updates canvas sizes during initialization.
      * @default true
      */
     hasInitialResize?: boolean;

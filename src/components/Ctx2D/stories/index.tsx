@@ -11,7 +11,6 @@ export const Component: FC = () => {
 
     const instance = new Ctx2D({
       container: containerRef.current,
-      hasResize: true,
     });
 
     const render: NCtx2D.TRender = ({ ctx, width, height }) => {
@@ -27,7 +26,7 @@ export const Component: FC = () => {
     };
 
     instance.render(render);
-    instance.addCallback('resize', () => instance.render(render));
+    instance.on('resize', () => instance.render(render));
 
     return () => instance.destroy();
   }, []);
