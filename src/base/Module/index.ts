@@ -62,13 +62,13 @@ export class Module<
    * These can be retrieved dynamically during the module's lifecycle.
    */
   get props() {
-    return this._mutableProps.props as TRequiredModuleProp<
+    return this._props.props as TRequiredModuleProp<
       StaticProps & ChangeableProps
     >;
   }
 
   /** Manages the module's mutable properties */
-  private _mutableProps: MutableProps<StaticProps, ChangeableProps>;
+  private _props: MutableProps<StaticProps, ChangeableProps>;
 
   /** Manages the module's callbacks */
   private _callbacks: Callbacks<CallbacksTypes>;
@@ -80,14 +80,11 @@ export class Module<
     return this._callbacks;
   }
 
-  /** Holds the list of event listeners added to the module */
-  private _listeners: (() => void)[];
-
   /** Stores actions that need to be executed when the module is destroyed */
-  private _destroyableActions: (() => void)[];
+  private _destroyable: (() => void)[];
 
   /** Stores the class names to be removed when the module is destroyed */
-  private _classNamesToRemove: NModule.IClassNamesToRemove[];
+  private _classNames: NModule.IClassNamesToRemove[];
 
   /** The name of the module, derived from the class name */
   get name() {
@@ -131,16 +128,15 @@ export class Module<
     }
 
     this._callbacks = new Callbacks<CallbacksTypes>();
-    this._listeners = [];
-    this._destroyableActions = [];
-    this._classNamesToRemove = [];
+    this._destroyable = [];
+    this._classNames = [];
 
     const props = {
       ...this._getDefaultProps(),
       ...(initialProps || {}),
     };
 
-    this._mutableProps = new MutableProps(
+    this._props = new MutableProps(
       props as StaticProps & ChangeableProps,
       () => this._onPropsMutate(),
       this.name,
@@ -162,7 +158,7 @@ export class Module<
         'Responsive properties cannot be added after `init` is called',
       );
     } else {
-      this._mutableProps.addResponsiveProps(rules);
+      this._props.addResponsiveProps(rules);
     }
   }
 
@@ -176,7 +172,7 @@ export class Module<
       return;
     }
 
-    this._mutableProps.changeProps(props);
+    this._props.changeProps(props);
 
     this._callbacks.tbt('propsChange', undefined);
   }
@@ -211,8 +207,8 @@ export class Module<
    *
    * @param action - The function to execute during destruction.
    */
-  protected addDestroyableAction(action: () => void) {
-    this._destroyableActions.push(action);
+  protected addDestroyable(action: () => void) {
+    this._destroyable.push(action);
   }
 
   /**
@@ -222,17 +218,17 @@ export class Module<
    * @param action - The callback function to execute when the viewport target changes.
    * @param data - Additional data for the callback.
    */
-  public addViewportCallback(
+  public onViewport(
     target: Parameters<TViewportAdd>[0],
     action: Parameters<TViewportAdd>[1],
     data: Parameters<TViewportAdd>[2] = {},
   ) {
-    const callback = getApp().viewport.callbacks.add(target, action, {
+    const destruct = getApp().onViewport(target, action, {
       ...data,
       name: this.constructor.name,
     });
 
-    this.addDestroyableAction(() => callback.remove());
+    this.addDestroyable(() => destruct());
   }
 
   /**
@@ -242,12 +238,12 @@ export class Module<
    * @param action - The function to execute when the event is triggered.
    * @param settings - Additional settings for the callback.
    */
-  public addCallback<T extends keyof CallbacksTypes>(
+  public on<T extends keyof CallbacksTypes>(
     target: T,
     action: NCallbacks.TAction<CallbacksTypes[T]>,
     settings: NCallbacks.ISettings = {},
   ) {
-    return this.callbacks.add(target, action, settings);
+    return this.callbacks.on(target, action, settings);
   }
 
   /**
@@ -267,10 +263,9 @@ export class Module<
     callback: Listener,
     options?: boolean | AddEventListenerOptions,
   ) {
-    const listener = addEventListener(element, target, callback, options);
-    this._listeners.push(listener);
+    const destruct = addEventListener(element, target, callback, options);
 
-    return listener;
+    this.addDestroyable(() => destruct());
   }
 
   /**
@@ -300,7 +295,7 @@ export class Module<
     element.classList.toggle(className, isActive);
 
     if (!isAlreadyExists) {
-      this._classNamesToRemove.push({ element, className });
+      this._classNames.push({ element, className });
     }
   }
 
@@ -323,12 +318,11 @@ export class Module<
     this._callbacks.tbt('destroy', undefined);
     this._callbacks.destroy();
 
-    this._mutableProps.destroy();
+    this._props.destroy();
 
-    this._destroyableActions.forEach((action) => action());
-    this._listeners.forEach((listener) => listener());
+    this._destroyable.forEach((action) => action());
 
-    this._classNamesToRemove.forEach(({ element, className }) =>
+    this._classNames.forEach(({ element, className }) =>
       element.classList.remove(className),
     );
 
