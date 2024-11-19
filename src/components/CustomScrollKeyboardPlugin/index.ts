@@ -65,14 +65,14 @@ export class CustomScrollKeyboardPlugin<
    * Checks if the scroll container is visible in the viewport.
    */
   protected _isInViewport() {
-    const { viewport } = getApp();
+    const app = getApp();
 
     const bounding = this.component.container.getBoundingClientRect();
 
     return (
-      bounding.left < viewport.width &&
+      bounding.left < app.width &&
       bounding.right > 0 &&
-      bounding.top < viewport.height &&
+      bounding.top < app.height &&
       bounding.bottom > 0
     );
   }

@@ -197,7 +197,7 @@ export class SectionScrollProgress<
     });
 
     // Clean up actions on destroy
-    this.addDestroyableAction(() => {
+    this.addDestroyable(() => {
       resizeHandler.remove();
       loadEvent.cancel();
       scrollEvent.remove();
@@ -251,7 +251,7 @@ export class SectionScrollProgress<
    * Calculates the scroll scopes for the section.
    */
   protected _calculateScopes({ scrollTop }: IGetScrollValues) {
-    const { height: vHeight } = getApp().viewport;
+    const vHeight = getApp().height;
     const sectionBounding = this.section.getBoundingClientRect();
 
     // Calculate scroll scopes

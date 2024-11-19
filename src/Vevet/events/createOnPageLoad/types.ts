@@ -15,7 +15,7 @@ export interface IOnPageLoad {
    *
    * callback?.remove()
    */
-  onLoad: (callback: () => void) => NCallbacks.IAddedCallback | undefined;
+  onLoad: (callback: () => void) => (() => void) | undefined;
   /** Get if the page is loaded */
   getIsLoaded: () => boolean;
 }

@@ -2,7 +2,6 @@ import { Plugin } from '@/base/Plugin';
 import { NCustomScrollDragPlugin } from './types';
 import type { CustomScroll as CustomScrollInstance } from '../CustomScroll';
 import { DraggerMove, NDraggerMove } from '../DraggerMove';
-import { NCallbacks } from '@/base/Callbacks';
 
 export type { NCustomScrollDragPlugin };
 
@@ -42,7 +41,7 @@ export class CustomScrollDragPlugin<
   protected _dragger?: DraggerMove;
 
   /** List of callbacks added to the CustomScroll instance. */
-  protected _componentCallbacks?: NCallbacks.IAddedCallback[];
+  protected _componentCallbacks?: (() => void)[];
 
   /** Holds the previous lerp value of the CustomScroll component. */
   protected _prevComponentLerp?: number;
@@ -91,18 +90,18 @@ export class CustomScrollDragPlugin<
       container: component.container,
     });
 
-    this._dragger.addCallback('start', () => this._handleDragStart());
+    this._dragger.on('start', () => this._handleDragStart());
 
-    this._dragger.addCallback('move', (data) => this._handleDragMove(data));
+    this._dragger.on('move', (data) => this._handleDragMove(data));
 
-    this._dragger.addCallback('end', () => this._handleDragEnd());
+    this._dragger.on('end', () => this._handleDragEnd());
 
     if (!this._componentCallbacks) {
       this._componentCallbacks = [];
     }
 
     this._componentCallbacks.push(
-      component.addCallback('wheel', () => this._dragger?.cancel(), {
+      component.on('wheel', () => this._dragger?.cancel(), {
         name: this.name,
       }),
     );
@@ -119,7 +118,7 @@ export class CustomScrollDragPlugin<
     this._dragger.destroy();
     this._dragger = undefined;
 
-    this._componentCallbacks?.forEach((callback) => callback.remove());
+    this._componentCallbacks?.forEach((callback) => callback());
     this._componentCallbacks = [];
   }
 

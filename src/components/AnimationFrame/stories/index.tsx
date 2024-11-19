@@ -30,16 +30,16 @@ export const Component: FC<IProps> = ({ fps }) => {
     setAnimationFrame(frame);
     setTargetFps(frame.props.fps);
 
-    frame.addCallback('propsMutate', () => setTargetFps(frame.props.fps));
+    frame.on('propsMutate', () => setTargetFps(frame.props.fps));
 
-    frame.addCallback('frame', () => {
+    frame.on('frame', () => {
       setComputedFps(frame.computedFPS);
       setTime(+new Date());
     });
 
-    frame.addCallback('toggle', () => setIsPlaying(frame.isPlaying));
+    frame.on('toggle', () => setIsPlaying(frame.isPlaying));
 
-    frame.addCallback('destroy', () => {
+    frame.on('destroy', () => {
       // eslint-disable-next-line no-console
       console.log('destroy');
     });

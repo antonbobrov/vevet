@@ -21,11 +21,11 @@ export const Component: FC = () => {
       canPreloadVideos: true,
     });
 
-    instance.addCallback('progress', ({ progress: progressProp }) => {
+    instance.on('progress', ({ progress: progressProp }) => {
       setProgress(progressProp);
     });
 
-    instance.addCallback('resourceLoad', (data) => {
+    instance.on('resourceLoad', (data) => {
       // eslint-disable-next-line no-console
       console.log('resourceLoad', data);
     });

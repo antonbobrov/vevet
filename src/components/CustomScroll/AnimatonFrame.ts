@@ -1,5 +1,4 @@
 import { AnimationFrame as AnimationFrameClass } from '../AnimationFrame';
-import { NCallbacks } from '@/base/Callbacks';
 
 interface IProps {
   callback: () => void;
@@ -10,7 +9,7 @@ export class AnimationFrame {
   /** Inner animation frame */
   private _raf?: AnimationFrameClass;
 
-  private _event?: NCallbacks.IAddedCallback;
+  private _event?: () => void;
 
   private get raf() {
     return (this.props.raf || this._raf)!;
@@ -30,11 +29,9 @@ export class AnimationFrame {
     // set animation callback for the outer AnimationFrame
     if (this.props.raf) {
       if (!this._event) {
-        this._event = this.props.raf.addCallback(
-          'frame',
-          () => this.props.callback(),
-          { name: 'CustomScroll' },
-        );
+        this._event = this.props.raf.on('frame', () => this.props.callback(), {
+          name: 'CustomScroll',
+        });
       }
 
       return;
@@ -43,7 +40,7 @@ export class AnimationFrame {
     // otherwise, check if inner AnimationFrame is created
     if (!this._raf) {
       this._raf = new AnimationFrameClass({ fps: 'auto' });
-      this._raf.addCallback('frame', () => this.props.callback());
+      this._raf.on('frame', () => this.props.callback());
     }
 
     // play
@@ -52,7 +49,7 @@ export class AnimationFrame {
 
   /** Disable scrolling */
   public disable() {
-    this._event?.remove();
+    this._event?.();
     this._event = undefined;
 
     this._raf?.pause();

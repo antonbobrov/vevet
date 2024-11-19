@@ -1,11 +1,3 @@
-export interface IRemovable {
-  remove: () => void;
-}
-
-export interface IDestroyable {
-  destroy: () => void;
-}
-
 export interface IScrollLike {
   scrollWidth: number;
   scrollHeight: number;

@@ -27,7 +27,7 @@ export const Component: FC = () => {
 
     const elements = Array.from(containerRef.current.children) as HTMLElement[];
 
-    instance.addCallback('render', () => {
+    instance.on('render', () => {
       elements.forEach((element, index) => {
         const x = instance.progress * -100 + index * 100;
         element.style.transform = `translate(${x}%, 0)`;

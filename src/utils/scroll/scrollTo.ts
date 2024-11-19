@@ -81,7 +81,7 @@ export function scrollTo({
       isDestroyedOnEnd: true,
     });
 
-    timeline.addCallback('progress', ({ e }) => {
+    timeline.on('progress', ({ e }) => {
       if (!container) {
         return;
       }
@@ -93,7 +93,7 @@ export function scrollTo({
       });
     });
 
-    timeline.addCallback('end', () => resolve());
+    timeline.on('end', () => resolve());
 
     timeline.play();
   });

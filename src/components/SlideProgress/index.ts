@@ -95,15 +95,13 @@ export class SlideProgress<
 
     // Create the animation frame
     this._animationFrame = new AnimationFrame();
-    this._animationFrame.addCallback('frame', () =>
-      this._handleAnimationFrame(),
-    );
+    this._animationFrame.on('frame', () => this._handleAnimationFrame());
 
     // Create the dragger
     this._dragger = new DraggerMove({ container });
-    this._dragger.addCallback('move', (event) => this._handleDrag(event));
-    this._dragger.addCallback('start', ({ event }) => event.stopPropagation());
-    this._dragger.addCallback('end', () => this._handleDragEnd());
+    this._dragger.on('move', (event) => this._handleDrag(event));
+    this._dragger.on('start', ({ event }) => event.stopPropagation());
+    this._dragger.on('end', () => this._handleDragEnd());
 
     // Add wheel event listener
     this.addEventListener(container, 'wheel', (event) =>
@@ -386,14 +384,14 @@ export class SlideProgress<
     const timeline = new Timeline({ duration });
     this._timelineTo = timeline;
 
-    timeline.addCallback('progress', (data) => {
+    timeline.on('progress', (data) => {
       this._progressLerp.target = lerp(startValue, endValue, data.e, 0);
       this._updateCurrentProgress(1);
 
       onProgress?.(data);
     });
 
-    timeline.addCallback('end', () => {
+    timeline.on('end', () => {
       this._timelineTo?.destroy();
       this._timelineTo = undefined;
 

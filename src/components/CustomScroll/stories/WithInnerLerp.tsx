@@ -53,7 +53,7 @@ export const WithInnerLerpComponent: FC = () => {
               <div
                 key={index}
                 className="js-element"
-                data-custom-scroll-lerp={0.5 - (index / count) * 0.35}
+                data-custom-scroll-lerp={0.75 - (index / count) * 0.7}
               >
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Pariatur quibusdam fugit at quos. Quod repellendus placeat
@@ -61,7 +61,7 @@ export const WithInnerLerpComponent: FC = () => {
                 dolores placeat mollitia illum?
               </div>
             ),
-            40,
+            20,
           )}
         </div>
       </div>

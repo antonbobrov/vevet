@@ -332,14 +332,14 @@ export class CustomScroll<
       resizeDebounce,
       hasBothEvents: true,
     });
-    this.addDestroyableAction(() => resizeHandler.remove());
+    this.addDestroyable(() => resizeHandler.remove());
 
     // initial resize
     resizeHandler.resize();
 
     // if the ResizeObserver cannot be used, recalculate sizes on each 10th frame
     if (!resizeHandler.hasResizeObserver) {
-      this.addCallback(
+      this.on(
         'render',
         (() => {
           if (this._frameIndex % 10 === 0) {

@@ -17,10 +17,10 @@ export const Component: FC = () => {
     });
     setDragger(instance);
 
-    instance.addCallback('down', () => setDirection('down'));
-    instance.addCallback('up', () => setDirection('up'));
-    instance.addCallback('left', () => setDirection('left'));
-    instance.addCallback('right', () => setDirection('right'));
+    instance.on('down', () => setDirection('down'));
+    instance.on('up', () => setDirection('up'));
+    instance.on('left', () => setDirection('left'));
+    instance.on('right', () => setDirection('right'));
 
     return () => instance?.destroy();
   }, []);

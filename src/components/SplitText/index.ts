@@ -189,7 +189,7 @@ export class SplitText<
 
     resizeHandler.resize();
 
-    this.addDestroyableAction(() => resizeHandler.remove());
+    this.addDestroyable(() => resizeHandler.remove());
   }
 
   /**
