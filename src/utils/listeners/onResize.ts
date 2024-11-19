@@ -1,4 +1,3 @@
-import { NCallbacks } from '@/base/Callbacks';
 import { getApp } from '../internal/getApp';
 import { IViewportCallbackTypes } from '@/src/Vevet/events/createViewport/types';
 
@@ -80,7 +79,7 @@ export function onResize({
   let resizeObserver: ResizeObserver | undefined;
   let isFirstResizeObserverCallback = true;
 
-  let viewportCallback: NCallbacks.IAddedCallback | undefined;
+  let viewportCallback: (() => void) | undefined;
 
   const debounceResize = (props?: IOnResizeCallbackProps, delay?: number) => {
     if (timeout) {
@@ -115,7 +114,7 @@ export function onResize({
   }
 
   if (hasBothEvents || !resizeObserver) {
-    viewportCallback = getApp().viewport.callbacks.add(viewportTarget, () =>
+    viewportCallback = getApp().onViewport(viewportTarget, () =>
       debounceResize({ trigger: 'Viewport' }),
     );
   }
@@ -127,7 +126,7 @@ export function onResize({
       }
 
       resizeObserver?.disconnect();
-      viewportCallback?.remove();
+      viewportCallback?.();
     },
     resize: () => handleResize({ trigger: 'unknown' }),
     debounceResize: () => debounceResize(),

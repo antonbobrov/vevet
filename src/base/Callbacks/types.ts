@@ -1,5 +1,3 @@
-import { IRemovable } from '@/types/general';
-
 export namespace NCallbacks {
   /**
    * Represents a mapping of event types to their callback parameter types.
@@ -71,7 +69,7 @@ export namespace NCallbacks {
   /**
    * An interface representing an added callback, with methods to manage it.
    */
-  export interface IAddedCallback extends IRemovable {
+  export interface IAddCallback {
     /**
      * The unique identifier of the callback.
      */

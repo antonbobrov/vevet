@@ -1,9 +1,13 @@
-import { IViewport } from './events/createViewport/types';
+import {
+  IViewportData,
+  TViewportCallbacks,
+  TViewportCallbacksOn,
+} from './events/createViewport/types';
 import { IVevetProps } from './types';
 import { PCancelable } from '@/utils/common/PCancelable';
 
 /** Vevet Application */
-export interface IVevet {
+export interface IVevet extends IViewportData {
   /** Current Vevet version */
   version: string;
   /** Appliction properties */
@@ -26,8 +30,6 @@ export interface IVevet {
   isWebpSupported: boolean;
   /** If the page is loaded */
   isPageLoaded: boolean;
-  /** Viewport handler */
-  viewport: IViewport;
   /** Document */
   doc: Document;
   /** HTML element */
@@ -45,4 +47,24 @@ export interface IVevet {
    *   .catch(() => console.log('Error'));
    */
   onPageLoad: () => PCancelable<void>;
+  /** Viewport callbacks instance */
+  viewportCallbacks: TViewportCallbacks;
+  /**
+   * Viewport callbacks
+   *
+   * @example
+   *
+   * vevet.onViewport('width', () => console.log('width changed'));
+   *
+   * vevet.onViewport('height', () => console.log('height changed'));
+   *
+   * vevet.onViewport('both', () => console.log('both width and height changed'));
+   *
+   * vevet.onViewport('widthOnly', () => console.log('only width changed'));
+   *
+   * vevet.onViewport('heightOnly', () => console.log('only height changed'));
+   *
+   * vevet.onViewport('any', () => console.log('any change'));
+   */
+  onViewport: TViewportCallbacksOn;
 }

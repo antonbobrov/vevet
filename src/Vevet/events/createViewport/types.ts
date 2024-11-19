@@ -33,37 +33,19 @@ export interface IViewportCallbackTypes extends NCallbacks.ITypes {
 }
 
 /** Viewport size types */
-export enum ESizeTypes {
-  Desktop = 'desktop',
-  Tablet = 'tablet',
-  Phone = 'phone',
+export enum EBreakpoint {
+  Desktop = 'breakpoint-desktop',
+  Tablet = 'breakpoint-tablet',
+  Phone = 'breakpoint-phone',
 }
 
 /** Orientation types */
-export enum EOrientationTypes {
+export enum EOrientation {
   Landscape = 'landscape',
   Portrait = 'portrait',
 }
 
-export interface IViewport {
-  /**
-   * Viewport callbacks
-   *
-   * @example
-   *
-   * vevet.viewport.callbacks.add('width', () => console.log('width changed'));
-   *
-   * vevet.viewport.callbacks.add('height', () => console.log('height changed'));
-   *
-   * vevet.viewport.callbacks.add('both', () => console.log('both width and height changed'));
-   *
-   * vevet.viewport.callbacks.add('widthOnly', () => console.log('only width changed'));
-   *
-   * vevet.viewport.callbacks.add('heightOnly', () => console.log('only height changed'));
-   *
-   * vevet.viewport.callbacks.add('any', () => console.log('any change'));
-   */
-  callbacks: Callbacks<IViewportCallbackTypes>;
+export interface IViewportData {
   /** Current viewport width */
   width: number;
   /** Current viewport height */
@@ -80,14 +62,14 @@ export interface IViewport {
   isLandscape: boolean;
   /** Is viewport in portrait mode */
   isPortrait: boolean;
-  /** Is viewport in desktop mode */
-  isDesktop: boolean;
-  /** Is viewport in tablet mode */
-  isTablet: boolean;
-  /** Is viewport in phone mode */
-  isPhone: boolean;
   /** Device pixel ratio */
   dpr: number;
   /** Lower device pixel ratio (1 for desktop and maximum 2 for mobile devices) */
   lowerDpr: number;
+  /** Viewport kind */
+  breakpoint: 'phone' | 'tablet' | 'desktop';
 }
+
+export type TViewportCallbacks = Callbacks<IViewportCallbackTypes>;
+
+export type TViewportCallbacksOn = TViewportCallbacks['on'];

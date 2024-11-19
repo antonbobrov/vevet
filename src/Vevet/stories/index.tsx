@@ -18,12 +18,29 @@ export const Component: FC = () => {
       'osName',
       'isWebpSupported',
       'isPageLoaded',
+      'breakpoint',
+      'width',
+      'height',
+      'sHeight',
+      'isLandscape',
+      'isPortrait',
+      'dpr',
+      'lowerDpr',
+      'vh',
+      'svh',
+      'vw',
     ]);
 
     setFeatures(object);
   }, []);
 
-  useEffect(() => updateFeatures(), [updateFeatures]);
+  useEffect(() => {
+    updateFeatures();
+
+    const viewportCallback = getApp().onViewport('any', () => updateFeatures());
+
+    return () => viewportCallback();
+  }, [updateFeatures]);
 
   return (
     <div>
