@@ -200,7 +200,7 @@ export class SectionScrollProgress<
     this.addDestroyable(() => {
       resizeHandler.remove();
       loadEvent.cancel();
-      scrollEvent.remove();
+      scrollEvent();
     });
   }
 
