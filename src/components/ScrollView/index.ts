@@ -73,17 +73,11 @@ export class ScrollView<
     return this._elements;
   }
 
-  /**
-   * Indicates whether the `IntersectionObserver` API is supported in the current environment.
-   */
-  protected _isIntersectionObserverSupported: boolean;
-
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
 
     this._isFirstStart = true;
     this._elements = [];
-    this._isIntersectionObserverSupported = isIntersectionObserverSupported();
 
     // initialize the class if requested
     if (canInit) {
@@ -159,7 +153,7 @@ export class ScrollView<
    * Sets up the `IntersectionObserver` to detect when elements come into view.
    */
   protected _setViewEvents() {
-    if (!this._isIntersectionObserverSupported) {
+    if (!isIntersectionObserverSupported()) {
       return;
     }
 
@@ -327,7 +321,7 @@ export class ScrollView<
 
     element.isScrollViewIn = undefined;
 
-    if (this._isIntersectionObserverSupported) {
+    if (isIntersectionObserverSupported()) {
       this._elements.push(element);
 
       this._intersectionObserverIn?.observe(element);
