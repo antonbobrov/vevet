@@ -30,7 +30,7 @@ export class CustomCursor<
       ...super._getDefaultProps(),
       container: window,
       isEnabled: true,
-      isNativeCursorHidden: false,
+      isNativeHidden: false,
       width: 36,
       height: 36,
       lerp: 0.2,
@@ -52,7 +52,7 @@ export class CustomCursor<
   protected _container: Element | Window;
 
   /** Boolean flag to indicate whether the cursor container is the window. */
-  protected _isContainerWindow: boolean;
+  protected _isWindow: boolean;
 
   /** Returns the DOM parent for the cursor element. */
   get domContainer(): HTMLElement {
@@ -164,7 +164,7 @@ export class CustomCursor<
     } else {
       throw new Error(`No cursor container found for ${this.props.container}`);
     }
-    this._isContainerWindow = container instanceof Window;
+    this._isWindow = container instanceof Window;
 
     // Set default variables
     const { width, height } = this.props;
@@ -207,7 +207,7 @@ export class CustomCursor<
     const { container, domContainer } = this;
 
     // Hide native cursor
-    if (this.props.isNativeCursorHidden) {
+    if (this.props.isNativeHidden) {
       domContainer.style.cursor = 'none';
       domContainer.classList.add(this.className('-hide-default-cursor'));
     }
@@ -452,7 +452,7 @@ export class CustomCursor<
     let { x, y } = this.coords;
     const { width, height } = this.coords;
 
-    if (!this._isContainerWindow) {
+    if (!this._isWindow) {
       const bounding = domContainer.getBoundingClientRect();
       x -= bounding.left;
       y -= bounding.top;
