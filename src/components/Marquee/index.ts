@@ -206,6 +206,9 @@ export class Marquee<
       hasBothEvents: false,
     });
 
+    // initial resize
+    this._handleResize();
+
     // Resize on page load
     getApp()
       .onPageLoad()
