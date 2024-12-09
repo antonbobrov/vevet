@@ -19,9 +19,10 @@ Vevet is highly customizable, seamlessly integrates into existing projects, and 
   - `vevet.osName`, `vevet.browserName`, `vevet.isWebpSupported` (Check WebP support)
 - **Page Load Detection**
   - `vevet.isPageLoaded`, `vevet.onPageLoad`
-- **Viewport Management**
-  - `vevet.viewport` (Handles resize events efficiently)
-    - `width`, `height`, `sHeight`, `vw`, `vh`, `svh`, `isDesktop`, `isTablet`, `isPhone`, `isPortrait`, `isLandscape`, `dpr`, `lowerDpr `
+- **Viewport Information**
+    - `vevet.width`, `vevet.height`, `vevet.sHeight`, `vevet.vw`, `vevet.vh`, `vevet.svh`, `vevet.breakpoint`, `vevet.isPortrait`, `vevet.isLandscape`, `vevet.dpr`, `vevet.lowerDpr `
+- **Viewport Events**
+    - `vevet.onViewport`, `vevet.viewportCallbacks`
 
 ### Animation:
 - **AnimationFrame** [Demo](https://antonbobrov.github.io/vevet-demo/animation-frame/) / [Docs](https://antonbobrov.github.io/vevet/classes/AnimationFrame.html): Simplifies the use of `requestAnimationFrame`, offering custom FPS control.
@@ -86,6 +87,20 @@ import { CustomCursor } from 'vevet';
 const instance = new CustomCursor({
   container: document.getElementById('container')!,
 });
+```
+
+## Setting Up Custom Vevet Properties
+
+You can define custom properties for Vevet before its initialization. To ensure the settings are applied correctly, include the following code in the `<head>` section of your HTML file:
+
+```typescript
+window.VEVET_PROPS = {
+  tablet: 1199, // Maximum width for tablet screens (in pixels)
+  phone: 899, // Maximum width for phone screens (in pixels)
+  resizeDebounce: 16, // Debounce time for resize events (in milliseconds)
+  easing: [0.25, 0.1, 0.25, 1], // Default easing for animations (CSS cubic-bezier format)
+  checkWebpSupport: true, // Enable WebP support detection
+};
 ```
 
 ## Development Environment
