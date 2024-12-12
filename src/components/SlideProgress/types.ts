@@ -77,6 +77,8 @@ export namespace NSlideProgress {
     wheel: TNormalizeWheel;
     /** Fired when a drag event moves the slider */
     dragMove: NDraggerMove.IMoveParameter;
+    /** Fired when dragging ends */
+    dragEnd: undefined;
   }
 
   export interface IWithLerp {

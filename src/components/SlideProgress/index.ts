@@ -248,6 +248,9 @@ export class SlideProgress<
     this._canDragMove = false;
 
     this._goStickyEnd();
+
+    // Callbacks
+    this.callbacks.tbt('dragEnd', undefined);
   }
 
   /**
