@@ -3,7 +3,6 @@ import { NScrollView } from './types';
 import { isIntersectionObserverSupported } from '@/utils/listeners';
 import { clamp } from '@/utils/math';
 import { normalizedTimeoutCallback } from '@/utils/common';
-import { IRemovable } from '@/types/general';
 import { getApp } from '@/utils/internal/getApp';
 
 export type { NScrollView };
@@ -74,17 +73,11 @@ export class ScrollView<
     return this._elements;
   }
 
-  /**
-   * Indicates whether the `IntersectionObserver` API is supported in the current environment.
-   */
-  protected _isIntersectionObserverSupported: boolean;
-
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
 
     this._isFirstStart = true;
     this._elements = [];
-    this._isIntersectionObserverSupported = isIntersectionObserverSupported();
 
     // initialize the class if requested
     if (canInit) {
@@ -113,7 +106,7 @@ export class ScrollView<
     this.resize();
 
     // Set up a viewport callback to trigger the resize method
-    this.addViewportCallback(viewportTarget, () => this.resize(), {
+    this.onViewport(viewportTarget, () => this.resize(), {
       timeout: resizeDebounce,
     });
   }
@@ -146,13 +139,13 @@ export class ScrollView<
       };
     }
 
-    const { viewport } = getApp();
+    const app = getApp();
 
     return {
       top: 0,
       left: 0,
-      width: viewport.width,
-      height: viewport.height,
+      width: app.width,
+      height: app.height,
     };
   }
 
@@ -160,7 +153,7 @@ export class ScrollView<
    * Sets up the `IntersectionObserver` to detect when elements come into view.
    */
   protected _setViewEvents() {
-    if (!this._isIntersectionObserverSupported) {
+    if (!isIntersectionObserverSupported()) {
       return;
     }
 
@@ -323,12 +316,12 @@ export class ScrollView<
   /**
    * Adds an element to the observer list and starts tracking its visibility in the viewport.
    */
-  public addElement(elementProp: Element): IRemovable {
+  public addElement(elementProp: Element) {
     const element = elementProp as NScrollView.IElement;
 
     element.isScrollViewIn = undefined;
 
-    if (this._isIntersectionObserverSupported) {
+    if (isIntersectionObserverSupported()) {
       this._elements.push(element);
 
       this._intersectionObserverIn?.observe(element);
@@ -337,9 +330,7 @@ export class ScrollView<
       this._handleInOut(element, true);
     }
 
-    return {
-      remove: () => this.removeElement(element),
-    };
+    return () => this.removeElement(element);
   }
 
   /**

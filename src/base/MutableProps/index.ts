@@ -1,5 +1,4 @@
 import { getApp } from '@/utils/internal/getApp';
-import { NCallbacks } from '../Callbacks/types';
 import { NMutableProps } from './types';
 
 export type { NMutableProps };
@@ -40,7 +39,7 @@ export class MutableProps<
    * A reference to the original properties (both static and changeable).
    * These properties are only updated manually via {@linkcode changeProps}.
    */
-  private _refProps: StaticProps & ChangeableProps;
+  private _ref: StaticProps & ChangeableProps;
 
   /**
    * The current active properties. These can be updated through both window resizing
@@ -52,7 +51,7 @@ export class MutableProps<
    * A set of responsive rules defining how properties should change based on viewport size or device type.
    * Each rule is defined by a breakpoint and corresponding property settings.
    */
-  private _responsiveRules: NMutableProps.IResponsive<ChangeableProps>[] = [];
+  private _rules: NMutableProps.IResponsive<ChangeableProps>[] = [];
 
   /**
    * The active breakpoints currently applied to the properties.
@@ -62,7 +61,7 @@ export class MutableProps<
   /**
    * A callback used to update properties when the viewport size changes.
    */
-  private _viewportCallback?: NCallbacks.IAddedCallback;
+  private _onViewport?: () => void;
 
   /**
    * Initializes the `MutableProps` instance with static and changeable properties,
@@ -77,7 +76,7 @@ export class MutableProps<
     private _onMutate: () => void = () => {},
     private _name = 'Responsive Props',
   ) {
-    this._refProps = { ...initProps };
+    this._ref = { ...initProps };
     this._props = { ...initProps };
     this._activeBreakpoints = [];
   }
@@ -96,15 +95,15 @@ export class MutableProps<
    * @param rules - Responsive rules specifying breakpoints and corresponding property settings.
    */
   public addResponsiveProps(rules: NMutableProps.IResponsive<ChangeableProps>) {
-    this._responsiveRules.push(rules);
+    this._rules.push(rules);
 
     this._responseProps();
 
-    if (this._viewportCallback) {
+    if (this._onViewport) {
       return;
     }
 
-    this._viewportCallback = getApp().viewport.callbacks.add(
+    this._onViewport = getApp().onViewport(
       'width',
       this._responseProps.bind(this),
       { name: this._name },
@@ -117,27 +116,26 @@ export class MutableProps<
    */
   private _responseProps() {
     const app = getApp();
-    const { viewport } = app;
 
     let newProps: (StaticProps & ChangeableProps) | false = false;
-    const statProp = { ...this._refProps };
+    const statProp = { ...this._ref };
 
     const prevActiveBreakpointsString = [...this._activeBreakpoints].join('_');
     this._activeBreakpoints = [];
 
     // Evaluate each responsive rule to see if it should be applied
-    this._responsiveRules.forEach(({ settings, breakpoint }) => {
+    this._rules.forEach(({ settings, breakpoint }) => {
       if (typeof breakpoint === 'number') {
-        if (viewport.width <= breakpoint) {
+        if (app.width <= breakpoint) {
           this._activeBreakpoints.push(breakpoint);
           newProps = { ...statProp, ...settings };
         }
       } else if (typeof breakpoint === 'string') {
         // viewport size
         if (
-          (breakpoint === 'viewport_desktop' && viewport.isDesktop) ||
-          (breakpoint === 'viewport_tablet' && viewport.isTablet) ||
-          (breakpoint === 'viewport_phone' && viewport.isPhone)
+          (breakpoint === 'viewport_desktop' && app.breakpoint === 'desktop') ||
+          (breakpoint === 'viewport_tablet' && app.breakpoint === 'tablet') ||
+          (breakpoint === 'viewport_phone' && app.breakpoint === 'phone')
         ) {
           this._activeBreakpoints.push(breakpoint);
           newProps = { ...(newProps || statProp), ...settings };
@@ -147,6 +145,7 @@ export class MutableProps<
         if (
           (breakpoint === 'device_phone' && app.isPhone) ||
           (breakpoint === 'device_tablet' && app.isTablet) ||
+          (breakpoint === 'device_desktop' && app.isDesktop) ||
           (breakpoint === 'device_mobile' && app.isMobile)
         ) {
           this._activeBreakpoints.push(breakpoint);
@@ -162,7 +161,7 @@ export class MutableProps<
 
     // if there's no breakpoint, restore the props
     if (!newProps) {
-      this._props = { ...this._props, ...this._refProps };
+      this._props = { ...this._props, ...this._ref };
     } else {
       // otherwise, change the properties
       this._props = { ...this._props, ...(newProps as any) };
@@ -181,7 +180,7 @@ export class MutableProps<
    */
   public changeProps(props: Partial<ChangeableProps>) {
     this._props = { ...this._props, ...props };
-    this._refProps = { ...this._refProps, ...props };
+    this._ref = { ...this._ref, ...props };
 
     this._onMutate();
   }
@@ -190,8 +189,6 @@ export class MutableProps<
    * Cleans up and destroys the responsive properties.
    */
   public destroy() {
-    if (this._viewportCallback) {
-      this._viewportCallback.remove();
-    }
+    this._onViewport?.();
   }
 }

@@ -188,16 +188,14 @@ export class ScrollBar<
     // resize for custom scroll
     const scrollResize =
       'isCustomScroll' in container
-        ? container.addCallback(
-            'resize',
-            () => resizeHandler.debounceResize(),
-            { name: this.name },
-          )
+        ? container.on('resize', () => resizeHandler.debounceResize(), {
+            name: this.name,
+          })
         : undefined;
 
-    this.addDestroyableAction(() => {
+    this.addDestroyable(() => {
       resizeHandler.remove();
-      scrollResize?.remove();
+      scrollResize?.();
     });
 
     // initial resize

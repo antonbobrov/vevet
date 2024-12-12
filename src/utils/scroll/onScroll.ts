@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import { IRemovable } from '@/types/general';
 import { uid } from '../common';
 import type { CustomScroll } from '@/components/CustomScroll';
 import { getScrollValues } from './getScrollValues';
@@ -21,7 +20,7 @@ interface IInstance {
     callback: (data: IOnScrollCallbackParameter) => void;
   }[];
   isPassive: boolean;
-  listeners: IRemovable[];
+  listeners: (() => void)[];
 }
 
 export interface IOnScrollProps {
@@ -61,7 +60,7 @@ export function onScroll({
   container,
   callback,
   isPassive = false,
-}: IOnScrollProps): IRemovable {
+}: IOnScrollProps) {
   // Check if a listener for this container already exists
   let instance = window.__vevetOnScrollInstances.find(
     (data) => data.container === container && data.isPassive === isPassive,
@@ -86,7 +85,7 @@ export function onScroll({
     // Custom scroll events
     if (typeof container === 'object' && 'isCustomScroll' in container) {
       instance.listeners.push(
-        container.addCallback(
+        container.on(
           'render',
           () => {
             const { scrollTop, scrollLeft } = container;
@@ -116,11 +115,7 @@ export function onScroll({
         { passive: isPassive },
       );
 
-      const removeListener = {
-        remove: listener,
-      };
-
-      instance.listeners.push(removeListener);
+      instance.listeners.push(listener);
     }
   }
 
@@ -133,12 +128,12 @@ export function onScroll({
     instance.callbacks = newCallbacks;
 
     if (newCallbacks.length === 0) {
-      instance.listeners.forEach((listener) => listener.remove());
+      instance.listeners.forEach((listener) => listener());
       window.__vevetOnScrollInstances = window.__vevetOnScrollInstances.filter(
         (item) => item.id !== instance.id,
       );
     }
   };
 
-  return { remove };
+  return () => remove();
 }

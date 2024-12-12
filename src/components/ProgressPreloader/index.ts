@@ -184,7 +184,7 @@ export class ProgressPreloader<
     if (typeof lerpProp === 'number' && lerpProp < 1) {
       this._raf = new AnimationFrame();
 
-      this._raf.addCallback('frame', () => {
+      this._raf.on('frame', () => {
         this.progress = lerp(this.progress, this.loadProgress, lerpProp);
       });
 
@@ -396,7 +396,7 @@ export class ProgressPreloader<
       this._endTimeline = new Timeline({ duration: this.props.forceEnd });
       const startProgress = this.progress;
 
-      this._endTimeline.addCallback('progress', ({ p }) => {
+      this._endTimeline.on('progress', ({ p }) => {
         const diff = 1 - startProgress;
         this.progress = startProgress + diff * p;
       });

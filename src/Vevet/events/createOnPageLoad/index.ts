@@ -36,7 +36,7 @@ export function createOnPageLoad(prefix: string): IOnPageLoad {
       return undefined;
     }
 
-    return callbacks.add('loaded', () => callback());
+    return callbacks.on('loaded', () => callback());
   }
 
   return { onLoad, getIsLoaded: () => isLoaded };

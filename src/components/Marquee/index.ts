@@ -133,7 +133,7 @@ export class Marquee<
     this._raf = new AnimationFrame({
       isEnabled: this.props.isEnabled,
     });
-    this._raf.addCallback('frame', () => this._render());
+    this._raf.on('frame', () => this._render());
 
     // Initialize the component if canInit is true
     if (canInit) {
@@ -205,6 +205,9 @@ export class Marquee<
       viewportTarget: 'width',
       hasBothEvents: false,
     });
+
+    // initial resize
+    this._handleResize();
 
     // Resize on page load
     getApp()

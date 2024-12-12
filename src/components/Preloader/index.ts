@@ -112,7 +112,7 @@ export class Preloader<
       })
       .catch(() => {});
 
-    this.addDestroyableAction(() => loadEvent.cancel());
+    this.addDestroyable(() => loadEvent.cancel());
   }
 
   /**
@@ -169,7 +169,7 @@ export class Preloader<
         resolve();
       }, duration);
 
-      this.addDestroyableAction(() => timeout.clear());
+      this.addDestroyable(() => timeout.clear());
     });
   }
 
@@ -194,7 +194,7 @@ export class Preloader<
       return undefined;
     }
 
-    return this.addCallback('hide', (() => action()) as any);
+    return this.on('hide', (() => action()) as any);
   }
 
   /**
@@ -210,6 +210,6 @@ export class Preloader<
       return undefined;
     }
 
-    return this.addCallback('hidden', (() => action()) as any);
+    return this.on('hidden', (() => action()) as any);
   }
 }

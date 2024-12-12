@@ -34,7 +34,7 @@ export const WithCustomScrollComponent: FC = () => {
 
       render();
 
-      handler.addCallback('render', () => render());
+      handler.on('render', () => render());
 
       return handler;
     });

@@ -1,5 +1,4 @@
 import { IBarProps } from './types';
-import { IRemovable } from '@/types/general';
 import { DraggerMove, NDraggerMove } from '@/components/DraggerMove';
 import { IOnScrollCallbackParameter, onScroll } from '@/utils/scroll/onScroll';
 import { clamp } from '@/utils/math';
@@ -52,7 +51,7 @@ export class Bar {
   private _listeners: (() => void)[] = [];
 
   /** The scroll event handler */
-  private _scrollEvent?: IRemovable;
+  private _scrollEvent?: () => void;
 
   /** Timeout for handling auto-hide behavior */
   private _actionTimeout?: NodeJS.Timeout;
@@ -172,11 +171,11 @@ export class Bar {
     if (this.props.isDraggable) {
       this._dragger = new DraggerMove({ container: thumb });
 
-      this._dragger.addCallback('start', () => {
+      this._dragger.on('start', () => {
         this._coordsAtDragStart = getScrollValues(this.props.container)!;
       });
 
-      this._dragger.addCallback('move', (data) => this._handleThumbDrag(data));
+      this._dragger.on('move', (data) => this._handleThumbDrag(data));
     }
   }
 
@@ -185,7 +184,7 @@ export class Bar {
    */
   private _removeEvents() {
     this._listeners?.forEach((listener) => listener());
-    this._scrollEvent?.remove();
+    this._scrollEvent?.();
     this._dragger?.destroy();
   }
 

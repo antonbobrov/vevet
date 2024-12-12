@@ -16,7 +16,7 @@ export const Basic: FC = () => {
 
     setTimeline(instance);
 
-    instance.addCallback('progress', ({ e, p }) => {
+    instance.on('progress', ({ e, p }) => {
       if (inputRef.current) {
         inputRef.current.value = `${p}`;
       }

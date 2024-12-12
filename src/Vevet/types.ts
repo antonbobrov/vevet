@@ -35,7 +35,7 @@ export interface IVevetProps {
 
   /**
    * Enable or disable WebP support check in the browser.
-   * @default false
+   * @default true
    */
   checkWebpSupport: boolean;
 }

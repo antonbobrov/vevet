@@ -1,7 +1,7 @@
 import {
-  EOrientationTypes,
-  ESizeTypes,
-  IViewport,
+  EOrientation,
+  EBreakpoint,
+  IViewportData,
   IViewportCallbackTypes,
 } from './types';
 import { Callbacks } from '@/base/Callbacks';
@@ -12,7 +12,7 @@ export function createViewport(
   props: IVevetProps,
   isMobileDevice: boolean,
   prefix: string,
-): IViewport {
+) {
   const html = document.documentElement;
 
   const mqDesktop = window.matchMedia(`(min-width: ${props.tablet + 0.001}px)`);
@@ -25,8 +25,7 @@ export function createViewport(
   const callbacks = new Callbacks<IViewportCallbackTypes>();
 
   // default data
-  const data: IViewport = {
-    callbacks,
+  const data: IViewportData = {
     width: 0,
     height: 0,
     sHeight: 0,
@@ -35,11 +34,9 @@ export function createViewport(
     svh: 0,
     isLandscape: false,
     isPortrait: false,
-    isDesktop: false,
-    isTablet: false,
-    isPhone: false,
     dpr: window.devicePixelRatio,
     lowerDpr: window.devicePixelRatio,
+    breakpoint: 'phone',
   };
 
   // update values for the first time
@@ -69,6 +66,8 @@ export function createViewport(
 
     const { width, height } = data;
 
+    callbacks.tbt('any', undefined);
+
     if (width !== prevWidth && height === prevHeight) {
       callbacks.tbt('widthOnly', undefined);
     }
@@ -84,8 +83,6 @@ export function createViewport(
     if (height !== prevHeight) {
       callbacks.tbt('height', undefined);
     }
-
-    callbacks.tbt('any', undefined);
   }
 
   /** Update viewport values */
@@ -98,11 +95,16 @@ export function createViewport(
     data.vh = data.height / 100;
     data.isLandscape = data.width > data.height;
     data.isPortrait = data.width < data.height;
-    data.isDesktop = mqDesktop.matches;
-    data.isTablet = mqTablet.matches;
-    data.isPhone = mqPhone.matches;
     data.dpr = window.devicePixelRatio;
     data.lowerDpr = !isMobileDevice ? 1 : Math.min(data.dpr, 2);
+
+    if (mqPhone.matches) {
+      data.breakpoint = 'phone';
+    } else if (mqTablet.matches) {
+      data.breakpoint = 'tablet';
+    } else if (mqDesktop.matches) {
+      data.breakpoint = 'desktop';
+    }
 
     // update sHeight && svh only when the width changes
     // or for desktop
@@ -118,29 +120,29 @@ export function createViewport(
 
   /** Update page classnames according to the viewport data */
   function updateClassNames() {
-    const viewportSizeTypes: ESizeTypes[] = [
-      ESizeTypes.Desktop,
-      ESizeTypes.Tablet,
-      ESizeTypes.Phone,
+    const breakpoints: EBreakpoint[] = [
+      EBreakpoint.Desktop,
+      EBreakpoint.Tablet,
+      EBreakpoint.Phone,
     ];
 
-    if (data.isDesktop) {
-      updateBreakpointClassNames(ESizeTypes.Desktop, viewportSizeTypes);
-    } else if (data.isTablet) {
-      updateBreakpointClassNames(ESizeTypes.Tablet, viewportSizeTypes);
+    if (data.breakpoint === 'desktop') {
+      updateBreakpointClassNames(EBreakpoint.Desktop, breakpoints);
+    } else if (data.breakpoint === 'tablet') {
+      updateBreakpointClassNames(EBreakpoint.Tablet, breakpoints);
     } else {
-      updateBreakpointClassNames(ESizeTypes.Phone, viewportSizeTypes);
+      updateBreakpointClassNames(EBreakpoint.Phone, breakpoints);
     }
 
-    const orientationTypes: EOrientationTypes[] = [
-      EOrientationTypes.Landscape,
-      EOrientationTypes.Portrait,
+    const orientationTypes: EOrientation[] = [
+      EOrientation.Landscape,
+      EOrientation.Portrait,
     ];
 
     if (data.isLandscape) {
-      updateBreakpointClassNames(EOrientationTypes.Landscape, orientationTypes);
+      updateBreakpointClassNames(EOrientation.Landscape, orientationTypes);
     } else if (data.isPortrait) {
-      updateBreakpointClassNames(EOrientationTypes.Portrait, orientationTypes);
+      updateBreakpointClassNames(EOrientation.Portrait, orientationTypes);
     } else {
       updateBreakpointClassNames('', orientationTypes);
     }
@@ -149,7 +151,7 @@ export function createViewport(
   /** Set classnames */
   function updateBreakpointClassNames(activeType: string, types: string[]) {
     types.forEach((type) => {
-      html.classList.toggle(`${prefix}viewport-${type}`, type === activeType);
+      html.classList.toggle(`${prefix}${type}`, type === activeType);
     });
   }
 
@@ -160,5 +162,5 @@ export function createViewport(
     html.style.setProperty('--svh', `${data.svh}px`);
   }
 
-  return data;
+  return { data, callbacks };
 }

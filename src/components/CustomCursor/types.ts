@@ -16,7 +16,7 @@ export namespace NCustomCursor {
      * Determines whether the native cursor should be hidden.
      * @default false
      */
-    isNativeCursorHidden?: boolean;
+    isNativeHidden?: boolean;
   }
 
   /**

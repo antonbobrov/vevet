@@ -35,14 +35,14 @@ export const Component: FC = () => {
     module.init();
     setFeatures(module.props);
 
-    module.addCallback('propsChange', () => {
+    module.on('propsChange', () => {
       // eslint-disable-next-line no-console
       console.log('change props');
 
       setFeatures({ ...module.props });
     });
 
-    module.addCallback('propsMutate', () => {
+    module.on('propsMutate', () => {
       // eslint-disable-next-line no-console
       console.log('mutate props');
 

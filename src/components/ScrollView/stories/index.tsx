@@ -16,13 +16,13 @@ export const Component: FC = () => {
     const elements = containerRef.current.querySelectorAll('*');
     elements.forEach((element) => instance.addElement(element));
 
-    instance.addCallback('in', ({ element }) => {
+    instance.on('in', ({ element }) => {
       if (element instanceof HTMLElement) {
         element.style.opacity = '1';
       }
     });
 
-    instance.addCallback('out', ({ element }) => {
+    instance.on('out', ({ element }) => {
       if (element instanceof HTMLElement) {
         element.style.opacity = '0';
       }

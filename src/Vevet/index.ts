@@ -38,6 +38,7 @@ export function Vevet(input: Partial<IVevetProps>): IVevet {
   // output
 
   const output: IVevet = {
+    ...viewport.data,
     version,
     props,
     prefix,
@@ -49,7 +50,6 @@ export function Vevet(input: Partial<IVevetProps>): IVevet {
     browserName,
     isWebpSupported: false,
     isPageLoaded: false,
-    viewport,
     doc: document,
     html: document.documentElement,
     body: document.body,
@@ -57,6 +57,8 @@ export function Vevet(input: Partial<IVevetProps>): IVevet {
       new PCancelable((resolve: (...arg: any) => void) =>
         pageLoad.onLoad(resolve),
       ),
+    viewportCallbacks: viewport.callbacks,
+    onViewport: (...params) => viewport.callbacks.on(...params),
   };
 
   // update props on page load
@@ -64,6 +66,19 @@ export function Vevet(input: Partial<IVevetProps>): IVevet {
   pageLoad.onLoad(() => {
     output.isPageLoaded = true;
   });
+
+  // update props on viewport change
+
+  viewport.callbacks.add(
+    'any',
+    () => {
+      Object.keys(viewport.data).forEach((key) => {
+        // @ts-ignore
+        output[key] = viewport.data[key];
+      });
+    },
+    { isProtected: true, name: 'app' },
+  );
 
   // set device features
 

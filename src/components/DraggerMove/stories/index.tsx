@@ -18,12 +18,12 @@ export const Component: FC = () => {
     });
     setDragger(instance);
 
-    instance.addCallback('move', ({ diff }) => {
+    instance.on('move', ({ diff }) => {
       thumb.style.transition = '';
       thumb.style.transform = `translate(${diff.x}px, ${diff.y}px)`;
     });
 
-    instance.addCallback('end', () => {
+    instance.on('end', () => {
       thumb.style.transition = 'transform 0.35s';
       thumb.style.transform = '';
     });

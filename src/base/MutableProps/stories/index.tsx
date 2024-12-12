@@ -35,8 +35,8 @@ export const Component: FC = () => {
     }, 1000);
 
     props.addResponsiveProps({
-      breakpoint: 'device_mobile',
-      settings: { device: 'mobile' },
+      breakpoint: 'device_desktop',
+      settings: { device: 'desktop' },
     });
 
     props.addResponsiveProps({
