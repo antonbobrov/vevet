@@ -25,8 +25,8 @@ export abstract class DraggerBase<
     return {
       ...super._getDefaultProps(),
       container: `#${this.prefix}`,
-      isPassive: false,
       isEnabled: true,
+      preventDefault: true,
     };
   }
 
@@ -56,18 +56,6 @@ export abstract class DraggerBase<
    */
   get isDragging() {
     return this._runtimeListeners.length > 0;
-  }
-
-  /**
-   * Stores the pointer ID of the current drag operation.
-   */
-  protected _pointerID: number | null;
-
-  /**
-   * Returns the current pointer ID.
-   */
-  protected get pointerID() {
-    return this._pointerID;
   }
 
   /**
@@ -111,30 +99,13 @@ export abstract class DraggerBase<
   /**
    * The coordinates where the drag operation started.
    */
-  protected _startCoords: NDraggerBase.IVector2;
+  protected _start: NDraggerBase.IVector2;
 
   /**
    * Returns the starting pointer coordinates at the beginning of the drag.
    */
-  get startCoords() {
-    return this._startCoords;
-  }
-
-  /**
-   * Timeout handler for handling drag end events.
-   */
-  protected _handleEndTimeout?: NodeJS.Timeout;
-
-  /**
-   * The type of drag event, either 'mouse' or 'touch'.
-   */
-  protected _type?: 'mouse' | 'touch';
-
-  /**
-   * Returns the type of event ('mouse' or 'touch') being handled.
-   */
-  get type() {
-    return this._type;
+  get start() {
+    return this._start;
   }
 
   /**
@@ -153,10 +124,9 @@ export abstract class DraggerBase<
 
     // Initialize default variables
     this._runtimeListeners = [];
-    this._pointerID = null;
     this._coords = { x: 0, y: 0 };
     this._prevCoords = { x: 0, y: 0 };
-    this._startCoords = { x: 0, y: 0 };
+    this._start = { x: 0, y: 0 };
 
     // Set styles to prevent user-select during drag
     this._fixStyles = document.createElement('style');
@@ -179,16 +149,16 @@ export abstract class DraggerBase<
   protected _setEvents() {
     this.addEventListener(
       this.container,
-      'mousedown',
+      'pointerdown',
       (event) => this._handleStart(event),
-      { passive: this.props.isPassive },
+      { passive: false },
     );
 
     this.addEventListener(
       this.container,
-      'touchstart',
-      (event) => this._handleStart(event),
-      { passive: this.props.isPassive },
+      'dragstart',
+      (event) => event.preventDefault(),
+      { passive: false },
     );
   }
 
@@ -196,29 +166,24 @@ export abstract class DraggerBase<
    * Adds runtime events for mouseup, touchend, and other events during dragging.
    */
   protected _addRuntimeEvents() {
-    const { isPassive } = this.props;
-
     this._runtimeListeners.push(
-      addEventListener(window, 'mouseup', (event) => this.handleEnd(event), {
-        passive: isPassive,
+      addEventListener(window, 'pointerup', (event) => this._handleEnd(event), {
+        passive: false,
       }),
     );
 
     this._runtimeListeners.push(
-      addEventListener(window, 'touchend', (event) => this.handleEnd(event), {
-        passive: isPassive,
-      }),
+      addEventListener(
+        window,
+        'pointercancel',
+        (event) => this._handleEnd(event),
+        { passive: false },
+      ),
     );
 
     this._runtimeListeners.push(
-      addEventListener(window, 'touchcancel', () => this.cancel(), {
-        passive: isPassive,
-      }),
-    );
-
-    this._runtimeListeners.push(
-      addEventListener(window, 'blur', () => this.cancel(), {
-        passive: isPassive,
+      addEventListener(window, 'blur', () => this._handleEnd(null), {
+        passive: false,
       }),
     );
   }
@@ -233,66 +198,34 @@ export abstract class DraggerBase<
   }
 
   /**
-   * Normalizes event coordinates based on the event type (mouse or touch).
-   *
-   * @param event - The event from which to extract coordinates.
-   * @returns The pointer coordinates and pointer ID.
-   */
-  protected _getEventCoords(event: NDraggerBase.TEvent) {
-    if (event.type.includes('touch')) {
-      const evt = event as TouchEvent;
-      const touch = evt.targetTouches[0] || evt.changedTouches[0];
-
-      return {
-        x: touch.clientX,
-        y: touch.clientY,
-        pointerId: touch.identifier,
-      };
-    }
-
-    const evt = event as MouseEvent;
-
-    return {
-      x: evt.clientX,
-      y: evt.clientY,
-      pointerId: null,
-    };
-  }
-
-  /**
    * Handles the start of a drag event.
-   *
-   * @param event - The event that initiated the drag (mouse or touch).
-   * @returns A boolean indicating whether the drag started successfully.
    */
-  protected _handleStart(event: NDraggerBase.TEvent) {
+  protected _handleStart(event: PointerEvent) {
     if (!this.props.isEnabled || this.isDragging) {
-      return false;
+      return;
     }
 
-    if (event.type === 'touchstart') {
-      this._type = 'touch';
-    } else {
-      this._type = 'mouse';
+    // prevent right click
+    if (event.button === 2) {
+      return;
     }
 
-    if (event.type === 'mousedown') {
-      if (event.which === 1) {
-        event.stopPropagation();
-      } else {
-        return false;
-      }
+    if (this.props.preventDefault) {
+      event.preventDefault();
     }
 
     // Update coordinates
-    const { x, y, pointerId } = this._getEventCoords(event);
+    const { clientX: x, clientY: y } = event;
     this._coords = { x, y };
     this._prevCoords = { x, y };
-    this._startCoords = { x, y };
-    this._pointerID = pointerId;
+    this._start = { x, y };
 
     // Add runtime events for drag
     this._addRuntimeEvents();
+
+    // reset selection
+    window.getSelection()?.empty();
+    window.getSelection()?.removeAllRanges();
 
     // Apply styles to prevent user-select
     getApp().body.append(this._fixStyles);
@@ -300,51 +233,21 @@ export abstract class DraggerBase<
     // Trigger start callback
     this.callbacks.tbt('start', {
       event,
-      start: this.startCoords,
+      start: this.start,
       coords: this.coords,
     });
-
-    return true;
   }
 
   /**
    * Handles the end of a drag event and initiates cleanup.
-   *
-   * @param event - The event that ended the drag (mouse or touch).
    */
-  protected handleEnd(event: NDraggerBase.TEvent) {
-    if (this._handleEndTimeout) {
-      return;
-    }
-
-    this._handleEndTimeout = setTimeout(() => {
-      const { pointerId } = this._getEventCoords(event);
-
-      if (!this.isDragging || pointerId !== this.pointerID) {
-        return;
-      }
-
-      this._handleEnd(event);
-
-      this._handleEndTimeout = undefined;
-    }, 1);
-  }
-
-  /**
-   * Handles the cleanup process when dragging ends.
-   *
-   * @param event - The event that ended the drag.
-   */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected _handleEnd(event: NDraggerBase.TEvent) {
-    this.cancel();
-  }
-
-  /**
-   * Cancels the current drag operation and removes runtime events and styles.
-   */
-  public cancel() {
+  protected _handleEnd(event: PointerEvent | null) {
     this._removeRuntimeEvents();
+
+    // Update coordinates
+    if (event) {
+      this._coords = { x: event.clientX, y: event.clientY };
+    }
 
     // remove styles fix
     this._fixStyles.remove();
@@ -357,14 +260,10 @@ export abstract class DraggerBase<
    * Destroys the dragger component, removing events and cleaning up resources.
    */
   protected _destroy() {
-    this.cancel();
+    this._handleEnd(null);
 
     super._destroy();
 
     this._removeRuntimeEvents();
-
-    if (this._handleEndTimeout) {
-      clearTimeout(this._handleEndTimeout);
-    }
   }
 }

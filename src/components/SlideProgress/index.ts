@@ -2,11 +2,9 @@ import { Component as ComponentClass } from '@/base/Component';
 import { NSlideProgress } from './types';
 import { clamp, lerp } from '@/utils/math';
 import { normalizeWheel } from '@/utils/scroll/normalizeWheel';
-import { createIsPageScrolling } from '@/utils/scroll/isPageScrolling';
 import { AnimationFrame } from '../AnimationFrame';
 import { DraggerMove, NDraggerMove } from '../DraggerMove';
 import { Timeline } from '../Timeline';
-import { NDraggerBase } from '../DraggerBase';
 
 export type { NSlideProgress };
 
@@ -40,12 +38,12 @@ export class SlideProgress<
       hasWheel: true,
       wheelSpeed: 1,
       stickyEndDuration: 500,
-      dragThreshold: 3,
+      dragThreshold: 5,
     };
   }
 
   /** Animation frame for smooth animations */
-  protected _animationFrame: AnimationFrame;
+  protected _raf: AnimationFrame;
 
   /** Dragging behavior manager */
   protected _dragger: DraggerMove;
@@ -68,13 +66,10 @@ export class SlideProgress<
   }
 
   /** Timeline for smooth transitions */
-  protected _timelineTo?: Timeline;
+  protected _timeline?: Timeline;
 
   /** Timeout for sticky behavior at the end */
   protected _stickyEndTimeout?: NodeJS.Timeout;
-
-  /** Determines if dragging is allowed */
-  protected _canDragMove = false;
 
   /** Direction of progress */
   protected _direction: 1 | -1 = 1;
@@ -85,33 +80,33 @@ export class SlideProgress<
   /** Current handler for user interactions: 'wheel' or 'drag' */
   protected _currentHandler: 'wheel' | 'drag' = 'wheel';
 
-  /** Checks if the page is scrolling */
-  protected _createIsPageScrolling: ReturnType<typeof createIsPageScrolling>;
-
   constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
     super(initialProps, false);
 
-    const { container } = this.props;
+    const { container, hasDrag, dragDirection, dragThreshold } = this.props;
 
     // Create the animation frame
-    this._animationFrame = new AnimationFrame();
-    this._animationFrame.addCallback('frame', () =>
-      this._handleAnimationFrame(),
-    );
+    this._raf = new AnimationFrame();
+    this._raf.addCallback('frame', () => this._handleAnimationFrame());
 
-    // Create the dragger
-    this._dragger = new DraggerMove({ container });
+    // Create dragger
+    this._dragger = new DraggerMove({
+      container,
+      isEnabled: hasDrag,
+      threshold: dragThreshold,
+    });
+
     this._dragger.addCallback('move', (event) => this._handleDrag(event));
     this._dragger.addCallback('start', ({ event }) => event.stopPropagation());
     this._dragger.addCallback('end', () => this._handleDragEnd());
+
+    // Touch Action
+    container.style.touchAction = dragDirection === 'x' ? 'pan-y' : 'pan-x';
 
     // Add wheel event listener
     this.addEventListener(container, 'wheel', (event) =>
       this._handleWheel(event),
     );
-
-    // Create page scrolling check
-    this._createIsPageScrolling = createIsPageScrolling();
 
     // Initialize the class
     if (canInit) {
@@ -125,7 +120,11 @@ export class SlideProgress<
   protected _onPropsMutate() {
     super._onPropsMutate();
 
-    this._dragger.changeProps({ isEnabled: this.props.hasDrag });
+    const { container, hasDrag, dragThreshold, dragDirection } = this.props;
+
+    this._dragger.changeProps({ isEnabled: hasDrag, threshold: dragThreshold });
+
+    container.style.touchAction = dragDirection === 'x' ? 'pan-y' : 'pan-x';
   }
 
   /**
@@ -133,7 +132,7 @@ export class SlideProgress<
    * @param event - The wheel event.
    */
   protected _handleWheel(event: WheelEvent) {
-    if (this._timelineTo || !this.props.hasWheel) {
+    if (this._timeline || !this.props.hasWheel) {
       return;
     }
 
@@ -159,7 +158,8 @@ export class SlideProgress<
     this._direction = this._wheelIntensity > 0 ? 1 : -1;
     progress.target = clamp(progress.target + y, [min, max]);
 
-    this._animationFrame.play();
+    // play animation
+    this._raf.play();
 
     // Set timeout for sticky behavior
     this._stickyEndTimeout = setTimeout(() => {
@@ -172,54 +172,17 @@ export class SlideProgress<
   }
 
   /**
-   * Checks if dragging is allowed.
-   * @param absDiff - Absolute difference in dragging distance.
-   */
-  protected _checkCanDragMove(absDiff: NDraggerBase.IVector2) {
-    const { dragDirection, dragThreshold } = this.props;
-
-    if (this._canDragMove) {
-      return true;
-    }
-
-    if (absDiff.x < dragThreshold && absDiff.y < dragThreshold) {
-      return false;
-    }
-
-    if (dragDirection === 'x' && absDiff.x > absDiff.y) {
-      this._canDragMove = true;
-    }
-
-    if (dragDirection === 'y' && absDiff.y > absDiff.x) {
-      this._canDragMove = true;
-    }
-
-    return false;
-  }
-
-  /**
    * Handles the drag movement for adjusting progress.
    * @param data - The drag event data.
    */
   protected _handleDrag(data: NDraggerMove.IMoveParameter) {
-    const isPageScrolling = this._createIsPageScrolling.get();
-
-    if (this._timelineTo || !this.props.hasDrag || isPageScrolling) {
-      return;
-    }
-
-    if (!this._checkCanDragMove(data.absDiff)) {
+    if (this._timeline) {
       return;
     }
 
     const { _progressLerp: progress, props } = this;
     const { container, dragSpeed, dragDirection, min, max } = props;
-    const { event, step, diff } = data;
-
-    if (event.cancelable) {
-      event.preventDefault();
-    }
-    event.stopPropagation();
+    const { step, diff } = data;
 
     // Update handler
     this._currentHandler = 'drag';
@@ -235,7 +198,7 @@ export class SlideProgress<
     const dragDiff = dragDirection === 'y' ? diff.y : diff.x;
     this._direction = dragDiff < 0 ? 1 : -1;
 
-    this._animationFrame.play();
+    this._raf.play();
 
     // Callbacks
     this.callbacks.tbt('dragMove', data);
@@ -245,8 +208,6 @@ export class SlideProgress<
    * Handles the end of a drag event and triggers sticky behavior.
    */
   private _handleDragEnd() {
-    this._canDragMove = false;
-
     this._goStickyEnd();
 
     // Callbacks
@@ -288,11 +249,11 @@ export class SlideProgress<
   protected _handleAnimationFrame() {
     const { _progressLerp: progress } = this;
     const { ease, friction, step } = this.props;
-    const { fpsMultiplier } = this._animationFrame;
+    const { fpsMultiplier } = this._raf;
 
     const nearestSteppedProgress = this._getNearestStep(progress.target);
 
-    if (!this._timelineTo) {
+    if (!this._timeline) {
       progress.target = lerp(
         progress.target,
         nearestSteppedProgress,
@@ -306,7 +267,7 @@ export class SlideProgress<
         progress.current === progress.target &&
         progress.current % step === 0
       ) {
-        this._animationFrame.pause();
+        this._raf.pause();
       }
     }
 
@@ -373,7 +334,7 @@ export class SlideProgress<
     onProgress,
     onEnd,
   }: NSlideProgress.IToProps) {
-    this._timelineTo?.destroy();
+    this._timeline?.destroy();
 
     const startValue = this._progressLerp.current;
     const diff = Math.abs(startValue - endValue);
@@ -387,7 +348,7 @@ export class SlideProgress<
     );
 
     const timeline = new Timeline({ duration });
-    this._timelineTo = timeline;
+    this._timeline = timeline;
 
     timeline.addCallback('progress', (data) => {
       this._progressLerp.target = lerp(startValue, endValue, data.e, 0);
@@ -397,15 +358,15 @@ export class SlideProgress<
     });
 
     timeline.addCallback('end', () => {
-      this._timelineTo?.destroy();
-      this._timelineTo = undefined;
+      this._timeline?.destroy();
+      this._timeline = undefined;
 
       onEnd?.();
     });
 
     timeline.play();
 
-    this._animationFrame.play();
+    this._raf.play();
   }
 
   /**
@@ -414,12 +375,10 @@ export class SlideProgress<
   protected _destroy() {
     super._destroy();
 
-    this._createIsPageScrolling.destroy();
-
-    this._animationFrame.destroy();
+    this._raf.destroy();
     this._dragger.destroy();
 
-    this._timelineTo?.destroy();
+    this._timeline?.destroy();
 
     if (this._stickyEndTimeout) {
       clearTimeout(this._stickyEndTimeout);

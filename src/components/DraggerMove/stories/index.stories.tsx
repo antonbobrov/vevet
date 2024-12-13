@@ -10,4 +10,6 @@ const meta: Meta<TComponent> = {
 
 export default meta;
 
-export const Default: StoryObj<TComponent> = {};
+export const Default: StoryObj<TComponent> = {
+  args: {},
+};

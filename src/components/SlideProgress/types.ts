@@ -63,7 +63,7 @@ export namespace NSlideProgress {
     stickyEndDuration?: TDuration | null;
     /**
      * Minimum threshold for drag movements (in pixels).
-     * @default 3
+     * @default 5
      */
     dragThreshold?: number;
   }

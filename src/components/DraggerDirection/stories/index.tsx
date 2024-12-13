@@ -50,6 +50,7 @@ export const Component: FC = () => {
           justifyContent: 'center',
           alignItems: 'center',
           background: '#ccc',
+          touchAction: 'none',
         }}
       >
         {direction}

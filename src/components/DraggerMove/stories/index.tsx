@@ -14,8 +14,8 @@ export const Component: FC = () => {
 
     const instance = new DraggerMove({
       container: thumb,
-      disablePointerEventsAt: 5,
     });
+
     setDragger(instance);
 
     instance.addCallback('move', ({ diff }) => {
@@ -50,6 +50,7 @@ export const Component: FC = () => {
       <div
         style={{
           position: 'relative',
+          marginTop: 10,
           width: '300px',
           height: '300px',
           display: 'flex',
@@ -64,8 +65,8 @@ export const Component: FC = () => {
           id="drag-thumb"
           style={{
             position: 'relative',
-            width: '150px',
-            height: '150px',
+            width: '250px',
+            height: '250px',
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
@@ -74,9 +75,11 @@ export const Component: FC = () => {
             cursor: 'pointer',
             textAlign: 'center',
             color: '#fff',
+            opacity: 0.75,
+            touchAction: 'pan-y',
           }}
         >
-          <a href="/" draggable={false} style={{ color: 'currentcolor' }}>
+          <a href="/" style={{ color: 'currentcolor' }}>
             Drag me
           </a>
         </div>

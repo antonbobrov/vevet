@@ -243,12 +243,9 @@ export class Bar {
    * @param param - The drag event data.
    */
   private _handleThumbDrag({
-    event,
     coords,
     start,
   }: NDraggerMove.ICallbacksTypes['move']) {
-    event.preventDefault();
-
     const { scrollLine } = this;
     const { container } = this.props;
 

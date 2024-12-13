@@ -58,6 +58,8 @@ export class CustomScrollDragPlugin<
     super._init();
 
     this._toggleDragger();
+
+    this.component.container.style.touchAction = 'none';
   }
 
   protected _onPropsMutate() {
@@ -89,6 +91,8 @@ export class CustomScrollDragPlugin<
 
     this._dragger = new DraggerMove({
       container: component.container,
+      threshold: 0,
+      preventDefault: false,
     });
 
     this._dragger.addCallback('start', () => this._handleDragStart());

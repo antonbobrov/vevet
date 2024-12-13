@@ -7,12 +7,11 @@ export namespace NDraggerBase {
      * @default '#v-dragger'
      */
     container?: string | Element | Window;
-
     /**
-     * Whether to use passive event listeners for the drag events. If set to `true`, the events will be passive, which can improve performance but prevents the default behavior from being blocked.
-     * @default false
+     * If need to prevent default events
+     * @default true
      */
-    isPassive?: boolean;
+    preventDefault?: boolean;
   }
 
   export interface IChangeableProps extends NComponent.IChangeableProps {
@@ -35,16 +34,11 @@ export namespace NDraggerBase {
     end: undefined;
   }
 
-  /**
-   * Type representing a drag event, which can be either a `MouseEvent` or a `TouchEvent`.
-   */
-  export type TEvent = MouseEvent | TouchEvent;
-
   export interface IStartParameter {
     /**
-     * The event that initiated the drag (either `MouseEvent` or `TouchEvent`).
+     * The event that initiated the drag.
      */
-    event: TEvent;
+    event: PointerEvent;
 
     /**
      * The coordinates where the drag started.

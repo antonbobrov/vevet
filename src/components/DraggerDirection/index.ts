@@ -1,4 +1,4 @@
-import { DraggerBase, NDraggerBase } from '../DraggerBase';
+import { DraggerBase } from '../DraggerBase';
 import { NDraggerDirection } from './types';
 
 export type { NDraggerDirection };
@@ -30,33 +30,34 @@ export class DraggerDirection<
    * Handles the end of the drag event and detects the swipe direction by comparing the start and end coordinates.
    * If the drag distance is greater than or equal to `minLength`, the corresponding direction callback is triggered.
    */
-  protected _handleEnd(event: NDraggerBase.TEvent) {
-    const { x, y } = this._getEventCoords(event);
-    const { startCoords } = this;
+  protected _handleEnd(event: PointerEvent | null) {
+    super._handleEnd(event);
+
+    const { start, coords } = this;
+    const { x, y } = coords;
+
     const min = Math.abs(this.props.minLength);
 
     // Detect swipe direction
+
     // Swipe up
-    if (startCoords.y > y && Math.abs(y - startCoords.y) >= min) {
+    if (start.y > y && Math.abs(y - start.y) >= min) {
       this.callbacks.tbt('up', undefined);
     }
 
     // Swipe down
-    if (startCoords.y < y && Math.abs(y - startCoords.y) >= min) {
+    if (start.y < y && Math.abs(y - start.y) >= min) {
       this.callbacks.tbt('down', undefined);
     }
 
     // Swipe left
-    if (startCoords.x > x && Math.abs(x - startCoords.x) >= min) {
+    if (start.x > x && Math.abs(x - start.x) >= min) {
       this.callbacks.tbt('left', undefined);
     }
 
     // Swipe right
-    if (startCoords.x < x && Math.abs(x - startCoords.x) >= min) {
+    if (start.x < x && Math.abs(x - start.x) >= min) {
       this.callbacks.tbt('right', undefined);
     }
-
-    // Call the parent class's `_handleEnd` method for further cleanup
-    super._handleEnd(event);
   }
 }
