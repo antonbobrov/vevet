@@ -1,4 +1,4 @@
-import PCancelable from '@anton.bobrov/p-cancelable';
+import PCancelable from 'p-cancelable';
 
 export { PCancelable };
 
