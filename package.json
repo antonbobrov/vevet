@@ -64,7 +64,7 @@
     "get-image-pos": "^0.0.11",
     "ismobilejs": "^1.1.1",
     "normalize-wheel": "^1.0.1",
-    "p-cancelable": "^4.0.1",
+    "p-cancelable-cjs": "^4.0.1-1",
     "ts-essentials": "^9.3.2"
   },
   "devDependencies": {

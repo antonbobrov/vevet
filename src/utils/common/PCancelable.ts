@@ -1,9 +1,9 @@
-import PCancelable from 'p-cancelable';
+import PCancelable from 'p-cancelable-cjs';
 
 export { PCancelable };
 
 /**
- * This module imports and re-exports the `PCancelable` class from the `@anton.bobrov/p-cancelable` package.
+ * This module imports and re-exports the `PCancelable` class from the `p-cancelable-cjs` package.
  *
  * `PCancelable` provides a way to create promises that can be canceled. It is useful in scenarios where
  * you want to cancel an ongoing asynchronous operation before it finishes.
