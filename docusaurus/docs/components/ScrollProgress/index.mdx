@@ -1,0 +1,169 @@
+# ScrollProgress
+
+todo: examples
+
+`ScrollProgress` is a component that tracks the scroll progress of a specified section element.
+
+This component can be used for creating scroll-based animations such as parallax effects.
+
+
+
+## Props
+
+### Static Props
+
+Static properties are set during initialization and cannot be modified later.
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Default Value</th>
+  </tr>
+  
+  <tr>
+    <td>section</td>
+    <td>The element whose scroll progress is tracked.</td>
+    <td><code>Element</code></td>
+    <td></td>
+  </tr>
+  
+  <tr>
+    <td>root</td>
+    <td>The root element used as a reference for scroll progress calculation. Usually it is the scroll container. If `null`, the viewport is used as the reference.</td>
+    <td><code>Element | null</code></td>
+    <td><code>null</code></td>
+  </tr>
+  
+  <tr>
+    <td>optimized</td>
+    <td>If `true`, progress is calculated only while the section is within the viewport or the root element. Improves performance by avoiding unnecessary calculations.</td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+  </tr>
+  
+  <tr>
+    <td>useSvh</td>
+    <td>If `true`, the scroll progress is calculated based on the small viewport height (svh in css) instead of the current viewport height (vh in css).</td>
+    <td><code>boolean</code></td>
+    <td><code>false</code></td>
+  </tr>
+</table>
+
+
+
+## Accessors
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### inProgress
+
+Type: `{ x: number; y: number }`
+
+Calculates the progress of the section entering the root element.
+
+### isVisible
+
+Type: `boolean`
+
+Indicates whether the section is currently visible within the viewport or root element.
+
+### moveProgress
+
+Type: `{ x: number; y: number }`
+
+Calculates the progress of the section's movement within the root element.
+
+### outProgress
+
+Type: `{ x: number; y: number }`
+
+Calculates the progress of the section leaving the root element.
+
+### progress
+
+Type: `{ x: number; y: number }`
+
+Calculates the global scroll progress of the section relative to the root element.
+
+### rootBounds
+
+Type: `{ height: number; left: number; top: number; width: number }`
+
+The bounds of the root element used for scroll calculations.
+
+### section
+
+Type: `Element`
+
+Returns the section element being tracked for scroll progress.
+
+### sectionBounds
+
+Type: `{ height: number; left: number; top: number; width: number }`
+
+The bounds of the section element relative to the root element.
+
+
+
+## Methods
+
+:::note
+All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+:::
+
+### getProgress
+
+Calculates the section scroll progress relative to the root element.
+
+The function takes top or left corner of the section as the reference point.
+
+#### Parameters
+  - `topThreshold: number`
+  Top threshold of the section position.
+
+  - `rightThreshold: number`
+  Right threshold of the section position.
+
+  - `bottomThreshold: number`
+  Bottom threshold of the section position.
+
+  - `leftThreshold: number`
+  Left threshold of the section position.
+
+```ts
+const progress = instance.getProgress(0, vevet.width, vevet.height / 2, 0);
+
+// `progress.y` is `0` when the top corner of the section is at the beginning of the viewport or root element
+// `progress.y` is `1` when the top corner of the section is at the center of the viewport or root element
+```
+
+### update
+
+Updates the section and root bounds, and emits an update callback.
+
+```ts
+instance.update();
+```
+
+
+
+## Callbacks
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### update
+
+Triggered on each scroll progress update.
+
+```ts
+const destruct = instance.on('update', () => console.log('update'));
+
+// Cancel the callback
+destruct();
+```

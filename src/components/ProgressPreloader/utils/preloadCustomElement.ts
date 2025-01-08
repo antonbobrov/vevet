@@ -1,84 +1,46 @@
-import { Module } from '@/base/Module';
-import { NProgressPreloader } from '../types';
+import { clamp } from '@/utils/math';
+import { IProgressPreloaderResource } from '../types';
 
 /**
- * Retrieves the load progress of a custom resource element based on its properties or attributes.
+ * Retrieves the load progress of a custom resource element based on its attributes.
  */
-function getLoadProgress({
-  element,
-  targetProgress,
-}: NProgressPreloader.ICustomResourceData): number {
-  // Check if the element is marked as complete
-  if (typeof element.isComplete !== 'undefined') {
-    if (typeof element.isComplete === 'boolean' && element.isComplete) {
-      return targetProgress;
-    }
+function getLoaded(element: Element) {
+  let loaded = parseInt(element.getAttribute('data-loaded') || '0', 10);
+  loaded = Number.isNaN(loaded) ? 0 : clamp(loaded, 0, Infinity);
 
-    if (typeof element.isComplete === 'number') {
-      return element.isComplete;
-    }
-
-    return 0;
-  }
-
-  // Check if the element is marked as loaded
-  if (typeof element.isLoaded !== 'undefined') {
-    if (typeof element.isLoaded === 'boolean' && element.isLoaded) {
-      return targetProgress;
-    }
-
-    if (typeof element.isLoaded === 'number') {
-      return element.isLoaded;
-    }
-  }
-
-  // Check for a `data-is-loaded` attribute
-  const isLoadedAttr = element.getAttribute('data-is-loaded');
-  if (
-    isLoadedAttr !== null &&
-    isLoadedAttr !== '' &&
-    isLoadedAttr !== 'false'
-  ) {
-    const isLoadedAttrNum = parseFloat(isLoadedAttr);
-
-    // If the value is non-numeric, treat the resource as loaded
-    if (Number.isNaN(isLoadedAttrNum)) {
-      return targetProgress;
-    }
-
-    return isLoadedAttrNum;
-  }
-
-  return 0;
+  return loaded;
 }
 
 /**
  * Preloads a custom resource element by recursively checking its load progress until the target progress is reached.
  */
 export function preloadCustomElement(
-  data: NProgressPreloader.ICustomResourceData,
-  instance: Module<any, any, any>,
+  { id, weight }: IProgressPreloaderResource,
+  onLoad: (loadedWeight: number) => void,
 ) {
-  return new Promise<void>((resolve) => {
-    const { targetProgress } = data;
-    const loadProgress = getLoadProgress(data);
+  if (!(id instanceof Element)) {
+    return;
+  }
 
-    // If the load progress has reached or exceeded the target, resolve the promise
-    if (loadProgress >= targetProgress) {
-      resolve();
+  // If the load progress has reached or exceeded the target, resolve the promise
+  if (getLoaded(id) >= weight) {
+    onLoad(weight);
 
-      return;
+    return;
+  }
+
+  // Set up a mutation observer to monitor changes in the 'data-loaded' attribute
+  const observer = new MutationObserver(() => {
+    const loaded = getLoaded(id);
+    onLoad(loaded);
+
+    if (loaded >= weight) {
+      observer.disconnect();
     }
+  });
 
-    // Recursively check the load progress every 50ms
-    setTimeout(() => {
-      if (instance.isDestroyed) {
-        return;
-      }
-
-      preloadCustomElement(data, instance)
-        .then(() => resolve())
-        .catch(() => {});
-    }, 50);
+  observer.observe(id, {
+    attributes: true,
+    attributeFilter: ['data-loaded'],
   });
 }

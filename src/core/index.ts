@@ -1,0 +1,103 @@
+import { detect } from 'detect-browser';
+import isMobileJs from 'ismobilejs';
+import version from '../version';
+import { createPageLoad } from './handlers/createPageLoad';
+import { ICoreProps } from './types';
+import { createViewport } from './handlers/createViewport';
+import { ICore } from './global';
+
+export function Core(input: Partial<ICoreProps>): ICore {
+  // set default properties
+
+  const defaultProps: ICoreProps = {
+    md: 1199,
+    sm: 899,
+    resizeDebounce: 16,
+    applyClassNames: false,
+  };
+
+  const props = { ...defaultProps, ...input };
+
+  const prefix = 'v-';
+
+  // device info
+
+  const browserData = detect();
+  const device = isMobileJs();
+
+  const osName = (browserData?.os || '')?.split(' ')[0].toLowerCase();
+  const browserName = (browserData?.name || '').toLowerCase();
+
+  const isMobile = device.phone || device.tablet;
+
+  // events
+
+  const pageLoad = createPageLoad({
+    prefix,
+    applyClassNames: props.applyClassNames,
+  });
+  const viewport = createViewport({ prefix, props, isMobile });
+
+  // output
+
+  const output: ICore = {
+    ...viewport.data,
+    viewportCallbacks: viewport.callbacks,
+    version,
+    props,
+    prefix,
+    phone: device.phone,
+    tablet: device.tablet,
+    mobile: isMobile,
+    osName,
+    browserName,
+    doc: document,
+    html: document.documentElement,
+    body: document.body,
+    loaded: false,
+    onLoad: pageLoad.onLoad,
+    onViewport: (...params) => viewport.callbacks.on(...params),
+  };
+
+  // update props on page load
+
+  pageLoad.onLoad(() => {
+    output.loaded = true;
+  });
+
+  // update props on viewport change
+
+  viewport.callbacks.add(
+    'any',
+    () => {
+      const keys = Object.keys(viewport.data);
+      keys.forEach((key) => {
+        // @ts-ignore
+        output[key] = viewport.data[key];
+      });
+    },
+    { protected: true, name: 'vevet core' },
+  );
+
+  // set device features
+
+  (function setDeviceFeatures() {
+    if (!props.applyClassNames) {
+      return;
+    }
+
+    const { html } = output;
+
+    html.classList.add(`${prefix}os-${osName}`);
+
+    html.classList.add(`${prefix}browser-${browserName}`);
+
+    html.classList.toggle(`${prefix}phone`, output.phone);
+
+    html.classList.toggle(`${prefix}tablet`, output.tablet);
+
+    html.classList.toggle(`${prefix}mobile`, output.mobile);
+  })();
+
+  return output;
+}

@@ -1,0 +1,362 @@
+# Scrollbar
+
+A custom scrollbar component. Supports both `window` and `HTMLElement` containers.
+
+:::note
+To prevent layout shifts, hide native scrollbars in your CSS:
+
+```css
+
+.your_container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+    appearance: none;
+    width: 0;
+    height: 0;
+  }
+}
+```
+:::
+
+## Examples
+
+Explore live examples in CodeSandbox:
+
+### Body Scrollbar
+
+<iframe 
+  src="https://codesandbox.io/embed/47yhyn?view=preview"
+  style={{
+    width: "100%",
+    height: "500px",
+    border: "0",
+    borderRadius: "4px",
+    overflow: "hidden"
+  }}
+  title="CodeSandbox Embed"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+/>
+
+### Inner Scrollbar
+
+<iframe 
+  src="https://codesandbox.io/embed/jn6x9s?view=preview"
+  style={{
+    width: "100%",
+    height: "500px",
+    border: "0",
+    borderRadius: "4px",
+    overflow: "hidden"
+  }}
+  title="CodeSandbox Embed"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+/>
+
+### Horizontal Scrollbar
+
+<iframe 
+  src="https://codesandbox.io/embed/mpzh3j?view=preview"
+  style={{
+    width: "100%",
+    height: "500px",
+    border: "0",
+    borderRadius: "4px",
+    overflow: "hidden"
+  }}
+  title="CodeSandbox Embed"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+/>
+
+
+
+## Props
+
+### Static Props
+
+Static properties are set during initialization and cannot be modified later.
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Default Value</th>
+  </tr>
+  
+  <tr>
+    <td>container</td>
+    <td>The element to which the scrollbar is applied. Can be either the `window` or a specific HTML element.</td>
+    <td><code>Window | HTMLElement</code></td>
+    <td><code>window</code></td>
+  </tr>
+  
+  <tr>
+    <td>parent</td>
+    <td>
+      The parent element where the scrollbar should be appended.
+
+      If `false`, the scrollbar is appended directly to the `container`.
+
+      For proper behavior, use `parent` when applying the scrollbar to an HTML element.
+    </td>
+    <td><code>false | HTMLElement</code></td>
+    <td><code>false</code></td>
+  </tr>
+  
+  <tr>
+    <td>class</td>
+    <td>
+      Custom CSS class to be applied to the scrollbar track.
+
+      If `false`, no additional class is applied.
+    </td>
+    <td><code>string | false</code></td>
+    <td><code>false</code></td>
+  </tr>
+  
+  <tr>
+    <td>axis</td>
+    <td>
+      Defines the scrolling axis for the scrollbar.
+      - `'x'` for horizontal scrolling.
+      - `'y'` for vertical scrolling.
+    </td>
+    <td><code>'x' | 'y'</code></td>
+    <td><code>'y'</code></td>
+  </tr>
+  
+  <tr>
+    <td>draggable</td>
+    <td>Determines whether the scrollbar thumb is draggable.</td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+  </tr>
+  
+  <tr>
+    <td>autoHide</td>
+    <td>Automatically hides the scrollbar when inactive.</td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+  </tr>
+  
+  <tr>
+    <td>resizeDebounce</td>
+    <td>Debounce time (in milliseconds) for handling resize events. Helps improve performance by limiting the frequency of resize calculations.</td>
+    <td><code>number</code></td>
+    <td><code>0</code></td>
+  </tr>
+</table>
+
+### Mutable Props
+
+Mutable properties can be updated at runtime using `.updateProps()`.
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Default Value</th>
+  </tr>
+  
+  <tr>
+    <td>minSize</td>
+    <td>Minimum size of the scrollbar thumb. Accepts numeric values (interpreted as pixels) or CSS units (`px`, `rem`, `vw`, `vh`, `svh`).</td>
+    <td><code>number | string</code></td>
+    <td><code>50</code></td>
+  </tr>
+  
+  <tr>
+    <td>autoSize</td>
+    <td>Enables automatic adjustment of the scrollbar size.</td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+  </tr>
+</table>
+
+
+
+## Accessors
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### axis
+
+Type: `"x" | "y"`
+
+Scrolling direction
+
+### container
+
+Type: `Window | HTMLElement`
+
+The element to which the scrollbar is applied.
+
+### outer
+
+Type: `HTMLElement`
+
+Scrollbar outer element
+
+### parent
+
+Type: `HTMLElement`
+
+The element where the scrollbar is appended. If `parent` is not set, it defaults to `container` or `document.body` (if applied to `window`).
+
+### scrollableSize
+
+Type: `number`
+
+Returns the total scrollable distance.
+
+### scrollElement
+
+Type: `HTMLElement`
+
+The actual scrollable element. Returns `document.documentElement` for `window`, otherwise the `container` itself.
+
+### scrollSize
+
+Type: `number`
+
+Returns the total scroll width/height of the content.
+
+### scrollValue
+
+Type: `number`
+
+Returns scrollTop or scrollLeft of the scrollable element.
+
+### thumb
+
+Type: `HTMLElement`
+
+Scrollbar thumb element (draggable handle).
+
+### thumbSize
+
+Type: `number`
+
+Returns the current thumb size.
+
+### track
+
+Type: `HTMLElement`
+
+Scrollbar track element (the container of the thumb).
+
+### trackSize
+
+Type: `number`
+
+Returns the current track size.
+
+
+
+## Methods
+
+:::note
+All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+:::
+
+### resize
+
+Force-resize the scrollbar.
+
+```ts
+instance.resize();
+```
+
+
+
+## Callbacks
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### update
+
+Triggered when the scrollbar updates its position.
+
+```ts
+const destruct = instance.on('update', () => console.log('update'));
+
+// Cancel the callback
+destruct();
+```
+
+### resize
+
+Triggered when the scrollbar resizes.
+
+```ts
+const destruct = instance.on('resize', () => console.log('resize'));
+
+// Cancel the callback
+destruct();
+```
+
+### show
+
+Triggered when the scrollbar is shown
+
+```ts
+const destruct = instance.on('show', () => console.log('show'));
+
+// Cancel the callback
+destruct();
+```
+
+### hide
+
+Triggered when the scrollbar is hidden
+
+```ts
+const destruct = instance.on('hide', () => console.log('hide'));
+
+// Cancel the callback
+destruct();
+```
+
+### swipeStart
+
+Triggered on swipe start
+
+```ts
+const destruct = instance.on('swipeStart', (coords) => console.log(coords));
+
+// Cancel the callback
+destruct();
+```
+
+### swipe
+
+Triggered on swipe move
+
+```ts
+const destruct = instance.on('swipe', (coords) => console.log(coords));
+
+// Cancel the callback
+destruct();
+```
+
+### swipeEnd
+
+Triggered on swipe end
+
+```ts
+const destruct = instance.on('swipeEnd', (coords) => console.log(coords));
+
+// Cancel the callback
+destruct();
+```

@@ -1,18 +1,15 @@
-export function preloadImage(
-  imageProp: HTMLImageElement,
-  action: (isSuccess: boolean) => void,
-) {
-  if (imageProp.complete) {
-    action(true);
+export function preloadImage(resource: HTMLImageElement, onLoad: () => void) {
+  if (resource.complete) {
+    onLoad();
 
     return;
   }
 
   const image = new Image();
 
-  image.addEventListener('load', () => action(true));
-  image.addEventListener('error', () => action(false));
+  image.addEventListener('load', () => onLoad());
+  image.addEventListener('error', () => onLoad());
 
   image.crossOrigin = 'anonymous';
-  image.src = imageProp.currentSrc || imageProp.src;
+  image.src = resource.currentSrc || resource.src;
 }

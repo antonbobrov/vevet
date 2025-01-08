@@ -1,29 +1,37 @@
 /**
- * Performs linear interpolation between the current and target values using an ease factor.
+ * Performs linear interpolation (LERP) between a current value and a target value using an easing factor.
  *
- * Linear interpolation (LERP) calculates the intermediate value between two values (`current` and `target`)
- * based on a given easing factor.
+ * Linear interpolation calculates an intermediate value between `current` and `target`
+ * based on a given `factor`, providing smooth transitions.
  *
- * @param current - The current value or starting point.
- * @param target - The target value or end point.
- * @param factor - The factor, typically between 0 and 1, which controls how fast the interpolation happens. A value closer to 0 makes the change slower, and a value closer to 1 makes it faster.
- * @param approximationLeft - The threshold within which the difference between `current` and `target` is considered negligible, and the function returns the `target` value directly.
+ * @param {number} current - The starting value.
+ * @param {number} target - The end value.
+ * @param {number} factor - The interpolation factor, typically between 0 and 1. A lower value results in slower interpolation, while a higher value makes it faster.
+ * @param {number} [approximation=0] - A small threshold to determine when the difference between the interpolated value and the target is negligible. If the difference is within this threshold, the function returns `target` directly.
+ * @returns {number} - The interpolated value.
+ *
+ * @group Utils
  *
  * @example
+ * lerp(0, 1, 0.4);
+ * // => 0.4 (40% progress from 0 to 1)
  *
- * lerp(0, 1, 0.4); // => 0.4
- * lerp(0.75, 0.8, 0.98); // => 0.799
+ * lerp(0.75, 0.8, 0.98);
+ * // => 0.799 (close to the target but not exactly 0.8)
+ *
+ * lerp(0.75, 0.8, 0.98, 0.01);
+ * // => 0.8 (within the approximation threshold)
  */
 export function lerp(
   current: number,
   target: number,
   factor: number,
-  approximationLeft = 0,
-) {
-  const value = current * (1 - factor) + target * factor;
+  approximation = 0,
+): number {
+  const value = current + (target - current) * factor;
   const difference = Math.abs(target - value);
 
-  if (difference <= approximationLeft) {
+  if (difference <= approximation) {
     return target;
   }
 

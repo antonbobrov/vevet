@@ -1,0 +1,244 @@
+# Canvas
+
+The **Canvas** class simplifies working with an HTML5 Canvas element and its 2D rendering context. 
+
+## Overview
+
+This class provides a streamlined approach to handling a canvas by:
+- Automatically creating the `<canvas>` element.
+- Managing resizing based on viewport or container size.
+- Offering access to useful properties like `width`, `height`, `dpr`, and `context`.
+- Supporting both automatic and manual resizing.
+- Implementing conditional rendering to prevent errors when the canvas is invisible or has zero size.
+
+## Example
+
+Explore a live example in CodeSandbox:
+
+<iframe 
+  src="https://codesandbox.io/embed/hw5l83?view=preview"
+  style={{
+    width: "100%",
+    height: "500px",
+    border: "0",
+    borderRadius: "4px",
+    overflow: "hidden"
+  }}
+  title="CodeSandbox Embed"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+/>
+
+
+
+## Props
+
+### Static Props
+
+Static properties are set during initialization and cannot be modified later.
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Default Value</th>
+  </tr>
+  
+  <tr>
+    <td>container</td>
+    <td>Parent element used to determine canvas size. If `null`, it uses the viewport.</td>
+    <td><code>HTMLElement | null</code></td>
+    <td><code>null</code></td>
+  </tr>
+  
+  <tr>
+    <td>append</td>
+    <td>If `true`, appends the canvas to the `container`. Ignored if `container` is `null`.</td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+  </tr>
+  
+  <tr>
+    <td>resizeOnInit</td>
+    <td>Automatically adjusts canvas size on initialization.</td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+  </tr>
+  
+  <tr>
+    <td>resizeOnRuntime</td>
+    <td>Enables dynamic resizing based on viewport or container changes.</td>
+    <td><code>boolean</code></td>
+    <td><code>false</code></td>
+  </tr>
+  
+  <tr>
+    <td>viewportTarget</td>
+    <td>Defines which dimension(s) should trigger a resize. [Learn more](/docs/vevet/features#onviewport)</td>
+    <td>`'width' | 'height' | 'both' | 'width_' | 'height_' | 'any'`</td>
+    <td><code>'any'</code></td>
+  </tr>
+  
+  <tr>
+    <td>resizeDebounce</td>
+    <td>Debounce time (ms) for resize handling.</td>
+    <td><code>number</code></td>
+    <td><code>0</code></td>
+  </tr>
+</table>
+
+### Mutable Props
+
+Mutable properties can be updated at runtime using `.updateProps()`.
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Default Value</th>
+  </tr>
+  
+  <tr>
+    <td>width</td>
+    <td>Canvas width. Use `'auto'` to match the container's width.</td>
+    <td><code>'auto' | number</code></td>
+    <td><code>'auto'</code></td>
+  </tr>
+  
+  <tr>
+    <td>height</td>
+    <td>Canvas height. Use `'auto'` to match the container's height.</td>
+    <td><code>'auto' | number</code></td>
+    <td><code>'auto'</code></td>
+  </tr>
+  
+  <tr>
+    <td>dpr</td>
+    <td>Device Pixel Ratio (DPR). Use `'auto'` for automatic detection.</td>
+    <td><code>'auto' | number</code></td>
+    <td><code>'auto'</code></td>
+  </tr>
+</table>
+
+
+
+## Accessors
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### canRender
+
+Type: `boolean`
+
+Checks if the canvas is ready to render.
+
+### canvas
+
+Type: `HTMLCanvasElement`
+
+The canvas element instance.
+
+### ctx
+
+Type: `CanvasRenderingContext2D`
+
+The 2D rendering context.
+
+### dpr
+
+Type: `number`
+
+Current device pixel ratio.
+
+### height
+
+Type: `number`
+
+Canvas height (DPR applied).
+
+### offsetHeight
+
+Type: `number`
+
+Height without DPR scaling.
+
+### offsetWidth
+
+Type: `number`
+
+Width without DPR scaling.
+
+### width
+
+Type: `number`
+
+Canvas width (DPR applied).
+
+
+
+## Methods
+
+:::note
+All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+:::
+
+### render
+
+Renders content on the canvas if it's ready.
+
+```ts
+instance.render(({ canvas, ctx, dpr, width, height }) => {
+  // Draw your scene here
+});
+```
+
+### resize
+
+Triggers a canvas resize based on container or viewport dimensions.
+
+```ts
+instance.resize();
+```
+
+### updateProps
+
+Updates instance properties.
+
+```ts
+instance.updateProps({
+  width: 100,
+  height: 100,
+});
+```
+
+### destroy
+
+Destroys the instance and cleans up resources.
+
+```ts
+instance.destroy();
+```
+
+
+
+## Callbacks
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### resize
+
+Fires when the canvas is resized.
+
+```ts
+const destruct = instance.on('resize', () => console.log('Canvas resized'));
+
+// Cancel the callback
+destruct();
+```
+

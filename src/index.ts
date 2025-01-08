@@ -1,29 +1,21 @@
-import { getApp } from './utils/internal/getApp';
-import { IVevet } from './Vevet/global';
-import { IVevetProps } from './Vevet/types';
+import { ICore } from './core/global';
+import { initVevet } from './global/initVevet';
+
+export { initVevet };
 
 /**
- * Vevet Application
+ * Vevet Core
  *
- * @see {@linkcode IVevet}
+ * @group Core
  */
 export const vevet = (
-  typeof window !== 'undefined' ? getApp() : undefined
-) as IVevet;
+  typeof window !== 'undefined' ? initVevet() : undefined
+) as Readonly<ICore>;
 
-declare global {
-  interface Window {
-    vevetApp: IVevet;
-    VEVET_PROPS: Partial<IVevetProps>;
-  }
-}
-
-export * from './Vevet/exported';
+export * from './core/exported';
 
 export * from './utils';
 
 export * from './base';
 
 export * from './components';
-
-export * from './types';

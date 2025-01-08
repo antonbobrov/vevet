@@ -1,15 +1,15 @@
-/* eslint-disable no-param-reassign */
-import { childOf } from '@/utils/dom/childOf';
-import { NSplitText } from '../types';
+import { ISplitTextLineMeta, ISplitTextWordMeta } from '../types';
 
 interface IProps {
   container: HTMLElement;
-  words: NSplitText.IWord[];
-  className: string;
+  hasLinesWrapper: boolean;
+  wordsMeta: ISplitTextWordMeta[];
+  lineClassName: string;
+  lineWrapperClassName: string;
   tagName: keyof HTMLElementTagNameMap;
 }
 
-interface ILine extends NSplitText.ILine {
+interface ILine extends ISplitTextLineMeta {
   nodes: Node[];
 }
 
@@ -24,33 +24,62 @@ function getTopParent(ref: Element | null, topParent: Element): Element {
   return getTopParent(ref?.parentElement ?? null, topParent);
 }
 
+export function childOf(element: Element, parent: Element) {
+  if (element === parent) {
+    return true;
+  }
+
+  if (element !== null) {
+    return childOf(element.parentNode as Element, parent);
+  }
+
+  return false;
+}
+
 /**
  * Wraps each word in the container into lines, based on their vertical position.
  */
-export function wrapLines({ container, words, className, tagName }: IProps) {
-  const lines: ILine[] = [];
+export function wrapLines({
+  container,
+  hasLinesWrapper,
+  wordsMeta,
+  lineClassName,
+  lineWrapperClassName,
+  tagName,
+}: IProps) {
+  const linesMeta: ILine[] = [];
   let lineIndex = -1;
   let prevTop = Infinity;
 
   // Create lines by wrapping words
-  words.forEach((word) => {
-    const currentTop = Math.round(word.element.getBoundingClientRect().top);
-    const topParent = getTopParent(word.element, container);
+  wordsMeta.forEach((wordMeta) => {
+    const currentTop = Math.round(wordMeta.element.offsetTop);
+    const topParent = getTopParent(wordMeta.element, container);
 
+    // create new line if the top position changes
     if (currentTop !== prevTop) {
       prevTop = currentTop;
       lineIndex += 1;
 
       const element = document.createElement(tagName);
       element.style.display = 'block';
-      element.classList.add(className);
+      element.classList.add(lineClassName);
 
-      lines[lineIndex] = { element, nodes: [], words: [] };
+      let wrapper: HTMLElement | undefined;
+
+      if (hasLinesWrapper) {
+        wrapper = document.createElement(tagName);
+        wrapper.style.display = 'block';
+        wrapper.classList.add(lineWrapperClassName);
+        wrapper.appendChild(element);
+      }
+
+      linesMeta[lineIndex] = { element, wrapper, nodes: [], words: [] };
     }
 
-    const currentLine = lines[lineIndex];
+    const currentLine = linesMeta[lineIndex];
 
-    const isInList = !!lines.find(({ nodes }) => nodes.includes(topParent));
+    const isInList = !!linesMeta.find(({ nodes }) => nodes.includes(topParent));
 
     if (!isInList) {
       currentLine.nodes.push(topParent);
@@ -62,16 +91,18 @@ export function wrapLines({ container, words, className, tagName }: IProps) {
   });
 
   // Append line elements to the container
-  lines.forEach((line) => {
-    container.insertBefore(line.element, line.nodes[0]);
+  linesMeta.forEach((line) => {
+    container.insertBefore(line.wrapper ?? line.element, line.nodes[0]);
 
-    line.element.append(...line.nodes);
+    const fragment = document.createDocumentFragment();
+    fragment.append(...line.nodes);
+    line.element.append(fragment);
   });
 
   // Hide any extra <br> elements after lines
   const hiddenBr: HTMLBRElement[] = [];
-  lines.forEach((line) => {
-    const nextSibling = line.element.nextElementSibling;
+  linesMeta.forEach((line) => {
+    const nextSibling = (line.wrapper ?? line.element).nextElementSibling;
     if (nextSibling instanceof HTMLBRElement) {
       nextSibling.style.display = 'none';
       hiddenBr.push(nextSibling);
@@ -79,26 +110,38 @@ export function wrapLines({ container, words, className, tagName }: IProps) {
   });
 
   // Associate words with the corresponding lines
-  lines.forEach((line) => {
+  linesMeta.forEach((line) => {
     line.words.push(
-      ...words.filter((word) => childOf(word.element, line.element)),
+      ...wordsMeta.filter((word) => childOf(word.element, line.element)),
     );
   });
 
   // Destroy method to undo the line wrapping
   const destroy = () => {
+    let isSuccess = true;
+
     hiddenBr.forEach((br) => {
+      // eslint-disable-next-line no-param-reassign
       br.style.display = '';
     });
 
-    lines.forEach((line) => {
+    linesMeta.forEach((line) => {
       line.nodes.forEach((node) => {
-        container.insertBefore(node, line.element);
+        const reference = line.wrapper ?? line.element;
+
+        if (reference.parentElement) {
+          container.insertBefore(node, reference);
+        } else {
+          isSuccess = false;
+        }
       });
 
       line.element.remove();
+      line.wrapper?.remove();
     });
+
+    return isSuccess;
   };
 
-  return { lines, destroy };
+  return { linesMeta, destroy };
 }

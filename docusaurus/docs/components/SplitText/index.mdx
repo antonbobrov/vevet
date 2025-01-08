@@ -1,0 +1,255 @@
+# SplitText
+
+`SplitText` splits text within a container into individual lines, words, and letters.
+
+Features:
+- Supports resizing, HTML content, and special symbols like emojis.
+- Handles multi-line breaks and non-breaking spaces.
+- Saves initial nodes and listeners for easy restoration.
+- Allows splitting into lines, words, or letters as needed.
+
+:::note
+Apply `fontKerning: none` to prevent layout shifts.
+:::
+
+## Example
+
+Explore live examples in CodeSandbox:
+
+### With Letters
+
+<iframe 
+  src="https://codesandbox.io/embed/sydvyr?view=preview"
+  style={{
+    width: "100%",
+    height: "500px",
+    border: "0",
+    borderRadius: "4px",
+    overflow: "hidden"
+  }}
+  title="CodeSandbox Embed"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+/>
+
+### With HTML
+
+<iframe 
+  src="https://codesandbox.io/embed/47jcql?view=preview"
+  style={{
+    width: "100%",
+    height: "800px",
+    border: "0",
+    borderRadius: "4px",
+    overflow: "hidden"
+  }}
+  title="CodeSandbox Embed"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+/>
+
+### With Lines Mask
+
+<iframe 
+  src="https://codesandbox.io/embed/c5c6dl?view=preview"
+  style={{
+    width: "100%",
+    height: "600px",
+    border: "0",
+    borderRadius: "4px",
+    overflow: "hidden"
+  }}
+  title="CodeSandbox Embed"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+/>
+
+
+
+## Props
+
+### Static Props
+
+Static properties are set during initialization and cannot be modified later.
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Default Value</th>
+  </tr>
+  
+  <tr>
+    <td>container</td>
+    <td>The text container where the text will be split.</td>
+    <td><code>HTMLElement</code></td>
+    <td></td>
+  </tr>
+  
+  <tr>
+    <td>letters</td>
+    <td>Specifies whether the text should be split into individual letters.</td>
+    <td><code>boolean</code></td>
+    <td><code>false</code></td>
+  </tr>
+  
+  <tr>
+    <td>lines</td>
+    <td>Specifies whether the text should be split into lines.</td>
+    <td><code>boolean</code></td>
+    <td><code>false</code></td>
+  </tr>
+  
+  <tr>
+    <td>linesWrapper</td>
+    <td>Specifies whether to wrap each line in an additional container.</td>
+    <td><code>boolean</code></td>
+    <td><code>false</code></td>
+  </tr>
+  
+  <tr>
+    <td>letterTag</td>
+    <td>Specifies whether to wrap each line in an additional container.</td>
+    <td><code>string</code></td>
+    <td><code>'span'</code></td>
+  </tr>
+  
+  <tr>
+    <td>wordTag</td>
+    <td>HTML tag to wrap each word.</td>
+    <td><code>string</code></td>
+    <td><code>'span'</code></td>
+  </tr>
+  
+  <tr>
+    <td>lineTag</td>
+    <td>HTML tag to wrap each line.</td>
+    <td><code>string</code></td>
+    <td><code>'span'</code></td>
+  </tr>
+  
+  <tr>
+    <td>resizeDebounce</td>
+    <td>The debounce delay for the resize event in milliseconds.</td>
+    <td><code>number</code></td>
+    <td><code>0</code></td>
+  </tr>
+</table>
+
+
+
+## Accessors
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### letters
+
+Type: `HTMLElement[]`
+
+Retrieves an array of letter elements.
+
+### lettersMeta
+
+Type: `ISplitTextLetterMeta[]`
+
+Retrieves an array of letters metadata.
+
+#### ISplitTextLetterMeta Structure
+
+```ts
+interface ISplitTextLetterMeta {
+  element: HTMLElement;
+}
+```
+
+### lines
+
+Type: `HTMLElement[]`
+
+Retrieves an array of line elements.
+
+### linesMeta
+
+Type: `ISplitTextLineMeta[]`
+
+Retrieves an array of lines metadata.
+
+#### ISplitTextLineMeta Structure
+
+```ts
+interface ISplitTextLineMeta {
+  element: HTMLElement;
+  words: ISplitTextWordMeta[];
+  wrapper?: HTMLElement;
+}
+```
+
+### words
+
+Type: `HTMLElement[]`
+
+Retrieves an array of word elements.
+
+### wordsMeta
+
+Type: `ISplitTextWordMeta[]`
+
+Retrieves an array of words metadata.
+
+#### ISplitTextWordMeta Structure
+
+```ts
+interface ISplitTextWordMeta {
+  element: HTMLElement;
+  letters: ISplitTextLetterMeta[];
+}
+```
+
+
+
+## Methods
+
+:::note
+All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+:::
+
+### split
+
+Splits the text into letters, words, and optionally lines based on configuration.
+
+```ts
+instance.split();
+```
+
+
+
+## Callbacks
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### beforeSplit
+
+Called before the text is split
+
+```ts
+const destruct = instance.on('beforeSplit', () => console.log('beforeSplit'));
+
+// Cancel the callback
+destruct();
+```
+
+### split
+
+Called after the text has been split.
+
+```ts
+const destruct = instance.on('split', () => console.log('split'));
+
+// Cancel the callback
+destruct();
+```

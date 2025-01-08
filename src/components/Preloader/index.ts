@@ -1,215 +1,189 @@
-import { PCancelable } from '@/utils/common/PCancelable';
-import { NPreloader } from './types';
-import { Component as ComponentClass } from '@/base/Component';
-import { normalizedTimeoutCallback } from '@/utils/common';
-import { getApp } from '@/utils/internal/getApp';
-import { selectOne } from '@/utils/dom/selectOne';
+import { TRequiredProps } from '@/internal/requiredProps';
+import {
+  IPreloaderCallbacksMap,
+  IPreloaderMutableProps,
+  IPreloaderStaticProps,
+} from './types';
+import { Module } from '@/base/Module';
+import { Timeline } from '../Timeline';
+import { initVevet } from '@/global/initVevet';
+import { EaseInOutSine } from '@/utils/math/easing';
 
-export type { NPreloader };
+export * from './types';
 
 /**
- * Page preloader component, which manages the visibility of a preloader during page loading.
- * It can hide the preloader after the page is fully loaded and trigger related events.
+ * Page preloader component that manages the visibility and lifecycle of a loading screen.
+ * The module does not provide styling for the container.
  *
- * @requires Requires styles: `@import '~vevet/lib/styles/components/Preloader';`
+ * [Documentation](https://antonbobrov.github.io/vevet/docs/components/Preloader)
  *
- * @link See examples https://antonbobrov.github.io/vevet-demo/preloader/
- *
- * @link See docs https://antonbobrov.github.io/vevet/classes/Preloader.html
+ * @group Components
  */
 export class Preloader<
-  StaticProps extends NPreloader.IStaticProps = NPreloader.IStaticProps,
-  ChangeableProps extends
-    NPreloader.IChangeableProps = NPreloader.IChangeableProps,
-  CallbacksTypes extends
-    NPreloader.ICallbacksTypes = NPreloader.ICallbacksTypes,
-> extends ComponentClass<StaticProps, ChangeableProps, CallbacksTypes> {
-  protected _getDefaultProps() {
+  CallbacksMap extends IPreloaderCallbacksMap = IPreloaderCallbacksMap,
+  StaticProps extends IPreloaderStaticProps = IPreloaderStaticProps,
+  MutableProps extends IPreloaderMutableProps = IPreloaderMutableProps,
+> extends Module<CallbacksMap, StaticProps, MutableProps> {
+  /**
+   * Retrieves the default static properties.
+   */
+  public _getStatic(): TRequiredProps<StaticProps> {
     return {
-      ...super._getDefaultProps(),
-      container: `#${this.prefix}`,
-      hideAnimation: 250,
-    };
-  }
-
-  get prefix() {
-    return `${getApp().prefix}preloader`;
+      ...super._getStatic(),
+      hide: 250,
+    } as TRequiredProps<StaticProps>;
   }
 
   /**
-   * The preloader container element.
+   * Retrieves the default mutable properties.
    */
-  protected _container?: HTMLElement | false;
-
-  /**
-   * Returns the preloader container element.
-   */
-  get container() {
-    return this._container;
+  public _getMutable(): TRequiredProps<MutableProps> {
+    return { ...super._getMutable() } as TRequiredProps<MutableProps>;
   }
 
-  /**
-   * Indicates if the preloader is in the process of being hidden.
-   */
-  protected _isToBeHidden: boolean;
+  /** Indicates if the preloader is in the process of being hidden. */
+  protected _shouldHide = false;
+
+  /** Indicates if the preloader has already been hidden. */
+  protected _isHidden = false;
+
+  /** Indicates if the page is fully loaded. */
+  protected _isLoaded = false;
 
   /**
-   * Indicates if the preloader has already been hidden.
-   */
-  protected _isHidden: boolean;
-
-  /**
-   * Returns whether the preloader is hidden.
+   * Returns whether the preloader is currently hidden.
    */
   get isHidden() {
     return this._isHidden;
   }
 
-  constructor(initialProps?: StaticProps & ChangeableProps, canInit = true) {
-    super(initialProps, false);
+  constructor(props?: StaticProps & MutableProps) {
+    super(props);
 
-    // Get the preloader container
-    if (this.props.container) {
-      const container = selectOne(this.props.container);
+    // Handle page load event
+    const timeout = setTimeout(() => {
+      this._onLoaded(() => this._handleLoaded());
+    }, 0);
 
-      if (container instanceof HTMLElement) {
-        this._container = container;
-        this.toggleClassName(container, this.className(''), true);
-      }
-    }
-
-    // Set default values
-    this._isToBeHidden = false;
-    this._isHidden = false;
-
-    if (canInit) {
-      this.init();
-    }
-  }
-
-  /**
-   * Initializes the preloader and sets event listeners.
-   */
-  protected _init() {
-    super._init();
-
-    this._setEvents();
-  }
-
-  /**
-   * Sets up the preloader's event handling for when the page is fully loaded.
-   */
-  protected _setEvents() {
-    const loadEvent = this._onLoaded();
-
-    loadEvent
-      .then(() => {
-        if (this.isDestroyed) {
-          return;
-        }
-
-        this._handleLoaded();
-      })
-      .catch(() => {});
-
-    this.addDestroyableAction(() => loadEvent.cancel());
+    this.onDestroy(() => clearTimeout(timeout));
   }
 
   /**
    * Handles the page load event, triggering when the page is fully loaded.
    */
-  protected _onLoaded() {
-    return getApp().onPageLoad();
+  protected _onLoaded(callback: () => void) {
+    initVevet().onLoad(callback);
   }
 
   /**
    * Handles the logic that occurs after the page is fully loaded.
    */
   protected _handleLoaded() {
-    this.callbacks.tbt('loaded', undefined);
+    if (this.isDestroyed) {
+      return;
+    }
 
-    if (typeof this.props.hideAnimation !== 'boolean') {
-      this.hide();
+    this._isLoaded = true;
+    this.callbacks.emit('loaded', undefined);
+
+    if (typeof this.props.hide === 'number') {
+      this.hide(this.props.hide);
     }
   }
 
   /**
-   * Hides the preloader with an optional animation duration.
+   * Hides the preloader with a custom animation duration.
    *
-   * @param duration - The duration of the hide animation (in milliseconds).
+   * @param duration - The duration of the hide animation (in milliseconds). Applies only when the container is used.
+   * @param callback - The callback to execute when the hide animation is complete.
+   *
+   * @returns Returns an action destructor.
    */
-  public hide(
-    duration = typeof this.props.hideAnimation !== 'boolean'
-      ? this.props.hideAnimation
-      : 250,
-  ) {
-    this._isToBeHidden = true;
-    this.callbacks.tbt('hide', undefined);
+  public hide(duration: number, callback?: () => void) {
+    if (!this._isLoaded || this._shouldHide) {
+      return undefined;
+    }
 
-    return new PCancelable((resolve: (...args: any) => void) => {
-      const container = this._container;
+    let isDestroyed = false;
 
-      if (!container) {
-        this._handleHidden();
-        resolve();
+    this._shouldHide = true;
+    this.callbacks.emit('hide', undefined);
 
-        return;
+    this._hideContainer(() => {
+      this._onHidden();
+
+      if (!isDestroyed) {
+        callback?.();
       }
+    }, duration);
 
-      // Apply hide animation
-      container.style.transition = `opacity ${duration}ms, visibility ${duration}ms`;
-      container.style.opacity = '0';
-      container.style.visibility = 'hidden';
+    return () => {
+      isDestroyed = true;
+    };
+  }
 
-      const timeout = normalizedTimeoutCallback(() => {
-        container.style.display = 'none';
+  /**
+   * Executes the hiding animation for the preloader container.
+   */
+  protected _hideContainer(onHidden: () => void, duration: number) {
+    const { container } = this.props;
 
-        this._handleHidden();
+    if (!container) {
+      onHidden();
 
-        resolve();
-      }, duration);
+      return;
+    }
 
-      this.addDestroyableAction(() => timeout.clear());
+    const tm = new Timeline({ duration, easing: EaseInOutSine });
+    this.onDestroy(() => tm.destroy());
+
+    tm.on('update', ({ progress }) => {
+      container.style.opacity = String(1 - progress);
+      container.style.display = progress === 1 ? 'none' : 'flex';
     });
+
+    tm.on('end', () => onHidden());
+
+    tm.play();
   }
 
   /**
    * Handles actions when the preloader is fully hidden.
    */
-  protected _handleHidden() {
+  protected _onHidden() {
     this._isHidden = true;
-    this.callbacks.tbt('hidden', undefined);
+    this.callbacks.emit('hidden', undefined);
   }
 
   /**
    * Registers a callback for when the preloader starts hiding.
    *
    * @param action - The callback function to execute.
-   * @returns A cancelable action or undefined if already in hiding process.
+   * @returns A destructor.
    */
   public onHide(action: () => void) {
-    if (this._isToBeHidden) {
+    if (this._shouldHide) {
       action();
 
-      return undefined;
+      return () => {};
     }
 
-    return this.addCallback('hide', (() => action()) as any);
+    return this.on('hide', (() => action()) as any);
   }
 
   /**
    * Registers a callback for when the preloader is fully hidden.
    *
    * @param action - The callback function to execute.
-   * @returns A cancelable action or undefined if already hidden.
+   * @returns A destructor.
    */
   public onHidden(action: () => void) {
     if (this._isHidden) {
       action();
 
-      return undefined;
+      return () => {};
     }
 
-    return this.addCallback('hidden', (() => action()) as any);
+    return this.on('hidden', (() => action()) as any);
   }
 }
