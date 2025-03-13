@@ -1,279 +1,264 @@
-import { Component as ComponentClass } from '@/base/Component';
-import { NSplitText } from './types';
 import { onResize } from '@/utils/listeners/onResize';
 import { splitBase } from './utils/splitBase';
 import { wrapLines } from './utils/wrapLines';
-import { getApp } from '@/utils/internal/getApp';
-import { selectOne } from '@/utils/dom/selectOne';
+import {
+  ISplitTextCallbacksMap,
+  ISplitTextLetterMeta,
+  ISplitTextLineMeta,
+  ISplitTextMutableProps,
+  ISplitTextStaticProps,
+  ISplitTextWordMeta,
+} from './types';
+import { Module } from '@/base';
+import { TRequiredProps } from '@/internal/requiredProps';
+import { initVevet } from '@/global/initVevet';
+import { saveInitialNodes } from './utils/saveInitialNodes';
 
-export type { NSplitText };
+export * from './types';
 
 /**
- * SplitText is a component that splits your text into lines, words, and letters so that you can animate them.
- * It supports auto-resizing for lines and styled content when using HTML inside your text.
+ * `SplitText` splits text within a container into individual lines, words, and letters.
  *
- * Inspired by GSAP's SplitText plugin and SplitType.
+ * Features:
+ * - Supports resizing, HTML content, and special symbols like emojis.
+ * - Handles multi-line breaks and non-breaking spaces.
+ * - Saves initial nodes and listeners for easy restoration.
+ * - Allows splitting into lines, words, or letters as needed.
  *
- * P.S. Apply `fontKerning: none` to your container to prevent large layout shifts.
+ * **Note**: Apply `fontKerning: none` to prevent layout shifts.
  *
- * @link See examples https://antonbobrov.github.io/vevet-demo/split-text/
+ * [Documentation](https://antonbobrov.github.io/vevet/docs/components/SplitText)
  *
- * @link See docs https://antonbobrov.github.io/vevet/classes/SplitText.html
- *
- * @see Performance comparison of splitting your text into words: https://measurethat.net/Benchmarks/Show/31805/0/vevetsplittext-splittype-comparison-words-only
- *
- * @see Performance comparison of splitting your text into words and letters: https://measurethat.net/Benchmarks/Show/31806/0/vevetsplittext-splittype-comparison-words-letters
- *
- * @see Performance comparison of splitting your text into words and lines: https://measurethat.net/Benchmarks/Show/31847/0/vevetsplittext-splittype-comparison-words-lines
+ * @group Components
  */
 export class SplitText<
-  StaticProps extends NSplitText.IStaticProps = NSplitText.IStaticProps,
-  ChangeableProps extends
-    NSplitText.IChangeableProps = NSplitText.IChangeableProps,
-  CallbacksTypes extends
-    NSplitText.ICallbacksTypes = NSplitText.ICallbacksTypes,
-> extends ComponentClass<StaticProps, ChangeableProps, CallbacksTypes> {
-  protected _getDefaultProps() {
+  CallbacksMap extends ISplitTextCallbacksMap = ISplitTextCallbacksMap,
+  StaticProps extends ISplitTextStaticProps = ISplitTextStaticProps,
+  MutableProps extends ISplitTextMutableProps = ISplitTextMutableProps,
+> extends Module<CallbacksMap, StaticProps, MutableProps> {
+  /**
+   * Retrieves the default static properties.
+   */
+  public _getStatic(): TRequiredProps<StaticProps> {
     return {
-      ...super._getDefaultProps(),
-      container: `#${this.prefix}`,
-      hasLetters: true,
-      hasLines: false,
+      ...super._getStatic(),
+      letters: false,
+      lines: false,
+      linesWrapper: false,
       letterTag: 'span',
       wordTag: 'span',
       lineTag: 'span',
-      viewportTarget: 'any',
       resizeDebounce: 0,
-    };
+    } as TRequiredProps<StaticProps>;
   }
 
+  /**
+   * Retrieves the default mutable properties.
+   */
+  public _getMutable(): TRequiredProps<MutableProps> {
+    return { ...super._getMutable() } as TRequiredProps<MutableProps>;
+  }
+
+  /**
+   * Classname prefix for styling elements.
+   */
   get prefix() {
-    return `${getApp().prefix}split-text`;
+    return `${initVevet().prefix}split-text`;
   }
 
   /**
-   * Class name used for individual letters.
+   * Saved initial HTML nodes of the container.
    */
-  get letterClassName() {
-    return this.className('__letter');
-  }
+  protected _savedNodes: ReturnType<typeof saveInitialNodes>;
 
   /**
-   * Class name used for individual words.
-   */
-  get wordClassName() {
-    return this.className('__word');
-  }
-
-  /**
-   * Class name used for individual lines.
-   */
-  get lineClassName() {
-    return this.className('__line');
-  }
-
-  /**
-   * Initial HTML content of the container before splitting.
-   */
-  protected _initialHTML: string;
-
-  /**
-   * Tracks if the text has already been split into base elements (words & letters).
+   * Tracks whether the text is already split into base elements: words and letters.
    */
   protected _isBaseSplit = false;
 
   /**
-   * The text container where the split text is stored.
+   * List of letters metadata.
    */
-  protected _container: HTMLElement;
+  protected _lettersMeta: ISplitTextLetterMeta[] = [];
 
   /**
-   * Returns the text container element.
+   * Retrieves an array of letters metadata.
    */
-  get container() {
-    return this._container;
+  get lettersMeta() {
+    return this._lettersMeta;
   }
 
   /**
-   * List of letter elements generated after splitting.
-   */
-  protected _letters: NSplitText.ILetter[];
-
-  /**
-   * Returns the list of letter elements.
+   * Retrieves an array of letter elements.
    */
   get letters() {
-    return this._letters;
+    return this._lettersMeta.map((letter) => letter.element);
   }
 
   /**
-   * List of word elements generated after splitting.
+   * List of words metadata.
    */
-  protected _words: NSplitText.IWord[];
+  protected _wordsMeta: ISplitTextWordMeta[] = [];
 
   /**
-   * Returns the list of word elements.
+   * Retrieves an array of words metadata.
+   */
+  get wordsMeta() {
+    return this._wordsMeta;
+  }
+
+  /**
+   * Retrieves an array of word elements.
    */
   get words() {
-    return this._words;
+    return this._wordsMeta.map((word) => word.element);
   }
 
   /**
-   * List of line elements generated after splitting.
+   * List of lines metadata.
    */
-  protected _lines: NSplitText.ILine[];
+  protected _linesMeta: ISplitTextLineMeta[] = [];
 
   /**
-   * Returns the list of line elements.
+   * Retrieves an array of lines metadata.
+   */
+  get linesMeta() {
+    return this._linesMeta;
+  }
+
+  /**
+   * Retrieves an array of line elements.
    */
   get lines() {
-    return this._lines;
+    return this._linesMeta.map((line) => line.element);
   }
 
   /**
-   * Result from `wrapLines` utility used to manage the split lines.
-   * @ignore
+   * Utility for wrapping words into line containers.
    */
-  protected _lineWrapper?: ReturnType<typeof wrapLines>;
+  protected _lineSplitWrapper?: ReturnType<typeof wrapLines>;
 
-  constructor(initialProps: StaticProps & ChangeableProps, canInit = true) {
-    super(initialProps, false);
+  /**
+   * Initializes the SplitText instance and saves the initial state.
+   */
+  constructor(props?: StaticProps & MutableProps) {
+    super(props);
 
-    // Get text container
-    this._container = selectOne(this.props.container) as HTMLElement;
-    this.toggleClassName(this._container, this.className(''), true);
+    const { container } = this.props;
 
-    // Disable translation for text elements
-    this._container.translate = false;
+    container.style.fontKerning = 'none';
+    this._addTempClassName(container, this._cn(''));
 
-    // Store initial HTML content
-    this._initialHTML = this._container.innerHTML;
+    container.translate = false;
 
-    // Initialize default properties
-    this._letters = [];
-    this._words = [];
-    this._lines = [];
+    this._savedNodes = saveInitialNodes(container);
 
-    if (canInit) {
-      this.init();
-    }
+    this._setup();
   }
 
   /**
-   * Initializes the component.
+   * Sets up event listeners and handles initial splitting.
    */
-  protected _init() {
-    super._init();
+  protected _setup() {
+    const { container, resizeDebounce } = this.props;
 
-    this._setResize();
-  }
-
-  /**
-   * Sets up resize events for the component, allowing it to respond to viewport or container size changes.
-   */
-  protected _setResize() {
-    const { viewportTarget, resizeDebounce, hasLines } = this.props;
-
-    if (!hasLines) {
-      this.splitText();
+    if (!this.props.lines) {
+      this.split();
 
       return;
     }
 
     const resizeHandler = onResize({
-      onResize: () => this.splitText(),
-      element: this.container,
-      viewportTarget,
+      callback: () => this.split(),
+      element: container,
+      viewportTarget: 'width',
       resizeDebounce,
+      name: this.name,
     });
 
     resizeHandler.resize();
 
-    this.addDestroyableAction(() => resizeHandler.remove());
+    this.onDestroy(() => resizeHandler.remove());
   }
 
   /**
-   * Splits the text in the container into letters, words, and optionally lines, based on the component properties.
+   * Splits the text into letters, words, and optionally lines based on configuration.
    */
-  public splitText() {
-    this.callbacks.tbt('beforeSplit', undefined);
+  public split() {
+    this.callbacks.emit('beforeSplit', undefined);
 
     this._splitBase();
 
-    if (this.props.hasLines) {
-      this._splitIntoLines();
+    if (this.props.lines) {
+      this._splitLines();
     }
 
-    this.callbacks.tbt('split', undefined);
+    this.callbacks.emit('split', undefined);
   }
 
   /**
-   * Splits the text into base elements (letters and words).
+   * Splits text into base elements: letters and words.
    */
-  private _splitBase() {
+  protected _splitBase() {
     if (this._isBaseSplit) {
       return;
     }
 
-    const { container, letterClassName, wordClassName } = this;
-    const { letterTag, wordTag } = this.props;
+    const { container, letterTag, wordTag } = this.props;
 
     this._isBaseSplit = true;
 
-    const { helper, words, letters } = splitBase({
+    const { wordsMeta, lettersMeta } = splitBase({
       container,
-      letterClassName,
-      wordClassName,
-      hasLetters: this.props.hasLetters,
+      letterClassName: this._cn('__letter'),
+      wordClassName: this._cn('__word'),
+      hasLetters: this.props.letters,
       letterTag,
       wordTag,
     });
 
-    // Clear the original content
-    while (container.childNodes[0]) {
-      container.childNodes[0].remove();
-    }
-
-    // Append the new elements
-    while (helper.childNodes[0]) {
-      container.appendChild(helper.childNodes[0]);
-    }
-
-    // Update elements
-    this._words = words;
-    this._letters = letters;
+    this._wordsMeta = wordsMeta;
+    this._lettersMeta = lettersMeta;
   }
 
   /**
-   * Splits the text into lines by wrapping word elements into line containers.
+   * Wraps words into line containers.
    */
-  protected _splitIntoLines() {
-    const { container, words, lineClassName } = this;
-    const { lineTag } = this.props;
+  protected _splitLines() {
+    const { wordsMeta } = this;
+    const { container, lineTag } = this.props;
 
     const isHidden = container.offsetParent === null;
     if (isHidden) {
       return;
     }
 
-    this._lineWrapper?.destroy();
+    this._lineSplitWrapper?.destroy();
 
-    this._lineWrapper = wrapLines({
+    this._lineSplitWrapper = wrapLines({
       container,
-      words,
-      className: lineClassName,
+      hasLinesWrapper: this.props.linesWrapper,
+      wordsMeta,
+      lineClassName: this._cn('__line'),
+      lineWrapperClassName: this._cn('__line-wrapper'),
       tagName: lineTag,
     });
 
-    this._lines = this._lineWrapper.lines;
+    this._linesMeta = this._lineSplitWrapper.linesMeta;
   }
 
   /**
-   * Destroys the component, restoring the container to its initial HTML state.
+   * Destroys the component.
+   * This method does not restore the initial nodes. For this purpose, use `restore()`.
    */
   protected _destroy() {
     super._destroy();
 
-    this._container.innerHTML = this._initialHTML;
+    const isSuccess = this._lineSplitWrapper?.destroy();
+    this._lineSplitWrapper = undefined;
+
+    if (isSuccess) {
+      this._savedNodes.restore();
+    }
   }
 }

@@ -1,7 +1,8 @@
 {
   "extends": "../tsconfig.json",
   "exclude": [
-    "../src/**/stories/*.ts",
-    "../src/**/stories/*.tsx"
+    "../docusaurus/*",
+    "../stories/**/*.ts",
+    "../stories/**/*.tsx"
   ]
 }

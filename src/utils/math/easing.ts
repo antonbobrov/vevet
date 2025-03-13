@@ -1,5 +1,4 @@
 import { easing as easingProgress } from 'easing-progress';
-import { getApp } from '../internal/getApp';
 
 export {
   EaseInBack,
@@ -41,18 +40,29 @@ export type {
 } from 'easing-progress';
 
 /**
- * Calculates easing progress using a specified easing function, bezier curve, or custom easing function.
+ * Applies an easing function to a given progress value.
  *
- * @param progress - The current progress value (between 0 and 1).
- * @param easingType - The easing type to apply. It can be a predefined easing function, a bezier array, or a custom easing function. Defaults to the global app's easing settings if available.
+ * This function calculates eased progress using a specified easing function,
+ * bezier curve, or custom easing function.
+ *
+ * @param {number} progress - The current progress value, typically between 0 and 1.
+ * @param {TEasingType} easingType - The easing method to apply. It can be:
+ *   - A predefined easing function (e.g., `EaseInBounce`).
+ *   - A bezier array (e.g., `[0.25, 0.1, 0.25, 1]`).
+ *   - A custom easing function (e.g., `(value) => Math.sin(Math.PI * 0.5 * value)`).
+ * @returns {number} - The eased progress value.
+ *
+ * @group Utils
  *
  * @example
+ * easing(0.35, EaseInBounce);
+ * // => 0.167 (eased progress using EaseInBounce)
  *
- * easing(0.35, EaseInBounce); // => 0.167
- * easing(0.35, [.25, .1, .25, 1]); // => 0.604
- * easing(0.35, (value) => Math.sin(Math.PI * 0.5 * value)); // => 0.522
+ * easing(0.35, [0.25, 0.1, 0.25, 1]);
+ * // => 0.604 (eased progress using a bezier curve)
+ *
+ * easing(0.35, (value) => Math.sin(Math.PI * 0.5 * value));
+ * // => 0.522 (eased progress using a custom easing function)
  */
-export const easing: typeof easingProgress = (
-  progress,
-  easingType = getApp()?.props.easing ?? false,
-) => easingProgress(progress, easingType);
+export const easing: typeof easingProgress = (progress, easingType) =>
+  easingProgress(progress, easingType);

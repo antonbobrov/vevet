@@ -1,0 +1,257 @@
+# Marquee
+
+A custom marquee component that smoothly scrolls its child elements.
+
+This component is designed to loop elements horizontally within a container, with support for customization such as speed, gap, pause on hover, and more.
+
+## Examples
+
+Explore live examples in CodeSandbox:
+
+### Default Marquee
+
+<iframe 
+  src="https://codesandbox.io/embed/ln53pl?view=preview"
+  style={{
+    width: "100%",
+    height: "500px",
+    border: "0",
+    borderRadius: "4px",
+    overflow: "hidden"
+  }}
+  title="CodeSandbox Embed"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+/>
+
+### Draggable Marquee
+
+<iframe 
+  src="https://codesandbox.io/embed/jsg3nx?view=preview"
+  style={{
+    width: "100%",
+    height: "500px",
+    border: "0",
+    borderRadius: "4px",
+    overflow: "hidden"
+  }}
+  title="CodeSandbox Embed"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+/>
+
+### Scrollable Marquee
+
+<iframe 
+  src="https://codesandbox.io/embed/2xs68h?view=preview"
+  style={{
+    width: "100%",
+    height: "500px",
+    border: "0",
+    borderRadius: "4px",
+    overflow: "hidden"
+  }}
+  title="CodeSandbox Embed"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+/>
+
+
+
+## Props
+
+### Static Props
+
+Static properties are set during initialization and cannot be modified later.
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Default Value</th>
+  </tr>
+  
+  <tr>
+    <td>container</td>
+    <td>The container element that holds the marquee content.</td>
+    <td><code>HTMLElement</code></td>
+    <td></td>
+  </tr>
+  
+  <tr>
+    <td>resizeDebounce</td>
+    <td>The debounce delay for the resize event in milliseconds.</td>
+    <td><code>number</code></td>
+    <td><code>0</code></td>
+  </tr>
+  
+  <tr>
+    <td>hasWillChange</td>
+    <td>Determines whether to apply the `will-change` CSS property to the marquee elements to optimize rendering. Setting this to `true` may improve performance.</td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+  </tr>
+  
+  <tr>
+    <td>cloneNodes</td>
+    <td>Indicates whether to clone the marquee nodes. Can be set to `false` if DOM cloning is not preferred.</td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+  </tr>
+</table>
+
+### Mutable Props
+
+Mutable properties can be updated at runtime using `.updateProps()`.
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Default Value</th>
+  </tr>
+  
+  <tr>
+    <td>speed</td>
+    <td>The speed of the marquee animation. Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.</td>
+    <td><code>number | string</code></td>
+    <td><code>1</code></td>
+  </tr>
+  
+  <tr>
+    <td>gap</td>
+    <td>The gap between the marquee elements. Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.</td>
+    <td><code>number | string</code></td>
+    <td><code>0</code></td>
+  </tr>
+  
+  <tr>
+    <td>enabled</td>
+    <td>Enables or disables the marquee animation. When `false`, the marquee will be paused.</td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+  </tr>
+  
+  <tr>
+    <td>pauseOnHover</td>
+    <td>Pauses the marquee when the mouse hovers over it.</td>
+    <td><code>boolean</code></td>
+    <td><code>false</code></td>
+  </tr>
+  
+  <tr>
+    <td>centered</td>
+    <td>Centers the marquee content within the container.</td>
+    <td><code>boolean</code></td>
+    <td><code>false</code></td>
+  </tr>
+  
+  <tr>
+    <td>adjustSpeed</td>
+    <td>When need to use dynamic FPS factor to adjust the speed of the marquee.</td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+  </tr>
+  
+  <tr>
+    <td>pauseOnOut</td>
+    <td>Pauses the marquee when the mouse leaves the viewport.</td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+  </tr>
+</table>
+
+
+
+## Accessors
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### totalWidth
+
+Type: `number`
+
+Total width of all elements in the marquee
+
+### x
+
+Type: `number`
+
+The current X coordinate of the marquee.
+
+
+
+## Methods
+
+:::note
+All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+:::
+
+### render
+
+Renders the marquee, adjusting element positions.
+
+```ts
+instance.render(2); // with step 2
+instance.render(-1); // with step -1
+```
+
+### resize
+
+Resizes the marquee, recalculating element positions and cloning if necessary.
+
+```ts
+instance.resize();
+```
+
+### updateProps
+
+Dynamically updates instance properties.
+
+```ts
+instance.updateProps({
+  enabled: false,
+});
+```
+
+### destroy
+
+Destroys the instance and cleans up resources.
+
+```ts
+instance.destroy();
+```
+
+
+
+## Callbacks
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### render
+
+Called during marquee rendering.
+
+```ts
+const destruct = instance.on('render', () => console.log('render'));
+
+// Cancel the callback
+destruct();
+```
+
+### resize
+
+Called on marquee resize
+
+```ts
+const destruct = instance.on('resize', () => console.log('resize'));
+
+// Cancel the callback
+destruct();
+```

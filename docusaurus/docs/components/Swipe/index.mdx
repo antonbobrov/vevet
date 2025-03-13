@@ -1,0 +1,532 @@
+# Swipe
+
+Manages swipe interactions:
+
+- Tracks movement and detects direction
+- Emits events on start, move, and end
+- Supports inertia-based movement
+
+:::note
+- Does not transform elements, only computes coordinates.
+- Does not persist state after swipe completion.
+:::
+
+## Example
+
+Explore a live example in CodeSandbox:
+
+<iframe 
+  src="https://codesandbox.io/embed/95ltnm?view=preview"
+  style={{
+    width: "100%",
+    height: "500px",
+    border: "0",
+    borderRadius: "4px",
+    overflow: "hidden"
+  }}
+  title="CodeSandbox Embed"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+/>
+
+
+
+## Props
+
+### Static Props
+
+Static properties are set during initialization and cannot be modified later.
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Default Value</th>
+  </tr>
+  
+  <tr>
+    <td>container</td>
+    <td>Event listener container.</td>
+    <td><code>HTMLElement | SVGElement</code></td>
+    <td></td>
+  </tr>
+  
+  <tr>
+    <td>buttons</td>
+    <td>
+      Determines which mouse buttons trigger events.
+      - 0: Main button pressed, usually the left button or the un-initialized state
+      - 1: Auxiliary button pressed, usually the wheel button or the middle button (if present)
+      - 2: Secondary button pressed, usually the right button
+      - 3: Fourth button, typically the Browser Back button
+      - 4: Fifth button, typically the Browser Forward button
+
+      See [MouseEvent.button](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button).
+    </td>
+    <td><code>number[]</code></td>
+    <td><code>[0]</code></td>
+  </tr>
+  
+  <tr>
+    <td>pointers</td>
+    <td>Required pointer count to activate swiping.</td>
+    <td><code>number</code></td>
+    <td><code>1</code></td>
+  </tr>
+</table>
+
+### Mutable Props
+
+Mutable properties can be updated at runtime using `.updateProps()`.
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Default Value</th>
+  </tr>
+  
+  <tr>
+    <td>enabled</td>
+    <td>Enables or disables swipe events.</td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+  </tr>
+  
+  <tr>
+    <td>relative</td>
+    <td>Calculates coordinates relative to the container.</td>
+    <td><code>boolean</code></td>
+    <td><code>false</code></td>
+  </tr>
+  
+  <tr>
+    <td>axis</td>
+    <td>Primary swiping axis.</td>
+    <td><code>null | 'x' | 'y'</code></td>
+    <td><code>null</code></td>
+  </tr>
+  
+  <tr>
+    <td>grabCursor</td>
+    <td>Shows "grab" and "grabbing" cursors during interaction.</td>
+    <td><code>boolean</code></td>
+    <td><code>false</code></td>
+  </tr>
+  
+  <tr>
+    <td>willAbort</td>
+    <td>Determines if swipe should be aborted.</td>
+    <td><code>(props: ISwipeCanMoveArg) => boolean</code></td> 
+    <td><code>() => false</code></td>
+  </tr>
+  
+  <tr>
+    <td>threshold</td>
+    <td>Minimum swipe distance (px) to trigger swipe start.</td>
+    <td><code>number</code></td> 
+    <td><code>5</code></td>
+  </tr>
+  
+  <tr>
+    <td>minTime</td>
+    <td>Minimum duration (ms) to trigger swipe move.</td>
+    <td><code>number</code></td> 
+    <td><code>0</code></td>
+  </tr>
+  
+  <tr>
+    <td>directionThreshold</td>
+    <td>Minimum swipe distance (px) for directional callbacks.</td>
+    <td><code>number</code></td> 
+    <td><code>50</code></td>
+  </tr>
+  
+  <tr>
+    <td>preventEdgeSwipe</td>
+    <td>Prevents edge swiping (iOS swipe-back gesture).</td>
+    <td><code>boolean</code></td> 
+    <td><code>true</code></td>
+  </tr>
+  
+  <tr>
+    <td>edgeSwipeThreshold</td>
+    <td>Edge swipe threshold (px) from the left/right edge.</td>
+    <td><code>number</code></td> 
+    <td><code>20</code></td>
+  </tr>
+  
+  <tr>
+    <td>preventTouchMove</td>
+    <td>Prevents `touchmove` event.</td>
+    <td><code>boolean</code></td> 
+    <td><code>true</code></td>
+  </tr>
+  
+  <tr>
+    <td>requireCtrlKey</td>
+    <td>Requires Ctrl key for swipe (mouse only).</td>
+    <td><code>boolean</code></td> 
+    <td><code>false</code></td>
+  </tr>
+  
+  <tr>
+    <td>inertia</td>
+    <td>Enables inertia animation.</td>
+    <td><code>boolean</code></td> 
+    <td><code>false</code></td>
+  </tr>
+  
+  <tr>
+    <td>inertiaDuration</td>
+    <td>Inertia duration.</td>
+    <td><code>(distance: number) => number</code></td> 
+    <td><code>(distance) => clamp(distance, 350, 1000)</code></td>
+  </tr>
+  
+  <tr>
+    <td>inertiaEasing</td>
+    <td>
+      Easing function for inertia.
+      
+      See [easing types](/docs/utils#easing-types) for more information
+    </td>
+    <td><code>TEasingType</code></td> 
+    <td><code>EaseOutCubic</code></td>
+  </tr>
+  
+  <tr>
+    <td>inertiaRatio</td>
+    <td>Inertia strength.</td>
+    <td><code>number</code></td> 
+    <td><code>0.5</code></td>
+  </tr>
+</table>
+
+
+
+## Interfaces
+
+### ISwipeVec2
+
+```ts
+interface ISwipeVec2 {
+  x: number;
+  y: number;
+}
+```
+
+### ISwipeCanMoveArg
+
+```ts
+interface ISwipeCanMoveArg {
+  type: 'touch' | 'mouse';
+  matrix: ISwipeMatrix;
+  start: ISwipeVec2;
+  diff: ISwipeVec2;
+}
+```
+
+### ISwipeMatrix
+
+```ts
+interface ISwipeMatrix {
+  x: number;
+  y: number;
+  angle: number;
+}
+```
+
+### ISwipeVelocity
+
+```ts
+interface ISwipeVelocity {
+  x: number;
+  y: number;
+  angle: number;
+  timestamp: number;
+}
+```
+
+### ISwipeCoords
+
+```ts
+interface ISwipeCoords {
+  /** Event timestamp. */
+  timestamp: number;
+  /** Start position. */
+  start: ISwipeMatrix;
+  /** Previous position. */
+  prev: ISwipeMatrix;
+  /** Current position. */
+  current: ISwipeMatrix;
+  /** Movement offset from start. */
+  diff: ISwipeMatrix;
+  /** Movement offset from previous position. */
+  step: ISwipeMatrix;
+  /** Total accumulated movement. */
+  accum: ISwipeVec2;
+}
+```
+
+
+
+## Accessors
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### accum
+
+Type: `ISwipeVec2`
+
+Accumulated movement.
+
+### container
+
+Type: `HTMLElement | SVGElement`
+
+Event target element.
+
+### coords
+
+Type: `ISwipeCoords`
+
+Returns current swipe coordinates.
+
+### current
+
+Type: `ISwipeMatrix`
+
+Current coordinate.
+
+### diff
+
+Type: `ISwipeMatrix`
+
+Difference between start and current coordinates.
+
+### hasInertia
+
+Type: `boolean`
+
+Indicates if inertia is active.
+
+### isSwiping
+
+Type: `boolean`
+
+Indicates if a swipe is active.
+
+### prev
+
+Type: `ISwipeMatrix`
+
+Previous coordinate.
+
+### start
+
+Type: `ISwipeMatrix`
+
+Start coordinate.
+
+### step
+
+Type: `ISwipeMatrix`
+
+Difference between start and previous coordinates.
+
+
+
+## Methods
+
+:::note
+All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+:::
+
+### cancelInertia
+
+Destroys the inertia animation.
+
+```ts
+instance.cancelInertia();
+```
+
+
+
+## Callbacks
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### start
+
+Swipe start event.
+
+```ts
+// See ISwipeCoords
+const destruct = instance.on('start', (coords) => console.log(coords));
+
+// Cancel the callback
+destruct();
+```
+
+### move
+
+Swipe move event.
+
+```ts
+// See ISwipeCoords
+const destruct = instance.on('move', (coords) => console.log(coords));
+
+// Cancel the callback
+destruct();
+```
+
+### end
+
+Swipe end event.
+
+```ts
+// See ISwipeCoords
+const destruct = instance.on('end', (coords) => console.log(coords));
+
+// Cancel the callback
+destruct();
+```
+
+### toTop
+
+Swipe from bottom to top.
+
+```ts
+const destruct = instance.on('toTop', () => console.log('from bottom to top'));
+
+// Cancel the callback
+destruct();
+```
+
+### toTop
+
+Swipe from top to bottom.
+
+```ts
+const destruct = instance.on('toBottom', () => console.log('from top to bottom'));
+
+// Cancel the callback
+destruct();
+```
+
+### toRight
+
+Swipe from left to right.
+
+```ts
+const destruct = instance.on('toRight', () => console.log('from left to right'));
+
+// Cancel the callback
+destruct();
+```
+
+### toLeft
+
+Swipe from right to left.
+
+```ts
+const destruct = instance.on('toLeft', () => console.log('from right to left'));
+
+// Cancel the callback
+destruct();
+```
+
+### touchstart
+
+Triggered on `touchstart` listener. Triggered before any action related to this event is processed.
+
+```ts
+const destruct = instance.on('touchstart', (event) => console.log(event));
+
+// Cancel the callback
+destruct();
+```
+
+### touchmove
+
+Triggered on `touchmove` listener. Triggered before any action related to this event is processed.
+
+```ts
+const destruct = instance.on('touchmove', (event) => console.log(event));
+
+// Cancel the callback
+destruct();
+```
+
+### mousemove
+
+Triggered on `mousemove` listener. Triggered before any action related to this event is processed.
+
+```ts
+const destruct = instance.on('mousemove', (event) => console.log(event));
+
+// Cancel the callback
+destruct();
+```
+
+### abort
+
+Triggered when swipe is aborted.
+
+```ts
+const destruct = instance.on('abort', () => console.log('swipe aborted'));
+
+// Cancel the callback
+destruct();
+```
+
+### preventEdgeSwipe
+
+Triggered on edge swipe preventing.
+
+```ts
+const destruct = instance.on('preventEdgeSwipe', () => console.log('edge swipe prevented'));
+
+// Cancel the callback
+destruct();
+```
+
+### inertiaStart
+
+Triggered on inertia start.
+
+```ts
+const destruct = instance.on('inertiaStart', () => console.log('inertia start'));
+
+// Cancel the callback
+destruct();
+```
+
+### inertiaStart
+
+Triggered on inertia progress.
+
+```ts
+const destruct = instance.on('inertia', () => console.log('inertia in progress'));
+
+// Cancel the callback
+destruct();
+```
+
+### inertiaEnd
+
+Triggered on inertia end.
+
+```ts
+const destruct = instance.on('inertiaEnd', () => console.log('inertia end'));
+
+// Cancel the callback
+destruct();
+```

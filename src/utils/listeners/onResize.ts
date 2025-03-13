@@ -1,123 +1,119 @@
-import { NCallbacks } from '@/base/Callbacks';
-import { getApp } from '../internal/getApp';
-import { IViewportCallbackTypes } from '@/src/Vevet/events/createViewport/types';
+import { IViewportCallbacksMap } from '@/core/exported';
+import { initVevet } from '@/global/initVevet';
 
-export type TOnResizeTarget = keyof IViewportCallbackTypes;
-
-export interface IOnResizeCallbackProps {
-  trigger: 'unknown' | 'Viewport' | 'ResizeObserver';
-}
-
-export type TOnResizeCallback = (props: IOnResizeCallbackProps) => void;
+export type TOnResizeCallback = () => void;
 
 export interface IOnResizeProps {
-  /** Callback on resize */
-  onResize: TOnResizeCallback;
-  /** Observable element */
-  element?: Element | Element[] | false;
   /**
-   * Viewport target on resize.
-   * It will be used if `element` is not provided or `ResizeObserver` is not supported.
-   * @default 'any'
+   * Callback to invoke on resize.
    */
-  viewportTarget?: TOnResizeTarget;
+  callback: TOnResizeCallback;
+
   /**
-   * Has both `viewport` callbacks and `ResizeObserver`
-   * @default false
+   * Elements to observe for size changes. If null, only viewport events are used.
    */
-  hasBothEvents?: boolean;
+  element?: Element | Element[] | null;
+
   /**
-   * Resize debounce timeout
+   * Target viewport property for resize events (enables viewport listeners).
+   */
+  viewportTarget?: keyof IViewportCallbacksMap;
+
+  /**
+   * Debounce delay (ms) for resize events.
    * @default 0
    */
   resizeDebounce?: number;
+
+  /** Viewport callback name. Used for debugging */
+  name?: string;
 }
 
 export interface IOnResize {
-  /** Remove resize events */
+  /**
+   * Remove all resize listeners.
+   */
   remove: () => void;
-  /** Launch resize callback */
+
+  /**
+   * Trigger the resize callback immediately.
+   */
   resize: () => void;
-  /** Launch resize callback with debounce */
+
+  /**
+   * Trigger the resize callback with `resizeDebounce` delay.
+   */
   debounceResize: () => void;
-  /** `ResizeObserver` was used */
-  hasResizeObserver: boolean;
 }
 
 /**
- * Adds resize event listeners to either an element (using `ResizeObserver`) or the viewport (using custom resize events).
- * It handles debouncing and allows the removal of listeners when no longer needed.
- * If both `element` and `hasBothEvents` are provided, both `ResizeObserver` and viewport resize events will be used.
+ * Adds resize listeners to elements (using `ResizeObserver`) and/or the viewport.
+ *
+ * @group Utils
  *
  * @example
- *
- * const handler = onResize({
- *   onResize: () => console.log('resize'),
- *   element: document.getElementById('app')!,
- *   viewportTarget: 'any',
- *   hasBothEvents: true,   // Trace both element and viewport sizes
- *   resizeDebounce: 100,
+ * const resizeWithElement = onResize({
+ *   callback: () => console.log('Element resized'),
+ *   element: document.getElementById('app'),
  * });
  *
- * // Trigger resize with debounce
- * handler.debounceResize();
- * handler.debounceResize();
+ * const resizeWithViewport = onResize({
+ *   callback: () => console.log('Viewport resized'),
+ *   viewportTarget: 'width',
+ * });
  *
- * // Trigger resize without debounce
- * handler.resize();
- *
- * // Remove listeners
- * handler.remove();
+ * const resizeWithBoth = onResize({
+ *   callback: () => console.log('Both resized'),
+ *   element: document.getElementById('app'),
+ *   viewportTarget: 'any',
+ * });
  */
 export function onResize({
-  onResize: handleResize,
+  callback,
   element,
-  viewportTarget = 'any',
-  hasBothEvents = false,
+  viewportTarget,
   resizeDebounce = 0,
+  name,
 }: IOnResizeProps): IOnResize {
+  const core = initVevet();
+
   let timeout: NodeJS.Timeout | undefined;
   let resizeObserver: ResizeObserver | undefined;
-  let isFirstResizeObserverCallback = true;
+  let isFirstObserverCallback = true;
 
-  let viewportCallback: NCallbacks.IAddedCallback | undefined;
+  let viewportCallback: (() => void) | undefined;
 
-  const debounceResize = (props?: IOnResizeCallbackProps, delay?: number) => {
+  const debounceResize = (delay?: number) => {
     if (timeout) {
       clearTimeout(timeout);
+      timeout = undefined;
     }
 
-    timeout = setTimeout(
-      () => handleResize(props ?? { trigger: 'unknown' }),
-      delay ?? resizeDebounce,
-    );
+    timeout = setTimeout(() => callback(), delay ?? resizeDebounce);
   };
 
-  if (element && (element instanceof Element || Array.isArray(element))) {
+  // Initialize ResizeObserver if element is provided
+  if (element) {
     resizeObserver = new ResizeObserver(() => {
-      if (isFirstResizeObserverCallback) {
-        isFirstResizeObserverCallback = false;
+      if (isFirstObserverCallback) {
+        isFirstObserverCallback = false;
 
         return;
       }
 
-      debounceResize(
-        { trigger: 'ResizeObserver' },
-        getApp().props.resizeDebounce + resizeDebounce,
-      );
+      debounceResize(core.props.resizeDebounce + resizeDebounce);
     });
 
-    if (Array.isArray(element)) {
-      element.forEach((item) => resizeObserver?.observe(item));
-    } else {
-      resizeObserver.observe(element);
-    }
+    (Array.isArray(element) ? element : [element]).forEach((el) => {
+      resizeObserver?.observe(el);
+    });
   }
 
-  if (hasBothEvents || !resizeObserver) {
-    viewportCallback = getApp().viewport.callbacks.add(viewportTarget, () =>
-      debounceResize({ trigger: 'Viewport' }),
-    );
+  // Attach viewport event listeners if specified
+  if (viewportTarget) {
+    viewportCallback = core.onViewport(viewportTarget, () => debounceResize(), {
+      name,
+    });
   }
 
   return {
@@ -127,10 +123,9 @@ export function onResize({
       }
 
       resizeObserver?.disconnect();
-      viewportCallback?.remove();
+      viewportCallback?.();
     },
-    resize: () => handleResize({ trigger: 'unknown' }),
+    resize: () => callback(),
     debounceResize: () => debounceResize(),
-    hasResizeObserver: !!resizeObserver,
   };
 }

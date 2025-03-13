@@ -1,7 +1,8 @@
-import { NSplitText } from '../types';
+import split from 'lodash.split';
+import { ISplitTextLetterMeta, ISplitTextWordMeta } from '../types';
 
 interface IProps {
-  words: NSplitText.IWord[];
+  wordsMeta: ISplitTextWordMeta[];
   classname: string;
   tagName: keyof HTMLElementTagNameMap;
 }
@@ -9,12 +10,16 @@ interface IProps {
 /**
  * Wraps each letter in every word inside the container with the specified HTML tag and class name.
  */
-export function wrapLetters({ words, classname, tagName }: IProps) {
-  const letters: NSplitText.ILetter[] = [];
+export function wrapLetters({ wordsMeta, classname, tagName }: IProps) {
+  const lettersMeta: ISplitTextLetterMeta[] = [];
 
   // Iterate over each word to wrap its letters
-  words.forEach((word) => {
-    const textNode = word.element.childNodes[0];
+  wordsMeta.forEach((wordMeta) => {
+    const textNode = wordMeta.element.childNodes[0];
+    if (!textNode) {
+      return;
+    }
+
     const text = textNode.textContent;
 
     if (!text) {
@@ -22,28 +27,27 @@ export function wrapLetters({ words, classname, tagName }: IProps) {
     }
 
     // Split the word into individual letters
-    const splitLetters = text.split('');
+    const splitLetters = split(text, '');
 
-    splitLetters.forEach((splitLetter) => {
-      // Create a new element for each letter
+    splitLetters.forEach((letterContents) => {
       const element = document.createElement(tagName);
       element.style.display = 'inline-block';
       element.classList.add(classname);
-      element.appendChild(document.createTextNode(splitLetter));
+      element.appendChild(document.createTextNode(letterContents));
 
       // Append the letter element to the word's container
-      word.element.appendChild(element);
+      wordMeta.element.append(element);
 
-      const letter: NSplitText.ILetter = { element, text: splitLetter };
+      const letter: ISplitTextLetterMeta = { element };
 
       // Add the letter to the word's letters array and the global letters array
-      word.letters.push(letter);
-      letters.push(letter);
+      wordMeta.letters.push(letter);
+      lettersMeta.push(letter);
     });
 
     // Remove the original text node after wrapping the letters
     textNode.remove();
   });
 
-  return { letters };
+  return { lettersMeta };
 }

@@ -1,0 +1,187 @@
+# Raf
+
+Manages an animation frame loop with configurable FPS and playback controls.
+
+## Example
+
+Explore a live example in CodeSandbox:
+
+<iframe 
+  src="https://codesandbox.io/embed/pt5txr?view=preview"
+  style={{
+    width: "100%",
+    height: "700px",
+    border: "0",
+    borderRadius: "4px",
+    overflow: "hidden"
+  }}
+  title="CodeSandbox Embed"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+/>
+
+
+
+## Props
+
+### Mutable Props
+
+Mutable properties can be updated at runtime using `.updateProps()`.
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Default Value</th>
+  </tr>
+  
+  <tr>
+    <td>fps</td>
+    <td>Frames per second (FPS) for the animation. Set to 'auto' for dynamic adjustment.</td>
+    <td><code>'auto' | number</code></td>
+    <td>'auto'</td>
+  </tr>
+  
+  <tr>
+    <td>enabled</td>
+    <td>Enables or disables the Raf animation loop.</td>
+    <td><code>boolean</code></td>
+    <td><code>false</code></td>
+  </tr>
+</table>
+
+
+
+## Accessors
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### duration
+
+Type: `number`
+
+Duration of the last frame in ms
+
+### fps
+
+Type: `number`
+
+Real-time FPS
+
+### fpsFactor
+
+Type: `number`
+
+Scaling coefficient based on a 60 FPS target
+
+### index
+
+Type: `number`
+
+Current frame index
+
+### isPlaying
+
+Type: `boolean`
+
+Playback state of the animation frame
+
+### timestamp
+
+Type: `number`
+
+Timestamp of the current frame
+
+
+
+## Methods
+
+:::note
+All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+:::
+
+### lerpFactor
+
+Calculate linear interpolation factor to make animations run the same regardless of FPS
+
+```ts
+const ease = instance.lerpFactor(0.1);
+
+// and use it in your lerp
+lerp(from, to, ease);
+```
+
+### pause
+
+Pause the animation loop
+
+```ts
+instance.pause();
+```
+
+### play
+
+Start the animation loop
+
+```ts
+instance.play();
+```
+
+
+
+## Callbacks
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### play
+
+Triggered when the animation starts
+
+```ts
+const destruct = instance.on('play', () => console.log('play'));
+
+// Cancel the callback
+destruct();
+```
+
+### pause
+
+Triggered when the animation is paused
+
+```ts
+const destruct = instance.on('pause', () => console.log('pause'));
+
+// Cancel the callback
+destruct();
+```
+
+### toggle
+
+Triggered when play/pause state toggles
+
+```ts
+const destruct = instance.on('toggle', () => console.log('toggle'));
+
+// Cancel the callback
+destruct();
+```
+
+### frame
+
+Triggered on every animation frame
+
+```ts
+const destruct = instance.on('frame', ({ fps, fpsFactor, duration }) => {
+  console.log('current FPS', fps);
+  console.log('scaling coefficient based on a 60 FPS target', fpsFactor);
+  console.log('duration of the last frame in ms', duration);
+});
+
+// Cancel the callback
+destruct();
+```

@@ -4,34 +4,15 @@
     "target": "ES5",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "strict": true,
     "isolatedModules": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "jsx": "react",
-    "baseUrl": ".",
+    "jsx": "preserve",
     "paths": {
-      "@/base/*": [
-        "./src/base/*"
-      ],
-      "@/components/*": [
-        "./src/components/*"
-      ],
-      "@/styles/*": [
-        "./src/styles/*"
-      ],
-      "@/types/*": [
-        "./src/types/*"
-      ],
-      "@/utils/*": [
-        "./src/utils/*"
-      ],
-      "@/src/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "**/*.ts"],
+  "include": ["src", "stories", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "lib"]
 }

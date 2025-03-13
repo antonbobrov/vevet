@@ -1,23 +1,20 @@
 /**
- * Clamp the value between two points.
- * Ensures that `value` is between the minimum and maximum of the provided `scope`.
+ * Restricts a value to lie within a specified range.
  *
- * @param value - The value to be clamped.
- * @param scope - The range to clamp the value between, defaulting to [0, 1].
+ * Ensures that `value` is no less than `min` and no greater than `max`.
+ *
+ * @param {number} value - The input value to be clamped.
+ * @param {number} [min=0] - The lower bound of the range (default is 0).
+ * @param {number} [max=1] - The upper bound of the range (default is 1).
+ * @returns {number} - The clamped value within the range [min, max].
+ *
+ * @group Utils
  *
  * @example
- *
- * clamp(1.5, [0.1, 0.9]); // => 0.9
- * clamp(0.001, [0.1, 0.9]); // => 0.1
- * clamp(0.5, [0, 1]); // => 0.5
+ * clamp(1.5, 0.1, 0.9); // 0.9
+ * clamp(0.001, 0.1, 0.9); // 0.1
+ * clamp(0.5, 0, 1); // 0.5
  */
-export function clamp(value: number, scope = [0, 1]): number {
-  if (value < scope[0]) {
-    return scope[0];
-  }
-  if (value > scope[1]) {
-    return scope[1];
-  }
-
-  return value;
+export function clamp(value: number, min = 0, max = 1) {
+  return Math.max(min, Math.min(value, max));
 }

@@ -1,0 +1,258 @@
+# Cursor
+
+A customizable custom cursor component with smooth animations and hover interactions. Supports dynamic appearance changes and enhanced user interaction.
+
+## Example
+
+Explore a live example in CodeSandbox:
+
+<iframe 
+  src="https://codesandbox.io/embed/wvlp22?view=preview"
+  style={{
+    width: "100%",
+    height: "500px",
+    border: "0",
+    borderRadius: "4px",
+    overflow: "hidden"
+  }}
+  title="CodeSandbox Embed"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+/>
+
+
+
+## Props
+
+### Static Props
+
+Static properties are set during initialization and cannot be modified later.
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Default Value</th>
+  </tr>
+  
+  <tr>
+    <td>container</td>
+    <td>The container where the custom cursor is active. <br />Use `window` for full-window activation.</td>
+    <td><code>Element | window</code></td>
+    <td><code>window</code></td>
+  </tr>
+  
+  <tr>
+    <td>hideNative</td>
+    <td>Hides the native cursor if set to `true`.</td>
+    <td><code>boolean</code></td>
+    <td><code>false</code></td>
+  </tr>
+</table>
+
+### Mutable Props
+
+Mutable properties can be updated at runtime using `.updateProps()`.
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Default Value</th>
+  </tr>
+  
+  <tr>
+    <td>enabled</td>
+    <td>Enables or disables the custom cursor interactions.</td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+  </tr>
+  
+  <tr>
+    <td>width</td>
+    <td>The initial width of the custom cursor.</td>
+    <td><code>number</code></td>
+    <td><code>50</code></td>
+  </tr>
+  
+  <tr>
+    <td>height</td>
+    <td>The initial height of the custom cursor.</td>
+    <td><code>number</code></td>
+    <td><code>50</code></td>
+  </tr>
+  
+  <tr>
+    <td>lerp</td>
+    <td>Linear interpolation factor for smooth cursor movement. The value must be between `0` and `1`, with higher values indicating faster movement.</td>
+    <td><code>number</code></td>
+    <td><code>0.2</code></td>
+  </tr>
+  
+  <tr>
+    <td>autoStop</td>
+    <td>Stops rendering the cursor automatically when its coordinates and size closely match the target values.</td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+  </tr>
+</table>
+
+
+
+## Accessors
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### container
+
+Type: `Element | Window`
+
+The cursor container
+
+### coords
+
+Type: `{ height: number; width: number; x: number; y: number; }`
+
+The current coordinates. These are updated during cursor movement.
+
+### domContainer
+
+Type: `HTMLElement`
+
+Returns the DOM parent for the cursor element.
+
+### hoveredElement
+
+Type: `undefined  | ICursorHoveredElement`
+
+Stores information about the currently hovered element, including dimensions and interactive properties.
+
+#### ICursorHoveredElement Structure
+
+```ts
+interface ICursorHoveredElement {
+  element: Element;
+  width?: number | "auto" | null;
+  height?: number | "auto" | null;
+  padding?: number;
+  sticky?: boolean;
+}
+```
+
+- `element`: The DOM element currently being hovered.
+- `width`: Custom width for the cursor when hovering over this element (`number`, "auto", or `null`).
+- `height`: Custom height for the cursor when hovering over this element (`number`, "auto", or `null`).
+- `padding`: Additional padding around the cursor.
+- `sticky`: Whether the cursor remains centered on the element.
+
+### inner
+
+Type: `HTMLElement`
+
+The inner element of the custom cursor, allowing additional styling.
+
+### outer
+
+Type: `HTMLElement`
+
+The outer element representing the visual cursor.
+
+### prefix
+
+Type: `string`
+
+Classname prefix for styling elements.
+
+### targetCoords
+
+Type: `{ height: number; width: number; x: number; y: number }`
+
+Target coordinates of the cursor (without smooth interpolation).
+
+
+
+## Methods
+
+:::note
+All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+:::
+
+### attachCursor
+
+Registers a cursor type.
+
+```ts
+instance.attachCursor({
+  element: document.getElementById('curor-type'),
+  type: 'some_type',
+});
+```
+
+### attachElement
+
+Registers an element to interact with the cursor, enabling dynamic size and position changes based on hover effects.
+
+```ts
+const hoveredElement = instance.attachElement({
+  element: document.getElementById('hover-element'),
+  type: 'some_type',
+  width: 'auto',
+  height: 'auto',
+  padding: 10,
+  sticky: true,
+});
+
+// Remove interaction
+hoveredElement();
+```
+
+### render
+
+Manually triggers a cursor render.
+
+```ts
+canvas.render();
+```
+
+### updateProps
+
+Dynamically updates instance properties.
+
+```ts
+instance.updateProps({
+  width: 100,
+  height: 100,
+});
+```
+
+### destroy
+
+Destroys the instance and cleans up resources.
+
+```ts
+canvas.destroy();
+```
+
+
+
+## Callbacks
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### render
+
+Triggered on each render to update the cursor's position.
+
+```ts
+const destruct = instance.on('render', () => console.log('Cursor rendered'));
+
+// Cancel the callback
+destruct();
+```
+

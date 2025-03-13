@@ -1,41 +1,49 @@
-import { NComponent } from '@/base/Component/types';
+import {
+  IModuleCallbacksMap,
+  IModuleMutableProps,
+  IModuleStaticProps,
+} from '@/base/Module';
 
-export namespace NPreloader {
-  export interface IStaticProps extends NComponent.IStaticProps {
-    /**
-     * The container for the preloader. You can pass a CSS selector string,
-     * an HTML element, or set it to `false` if you only need the preloader callbacks.
-     *
-     * @default '#v-preloader'
-     */
-    container?: string | HTMLElement | false;
-  }
+/**
+ * Static properties for the Preloader module.
+ */
+export interface IPreloaderStaticProps extends IModuleStaticProps {
+  /**
+   * The container for the preloader. Set it to `null` if you only need the preloader logic.
+   */
+  container: HTMLElement | null;
+  /**
+   * Defines whether to automatically hide the preloader container.
+   * - `false`: Disables the hiding animation, allowing you to manage it manually.
+   * - `number`: Specifies the animation duration in milliseconds.
+   *   This works only if the container is an HTML element.
+   *
+   * @default 250
+   */
+  hide?: false | number;
+}
 
-  export interface IChangeableProps extends NComponent.IChangeableProps {
-    /**
-     * Defines whether to automatically hide the preloader container.
-     * Set `false` to disable the hiding animation, allowing you to manage it manually.
-     * Set a `number` to specify the animation duration in milliseconds.
-     *
-     * @default 250
-     */
-    hideAnimation?: false | number;
-  }
+/**
+ * Mutable properties for the Preloader module.
+ */
+export interface IPreloaderMutableProps extends IModuleMutableProps {}
 
-  export interface ICallbacksTypes extends NComponent.ICallbacksTypes {
-    /**
-     * Triggered when the page is fully loaded.
-     */
-    loaded: undefined;
+/**
+ * Callbacks map for the Preloader module.
+ */
+export interface IPreloaderCallbacksMap extends IModuleCallbacksMap {
+  /**
+   * Triggered when the page is fully loaded.
+   */
+  loaded: undefined;
 
-    /**
-     * Triggered when the preloader starts hiding.
-     */
-    hide: undefined;
+  /**
+   * Triggered when the preloader starts hiding.
+   */
+  hide: undefined;
 
-    /**
-     * Triggered when the preloader is completely hidden.
-     */
-    hidden: undefined;
-  }
+  /**
+   * Triggered when the preloader is completely hidden.
+   */
+  hidden: undefined;
 }

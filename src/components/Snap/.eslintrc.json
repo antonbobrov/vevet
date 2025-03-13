@@ -1,0 +1,6 @@
+{
+  "rules": {
+    "import/no-cycle": "off",
+    "no-param-reassign": "off"
+  }
+}

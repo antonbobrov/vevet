@@ -1,4 +1,4 @@
-import { NSplitText } from '../types';
+import { ISplitTextLetterMeta } from '../types';
 import { wrapLetters } from './wrapLetters';
 import { wrapWords } from './wrapWords';
 
@@ -22,32 +22,34 @@ export function splitBase({
   letterTag,
   wordTag,
 }: IProps) {
-  // Clone the container to manipulate the DOM without affecting the original
-  const helper = container.cloneNode(true) as HTMLElement;
+  // Prepare the fragment
+  const prepareFragment = document.createDocumentFragment();
+  while (container.childNodes[0]) {
+    prepareFragment.appendChild(container.childNodes[0]);
+  }
 
   // Wrap the text into words
-  const words = wrapWords({
-    container: helper,
+  const wordsMeta = wrapWords({
+    container: prepareFragment as any,
     classname: wordClassName,
     tagName: wordTag,
   });
 
-  const letters: NSplitText.ILetter[] = [];
+  const lettersMeta: ISplitTextLetterMeta[] = [];
 
   // If enabled, wrap words into letters
   if (hasLetters) {
     const wrappedLetters = wrapLetters({
-      words,
+      wordsMeta,
       classname: letterClassName,
       tagName: letterTag,
     });
 
-    letters.push(...wrappedLetters.letters);
+    lettersMeta.push(...wrappedLetters.lettersMeta);
   }
 
-  return {
-    helper,
-    words,
-    letters,
-  };
+  // Append the prepared fragment
+  container.appendChild(prepareFragment);
+
+  return { wordsMeta, lettersMeta };
 }

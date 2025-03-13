@@ -1,65 +1,98 @@
-import { NComponent } from '@/base/Component/types';
+import {
+  IModuleCallbacksMap,
+  IModuleMutableProps,
+  IModuleStaticProps,
+} from '@/base/Module';
 
-export namespace NMarquee {
-  export interface IStaticProps extends NComponent.IStaticProps {
-    /**
-     * Marquee container. You may use a CSS selector or the element itself.
-     * @default '#v-marquee'
-     */
-    container?: string | HTMLElement;
-    /**
-     * Timeout of resize event
-     * @default 0
-     */
-    resizeDebounce?: number;
-    /**
-     * If `true`, the `will-change` CSS property will be applied to the elements to improve performance.
-     * @default true
-     */
-    hasWillChange?: boolean;
-    /**
-     * If need to clone nodes for a better animation. May be useful to set `false` when using with such frameworks as React.
-     * @default true
-     */
-    canCloneNodes?: boolean;
-  }
+/**
+ * Static properties for the Marquee component.
+ */
+export interface IMarqueeStaticProps extends IModuleStaticProps {
+  /**
+   * The container element that holds the marquee content.
+   */
+  container: HTMLElement;
 
-  export interface IChangeableProps extends NComponent.IChangeableProps {
-    /**
-     * Marquee speed
-     * @default 1
-     */
-    speed?: number;
-    /**
-     * Gap between elements
-     * @default 0
-     */
-    gap?: number;
-    /**
-     * Enable animation
-     * @default true
-     */
-    isEnabled?: boolean;
-    /**
-     * Pause on hover
-     * @default false
-     */
-    pauseOnHover?: boolean;
-    /**
-     * On different screens with different FPS, animation may be slower or faster.
-     * This property is to normalize animation speed across different screens.
-     * @default true
-     */
-    isFpsNormalized?: boolean;
-    /**
-     * If need to center elements
-     * @default false
-     */
-    isCentered?: boolean;
-  }
+  /**
+   * The debounce delay for the resize event in milliseconds.
+   * @default 0
+   */
+  resizeDebounce?: number;
 
-  export interface ICallbacksTypes extends NComponent.ICallbacksTypes {
-    render: undefined;
-    resize: undefined;
-  }
+  /**
+   * Determines whether to apply the `will-change` CSS property to the marquee elements to optimize rendering.
+   * Setting this to `true` may improve performance.
+   * @default true
+   */
+  hasWillChange?: boolean;
+
+  /**
+   * Indicates whether to clone the marquee nodes.
+   * Indicates whether to clone the marquee nodes. Can be set to `false` if DOM cloning is not preferred.
+   * @default true
+   */
+  cloneNodes?: boolean;
+}
+
+/**
+ * Mutable properties for the Marquee component.
+ */
+export interface IMarqueeMutableProps extends IModuleMutableProps {
+  /**
+   * The speed of the marquee animation. Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.
+   * @default 1
+   */
+  speed?: number | string;
+
+  /**
+   * The gap between the marquee elements. Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.
+   * @default 0
+   */
+  gap?: number | string;
+
+  /**
+   * Enables or disables the marquee animation.
+   * When `false`, the marquee will be paused.
+   * @default true
+   */
+  enabled?: boolean;
+
+  /**
+   * Pauses the marquee when the mouse hovers over it.
+   * @default false
+   */
+  pauseOnHover?: boolean;
+
+  /**
+   * Centers the marquee content within the container.
+   * @default false
+   */
+  centered?: boolean;
+
+  /**
+   * When need to use dynamic FPS factor to adjust the speed of the marquee.
+   * @default true
+   */
+  adjustSpeed?: boolean;
+
+  /**
+   * Pauses the marquee when the mouse leaves the viewport.
+   * @default true
+   */
+  pauseOnOut?: boolean;
+}
+
+/**
+ * Marquee callbacks
+ */
+export interface IMarqueeCallbacksMap extends IModuleCallbacksMap {
+  /**
+   * Called during marquee rendering.
+   */
+  render: undefined;
+
+  /**
+   * Called on marquee resize
+   */
+  resize: undefined;
 }

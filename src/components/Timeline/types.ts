@@ -1,54 +1,52 @@
-import { NComponent } from '@/base/Component';
-import { IVevetProps } from '@/src/Vevet/types';
+import {
+  IModuleCallbacksMap,
+  IModuleMutableProps,
+  IModuleStaticProps,
+} from '@/base/Module';
+import { TEasingType } from '@/utils/math/easing';
 
-export namespace NTimeline {
-  export interface IStaticProps extends NComponent.IStaticProps {
-    /**
-     * Easing function for the timeline animation.
-     */
-    easing?: IVevetProps['easing'];
+export interface ITimelineStaticProps extends IModuleStaticProps {}
 
-    /**
-     * Whether to destroy the timeline when the animation ends.
-     * @default false
-     */
-    isDestroyedOnEnd?: boolean;
-  }
+export interface ITimelineMutableProps extends IModuleMutableProps {
+  /**
+   * Timeline duration in milliseconds.
+   * @default 1000
+   */
+  duration?: number;
 
-  export interface IChangeableProps extends NComponent.IChangeableProps {
-    /**
-     * Duration of the timeline animation in milliseconds.
-     * @default 1000
-     */
-    duration?: number;
-  }
+  /**
+   * Easing function for timeline progression.
+   * Accepts standard easing types or an array of bezier values.
+   * @default false
+   */
+  easing?: TEasingType;
+}
 
-  export interface ICallbacksTypes extends NComponent.ICallbacksTypes {
-    /**
-     * Triggered when the timeline starts.
-     */
-    start: undefined;
+export interface ITimelineCallbacksMap extends IModuleCallbacksMap {
+  /**
+   * Triggered when the timeline starts.
+   */
+  start: undefined;
 
-    /**
-     * Triggered during timeline progress updates.
-     */
-    progress: IProgressParameter;
+  /**
+   * Triggered during timeline updates with progress values.
+   */
+  update: ITimelineProgressArg;
 
-    /**
-     * Triggered when the timeline reaches the end.
-     */
-    end: undefined;
-  }
+  /**
+   * Triggered when the timeline completes.
+   */
+  end: undefined;
+}
 
-  export interface IProgressParameter {
-    /**
-     * Current progress of the timeline, ranging from 0 to 1.
-     */
-    p: number;
+export interface ITimelineProgressArg {
+  /**
+   * Linear progress, ranging from 0 to 1.
+   */
+  progress: number;
 
-    /**
-     * Eased progress value based on the easing function.
-     */
-    e: number;
-  }
+  /**
+   * Progress value after applying the easing function.
+   */
+  eased: number;
 }

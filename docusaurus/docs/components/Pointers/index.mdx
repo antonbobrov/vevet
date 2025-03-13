@@ -1,0 +1,235 @@
+# Pointers
+
+todo: examples
+
+Manages pointer events, including tracking multiple pointers, and emitting callbacks for pointer interactions.
+
+:::note
+For proper functionality, ensure the container has an appropriate [touch-action](https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action) property.
+:::
+
+
+
+## Props
+
+### Static Props
+
+Static properties are set during initialization and cannot be modified later.
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Default Value</th>
+  </tr>
+  
+  <tr>
+    <td>container</td>
+    <td>The element that listens for pointer events.</td>
+    <td><code>HTMLElement</code></td>
+    <td></td>
+  </tr>
+  
+  <tr>
+    <td>relative</td>
+    <td>Calculate coordinates relative to the container.</td>
+    <td><code>boolean</code></td>
+    <td><code>false</code></td>
+  </tr>
+  
+  <tr>
+    <td>buttons</td>
+    <td>
+      Determines which mouse buttons trigger events.
+      - 0: Main button pressed, usually the left button or the un-initialized state
+      - 1: Auxiliary button pressed, usually the wheel button or the middle button (if present)
+      - 2: Secondary button pressed, usually the right button
+      - 3: Fourth button, typically the Browser Back button
+      - 4: Fifth button, typically the Browser Forward button
+
+      See [MouseEvent.button](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button).
+    </td>
+    <td><code>number[]</code></td>
+    <td><code>[0]</code></td>
+  </tr>
+  
+  <tr>
+    <td>minPointers</td>
+    <td>Minimum number of active pointers required to trigger the "start" callback.</td>
+    <td><code>number</code></td>
+    <td><code>1</code></td>
+  </tr>
+  
+  <tr>
+    <td>maxPointers</td>
+    <td>Maximum number of pointers that can be tracked simultaneously.</td>
+    <td><code>number</code></td>
+    <td><code>5</code></td>
+  </tr>
+</table>
+
+### Mutable Props
+
+Mutable properties can be updated at runtime using `.updateProps()`.
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Default Value</th>
+  </tr>
+  
+  <tr>
+    <td>enabled</td>
+    <td>Enables or disables pointer events.</td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+  </tr>
+</table>
+
+
+
+## Accessors
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### container
+
+Type: `HTMLElement`
+
+Returns the container element handling events.
+
+### isStarted
+
+Type: `boolean`
+
+Indicates whether the `start` event has been triggered.
+
+### maxPointers
+
+Type: `number`
+
+Returns the maximum number of pointers that can be tracked.
+
+### minPointers
+
+Type: `number`
+
+Returns the minimum number of pointers required to trigger events.
+
+### pointersMap
+
+Type: `Map<number, IPointersItem>`
+
+Returns the map of active pointers.
+
+#### IPointersItem Structure
+
+```ts
+interface IPointersItem {
+  id: number;
+  index: number;
+  start: IPointersVec2;
+  prev: IPointersVec2;
+  current: IPointersVec2;
+  diff: IPointersVec2;
+  step: IPointersVec2;
+  accum: IPointersVec2;
+}
+```
+
+- `id`: Unique pointer identifier.
+- `index`: Index assigned to the pointer.
+- `start`: Coordinates at the start of the interaction.
+- `prev`: Previous recorded coordinates.
+- `current`: Current pointer coordinates.
+- `diff`: Movement offset from the starting position.
+- `step`: Movement offset from the previous position.
+- `accum`: Total accumulated movement since start
+
+#### IPointersVec2 Structure
+
+```ts
+interface IPointersVec2 {
+  x: number;
+  y: number;
+}
+```
+
+- `x`: X-coordinate relative to the container.
+- `y`: X-coordinate relative to the container.
+
+
+
+## Methods
+
+:::note
+All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+:::
+
+
+
+## Callbacks
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### start
+
+Fired when the required number of pointers is reached.
+
+```ts
+const destruct = instance.on('start', () => console.log('start'));
+
+// Cancel the callback
+destruct();
+```
+
+### pointerdown
+
+Fired when a pointer is added.
+
+```ts
+const destruct = instance.on('pointerdown', ({ event, pointer }) => console.log('pointerdown'));
+
+// Cancel the callback
+destruct();
+```
+
+### pointermove
+
+Fired when a pointer moves.
+
+```ts
+const destruct = instance.on('pointermove', ({ event, pointer }) => console.log('pointermove'));
+
+// Cancel the callback
+destruct();
+```
+
+### pointerup
+
+Fired when a pointer is removed.
+
+```ts
+const destruct = instance.on('pointerup', ({ pointer }) => console.log('pointerup'));
+
+// Cancel the callback
+destruct();
+```
+
+### end
+
+Fired when pointer events are canceled.
+
+```ts
+const destruct = instance.on('end', () => console.log('end'));
+
+// Cancel the callback
+destruct();
+```

@@ -1,19 +1,16 @@
-export function preloadVideo(
-  video: HTMLVideoElement,
-  action: (isSuccess: boolean) => void,
-) {
-  if (video.readyState > 0) {
-    action(true);
+export function preloadVideo(resource: HTMLVideoElement, onLoad: () => void) {
+  if (resource.readyState > 0) {
+    onLoad();
 
     return;
   }
 
-  if (video.preload === 'none') {
-    action(false);
+  if (resource.preload === 'none') {
+    onLoad();
 
     return;
   }
 
-  video.addEventListener('error', () => action(false));
-  video.addEventListener('loadedmetadata', () => action(true));
+  resource.addEventListener('error', () => onLoad());
+  resource.addEventListener('loadedmetadata', () => onLoad());
 }

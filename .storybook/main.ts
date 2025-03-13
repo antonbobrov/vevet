@@ -1,39 +1,25 @@
-import type { StorybookConfig } from '@storybook/react-webpack5';
-import { resolveTsconfigPathsToAlias } from './resolveTsconfigPathsToAlias';
+import type { StorybookConfig } from '@storybook/react-vite';
+import path from "path";
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: ['../**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
-    '@storybook/addon-links',
+    '@storybook/addon-onboarding',
     '@storybook/addon-essentials',
+    '@chromatic-com/storybook',
     '@storybook/addon-interactions',
-    {
-      name: '@storybook/addon-styling',
-      options: {
-        sass: {
-          // eslint-disable-next-line import/no-extraneous-dependencies, global-require
-          implementation: require('sass'),
-        },
-      },
-    },
   ],
+  staticDirs: ['../stories/public/'],
   framework: {
-    name: '@storybook/react-webpack5',
+    name: '@storybook/react-vite',
     options: {},
   },
-  docs: {
-    autodocs: 'tag',
-  },
-  webpackFinal: async (configProp) => {
-    if (configProp.resolve) {
-      // eslint-disable-next-line no-param-reassign
-      configProp.resolve.alias = {
-        ...configProp.resolve.alias,
-        ...resolveTsconfigPathsToAlias(),
-      };
-    }
+  viteFinal: (config) => {
+    config.resolve!.alias = {
+      '@': path.resolve(__dirname, '../src/'),
+    };
 
-    return configProp;
+    return config;
   },
 };
 

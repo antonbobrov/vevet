@@ -1,25 +1,29 @@
 import { scoped } from './scoped';
-import { clamp } from './clamp';
+import { clamp as clampFunc } from './clamp';
 
 /**
- * Get progress relative to a given scope and then clamp it within another range.
+ * Maps a value to a relative range and clamps the result within another range.
  *
- * The function first scales the `value` relative to `scopeProp` using the `scoped` function,
- * and then clamps the result within `clampProp` using the `clamp` function.
+ * This function first calculates the relative progress of `value` within `scope`
+ * using the `scoped` function. Then, it clamps the resulting progress to `clamp`
+ * using the `clamp` function.
  *
- * @param value - The value to be scaled and clamped.
- * @param scopeProp - The scope within which the value will be scaled.
- * @param clampProp - The range to clamp the scaled value within.
+ * @param {number} value - The input value to be mapped and clamped.
+ * @param {[number, number]} [scope=[0, 1]] - The range (start and end) within which to map the input value.
+ * @param {[number, number]} [clamp=[0, 1]] - The range (start and end) within which to clamp the mapped value.
+ * @returns {number} - The resulting value after mapping and clamping.
+ *
+ * @group Utils
  *
  * @example
+ * clampScope(0.36, [0.35, 1]);
+ * // => 0.015384 (relative progress of 0.36 within [0.35, 1], clamped to [0, 1])
  *
- * clampScope(0.38, [0.35, 1]); // => 0.046
- * clampScope(0.38, [0.35, 1], [0.1, 1]); // => 0.1
+ * clampScope(0.36, [0.35, 1], [0.1, 1]);
+ * // => 0.1 (relative progress of 0.36 within [0.35, 1], clamped to [0.1, 1])
  */
-export function clampScope(
-  value: number,
-  scopeProp = [0, 1],
-  clampProp = [0, 1],
-): number {
-  return clamp(scoped(value, scopeProp), clampProp);
+export function clampScope(value: number, scope = [0, 1], clamp = [0, 1]) {
+  const scopedProgress = scoped(value, scope[0], scope[1]);
+
+  return clampFunc(scopedProgress, clamp[0], clamp[1]);
 }

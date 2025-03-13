@@ -1,2 +1,3 @@
-export * from './isIntersectionObserverSupported';
+export * from './addEventListener';
+export * from './normalizeWheel';
 export * from './onResize';
