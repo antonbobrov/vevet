@@ -352,8 +352,10 @@ export class Pointers<
 
     this.pointersMap.clear();
 
-    this._resetSelection();
-    styles?.remove();
+    if (this.props.disableUserSelect) {
+      this._resetSelection();
+      styles?.remove();
+    }
   }
 
   /**
