@@ -68,7 +68,7 @@ export function Core(input: Partial<ICoreProps>): ICore {
   // update props on viewport change
 
   viewport.callbacks.add(
-    'any',
+    'trigger',
     () => {
       const keys = Object.keys(viewport.data);
       keys.forEach((key) => {

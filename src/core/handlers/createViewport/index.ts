@@ -36,6 +36,7 @@ export function createViewport({ prefix, props, isMobile }: IProps) {
     vw: 0,
     vh: 0,
     svh: 0,
+    scrollbarWidth: 0,
     rem: 16,
     landscape: false,
     portrait: false,
@@ -55,14 +56,20 @@ export function createViewport({ prefix, props, isMobile }: IProps) {
 
   let debounce: NodeJS.Timeout | undefined;
 
-  addEventListener(window, 'resize', () => {
+  function debounceResize() {
     if (debounce) {
       clearTimeout(debounce);
       debounce = undefined;
     }
 
     debounce = setTimeout(() => onResize(), props.resizeDebounce);
-  });
+  }
+
+  addEventListener(window, 'resize', () => debounceResize());
+
+  const observer = new ResizeObserver(() => debounceResize());
+  observer.observe(document.documentElement);
+  observer.observe(document.body);
 
   /** Event on window resize */
   function onResize() {
@@ -74,7 +81,11 @@ export function createViewport({ prefix, props, isMobile }: IProps) {
 
     const { width, height } = data;
 
-    callbacks.emit('any', undefined);
+    callbacks.emit('trigger', undefined);
+
+    if (width !== prevWidth || height !== prevHeight) {
+      callbacks.emit('any', undefined);
+    }
 
     if (width !== prevWidth && height === prevHeight) {
       callbacks.emit('width_', undefined);
@@ -106,6 +117,7 @@ export function createViewport({ prefix, props, isMobile }: IProps) {
 
     data.width = window.innerWidth;
     data.height = window.innerHeight;
+    data.scrollbarWidth = window.innerWidth - root.clientWidth;
     data.vw = data.width / 100;
     data.vh = data.height / 100;
     data.rem = parseFloat(rootStyles.fontSize);
@@ -154,6 +166,7 @@ export function createViewport({ prefix, props, isMobile }: IProps) {
         --vw: ${data.vw}px;
         --vh: ${data.vh}px;
         --svh: ${data.svh}px;
+        --scrollbar-width: ${data.scrollbarWidth}px;
       }
     `;
   }

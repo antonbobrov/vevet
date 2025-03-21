@@ -22,6 +22,7 @@ export const Component: FC = () => {
       'width',
       'height',
       'sHeight',
+      'scrollbarWidth',
       'landscape',
       'portrait',
       'dpr',
@@ -38,7 +39,9 @@ export const Component: FC = () => {
   useEffect(() => {
     updateFeatures();
 
-    const viewportCallback = vevet.onViewport('any', () => updateFeatures());
+    const viewportCallback = vevet.onViewport('trigger', () =>
+      updateFeatures(),
+    );
 
     return () => viewportCallback();
   }, [updateFeatures]);

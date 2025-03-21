@@ -118,8 +118,9 @@ vevet.onViewport('height', () => console.log('Height changed'));
 vevet.onViewport('both', () => console.log('Both width and height changed'));
 vevet.onViewport('width_', () => console.log('Only width changed'));
 vevet.onViewport('height_', () => console.log('Only height changed'));
+vevet.onViewport('any', () => console.log('Width or height change'));
 
-const destruct = vevet.onViewport('any', () => console.log('Any change'));
+const destruct = vevet.onViewport('trigger', () => console.log('Any change that triggers resize'));
 
 // Cancel the callback
 destruct();
@@ -136,6 +137,10 @@ Current viewport height.
 ### `sHeight`
 - **Type**: `number`  
 Current small viewport height. Equivalent to `100svh`. Used to prevent layout shifts in browsers like In-App Safari. 
+
+### `scrollbarWidth`
+- **Type**: `number`  
+Page scrollbar current width.
 
 ### `vw`
 - **Type**: `number`  

@@ -27,9 +27,14 @@ export interface IViewportCallbacksMap extends ICallbacksMap {
   height_: undefined;
 
   /**
-   * Any change
+   * Width or height change
    */
   any: undefined;
+
+  /**
+   * On any resize trigger: width, height or body size change
+   */
+  trigger: undefined;
 }
 
 export interface IViewport {
@@ -45,6 +50,11 @@ export interface IViewport {
    * Used to prevent layout shifts on some browsers such as In-App Safari.
    */
   sHeight: number;
+
+  /**
+   * Page scrollbar width
+   */
+  scrollbarWidth: number;
 
   /** Current viewport width divided by 100 */
   vw: number;

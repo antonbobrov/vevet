@@ -9,6 +9,7 @@ The core library defines the following CSS variables on the root element:
 - `--vw`
 - `--vh`
 - `--svh`
+- `--scrollbar-width`
 
 ## Layout Shift Issue
 
