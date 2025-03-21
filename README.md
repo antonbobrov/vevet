@@ -2,8 +2,6 @@
 
 The primary goal of Vevet is to simplify the creation of interactive components from scratch — be it text animations, carousels, or other interactive elements.
 
-![Top Language](https://img.shields.io/github/languages/top/antonbobrov/vevet) ![Gzipped Size](https://img.shields.io/bundlephobia/minzip/vevet)
-
 ### [Documentation ↗](https://antonbobrov.github.io/vevet/)
 
 ## Installation

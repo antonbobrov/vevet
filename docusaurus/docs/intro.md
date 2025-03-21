@@ -4,8 +4,6 @@ sidebar_position: 1
 
 # Introduction
 
-![Top Language](https://img.shields.io/github/languages/top/antonbobrov/vevet) ![Gzipped Size](https://img.shields.io/bundlephobia/minzip/vevet)
-
 **Vevet** is a flexible, client-side JavaScript library for creative web development.
 
 The primary goal of Vevet is to simplify the creation of interactive components from scratch — be it text animations, carousels, or other interactive elements.
