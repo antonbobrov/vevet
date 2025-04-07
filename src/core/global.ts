@@ -84,17 +84,19 @@ export interface ICore extends IViewport {
    *
    * @example
    *
-   * vevet.onViewport('width', () => console.log('width changed'));
-   *
-   * vevet.onViewport('height', () => console.log('height changed'));
-   *
-   * vevet.onViewport('both', () => console.log('both width and height changed'));
-   *
-   * vevet.onViewport('width_', () => console.log('only width changed'));
-   *
-   * vevet.onViewport('height_', () => console.log('only height changed'));
-   *
-   * const destruct = vevet.onViewport('any', () => console.log('any change'));
+   * vevet.onViewport('width', () => console.log('when the viewport width changes (ignores height)'));
+   * 
+   * vevet.onViewport('height', () => console.log('when the viewport height changes (ignores width)'));
+   * 
+   * vevet.onViewport('both', () => console.log('when both width and height change'));
+   * 
+   * vevet.onViewport('widthOnly', () => console.log('only when the width changes (height remains the same)'));
+   * 
+   * vevet.onViewport('heightOnly', () => console.log('only when the height changes (width remains the same)'));
+   * 
+   * vevet.onViewport('any', () => console.log('when either width or height changes'));
+
+   * const destruct = vevet.onViewport('trigger', () => console.log('on any resize event, including width, height, or body size changes'));
    *
    * // cancel the event
    * destruct();

@@ -88,11 +88,11 @@ export function createViewport({ prefix, props, isMobile }: IProps) {
     }
 
     if (width !== prevWidth && height === prevHeight) {
-      callbacks.emit('width_', undefined);
+      callbacks.emit('widthOnly', undefined);
     }
 
     if (height !== prevHeight && width === prevWidth) {
-      callbacks.emit('height_', undefined);
+      callbacks.emit('heightOnly', undefined);
     }
 
     if (width !== prevWidth && height !== prevHeight) {

@@ -2,37 +2,37 @@ import { Callbacks, ICallbacksMap } from '@/base/Callbacks';
 
 export interface IViewportCallbacksMap extends ICallbacksMap {
   /**
-   * When the width is changed regardless of the height
+   * Triggered when the viewport width changes (ignores height).
    */
   width: undefined;
 
   /**
-   * When the height is changed regardless of the width
+   * Triggered when the viewport height changes (ignores width).
    */
   height: undefined;
 
   /**
-   * When both the width and height are changed
+   * Triggered when both width and height change.
    */
   both: undefined;
 
   /**
-   * When only the width is changed
+   * Triggered only when the width changes (height remains the same).
    */
-  width_: undefined;
+  widthOnly: undefined; // todo: rename to widthOnly
 
   /**
-   * When only the height is changed
+   * Triggered only when the height changes (width remains the same).
    */
-  height_: undefined;
+  heightOnly: undefined;
 
   /**
-   * Width or height change
+   * Triggered when either width or height changes.
    */
   any: undefined;
 
   /**
-   * On any resize trigger: width, height or body size change
+   * Triggered on any resize event, including width, height, or body size changes.
    */
   trigger: undefined;
 }

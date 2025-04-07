@@ -113,14 +113,14 @@ Adds a callback that triggers when the window size changes. Different targets ca
 
 **Example**:
 ```ts
-vevet.onViewport('width', () => console.log('Width changed'));
-vevet.onViewport('height', () => console.log('Height changed'));
-vevet.onViewport('both', () => console.log('Both width and height changed'));
-vevet.onViewport('width_', () => console.log('Only width changed'));
-vevet.onViewport('height_', () => console.log('Only height changed'));
-vevet.onViewport('any', () => console.log('Width or height change'));
+vevet.onViewport('width', () => console.log('when the viewport width changes (ignores height)'));
+vevet.onViewport('height', () => console.log('when the viewport height changes (ignores width)'));
+vevet.onViewport('both', () => console.log('when both width and height change'));
+vevet.onViewport('widthOnly', () => console.log('only when the width changes (height remains the same)'));
+vevet.onViewport('heightOnly', () => console.log('only when the height changes (width remains the same)'));
+vevet.onViewport('any', () => console.log('when either width or height changes'));
 
-const destruct = vevet.onViewport('trigger', () => console.log('Any change that triggers resize'));
+const destruct = vevet.onViewport('trigger', () => console.log('on any resize event, including width, height, or body size changes'));
 
 // Cancel the callback
 destruct();
