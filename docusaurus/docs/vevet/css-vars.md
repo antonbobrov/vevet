@@ -22,8 +22,5 @@ To prevent this, it is recommended to calculate these values manually on the fir
 ```tsx
 import { presetCssVars } from 'vevet';
 
-<Script
-  strategy="beforeInteractive"
-  dangerouslySetInnerHTML={{ __html: presetCssVars }}
-/>;
+<script dangerouslySetInnerHTML={{ __html: presetCssVars }} />;
 ```

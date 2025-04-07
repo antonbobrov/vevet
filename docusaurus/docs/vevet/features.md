@@ -38,7 +38,7 @@ Detects if the application is running on a mobile device (tablet or phone).
 Returns the name of the operating system.  
 Popular results:
   - windows
-  - macos
+  - mac
   - android
   - ios
 

@@ -29,7 +29,7 @@ export interface ICore extends IViewport {
    * OS name in lowercase. Popular results:
    *
    * - windows
-   * - macos
+   * - mac
    * - android
    * - ios
    */
