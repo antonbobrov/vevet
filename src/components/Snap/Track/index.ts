@@ -159,12 +159,12 @@ export class SnapTrack {
 
   /** If the start has been reached */
   get isStart() {
-    return Math.round(this.target) <= this.min;
+    return Math.floor(this.target) <= Math.floor(this.min);
   }
 
   /** If the end has been reached */
   get isEnd() {
-    return Math.round(this.target) >= this.max;
+    return Math.floor(this.target) >= Math.floor(this.max);
   }
 
   /** Check if the active slide is larger than the container and is being scrolled */
