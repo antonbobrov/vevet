@@ -1,5 +1,12 @@
 import React, { FC, useEffect, useRef } from 'react';
-import { addEventListener, lerp, Snap, Timeline, vevet } from '@/index';
+import {
+  addEventListener,
+  EaseOutBack,
+  lerp,
+  Snap,
+  Timeline,
+  vevet,
+} from '@/index';
 
 export const DynamicWidth: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -36,7 +43,7 @@ export const DynamicWidth: FC = () => {
         const isExpanding = element.classList.contains('active');
 
         const fromWidth = (element.offsetWidth / vevet.width) * 100;
-        const tm = new Timeline({ duration: 500 });
+        const tm = new Timeline({ duration: 500, easing: EaseOutBack });
 
         tm.on('update', ({ eased }) => {
           const toWidth = isExpanding ? 45 : 20;
