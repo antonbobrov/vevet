@@ -1,3 +1,5 @@
+import { TEasingType } from '@/utils/math/easing';
+
 /**
  * Application configuration properties for initializing Vevet.
  */
@@ -23,6 +25,12 @@ export interface ICoreProps {
    * @default 16
    */
   resizeDebounce: number;
+
+  /**
+   * Default easing type. Accepts a bezier array, function or an easing name.
+   * @default [0.25, 0.1, 0.25, 1]
+   */
+  easing?: TEasingType;
 
   /**
    * If need to apply class names for the root element: such as browser, OS name, etc.

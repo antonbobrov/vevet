@@ -6,6 +6,7 @@ import {
   ITimelineMutableProps,
   ITimelineStaticProps,
 } from './types';
+import { initVevet } from '@/global/initVevet';
 
 export * from './types';
 
@@ -31,7 +32,7 @@ export class Timeline<
   public _getMutable(): TRequiredProps<MutableProps> {
     return {
       ...super._getMutable(),
-      easing: false,
+      easing: initVevet().props.easing,
       duration: 1000,
     } as TRequiredProps<MutableProps>;
   }

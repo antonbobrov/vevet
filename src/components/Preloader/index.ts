@@ -7,7 +7,6 @@ import {
 import { Module } from '@/base/Module';
 import { Timeline } from '../Timeline';
 import { initVevet } from '@/global/initVevet';
-import { EaseInOutSine } from '@/utils/math/easing';
 
 export * from './types';
 
@@ -134,7 +133,7 @@ export class Preloader<
       return;
     }
 
-    const tm = new Timeline({ duration, easing: EaseInOutSine });
+    const tm = new Timeline({ duration });
     this.onDestroy(() => tm.destroy());
 
     tm.on('update', ({ progress }) => {

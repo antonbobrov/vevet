@@ -1,6 +1,6 @@
 import { TRequiredProps } from '@/internal/requiredProps';
 import { Timeline } from '../Timeline';
-import { clamp, EaseInOutSine, lerp } from '@/utils/math';
+import { clamp, lerp } from '@/utils/math';
 import { preloadImage } from './utils/preloadImage';
 import { preloadVideo } from './utils/preloadVideo';
 import { preloadCustomElement } from './utils/preloadCustomElement';
@@ -257,10 +257,7 @@ export class ProgressPreloader<
       return;
     }
 
-    const endTimeline = new Timeline({
-      duration: this.props.endDuration,
-      easing: EaseInOutSine,
-    });
+    const endTimeline = new Timeline({ duration: this.props.endDuration });
     this.onDestroy(() => endTimeline.destroy());
 
     endTimeline.on('update', ({ progress }) => {

@@ -13,6 +13,7 @@ export function Core(input: Partial<ICoreProps>): ICore {
     md: 1199,
     sm: 899,
     resizeDebounce: 16,
+    easing: [0.25, 0.1, 0.25, 1],
     applyClassNames: false,
   };
 

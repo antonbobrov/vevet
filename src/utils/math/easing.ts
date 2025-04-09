@@ -1,4 +1,5 @@
 import { easing as easingProgress } from 'easing-progress';
+import { initVevet } from '@/global/initVevet';
 
 export {
   EaseInBack,
@@ -64,5 +65,7 @@ export type {
  * easing(0.35, (value) => Math.sin(Math.PI * 0.5 * value));
  * // => 0.522 (eased progress using a custom easing function)
  */
-export const easing: typeof easingProgress = (progress, easingType) =>
-  easingProgress(progress, easingType);
+export const easing: typeof easingProgress = (
+  progress,
+  easingType = initVevet().props.easing ?? false,
+) => easingProgress(progress, easingType);
