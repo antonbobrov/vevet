@@ -1,15 +1,13 @@
-import React, { FC, useEffect, useRef } from 'react';
-import {
-  addEventListener,
-  EaseOutBack,
-  lerp,
-  Snap,
-  Timeline,
-  vevet,
-} from '@/index';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { clamp, lerp, Snap, Timeline, vevet } from '@/index';
 
 export const DynamicWidth: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
+  const timelineIndex = useRef(0);
+
+  const [snap, setSnap] = useState<Snap>();
 
   useEffect(() => {
     if (!ref.current) {
@@ -24,10 +22,9 @@ export const DynamicWidth: FC = () => {
       wheelAxis: 'y',
       freemode: true,
       stickOnResize: false,
-      edgeFriction: 1,
     });
 
-    // todo: try calculating target & current on resize by slides progress
+    setSnap(instance);
 
     instance.on('update', () => {
       instance.slides.forEach(({ element, coord }) => {
@@ -35,42 +32,53 @@ export const DynamicWidth: FC = () => {
       });
     });
 
-    const listeners = instance.slides.map((slide) =>
-      addEventListener(slide.element!, 'click', () => {
-        const element = slide.element!;
-
-        element.classList.toggle('active');
-        const isExpanding = element.classList.contains('active');
-
-        const fromWidth = (element.offsetWidth / vevet.width) * 100;
-        const tm = new Timeline({ duration: 500, easing: EaseOutBack });
-
-        tm.on('update', ({ eased }) => {
-          const toWidth = isExpanding ? 45 : 20;
-          element.style.width = `${lerp(fromWidth, toWidth, eased)}vw`;
-
-          slide.resize(true);
-        });
-
-        tm.on(
-          'end',
-          () => {
-            if (!isExpanding) {
-              instance.stick();
-            }
-          },
-          { timeout: 100 },
-        );
-
-        tm.play();
-      }),
-    );
-
-    return () => {
-      instance.destroy();
-      listeners.forEach((listener) => listener());
-    };
+    return () => instance.destroy();
   }, []);
+
+  const toggleSlide = useCallback(
+    (index: number) => {
+      if (!snap) {
+        return;
+      }
+
+      timelineIndex.current = index;
+
+      const slide = snap.slides[index];
+      const element = slide.element!;
+
+      element.classList.toggle('active');
+      const isExpanding = element.classList.contains('active');
+
+      const fromWidth = (element.offsetWidth / vevet.width) * 100;
+      const startTrack = snap.track.current;
+
+      const tm = new Timeline({ duration: 500 });
+
+      tm.on('update', ({ eased }) => {
+        const toWidth = isExpanding ? 45 : 20;
+        element.style.width = `${lerp(fromWidth, toWidth, eased)}vw`;
+
+        slide.resize(true);
+
+        if (timelineIndex.current === index) {
+          if (isExpanding) {
+            snap.track.set(
+              lerp(
+                startTrack,
+                clamp(slide.staticCoord, snap.track.min, snap.track.max),
+                eased,
+              ),
+            );
+          } else {
+            snap.track.clampTarget();
+          }
+        }
+      });
+
+      tm.play();
+    },
+    [snap],
+  );
 
   return (
     <>
@@ -111,8 +119,8 @@ export const DynamicWidth: FC = () => {
           'https://picsum.photos/id/1080/1000/1500',
           'https://picsum.photos/id/1081/1000/1500',
           'https://picsum.photos/id/1082/1000/1500',
-        ].map((src) => (
-          <div key={src} className="slide">
+        ].map((src, index) => (
+          <div key={src} className="slide" onClick={() => toggleSlide(index)}>
             <img src={src} alt="" />
           </div>
         ))}
