@@ -281,9 +281,8 @@ export class Snap<
     // Reset to active slide
     const slide = slides.find(({ index }) => index === this.activeIndex);
     if (props.stickOnResize && slide) {
-      this._track.set(slide.staticCoord);
-    } else {
       this._track.clampTarget();
+      this._track.set(slide.staticCoord);
     }
 
     // Emit callbacks
