@@ -178,13 +178,22 @@ export class SnapSwipe {
   /** End short swipe */
   protected _endShort() {
     const { diff, snap } = this;
-    const { props } = snap;
+    const { props, activeSlide } = snap;
 
-    if (
-      Math.abs(diff) < props.shortSwipesThreshold ||
-      this._startIndex !== snap.activeIndex
-    ) {
+    if (Math.abs(diff) < props.shortSwipesThreshold) {
       snap.stick();
+
+      return;
+    }
+
+    if (this._startIndex !== snap.activeIndex) {
+      if (Math.sign(diff) < 0 && activeSlide.progress > 0) {
+        snap.next();
+      } else if (Math.sign(diff) > 0 && activeSlide.progress < 0) {
+        snap.prev();
+      } else {
+        snap.stick();
+      }
 
       return;
     }
