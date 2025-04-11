@@ -22,7 +22,7 @@ export interface ICoreProps {
 
   /**
    * Timeout (in milliseconds) for viewport callbacks debouncing.
-   * @default 16
+   * @default 0
    */
   resizeDebounce: number;
 

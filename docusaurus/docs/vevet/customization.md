@@ -16,7 +16,7 @@ The default settings are:
 window.VEVET_PROPS = {
   md: 1199, // Medium breakpoint (px)
   sm: 899, // Small breakpoint (px)
-  resizeDebounce: 16, // Debounce time for resize events (ms)
+  resizeDebounce: 0, // Debounce time for resize events (ms)
   easing: [0.25, 0.1, 0.25, 1], // Default easing type
   applyClassNames: false, // Apply class names to the root element (browser, OS, etc.)
 };

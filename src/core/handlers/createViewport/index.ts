@@ -62,7 +62,11 @@ export function createViewport({ prefix, props, isMobile }: IProps) {
       debounce = undefined;
     }
 
-    debounce = setTimeout(() => onResize(), props.resizeDebounce);
+    if (props.resizeDebounce) {
+      debounce = setTimeout(() => onResize(), props.resizeDebounce);
+    } else {
+      onResize();
+    }
   }
 
   addEventListener(window, 'resize', () => debounceResize());
