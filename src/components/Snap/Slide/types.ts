@@ -7,7 +7,7 @@ export interface ISnapSlideProps {
   size?: number | 'auto' | (string & {});
 
   /**
-   * If the slide is virtual
+   * If the slide is virtual. When true, the element will be automatically appended to the container when it becomes visible.
    * @default false
    */
   virtual?: boolean;
