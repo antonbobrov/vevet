@@ -49,7 +49,6 @@ export class SnapTrack {
 
   /** Interpolate the current track value */
   public lerp(factor: number) {
-    // todo: move to renderer?
     let { target } = this;
     const { snap, min, max } = this;
 

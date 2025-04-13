@@ -3,8 +3,6 @@ import { clamp, inRange, Snap } from '@/index';
 
 // Inspired by: https://swiperjs.com/
 
-// todo: add photos
-
 export const Cards: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
 
