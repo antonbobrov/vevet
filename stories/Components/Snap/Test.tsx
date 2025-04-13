@@ -112,6 +112,18 @@ export const Test: FC = () => {
         ))}
       </div>
 
+      <button type="button" onClick={() => snap?.prev()}>
+        Prev
+      </button>
+
+      <button type="button" onClick={() => snap?.next()}>
+        Next
+      </button>
+
+      <br />
+
+      <br />
+
       <button type="button" disabled={isStart} onClick={() => snap?.toSlide(0)}>
         Start
       </button>

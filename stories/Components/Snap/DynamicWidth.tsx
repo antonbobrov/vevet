@@ -19,6 +19,7 @@ export const DynamicWidth: FC = () => {
       direction: 'horizontal',
       gap: '1vw',
       wheel: true,
+      // todo: adapt for loop
       wheelAxis: 'y',
       freemode: true,
       stickOnResize: false,
@@ -99,6 +100,7 @@ export const DynamicWidth: FC = () => {
             height: 30vw;
             border-radius: 16px;
             overflow: hidden;
+            background: #000;
           }
 
           .slide img {
