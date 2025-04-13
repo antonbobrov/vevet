@@ -110,6 +110,9 @@ export class Snap<
   /** All slides */
   protected _slides: SnapSlide[] = [];
 
+  /** Scrollable slides (which size is larger than the container) */
+  protected _scrollableSlides: SnapSlide[] = [];
+
   /** Timeline for smooth transitions */
   protected _timeline?: Timeline;
 
@@ -234,6 +237,11 @@ export class Snap<
     return this._slides;
   }
 
+  /** Scrollable slides (which size is larger than the container) */
+  get scrollableSlides() {
+    return this._scrollableSlides;
+  }
+
   /** Active slide index */
   get activeIndex() {
     return this._activeIndex;
@@ -271,9 +279,16 @@ export class Snap<
       return;
     }
 
+    // Reset scrollable slides
+    this._scrollableSlides = [];
+
     // Calculate static values
     slides.reduce((prev, slide) => {
       slide.setStaticCoord(prev);
+
+      if (slide.size > this.domSize) {
+        this._scrollableSlides.push(slide);
+      }
 
       return prev + slide.size + toPixels(props.gap);
     }, 0);

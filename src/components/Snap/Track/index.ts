@@ -172,8 +172,8 @@ export class SnapTrack {
     const { snap } = this;
     const { domSize } = snap;
 
-    return snap.slides.some(
-      ({ size, coord }) => size > domSize && inRange(coord, domSize - size, 0),
+    return snap.scrollableSlides.some(({ size, coord }) =>
+      inRange(coord, domSize - size, 0),
     );
   }
 }
