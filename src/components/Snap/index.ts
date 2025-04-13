@@ -13,7 +13,6 @@ import {
   onResize,
   scoped,
   loop,
-  clamp,
   EaseOutCubic,
   damp,
   lerp,
@@ -296,8 +295,8 @@ export class Snap<
     // Reset to active slide
     const slide = slides.find(({ index }) => index === this.activeIndex);
     if (props.stickOnResize && slide) {
-      this._track.clampTarget();
-      this._track.set(slide.staticCoord);
+      this.track.clampTarget();
+      this.track.set(slide.staticCoord);
     }
 
     // Emit callbacks
@@ -313,7 +312,7 @@ export class Snap<
       return;
     }
 
-    const { _track: track, props, _swipe: swipe } = this;
+    const { track, props, _swipe: swipe } = this;
 
     // Get lerp factor
     const lerpFactor =
@@ -337,7 +336,7 @@ export class Snap<
       return;
     }
 
-    const { _track: track, props } = this;
+    const { track, props } = this;
 
     // Update values
     this._updateSlidesCoords();
@@ -346,12 +345,8 @@ export class Snap<
     // Get magnet after slide coordinates are updated
     const { magnet, _swipe: swipe } = this;
 
-    if (!magnet) {
-      return;
-    }
-
     // Active index change
-    if (magnet.slide.index !== this._activeIndex) {
+    if (magnet && magnet.slide.index !== this._activeIndex) {
       this._activeIndex = magnet.slide.index;
       this.callbacks.emit('activeSlide', this.activeSlide);
     }
@@ -362,15 +357,16 @@ export class Snap<
 
     // Apply friction
     if (
-      !track.isSlideScrolling &&
-      !props.freemode &&
+      magnet &&
       canHaveFriction &&
       frameDuration > 0 &&
-      props.friction >= 0
+      props.friction >= 0 &&
+      !track.isSlideScrolling &&
+      !props.freemode
     ) {
       track.target = damp(
         track.target,
-        track.current + magnet.magnetDiff,
+        track.current + magnet.diff,
         props.friction * props.lerp,
         frameDuration,
         0.000001,
@@ -386,12 +382,13 @@ export class Snap<
 
   /** Update slides values */
   protected _updateSlidesCoords() {
-    const { slides, domSize, _track: track } = this;
+    const { slides, track } = this;
     const { centered: isCentered } = this.props;
+
+    const offset = isCentered ? this._domSize / 2 - this.firstSlideSize / 2 : 0;
 
     slides.forEach((slide) => {
       const { staticCoord, size } = slide;
-      const offset = isCentered ? domSize / 2 - slides[0].size / 2 : 0;
 
       if (!track.canLoop) {
         slide.setCoord(staticCoord + offset - track.current);
@@ -417,6 +414,11 @@ export class Snap<
     });
   }
 
+  /** Get first slide size */
+  get firstSlideSize() {
+    return this.slides[0].size;
+  }
+
   /** Update slides progress */
   protected _updateSlidesProgress() {
     const { slides, domSize } = this;
@@ -435,70 +437,30 @@ export class Snap<
     });
   }
 
-  /** Get slide magnets */
-  protected get magnets(): ISnapMagnet[] {
-    const { domSize, props, track } = this;
-
-    const threshold = props.centered ? domSize / 2 : 0;
-
-    const slideMagnets = this.slides.map((slide) => {
-      const firstPoint = props.centered
-        ? slide.coord + slide.size / 2
-        : slide.coord;
-
-      const points: number[] = [firstPoint];
-
-      if (slide.size > domSize) {
-        if (props.centered) {
-          points.push(firstPoint + (domSize - slide.size) / 2);
-          points.push(firstPoint - (domSize - slide.size) / 2);
-        } else {
-          points.push(firstPoint + slide.size - domSize);
-        }
-      }
-
-      return points.map<ISnapMagnet>((point) => ({
-        slide,
-        magnetCoord: point,
-        magnetDiff: point - threshold,
-        staticMagnetCoord: point + this._track.current,
-      }));
-    });
-
-    const flatMagnets = slideMagnets.flat();
-
-    if (!track.canLoop && !props.centered) {
-      flatMagnets.forEach((magnet) => {
-        const oldStaticMagnetCoord = magnet.staticMagnetCoord;
-
-        const newStaticMagnetCoord = clamp(
-          magnet.staticMagnetCoord,
-          0,
-          this._track.max,
-        );
-
-        const diff = oldStaticMagnetCoord - newStaticMagnetCoord;
-
-        magnet.staticMagnetCoord = newStaticMagnetCoord;
-        magnet.magnetCoord -= diff;
-        magnet.magnetDiff -= diff;
-      });
-    }
-
-    return flatMagnets;
-  }
-
   /** Get nearest magnet */
   protected get magnet(): ISnapMagnet | undefined {
-    if (this.isEmpty) {
+    // todo: search only in nearby slides
+
+    const current = this.track.loopedCurrent;
+
+    const magnets = this.slides.flatMap((slide) =>
+      slide.magnets.map((magnet) => ({ slide, magnet, index: slide.index })),
+    );
+
+    if (magnets.length === 0) {
       return undefined;
     }
 
-    const magnets = this.magnets.sort(
-      (a, b) => Math.abs(a.magnetDiff) - Math.abs(b.magnetDiff),
+    const magnet = magnets.reduce((prev, curr) =>
+      Math.abs(curr.magnet - current) < Math.abs(prev.magnet - current)
+        ? curr
+        : prev,
     );
 
-    return magnets[0];
+    return {
+      ...magnet,
+      diff: magnet.magnet - current,
+    };
   }
 
   /** Cancel sticky behavior */
@@ -510,11 +472,12 @@ export class Snap<
   /** Stick to the nearest magnet */
   public stick() {
     const { magnet } = this;
+
     if (this.track.isSlideScrolling || !magnet) {
       return;
     }
 
-    this.toCoord(this._track.current + magnet.magnetDiff);
+    this.toCoord(this.track.current + magnet.diff);
   }
 
   /** Go to a definite coordinate */
@@ -525,30 +488,32 @@ export class Snap<
 
     this.cancelTransition();
 
-    const start = this._track.current;
+    const { track, props, callbacks } = this;
+
+    const start = track.current;
     const end = coordinate;
     const diff = Math.abs(end - start);
 
     const tm = new Timeline({
       duration: typeof duration === 'number' ? duration : duration(diff),
-      easing: this.props.easing,
+      easing: props.easing,
     });
 
     this._timeline = tm;
 
-    tm.on('start', () => this.callbacks.emit('timelineStart', undefined));
+    tm.on('start', () => callbacks.emit('timelineStart', undefined));
 
     tm.on('update', (data) => {
-      this._track.current = lerp(start, end, data.eased);
-      this._track.target = this._track.current;
+      track.current = lerp(start, end, data.eased);
+      track.target = track.current;
 
       this._render();
-      this.callbacks.emit('timelineUpdate', data);
+      callbacks.emit('timelineUpdate', data);
     });
 
     tm.on('end', () => {
       tm.destroy();
-      this.callbacks.emit('timelineEnd', undefined);
+      callbacks.emit('timelineEnd', undefined);
       this._timeline = undefined;
     });
 
@@ -556,20 +521,29 @@ export class Snap<
   }
 
   /** Go to a slide by index */
-  public toSlide(index: number, duration = this.props.duration) {
-    if (index === this.activeIndex) {
+  public toSlide(targetIndex: number, duration = this.props.duration) {
+    const { isEmpty, activeIndex, slides, track } = this;
+
+    if (isEmpty) {
+      return;
+    }
+
+    const index = loop(targetIndex, 0, this.slides.length);
+
+    if (index === activeIndex) {
       this.stick();
 
       return;
     }
 
-    const magnet = this.magnets.find((data) => data.slide.index === index);
+    const slideMagnets = slides[index].magnets;
+    const current = track.loopedCurrent;
 
-    if (!magnet) {
-      return;
-    }
+    const magnet = slideMagnets.reduce((prev, curr) =>
+      Math.abs(curr - current) < Math.abs(prev - current) ? curr : prev,
+    );
 
-    this.toCoord(this._track.current + magnet.magnetDiff, duration);
+    this.toCoord(this.track.current + (magnet - track.loopedCurrent), duration);
   }
 
   /** Go to next slide */

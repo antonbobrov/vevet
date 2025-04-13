@@ -155,10 +155,8 @@ export type TSnapDuration = number | ((distance: number) => number);
 export interface ISnapMagnet {
   /** Slide */
   slide: SnapSlide;
-  /** Magnet coordinate */
-  magnetCoord: number;
-  /** Difference between the magnet coodintate and the current track value */
-  magnetDiff: number;
-  /** Static magnet coordinate (as if the slide was never moved) */
-  staticMagnetCoord: number;
+  /** Static magnet coordinate */
+  magnet: number;
+  /** Difference with current coordinate */
+  diff: number;
 }
