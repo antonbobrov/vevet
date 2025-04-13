@@ -1,4 +1,4 @@
-import { clamp, inRange, lerp, scoped } from '@/utils/math';
+import { clamp, inRange, lerp, loop, scoped } from '@/utils/math';
 import { Snap } from '..';
 import { toPixels } from '@/utils';
 
@@ -42,6 +42,11 @@ export class SnapTrack {
     return this.snap.props.loop && this.snap.slides.length > 1;
   }
 
+  /** Get looped current value */
+  get loopedCurrent() {
+    return this.canLoop ? loop(this.current, this.min, this.max) : this.current;
+  }
+
   /** Interpolate the current track value */
   public lerp(factor: number) {
     // todo: move to renderer?
@@ -64,6 +69,8 @@ export class SnapTrack {
 
       target = clamp(target, min - edgeSpace, max + edgeSpace);
     }
+
+    // Interpolate current value
 
     this.current = lerp(this.current, target, factor, 0.000001);
   }
