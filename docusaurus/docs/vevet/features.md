@@ -97,7 +97,7 @@ Adds a callback to execute when the page loads. Returns a destructor function.
 **Example**:
 ```ts
 const destruct = vevet.onLoad(() => {
-  console.log('Page loaded');
+  console.log(vevet.loaded);
 });
 
 // Cancel the callback if it hasn't been called yet
@@ -113,14 +113,33 @@ Adds a callback that triggers when the window size changes. Different targets ca
 
 **Example**:
 ```ts
-vevet.onViewport('width', () => console.log('when the viewport width changes (ignores height)'));
-vevet.onViewport('height', () => console.log('when the viewport height changes (ignores width)'));
-vevet.onViewport('both', () => console.log('when both width and height change'));
-vevet.onViewport('widthOnly', () => console.log('only when the width changes (height remains the same)'));
-vevet.onViewport('heightOnly', () => console.log('only when the height changes (width remains the same)'));
-vevet.onViewport('any', () => console.log('when either width or height changes'));
+vevet.onViewport('width', () => {
+  console.log('when the viewport width changes (ignores height)');
+});
 
-const destruct = vevet.onViewport('trigger', () => console.log('on any resize event, including width, height, or body size changes'));
+vevet.onViewport('height', () => {
+  console.log('when the viewport height changes (ignores width)');
+});
+
+vevet.onViewport('both', () => {
+  console.log('when both width and height change');
+});
+
+vevet.onViewport('widthOnly', () => {
+  console.log('only when the width changes (height remains the same)');
+});
+
+vevet.onViewport('heightOnly', () => {
+  console.log('only when the height changes (width remains the same)');
+});
+
+vevet.onViewport('any', () => {
+  console.log('when either width or height changes');
+});
+
+const destruct = vevet.onViewport('trigger', () => {
+  console.log('on any resize event, including width, height, or body size changes');
+});
 
 // Cancel the callback
 destruct();
