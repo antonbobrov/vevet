@@ -4,17 +4,13 @@ The primary goal of Vevet is to simplify the creation of interactive components 
 
 ### [Documentation ↗](https://antonbobrov.github.io/vevet/)
 
-## Installation
+## NPM Usage
 
 ```bash
 npm install vevet
 ```
 
-## Usage
-
-### JavaScript Usage
-
-Explore more in the **[documentation](https://antonbobrov.github.io/vevet/docs/vevet/features)**.
+JavaScript:
 
 ```ts
 import { vevet } from 'vevet';
@@ -22,12 +18,22 @@ import { vevet } from 'vevet';
 console.log(vevet.version); // => 5.0.0
 ```
 
-### SCSS Usage
-
-Find additional details in the **[documentation](https://antonbobrov.github.io/vevet/docs/vevet/scss)**.
+SCSS:
 
 ```scss
 @import '~vevet/lib/styles/index';
+```
+
+## CDN Usage
+
+```html
+<script src="
+https://cdn.jsdelivr.net/npm/vevet@5/lib/cdn/vevet.iife.min.js
+"></script>
+
+<script>
+  console.log(Vevet.app.version); // => 5.0.0
+</script>
 ```
 
 ## Components
