@@ -20,7 +20,7 @@ Vevet provides SCSS variables and mixins to work with viewport breakpoints.
 
 ## var: $vevet-sm
 
-Default: `899px`
+Default: `999px`
 
 The maximum value (in pixels) for the small viewport breakpoint.
 

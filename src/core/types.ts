@@ -16,7 +16,7 @@ export interface ICoreProps {
    * Small breakpoint in pixels.
    * When changing this property, you need to
    * update the SASS variable: `$sm`. The values must be equal.
-   * @default 899
+   * @default 999
    */
   sm: number;
 

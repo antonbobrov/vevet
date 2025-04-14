@@ -15,7 +15,7 @@ The default settings are:
 ```js
 window.VEVET_PROPS = {
   md: 1199, // Medium breakpoint (px)
-  sm: 899, // Small breakpoint (px)
+  sm: 999, // Small breakpoint (px)
   resizeDebounce: 0, // Debounce time for resize events (ms)
   easing: [0.25, 0.1, 0.25, 1], // Default easing type
   applyClassNames: false, // Apply class names to the root element (browser, OS, etc.)
@@ -28,7 +28,7 @@ Define breakpoints in SCSS before importing Vevet’s styles:
 
 ```scss
 $vevet-md: 1199px;
-$vevet-sm: 899px;
+$vevet-sm: 999px;
 
 @import '~vevet/lib/styles/index';
 ```
