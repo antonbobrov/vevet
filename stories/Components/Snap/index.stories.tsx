@@ -11,6 +11,7 @@ import { Spiral as SpiralComponent } from './Spiral';
 import { SlickGap as SlickGapComponent } from './SlickGap';
 import { Virtual as VirtualComponent } from './Virtual';
 import { DynamicWidth as DynamicWidthComponent } from './DynamicWidth';
+import { CreativeScale as CreativeScaleComponent } from './CreativeScale';
 
 const meta: Meta = {
   title: 'Components/Snap',
@@ -37,5 +38,7 @@ export const Spiral: StoryFn = () => <SpiralComponent />;
 export const SlickGap: StoryFn = () => <SlickGapComponent />;
 
 export const DynamicWidth: StoryFn = () => <DynamicWidthComponent />;
+
+export const CreativeScale: StoryFn = () => <CreativeScaleComponent />;
 
 export const Virtual: StoryFn = () => <VirtualComponent />;
