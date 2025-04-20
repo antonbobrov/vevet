@@ -11,7 +11,6 @@ export class SnapSlide {
     this._index = 0;
 
     const defaultProps: ISnapSlideProps = {
-      size: 'auto',
       virtual: false,
     };
 
@@ -118,13 +117,28 @@ export class SnapSlide {
     this._progress = value;
   }
 
+  /** Size property */
+  get sizeProp() {
+    return this.props.size ?? this.snap?.props.slideSize ?? 'auto';
+  }
+
   /** Slide size in pixels */
   get size() {
-    if (this.props.size === 'auto') {
-      return this._domSize ?? this.snap?.domSize ?? 0;
+    const { snap, sizeProp } = this;
+
+    if (!snap) {
+      return 0;
     }
 
-    return toPixels(this.props.size);
+    if (sizeProp === 'stretch') {
+      return snap.domSize;
+    }
+
+    if (sizeProp === 'auto') {
+      return this._domSize ?? snap.domSize;
+    }
+
+    return toPixels(sizeProp);
   }
 
   /** Check if the slide is visible */
@@ -159,7 +173,7 @@ export class SnapSlide {
     this._snap = snap;
     this._index = index;
 
-    if (this.element && this.props.size === 'auto') {
+    if (this.element && this.sizeProp === 'auto') {
       this._onResize = onResize({
         element: this.element,
         callback: () => this.resize(),

@@ -9,6 +9,7 @@ import { ISnapWheelProps } from './Wheel/types';
 import { ISnapSwipeProps } from './Swipe/types';
 import { ISwipeCoords } from '../Swipe';
 import { ITimelineProgressArg } from '../Timeline';
+import { ISnapSlideProps } from './Slide/types';
 
 /** Static properties for the Snap component */
 export interface ISnapStaticProps extends IModuleStaticProps {
@@ -100,6 +101,16 @@ export interface ISnapMutableProps
    * @default EaseOutCubic
    */
   easing?: TEasingType;
+
+  /**
+   * Slide size. Supported values:
+   * - `auto` detects slide size depending on the element or container size.
+   * - `stretch` detects slide size as the container size.
+   * - `number` defines the slide size in pixels.
+   * - css units like `px`, `rem`, `vw`, `vh`, `svh`.
+   * @default 'auto'
+   */
+  slideSize?: ISnapSlideProps['size'];
 }
 
 /** Callbacks map for the Snap component */

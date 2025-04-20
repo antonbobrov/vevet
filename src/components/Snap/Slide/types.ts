@@ -1,10 +1,12 @@
 export interface ISnapSlideProps {
   /**
-   * Size of the slide in pixels or 'auto'. 'auto' detects slide size depending on the element or container size.
-   * Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.
-   * @default 'auto'
+   * Slide size. Supported values:
+   * - `auto` detects slide size depending on the element or container size.
+   * - `stretch` detects slide size as the container size.
+   * - `number` defines the slide size in pixels.
+   * - css units like `px`, `rem`, `vw`, `vh`, `svh`.
    */
-  size?: number | 'auto' | (string & {});
+  size?: number | 'auto' | 'stretch' | (string & {}) | null;
 
   /**
    * If the slide is virtual. When true, the element will be automatically appended to the container when it becomes visible.

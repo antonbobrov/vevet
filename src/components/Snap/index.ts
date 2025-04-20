@@ -85,6 +85,7 @@ export class Snap<
       wheelSpeed: 1,
       wheelAxis: 'auto',
       followWheel: true,
+      slideSize: 'auto',
     } as TRequiredProps<MutableProps>;
   }
 
