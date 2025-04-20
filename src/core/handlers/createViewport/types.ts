@@ -19,12 +19,12 @@ export interface IViewportCallbacksMap extends ICallbacksMap {
   /**
    * Triggered only when the width changes (height remains the same).
    */
-  widthOnly: undefined;
+  onlyWidth: undefined;
 
   /**
    * Triggered only when the height changes (width remains the same).
    */
-  heightOnly: undefined;
+  onlyHeight: undefined;
 
   /**
    * Triggered when either width or height changes.

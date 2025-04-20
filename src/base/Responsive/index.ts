@@ -68,7 +68,7 @@ export class Responsive<T extends TResponsiveSource> {
 
     // Add viewport listener
     this._destructors.push(
-      app.onViewport('any', () => this._handleUpdate(), {
+      app.onResize('any', () => this._handleUpdate(), {
         name: `${this.constructor.name} / ${sourceName}`,
       }),
     );

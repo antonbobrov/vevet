@@ -111,7 +111,7 @@ export function onResize({
 
   // Attach viewport event listeners if specified
   if (viewportTarget) {
-    viewportCallback = core.onViewport(viewportTarget, () => debounceResize(), {
+    viewportCallback = core.onResize(viewportTarget, () => debounceResize(), {
       name,
     });
   }

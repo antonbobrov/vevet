@@ -28,7 +28,7 @@ export function toPixels(value: string | number) {
   if (!window.vevet5_toPixelsCache) {
     window.vevet5_toPixelsCache = new Map();
 
-    app.onViewport(
+    app.onResize(
       'any',
       () => {
         window.vevet5_toPixelsCache.clear();

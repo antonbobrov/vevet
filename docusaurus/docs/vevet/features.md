@@ -108,36 +108,36 @@ destruct();
 
 ## Viewport
 
-### `onViewport`
+### `onResize`
 Adds a callback that triggers when the window size changes. Different targets can be specified.
 
 **Example**:
 ```ts
-vevet.onViewport('width', () => {
+vevet.onResize('width', () => {
   console.log('when the viewport width changes (ignores height)');
 });
 
-vevet.onViewport('height', () => {
+vevet.onResize('height', () => {
   console.log('when the viewport height changes (ignores width)');
 });
 
-vevet.onViewport('both', () => {
+vevet.onResize('both', () => {
   console.log('when both width and height change');
 });
 
-vevet.onViewport('widthOnly', () => {
+vevet.onResize('onlyWidth', () => {
   console.log('only when the width changes (height remains the same)');
 });
 
-vevet.onViewport('heightOnly', () => {
+vevet.onResize('onlyHeight', () => {
   console.log('only when the height changes (width remains the same)');
 });
 
-vevet.onViewport('any', () => {
+vevet.onResize('any', () => {
   console.log('when either width or height changes');
 });
 
-const destruct = vevet.onViewport('trigger', () => {
+const destruct = vevet.onResize('trigger', () => {
   console.log('on any resize event, including width, height, or body size changes');
 });
 

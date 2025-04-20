@@ -57,7 +57,7 @@ export function Core(input: Partial<ICoreProps>): ICore {
     body: document.body,
     loaded: false,
     onLoad: pageLoad.onLoad,
-    onViewport: (...params) => viewport.callbacks.on(...params),
+    onResize: (...params) => viewport.callbacks.on(...params),
   };
 
   // update props on page load
