@@ -16,6 +16,8 @@ import { initVevet } from '@/global/initVevet';
 
 export * from './types';
 
+const PAGE_RESOURCE = `vevet-page-${Math.random()}`;
+
 /**
  * Page preloader for calculating and displaying the loading progress of resources (images, videos, custom elements).
  * Provides smooth progress transitions.
@@ -58,7 +60,7 @@ export class ProgressPreloader<
    * List of custom resources to preload based on selectors.
    */
   protected _resources: IProgressPreloaderResource[] = [
-    { id: 'page', weight: 1, loaded: 0 },
+    { id: PAGE_RESOURCE, weight: 1, loaded: 0 },
   ];
 
   /**
@@ -122,7 +124,7 @@ export class ProgressPreloader<
     this._fetchResources();
 
     // Handle resources on page load
-    initVevet().onLoad(() => this.resolveResource('page'));
+    initVevet().onLoad(() => this.resolveResource(PAGE_RESOURCE));
   }
 
   /** Preload images */
@@ -194,7 +196,9 @@ export class ProgressPreloader<
 
       this._resources.push(resource);
 
-      preloadCustomElement(resource, () => this.resolveResource(element));
+      preloadCustomElement(resource, (loadedWeight) =>
+        this.resolveResource(element, loadedWeight),
+      );
     });
   }
 
@@ -231,7 +235,8 @@ export class ProgressPreloader<
       return;
     }
 
-    resource.loaded = loadedWeight ?? resource.weight;
+    const targetWeight = loadedWeight ?? resource.weight;
+    resource.loaded = clamp(targetWeight, 0, resource.weight);
 
     this.callbacks.emit('resource', resource);
   }

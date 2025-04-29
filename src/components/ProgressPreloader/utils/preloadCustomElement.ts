@@ -5,7 +5,7 @@ import { IProgressPreloaderResource } from '../types';
  * Retrieves the load progress of a custom resource element based on its attributes.
  */
 function getLoaded(element: Element) {
-  let loaded = parseInt(element.getAttribute('data-loaded') || '0', 10);
+  let loaded = parseFloat(element.getAttribute('data-loaded') || '0');
   loaded = Number.isNaN(loaded) ? 0 : clamp(loaded, 0, Infinity);
 
   return loaded;
