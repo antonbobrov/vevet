@@ -261,11 +261,15 @@ export class SplitText<
   protected _destroy() {
     super._destroy();
 
-    const isSuccess = this._lineSplitWrapper?.destroy();
-    this._lineSplitWrapper = undefined;
-
-    if (isSuccess) {
+    if (!this._lineSplitWrapper) {
       this._savedNodes.restore();
+    } else {
+      const isSuccessfulDestroy = this._lineSplitWrapper.destroy();
+      this._lineSplitWrapper = undefined;
+
+      if (isSuccessfulDestroy) {
+        this._savedNodes.restore();
+      }
     }
   }
 }
