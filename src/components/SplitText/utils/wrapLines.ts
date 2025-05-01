@@ -16,8 +16,12 @@ interface ILine extends ISplitTextLineMeta {
 /**
  * Recursively retrieves the top parent element of a given element within a container.
  */
-function getTopParent(ref: Element | null, topParent: Element): Element {
-  if (ref?.parentElement === topParent) {
+function getTopParent(ref: Element | null, topParent: Element): Element | null {
+  if (!ref?.parentElement) {
+    return null;
+  }
+
+  if (ref.parentElement === topParent) {
     return ref;
   }
 
@@ -60,6 +64,10 @@ export function wrapLines({
   wordsMeta.forEach((wordMeta) => {
     const currentTop = Math.round(wordMeta.element.offsetTop);
     const topParent = getTopParent(wordMeta.element, container);
+
+    if (!topParent) {
+      return;
+    }
 
     // create new line if the top position changes
     if (currentTop !== prevTop) {
