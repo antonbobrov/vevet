@@ -13,6 +13,10 @@ interface IProps {
 export function wrapLetters({ wordsMeta, classname, tagName }: IProps) {
   const lettersMeta: ISplitTextLetterMeta[] = [];
 
+  const baseElement = document.createElement(tagName);
+  baseElement.style.display = 'inline-block';
+  baseElement.classList.add(classname);
+
   // Iterate over each word to wrap its letters
   wordsMeta.forEach((wordMeta) => {
     const textNode = wordMeta.element.childNodes[0];
@@ -30,9 +34,7 @@ export function wrapLetters({ wordsMeta, classname, tagName }: IProps) {
     const splitLetters = split(text, '');
 
     splitLetters.forEach((letterContents) => {
-      const element = document.createElement(tagName);
-      element.style.display = 'inline-block';
-      element.classList.add(classname);
+      const element = baseElement.cloneNode(false) as HTMLElement;
       element.appendChild(document.createTextNode(letterContents));
 
       // Append the letter element to the word's container

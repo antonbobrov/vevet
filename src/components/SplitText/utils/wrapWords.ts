@@ -12,6 +12,11 @@ interface IProps {
 export function wrapWords({ container, classname, tagName }: IProps) {
   const whitespace = String.fromCharCode(32); // ASCII for space
 
+  const baseElement = document.createElement(tagName);
+  baseElement.style.display = 'inline-block';
+  baseElement.setAttribute('aria-hidden', 'true');
+  baseElement.classList.add(classname);
+
   const wordsMeta: ISplitTextWordMeta[] = [];
 
   /**
@@ -33,34 +38,32 @@ export function wrapWords({ container, classname, tagName }: IProps) {
 
     // If the node is a text node, split it into words
     if (node.nodeType === 3) {
-      const nodeParent = node.parentElement ?? container;
+      const parent = node.parentElement ?? container;
       const text = node.nodeValue ?? '';
-      const splitWords = text.split(whitespace);
 
       // Handle case where node contains only whitespace
       if (text === whitespace) {
-        nodeParent?.insertBefore(document.createTextNode(whitespace), node);
+        parent?.insertBefore(document.createTextNode(whitespace), node);
         node.remove();
 
         return;
       }
 
       // Wrap each word in an element and insert it into the DOM
+      const splitWords = text.split(whitespace);
       splitWords.forEach((wordContents, index) => {
         if (wordContents) {
-          const element = document.createElement(tagName);
-          element.style.display = 'inline-block';
-          element.classList.add(classname);
+          const element = baseElement.cloneNode(false) as HTMLElement;
           element.appendChild(document.createTextNode(wordContents));
 
           wordsMeta.push({ element, letters: [] });
 
-          nodeParent?.insertBefore(element, node);
+          parent?.insertBefore(element, node);
         }
 
         // Add a whitespace between words, except after the last word
         if (index < splitWords.length - 1) {
-          nodeParent?.insertBefore(document.createTextNode(whitespace), node);
+          parent?.insertBefore(document.createTextNode(whitespace), node);
         }
       });
 

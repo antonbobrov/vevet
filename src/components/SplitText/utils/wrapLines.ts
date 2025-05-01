@@ -51,6 +51,11 @@ export function wrapLines({
   let lineIndex = -1;
   let prevTop = Infinity;
 
+  const baseElement = document.createElement(tagName);
+  baseElement.style.display = 'block';
+  baseElement.setAttribute('aria-hidden', 'true');
+  baseElement.classList.add(lineClassName);
+
   // Create lines by wrapping words
   wordsMeta.forEach((wordMeta) => {
     const currentTop = Math.round(wordMeta.element.offsetTop);
@@ -61,9 +66,7 @@ export function wrapLines({
       prevTop = currentTop;
       lineIndex += 1;
 
-      const element = document.createElement(tagName);
-      element.style.display = 'block';
-      element.classList.add(lineClassName);
+      const element = baseElement.cloneNode(false) as HTMLElement;
 
       let wrapper: HTMLElement | undefined;
 
