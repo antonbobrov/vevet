@@ -151,6 +151,8 @@ export class SplitText<
     const { container } = this.props;
 
     container.style.fontKerning = 'none';
+    container.setAttribute('aria-label', container.textContent || '');
+
     this._addTempClassName(container, this._cn(''));
 
     container.translate = false;
