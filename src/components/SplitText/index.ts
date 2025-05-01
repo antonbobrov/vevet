@@ -48,6 +48,10 @@ export class SplitText<
       letterTag: 'span',
       wordTag: 'span',
       lineTag: 'span',
+      letterClass: this._cn('__letter'),
+      wordClass: this._cn('__word'),
+      lineClass: this._cn('__line'),
+      lineWrapperClass: this._cn('__line-wrapper'),
       resizeDebounce: 0,
     } as TRequiredProps<StaticProps>;
   }
@@ -204,14 +208,15 @@ export class SplitText<
       return;
     }
 
-    const { container, letterTag, wordTag } = this.props;
+    const { container, letterTag, wordTag, wordClass, letterClass } =
+      this.props;
 
     this._isBaseSplit = true;
 
     const { wordsMeta, lettersMeta } = splitBase({
       container,
-      letterClassName: this._cn('__letter'),
-      wordClassName: this._cn('__word'),
+      letterClassName: letterClass,
+      wordClassName: wordClass,
       hasLetters: this.props.letters,
       letterTag,
       wordTag,
@@ -226,7 +231,7 @@ export class SplitText<
    */
   protected _splitLines() {
     const { wordsMeta } = this;
-    const { container, lineTag } = this.props;
+    const { container, lineTag, lineClass, lineWrapperClass } = this.props;
 
     const isHidden = container.offsetParent === null;
     if (isHidden) {
@@ -239,8 +244,8 @@ export class SplitText<
       container,
       hasLinesWrapper: this.props.linesWrapper,
       wordsMeta,
-      lineClassName: this._cn('__line'),
-      lineWrapperClassName: this._cn('__line-wrapper'),
+      lineClassName: lineClass,
+      lineWrapperClassName: lineWrapperClass,
       tagName: lineTag,
     });
 

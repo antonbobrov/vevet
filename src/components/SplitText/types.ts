@@ -48,6 +48,30 @@ export interface ISplitTextStaticProps extends IModuleStaticProps {
   lineTag?: keyof HTMLElementTagNameMap;
 
   /**
+   * Letter class name.
+   * @default `v-split-text__letter`
+   */
+  letterClass?: string;
+
+  /**
+   * Word class name.
+   * @default `v-split-text__word`
+   */
+  wordClass?: string;
+
+  /**
+   * Line class name.
+   * @default `v-split-text__line`
+   */
+  lineClass?: string;
+
+  /**
+   * Line wrapper class name.
+   * @default `v-split-text__line-wrapper`
+   */
+  lineWrapperClass?: string;
+
+  /**
    * The debounce delay for the resize event in milliseconds.
    * @default 0
    */
