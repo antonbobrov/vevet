@@ -1,0 +1,297 @@
+# Snap
+
+Manages carousel-like behavior. Supports
+
+- Tracks slide progress
+- Numerous callbacks for event handling
+- Snapping
+- Wheel interaction
+- Swipe/Drag events
+- Custom gaps with css units supported
+- Smooth transitions
+- and more...
+
+:::note
+- Snap does not apply any styles to the container or slides, it only provides logic, which allows you building custom carousels.
+:::
+
+## Example
+
+Explore a basic example in CodePen:
+
+<iframe 
+  height="500"
+  style={{
+    width: '100%'
+  }} 
+  scrolling="no" 
+  title="Vevet Example"
+  src="https://codepen.io/anton-bobrov/embed/RNNjdxK?default-tab=result"
+  frameborder="no"
+  loading="lazy"
+  allowtransparency="true"
+  allowfullscreen="true"
+>
+  See the Pen <a href="https://codepen.io/anton-bobrov/pen/RNNjdxK">Vevet Example</a> by Anton Bobrov.
+</iframe>
+
+
+
+## Props
+
+### Static Props
+
+Static properties are set during initialization and cannot be modified later.
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Default Value</th>
+  </tr>
+  
+  <tr>
+    <td>container</td>
+    <td>HTML container element where listeners are attached.</td>
+    <td><code>HTMLElement</code></td>
+    <td></td>
+  </tr>
+  
+  <tr>
+    <td>activeIndex</td>
+    <td>Default active index.</td>
+    <td><code>number</code></td>
+    <td>0</td>
+  </tr>
+</table>
+
+### Mutable Props
+
+Mutable properties can be updated at runtime using `.updateProps()`.
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Default Value</th>
+  </tr>
+  
+  <tr>
+    <td>slides</td>
+    <td>Todo: add examples & description.</td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+  </tr>
+  
+  <tr>
+    <td>direction</td>
+    <td>Sliding direction. <br /> **See [example](basic-examples#vertical)**</td>
+    <td><code>'horizontal' | 'vertical'</code></td>
+    <td><code>'horizontal'</code></td>
+  </tr>
+  
+  <tr>
+    <td>centered</td>
+    <td>Centered slides. <br /> **See [example](basic-examples#centered)**</td>
+    <td><code>boolean</code></td>
+    <td><code>false</code></td>
+  </tr>
+  
+  <tr>
+    <td>loop</td>
+    <td>Detects if need to loop the slides. <br /> **See [example](basic-examples#loop)**</td>
+    <td><code>boolean</code></td>
+    <td><code>false</code></td>
+  </tr>
+  
+  <tr>
+    <td>gap</td>
+    <td>The gap between slides. Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.</td>
+    <td><code>number | string</code></td>
+    <td><code>0</code></td>
+  </tr>
+  
+  <tr>
+    <td>lerp</td>
+    <td>Linear interpolation factor for smooth animation. <br /> **See [example](basic-examples#smooth)**</td>
+    <td><code>number</code></td>
+    <td><code>0.2</code></td>
+  </tr>
+  
+  <tr>
+    <td>freemode</td>
+    <td>Disables `friction` and snapping to the nearest slide. <br /> **See [example](basic-examples#freemode)**</td>
+    <td><code>boolean</code></td>
+    <td><code>false</code></td>
+  </tr>
+  
+  <tr>
+    <td>stickOnResize</td>
+    <td>Stick to the nearest slide on window resize.</td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+  </tr>
+  
+  <tr>
+    <td>friction</td>
+    <td>Friction that makes the slides tend to the nearest slide magnet. The value is a number between `0 and 1` which is multiplied by the `lerp` value. `0` disables friction. <br /> **See [example](basic-examples#friction)**</td>
+    <td><code>number</code></td>
+    <td><code>0.15</code></td>
+  </tr>
+  
+  <tr>
+    <td>edgeFriction</td>
+    <td>Maximum friction between the final slide and the maximum translation value. From `0 to 1`. The higher value the more resistance is applied.</td>
+    <td><code>number</code></td>
+    <td><code>0.85</code></td>
+  </tr>
+  
+  <tr>
+    <td>duration</td>
+    <td>Slide animation duration. <br /> **See [example](basic-examples#smooth)**</td>
+    <td><code>number | ((distance: number) => number)</code></td>
+    <td><code>500</code></td>
+  </tr>
+  
+  <tr>
+    <td>easing</td>
+    <td>
+      Easing type for smoother animation. Accepts standard easing types or an array of bezier values.
+      
+      See [easing types](/docs/utils#easing-types) for more information
+
+      **See [example](basic-examples#bounce)**
+    </td>
+    <td><code>TEasingType</code></td>
+    <td><code>EaseOutCubic</code></td>
+  </tr>
+  
+  <tr>
+    <td>slideSize</td>
+    <td>
+      Default slide size. Supported values:
+      - `auto` detects slide size depending on the element or container size.
+      - `stretch` detects slide size as the container size.
+      - `number` defines the slide size in pixels.
+      - css units like `px`, `rem`, `vw`, `vh`, `svh`.
+      
+      Note that this property does not change real slide sizes. It is used for virtual slides & custom logic.
+    </td>
+    <td><code>'auto' | 'stretch' | number | string</code></td>
+    <td><code>'auto'</code></td>
+  </tr>
+  
+  <tr>
+    <td>swipe</td>
+    <td>Enable or disable swipe events.</td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+  </tr>
+  
+  <tr>
+    <td>grabCursor</td>
+    <td>User will see the "grab" cursor when hovering and "grabbing" when swiping.</td>
+    <td><code>boolean</code></td>
+    <td><code>false</code></td>
+  </tr>
+  
+  <tr>
+    <td>swipeSpeed</td>
+    <td>Speed factor for swipe movements. <br /> **See [example](basic-examples#reverse-swipe)**</td>
+    <td><code>number</code></td>
+    <td><code>1</code></td>
+  </tr>
+  
+  <tr>
+    <td>swipeAxis</td>
+    <td>Swipe axis. If `auto`, the axis will be automatically detected depending on `direction`.</td>
+    <td><code>'x' | 'y' | 'auto'</code></td>
+    <td><code>'auto'</code></td>
+  </tr>
+  
+  <tr>
+    <td>followSwipe</td>
+    <td>If `false`, then slider will be animated only when you release the finger, it will not move while you hold your finger on it.</td>
+    <td><code>boolean</code></td>
+    <td><code>false</code></td>
+  </tr>
+  
+  <tr>
+    <td>shortSwipes</td>
+    <td>When `true`, swipes shorter than `shortSwipeDuration` can trigger slide change. Short swipes work only when `followSwipe` is `true`.</td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+  </tr>
+  
+  <tr>
+    <td>shortSwipesDuration</td>
+    <td>Short swipe maximum duration.</td>
+    <td><code>number</code></td>
+    <td><code>300</code></td>
+  </tr>
+  
+  <tr>
+    <td>shortSwipesThreshold</td>
+    <td>Minimum distance in pixels to trigger slide change for short swipes.</td>
+    <td><code>number</code></td>
+    <td><code>30</code></td>
+  </tr>
+  
+  <tr>
+    <td>swipeFriction</td>
+    <td>Defines if `friction` is allowed when swiping. Doesn't work with short swipes or when when `followSwipe` is `false`. <br /> **See [example](basic-examples#friction)**</td>
+    <td><code>boolean</code></td>
+    <td><code>false</code></td>
+  </tr>
+  
+  <tr>
+    <td>swipeLerp</td>
+    <td>Linear interpolation factor for smooth progress updates during swipe move. `false` means that the main `lerp` option will be used.</td>
+    <td><code>number | false</code></td>
+    <td><code>vevet.mobile ? 1 : 0.6</code></td>
+  </tr>
+  
+  <tr>
+    <td>swipeThreshold</td>
+    <td>Length in pixels that must be swiped to trigger swipe start.</td>
+    <td><code>number</code></td>
+    <td><code>5</code></td>
+  </tr>
+  
+  <tr>
+    <td>swipeMinTime</td>
+    <td>Minimum time in milliseconds to trigger swipe move.</td>
+    <td><code>number</code></td>
+    <td><code>0</code></td>
+  </tr>
+  
+  <tr>
+    <td>wheel</td>
+    <td>Enable or disable mouse wheel control. <br /> **See [example](basic-examples#wheel)**</td>
+    <td><code>boolean</code></td>
+    <td><code>false</code></td>
+  </tr>
+  
+  <tr>
+    <td>wheelSpeed</td>
+    <td>Speed factor for mouse wheel control.</td>
+    <td><code>number</code></td>
+    <td><code>1</code></td>
+  </tr>
+  
+  <tr>
+    <td>wheelAxis</td>
+    <td>Wheel axis. If `auto`, the axis will be automatically detected depending on `direction`.</td>
+    <td><code>'x' | 'y' | 'auto'</code></td>
+    <td><code>'auto'</code></td>
+  </tr>
+  
+  <tr>
+    <td>followWheel</td>
+    <td>If `false`, then slider will be animated only when you stop scrolling the wheel.</td>
+    <td><code>boolean</code></td>
+    <td><code>true</code></td>
+  </tr>
+</table>
