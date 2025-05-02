@@ -2,21 +2,19 @@
 sidebar_position: 2
 ---
 
-# Vevet
+# Core
 
-**vevet** is a client-side utility designed to provide comprehensive details about the user's viewport, browser, and operating system. It also offers various callbacks for page load events and viewport changes.
+The **Vevet Core** provides essential utilities for detecting and responding to the user’s environment.
 
 ## Features
 
-- **Viewport Detection**: Retrieve detailed information about the user's viewport.
-- **Browser and OS Identification**: Get details about the user's browser and operating system.
-- **Custom Callbacks**: Trigger specific actions on page load or viewport changes.
+- **Viewport Detection** – Get detailed information about the user's viewport.
+- **Browser & OS Detection** – Identify the user's browser and operating system.
+- **Custom Callbacks** – Trigger actions on page load or viewport changes.
 
 ## Usage
 
 ### JavaScript Example
-
-Learn more in the **[Features Documentation](./features)**.
 
 ```ts
 import { vevet } from 'vevet';
@@ -25,3 +23,26 @@ console.log(vevet); // => IVevet instance
 console.log(vevet.version); // => '5.0.0'
 console.log(vevet.osName); // => 'windows'
 console.log(vevet.browserName); // => 'chrome'
+```
+
+Learn more in the **[Features Documentation](./features)** and **[SCSS Features](./scss)** .
+
+## Customization
+
+Vevet is fully customizable. You can modify breakpoints (CSS & JS), default easing functions, and resize events.
+
+Learn more in **[Customization](./customization)**
+
+## CSS Variables 
+
+Vevet provides key CSS variables:
+
+- `--vw` – Viewport width unit
+
+- `--vh` – Viewport height unit
+
+- `--svh` – Safe viewport height
+
+- `--scrollbar-width` – Width of the browser scrollbar
+
+Learn more in **[CSS Variables](./css-vars)**

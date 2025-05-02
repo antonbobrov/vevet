@@ -1,30 +1,95 @@
-/**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
- */
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@100..900&display=swap');
 
-/* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --color-sapphire: #1E2B52;
+  --color-ultramarine: #0D6EFD;
+  --color-aurora-teal: #00C9B1;
+  --color-amethyst: #8C7AE6;
+  --color-champagne: #F4D69D;
+  --color-coral: #FF7F87;
+  --color-mint: #C2F9EF;
+  --color-night: #11192A;
+  --gradient-cosmic: linear-gradient(135deg, var(--color-ultramarine) 0%, var(--color-amethyst) 50%, var(--color-aurora-teal) 100%);
+  --gradient-sunset: linear-gradient(135deg, var(--color-coral) 0%, var(--color-champagne) 100%);
+  --gradient-northern: linear-gradient(165deg, var(--color-night) 0%, var(--color-sapphire) 40%, #003A52 100%);
+  --gradient-frosted: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(194, 249, 239, 0.7) 100%);
+
+  --ifm-font-family-base: 'Outfit', sans-serif;
+
+  --ifm-background-color: #f8f9ff;
+  --ifm-color-primary: var(--color-ultramarine);
+  --ifm-color-primary-dark: #0261ed;
+  --ifm-color-primary-darker: #025bde;
+  --ifm-color-primary-darkest: #024cb9;
+  --ifm-color-primary-light: #0261ed;
+  --ifm-color-primary-lighter: #0256d3;
+  --ifm-color-primary-lightest: #024cb9;
+  --ifm-color-secondary-contrast-background: #fff;
+  --ifm-color-secondary: var(--ifm-hover-overlay); 
+  --ifm-color-content: var(--color-sapphire);
+  --ifm-navbar-background-color: var(--ifm-background-color);
+  --ifm-code-background: var(--ifm-hover-overlay);
+  --ifm-navbar-shadow: none;
+  --ifm-navbar-height: 4.5rem;
+  --ifm-menu-link-padding-horizontal: 0.75rem;
+  --ifm-menu-link-padding-vertical: 0.75rem;
+  --ifm-code-padding-horizontal: 0.5rem;
+  --ifm-code-padding-vertical: 0.25rem;
+  --ifm-pre-padding: 1.5rem;
+  --ifm-breadcrumb-padding-horizontal: 1rem;
+  --ifm-breadcrumb-padding-vertical: 0.5rem;
+  --ifm-toc-padding-vertical: 0.75rem;
+  --ifm-table-cell-padding: 1rem;
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
-[data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
+/* [data-theme='dark'] {
+  --ifm-color-primary: #0d6efd;
+  --ifm-color-primary-dark: #277efd;
+  --ifm-color-primary-darker: #3586fd;
+  --ifm-color-primary-darkest: #5c9dfe;
+  --ifm-color-primary-light: #277efd;
+  --ifm-color-primary-lighter: #3586fd;
+  --ifm-color-primary-lightest: #5c9dfe;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+} */
+
+.navbar-sidebar {
+  background-color: var(--ifm-background-color);
+}
+
+.navbar__items {
+  gap: 1rem;
+}
+
+.navbar__item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 0.5rem;
+}
+
+@media (max-width: 996px) {
+  .navbar__item {
+    display: none;
+  }
+}
+
+.theme-doc-sidebar-container {
+  border: 0 !important;
+}
+
+code {
+  border: 0;
+}
+
+.table-of-contents {
+  padding-block: 0;
+}
+
+.pagination-nav__link {
+  padding: 1.5rem;
 }

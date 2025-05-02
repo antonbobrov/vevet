@@ -22,7 +22,7 @@ export * from './types';
  * Features:
  * - Supports resizing, HTML content, and special symbols like emojis.
  * - Handles multi-line breaks and non-breaking spaces.
- * - Saves initial nodes and listeners for easy restoration.
+ * - Saves initial nodes for easy restoration.
  * - Allows splitting into lines, words, or letters as needed.
  *
  * **Note**: Apply `fontKerning: none` to prevent layout shifts.

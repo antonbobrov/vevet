@@ -4,7 +4,11 @@ sidebar_position: 1
 
 # Features
 
-Vevet offers a robust set of features for detecting device types, managing application states, responding to viewport changes, and more.
+Vevet offers a robust set of features for detecting 
+- device types
+- managing application states
+- responding to viewport changes
+- and more.
 
 ## Usage Example
 

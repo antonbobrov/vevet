@@ -11,23 +11,23 @@ function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
 
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className="container">
-        <Heading as="h1" className="hero__title">
-          {siteConfig.title}
-        </Heading>
+    <header className={styles.mainScreen}>
+      <h1 className={styles.title}>{siteConfig.title}</h1>
+      
+      <p className={styles.subtitle}>{siteConfig.tagline}</p>
 
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/intro">
-            Documentation
-          </Link>
-        </div>
-
-        <video className={styles.showreel} src="./showreel.mp4" muted autoPlay playsInline loop controls></video>
+      <div className={styles.buttons}>
+        <Link
+          className={styles.button}
+          to="/docs/intro">
+          Documentation
+        </Link>
+        
+        <Link
+          className={clsx(styles.button, styles.button_outline)}
+          to="https://codepen.io/collection/RPNmJz">
+          Demos
+        </Link>
       </div>
     </header>
   );
