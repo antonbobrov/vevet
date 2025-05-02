@@ -39,9 +39,7 @@ export const Component: FC = () => {
   useEffect(() => {
     updateFeatures();
 
-    const viewportCallback = vevet.onResize('trigger', () =>
-      updateFeatures(),
-    );
+    const viewportCallback = vevet.onResize('trigger', () => updateFeatures());
 
     return () => viewportCallback();
   }, [updateFeatures]);
