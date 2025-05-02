@@ -13,10 +13,10 @@ It includes:
 - [Core](/docs/vevet)  
   Handles viewport events, page load states, and provides essential info about the viewport and user agent.
 
-- [Base](/docs/base/callbacks)  
+- [Base](/docs/base/Callbacks)  
   Core utilities like Callbacks, Module, and Responsive. Skip this if you only need ready-to-use components.
 
-- [Components](/docs/components/canvas)  
+- [Components](/docs/components/Canvas)  
   A collection of abstract and functional modules such as loaders, scroll tools, split text, carousels, and more.
 
 - [Utils](/docs/utils)  
