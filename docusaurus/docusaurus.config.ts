@@ -36,6 +36,7 @@ const config: Config = {
   
   themeConfig: {
     image: 'img/docusaurus-social-card.jpg',
+
     navbar: {
       logo: {
         alt: 'Vevet Logo',
@@ -67,9 +68,20 @@ const config: Config = {
         },
       ],
     },
+
     prism: {
       theme: prismThemes.dracula,
       darkTheme: prismThemes.dracula,
+    },
+    
+    algolia: {
+      appId: 'MSAF9XJGA7',
+      apiKey: '3ca26ace2526c74dccc014381db15fe5',
+      indexName: 'antonbobrovio',
+      contextualSearch: true,
+      searchParameters: {},
+      searchPagePath: 'search',
+      insights: false,
     },
   } satisfies Preset.ThemeConfig,
 };
