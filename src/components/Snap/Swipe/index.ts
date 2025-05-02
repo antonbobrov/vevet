@@ -186,10 +186,12 @@ export class SnapSwipe {
       return;
     }
 
+    const normalizedDiff = Math.sign(diff) * Math.sign(props.swipeSpeed);
+
     if (this._startIndex !== snap.activeIndex) {
-      if (Math.sign(diff) < 0 && activeSlide.progress > 0) {
+      if (normalizedDiff < 0 && activeSlide.progress > 0) {
         snap.next();
-      } else if (Math.sign(diff) > 0 && activeSlide.progress < 0) {
+      } else if (normalizedDiff > 0 && activeSlide.progress < 0) {
         snap.prev();
       } else {
         snap.stick();
@@ -198,7 +200,7 @@ export class SnapSwipe {
       return;
     }
 
-    if (Math.sign(diff) < 0) {
+    if (normalizedDiff < 0) {
       snap.next();
     } else {
       snap.prev();
