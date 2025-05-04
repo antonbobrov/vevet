@@ -27,6 +27,7 @@ const config: Config = {
           editUrl:
             'https://github.com/antonbobrov/vevet/tree/master/docusaurus',
         },
+        sitemap: {},
         theme: {
           customCss: './src/css/custom.css',
         },
