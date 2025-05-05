@@ -28,6 +28,9 @@ const config: Config = {
             'https://github.com/antonbobrov/vevet/tree/master/docusaurus',
         },
         sitemap: {},
+        gtag: {
+          trackingID: 'G-KSMP6NQ3RZ'
+        },
         theme: {
           customCss: './src/css/custom.css',
         },
