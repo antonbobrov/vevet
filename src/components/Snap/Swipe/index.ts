@@ -18,7 +18,7 @@ export class SnapSwipe {
     this._startTime = 0;
 
     this._swipe = new Swipe({
-      container: snap.container,
+      container: snap.eventsEmitter,
       enabled: snap.props.swipe,
       grabCursor: snap.props.grabCursor,
       minTime: snap.props.swipeMinTime,
@@ -92,7 +92,7 @@ export class SnapSwipe {
     this._startTime = +new Date();
 
     // disable pointer events
-    snap.container.style.pointerEvents = 'none';
+    snap.eventsEmitter.style.pointerEvents = 'none';
 
     // cancel sticky behavior
     if (snap.props.followSwipe) {
@@ -135,7 +135,7 @@ export class SnapSwipe {
     this._end();
 
     // Enable pointer events
-    this.snap.container.style.pointerEvents = '';
+    this.snap.eventsEmitter.style.pointerEvents = '';
 
     // Emit end callbacks
     this.snap.callbacks.emit('swipeEnd', coords);

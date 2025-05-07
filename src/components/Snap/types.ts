@@ -13,8 +13,12 @@ import { ISnapSlideProps } from './Slide/types';
 
 /** Static properties for the Snap component */
 export interface ISnapStaticProps extends IModuleStaticProps {
-  /** HTML container element where listeners are attached */
+  /** HTML container  */
   container: HTMLElement;
+  /** HTML Element used to emit events
+   * @default null
+   */
+  eventsEmitter?: HTMLElement | null;
   /**
    * Default active index
    * @default 0

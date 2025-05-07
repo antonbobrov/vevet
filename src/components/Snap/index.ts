@@ -49,6 +49,7 @@ export class Snap<
   public _getStatic(): TRequiredProps<StaticProps> {
     return {
       ...super._getStatic(),
+      eventsEmitter: null,
       activeIndex: 0,
     } as TRequiredProps<StaticProps>;
   }
@@ -225,6 +226,11 @@ export class Snap<
   /** Get container */
   get container() {
     return this.props.container;
+  }
+
+  /** Get events emitter */
+  get eventsEmitter() {
+    return this.props.eventsEmitter ?? this.container;
   }
 
   /** Container size depending on direction (width or height) */

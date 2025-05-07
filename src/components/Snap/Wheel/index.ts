@@ -17,7 +17,7 @@ export class SnapWheel {
   constructor(protected _snap: Snap) {
     _snap.on('destroy', () => this._destroy(), { protected: true });
 
-    this._destructor = addEventListener(_snap.container, 'wheel', (event) =>
+    this._destructor = addEventListener(_snap.eventsEmitter, 'wheel', (event) =>
       this._handleWheel(event),
     );
   }
