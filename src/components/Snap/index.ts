@@ -19,7 +19,7 @@ import {
   damp,
   lerp,
   toPixels,
-  getClosest,
+  closest,
 } from '@/utils';
 import { SnapSlide } from './Slide';
 import { SnapWheel } from './Wheel';
@@ -573,11 +573,11 @@ export class Snap<
       const magnets = allMagnets.filter((magnet) =>
         direction === 'next' ? magnet >= current : magnet <= current,
       );
-      const magnet = getClosest(current, magnets);
+      const magnet = closest(current, magnets);
 
       this.toCoord(magnet, duration);
     } else {
-      const magnet = getClosest(current, allMagnets);
+      const magnet = closest(current, allMagnets);
 
       this.toCoord(magnet, duration);
     }
