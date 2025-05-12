@@ -231,6 +231,7 @@ export class SnapSlide {
       const point = staticCoord + size / 2 - firstSlideSize / 2;
 
       if (size > domSize) {
+        points.push(point);
         points.push(point + (domSize - size) / 2);
         points.push(point - (domSize - size) / 2);
       } else {
