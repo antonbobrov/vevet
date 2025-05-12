@@ -14,9 +14,7 @@
     "build:cdn": "esbuild ./lib/esm/index.js --bundle --format=iife --target=es2017 --global-name=Vevet --minify --outfile=./lib/cdn/vevet.iife.min.js",
     "build:styles": "copyfiles src/styles/**/*.scss lib/styles -u 2",
     "build:docs": "rimraf docs && typedoc --out docusaurus/static/v5 ./src --theme default --hideGenerator --includeVersion && cd docusaurus && npm run build && cd ..",
-    "version": "node ./config/version.js && git add ./src/version.ts && git commit -m \"Update version\"",
-    "deploy": "gh-pages -d docusaurus/build",
-    "prepublishOnly": "run-s lint build deploy"
+    "deploy": "gh-pages -d docusaurus/build"
   },
   "main": "./lib/cjs/index.js",
   "types": "./lib/types/index.d.ts",
@@ -70,6 +68,8 @@
   "devDependencies": {
     "@anton.bobrov/eslint-config": "2.0.5",
     "@chromatic-com/storybook": "^3.2.4",
+    "@release-it/bumper": "^7.0.5",
+    "@release-it/conventional-changelog": "^10.0.1",
     "@storybook/addon-essentials": "^8.6.0",
     "@storybook/addon-interactions": "^8.6.0",
     "@storybook/addon-onboarding": "^8.6.0",
@@ -90,6 +90,7 @@
     "prettier": "3.3.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "release-it": "^19.0.2",
     "rimraf": "^6.0.1",
     "storybook": "^8.6.0",
     "tsc-alias": "^1.8.7",

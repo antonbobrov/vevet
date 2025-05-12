@@ -1,0 +1,29 @@
+{
+  "$schema": "https://unpkg.com/release-it@19/schema/release-it.json",
+  "git": {
+    "requireBranch": "master",
+    "tagName": "v${version}",
+    "commitMessage": "chore(release): v${version}",
+    "add": ["CHANGELOG.md", "package.json", "src/manifest.json"]
+  },
+  "github": {
+    "release": true
+  },
+  "npm": {
+    "publish": true
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "infile": "CHANGELOG.md",
+      "preset": "eslint"
+    },
+    "@release-it/bumper": {
+      "out": ["src/manifest.json"]
+    }
+  },
+  "hooks": {
+    "before:init": ["git pull", "npm run lint"],
+    "after:bump": ["npm run build", "git add ./src/manifest.json"],
+    "after:release": ["npm run deploy"]
+  }
+}

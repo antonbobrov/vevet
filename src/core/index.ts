@@ -1,6 +1,6 @@
 import { detect } from 'detect-browser';
 import isMobileJs from 'ismobilejs';
-import version from '../version';
+import manifest from '../manifest.json';
 import { createPageLoad } from './handlers/createPageLoad';
 import { ICoreProps } from './types';
 import { createViewport } from './handlers/createViewport';
@@ -44,7 +44,7 @@ export function Core(input: Partial<ICoreProps>): ICore {
   const output: ICore = {
     ...viewport.data,
     viewportCallbacks: viewport.callbacks,
-    version,
+    version: manifest.version,
     props,
     prefix,
     phone: device.phone,
