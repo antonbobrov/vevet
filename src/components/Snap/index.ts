@@ -126,6 +126,9 @@ export class Snap<
   /** Active slide index */
   protected _activeIndex: number;
 
+  /** Target slide index */
+  protected _targetIndex?: number;
+
   constructor(props?: StaticProps & MutableProps) {
     super(props);
 
@@ -356,8 +359,14 @@ export class Snap<
     const { magnet } = this;
 
     // Active index change
-    if (magnet && magnet.slide.index !== this._activeIndex) {
+    if (
+      magnet &&
+      magnet.slide.index !== this._activeIndex &&
+      (typeof this._targetIndex === 'undefined' ||
+        magnet.slide.index === this._targetIndex)
+    ) {
       this._activeIndex = magnet.slide.index;
+      this._targetIndex = undefined;
       this.callbacks.emit('activeSlide', this.activeSlide);
     }
 
@@ -525,6 +534,10 @@ export class Snap<
       this._timeline = undefined;
     });
 
+    tm.on('destroy', () => {
+      this._targetIndex = undefined;
+    });
+
     tm.play();
   }
 
@@ -549,6 +562,8 @@ export class Snap<
 
       return;
     }
+
+    this._targetIndex = index;
 
     // Get nearest magnet
 
