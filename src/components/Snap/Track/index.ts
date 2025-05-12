@@ -47,6 +47,18 @@ export class SnapTrack {
     return this.canLoop ? loop(this.current, this.min, this.max) : this.current;
   }
 
+  /** Get track offset */
+  get offset() {
+    const { snap } = this;
+
+    return snap.props.centered ? snap.domSize / 2 - snap.firstSlideSize / 2 : 0;
+  }
+
+  /** Get loop count */
+  get loopCount() {
+    return Math.floor(this.current / this.max);
+  }
+
   /** Interpolate the current track value */
   public lerp(factor: number) {
     let { target } = this;
@@ -165,11 +177,19 @@ export class SnapTrack {
 
   /** If the start has been reached */
   get isStart() {
+    if (this.snap.props.loop) {
+      return false;
+    }
+
     return Math.floor(this.target) <= Math.floor(this.min);
   }
 
   /** If the end has been reached */
   get isEnd() {
+    if (this.snap.props.loop) {
+      return false;
+    }
+
     return Math.floor(this.target) >= Math.floor(this.max);
   }
 
