@@ -4,7 +4,9 @@ import {
   ISnapCallbacksMap,
   ISnapMagnet,
   ISnapMutableProps,
+  ISnapNexPrevArg,
   ISnapStaticProps,
+  ISnapToSlideArg,
 } from './types';
 import { TRequiredProps } from '@/internal/requiredProps';
 import { Raf } from '../Raf';
@@ -17,6 +19,7 @@ import {
   damp,
   lerp,
   toPixels,
+  getClosest,
 } from '@/utils';
 import { SnapSlide } from './Slide';
 import { SnapWheel } from './Wheel';
@@ -343,14 +346,14 @@ export class Snap<
       return;
     }
 
-    const { track, props } = this;
+    const { _swipe: swipe, track, props } = this;
 
     // Update values
     this._updateSlidesCoords();
     this._updateSlidesProgress();
 
     // Get magnet after slide coordinates are updated
-    const { magnet, _swipe: swipe } = this;
+    const { magnet } = this;
 
     // Active index change
     if (magnet && magnet.slide.index !== this._activeIndex) {
@@ -458,10 +461,8 @@ export class Snap<
       return undefined;
     }
 
-    const magnet = magnets.reduce((prev, curr) =>
-      Math.abs(curr.magnet - current) < Math.abs(prev.magnet - current)
-        ? curr
-        : prev,
+    const magnet = magnets.reduce((p, c) =>
+      Math.abs(c.magnet - current) < Math.abs(p.magnet - current) ? c : p,
     );
 
     return {
@@ -528,8 +529,12 @@ export class Snap<
   }
 
   /** Go to a slide by index */
-  public toSlide(targetIndex: number, duration = this.props.duration) {
-    const { isEmpty, activeIndex, slides, track } = this;
+  public toSlide(
+    targetIndex: number,
+    { direction = null, duration = this.props.duration }: ISnapToSlideArg = {},
+  ) {
+    const { isEmpty, activeIndex, slides, track, props } = this;
+    const { current, max, loopCount } = track;
 
     if (isEmpty) {
       return;
@@ -537,42 +542,73 @@ export class Snap<
 
     const index = loop(targetIndex, 0, this.slides.length);
 
+    // Stick if the same slide
+
     if (index === activeIndex) {
       this.stick();
 
       return;
     }
 
+    // Get nearest magnet
+
     const slideMagnets = slides[index].magnets;
-    const current = track.loopedCurrent;
+    const targetMagnet = slideMagnets[0] + loopCount * max;
 
-    const magnet = slideMagnets.reduce((prev, curr) =>
-      Math.abs(curr - current) < Math.abs(prev - current) ? curr : prev,
-    );
+    // Use static magnet when not looping
 
-    this.toCoord(this.track.current + (magnet - track.loopedCurrent), duration);
+    if (!props.loop) {
+      this.toCoord(targetMagnet, duration);
+
+      return;
+    }
+
+    // Or calculate closest magnet
+
+    const targetMagnetMin = targetMagnet - max;
+    const targetMagnetMax = targetMagnet + max;
+    const allMagnets = [targetMagnetMin, targetMagnet, targetMagnetMax];
+
+    if (typeof direction === 'string') {
+      const magnets = allMagnets.filter((magnet) =>
+        direction === 'next' ? magnet >= current : magnet <= current,
+      );
+      const magnet = getClosest(current, magnets);
+
+      this.toCoord(magnet, duration);
+    } else {
+      const magnet = getClosest(current, allMagnets);
+
+      this.toCoord(magnet, duration);
+    }
   }
 
   /** Go to next slide */
-  public next(duration = this.props.duration) {
+  public next({
+    duration = this.props.duration,
+    skip = 1,
+  }: ISnapNexPrevArg = {}) {
     const { props, slides, activeIndex } = this;
 
     const index = props.loop
-      ? loop(activeIndex + 1, 0, slides.length)
-      : Math.min(activeIndex + 1, slides.length - 1);
+      ? loop(activeIndex + skip, 0, slides.length)
+      : Math.min(activeIndex + skip, slides.length - 1);
 
-    this.toSlide(index, duration);
+    this.toSlide(index, { duration, direction: 'next' });
   }
 
   /** Go to previous slide */
-  public prev(duration = this.props.duration) {
+  public prev({
+    duration = this.props.duration,
+    skip = 1,
+  }: ISnapNexPrevArg = {}) {
     const { props, slides, activeIndex } = this;
 
     const index = props.loop
-      ? loop(activeIndex - 1, 0, slides.length)
-      : Math.max(activeIndex - 1, 0);
+      ? loop(activeIndex - skip, 0, slides.length)
+      : Math.max(activeIndex - skip, 0);
 
-    this.toSlide(index, duration);
+    this.toSlide(index, { duration, direction: 'prev' });
   }
 
   /**

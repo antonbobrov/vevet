@@ -175,3 +175,13 @@ export interface ISnapMagnet {
   /** Difference with current coordinate */
   diff: number;
 }
+
+export interface ISnapNexPrevArg {
+  duration?: TSnapDuration;
+  skip?: number;
+}
+
+export interface ISnapToSlideArg {
+  direction?: 'next' | 'prev' | null;
+  duration?: TSnapDuration;
+}
