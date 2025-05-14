@@ -3,7 +3,7 @@
 The primary goal of Vevet is to simplify the creation of interactive components from scratch — be it text animations, carousels, or other interactive elements.
 
 ### [Documentation ↗](https://antonbobrov.github.io/vevet/)
-### [Changelog ↗](https://github.com/antonbobrov/vevet/blob/master//CHANGELOG.md)
+### [Changelog ↗](https://github.com/antonbobrov/vevet/blob/master/CHANGELOG.md)
 
 ## NPM Usage
 
