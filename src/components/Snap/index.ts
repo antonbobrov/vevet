@@ -524,6 +524,10 @@ export class Snap<
       track.current = lerp(start, end, data.eased);
       track.target = track.current;
 
+      if (data.progress === 1) {
+        this._targetIndex = undefined;
+      }
+
       this._render();
       callbacks.emit('timelineUpdate', data);
     });
