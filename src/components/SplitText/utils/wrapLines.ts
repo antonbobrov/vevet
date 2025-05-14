@@ -51,18 +51,24 @@ export function wrapLines({
   lineWrapperClassName,
   tagName,
 }: IProps) {
+  const { direction } = getComputedStyle(container);
+
   const linesMeta: ILine[] = [];
   let lineIndex = -1;
-  let prevTop = Infinity;
+  let lastBounding: DOMRect | null = null;
 
   const baseElement = document.createElement(tagName);
   baseElement.style.display = 'block';
   baseElement.setAttribute('aria-hidden', 'true');
   baseElement.classList.add(lineClassName);
 
+  const boundings = wordsMeta.map((wordMeta) =>
+    wordMeta.element.getBoundingClientRect(),
+  );
+
   // Create lines by wrapping words
-  wordsMeta.forEach((wordMeta) => {
-    const currentTop = Math.round(wordMeta.element.offsetTop);
+  wordsMeta.forEach((wordMeta, index) => {
+    const bounds = boundings[index];
     const topParent = getTopParent(wordMeta.element, container);
 
     if (!topParent) {
@@ -70,8 +76,16 @@ export function wrapLines({
     }
 
     // create new line if the top position changes
-    if (currentTop !== prevTop) {
-      prevTop = currentTop;
+
+    if (
+      !lastBounding ||
+      (bounds.top >= lastBounding.top &&
+        bounds.left <= lastBounding.left &&
+        direction === 'ltr') ||
+      (bounds.top >= lastBounding.top &&
+        bounds.left >= lastBounding.left &&
+        direction === 'rtl')
+    ) {
       lineIndex += 1;
 
       const element = baseElement.cloneNode(false) as HTMLElement;
@@ -87,6 +101,8 @@ export function wrapLines({
 
       linesMeta[lineIndex] = { element, wrapper, nodes: [], words: [] };
     }
+
+    lastBounding = bounds;
 
     const currentLine = linesMeta[lineIndex];
 
