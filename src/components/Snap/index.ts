@@ -568,22 +568,19 @@ export class Snap<
     }
 
     this._targetIndex = index;
-
-    // Get nearest magnet
-
     const slideMagnets = slides[index].magnets;
-    const targetMagnet = slideMagnets[0] + loopCount * max;
 
     // Use static magnet when not looping
 
     if (!props.loop) {
-      this.toCoord(targetMagnet, duration);
+      this.toCoord(slideMagnets[0], duration);
 
       return;
     }
 
     // Or calculate closest magnet
 
+    const targetMagnet = slideMagnets[0] + loopCount * max;
     const targetMagnetMin = targetMagnet - max;
     const targetMagnetMax = targetMagnet + max;
     const allMagnets = [targetMagnetMin, targetMagnet, targetMagnetMax];
