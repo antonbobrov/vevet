@@ -76,6 +76,12 @@ export interface ISplitTextStaticProps extends IModuleStaticProps {
    * @default 0
    */
   resizeDebounce?: number;
+
+  /**
+   * Do not split certain elements. Supports string selectors, array of elements, or function.
+   * @default null
+   */
+  ignore?: string | HTMLElement[] | ((element: HTMLElement) => boolean) | null;
 }
 
 /** Mutable properties for the SplitText module */

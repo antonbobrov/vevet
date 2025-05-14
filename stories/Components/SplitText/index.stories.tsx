@@ -64,3 +64,13 @@ export const WithReactChildren: StoryObj<TComponent> = {
     ),
   },
 };
+
+export const WithIgnore: StoryObj<TComponent> = {
+  args: {
+    letters: false,
+    lines: true,
+    linesWrapper: true,
+    ignore: 'sup',
+    text: '<b>Если вам&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;близко<sup>™<u>™</u></sup><sup>1</sup></b> test<sup>™</sup> <sup>™</sup> написанное выше, не<br> стесняйтесь постучаться в телеграм<span style="display: inline-flex; align-items: center;"><span style="display: block; width: 2em; height: 2em; border-radius: 50%; background-color: red;">test</span>Жене</span>,<span style="display: inline-flex; align-items: center;"><span style="display: block; width: 2em; height: 2em; border-radius: 50%; background-color: red;"></span>Диме</span>или<span style="display: inline-flex; align-items: center;"><span style="display: block; width: 2em; height: 2em; border-radius: 50%; background-color: red;"></span>Даше</span>будем рады познакомиться, отсмотреть ваше портфолио и обсудить возможные точки соприкосновения',
+  },
+};

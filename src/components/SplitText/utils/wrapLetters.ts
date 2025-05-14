@@ -1,16 +1,22 @@
 import split from 'lodash.split';
-import { ISplitTextLetterMeta, ISplitTextWordMeta } from '../types';
+import {
+  ISplitTextLetterMeta,
+  ISplitTextStaticProps,
+  ISplitTextWordMeta,
+} from '../types';
+import { isIgnored } from './isIgnored';
 
 interface IProps {
   wordsMeta: ISplitTextWordMeta[];
   classname: string;
   tagName: keyof HTMLElementTagNameMap;
+  ignore: ISplitTextStaticProps['ignore'];
 }
 
 /**
  * Wraps each letter in every word inside the container with the specified HTML tag and class name.
  */
-export function wrapLetters({ wordsMeta, classname, tagName }: IProps) {
+export function wrapLetters({ wordsMeta, classname, tagName, ignore }: IProps) {
   const lettersMeta: ISplitTextLetterMeta[] = [];
 
   const baseElement = document.createElement(tagName);
@@ -19,6 +25,10 @@ export function wrapLetters({ wordsMeta, classname, tagName }: IProps) {
 
   // Iterate over each word to wrap its letters
   wordsMeta.forEach((wordMeta) => {
+    if (isIgnored(wordMeta.element, ignore)) {
+      return;
+    }
+
     const textNode = wordMeta.element.childNodes[0];
     if (!textNode) {
       return;
@@ -38,7 +48,7 @@ export function wrapLetters({ wordsMeta, classname, tagName }: IProps) {
       element.appendChild(document.createTextNode(letterContents));
 
       // Append the letter element to the word's container
-      wordMeta.element.append(element);
+      wordMeta.element.insertBefore(element, textNode);
 
       const letter: ISplitTextLetterMeta = { element };
 

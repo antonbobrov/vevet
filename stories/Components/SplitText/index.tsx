@@ -2,7 +2,10 @@ import React, { FC, ReactNode, useEffect, useRef } from 'react';
 import { ISplitTextStaticProps, SplitText } from '@/index';
 
 interface IProps
-  extends Pick<ISplitTextStaticProps, 'letters' | 'lines' | 'linesWrapper'> {
+  extends Pick<
+    ISplitTextStaticProps,
+    'letters' | 'lines' | 'linesWrapper' | 'ignore'
+  > {
   text?: string;
   children?: ReactNode;
 }
@@ -11,6 +14,7 @@ export const Component: FC<IProps> = ({
   letters,
   lines,
   linesWrapper,
+  ignore,
   text,
   children,
 }) => {
@@ -28,10 +32,11 @@ export const Component: FC<IProps> = ({
       letters,
       lines,
       linesWrapper,
+      ignore,
     });
 
     return () => instance.destroy();
-  }, [letters, lines, linesWrapper]);
+  }, [ignore, letters, lines, linesWrapper]);
 
   const style = { fontSize: '30px', lineHeight: '30px' } as any;
 

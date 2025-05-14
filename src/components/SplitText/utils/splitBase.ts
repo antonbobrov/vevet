@@ -1,4 +1,4 @@
-import { ISplitTextLetterMeta } from '../types';
+import { ISplitTextLetterMeta, ISplitTextStaticProps } from '../types';
 import { wrapLetters } from './wrapLetters';
 import { wrapWords } from './wrapWords';
 
@@ -9,6 +9,7 @@ interface IProps {
   hasLetters: boolean;
   letterTag: keyof HTMLElementTagNameMap;
   wordTag: keyof HTMLElementTagNameMap;
+  ignore: ISplitTextStaticProps['ignore'];
 }
 
 /**
@@ -21,6 +22,7 @@ export function splitBase({
   hasLetters,
   letterTag,
   wordTag,
+  ignore,
 }: IProps) {
   // Prepare the fragment
   const prepareFragment = document.createDocumentFragment();
@@ -33,6 +35,7 @@ export function splitBase({
     container: prepareFragment as any,
     classname: wordClassName,
     tagName: wordTag,
+    ignore,
   });
 
   const lettersMeta: ISplitTextLetterMeta[] = [];
@@ -43,6 +46,7 @@ export function splitBase({
       wordsMeta,
       classname: letterClassName,
       tagName: letterTag,
+      ignore,
     });
 
     lettersMeta.push(...wrappedLetters.lettersMeta);

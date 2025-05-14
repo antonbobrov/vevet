@@ -53,6 +53,7 @@ export class SplitText<
       lineClass: this._cn('__line'),
       lineWrapperClass: this._cn('__line-wrapper'),
       resizeDebounce: 0,
+      ignore: null,
     } as TRequiredProps<StaticProps>;
   }
 
@@ -210,7 +211,7 @@ export class SplitText<
       return;
     }
 
-    const { container, letterTag, wordTag, wordClass, letterClass } =
+    const { container, letterTag, wordTag, wordClass, letterClass, ignore } =
       this.props;
 
     this._isBaseSplit = true;
@@ -222,6 +223,7 @@ export class SplitText<
       hasLetters: this.props.letters,
       letterTag,
       wordTag,
+      ignore,
     });
 
     this._wordsMeta = wordsMeta;
