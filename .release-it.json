@@ -22,7 +22,7 @@
     }
   },
   "hooks": {
-    "before:init": ["git pull", "npm run lint"],
+    "before:init": ["git pull", "tsc --noEmit", "npm run lint"],
     "after:bump": ["npm run build", "git add ./src/manifest.json"],
     "after:release": ["npm run deploy"]
   }
