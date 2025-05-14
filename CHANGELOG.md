@@ -1,5 +1,19 @@
 # Changelog
 
+## [5.0.6](https://github.com/antonbobrov/vevet/compare/v5.0.5...v5.0.6) (2025-05-14)
+
+
+### Snap
+
+* fix closest magnets detection for non-loop sliders ([78e7529](https://github.com/antonbobrov/vevet/commit/78e7529573648e3c64fd21faca1b9a5539a19a77))
+* reset `targetIndex` on timeline animation end, fix `activeSlide` callback triggering ([e3b5f1f](https://github.com/antonbobrov/vevet/commit/e3b5f1f743beb42f79495e9a3e5dfc4c3ee55de6))
+
+### SplitText
+
+* add `ignore` prop ([17f7b78](https://github.com/antonbobrov/vevet/commit/17f7b785ab0cc887b666fa02601c8da464047d78))
+* better line splitting, respect `rtl` direction ([a0652bf](https://github.com/antonbobrov/vevet/commit/a0652bfeade029f16bf4d067a21324093dc453aa))
+* restore node styles on destroy ([78a8799](https://github.com/antonbobrov/vevet/commit/78a8799bd0c43a295a937b852a3d28cda545763f))
+
 ## [5.0.5](https://github.com/antonbobrov/vevet/compare/v5.0.4...v5.0.5) (2025-05-12)
 
 * Snap: optimize `activeSlide` calling ([ead0cb6](https://github.com/antonbobrov/vevet/commit/ead0cb67c19e984a454ccdd8e1d6dae98b706195))
