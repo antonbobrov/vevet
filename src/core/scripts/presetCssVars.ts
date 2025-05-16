@@ -5,9 +5,12 @@ export const presetCssVars = `var presetVevetCss = function update() {
 
   var doc = document.documentElement;
 
-  var styles = document.createElement('style');
-  styles.id = 'vevet_css_preset';
-  document.body.appendChild(styles);
+  var styles = document.getElementById('vevet_css_preset');
+  if (!styles) {
+    styles = document.createElement('style');
+    styles.id = 'vevet_css_preset';
+    document.body.appendChild(styles);
+  }
 
   var w = window.innerWidth;
   var h = window.innerHeight;
