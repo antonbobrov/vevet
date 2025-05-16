@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.0.7](https://github.com/antonbobrov/vevet/compare/v5.0.6...v5.0.7) (2025-05-16)
+
+
+### Core
+
+* remove css presets duplicates ([a320de1](https://github.com/antonbobrov/vevet/commit/a320de1af0382bf04da924103e365b97a9197b82))
+
 ## [5.0.6](https://github.com/antonbobrov/vevet/compare/v5.0.5...v5.0.6) (2025-05-14)
 
 
