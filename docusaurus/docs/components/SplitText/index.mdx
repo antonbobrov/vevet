@@ -1,3 +1,8 @@
+---
+toc_min_heading_level: 2
+toc_max_heading_level: 6
+---
+
 # SplitText
 
 `SplitText` splits text within a container into individual lines, words, and letters.
@@ -78,105 +83,69 @@ Explore live examples in CodePen:
 
 Static properties are set during initialization and cannot be modified later.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default Value</th>
-  </tr>
-  
-  <tr>
-    <td>container</td>
-    <td>The text container where the text will be split.</td>
-    <td><code>HTMLElement</code></td>
-    <td></td>
-  </tr>
-  
-  <tr>
-    <td>letters</td>
-    <td>Specifies whether the text should be split into individual letters.</td>
-    <td><code>boolean</code></td>
-    <td><code>false</code></td>
-  </tr>
-  
-  <tr>
-    <td>lines</td>
-    <td>Specifies whether the text should be split into lines.</td>
-    <td><code>boolean</code></td>
-    <td><code>false</code></td>
-  </tr>
-  
-  <tr>
-    <td>linesWrapper</td>
-    <td>Specifies whether to wrap each line in an additional container.</td>
-    <td><code>boolean</code></td>
-    <td><code>false</code></td>
-  </tr>
-  
-  <tr>
-    <td>letterTag</td>
-    <td>Specifies whether to wrap each line in an additional container.</td>
-    <td><code>string</code></td>
-    <td><code>'span'</code></td>
-  </tr>
-  
-  <tr>
-    <td>wordTag</td>
-    <td>HTML tag to wrap each word.</td>
-    <td><code>string</code></td>
-    <td><code>'span'</code></td>
-  </tr>
-  
-  <tr>
-    <td>lineTag</td>
-    <td>HTML tag to wrap each line.</td>
-    <td><code>string</code></td>
-    <td><code>'span'</code></td>
-  </tr>
-  
-  <tr>
-    <td>letterClass</td>
-    <td>Letter class name.</td>
-    <td><code>string</code></td>
-    <td><code>'v-split-text__letter'</code></td>
-  </tr>
-  
-  <tr>
-    <td>wordClass</td>
-    <td>Word class name.</td>
-    <td><code>string</code></td>
-    <td><code>'v-split-text__word'</code></td>
-  </tr>
-  
-  <tr>
-    <td>lineClass</td>
-    <td>Line class name.</td>
-    <td><code>string</code></td>
-    <td><code>'v-split-text__line'</code></td>
-  </tr>
-  
-  <tr>
-    <td>lineWrapperClass</td>
-    <td>Line wrapper class name.</td>
-    <td><code>string</code></td>
-    <td><code>'v-split-text__line-wrapper'</code></td>
-  </tr>
-  
-  <tr>
-    <td>resizeDebounce</td>
-    <td>The debounce delay for the resize event in milliseconds.</td>
-    <td><code>number</code></td>
-    <td><code>0</code></td>
-  </tr>
-  
-  <tr>
-    <td>ignore</td>
-    <td>Do not split certain elements. Supports string selectors, array of elements, or function.</td>
-    <td><code>string | HTMLElement[] | ((element: HTMLElement) => boolean) | null</code></td>
-    <td><code>null</code></td>
-  </tr>
-</table>
+#### `container` {#props.container}
+- **Type:** `HTMLElement`  
+- The text container where the text will be split.
+
+#### `letters` {#props.letters}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Whether to split the text into individual letters.
+
+#### `lines` {#props.lines}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Whether to split the text into lines.
+
+#### `linesWrapper` {#props.linesWrapper}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Whether to wrap each line in an additional container.
+
+#### `letterTag` {#props.letterTag}
+- **Type:** `string`  
+- **Default:** `'span'`  
+- The HTML tag to wrap each letter.
+
+#### `wordTag` {#props.wordTag}
+- **Type:** `string`  
+- **Default:** `'span'`  
+- The HTML tag to wrap each word.
+
+#### `lineTag` {#props.lineTag}
+- **Type:** `string`  
+- **Default:** `'span'`  
+- The HTML tag to wrap each line.
+
+#### `letterClass` {#props.letterClass}
+- **Type:** `string`  
+- **Default:** `'v-split-text__letter'`  
+- CSS class name applied to each letter.
+
+#### `wordClass` {#props.wordClass}
+- **Type:** `string`  
+- **Default:** `'v-split-text__word'`  
+- CSS class name applied to each word.
+
+#### `lineClass` {#props.lineClass}
+- **Type:** `string`  
+- **Default:** `'v-split-text__line'`  
+- CSS class name applied to each line.
+
+#### `lineWrapperClass` {#props.lineWrapperClass}
+- **Type:** `string`  
+- **Default:** `'v-split-text__line-wrapper'`  
+- CSS class name applied to the line wrapper.
+
+#### `resizeDebounce` {#props.resizeDebounce}
+- **Type:** `number`  
+- **Default:** `0`  
+- Debounce delay in milliseconds for the resize event.
+
+#### `ignore` {#props.ignore}
+- **Type:** `string | HTMLElement[] | ((element: HTMLElement) => boolean) | null`  
+- **Default:** `null`  
+- Elements or selectors to exclude from splitting. Can be a CSS selector string, an array of HTMLElements, or a function that returns a boolean.
 
 
 

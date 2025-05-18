@@ -1,3 +1,8 @@
+---
+toc_min_heading_level: 2
+toc_max_heading_level: 6
+---
+
 # ScrollProgress
 
 todo: examples
@@ -14,42 +19,27 @@ This component can be used for creating scroll-based animations such as parallax
 
 Static properties are set during initialization and cannot be modified later.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default Value</th>
-  </tr>
-  
-  <tr>
-    <td>section</td>
-    <td>The element whose scroll progress is tracked.</td>
-    <td><code>Element</code></td>
-    <td></td>
-  </tr>
-  
-  <tr>
-    <td>root</td>
-    <td>The root element used as a reference for scroll progress calculation. Usually it is the scroll container. If `null`, the viewport is used as the reference.</td>
-    <td><code>Element | null</code></td>
-    <td><code>null</code></td>
-  </tr>
-  
-  <tr>
-    <td>optimized</td>
-    <td>If `true`, progress is calculated only while the section is within the viewport or the root element. Improves performance by avoiding unnecessary calculations.</td>
-    <td><code>boolean</code></td>
-    <td><code>true</code></td>
-  </tr>
-  
-  <tr>
-    <td>useSvh</td>
-    <td>If `true`, the scroll progress is calculated based on the small viewport height (svh in css) instead of the current viewport height (vh in css).</td>
-    <td><code>boolean</code></td>
-    <td><code>false</code></td>
-  </tr>
-</table>
+#### `section` {#props.section}
+- **Type:** `Element`  
+- The element whose scroll progress is tracked.
+
+#### `root` {#props.root}
+- **Type:** `Element | null`  
+- **Default:** `null`  
+- The root element used as a reference for scroll progress calculation.  
+- Usually the scroll container.  
+- If `null`, the viewport is used as the reference.
+
+#### `optimized` {#props.optimized}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- If `true`, progress calculations occur only while the section is within the viewport or root element.  
+- Improves performance by avoiding unnecessary calculations.
+
+#### `useSvh` {#props.useSvh}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- If `true`, scroll progress is calculated based on the small viewport height (`svh` CSS unit) instead of the current viewport height (`vh` CSS unit).
 
 
 

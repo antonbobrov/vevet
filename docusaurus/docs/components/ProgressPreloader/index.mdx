@@ -1,3 +1,8 @@
+---
+toc_min_heading_level: 2
+toc_max_heading_level: 6
+---
+
 # ProgressPreloader
 
 Page preloader for calculating and displaying the loading progress of resources (images, videos, custom elements). Provides smooth progress transitions.
@@ -34,62 +39,38 @@ All **[Preloader's props](/docs/components/Preloader/#props)** are available in 
 
 Static properties are set during initialization and cannot be modified later.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default Value</th>
-  </tr>
-  
-  <tr>
-    <td>preloadImages</td>
-    <td>Enables automatic preloading of images.</td>
-    <td><code>boolean</code></td>
-    <td><code>true</code></td>
-  </tr>
-  
-  <tr>
-    <td>preloadVideos</td>
-    <td>Enables automatic preloading of videos.</td>
-    <td><code>boolean</code></td>
-    <td><code>false</code></td>
-  </tr>
-  
-  <tr>
-    <td>customSelector</td>
-    <td>
-      Selector for custom resources to preload. 
-      
-      The elements should include `data-weight` and `data-loaded` attributes.
-      
-      Example: `data-weight="10"` to indicate a weight of 10 and `data-loaded="10"` when fully loaded.
-    </td>
-    <td><code>string</code></td>
-    <td><code>'.js-preload'</code></td>
-  </tr>
-  
-  <tr>
-    <td>ignoreClassName</td>
-    <td>Class name for elements to exclude from preloading.</td>
-    <td><code>string</code></td>
-    <td><code>'js-preload-ignore'</code></td>
-  </tr>
-  
-  <tr>
-    <td>lerp</td>
-    <td>Linear interpolation factor for smooth progress updates. `1` disables interpolation for instant updates.</td>
-    <td><code>number</code></td>
-    <td><code>0.1</code></td>
-  </tr>
-  
-  <tr>
-    <td>endDuration</td>
-    <td>Duration (ms) to complete the preloader if resources are loaded but the progress is still below 1.</td>
-    <td><code>number</code></td>
-    <td><code>500</code></td>
-  </tr>
-</table>
+#### `preloadImages` {#props.preloadImages}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Enables automatic preloading of images.
+
+#### `preloadVideos` {#props.preloadVideos}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Enables automatic preloading of videos.
+
+#### `customSelector` {#props.customSelector}
+- **Type:** `string`  
+- **Default:** `'.js-preload'`  
+- Selector for custom resources to preload.  
+- Elements should have `data-weight` and `data-loaded` attributes.  
+- Example: `data-weight="10"` indicates weight; `data-loaded="10"` means fully loaded.
+
+#### `ignoreClassName` {#props.ignoreClassName}
+- **Type:** `string`  
+- **Default:** `'js-preload-ignore'`  
+- Class name for elements to exclude from preloading.
+
+#### `lerp` {#props.lerp}
+- **Type:** `number`  
+- **Default:** `0.1`  
+- Linear interpolation factor for smooth progress updates.  
+- `1` disables interpolation for instant updates.
+
+#### `endDuration` {#props.endDuration}
+- **Type:** `number`  
+- **Default:** `500`  
+- Duration in milliseconds to complete the preloader if resources are loaded but progress is below 1.
 
 
 

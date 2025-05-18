@@ -1,3 +1,8 @@
+---
+toc_min_heading_level: 2
+toc_max_heading_level: 6
+---
+
 # Marquee
 
 A custom marquee component that smoothly scrolls its child elements.
@@ -88,104 +93,63 @@ Explore live examples in CodePen:
 
 Static properties are set during initialization and cannot be modified later.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default Value</th>
-  </tr>
-  
-  <tr>
-    <td>container</td>
-    <td>The container element that holds the marquee content.</td>
-    <td><code>HTMLElement</code></td>
-    <td></td>
-  </tr>
-  
-  <tr>
-    <td>resizeDebounce</td>
-    <td>The debounce delay for the resize event in milliseconds.</td>
-    <td><code>number</code></td>
-    <td><code>0</code></td>
-  </tr>
-  
-  <tr>
-    <td>hasWillChange</td>
-    <td>Determines whether to apply the `will-change` CSS property to the marquee elements to optimize rendering. Setting this to `true` may improve performance.</td>
-    <td><code>boolean</code></td>
-    <td><code>true</code></td>
-  </tr>
-  
-  <tr>
-    <td>cloneNodes</td>
-    <td>Indicates whether to clone the marquee nodes. Can be set to `false` if DOM cloning is not preferred.</td>
-    <td><code>boolean</code></td>
-    <td><code>true</code></td>
-  </tr>
-</table>
+#### `container` {#props.container}
+- **Type:** `HTMLElement`  
+- The container element that holds the marquee content.
+
+#### `resizeDebounce` {#props.resizeDebounce}
+- **Type:** `number`  
+- **Default:** `0`  
+- The debounce delay for the resize event in milliseconds.
+
+#### `hasWillChange` {#props.hasWillChange}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Determines whether to apply the `will-change` CSS property to the marquee elements to optimize rendering. Setting this to `true` may improve performance.
+
+#### `cloneNodes` {#props.cloneNodes}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Indicates whether to clone the marquee nodes. Can be set to `false` if DOM cloning is not preferred.
 
 ### Mutable Props
 
 Mutable properties can be updated at runtime using `.updateProps()`.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default Value</th>
-  </tr>
-  
-  <tr>
-    <td>speed</td>
-    <td>The speed of the marquee animation. Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.</td>
-    <td><code>number | string</code></td>
-    <td><code>1</code></td>
-  </tr>
-  
-  <tr>
-    <td>gap</td>
-    <td>The gap between the marquee elements. Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.</td>
-    <td><code>number | string</code></td>
-    <td><code>0</code></td>
-  </tr>
-  
-  <tr>
-    <td>enabled</td>
-    <td>Enables or disables the marquee animation. When `false`, the marquee will be paused.</td>
-    <td><code>boolean</code></td>
-    <td><code>true</code></td>
-  </tr>
-  
-  <tr>
-    <td>pauseOnHover</td>
-    <td>Pauses the marquee when the mouse hovers over it.</td>
-    <td><code>boolean</code></td>
-    <td><code>false</code></td>
-  </tr>
-  
-  <tr>
-    <td>centered</td>
-    <td>Centers the marquee content within the container.</td>
-    <td><code>boolean</code></td>
-    <td><code>false</code></td>
-  </tr>
-  
-  <tr>
-    <td>adjustSpeed</td>
-    <td>When need to use dynamic FPS factor to adjust the speed of the marquee.</td>
-    <td><code>boolean</code></td>
-    <td><code>true</code></td>
-  </tr>
-  
-  <tr>
-    <td>pauseOnOut</td>
-    <td>Pauses the marquee when the mouse leaves the viewport.</td>
-    <td><code>boolean</code></td>
-    <td><code>true</code></td>
-  </tr>
-</table>
+#### `speed` {#props.speed}
+- **Type:** `number | string`  
+- **Default:** `1`  
+- The speed of the marquee animation. Supports CSS units like `px`, `rem`, `vw`, `vh`, `svh`.
+
+#### `gap` {#props.gap}
+- **Type:** `number | string`  
+- **Default:** `0`  
+- The gap between the marquee elements. Supports CSS units like `px`, `rem`, `vw`, `vh`, `svh`.
+
+#### `enabled` {#props.enabled}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Enables or disables the marquee animation. When `false`, the marquee will be paused.
+
+#### `pauseOnHover` {#props.pauseOnHover}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Pauses the marquee when the mouse hovers over it.
+
+#### `centered` {#props.centered}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Centers the marquee content within the container.
+
+#### `adjustSpeed` {#props.adjustSpeed}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- When needed, uses dynamic FPS factor to adjust the speed of the marquee.
+
+#### `pauseOnOut` {#props.pauseOnOut}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Pauses the marquee when the mouse leaves the viewport.
 
 
 

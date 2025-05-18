@@ -1,3 +1,8 @@
+---
+toc_min_heading_level: 2
+toc_max_heading_level: 6
+---
+
 # InView
 
 InView is a visibility detection utility that leverages the `IntersectionObserver` API to monitor when elements enter or leave the viewport. It provides customizable options for triggering events, delaying visibility changes, and dynamically adding CSS classes to elements based on their visibility state.
@@ -30,62 +35,34 @@ Explore a live example in CodePen:
 
 Static properties are set during initialization and cannot be modified later.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default Value</th>
-  </tr>
-  
-  <tr>
-    <td>hasOut</td>
-    <td>Determines whether elements leaving the viewport should trigger an event.</td>
-    <td><code>boolean</code></td>
-    <td><code>true</code></td>
-  </tr>
-  
-  <tr>
-    <td>maxInitialDelay</td>
-    <td>Sets the maximum delay (in milliseconds) for initial element visibility. Delay is calculated based on element position.</td>
-    <td><code>number</code></td>
-    <td><code>1000</code></td>
-  </tr>
-  
-  <tr>
-    <td>scrollDirection</td>
-    <td>Defines the primary scrolling axis used for delay calculations.</td>
-    <td><code>'horizontal' | 'vertical'</code></td>
-    <td><code>'vertical'</code></td>
-  </tr>
-</table>
+#### `hasOut` {#props.hasOut}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Determines whether elements leaving the viewport should trigger an event.
+
+#### `maxInitialDelay` {#props.maxInitialDelay}
+- **Type:** `number`  
+- **Default:** `1000`  
+- Sets the maximum delay (in milliseconds) for initial element visibility. Delay is calculated based on element position.
+
+#### `scrollDirection` {#props.scrollDirection}
+- **Type:** `'horizontal' | 'vertical'`  
+- **Default:** `'vertical'`  
+- Defines the primary scrolling axis used for delay calculations.
 
 ### Mutable Props
 
 Mutable properties can be updated at runtime using `.updateProps()`.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default Value</th>
-  </tr>
-  
-  <tr>
-    <td>enabled</td>
-    <td>Enables or disables the `IntersectionObserver` instance.</td>
-    <td><code>boolean</code></td>
-    <td><code>true</code></td>
-  </tr>
-  
-  <tr>
-    <td>rootMargin</td>
-    <td>Specifies the root margin offsets for the `IntersectionObserver`, allowing fine-tuned visibility detection.</td>
-    <td><code>string</code></td>
-    <td><code>'0% 0% -5% 0%'</code></td>
-  </tr>
-</table>
+#### `enabled` {#props.enabled}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Enables or disables the `IntersectionObserver` instance.
+
+#### `rootMargin` {#props.rootMargin}
+- **Type:** `string`  
+- **Default:** `'0% 0% -5% 0%'`  
+- Specifies the root margin offsets for the `IntersectionObserver`, allowing fine-tuned visibility detection.
 
 
 

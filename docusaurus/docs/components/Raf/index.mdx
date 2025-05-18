@@ -1,3 +1,8 @@
+---
+toc_min_heading_level: 2
+toc_max_heading_level: 6
+---
+
 # Raf
 
 Manages an animation frame loop with configurable FPS and playback controls.
@@ -30,28 +35,16 @@ Explore a live example in CodePen:
 
 Mutable properties can be updated at runtime using `.updateProps()`.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default Value</th>
-  </tr>
-  
-  <tr>
-    <td>fps</td>
-    <td>Frames per second (FPS) for the animation. Set to 'auto' for dynamic adjustment.</td>
-    <td><code>'auto' | number</code></td>
-    <td>'auto'</td>
-  </tr>
-  
-  <tr>
-    <td>enabled</td>
-    <td>Enables or disables the Raf animation loop.</td>
-    <td><code>boolean</code></td>
-    <td><code>false</code></td>
-  </tr>
-</table>
+#### `fps` {#props.fps}
+- **Type:** `'auto' | number`  
+- **Default:** `'auto'`  
+- Frames per second (FPS) for the animation.  
+- Use `'auto'` to enable dynamic FPS adjustment.
+
+#### `enabled` {#props.enabled}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Enables or disables the Raf animation loop.
 
 
 

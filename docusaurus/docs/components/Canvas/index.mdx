@@ -1,3 +1,8 @@
+---
+toc_min_heading_level: 2
+toc_max_heading_level: 6
+---
+
 # Canvas
 
 The **Canvas** class simplifies working with an HTML5 Canvas element and its 2D rendering context. 
@@ -39,90 +44,55 @@ Explore a live example in CodePen:
 
 Static properties are set during initialization and cannot be modified later.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default Value</th>
-  </tr>
-  
-  <tr>
-    <td>container</td>
-    <td>Parent element used to determine canvas size. If `null`, it uses the viewport.</td>
-    <td><code>HTMLElement | null</code></td>
-    <td><code>null</code></td>
-  </tr>
-  
-  <tr>
-    <td>append</td>
-    <td>If `true`, appends the canvas to the `container`. Ignored if `container` is `null`.</td>
-    <td><code>boolean</code></td>
-    <td><code>true</code></td>
-  </tr>
-  
-  <tr>
-    <td>resizeOnInit</td>
-    <td>Automatically adjusts canvas size on initialization.</td>
-    <td><code>boolean</code></td>
-    <td><code>true</code></td>
-  </tr>
-  
-  <tr>
-    <td>resizeOnRuntime</td>
-    <td>Enables dynamic resizing based on viewport or container changes.</td>
-    <td><code>boolean</code></td>
-    <td><code>false</code></td>
-  </tr>
-  
-  <tr>
-    <td>viewportTarget</td>
-    <td>Defines which dimension(s) should trigger a resize. [Learn more](/docs/vevet/features#onResize)</td>
-    <td>`'width' | 'height' | 'both' | 'onlyWidth' | 'onlyHeight' | 'any' | 'trigger'`</td>
-    <td><code>'any'</code></td>
-  </tr>
-  
-  <tr>
-    <td>resizeDebounce</td>
-    <td>Debounce time (ms) for resize handling.</td>
-    <td><code>number</code></td>
-    <td><code>0</code></td>
-  </tr>
-</table>
+#### `container` {#props.container}
+- **Type:** `HTMLElement | null`  
+- **Default:** `null`  
+- Parent element used to determine canvas size. If `null`, it uses the viewport.
+
+#### `append` {#props.append}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- If `true`, appends the canvas to the `container`. Ignored if `container` is `null`.
+
+#### `resizeOnInit` {#props.resizeOnInit}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Automatically adjusts canvas size on initialization.
+
+#### `resizeOnRuntime` {#props.resizeOnRuntime}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Enables dynamic resizing based on viewport or container changes.
+
+#### `viewportTarget` {#props.viewportTarget}
+- **Type:** `'width' | 'height' | 'both' | 'onlyWidth' | 'onlyHeight' | 'any' | 'trigger'`  
+- **Default:** `'any'`  
+- Defines which dimension(s) should trigger a resize. [Learn more](/docs/vevet/features#onResize)
+
+#### `resizeDebounce` {#props.resizeDebounce}
+- **Type:** `number`  
+- **Default:** `0`  
+- Debounce time (ms) for resize handling.
+
 
 ### Mutable Props
 
 Mutable properties can be updated at runtime using `.updateProps()`.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default Value</th>
-  </tr>
-  
-  <tr>
-    <td>width</td>
-    <td>Canvas width. Use `'auto'` to match the container's width.</td>
-    <td><code>'auto' | number</code></td>
-    <td><code>'auto'</code></td>
-  </tr>
-  
-  <tr>
-    <td>height</td>
-    <td>Canvas height. Use `'auto'` to match the container's height.</td>
-    <td><code>'auto' | number</code></td>
-    <td><code>'auto'</code></td>
-  </tr>
-  
-  <tr>
-    <td>dpr</td>
-    <td>Device Pixel Ratio (DPR). Use `'auto'` for automatic detection.</td>
-    <td><code>'auto' | number</code></td>
-    <td><code>'auto'</code></td>
-  </tr>
-</table>
+#### `width` {#props.width}
+- **Type:** `'auto' | number`  
+- **Default:** `'auto'`  
+- Canvas width. Use `'auto'` to match the container's width.
+
+#### `height` {#props.height}
+- **Type:** `'auto' | number`  
+- **Default:** `'auto'`  
+- Canvas height. Use `'auto'` to match the container's height.
+
+#### `dpr` {#props.dpr}
+- **Type:** `'auto' | number`  
+- **Default:** `'auto'`  
+- Device Pixel Ratio (DPR). Use `'auto'` for automatic detection.
 
 
 

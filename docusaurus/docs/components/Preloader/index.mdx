@@ -1,3 +1,8 @@
+---
+toc_min_heading_level: 2
+toc_max_heading_level: 6
+---
+
 # Preloader
 
 Page preloader component that manages the visibility and lifecycle of a loading screen. The module does not provide styling for the container.
@@ -30,34 +35,18 @@ Explore a live example in CodePen:
 
 Static properties are set during initialization and cannot be modified later.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default Value</th>
-  </tr>
-  
-  <tr>
-    <td>container</td>
-    <td>The container for the preloader. Set it to `null` if you only need the preloader logic.</td>
-    <td><code>HTMLElement | null</code></td>
-    <td></td>
-  </tr>
-  
-  <tr>
-    <td>hide</td>
-    <td>
-      Defines whether to automatically hide the preloader container.
-      - `false`: Disables the hiding animation, allowing you to manage it manually.
-      - `number`: Specifies the animation duration in milliseconds.
-      
-      This works only if the container is an HTML element.
-    </td>
-    <td><code>false | number</code></td>
-    <td><code>250</code></td>
-  </tr>
-</table>
+#### `container` {#props.container}
+- **Type:** `HTMLElement | null`  
+- **Default:** `null`  
+- The container for the preloader. Set it to `null` if you only need the preloader logic.
+
+#### `hide` {#props.hide}
+- **Type:** `false | number`  
+- **Default:** `250`  
+- Defines whether to automatically hide the preloader container.  
+  - `false`: Disables the hiding animation, allowing manual control.  
+  - `number`: Specifies the animation duration in milliseconds.  
+- Works only if the container is an HTML element.
 
 ### Mutable Props
 

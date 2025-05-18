@@ -1,3 +1,8 @@
+---
+toc_min_heading_level: 2
+toc_max_heading_level: 6
+---
+
 # Cursor
 
 A customizable custom cursor component with smooth animations and hover interactions. Supports dynamic appearance changes and enhanced user interaction.
@@ -30,76 +35,45 @@ Explore a live example in CodePen:
 
 Static properties are set during initialization and cannot be modified later.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default Value</th>
-  </tr>
-  
-  <tr>
-    <td>container</td>
-    <td>The container where the custom cursor is active. <br />Use `window` for full-window activation.</td>
-    <td><code>Element | window</code></td>
-    <td><code>window</code></td>
-  </tr>
-  
-  <tr>
-    <td>hideNative</td>
-    <td>Hides the native cursor if set to `true`.</td>
-    <td><code>boolean</code></td>
-    <td><code>false</code></td>
-  </tr>
-</table>
+#### `container` {#props.container}
+- **Type:** `Element | window`  
+- **Default:** `window`  
+- The container where the custom cursor is active.  
+  Use `window` for full-window activation.
+
+#### `hideNative` {#props.hideNative}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Hides the native cursor if set to `true`.
 
 ### Mutable Props
 
 Mutable properties can be updated at runtime using `.updateProps()`.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default Value</th>
-  </tr>
-  
-  <tr>
-    <td>enabled</td>
-    <td>Enables or disables the custom cursor interactions.</td>
-    <td><code>boolean</code></td>
-    <td><code>true</code></td>
-  </tr>
-  
-  <tr>
-    <td>width</td>
-    <td>The initial width of the custom cursor.</td>
-    <td><code>number</code></td>
-    <td><code>50</code></td>
-  </tr>
-  
-  <tr>
-    <td>height</td>
-    <td>The initial height of the custom cursor.</td>
-    <td><code>number</code></td>
-    <td><code>50</code></td>
-  </tr>
-  
-  <tr>
-    <td>lerp</td>
-    <td>Linear interpolation factor for smooth cursor movement. The value must be between `0` and `1`, with higher values indicating faster movement.</td>
-    <td><code>number</code></td>
-    <td><code>0.2</code></td>
-  </tr>
-  
-  <tr>
-    <td>autoStop</td>
-    <td>Stops rendering the cursor automatically when its coordinates and size closely match the target values.</td>
-    <td><code>boolean</code></td>
-    <td><code>true</code></td>
-  </tr>
-</table>
+#### `enabled` {#props.enabled}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Enables or disables the custom cursor interactions.
+
+#### `width` {#props.width}
+- **Type:** `number`  
+- **Default:** `50`  
+- The initial width of the custom cursor.
+
+#### `height` {#props.height}
+- **Type:** `number`  
+- **Default:** `50`  
+- The initial height of the custom cursor.
+
+#### `lerp` {#props.lerp}
+- **Type:** `number`  
+- **Default:** `0.2`  
+- Linear interpolation factor for smooth cursor movement. The value must be between `0` and `1`, with higher values indicating faster movement.
+
+#### `autoStop` {#props.autoStop}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Stops rendering the cursor automatically when its coordinates and size closely match the target values.
 
 
 

@@ -1,3 +1,8 @@
+---
+toc_min_heading_level: 2
+toc_max_heading_level: 6
+---
+
 # Scrollbar
 
 A custom scrollbar component. Supports both `window` and `HTMLElement` containers.
@@ -87,104 +92,61 @@ Explore live examples in CodePen:
 
 Static properties are set during initialization and cannot be modified later.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default Value</th>
-  </tr>
-  
-  <tr>
-    <td>container</td>
-    <td>The element to which the scrollbar is applied. Can be either the `window` or a specific HTML element.</td>
-    <td><code>Window | HTMLElement</code></td>
-    <td><code>window</code></td>
-  </tr>
-  
-  <tr>
-    <td>parent</td>
-    <td>
-      The parent element where the scrollbar should be appended.
+#### `container` {#props.container}
+- **Type:** `Window | HTMLElement`  
+- **Default:** `window`  
+- The element to which the scrollbar is applied. Can be either the entire `window` or a specific HTML element.
 
-      If `false`, the scrollbar is appended directly to the `container`.
+#### `parent` {#props.parent}
+- **Type:** `false | HTMLElement`  
+- **Default:** `false`  
+- The parent element where the scrollbar should be appended.  
+- If set to `false`, the scrollbar is appended directly to the `container`.  
+- Use `parent` for correct behavior when the scrollbar is applied to an HTML element.
 
-      For proper behavior, use `parent` when applying the scrollbar to an HTML element.
-    </td>
-    <td><code>false | HTMLElement</code></td>
-    <td><code>false</code></td>
-  </tr>
-  
-  <tr>
-    <td>class</td>
-    <td>
-      Custom CSS class to be applied to the scrollbar track.
+#### `class` {#props.class}
+- **Type:** `string | false`  
+- **Default:** `false`  
+- Custom CSS class applied to the scrollbar track.  
+- If `false`, no extra class is applied.
 
-      If `false`, no additional class is applied.
-    </td>
-    <td><code>string | false</code></td>
-    <td><code>false</code></td>
-  </tr>
-  
-  <tr>
-    <td>axis</td>
-    <td>
-      Defines the scrolling axis for the scrollbar.
-      - `'x'` for horizontal scrolling.
-      - `'y'` for vertical scrolling.
-    </td>
-    <td><code>'x' | 'y'</code></td>
-    <td><code>'y'</code></td>
-  </tr>
-  
-  <tr>
-    <td>draggable</td>
-    <td>Determines whether the scrollbar thumb is draggable.</td>
-    <td><code>boolean</code></td>
-    <td><code>true</code></td>
-  </tr>
-  
-  <tr>
-    <td>autoHide</td>
-    <td>Automatically hides the scrollbar when inactive.</td>
-    <td><code>boolean</code></td>
-    <td><code>true</code></td>
-  </tr>
-  
-  <tr>
-    <td>resizeDebounce</td>
-    <td>Debounce time (in milliseconds) for handling resize events. Helps improve performance by limiting the frequency of resize calculations.</td>
-    <td><code>number</code></td>
-    <td><code>0</code></td>
-  </tr>
-</table>
+#### `axis` {#props.axis}
+- **Type:** `'x' | 'y'`  
+- **Default:** `'y'`  
+- Defines the scrolling axis:  
+  - `'x'` for horizontal scrolling  
+  - `'y'` for vertical scrolling
+
+#### `draggable` {#props.draggable}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Determines whether the scrollbar thumb is draggable.
+
+#### `autoHide` {#props.autoHide}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Automatically hides the scrollbar when inactive.
+
+#### `resizeDebounce` {#props.resizeDebounce}
+- **Type:** `number`  
+- **Default:** `0`  
+- Debounce delay in milliseconds for resize event handling.  
+- Helps improve performance by limiting frequency of resize calculations.
 
 ### Mutable Props
 
 Mutable properties can be updated at runtime using `.updateProps()`.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default Value</th>
-  </tr>
-  
-  <tr>
-    <td>minSize</td>
-    <td>Minimum size of the scrollbar thumb. Accepts numeric values (interpreted as pixels) or CSS units (`px`, `rem`, `vw`, `vh`, `svh`).</td>
-    <td><code>number | string</code></td>
-    <td><code>50</code></td>
-  </tr>
-  
-  <tr>
-    <td>autoSize</td>
-    <td>Enables automatic adjustment of the scrollbar size.</td>
-    <td><code>boolean</code></td>
-    <td><code>true</code></td>
-  </tr>
-</table>
+#### `minSize` {#props.minSize}
+- **Type:** `number | string`  
+- **Default:** `50`  
+- Minimum size of the scrollbar thumb.  
+- Can be specified as a number (pixels) or as a CSS unit string (`px`, `rem`, `vw`, `vh`, `svh`).
+
+#### `autoSize` {#props.autoSize}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Enables automatic adjustment of the scrollbar thumb size based on the content and container.
 
 
 

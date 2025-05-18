@@ -1,3 +1,8 @@
+---
+toc_min_heading_level: 2
+toc_max_heading_level: 6
+---
+
 # Swipe
 
 Manages swipe interactions:
@@ -39,173 +44,110 @@ Explore a live example in CodePen:
 
 Static properties are set during initialization and cannot be modified later.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default Value</th>
-  </tr>
-  
-  <tr>
-    <td>container</td>
-    <td>Event listener container.</td>
-    <td><code>HTMLElement | SVGElement</code></td>
-    <td></td>
-  </tr>
-  
-  <tr>
-    <td>buttons</td>
-    <td>
-      Determines which mouse buttons trigger events.
-      - 0: Main button pressed, usually the left button or the un-initialized state
-      - 1: Auxiliary button pressed, usually the wheel button or the middle button (if present)
-      - 2: Secondary button pressed, usually the right button
-      - 3: Fourth button, typically the Browser Back button
-      - 4: Fifth button, typically the Browser Forward button
+#### `container` {#props.container}  
+- **Type:** `HTMLElement | SVGElement`
+- Event listener container.
 
-      See [MouseEvent.button](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button).
-    </td>
-    <td><code>number[]</code></td>
-    <td><code>[0]</code></td>
-  </tr>
-  
-  <tr>
-    <td>pointers</td>
-    <td>Required pointer count to activate swiping.</td>
-    <td><code>number</code></td>
-    <td><code>1</code></td>
-  </tr>
-</table>
+#### `buttons` {#props.buttons}  
+- **Type:** `number[]`  
+- **Default:** `[0]`  
+- Determines which mouse buttons trigger events.  
+  - 0: Main button pressed, usually the left button or the un-initialized state  
+  - 1: Auxiliary button pressed, usually the wheel button or the middle button (if present)  
+  - 2: Secondary button pressed, usually the right button  
+  - 3: Fourth button, typically the Browser Back button  
+  - 4: Fifth button, typically the Browser Forward button  
+- See [MouseEvent.button](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button).
+
+#### `pointers` {#props.pointers}  
+- **Type:** `number`  
+- **Default:** `1`  
+- Required pointer count to activate swiping.
 
 ### Mutable Props
 
 Mutable properties can be updated at runtime using `.updateProps()`.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default Value</th>
-  </tr>
-  
-  <tr>
-    <td>enabled</td>
-    <td>Enables or disables swipe events.</td>
-    <td><code>boolean</code></td>
-    <td><code>true</code></td>
-  </tr>
-  
-  <tr>
-    <td>relative</td>
-    <td>Calculates coordinates relative to the container.</td>
-    <td><code>boolean</code></td>
-    <td><code>false</code></td>
-  </tr>
-  
-  <tr>
-    <td>axis</td>
-    <td>Primary swiping axis.</td>
-    <td><code>null | 'x' | 'y'</code></td>
-    <td><code>null</code></td>
-  </tr>
-  
-  <tr>
-    <td>grabCursor</td>
-    <td>Shows "grab" and "grabbing" cursors during interaction.</td>
-    <td><code>boolean</code></td>
-    <td><code>false</code></td>
-  </tr>
-  
-  <tr>
-    <td>willAbort</td>
-    <td>Determines if swipe should be aborted.</td>
-    <td><code>(props: ISwipeCanMoveArg) => boolean</code></td> 
-    <td><code>() => false</code></td>
-  </tr>
-  
-  <tr>
-    <td>threshold</td>
-    <td>Minimum swipe distance (px) to trigger swipe start.</td>
-    <td><code>number</code></td> 
-    <td><code>5</code></td>
-  </tr>
-  
-  <tr>
-    <td>minTime</td>
-    <td>Minimum duration (ms) to trigger swipe move.</td>
-    <td><code>number</code></td> 
-    <td><code>0</code></td>
-  </tr>
-  
-  <tr>
-    <td>directionThreshold</td>
-    <td>Minimum swipe distance (px) for directional callbacks.</td>
-    <td><code>number</code></td> 
-    <td><code>50</code></td>
-  </tr>
-  
-  <tr>
-    <td>preventEdgeSwipe</td>
-    <td>Prevents edge swiping (iOS swipe-back gesture).</td>
-    <td><code>boolean</code></td> 
-    <td><code>true</code></td>
-  </tr>
-  
-  <tr>
-    <td>edgeSwipeThreshold</td>
-    <td>Edge swipe threshold (px) from the left/right edge.</td>
-    <td><code>number</code></td> 
-    <td><code>20</code></td>
-  </tr>
-  
-  <tr>
-    <td>preventTouchMove</td>
-    <td>Prevents `touchmove` event.</td>
-    <td><code>boolean</code></td> 
-    <td><code>true</code></td>
-  </tr>
-  
-  <tr>
-    <td>requireCtrlKey</td>
-    <td>Requires Ctrl key for swipe (mouse only).</td>
-    <td><code>boolean</code></td> 
-    <td><code>false</code></td>
-  </tr>
-  
-  <tr>
-    <td>inertia</td>
-    <td>Enables inertia animation.</td>
-    <td><code>boolean</code></td> 
-    <td><code>false</code></td>
-  </tr>
-  
-  <tr>
-    <td>inertiaDuration</td>
-    <td>Inertia duration.</td>
-    <td><code>(distance: number) => number</code></td> 
-    <td><code>(distance) => clamp(distance, 350, 1000)</code></td>
-  </tr>
-  
-  <tr>
-    <td>inertiaEasing</td>
-    <td>
-      Easing function for inertia.
-      
-      See [easing types](/docs/utils#easing-types) for more information
-    </td>
-    <td><code>TEasingType</code></td> 
-    <td><code>EaseOutCubic</code></td>
-  </tr>
-  
-  <tr>
-    <td>inertiaRatio</td>
-    <td>Inertia strength.</td>
-    <td><code>number</code></td> 
-    <td><code>0.5</code></td>
-  </tr>
-</table>
+#### `enabled` {#props.enabled}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Enables or disables swipe events.
+
+#### `relative` {#props.relative}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Calculates coordinates relative to the container.
+
+#### `axis` {#props.axis}
+- **Type:** `null | 'x' | 'y'`  
+- **Default:** `null`  
+- Primary swiping axis.
+
+#### `grabCursor` {#props.grabCursor}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Shows "grab" and "grabbing" cursors during interaction.
+
+#### `willAbort` {#props.willAbort}
+- **Type:** `(props: ISwipeCanMoveArg) => boolean`  
+- **Default:** `() => false`  
+- Determines if swipe should be aborted.
+
+#### `threshold` {#props.threshold}
+- **Type:** `number`  
+- **Default:** `5`  
+- Minimum swipe distance (px) to trigger swipe start.
+
+#### `minTime` {#props.minTime}
+- **Type:** `number`  
+- **Default:** `0`  
+- Minimum duration (ms) to trigger swipe move.
+
+#### `directionThreshold` {#props.directionThreshold}
+- **Type:** `number`  
+- **Default:** `50`  
+- Minimum swipe distance (px) for directional callbacks.
+
+#### `preventEdgeSwipe` {#props.preventEdgeSwipe}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Prevents edge swiping (iOS swipe-back gesture).
+
+#### `edgeSwipeThreshold` {#props.edgeSwipeThreshold}
+- **Type:** `number`  
+- **Default:** `20`  
+- Edge swipe threshold (px) from the left/right edge.
+
+#### `preventTouchMove` {#props.preventTouchMove}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Prevents `touchmove` event.
+
+#### `requireCtrlKey` {#props.requireCtrlKey}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Requires Ctrl key for swipe (mouse only).
+
+#### `inertia` {#props.inertia}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Enables inertia animation.
+
+#### `inertiaDuration` {#props.inertiaDuration}
+- **Type:** `(distance: number) => number`  
+- **Default:** `(distance) => clamp(distance, 350, 1000)`  
+- Inertia duration.
+
+#### `inertiaEasing` {#props.inertiaEasing}
+- **Type:** `TEasingType`  
+- **Default:** `EaseOutCubic`  
+- Easing function for inertia.  
+- See [easing types](/docs/utils#easing-types) for more information.
+
+#### `inertiaRatio` {#props.inertiaRatio}
+- **Type:** `number`  
+- **Default:** `0.5`  
+- Inertia strength.
 
 
 

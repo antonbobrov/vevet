@@ -1,3 +1,8 @@
+---
+toc_min_heading_level: 2
+toc_max_heading_level: 6
+---
+
 # Pointers
 
 todo: examples
@@ -16,78 +21,45 @@ For proper functionality, ensure the container has an appropriate [touch-action]
 
 Static properties are set during initialization and cannot be modified later.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default Value</th>
-  </tr>
-  
-  <tr>
-    <td>container</td>
-    <td>The element that listens for pointer events.</td>
-    <td><code>HTMLElement</code></td>
-    <td></td>
-  </tr>
-  
-  <tr>
-    <td>relative</td>
-    <td>Calculate coordinates relative to the container.</td>
-    <td><code>boolean</code></td>
-    <td><code>false</code></td>
-  </tr>
-  
-  <tr>
-    <td>buttons</td>
-    <td>
-      Determines which mouse buttons trigger events.
-      - 0: Main button pressed, usually the left button or the un-initialized state
-      - 1: Auxiliary button pressed, usually the wheel button or the middle button (if present)
-      - 2: Secondary button pressed, usually the right button
-      - 3: Fourth button, typically the Browser Back button
-      - 4: Fifth button, typically the Browser Forward button
+#### `container` {#props.container}
+- **Type:** `HTMLElement`  
+- The element that listens for pointer events.
 
-      See [MouseEvent.button](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button).
-    </td>
-    <td><code>number[]</code></td>
-    <td><code>[0]</code></td>
-  </tr>
-  
-  <tr>
-    <td>minPointers</td>
-    <td>Minimum number of active pointers required to trigger the "start" callback.</td>
-    <td><code>number</code></td>
-    <td><code>1</code></td>
-  </tr>
-  
-  <tr>
-    <td>maxPointers</td>
-    <td>Maximum number of pointers that can be tracked simultaneously.</td>
-    <td><code>number</code></td>
-    <td><code>5</code></td>
-  </tr>
-</table>
+#### `relative` {#props.relative}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Calculate coordinates relative to the container.
+
+#### `buttons` {#props.buttons}
+- **Type:** `number[]`  
+- **Default:** `[0]`  
+- Determines which mouse buttons trigger events.
+  - 0: Main button pressed, usually the left button or the un-initialized state
+  - 1: Auxiliary button pressed, usually the wheel button or the middle button (if present)
+  - 2: Secondary button pressed, usually the right button
+  - 3: Fourth button, typically the Browser Back button
+  - 4: Fifth button, typically the Browser Forward button
+
+  See [MouseEvent.button](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button).
+
+#### `minPointers` {#props.minPointers}
+- **Type:** `number`  
+- **Default:** `1`  
+- Minimum number of active pointers required to trigger the "start" callback.
+
+#### `maxPointers` {#props.maxPointers}
+- **Type:** `number`  
+- **Default:** `5`  
+- Maximum number of pointers that can be tracked simultaneously.
 
 ### Mutable Props
 
 Mutable properties can be updated at runtime using `.updateProps()`.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default Value</th>
-  </tr>
-  
-  <tr>
-    <td>enabled</td>
-    <td>Enables or disables pointer events.</td>
-    <td><code>boolean</code></td>
-    <td><code>true</code></td>
-  </tr>
-</table>
+#### `enabled` {#props.enabled}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Enables or disables pointer events.
 
 
 

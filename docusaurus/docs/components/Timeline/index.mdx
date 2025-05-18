@@ -1,3 +1,8 @@
+---
+toc_min_heading_level: 2
+toc_max_heading_level: 6
+---
+
 # Timeline
 
 A simple timeline class for managing animations with easing and precise progress control. 
@@ -32,32 +37,16 @@ Explore a live example in CodePen:
 
 Mutable properties can be updated at runtime using `.updateProps()`.
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Type</th>
-    <th>Default Value</th>
-  </tr>
-  
-  <tr>
-    <td>duration</td>
-    <td>Timeline duration in milliseconds.</td>
-    <td><code>number</code></td>
-    <td><code>1000</code></td>
-  </tr>
-  
-  <tr>
-    <td>easing</td>
-    <td>
-      Easing function for timeline progression. Accepts standard easing types or an array of bezier values.
-      
-      See [easing types](/docs/utils#easing-types) for more information
-    </td>
-    <td><code>TEasingType</code></td>
-    <td><code>false</code></td>
-  </tr>
-</table>
+#### `duration` {#props.duration}
+- **Type:** `number`  
+- **Default:** `1000`  
+- Timeline duration in milliseconds.
+
+#### `easing` {#props.easing}
+- **Type:** `TEasingType`  
+- **Default:** `false`  
+- Easing function for timeline progression. Accepts standard easing types or an array of bezier values.  
+- See [easing types](/docs/utils#easing-types) for more information.
 
 
 
