@@ -22,7 +22,7 @@ Manages carousel-like behavior. Supports
 
 ## Example
 
-Explore a basic example in CodePen:
+Explore a basic example on CodePen:
 
 <iframe 
   height="500"
@@ -68,9 +68,9 @@ Static properties are set during initialization and cannot be modified later.
 Mutable properties can be updated at runtime using `.updateProps()`.
 
 #### `slides` {#props.slides}
-- **Type:** `boolean`  
-- **Default:** `true`  
-- Todo: add examples & description & fix types.
+- **Type:** (`HTMLElement` | [SnapSlide](./SnapSlide))[] | `false`;
+- **Default:** `false`  
+- Slides instances. If `false`, all container's children will be considered as slides.
 
 #### `direction` {#props.direction}
 - **Type:** `'horizontal' | 'vertical'`  
@@ -228,3 +228,256 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 - **Type:** `boolean`  
 - **Default:** `true`  
 - If `false`, then slider will be animated only when you stop scrolling the wheel.
+
+#### `wheelThrottle` {#props.followWheel}
+- **Type:** `number` | 'auto'  
+- **Default:** `auto`  
+- Throttle wheel events, value in milliseconds. Works only if `followWheel` is disabled.
+
+
+
+## Accessors
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### activeIndex
+
+Type: `number`
+
+Active slide index
+
+### activeSlide
+
+Type: [SnapSlide](./SnapSlide)
+
+Active slide
+
+### axis
+
+Type: `"x" | "y"`
+
+Get axis name depending on direction
+
+### container
+
+Type: `HTMLElement`
+
+Get container
+
+### domSize
+
+Type: `number`
+
+Container size depending on direction (width or height)
+
+### eventsEmitter
+
+Type: `HTMLElement`
+
+Get events emitter
+
+### firstSlideSize
+
+Type: `number`
+
+Get first slide size
+
+### isEmpty
+
+Type: `boolean`
+
+Defines if there's nothing to animate
+
+### isTransitioning
+
+Type: `boolean`
+
+If transition in progress
+
+### scrollableSlides
+
+Type: [SnapSlide](./SnapSlide)[]
+
+Scrollable slides (which size is larger than the container)
+
+### slides
+
+Type: [SnapSlide](./SnapSlide)[]
+
+All slides
+
+### track.canLoop
+
+Type: `boolean`
+
+If can loop
+
+### track.current
+
+Type: `number`
+
+Gets/sets the current track value.
+
+### track.isEnd
+
+Type: `boolean`
+
+If the end has been reached
+
+### track.isInterpolated
+
+Type: `boolean`
+
+Whether the track is interpolated
+
+### track.isSlideScrolling
+
+Type: `boolean`
+
+Check if the active slide is larger than the container and is being scrolled
+
+### track.isStart
+
+Type: `boolean`
+
+If the start has been reached
+
+### track.loopCount
+
+Type: `number`
+
+Get loop count
+
+### track.loopedCurrent
+
+Type: `number`
+
+Get looped current value
+
+### track.max
+
+Type: `number`
+
+Get maximum track value
+
+### track.min
+
+Type: `number`
+
+Get minimum track value
+
+### track.offset
+
+Type: `number`
+
+Get track offset
+
+### track.progress
+
+Type: `number`
+
+Get track progress. From 0 to 1 if not loop. From -Infinity to Infinity if loop
+
+### track.target
+
+Type: `number`
+
+Gets/sets the target track value
+
+
+
+## Methods
+
+:::note
+All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+:::
+
+### cancelTransition
+
+Cancel sticky behavior
+
+```ts
+instance.cancelTransition();
+```
+
+### next
+
+Go to next slide
+
+```ts
+instance.next({ duration: 500, skip: 1 });
+```
+
+### prev
+
+Go to previous slide
+
+```ts
+instance.prev({ duration: 500, skip: 1 });
+```
+
+### resize
+
+Request resize (handled with debounce timeout)
+
+```ts
+instance.resize(true);
+```
+
+### stick
+
+Stick to the nearest magnet
+
+```ts
+instance.stick();
+```
+
+### toCoord
+
+Go to a definite coordinate
+
+```ts
+instance.toCoord(1365, 250);
+```
+
+### toSlide
+
+Go to a slide by index
+
+```ts
+instance.toSlide(1, { direction: 'next', duration: 500 });
+```
+
+### track.clampTarget
+
+Clamp target value between min and max values
+
+```ts
+instance.track.clampTarget();
+```
+
+### track.iterateTarget
+
+Iterate track target value
+
+```ts
+instance.track.iterateTarget(50);
+```
+
+### track.lerp
+
+Interpolate the current track value
+
+```ts
+instance.track.lerp(0.1);
+```
+
+### track.set
+
+Set current & target value instantly
+
+```ts
+instance.track.set(1350);
+```

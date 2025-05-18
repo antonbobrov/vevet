@@ -1,0 +1,114 @@
+---
+toc_min_heading_level: 2  
+toc_max_heading_level: 6
+---
+
+# SnapSlide
+
+The `SnapSlide` class lets you create virtual slides in the `Snap` system.  
+When initializing a `Snap` instance, you can skip the `slides` parameter—child elements of the container will be used by default.  
+For custom logic, use `SnapSlide` directly.
+
+## Example
+
+Explore a basic example on CodePen:
+
+<iframe 
+  height="500"
+  style={{
+    width: '100%'
+  }} 
+  scrolling="no" 
+  title="Vevet Example"
+  src="https://codepen.io/anton-bobrov/embed/azONLzb?default-tab=result"
+  frameborder="no"
+  loading="lazy"
+  allowtransparency="true"
+  allowfullscreen="true"
+>
+  See the Pen <a href="https://codepen.io/anton-bobrov/pen/azONLzb">Vevet Example</a> by Anton Bobrov.
+</iframe>
+
+
+
+## Parameters
+
+### `container`
+
+- **Type:** `HTMLElement | null`  
+- **Default:** _none_  
+- The slide’s HTML element, or `null` for fully virtual slides.
+
+### `props`
+
+#### `size`
+
+- **Type:** `'auto' | 'stretch' | number | string`  
+- **Default:** `'auto'`  
+- Defines the slide size:
+  - `'auto'` — Based on the element or container.
+  - `'stretch'` — Matches the container size.
+  - `number` — Size in pixels.
+  - CSS units like `px`, `rem`, `vw`, `vh`, `svh`.
+
+#### `virtual`
+
+- **Type:** `boolean`  
+- **Default:** `true`  
+- If `true`, the slide is virtual and will be appended to the container only when visible.
+
+## Accessors
+
+### `coord`
+
+- **Type:** `number`  
+- Current coordinate in pixels (X or Y, depending on direction).
+
+### `element`
+
+- **Type:** `HTMLElement | null`  
+- Associated DOM element.
+
+### `id`
+
+- **Type:** `string`  
+- Slide ID.
+
+### `index`
+
+- **Type:** `number`  
+- Slide index.
+
+### `isVisible`
+
+- **Type:** `boolean`  
+- Whether the slide is currently visible.
+
+### `magnets`
+
+- **Type:** `number[]`  
+- Magnetic points (static coordinates with dynamic alignment).
+
+### `progress`
+
+- **Type:** `number`  
+- Movement progress from `-1` to `1`.
+
+### `size`
+
+- **Type:** `number`  
+- Slide size in pixels.
+
+### `staticCoord`
+
+- **Type:** `number`  
+- Static coordinate (unaffected by movement).
+
+## Methods
+
+### `resize()`
+
+Resize the slide and trigger Snap layout reflow.
+
+```ts
+slide.resize();
