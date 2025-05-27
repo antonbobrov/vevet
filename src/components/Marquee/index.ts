@@ -181,6 +181,11 @@ export class Marquee<
     // Store element references
     this._elements = Array.from(container.children) as any;
 
+    // Add necessary styles to elements
+    this._elements.forEach((element, index) =>
+      this._applyNodeStyles(element, index !== 0),
+    );
+
     // initial resize
     this.resize();
 
@@ -195,11 +200,6 @@ export class Marquee<
       resizeDebounce,
       name: this.name,
     });
-
-    // Add necessary styles to elements
-    this._elements.forEach((element, index) =>
-      this._applyNodeStyles(element, index !== 0),
-    );
 
     // Setup cleanup function
     this._lastSetup = () => {
@@ -243,6 +243,7 @@ export class Marquee<
     el.style.left = '0';
     el.style.width = element.style.width || 'max-content';
     el.style.willChange = this.props.hasWillChange ? 'transform' : '';
+    el.style.flexShrink = '0';
   }
 
   /** Resizes the marquee, recalculating element positions and cloning if necessary. */
