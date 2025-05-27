@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.0.8](https://github.com/antonbobrov/vevet/compare/v5.0.7...v5.0.8) (2025-05-27)
+
+
+### Marquee
+
+* fix resize events ([ef60cb4](https://github.com/antonbobrov/vevet/commit/ef60cb491633b8e4c4db487df4c80c0d641c0df4))
+
 ## [5.0.7](https://github.com/antonbobrov/vevet/compare/v5.0.6...v5.0.7) (2025-05-16)
 
 
