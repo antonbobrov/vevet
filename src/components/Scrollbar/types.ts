@@ -51,7 +51,7 @@ export interface IScrollbarStaticProps extends IModuleStaticProps {
   /**
    * Debounce time (in milliseconds) for handling resize events.
    * Helps improve performance by limiting the frequency of resize calculations.
-   * @default 0
+   * @default 10
    */
   resizeDebounce?: number;
 }

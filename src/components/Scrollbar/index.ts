@@ -34,7 +34,7 @@ export class Scrollbar<
       axis: 'y',
       draggable: true,
       autoHide: true,
-      resizeDebounce: 0,
+      resizeDebounce: 10,
     } as TRequiredProps<StaticProps>;
   }
 
@@ -283,15 +283,31 @@ export class Scrollbar<
 
   /** Set resize events */
   protected _setResize() {
-    const handler = onResize({
-      element: [this.track, this.parent, this.scrollElement],
-      resizeDebounce: this.props.resizeDebounce,
-      callback: () => this.resize(),
+    const createResizeHandler = () => {
+      const children = Array.from(this.scrollElement.children);
+
+      return onResize({
+        element: [this.track, this.parent, this.scrollElement, ...children],
+        resizeDebounce: this.props.resizeDebounce,
+        callback: () => this.resize(),
+      });
+    };
+
+    let resizeHandler = createResizeHandler();
+    resizeHandler.resize();
+
+    const childrenObserver = new MutationObserver(() => {
+      resizeHandler.remove();
+      resizeHandler = createResizeHandler();
+      resizeHandler.debounceResize();
     });
 
-    handler.resize();
+    childrenObserver.observe(this.scrollElement, { childList: true });
 
-    this.onDestroy(() => handler.remove());
+    this.onDestroy(() => {
+      resizeHandler.remove();
+      childrenObserver.disconnect();
+    });
   }
 
   /** Set scroll events */
