@@ -119,6 +119,9 @@ export class Scrollbar<
     this._setResize();
     this._setOnscroll();
     this._setSwipe();
+
+    // Initialize
+    this.outer.classList.add(this._cn('_inited'));
   }
 
   /** Handles property mutations */

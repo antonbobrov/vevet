@@ -29,12 +29,20 @@ export function createScrollbarStyles(prefix: string) {
       align-items: center;
       justify-content: center;
       box-sizing: border-box;
+      
+      opacity: 0;
+      visibility: hidden;
       transition: opacity 0.25s linear, visibility 0.25s linear;
     }
 
     .${prefix}.${prefix}_in-window {
       position: fixed;
       z-index: 9;
+    }
+
+    .${prefix}.${prefix}_inited {
+      opacity: 1;
+      visibility: visible;
     }
 
     .${prefix}.${prefix}_empty {
