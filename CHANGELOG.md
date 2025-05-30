@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.0.9](https://github.com/antonbobrov/vevet/compare/v5.0.8...v5.0.9) (2025-05-30)
+
+
+### Scrollbar
+
+* hide before initialization ([054252c](https://github.com/antonbobrov/vevet/commit/054252c7ec16389215e5dfa43f6329f677177d54))
+* track children sizes ([4dd742f](https://github.com/antonbobrov/vevet/commit/4dd742f63b4a02d6c117f0c02578dbea89b27c68))
+
+### Snap
+
+* add `wheelThrottle` ([30a610b](https://github.com/antonbobrov/vevet/commit/30a610b6f81c8425e0cfb23080025408cc92bf50))
+
 ## [5.0.8](https://github.com/antonbobrov/vevet/compare/v5.0.7...v5.0.8) (2025-05-27)
 
 
