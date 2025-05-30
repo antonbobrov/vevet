@@ -14,6 +14,9 @@ export class SnapWheel {
   /** Accummulated wheel value for `followWheel=false` */
   protected _accum = 0;
 
+  /** Last time wheel event was fired */
+  protected _lastNoFollowTime = 0;
+
   constructor(protected _snap: Snap) {
     _snap.on('destroy', () => this._destroy(), { protected: true });
 
@@ -86,7 +89,22 @@ export class SnapWheel {
 
   /** Handle `followWheel=false` */
   protected _handleNotFollow(delta: number) {
-    if (this.snap.isTransitioning || Math.abs(delta) < 10) {
+    const { snap } = this;
+
+    if (Math.abs(delta) < 10) {
+      return;
+    }
+
+    if (snap.props.wheelThrottle === 'auto' && snap.isTransitioning) {
+      return;
+    }
+
+    const timeDiff = +new Date() - this._lastNoFollowTime;
+
+    if (
+      typeof snap.props.wheelThrottle === 'number' &&
+      timeDiff < snap.props.wheelThrottle
+    ) {
       return;
     }
 
@@ -98,12 +116,15 @@ export class SnapWheel {
     }
 
     if (direction === 1) {
-      this.snap.next();
-    } else {
-      this.snap.prev();
+      if (!snap.next()) {
+        return;
+      }
+    } else if (!snap.prev()) {
+      return;
     }
 
     this._accum = 0;
+    this._lastNoFollowTime = +new Date();
   }
 
   /** Handle wheel end */

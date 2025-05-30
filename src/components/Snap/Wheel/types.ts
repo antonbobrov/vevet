@@ -22,4 +22,15 @@ export interface ISnapWheelProps {
    * @default true
    */
   followWheel?: boolean;
+
+  /**
+   * Throttle wheel events, value in milliseconds.
+   * Works only if `followWheel` is disabled.
+   *
+   * - `auto` - value based on transition duration
+   * - `number - value in milliseconds
+   *
+   * @default `auto`
+   */
+  wheelThrottle?: number | 'auto';
 }
