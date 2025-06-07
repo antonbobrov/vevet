@@ -90,6 +90,7 @@ export class Snap<
       wheelAxis: 'auto',
       followWheel: true,
       wheelThrottle: 'auto',
+      stickOnWheelEnd: true,
       slideSize: 'auto',
     } as TRequiredProps<MutableProps>;
   }

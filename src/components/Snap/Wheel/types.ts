@@ -33,4 +33,10 @@ export interface ISnapWheelProps {
    * @default `auto`
    */
   wheelThrottle?: number | 'auto';
+
+  /**
+   * Enable snapping on wheel stop
+   * @default true
+   */
+  stickOnWheelEnd?: boolean;
 }

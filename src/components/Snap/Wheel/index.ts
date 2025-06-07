@@ -72,7 +72,9 @@ export class SnapWheel {
     }
 
     // End callback
-    this._debounceEnd = setTimeout(() => this._handleEnd(), 100);
+    if (snap.props.stickOnWheelEnd) {
+      this._debounceEnd = setTimeout(() => this._handleEnd(), 100);
+    }
   }
 
   /** Handle `followWheel=true` */
