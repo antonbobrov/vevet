@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.0.10](https://github.com/antonbobrov/vevet/compare/v5.0.9...v5.0.10) (2025-06-07)
+
+
+### Snap
+
+* add `stickOnWheelEnd` ([7a07bc6](https://github.com/antonbobrov/vevet/commit/7a07bc67ac1cfc585613cabf99a098624f875898))
+
 ## [5.0.9](https://github.com/antonbobrov/vevet/compare/v5.0.8...v5.0.9) (2025-05-30)
 
 
