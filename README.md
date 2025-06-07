@@ -61,6 +61,8 @@ https://cdn.jsdelivr.net/npm/vevet@5/lib/cdn/vevet.iife.min.js
 
 - **[Scrollbar](https://antonbobrov.github.io/vevet/docs/components/Scrollbar/)** is a custom scrollbar component.
 
+- **[Snap](https://antonbobrov.github.io/vevet/docs/components/Snap/)** is a custom carousel handler.
+
 - **[SplitText](https://antonbobrov.github.io/vevet/docs/components/SplitText/)** splits text within a container into individual lines, words, and letters.
 
 - **[Swipe](https://antonbobrov.github.io/vevet/docs/components/Swipe/)** manages swipe interactions: tracks movement and detects direction, emits events on start, move, and end, supports inertia-based movement.
