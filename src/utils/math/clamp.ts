@@ -16,5 +16,8 @@
  * clamp(0.5, 0, 1); // 0.5
  */
 export function clamp(value: number, min = 0, max = 1) {
-  return Math.max(min, Math.min(value, max));
+  const realMin = Math.min(min, max);
+  const realMax = Math.max(min, max);
+
+  return Math.max(realMin, Math.min(value, realMax));
 }
