@@ -69,7 +69,7 @@ export class Swipe<
       inertia: false,
       inertiaDuration: (distance) => clamp(distance, 350, 1000),
       inertiaEasing: EaseOutCubic,
-      inertiaRatio: 0.5,
+      inertiaRatio: 1,
     } as TRequiredProps<MutableProps>;
   }
 

@@ -129,7 +129,7 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
 
   /**
    * Inertia strength.
-   * @default 0.5
+   * @default 1
    */
   inertiaRatio?: number;
 }
