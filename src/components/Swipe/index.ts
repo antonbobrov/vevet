@@ -67,7 +67,7 @@ export class Swipe<
       preventTouchMove: true,
       requireCtrlKey: false,
       inertia: false,
-      inertiaDuration: (distance) => clamp(distance, 350, 1000),
+      inertiaDuration: (distance) => clamp(distance, 500, 2000),
       inertiaEasing: EaseOutCubic,
       inertiaRatio: 1,
     } as TRequiredProps<MutableProps>;

@@ -117,7 +117,7 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
 
   /**
    * Inertia duration.
-   * @default `(distance) => clamp(distance, 350, 1000)`
+   * @default `(distance) => clamp(distance, 500, 2000)`
    */
   inertiaDuration?: (distance: number) => number;
 
