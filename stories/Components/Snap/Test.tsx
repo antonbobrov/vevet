@@ -94,7 +94,7 @@ export const Test: FC = () => {
         {[
           { color: '#A8E6CF', size: 200 },
           { color: '#DCEDC1', size: 180 },
-          { color: '#FFD3B6', size: 150 },
+          { color: '#FFD3B6', size: 700 },
           { color: '#FF8B94', size: 150 },
           { color: '#f00', size: 600 },
         ].map(({ color, size }, index) => (

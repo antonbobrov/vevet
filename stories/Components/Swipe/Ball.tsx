@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useRef } from 'react';
 import { clamp, Swipe, vevet } from '@/index';
 
-export const Drag: FC = () => {
+export const Ball: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -11,22 +11,33 @@ export const Drag: FC = () => {
 
     let x = 0;
     let y = 0;
+    let xDir = 1;
+    let yDir = 1;
 
     const instance = new Swipe({
       container: ref.current,
       inertia: true,
       grabCursor: true,
-      inertiaRatio: 0.5,
-      velocityModifier: (source) => ({
-        ...source,
-        x: clamp(source.x, -x - vevet.width / 2, vevet.width / 2 - x),
-        y: clamp(source.y, -y - vevet.height / 2, vevet.height / 2 - y),
-      }),
+    });
+
+    instance.on('start', () => {
+      xDir = 1;
+      yDir = 1;
     });
 
     instance.on('move', ({ step }) => {
-      x = clamp(x + step.x, -vevet.width / 2, vevet.width / 2);
-      y = clamp(y + step.y, -vevet.height / 2, vevet.height / 2);
+      if (instance.hasInertia) {
+        if (x >= vevet.width / 2 || x <= -vevet.width / 2) {
+          xDir *= -1;
+        }
+
+        if (y >= vevet.height / 2 || y <= -vevet.height / 2) {
+          yDir *= -1;
+        }
+      }
+
+      x = clamp(x + step.x * xDir, -vevet.width / 2, vevet.width / 2);
+      y = clamp(y + step.y * yDir, -vevet.height / 2, vevet.height / 2);
 
       instance.container.style.transform = `translate(${x}px, ${y}px)`;
     });
@@ -45,6 +56,7 @@ export const Drag: FC = () => {
             margin: -50px 0 0 -50px;
             width: 100px;
             height: 100px;
+            border-radius: 50%;
 
             display: flex;
             justify-content: center;
@@ -58,9 +70,7 @@ export const Drag: FC = () => {
         `}
       </style>
 
-      <div ref={ref} className="container">
-        Drag Me
-      </div>
+      <div ref={ref} className="container" />
     </>
   );
 };

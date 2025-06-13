@@ -3,6 +3,7 @@ import React from 'react';
 import { Test as TestComponent } from './Test';
 import { Direction as DirectionComponent } from './Direction';
 import { Drag as DragComponent } from './Drag';
+import { Ball as BallComponent } from './Ball';
 import { Rotation as RotationComponent } from './Rotation';
 import { Large as LargeComponent } from './Large';
 
@@ -17,6 +18,8 @@ export const Test: StoryFn = () => <TestComponent />;
 export const Direction: StoryFn = () => <DirectionComponent />;
 
 export const Drag: StoryFn = () => <DragComponent />;
+
+export const Ball: StoryFn = () => <BallComponent />;
 
 export const Rotation: StoryFn = () => <RotationComponent />;
 
