@@ -17,6 +17,9 @@ import { cursorStyles } from './styles';
 
 export * from './types';
 
+const VELOCITIES_COUNT = 4;
+const MIN_VELOCITY_THRESHOLD = 50;
+
 /**
  * Manages swipe interactions:
  * - Tracks movement and detects direction
@@ -69,6 +72,7 @@ export class Swipe<
       inertia: false,
       inertiaDuration: (distance) => clamp(distance, 500, 2000),
       inertiaEasing: EaseOutCubic,
+      velocityModifier: false,
       inertiaRatio: 1,
     } as TRequiredProps<MutableProps>;
   }
@@ -439,7 +443,12 @@ export class Swipe<
     };
 
     // update velocity
-    this._velocities.push({ ...coords.current, timestamp: coords.timestamp });
+    if (!this.hasInertia) {
+      this._velocities.push({ ...coords.current, timestamp: coords.timestamp });
+      if (this._velocities.length > VELOCITIES_COUNT) {
+        this._velocities.shift();
+      }
+    }
 
     // trigger callbacks
     this.callbacks.emit('move', this._coords);
@@ -458,11 +467,6 @@ export class Swipe<
 
     // reset
     this._reset();
-
-    // end with inertia
-    if (this.props.inertia) {
-      this._endWithInertia();
-    }
 
     // reset cursor
     this._cursorStyles.remove();
@@ -493,6 +497,17 @@ export class Swipe<
 
     // end callback
     this.callbacks.emit('end', this._coords);
+
+    // modifiy last velocity time
+    if (this._velocities.length > 0) {
+      this._velocities[this._velocities.length - 1].timestamp =
+        performance.now();
+    }
+
+    // end with inertia
+    if (this.props.inertia) {
+      this._endWithInertia();
+    }
   }
 
   /** Reset swipe states */
@@ -501,21 +516,87 @@ export class Swipe<
     this._isSwiping = false;
   }
 
+  /** Returns current velocity */
+  protected get velocity(): ISwipeMatrix {
+    const samples = this._velocities;
+
+    if (samples.length < 2) {
+      return { x: 0, y: 0, angle: 0 };
+    }
+
+    let totalWeight = 0;
+    let wvx = 0;
+    let wvy = 0;
+    let wva = 0;
+
+    for (let i = 1; i < samples.length; i += 1) {
+      const current = samples[i];
+      const previous = samples[i - 1];
+
+      const deltaX = current.x - previous.x;
+      const deltaY = current.y - previous.y;
+
+      let angleDiff = current.angle - previous.angle;
+      if (angleDiff > 180) angleDiff -= 360;
+      if (angleDiff < -180) angleDiff += 360;
+
+      const deltatTime = current.timestamp - previous.timestamp;
+
+      const sx = (deltaX / deltatTime) * 1000;
+      const sy = (deltaY / deltatTime) * 1000;
+      const sa = (angleDiff / deltatTime) * 1000;
+
+      const weight = 1 / Math.exp(-deltatTime * 0.1);
+      wvx += sx * weight;
+      wvy += sy * weight;
+      wva += sa * weight;
+      totalWeight += weight;
+    }
+
+    if (totalWeight > 0) {
+      return {
+        x: wvx / totalWeight,
+        y: wvy / totalWeight,
+        angle: wva / totalWeight,
+      };
+    }
+
+    return { x: 0, y: 0, angle: 0 };
+  }
+
   /** Apply inertia-based movement */
   protected _endWithInertia() {
-    const { velocity } = this;
-    if (!velocity) {
+    const { inertiaDuration, inertiaEasing, velocityModifier, inertiaRatio } =
+      this.props;
+
+    const velocity = velocityModifier
+      ? velocityModifier(this.velocity)
+      : this.velocity;
+
+    const velocityX = velocity.x * inertiaRatio;
+    const velocityY = velocity.y * inertiaRatio;
+    const velocityA = velocity.angle * inertiaRatio;
+
+    const distance = Math.sqrt(velocityX ** 2 + velocityY ** 2);
+
+    // Check if we have sufficient velocity
+    if (distance < MIN_VELOCITY_THRESHOLD) {
       return;
     }
 
-    const { inertiaDuration, inertiaEasing } = this.props;
-    const { x: xDistance, y: yDistance, angle: angleDistance } = velocity;
-
-    const distance = Math.max(Math.abs(xDistance), Math.abs(yDistance));
+    // Calculate animation duration
     const duration = inertiaDuration(distance);
 
-    const startMatrix = { ...this.coords.current };
+    // Check if the animation duration is positive
+    if (duration <= 0) {
+      return;
+    }
 
+    // Calculate the start and add matrices
+    const startMatrix = { ...this.coords.current };
+    const addMatrix = { x: 0, y: 0, angle: 0 };
+
+    // Start the inertia animation
     this._inertia = new Timeline({ duration, easing: inertiaEasing });
 
     this._inertia.on('start', () => {
@@ -523,10 +604,15 @@ export class Swipe<
     });
 
     this._inertia.on('update', ({ eased }) => {
+      addMatrix.x = velocityX * eased;
+      addMatrix.y = velocityY * eased;
+      addMatrix.angle = velocityA * eased;
+
+      // Apply the calculated position
       this._move({
-        x: startMatrix.x + xDistance * eased,
-        y: startMatrix.y + yDistance * eased,
-        angle: startMatrix.angle + angleDistance * eased,
+        x: startMatrix.x + addMatrix.x,
+        y: startMatrix.y + addMatrix.y,
+        angle: startMatrix.angle + addMatrix.angle,
       });
 
       this.callbacks.emit('inertia', undefined);
@@ -547,45 +633,6 @@ export class Swipe<
   public cancelInertia() {
     this._inertia?.destroy();
     this._inertia = undefined;
-  }
-
-  /** Returns current velocity */
-  protected get velocity() {
-    if (this._velocities.length < 2) {
-      return undefined;
-    }
-
-    const ratio = 1000 * this.props.inertiaRatio;
-    const minimumVelocity = 0.02;
-
-    const current = this._velocities.pop()!;
-    const last = this._velocities.pop()!;
-
-    const now = performance.now();
-    const timeDiff = current.timestamp - last.timestamp;
-
-    const velocityX = (current.x - last.x) / timeDiff / 2;
-    const velocityY = (current.y - last.y) / timeDiff / 2;
-    const velocityAngle = (current.angle - last.angle) / timeDiff / 2;
-
-    const hasXVelocity = Math.abs(velocityX) > minimumVelocity;
-    const hasYVelocity = Math.abs(velocityY) > minimumVelocity;
-    const hasAngleVelocity = Math.abs(velocityAngle) > minimumVelocity;
-
-    const hasVelocityByTime = timeDiff < 150 && now - current.timestamp < 300;
-
-    const hasVelocity =
-      (hasXVelocity || hasYVelocity || hasAngleVelocity) && hasVelocityByTime;
-
-    if (!hasVelocity) {
-      return undefined;
-    }
-
-    return {
-      x: hasXVelocity ? velocityX * ratio : 0,
-      y: hasYVelocity ? velocityY * ratio : 0,
-      angle: hasAngleVelocity ? velocityAngle * ratio : 0,
-    };
   }
 
   /** Start coordinate */

@@ -144,6 +144,11 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 - Easing function for inertia.  
 - See [easing types](/docs/utils#easing-types) for more information.
 
+#### `velocityModifier` {#props.inertiaEasing}
+- **Type:** `false` | `((velocity: ISwipeMatrix) => ISwipeMatrix)`  
+- **Default:** `false`  
+- Final velocity modifier. Accepts and returns additional movement.
+
 #### `inertiaRatio` {#props.inertiaRatio}
 - **Type:** `number`  
 - **Default:** `1`  

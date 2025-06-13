@@ -128,6 +128,12 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
   inertiaEasing?: TEasingType;
 
   /**
+   * Final velocity modifier.
+   * @default false
+   */
+  velocityModifier?: false | ((velocity: ISwipeMatrix) => ISwipeMatrix);
+
+  /**
    * Inertia strength.
    * @default 1
    */
