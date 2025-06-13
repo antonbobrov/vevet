@@ -332,7 +332,9 @@ export class Snap<
 
     // Get lerp factor
     const lerpFactor =
-      swipe.isSwiping && props.swipeLerp ? props.swipeLerp : props.lerp;
+      (swipe.isSwiping || swipe.hasInertia) && props.swipeLerp
+        ? props.swipeLerp
+        : props.lerp;
 
     // Interpolate track value
     track.lerp(this._raf.lerpFactor(lerpFactor));
