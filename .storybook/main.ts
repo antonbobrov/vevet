@@ -19,6 +19,14 @@ const config: StorybookConfig = {
       '@': path.resolve(__dirname, '../src/'),
     };
 
+    config.server = config.server || {};
+    config.server.watch = config.server.watch || {};
+    console.log(config.server.watch.ignored)
+    config.server.watch.ignored = [
+      '**/node_modules/**',
+      path.resolve(__dirname, '../docusaurus/**'),
+    ];
+    
     return config;
   },
 };
