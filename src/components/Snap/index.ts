@@ -85,6 +85,7 @@ export class Snap<
       swipeLerp: initVevet().mobile ? 1 : 0.6,
       swipeThreshold: 5,
       swipeMinTime: 0,
+      swipeInertiaRatio: 1,
       wheel: false,
       wheelSpeed: 1,
       wheelAxis: 'auto',

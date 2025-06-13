@@ -25,6 +25,7 @@ export class SnapSwipe {
       threshold: snap.props.swipeThreshold,
       axis: this.axis,
       inertia: snap.props.freemode,
+      inertiaRatio: snap.props.swipeInertiaRatio,
     });
 
     this._swipe.on('start', (data) => this._handleSwipeStart(data));
