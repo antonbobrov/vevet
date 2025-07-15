@@ -26,6 +26,7 @@ export class SnapSwipe {
       threshold: snap.props.swipeThreshold,
       axis: this.axis,
       inertia: snap.props.freemode,
+      inertiaDuration: snap.props.swipeInertiaDuration,
       inertiaRatio: snap.props.swipeInertiaRatio,
       velocityModifier: (source) => {
         if (snap.props.freemode) {

@@ -20,6 +20,7 @@ import {
   lerp,
   toPixels,
   closest,
+  clamp,
 } from '@/utils';
 import { SnapSlide } from './Slide';
 import { SnapWheel } from './Wheel';
@@ -85,6 +86,7 @@ export class Snap<
       swipeLerp: initVevet().mobile ? 1 : 0.6,
       swipeThreshold: 5,
       swipeMinTime: 0,
+      swipeInertiaDuration: (distance) => clamp(distance, 500, 2000),
       swipeInertiaRatio: 0.3,
       wheel: false,
       wheelSpeed: 1,

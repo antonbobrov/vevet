@@ -208,9 +208,14 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 - **Default:** `0`  
 - Minimum time in milliseconds to trigger swipe move.
 
-#### `inertiaRatio` {#props.inertiaRatio}
+#### `swipeInertiaDuration` {#props.swipeInertiaDuration}
+- **Type:** `(distance: number) => number`  
+- **Default:** `(distance) => clamp(distance, 500, 2000)`  
+- Inertia duration.
+
+#### `swipeInertiaRatio` {#props.swipeInertiaRatio}
 - **Type:** `number`  
-- **Default:** `1`  
+- **Default:** `0.3`  
 - Inertia strength.
 
 #### `wheel` {#props.wheel}
