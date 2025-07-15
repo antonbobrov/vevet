@@ -569,14 +569,17 @@ export class Swipe<
     const { inertiaDuration, inertiaEasing, velocityModifier, inertiaRatio } =
       this.props;
 
+    const sourceVelocity = {
+      x: this.velocity.x * inertiaRatio,
+      y: this.velocity.y * inertiaRatio,
+      angle: this.velocity.angle * inertiaRatio,
+    };
+
     const velocity = velocityModifier
-      ? velocityModifier(this.velocity)
-      : this.velocity;
+      ? velocityModifier(sourceVelocity)
+      : sourceVelocity;
 
-    const velocityX = velocity.x * inertiaRatio;
-    const velocityY = velocity.y * inertiaRatio;
-    const velocityA = velocity.angle * inertiaRatio;
-
+    const { x: velocityX, y: velocityY, angle: velocityA } = velocity;
     const distance = Math.sqrt(velocityX ** 2 + velocityY ** 2);
 
     // Check if we have sufficient velocity
