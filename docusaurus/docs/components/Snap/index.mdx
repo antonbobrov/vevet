@@ -237,17 +237,22 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 #### `followWheel` {#props.followWheel}
 - **Type:** `boolean`  
 - **Default:** `true`  
-- If `false`, then slider will be animated only when you stop scrolling the wheel.
+- If `false`, disables smooth, continuous scrolling behavior from the mouse wheel and instead updates the snap position in discrete steps (like pagination).
 
 #### `wheelThrottle` {#props.wheelThrottle}
 - **Type:** `number` | 'auto'  
 - **Default:** `auto`  
 - Throttle wheel events, value in milliseconds. Works only if `followWheel` is disabled.
 
+#### `wheelNoFollowThreshold` {#props.wheelNoFollowThreshold}
+- **Type:** `number`
+- **Default:** `100`  
+- Minimum distance in pixels to trigger snap update. Works only if `followWheel` is disabled.
+
 #### `stickOnWheelEnd` {#props.stickOnWheelEnd}
 - **Type:** `boolean`  
 - **Default:** `true`  
-- Enable snapping on wheel stop.
+- Enable snapping on wheel stop. Works with `followWheel` enabled.
 
 
 

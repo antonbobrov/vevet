@@ -18,7 +18,8 @@ export interface ISnapWheelProps {
   wheelAxis?: 'x' | 'y' | 'auto';
 
   /**
-   * If disabled, then slider will be animated only when you stop scrolling the wheel.
+   * If `false`, disables smooth, continuous scrolling behavior from the mouse wheel
+   * and instead updates the snap position in discrete steps (like pagination).
    * @default true
    */
   followWheel?: boolean;
@@ -35,7 +36,13 @@ export interface ISnapWheelProps {
   wheelThrottle?: number | 'auto';
 
   /**
-   * Enable snapping on wheel stop
+   * Minimum distance in pixels to trigger snap update. Works only if `followWheel` is disabled.
+   * @default 100
+   */
+  wheelNoFollowThreshold?: number;
+
+  /**
+   * Enable snapping on wheel stop. Works with `followWheel` enabled.
    * @default true
    */
   stickOnWheelEnd?: boolean;

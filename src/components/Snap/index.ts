@@ -93,6 +93,7 @@ export class Snap<
       wheelAxis: 'auto',
       followWheel: true,
       wheelThrottle: 'auto',
+      wheelNoFollowThreshold: 100,
       stickOnWheelEnd: true,
       slideSize: 'auto',
     } as TRequiredProps<MutableProps>;
@@ -505,7 +506,7 @@ export class Snap<
   }
 
   /** Go to a definite coordinate */
-  public toCoord(coordinate: number, duration = this.props.duration) {
+  public toCoord(coordinate: number, durationProp = this.props.duration) {
     if (this.isEmpty) {
       return false;
     }
@@ -518,8 +519,14 @@ export class Snap<
     const end = coordinate;
     const diff = Math.abs(end - start);
 
+    let duration =
+      typeof durationProp === 'number' ? durationProp : durationProp(diff);
+    if (diff === 0) {
+      duration = 0;
+    }
+
     const tm = new Timeline({
-      duration: typeof duration === 'number' ? duration : duration(diff),
+      duration,
       easing: props.easing,
     });
 

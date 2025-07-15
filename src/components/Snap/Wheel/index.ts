@@ -12,7 +12,7 @@ export class SnapWheel {
   protected _debounceEnd?: NodeJS.Timeout;
 
   /** Accummulated wheel value for `followWheel=false` */
-  protected _accum = 0;
+  protected _noFollowAccum = 0;
 
   /** Last time wheel event was fired */
   protected _lastNoFollowTime = 0;
@@ -72,9 +72,7 @@ export class SnapWheel {
     }
 
     // End callback
-    if (snap.props.stickOnWheelEnd) {
-      this._debounceEnd = setTimeout(() => this._handleEnd(), 100);
-    }
+    this._debounceEnd = setTimeout(() => this._handleEnd(), 100);
   }
 
   /** Handle `followWheel=true` */
@@ -92,31 +90,47 @@ export class SnapWheel {
   /** Handle `followWheel=false` */
   protected _handleNotFollow(delta: number) {
     const { snap } = this;
+    const { props } = snap;
 
-    if (Math.abs(delta) < 10) {
+    // check wheel throttling by active transition
+    if (props.wheelThrottle === 'auto' && snap.isTransitioning) {
       return;
     }
 
-    if (snap.props.wheelThrottle === 'auto' && snap.isTransitioning) {
-      return;
-    }
-
+    // check wheel throttling by time
     const timeDiff = +new Date() - this._lastNoFollowTime;
-
     if (
-      typeof snap.props.wheelThrottle === 'number' &&
-      timeDiff < snap.props.wheelThrottle
+      typeof props.wheelThrottle === 'number' &&
+      timeDiff < props.wheelThrottle
     ) {
       return;
     }
 
-    this._accum += Math.abs(delta) / 2;
-    const direction = Math.sign(delta);
+    // scroll slide
+    if (snap.track.isSlideScrolling) {
+      this._handleFollow(delta);
+      this._noFollowAccum = 0;
 
-    if (Math.abs(this._accum) < 100) {
       return;
     }
 
+    // check minumum wheel threshold
+    if (Math.abs(delta) < 0.5) {
+      return;
+    }
+
+    // accumulate wheel value
+    this._noFollowAccum += Math.abs(delta);
+    const direction = Math.sign(delta);
+
+    // continue if accumulated value is more than threshold
+    if (
+      Math.abs(this._noFollowAccum) < Math.abs(props.wheelNoFollowThreshold)
+    ) {
+      return;
+    }
+
+    // detect transition direction
     if (direction === 1) {
       if (!snap.next()) {
         return;
@@ -125,20 +139,25 @@ export class SnapWheel {
       return;
     }
 
-    this._accum = 0;
+    // reset
+    this._noFollowAccum = 0;
     this._lastNoFollowTime = +new Date();
   }
 
   /** Handle wheel end */
   protected _handleEnd() {
     const { snap } = this;
-    const { freemode: isFreemode, followWheel: isFollow } = snap.props;
+    const { props } = this.snap;
 
     this._hasStarted = false;
-    this._accum = 0;
+    this._noFollowAccum = 0;
 
-    if (!isFreemode && isFollow) {
-      snap.stick();
+    if (!props.freemode) {
+      if (props.followWheel && props.stickOnWheelEnd) {
+        snap.stick();
+      } else if (!props.followWheel && !snap.isTransitioning) {
+        snap.stick();
+      }
     }
 
     snap.callbacks.emit('wheelEnd', undefined);
