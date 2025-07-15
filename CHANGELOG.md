@@ -1,5 +1,27 @@
 # Changelog
 
+## [5.0.11](https://github.com/antonbobrov/vevet/compare/v5.0.10...v5.0.11) (2025-07-15)
+
+
+### clamp
+
+* use real min-max values ([b35331c](https://github.com/antonbobrov/vevet/commit/b35331cfd80b6b697cd31dd31e54d1bec4635298))
+
+### Snap
+
+* add `swipeInertiaDuration` ([cfeacee](https://github.com/antonbobrov/vevet/commit/cfeaceeb305c2279c9fda37a5b51bd81a774f65a))
+* add `swipeInertiaRatio` ([d63b420](https://github.com/antonbobrov/vevet/commit/d63b420ee40787a0a6ce2d40640d6ec651402007))
+* better logic when `followWheel` is false; add `wheelNoFollowThreshold` ([077e8db](https://github.com/antonbobrov/vevet/commit/077e8db4340461987a1614987850b9b87717e8a3))
+* better magnets ([56c5974](https://github.com/antonbobrov/vevet/commit/56c597408916d9bd91cf9aa3c5a504481d5f5daf))
+* use inertia for scrollbale slides ([47d387c](https://github.com/antonbobrov/vevet/commit/47d387c426faae14324dfc292b1534f20cb481bb))
+
+### Swipe
+
+* add `velocityModifier` & refactor inertia calculations ([d17e5e8](https://github.com/antonbobrov/vevet/commit/d17e5e8a24648af4cd49646312f249c33e57b979))
+* respect `inertiaRatio` when `velocityModifier` is used ([5152f2f](https://github.com/antonbobrov/vevet/commit/5152f2f0396a3d9d84abc766b678e120ffda3773))
+* update default `inertiaDuration` ([678131d](https://github.com/antonbobrov/vevet/commit/678131d307ad1004465bb7a0819a00bd2d830943))
+* update default `inertiaRatio` ([a99e8f7](https://github.com/antonbobrov/vevet/commit/a99e8f704707076ca01a73ef01196bee05600723))
+
 ## [5.0.10](https://github.com/antonbobrov/vevet/compare/v5.0.9...v5.0.10) (2025-06-07)
 
 
