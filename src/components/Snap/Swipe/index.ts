@@ -32,17 +32,20 @@ export class SnapSwipe {
           return source;
         }
 
-        const { coord, size } = snap.activeSlide;
-        const trackDiff = snap.track.current - snap.track.target;
+        const { coord, size: slideSize } = snap.activeSlide;
 
-        return {
+        snap.track.target = snap.track.current;
+
+        const output = {
           ...source,
           [this.axis]: clamp(
             source[this.axis],
-            -coord - trackDiff,
-            snap.domSize - size - coord - trackDiff,
+            -coord,
+            snap.domSize - slideSize - coord,
           ),
         };
+
+        return output;
       },
     });
 
