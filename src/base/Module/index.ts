@@ -5,6 +5,7 @@ import {
   IModuleMutableProps,
   IModuleStaticProps,
 } from './types';
+import { mergeWithNoUndefined } from '@/internal/mergeWithNoUndefined';
 
 // todo: jsdoc
 
@@ -79,11 +80,13 @@ export class Module<
   constructor(props?: StaticProps & MutableProps) {
     this._callbacks = new Callbacks();
 
-    this._props = {
-      ...this._getStatic(),
-      ...this._getMutable(),
-      ...props,
-    } as TRequiredProps<MutableProps & StaticProps>;
+    this._props = mergeWithNoUndefined(
+      {
+        ...this._getStatic(),
+        ...this._getMutable(),
+      },
+      { ...props },
+    ) as TRequiredProps<MutableProps & StaticProps>;
   }
 
   /**
