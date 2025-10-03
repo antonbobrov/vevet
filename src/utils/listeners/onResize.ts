@@ -16,6 +16,7 @@ export interface IOnResizeProps {
 
   /**
    * Target viewport property for resize events (enables viewport listeners).
+   * @default 'width'
    */
   viewportTarget?: keyof IViewportCallbacksMap;
 
@@ -71,7 +72,7 @@ export interface IOnResize {
 export function onResize({
   callback,
   element,
-  viewportTarget,
+  viewportTarget = 'width',
   resizeDebounce = 0,
   name,
 }: IOnResizeProps): IOnResize {

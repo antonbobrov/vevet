@@ -176,6 +176,7 @@ export class SnapSlide {
     if (this.element && this.sizeProp === 'auto') {
       this._onResize = onResize({
         element: this.element,
+        viewportTarget: 'width',
         callback: () => this.resize(),
         name: 'Snap Slide',
       });

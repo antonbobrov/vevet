@@ -288,6 +288,7 @@ export class Scrollbar<
 
       return onResize({
         element: [this.track, this.parent, this.scrollElement, ...children],
+        viewportTarget: 'width',
         resizeDebounce: this.props.resizeDebounce,
         callback: () => this.resize(),
       });

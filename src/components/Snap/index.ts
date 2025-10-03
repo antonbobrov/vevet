@@ -146,6 +146,7 @@ export class Snap<
     // add resize event
     this._resizeHandler = onResize({
       element: container,
+      viewportTarget: 'width',
       callback: () => this._handleResize(),
       name: this.name,
     });
