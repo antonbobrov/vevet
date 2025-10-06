@@ -152,7 +152,7 @@ export class SnapWheel {
     this._hasStarted = false;
     this._noFollowAccum = 0;
 
-    if (!props.freemode) {
+    if (!props.freemode || props.freemode === 'sticky') {
       if (props.followWheel && props.stickOnWheelEnd) {
         snap.stick();
       } else if (!props.followWheel && !snap.isTransitioning) {

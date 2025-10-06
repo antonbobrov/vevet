@@ -17,6 +17,7 @@ import { cursorStyles } from './styles';
 
 export * from './types';
 
+// todo: to props
 const VELOCITIES_COUNT = 4;
 const MIN_VELOCITY_THRESHOLD = 50;
 

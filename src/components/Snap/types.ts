@@ -68,10 +68,10 @@ export interface ISnapMutableProps
   lerp?: number;
 
   /**
-   * Disables `friction` and snapping to the nearest slide.
+   * Enables freemode, with or without sticky magnets.
    * @default false
    */
-  freemode?: boolean;
+  freemode?: boolean | 'sticky';
 
   /**
    * Stick to the nearest slide on window resize

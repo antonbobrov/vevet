@@ -32,6 +32,10 @@ import { initVevet } from '@/global/initVevet';
 export * from './types';
 export * from './Slide';
 
+// todo: add examples for freemode: sticky
+
+// todo: fix freemode with negative swipeSpeed
+
 // todo: jsdoc
 
 /**
