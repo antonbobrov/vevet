@@ -259,6 +259,10 @@ export class Pointers<
     pointer.prev = { ...pointer.current };
     pointer.current = { x, y };
 
+    // Update diff
+    pointer.diff.x = pointer.current.x - pointer.start.x;
+    pointer.diff.y = pointer.current.y - pointer.start.y;
+
     // Update step
     pointer.step.x = pointer.current.x - pointer.prev.x;
     pointer.step.y = pointer.current.y - pointer.prev.y;
