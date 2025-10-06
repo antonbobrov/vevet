@@ -479,3 +479,25 @@ const destruct = instance.on('inertiaEnd', () => console.log('inertia end'));
 // Cancel the callback
 destruct();
 ```
+
+### inertiaFail
+
+Triggered when inertia fails to start because of lack of momentum.
+
+```ts
+const destruct = instance.on('inertiaFail', () => console.log('inertia fail'));
+
+// Cancel the callback
+destruct();
+```
+
+### inertiaCancel
+
+Triggered when inertia is cancelled.
+
+```ts
+const destruct = instance.on('inertiaCancel', () => console.log('inertia cancel'));
+
+// Cancel the callback
+destruct();
+```

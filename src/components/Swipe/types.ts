@@ -185,6 +185,12 @@ export interface ISwipeCallbacksMap extends IModuleCallbacksMap {
 
   /** Triggered on inertia end. */
   inertiaEnd: undefined;
+
+  /** Triggered when inertia fails to start because of lack of momentum. */
+  inertiaFail: undefined;
+
+  /** Triggered when inertia is cancelled. */
+  inertiaCancel: undefined;
 }
 
 export interface ISwipeVec2 {

@@ -73,6 +73,7 @@ export class Swipe<
       inertiaDuration: (distance) => clamp(distance, 500, 2000),
       inertiaEasing: EaseOutCubic,
       velocityModifier: false,
+      distanceModifier: false,
       inertiaRatio: 1,
     } as TRequiredProps<MutableProps>;
   }
@@ -584,6 +585,8 @@ export class Swipe<
 
     // Check if we have sufficient velocity
     if (distance < MIN_VELOCITY_THRESHOLD) {
+      this.callbacks.emit('inertiaFail', undefined);
+
       return;
     }
 
@@ -592,6 +595,8 @@ export class Swipe<
 
     // Check if the animation duration is positive
     if (duration <= 0) {
+      this.callbacks.emit('inertiaFail', undefined);
+
       return;
     }
 
@@ -634,6 +639,14 @@ export class Swipe<
 
   /** Destroy inertia animation */
   public cancelInertia() {
+    if (!this._inertia) {
+      return;
+    }
+
+    if (this._inertia.progress < 1) {
+      this.callbacks.emit('inertiaCancel', undefined);
+    }
+
     this._inertia?.destroy();
     this._inertia = undefined;
   }
