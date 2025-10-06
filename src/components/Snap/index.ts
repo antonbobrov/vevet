@@ -380,13 +380,13 @@ export class Snap<
     }
 
     // Check if friction is allowed
-    const canHaveFriction =
+    const hasFriction =
       (swipe.isSwiping && swipe.allowFriction) || !swipe.isSwiping;
 
     // Apply friction
     if (
       magnet &&
-      canHaveFriction &&
+      hasFriction &&
       frameDuration > 0 &&
       props.friction >= 0 &&
       !track.isSlideScrolling &&
@@ -467,9 +467,14 @@ export class Snap<
 
   /** Get nearest magnet */
   protected get magnet(): ISnapMagnet | undefined {
-    // todo: search only in nearby slides
-
     const current = this.track.loopedCurrent;
+
+    return this.getNearestMagnet(current);
+  }
+
+  /** Get nearest magnet to the current position */
+  public getNearestMagnet(coord: number): ISnapMagnet | undefined {
+    // todo: search only in nearby slides
 
     const magnets = this.slides.flatMap((slide) =>
       slide.magnets.map((magnet) => ({ slide, magnet, index: slide.index })),
@@ -480,13 +485,10 @@ export class Snap<
     }
 
     const magnet = magnets.reduce((p, c) =>
-      Math.abs(c.magnet - current) < Math.abs(p.magnet - current) ? c : p,
+      Math.abs(c.magnet - coord) < Math.abs(p.magnet - coord) ? c : p,
     );
 
-    return {
-      ...magnet,
-      diff: magnet.magnet - current,
-    };
+    return { ...magnet, diff: magnet.magnet - coord };
   }
 
   /** Cancel sticky behavior */
