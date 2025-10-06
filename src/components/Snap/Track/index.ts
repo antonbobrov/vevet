@@ -44,7 +44,7 @@ export class SnapTrack {
 
   /** Get looped current value */
   get loopedCurrent() {
-    return this.canLoop ? loop(this.current, this.min, this.max) : this.current;
+    return this.loopCoord(this.current);
   }
 
   /** Get track offset */
@@ -57,6 +57,11 @@ export class SnapTrack {
   /** Get loop count */
   get loopCount() {
     return Math.floor(this.current / this.max);
+  }
+
+  /** Loop a coordinate if can loop */
+  public loopCoord(coord: number) {
+    return this.canLoop ? loop(coord, this.min, this.max) : coord;
   }
 
   /** Interpolate the current track value */
