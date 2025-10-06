@@ -9,16 +9,16 @@
  * @group Utils
  *
  * @example
- * inScope(0, 0, 1);
+ * inRange(0, 0, 1);
  * // => true (0 is within the range [0, 1])
  *
- * inScope(1, 0, 1);
+ * inRange(1, 0, 1);
  * // => true (1 is within the range [0, 1])
  *
- * inScope(2, 0, 1);
+ * inRange(2, 0, 1);
  * // => false (2 is outside the range [0, 1])
  *
- * inScope(-1, 0, 1);
+ * inRange(-1, 0, 1);
  * // => false (-1 is outside the range [0, 1])
  */
 export function inRange(value: number, min = 0, max = 1): boolean {
