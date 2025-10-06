@@ -323,7 +323,7 @@ export class Snap<
     this.callbacks.emit('reflow', undefined);
 
     // Render after resize
-    this._render();
+    this.render();
   }
 
   /** Handle RAF update, interpolate track values */
@@ -349,11 +349,11 @@ export class Snap<
     }
 
     // Render the scene
-    this._render(this._raf.duration);
+    this.render(this._raf.duration);
   }
 
-  /** Render slides logic */
-  protected _render(frameDuration = 0) {
+  /** Render slides */
+  public render(frameDuration = 0) {
     if (this.isEmpty) {
       return;
     }
@@ -543,7 +543,7 @@ export class Snap<
         this._targetIndex = undefined;
       }
 
-      this._render();
+      this.render();
       callbacks.emit('timelineUpdate', data);
     });
 

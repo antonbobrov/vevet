@@ -438,6 +438,14 @@ Go to previous slide
 instance.prev({ duration: 500, skip: 1 });
 ```
 
+### render
+
+Force slides rendering
+
+```ts
+instance.render();
+```
+
 ### resize
 
 Request resize (handled with debounce timeout)
@@ -552,7 +560,6 @@ const destruct = instance.on('reflow', () => console.log('reflow'));
 
 // Cancel the callback
 destruct();
-```
 
 ### resize
 
