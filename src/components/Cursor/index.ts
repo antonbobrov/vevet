@@ -377,24 +377,22 @@ export class Cursor<
    * @returns Returns a destructor
    */
   public attachElement(settings: ICursorHoveredElement, enterTimeout = 100) {
-    const final: ICursorHoveredElement = {
+    const data: ICursorHoveredElement = {
       width: null,
       height: null,
       ...settings,
     };
 
-    const { element } = final;
+    const { element } = data;
 
     let timeout: NodeJS.Timeout | undefined;
 
-    const mouseEnter = addEventListener(element, 'mouseenter', () => {
-      timeout = setTimeout(() => {
-        this.hoveredElement = { ...final };
+    if (element.matches(':hover')) {
+      this._handleElementEnter(data);
+    }
 
-        if (final.type) {
-          this._toggleType(final.type, true);
-        }
-      }, enterTimeout);
+    const mouseEnter = addEventListener(element, 'mouseenter', () => {
+      timeout = setTimeout(() => this._handleElementEnter(data), enterTimeout);
     });
 
     const mouseLeave = addEventListener(element, 'mouseleave', () => {
@@ -402,11 +400,7 @@ export class Cursor<
         clearTimeout(timeout);
       }
 
-      this.hoveredElement = undefined;
-
-      if (final.type) {
-        this._toggleType(final.type, false);
-      }
+      this._handleElementLeave(data);
     });
 
     const remove = () => {
@@ -425,6 +419,32 @@ export class Cursor<
     this.onDestroy(() => remove());
 
     return () => remove();
+  }
+
+  /** Handle element enter */
+  protected _handleElementEnter(data: ICursorHoveredElement) {
+    this.hoveredElement = { ...data };
+
+    if (data.type) {
+      this._toggleType(data.type, true);
+    }
+
+    if (this.props.enabled) {
+      this._raf.play();
+    }
+  }
+
+  /** Handle element leave */
+  protected _handleElementLeave(data: ICursorHoveredElement) {
+    this.hoveredElement = undefined;
+
+    if (data.type) {
+      this._toggleType(data.type, false);
+    }
+
+    if (this.props.enabled) {
+      this._raf.play();
+    }
   }
 
   /**
