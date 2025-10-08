@@ -31,6 +31,7 @@ export class SnapSwipe {
       inertiaDuration: props.swipeInertiaDuration,
       inertiaRatio: props.swipeInertiaRatio,
       velocityModifier: this._handleVelocityModifier.bind(this),
+      inertiaDistanceThreshold: 5,
     });
 
     this._swipe.on('start', (data) => this._handleSwipeStart(data));

@@ -138,6 +138,12 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
    * @default 1
    */
   inertiaRatio?: number;
+
+  /**
+   * Minimum calculated distance to trigger inertia.
+   * @default 50
+   */
+  inertiaDistanceThreshold?: number;
 }
 
 export interface ISwipeCallbacksMap extends IModuleCallbacksMap {

@@ -17,9 +17,7 @@ import { cursorStyles } from './styles';
 
 export * from './types';
 
-// todo: to props
 const VELOCITIES_COUNT = 4;
-const MIN_VELOCITY_THRESHOLD = 50;
 
 /**
  * Manages swipe interactions:
@@ -76,6 +74,7 @@ export class Swipe<
       velocityModifier: false,
       distanceModifier: false,
       inertiaRatio: 1,
+      inertiaDistanceThreshold: 50,
     } as TRequiredProps<MutableProps>;
   }
 
@@ -568,8 +567,13 @@ export class Swipe<
 
   /** Apply inertia-based movement */
   protected _endWithInertia() {
-    const { inertiaDuration, inertiaEasing, velocityModifier, inertiaRatio } =
-      this.props;
+    const {
+      inertiaDuration,
+      inertiaEasing,
+      velocityModifier,
+      inertiaRatio,
+      inertiaDistanceThreshold,
+    } = this.props;
 
     const sourceVelocity = {
       x: this.velocity.x * inertiaRatio,
@@ -585,7 +589,7 @@ export class Swipe<
     const distance = Math.sqrt(velocityX ** 2 + velocityY ** 2);
 
     // Check if we have sufficient velocity
-    if (distance < MIN_VELOCITY_THRESHOLD) {
+    if (distance < inertiaDistanceThreshold) {
       this.callbacks.emit('inertiaFail', undefined);
 
       return;
