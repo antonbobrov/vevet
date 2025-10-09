@@ -98,7 +98,6 @@ export class Snap<
       wheelAxis: 'auto',
       followWheel: true,
       wheelThrottle: 'auto',
-      wheelNoFollowThreshold: 100,
       stickOnWheelEnd: true,
       slideSize: 'auto',
     } as TRequiredProps<MutableProps>;
@@ -293,6 +292,11 @@ export class Snap<
   /** If transition in progress */
   get isTransitioning() {
     return !!this._timeline;
+  }
+
+  /** If swipe in progress */
+  get isSwiping() {
+    return !!this._swipe.isSwiping;
   }
 
   /** Reflow: update static values of slides */

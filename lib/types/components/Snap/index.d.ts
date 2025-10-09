@@ -80,6 +80,8 @@ export declare class Snap<CallbacksMap extends ISnapCallbacksMap = ISnapCallback
     get track(): SnapTrack;
     /** If transition in progress */
     get isTransitioning(): boolean;
+    /** If swipe in progress */
+    get isSwiping(): boolean;
     /** Reflow: update static values of slides */
     protected _reflow(): void;
     /** Handle RAF update, interpolate track values */

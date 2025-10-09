@@ -20,8 +20,6 @@ export declare class SnapTrack {
     get canLoop(): boolean;
     /** Get looped current value */
     get loopedCurrent(): number;
-    /** Get track offset */
-    get offset(): number;
     /** Get loop count */
     get loopCount(): number;
     /** Loop a coordinate if can loop */

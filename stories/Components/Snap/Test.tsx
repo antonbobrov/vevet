@@ -22,12 +22,14 @@ export const Test: FC = () => {
       container: ref.current,
       direction: 'horizontal',
       wheel: true,
+      followWheel: false,
       wheelAxis: 'y',
       centered: false,
       loop: false,
+      duration: 1000,
       gap: 20,
       grabCursor: true,
-      freemode: 'sticky',
+      freemode: true,
     });
 
     setSnap(instance);
@@ -93,11 +95,11 @@ export const Test: FC = () => {
 
       <div ref={ref} className="container">
         {[
-          { color: '#A8E6CF', size: 200 },
-          { color: '#DCEDC1', size: 180 },
-          { color: '#FFD3B6', size: 700 },
-          { color: '#FF8B94', size: 150 },
-          { color: '#f00', size: 600 },
+          { color: '#A8E6CF', size: 400 },
+          { color: '#DCEDC1', size: 800 },
+          { color: '#FFD3B6', size: 400 },
+          { color: '#FF8B94', size: 400 },
+          { color: '#f00', size: 800 },
         ].map(({ color, size }, index) => (
           <div
             key={color}

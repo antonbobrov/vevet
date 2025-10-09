@@ -9,11 +9,15 @@ export declare class SnapWheel {
     protected _debounceEnd?: NodeJS.Timeout;
     /** Absolute deltas */
     protected _deltas: number[];
+    /** Last time wheel event was fired */
+    protected _lastWheelTime: number;
     constructor(_snap: Snap);
     /** Destroy wheel listeners */
     protected _destroy(): void;
     /** Snap component */
     protected get snap(): Snap<import("..").ISnapCallbacksMap, import("..").ISnapStaticProps, import("..").ISnapMutableProps>;
+    /** Get last wheel time */
+    get lastWheelTime(): number;
     /**
      * Handles wheel events
      */
@@ -26,12 +30,14 @@ export declare class SnapWheel {
     protected _handleFollow(delta: number): void;
     /** Handle `followWheel=false` */
     protected _handleNoFollow(delta: number): void;
+    /** Detect if wheel should be throttled */
+    protected _detectNoFollowThrottle(): boolean;
     /** Handle wheel end */
     protected _handleEnd(): void;
     /** Save delta */
     protected _addDelta(delta: number): void;
     /** Detect if touchpad */
-    protected get isTouchPad(): boolean;
+    get isTouchPad(): boolean;
     /** Detects if deltas are stable */
     protected get isStableDelta(): boolean;
     /** Detects if the latest delta is small */

@@ -17,6 +17,9 @@ export class SnapWheel {
   /** Absolute deltas */
   protected _deltas: number[] = [];
 
+  /** Last time wheel event was fired */
+  protected _lastWheelTime = 0;
+
   constructor(protected _snap: Snap) {
     _snap.on('destroy', () => this._destroy(), { protected: true });
 
@@ -37,6 +40,11 @@ export class SnapWheel {
   /** Snap component */
   protected get snap() {
     return this._snap;
+  }
+
+  /** Get last wheel time */
+  get lastWheelTime() {
+    return this._lastWheelTime;
   }
 
   /**
@@ -120,16 +128,14 @@ export class SnapWheel {
     // Save delta
     this._addDelta(delta);
 
-    console.log(this.isTouchPad, this.isGainingDelta, delta);
-
-    // Skip if transition in progress
-    if (this.snap.isTransitioning) {
-      return;
-    }
-
     // vars
     const { snap, isTouchPad, isGainingDelta } = this;
     const { track, activeSlide, domSize } = snap;
+
+    // Detect wheel throttling
+    if (this._detectNoFollowThrottle()) {
+      return;
+    }
 
     // Detect if need to throttle or follow
 
@@ -156,9 +162,6 @@ export class SnapWheel {
     // Throttle
 
     if (isThrottled) {
-      // todo: add time throttling
-      // todo: for touchpad also check how much pixels in deltas (total)
-
       if (!isTouchPad || (isTouchPad && isGainingDelta)) {
         console.log('---- go change', isTouchPad, this.deltaAmp, [
           ...this._deltas,
@@ -168,11 +171,28 @@ export class SnapWheel {
 
         if (shouldFollow) {
           snap.cancelTransition();
+
           track.iterateTarget(direction);
           track.clampTarget();
+
+          if (!isTouchPad) {
+            track.current = track.target;
+          }
         } else if (direction === 1) {
+          if (!snap.props.loop && snap.activeIndex === snap.slides.length - 1) {
+            return;
+          }
+
+          this._lastWheelTime = +new Date();
+
           snap.next();
         } else {
+          if (!snap.props.loop && snap.activeIndex === 0) {
+            return;
+          }
+
+          this._lastWheelTime = +new Date();
+
           snap.prev();
         }
       }
@@ -203,13 +223,46 @@ export class SnapWheel {
     }
   }
 
+  /** Detect if wheel should be throttled */
+  protected _detectNoFollowThrottle() {
+    const { isTouchPad, snap } = this;
+    const { wheelThrottle } = snap.props;
+    const timeDiff = +new Date() - this._lastWheelTime;
+
+    // NUMBER
+
+    if (typeof wheelThrottle === 'number') {
+      return timeDiff < wheelThrottle;
+    }
+
+    // AUTO
+
+    if (isTouchPad) {
+      return this.snap.isTransitioning;
+    }
+
+    const visibleScrollableSlides = snap.scrollableSlides.filter(
+      (slide) => slide.isVisible,
+    );
+
+    if (visibleScrollableSlides.length && snap.isTransitioning) {
+      return true;
+    }
+
+    if (timeDiff < 500) {
+      return true;
+    }
+
+    return false;
+  }
+
   /** Handle wheel end */
   protected _handleEnd() {
     if (!this._hasStarted) {
       return;
     }
 
-    console.log('end --- end 09.10 - 10:37');
+    console.log('end --- end 09.10 - 14:32');
 
     const { snap } = this;
     const { props } = this.snap;
@@ -238,7 +291,7 @@ export class SnapWheel {
   }
 
   /** Detect if touchpad */
-  protected get isTouchPad() {
+  get isTouchPad() {
     return !this.isStableDelta || this.isSmallDelta;
   }
 
