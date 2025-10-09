@@ -162,7 +162,10 @@ export class SnapWheel {
     // Throttle
 
     if (isThrottled) {
-      if (!isTouchPad || (isTouchPad && isGainingDelta)) {
+      if (
+        !isTouchPad ||
+        (isTouchPad && (isGainingDelta || this._deltas.length === 1))
+      ) {
         console.log('---- go change', isTouchPad, this.deltaAmp, [
           ...this._deltas,
         ]);
