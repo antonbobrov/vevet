@@ -37,7 +37,10 @@ export class SnapSwipe {
     this._swipe.on('start', (data) => this._handleSwipeStart(data));
     this._swipe.on('move', (data) => this._handleSwipeMove(data));
     this._swipe.on('end', (data) => this._handleSwipeEnd(data));
+    this._swipe.on('inertiaStart', () => this._handleSwipeInertiaStart());
+    this._swipe.on('inertiaEnd', () => this._handleSwipeInertiaEnd());
     this._swipe.on('inertiaFail', () => this._handleSwipeInertiaFail());
+    this._swipe.on('inertiaCancel', () => this._handleSwipeInertiaCancel());
 
     // on props change
     snap.on(
@@ -199,6 +202,16 @@ export class SnapSwipe {
     this.snap.callbacks.emit('swipeEnd', coords);
   }
 
+  /** Handles swipe inertia start */
+  protected _handleSwipeInertiaStart() {
+    this.snap.callbacks.emit('swipeInertiaStart', undefined);
+  }
+
+  /** Handles swipe inertia end */
+  protected _handleSwipeInertiaEnd() {
+    this.snap.callbacks.emit('swipeInertiaEnd', undefined);
+  }
+
   /** Handles swipe inertia fail */
   protected _handleSwipeInertiaFail() {
     const { snap } = this;
@@ -210,6 +223,13 @@ export class SnapSwipe {
         snap.stick();
       }
     }
+
+    this.snap.callbacks.emit('swipeInertiaFail', undefined);
+  }
+
+  /** Handles swipe inertia cancel */
+  protected _handleSwipeInertiaCancel() {
+    this.snap.callbacks.emit('swipeInertiaCancel', undefined);
   }
 
   /** End swipe action */

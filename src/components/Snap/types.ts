@@ -163,6 +163,18 @@ export interface ISnapCallbacksMap extends IModuleCallbacksMap {
 
   /** Fired on timeline animation end */
   timelineEnd: undefined;
+
+  /** Fired on inertia start */
+  swipeInertiaStart: undefined;
+
+  /** Fired on inertia end */
+  swipeInertiaEnd: undefined;
+
+  /** Fired on inertia cancel */
+  swipeInertiaCancel: undefined;
+
+  /** Fired on inertia fail */
+  swipeInertiaFail: undefined;
 }
 
 export type TSnapDuration = number | ((distance: number) => number);
