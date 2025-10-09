@@ -33,7 +33,7 @@ export interface ISnapWheelProps {
    *
    * @default `auto`
    */
-  wheelThrottle?: number | 'auto';
+  wheelThrottle?: number | 'auto'; // todo
 
   /**
    * Minimum distance in pixels to trigger snap update. Works only if `followWheel` is disabled.

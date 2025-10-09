@@ -27,6 +27,7 @@ export const Test: FC = () => {
       loop: false,
       gap: 20,
       grabCursor: true,
+      freemode: 'sticky',
     });
 
     setSnap(instance);

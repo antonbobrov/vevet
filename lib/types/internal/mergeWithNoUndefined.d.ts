@@ -1,0 +1,2 @@
+export declare function mergeWithNoUndefined<S extends Record<string, any>, A extends Record<string, any>>(source: S, add: A): S & Record<keyof A, A[keyof A]>;
+//# sourceMappingURL=mergeWithNoUndefined.d.ts.map

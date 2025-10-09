@@ -88,6 +88,11 @@ export class SnapTrack {
 
     // Interpolate current value
 
+    const diff = Math.abs(this.current - target);
+    if (diff < 0.1) {
+      factor = 0.75;
+    }
+
     this.current = lerp(this.current, target, factor, 0.000001);
   }
 
