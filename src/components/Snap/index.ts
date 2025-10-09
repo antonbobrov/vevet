@@ -7,6 +7,7 @@ import {
   ISnapNexPrevArg,
   ISnapStaticProps,
   ISnapToSlideArg,
+  ISnapTransitionArg,
 } from './types';
 import { TRequiredProps } from '@/internal/requiredProps';
 import { Raf } from '../Raf';
@@ -513,7 +514,7 @@ export class Snap<
   }
 
   /** Go to a definite coordinate */
-  public toCoord(coordinate: number, durationProp = this.props.duration) {
+  public toCoord(coordinate: number, options?: ISnapTransitionArg) {
     if (this.isEmpty) {
       return false;
     }
@@ -526,20 +527,24 @@ export class Snap<
     const end = coordinate;
     const diff = Math.abs(end - start);
 
+    const durationProp = options?.duration ?? props.duration;
+
     let duration =
       typeof durationProp === 'number' ? durationProp : durationProp(diff);
     if (diff === 0) {
       duration = 0;
     }
 
-    const tm = new Timeline({
-      duration,
-      easing: props.easing,
-    });
+    const easing = options?.easing ?? props.easing;
+
+    const tm = new Timeline({ duration, easing });
 
     this._timeline = tm;
 
-    tm.on('start', () => callbacks.emit('timelineStart', undefined));
+    tm.on('start', () => {
+      callbacks.emit('timelineStart', undefined);
+      options?.onStart?.();
+    });
 
     tm.on('update', (data) => {
       track.current = lerp(start, end, data.eased);
@@ -550,12 +555,17 @@ export class Snap<
       }
 
       this.render();
+
       callbacks.emit('timelineUpdate', data);
+      options?.onUpdate?.(data);
     });
 
     tm.on('end', () => {
       tm.destroy();
+
       callbacks.emit('timelineEnd', undefined);
+      options?.onEnd?.();
+
       this._timeline = undefined;
     });
 
@@ -571,7 +581,7 @@ export class Snap<
   /** Go to a slide by index */
   public toSlide(
     targetIndex: number,
-    { direction = null, duration = this.props.duration }: ISnapToSlideArg = {},
+    { direction = null, ...options }: ISnapToSlideArg = {},
   ) {
     const { isEmpty, activeIndex, slides, track, props } = this;
     const { current, max, loopCount } = track;
@@ -610,7 +620,7 @@ export class Snap<
     // Use static magnet when not looping
 
     if (!props.loop) {
-      return this.toCoord(targetStaticMagnet, duration);
+      return this.toCoord(targetStaticMagnet, options);
     }
 
     // Or calculate closest magnet
@@ -626,40 +636,34 @@ export class Snap<
       );
       const magnet = closest(current, magnets);
 
-      return this.toCoord(magnet, duration);
+      return this.toCoord(magnet, options);
     }
 
     const magnet = closest(current, allMagnets);
 
-    return this.toCoord(magnet, duration);
+    return this.toCoord(magnet, options);
   }
 
   /** Go to next slide */
-  public next({
-    duration = this.props.duration,
-    skip = 1,
-  }: ISnapNexPrevArg = {}) {
+  public next({ skip = 1, ...options }: ISnapNexPrevArg = {}) {
     const { props, slides, activeIndex } = this;
 
     const index = props.loop
       ? loop(activeIndex + skip, 0, slides.length)
       : Math.min(activeIndex + skip, slides.length - 1);
 
-    return this.toSlide(index, { duration, direction: 'next' });
+    return this.toSlide(index, { ...options, direction: 'next' });
   }
 
   /** Go to previous slide */
-  public prev({
-    duration = this.props.duration,
-    skip = 1,
-  }: ISnapNexPrevArg = {}) {
+  public prev({ skip = 1, ...options }: ISnapNexPrevArg = {}) {
     const { props, slides, activeIndex } = this;
 
     const index = props.loop
       ? loop(activeIndex - skip, 0, slides.length)
       : Math.max(activeIndex - skip, 0);
 
-    return this.toSlide(index, { duration, direction: 'prev' });
+    return this.toSlide(index, { ...options, direction: 'prev' });
   }
 
   /**

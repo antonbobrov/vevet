@@ -176,12 +176,19 @@ export interface ISnapMagnet {
   diff: number;
 }
 
-export interface ISnapNexPrevArg {
+export interface ISnapTransitionArg {
   duration?: TSnapDuration;
+  easing?: TEasingType;
+  onStart?: () => void;
+  onUpdate?: (data: ITimelineProgressArg) => void;
+  onEnd?: () => void;
+}
+
+export interface ISnapNexPrevArg extends ISnapTransitionArg {
   skip?: number;
 }
 
-export interface ISnapToSlideArg {
+export interface ISnapToSlideArg extends ISnapTransitionArg {
   direction?: 'next' | 'prev' | null;
   duration?: TSnapDuration;
 }
