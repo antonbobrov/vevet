@@ -1,0 +1,1 @@
+{"version":3,"file":"loop.js","sourceRoot":"","sources":["../../../../src/utils/math/loop.ts"],"names":[],"mappings":";;AAoBA,oBAIC;AAxBD;;;;;;;;;;;;;;;;;;;GAmBG;AACH,SAAgB,IAAI,CAAC,KAAa,EAAE,GAAW,EAAE,GAAW;IAC1D,IAAM,KAAK,GAAG,GAAG,GAAG,GAAG,CAAC;IAExB,OAAO,CAAC,CAAC,CAAC,CAAC,KAAK,GAAG,GAAG,CAAC,GAAG,KAAK,CAAC,GAAG,KAAK,CAAC,GAAG,KAAK,CAAC,GAAG,GAAG,CAAC;AAC3D,CAAC"}

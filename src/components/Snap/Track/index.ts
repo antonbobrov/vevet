@@ -47,6 +47,13 @@ export class SnapTrack {
     return this.loopCoord(this.current);
   }
 
+  /** Get track offset */
+  get offset() {
+    const { snap } = this;
+
+    return snap.props.centered ? snap.domSize / 2 - snap.firstSlideSize / 2 : 0;
+  }
+
   /** Get loop count */
   get loopCount() {
     return Math.floor(this.current / this.max);

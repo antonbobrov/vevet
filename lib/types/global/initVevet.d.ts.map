@@ -1,0 +1,1 @@
+{"version":3,"file":"initVevet.d.ts","sourceRoot":"","sources":["../../../src/global/initVevet.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,KAAK,EAAE,MAAM,eAAe,CAAC;AACtC,OAAO,EAAE,UAAU,EAAE,MAAM,cAAc,CAAC;AAE1C,OAAO,CAAC,MAAM,CAAC;IACb,UAAU,MAAM;QACd,MAAM,EAAE,QAAQ,CAAC,KAAK,CAAC,CAAC;QACxB,WAAW,EAAE,OAAO,CAAC,UAAU,CAAC,CAAC;KAClC;CACF;AAED;;GAEG;AACH,wBAAgB,SAAS,oBAWxB"}
