@@ -47,13 +47,6 @@ export class SnapTrack {
     return this.loopCoord(this.current);
   }
 
-  /** Get track offset */
-  get offset() {
-    const { snap } = this;
-
-    return snap.props.centered ? snap.domSize / 2 - snap.firstSlideSize / 2 : 0;
-  }
-
   /** Get loop count */
   get loopCount() {
     return Math.floor(this.current / this.max);
@@ -87,6 +80,15 @@ export class SnapTrack {
     }
 
     // Interpolate current value
+
+    const rest = Math.abs(this.current - target);
+    const fastThreshold = 5;
+
+    if (rest < fastThreshold) {
+      const fastProgress = 1 - rest / fastThreshold;
+      const additionalFactor = (1 - factor) / 3;
+      factor += additionalFactor * fastProgress;
+    }
 
     this.current = lerp(this.current, target, factor, 0.000001);
   }
