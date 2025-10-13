@@ -295,6 +295,11 @@ export class Snap<
     return !!this._timeline;
   }
 
+  /** If swipe in progress */
+  get isSwiping() {
+    return !!this._swipe.isSwiping;
+  }
+
   /** Reflow: update static values of slides */
   protected _reflow() {
     const { slides, props } = this;
