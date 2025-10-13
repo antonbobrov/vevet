@@ -83,7 +83,7 @@ export interface ISnapMutableProps
    * Friction that makes the slides tend to the nearest slide magnet. The value is a number between 0 and 1
    * which is multiplied by the `lerp` value.
    * 0 disables friction
-   * @default 0.15
+   * @default 0
    */
   friction?: number;
 

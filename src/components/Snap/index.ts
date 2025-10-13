@@ -75,7 +75,7 @@ export class Snap<
       lerp: 0.2,
       freemode: false,
       stickOnResize: true,
-      friction: 0.15,
+      friction: 0,
       edgeFriction: 0.85,
       duration: 500,
       easing: EaseOutCubic,
