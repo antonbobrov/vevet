@@ -250,6 +250,14 @@ export class SnapSwipe {
         snap.stick();
       }
 
+      // End short swipe
+      if (this.isShort && props.freemode === 'sticky') {
+        this._swipe.updateProps({ inertia: false });
+        swipe.cancelInertia();
+
+        this._endShort();
+      }
+
       return;
     }
 
