@@ -56,6 +56,8 @@ export function toPixels(value: string | number) {
     finalValue = num * app.vh;
   } else if (value.includes('svh')) {
     finalValue = num * app.svh;
+  } else if (value.includes('px')) {
+    finalValue = num;
   }
 
   window.vevet5_toPixelsCache.set(value, finalValue);
