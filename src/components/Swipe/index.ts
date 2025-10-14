@@ -29,7 +29,7 @@ const VELOCITIES_COUNT = 4;
  * - Does not transform elements, only computes coordinates.
  * - Does not persist state after swipe completion.
  *
- * [Documentation](https://antonbobrov.github.io/vevet/docs/components/Swipe)
+ * [Documentation](https://vevetjs.com/docs/Swipe)
  *
  * @group Components
  */

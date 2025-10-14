@@ -14,7 +14,7 @@ export * from './types';
  * The `CanvasMedia` class allows pre-rendering of media (such as images or video) onto a canvas.
  * This can be useful for reducing payloads by preparing the media for further use in a more optimized form.
  *
- * [Documentation](https://antonbobrov.github.io/vevet/docs/components/CanvasMedia)
+ * [Documentation](https://vevetjs.com/docs/CanvasMedia)
  *
  * @group Components
  */

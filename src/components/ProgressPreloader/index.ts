@@ -22,7 +22,7 @@ const PAGE_RESOURCE = `vevet-page-${Math.random()}`;
  * Page preloader for calculating and displaying the loading progress of resources (images, videos, custom elements).
  * Provides smooth progress transitions.
  *
- * [Documentation](https://antonbobrov.github.io/vevet/docs/components/ProgressPreloader)
+ * [Documentation](https://vevetjs.com/docs/ProgressPreloader)
  *
  * @group Components
  */

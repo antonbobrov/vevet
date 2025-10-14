@@ -1,0 +1,188 @@
+---
+sidebar_position: 1100
+toc_min_heading_level: 2
+toc_max_heading_level: 6
+---
+
+# ProgressPreloader
+
+Page preloader for calculating and displaying the loading progress of resources (images, videos, custom elements). Provides smooth progress transitions.
+
+## Example
+
+Explore a live example on CodePen:
+
+<iframe 
+  height="600"
+  style={{
+    width: '100%'
+  }} 
+  scrolling="no" 
+  title="Vevet Example"
+  src="https://codepen.io/anton-bobrov/embed/VYYZdQG?default-tab=result"
+  frameborder="no"
+  loading="lazy"
+  allowtransparency="true"
+  allowfullscreen="true"
+>
+  See the Pen <a href="https://codepen.io/anton-bobrov/pen/VYYZdQG">Vevet Example</a> by Anton Bobrov.
+</iframe>
+
+
+
+## Props
+
+:::note
+All **[Preloader's props](/docs/Preloader/#props)** are available in this class.
+:::
+
+### Static Props
+
+Static properties are set during initialization and cannot be modified later.
+
+#### `preloadImages` {#props.preloadImages}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Enables automatic preloading of images.
+
+#### `preloadVideos` {#props.preloadVideos}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Enables automatic preloading of videos.
+
+#### `customSelector` {#props.customSelector}
+- **Type:** `string`  
+- **Default:** `'.js-preload'`  
+- Selector for custom resources to preload.  
+- Elements should have `data-weight` and `data-loaded` attributes.  
+- Example: `data-weight="10"` indicates weight; `data-loaded="10"` means fully loaded.
+
+#### `ignoreClassName` {#props.ignoreClassName}
+- **Type:** `string`  
+- **Default:** `'js-preload-ignore'`  
+- Class name for elements to exclude from preloading.
+
+#### `lerp` {#props.lerp}
+- **Type:** `number`  
+- **Default:** `0.1`  
+- Linear interpolation factor for smooth progress updates.  
+- `1` disables interpolation for instant updates.
+
+#### `endDuration` {#props.endDuration}
+- **Type:** `number`  
+- **Default:** `500`  
+- Duration in milliseconds to complete the preloader if resources are loaded but progress is below 1.
+
+
+
+## Accessors
+
+:::note
+All **[Preloader's accessors](/docs/Preloader/#accessors)** are available in this class.
+:::
+
+### loadedWeight
+
+Type: `number`
+
+Loaded weight.
+
+### loadProgress
+
+Type: `number`
+
+Current loading progress (0 to 1).
+
+### progress
+
+Type: `number`
+
+Gets the current interpolated progress value (0 to 1).
+
+### resources
+
+Type: `IProgressPreloaderResource[]`
+
+The list of custom resources to preload.
+
+#### IPointersItem Structure
+
+```ts
+interface IProgressPreloaderResource {
+  id: string | Element;
+  loaded: number;
+  weight: number;
+}
+```
+
+- `id`: The custom resource identifier.
+- `weight`: A resource may be split into multiple parts. This is the resource weight
+- `loaded`: Loaded weight
+
+### totalWeight
+
+Type: `number`
+
+Calculates the total number of resources to preload, including their weight.
+
+
+
+## Methods
+
+:::note
+All **[Preloader's methods](/docs/Preloader/#methods)** are available in this class.
+:::
+
+### addResource
+
+Adds a custom resource.
+
+```ts
+// preload a custom html element with its weight `100`
+// the element itself may have the attributes: `data-weight` and `data-loaded`
+instance.addResource(document.getElementById('preload-me'), 100);
+
+// add a custom resource without an element
+instance.addResource('my-resource', 20);
+```
+
+### resolveResource
+
+Emits a resource load event and updates the count of loaded resources.
+
+```ts
+// the resource's loaded weight is 19
+instance.resolveResource('my-resource', 20);
+```
+
+
+
+## Callbacks
+
+:::note
+All **[Preloader's callbacks](/docs/Preloader/#callbacks)** are available in this class.
+:::
+
+### progress
+
+Fired when the preloader's progress updates.
+
+```ts
+const destruct = instance.on('progress', () => console.log('progress update'));
+
+// Cancel the callback
+destruct();
+```
+
+### resource
+
+Fired each time a resource is loaded during preloading.
+
+```ts
+const destruct = instance.on('resource', ({ id, weight, loaded }) => {
+  console.log(id, `loaded ${loaded} / ${weight}`);
+});
+
+// Cancel the callback
+destruct();
+```

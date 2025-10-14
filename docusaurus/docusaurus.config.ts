@@ -3,8 +3,8 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'vevet',
-  tagline: 'a flexible client-side JavaScript library for creative web development',
+  title: 'vevet.js',
+  tagline: 'a flexible JavaScript library for creative web development',
   favicon: 'img/favicon.ico',
   url: 'https://vevetjs.com/',
   baseUrl: '/',

@@ -45,7 +45,7 @@ export * from './Slide';
  *
  * Please not that the class does not apply any styles to the slides, it only handles the logic.
  *
- * [Documentation](https://antonbobrov.github.io/vevet/docs/components/Snap)
+ * [Documentation](https://vevetjs.com/docs/Snap)
  *
  * @group Components
  */

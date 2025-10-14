@@ -20,7 +20,7 @@ export * from './types';
  * A customizable custom cursor component with smooth animations and hover interactions.
  * Supports dynamic appearance changes and enhanced user interaction.
  *
- * [Documentation](https://antonbobrov.github.io/vevet/docs/components/Cursor)
+ * [Documentation](https://vevetjs.com/docs/Cursor)
  *
  * @group Components
  */

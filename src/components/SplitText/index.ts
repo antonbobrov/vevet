@@ -27,7 +27,7 @@ export * from './types';
  *
  * **Note**: Apply `fontKerning: none` to prevent layout shifts.
  *
- * [Documentation](https://antonbobrov.github.io/vevet/docs/components/SplitText)
+ * [Documentation](https://vevetjs.com/docs/SplitText)
  *
  * @group Components
  */

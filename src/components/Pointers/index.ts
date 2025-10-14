@@ -19,7 +19,7 @@ export * from './types';
  * For proper functionality, ensure the container has an appropriate
  * [touch-action](https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action) property.
  *
- * [Documentation](https://antonbobrov.github.io/vevet/docs/components/Pointers)
+ * [Documentation](https://vevetjs.com/docs/Pointers)
  *
  * @group Components
  */

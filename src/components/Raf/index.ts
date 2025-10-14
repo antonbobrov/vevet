@@ -7,7 +7,7 @@ export * from './types';
 /**
  * Manages an animation frame loop with configurable FPS and playback controls.
  *
- * [Documentation](https://antonbobrov.github.io/vevet/docs/components/Raf)
+ * [Documentation](https://vevetjs.com/docs/Raf)
  *
  * @group Components
  */

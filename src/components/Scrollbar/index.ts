@@ -15,7 +15,7 @@ export * from './types';
 /**
  * A custom scrollbar component. Supports both `window` and `HTMLElement` containers.
  *
- * [Documentation](https://antonbobrov.github.io/vevet/docs/components/Scrollbar)
+ * [Documentation](https://vevetjs.com/docs/Scrollbar)
  *
  * @group Components
  */

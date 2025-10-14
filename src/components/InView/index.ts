@@ -15,7 +15,7 @@ export * from './types';
  * InView is a visibility detection utility that leverages the `IntersectionObserver` API to monitor when elements enter or leave the viewport.
  * It provides customizable options for triggering events, delaying visibility changes, and dynamically adding CSS classes to elements based on their visibility state.
  *
- * [Documentation](https://antonbobrov.github.io/vevet/docs/components/InView)
+ * [Documentation](https://vevetjs.com/docs/InView)
  *
  * @group Components
  */

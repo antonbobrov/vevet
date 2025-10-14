@@ -14,7 +14,7 @@ export * from './types';
 /**
  * A class for managing an HTML5 Canvas element and its 2D context.
  *
- * [Documentation](https://antonbobrov.github.io/vevet/docs/components/Canvas)
+ * [Documentation](https://vevetjs.com/docs/Canvas)
  *
  * @group Components
  */

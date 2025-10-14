@@ -14,7 +14,7 @@ export * from './types';
  * A timeline class for managing animations with easing and precise progress control.
  * It provides methods for playing, reversing, pausing, and resetting the timeline.
  *
- * [Documentation](https://antonbobrov.github.io/vevet/docs/components/Timeline)
+ * [Documentation](https://vevetjs.com/docs/Timeline)
  *
  * @group Components
  */

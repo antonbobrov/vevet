@@ -1,0 +1,331 @@
+---
+sidebar_position: 600
+toc_min_heading_level: 2
+toc_max_heading_level: 6
+---
+
+# Scrollbar
+
+A custom scrollbar component. Supports both `window` and `HTMLElement` containers.
+
+:::note
+To prevent layout shifts, hide native scrollbars in your CSS:
+
+```css
+
+.your_container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+    appearance: none;
+    width: 0;
+    height: 0;
+  }
+}
+```
+:::
+
+## Examples
+
+Explore live examples on CodePen:
+
+### Body Scrollbar
+
+<iframe 
+  height="400"
+  style={{
+    width: '100%'
+  }} 
+  scrolling="no" 
+  title="Vevet Example"
+  src="https://codepen.io/anton-bobrov/embed/XJJrYYa?default-tab=result"
+  frameborder="no"
+  loading="lazy"
+  allowtransparency="true"
+  allowfullscreen="true"
+>
+  See the Pen <a href="https://codepen.io/anton-bobrov/pen/XJJrYYa">Vevet Example</a> by Anton Bobrov.
+</iframe>
+
+### Inner Scrollbar
+
+<iframe 
+  height="400"
+  style={{
+    width: '100%'
+  }} 
+  scrolling="no" 
+  title="Vevet Example"
+  src="https://codepen.io/anton-bobrov/embed/emmOKjW?default-tab=result"
+  frameborder="no"
+  loading="lazy"
+  allowtransparency="true"
+  allowfullscreen="true"
+>
+  See the Pen <a href="https://codepen.io/anton-bobrov/pen/emmOKjW">Vevet Example</a> by Anton Bobrov.
+</iframe>
+
+### Horizontal Scrollbar
+
+<iframe 
+  height="400"
+  style={{
+    width: '100%'
+  }} 
+  scrolling="no" 
+  title="Vevet Example"
+  src="https://codepen.io/anton-bobrov/embed/wBBwXEv?default-tab=result"
+  frameborder="no"
+  loading="lazy"
+  allowtransparency="true"
+  allowfullscreen="true"
+>
+  See the Pen <a href="https://codepen.io/anton-bobrov/pen/wBBwXEv">Vevet Example</a> by Anton Bobrov.
+</iframe>
+
+
+
+## Props
+
+### Static Props
+
+Static properties are set during initialization and cannot be modified later.
+
+#### `container` {#props.container}
+- **Type:** `Window | HTMLElement`  
+- **Default:** `window`  
+- The element to which the scrollbar is applied. Can be either the entire `window` or a specific HTML element.
+
+#### `parent` {#props.parent}
+- **Type:** `false | HTMLElement`  
+- **Default:** `false`  
+- The parent element where the scrollbar should be appended.  
+- If set to `false`, the scrollbar is appended directly to the `container`.  
+- Use `parent` for correct behavior when the scrollbar is applied to an HTML element.
+
+#### `class` {#props.class}
+- **Type:** `string | false`  
+- **Default:** `false`  
+- Custom CSS class applied to the scrollbar track.  
+- If `false`, no extra class is applied.
+
+#### `axis` {#props.axis}
+- **Type:** `'x' | 'y'`  
+- **Default:** `'y'`  
+- Defines the scrolling axis:  
+  - `'x'` for horizontal scrolling  
+  - `'y'` for vertical scrolling
+
+#### `draggable` {#props.draggable}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Determines whether the scrollbar thumb is draggable.
+
+#### `autoHide` {#props.autoHide}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Automatically hides the scrollbar when inactive.
+
+#### `resizeDebounce` {#props.resizeDebounce}
+- **Type:** `number`  
+- **Default:** `0`  
+- Debounce delay in milliseconds for resize event handling.  
+- Helps improve performance by limiting frequency of resize calculations.
+
+### Mutable Props
+
+Mutable properties can be updated at runtime using `.updateProps()`.
+
+#### `minSize` {#props.minSize}
+- **Type:** `number | string`  
+- **Default:** `50`  
+- Minimum size of the scrollbar thumb.  
+- Can be specified as a number (pixels) or as a CSS unit string (`px`, `rem`, `vw`, `vh`, `svh`).
+
+#### `autoSize` {#props.autoSize}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Enables automatic adjustment of the scrollbar thumb size based on the content and container.
+
+
+
+## Accessors
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### axis
+
+Type: `"x" | "y"`
+
+Scrolling direction
+
+### container
+
+Type: `Window | HTMLElement`
+
+The element to which the scrollbar is applied.
+
+### outer
+
+Type: `HTMLElement`
+
+Scrollbar outer element
+
+### parent
+
+Type: `HTMLElement`
+
+The element where the scrollbar is appended. If `parent` is not set, it defaults to `container` or `document.body` (if applied to `window`).
+
+### scrollableSize
+
+Type: `number`
+
+Returns the total scrollable distance.
+
+### scrollElement
+
+Type: `HTMLElement`
+
+The actual scrollable element. Returns `document.documentElement` for `window`, otherwise the `container` itself.
+
+### scrollSize
+
+Type: `number`
+
+Returns the total scroll width/height of the content.
+
+### scrollValue
+
+Type: `number`
+
+Returns scrollTop or scrollLeft of the scrollable element.
+
+### thumb
+
+Type: `HTMLElement`
+
+Scrollbar thumb element (draggable handle).
+
+### thumbSize
+
+Type: `number`
+
+Returns the current thumb size.
+
+### track
+
+Type: `HTMLElement`
+
+Scrollbar track element (the container of the thumb).
+
+### trackSize
+
+Type: `number`
+
+Returns the current track size.
+
+
+
+## Methods
+
+:::note
+All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+:::
+
+### resize
+
+Force-resize the scrollbar.
+
+```ts
+instance.resize();
+```
+
+
+
+## Callbacks
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### update
+
+Triggered when the scrollbar updates its position.
+
+```ts
+const destruct = instance.on('update', () => console.log('update'));
+
+// Cancel the callback
+destruct();
+```
+
+### resize
+
+Triggered when the scrollbar resizes.
+
+```ts
+const destruct = instance.on('resize', () => console.log('resize'));
+
+// Cancel the callback
+destruct();
+```
+
+### show
+
+Triggered when the scrollbar is shown
+
+```ts
+const destruct = instance.on('show', () => console.log('show'));
+
+// Cancel the callback
+destruct();
+```
+
+### hide
+
+Triggered when the scrollbar is hidden
+
+```ts
+const destruct = instance.on('hide', () => console.log('hide'));
+
+// Cancel the callback
+destruct();
+```
+
+### swipeStart
+
+Triggered on swipe start
+
+```ts
+const destruct = instance.on('swipeStart', (coords) => console.log(coords));
+
+// Cancel the callback
+destruct();
+```
+
+### swipe
+
+Triggered on swipe move
+
+```ts
+const destruct = instance.on('swipe', (coords) => console.log(coords));
+
+// Cancel the callback
+destruct();
+```
+
+### swipeEnd
+
+Triggered on swipe end
+
+```ts
+const destruct = instance.on('swipeEnd', (coords) => console.log(coords));
+
+// Cancel the callback
+destruct();
+```

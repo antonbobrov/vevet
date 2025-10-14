@@ -14,7 +14,7 @@ export * from './types';
  * Page preloader component that manages the visibility and lifecycle of a loading screen.
  * The module does not provide styling for the container.
  *
- * [Documentation](https://antonbobrov.github.io/vevet/docs/components/Preloader)
+ * [Documentation](https://vevetjs.com/docs/Preloader)
  *
  * @group Components
  */

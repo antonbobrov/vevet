@@ -19,7 +19,7 @@ export * from './types';
  * This component is designed to loop elements horizontally within a container,
  * with support for customization such as speed, gap, pause on hover, and more.
  *
- * [Documentation](https://antonbobrov.github.io/vevet/docs/components/Marquee)
+ * [Documentation](https://vevetjs.com/docs/Marquee)
  *
  * @group Components
  */

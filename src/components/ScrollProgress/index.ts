@@ -16,7 +16,7 @@ export * from './types';
  *
  * This component can be used for creating scroll-based animations such as parallax effects.
  *
- * [Documentation](https://antonbobrov.github.io/vevet/docs/components/ScrollProgress)
+ * [Documentation](https://vevetjs.com/docs/ScrollProgress)
  *
  * @group Components
  */

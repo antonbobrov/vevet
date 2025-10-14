@@ -1,0 +1,177 @@
+---
+sidebar_position: 1300
+toc_min_heading_level: 2
+toc_max_heading_level: 6
+---
+
+# Timeline
+
+A simple timeline class for managing animations with easing and precise progress control. 
+
+It provides methods for playing, reversing, pausing, and resetting the timeline.
+
+## Example
+
+Explore a live example on CodePen:
+
+<iframe 
+  height="600"
+  style={{
+    width: '100%'
+  }} 
+  scrolling="no" 
+  title="Vevet Example"
+  src="https://codepen.io/anton-bobrov/embed/jEENKjV?default-tab=result"
+  frameborder="no"
+  loading="lazy"
+  allowtransparency="true"
+  allowfullscreen="true"
+>
+  See the Pen <a href="https://codepen.io/anton-bobrov/pen/jEENKjV">Vevet Example</a> by Anton Bobrov.
+</iframe>
+
+
+
+## Props
+
+### Mutable Props
+
+Mutable properties can be updated at runtime using `.updateProps()`.
+
+#### `duration` {#props.duration}
+- **Type:** `number`  
+- **Default:** `1000`  
+- Timeline duration in milliseconds.
+
+#### `easing` {#props.easing}
+- **Type:** `TEasingType`  
+- **Default:** `false`  
+- Easing function for timeline progression. Accepts standard easing types or an array of bezier values.  
+- See [easing types](/docs/utils#easing-types) for more information.
+
+
+
+## Accessors
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### duration
+
+Type: `number`
+
+Get the timeline duration, ensuring it is at least 0 ms.
+
+### eased
+
+Type: `number`
+
+Get the eased progress of the timeline, derived from the easing function.
+
+### isPaused
+
+Type: `boolean`
+
+Whether the timeline is paused.
+
+### isPlaying
+
+Type: `boolean`
+
+Whether the timeline is currently playing.
+
+### isReversed
+
+Type: `boolean`
+
+Whether the timeline is reversed (progress decreases over time).
+
+### progress
+
+Type: `number`
+
+Get or set the linear progress of the timeline. Setting this triggers an update and associated callbacks.
+
+
+
+## Methods
+
+:::note
+All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+:::
+
+### pause
+
+Pause the timeline, halting progress without resetting it.
+
+```ts
+instance.pause();
+```
+
+### play
+
+Play the timeline, advancing progress toward completion. Does nothing if the timeline is destroyed or already completed.
+
+```ts
+instance.play();
+```
+
+### reset
+
+Reset the timeline to the beginning (progress = 0).
+
+```ts
+instance.reset();
+```
+
+### reverse
+
+Reverse the timeline, moving progress toward the start. Does nothing if the timeline is destroyed or already at the start.
+
+```ts
+instance.reverse();
+```
+
+
+
+## Callbacks
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### start
+
+Triggered when the timeline starts.
+
+```ts
+const destruct = instance.on('start', () => console.log('start'));
+
+// Cancel the callback
+destruct();
+```
+
+### update
+
+Triggered during timeline updates with progress values.
+
+```ts
+const destruct = instance.on('update', ({ progress, eased }) => {
+  console.log('update', progress, eased);
+});
+
+// Cancel the callback
+destruct();
+```
+
+### end
+
+Triggered when the timeline completes.
+
+```ts
+const destruct = instance.on('end', () => console.log('end'));
+
+// Cancel the callback
+destruct();
+```
