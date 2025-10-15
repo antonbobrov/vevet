@@ -1,5 +1,50 @@
 # Changelog
 
+# [5.1.0](https://github.com/antonbobrov/vevet/compare/v5.0.11...v5.1.0) (2025-10-15)
+
+
+### Cursor
+
+* fix animation start on `enter` & `leave` ([8427330](https://github.com/antonbobrov/vevet/commit/8427330c681607a11af6bdced2447ad41ab97ed0))
+
+### inRange
+
+* fix docs ([c1c4b00](https://github.com/antonbobrov/vevet/commit/c1c4b00c6583ba15f08356e254d583dda4d522e5))
+
+### Module
+
+* skip undefined when merging props ([c27d1d0](https://github.com/antonbobrov/vevet/commit/c27d1d003cbdf3d0b7d1a5a85758e7898d1b2409))
+
+### onResize
+
+* use width viewport target by default ([66f72fb](https://github.com/antonbobrov/vevet/commit/66f72fb95fd33211fcab5adde16565d7455f49fd))
+
+### Pointers
+
+* fix `diff` calculation ([2ff30de](https://github.com/antonbobrov/vevet/commit/2ff30dea7ad4d80bcded9e5cb2ad3c6130dead39))
+
+### Snap
+
+* `friction` default value is `0` ([1344ee7](https://github.com/antonbobrov/vevet/commit/1344ee72425fd696df35c3c1e57ddda2a53eafbd))
+* add `freemode: sticky` ([eef91d8](https://github.com/antonbobrov/vevet/commit/eef91d88e465d26057dbf5e7098332b6ed187813))
+* add `getNearestMagnet` method ([9503c8e](https://github.com/antonbobrov/vevet/commit/9503c8ef8bb4a2c04367ccd9a4102a4af4dae465))
+* add `isSwiping` state ([801894c](https://github.com/antonbobrov/vevet/commit/801894cfe551abda1901542b78848f6213430497))
+* add `swipeInertiaStart`, `swipeInertiaEnd`, `swipeInertiaCancel` & `swipeInertiaFail` callbacks ([13081d9](https://github.com/antonbobrov/vevet/commit/13081d967f9e61db752375886c261889534821ea))
+* better interpolation of track values ([1abde41](https://github.com/antonbobrov/vevet/commit/1abde417427ffb197d24a1a83410b2a207d5d37f))
+* better wheel logic; remove `wheelNoFollowThreshold` & add `stickOnWheelEndThreshold` ([e38dc2d](https://github.com/antonbobrov/vevet/commit/e38dc2d453cb8807cc900b7bbceb3fe19b2bae40))
+* end short swipe without inertia when freemode is sticky ([89ec054](https://github.com/antonbobrov/vevet/commit/89ec054198efed451669bfae2862167e0b7dfc5a))
+* reveal `render` method ([1034c7e](https://github.com/antonbobrov/vevet/commit/1034c7e85e18b57df9a386944bff54ad14dcae35))
+* update transition props, add `easing`, `onStart`, `onUpdate`, `onEnd` ([f28d5c4](https://github.com/antonbobrov/vevet/commit/f28d5c474b792f4bd3635f83ac039f99dc875bbc))
+
+### Swipe
+
+* add `inertiaDistanceThreshold` ([ac00113](https://github.com/antonbobrov/vevet/commit/ac001138ffea16d234b22892859e4306ad3b7b91))
+* add `inertiaFail` & `inertiaCancel` callbacks ([1fae9b6](https://github.com/antonbobrov/vevet/commit/1fae9b6870454c8677d2f5cbf656ecbd1bb1a71a))
+
+### toPixels
+
+* fix `px` value ([036fcf8](https://github.com/antonbobrov/vevet/commit/036fcf877824309a1dcae99477a5a68c8fa23ddb))
+
 ## [5.0.11](https://github.com/antonbobrov/vevet/compare/v5.0.10...v5.0.11) (2025-07-15)
 
 
