@@ -13,16 +13,15 @@ Features:
 - Handles multi-line breaks and non-breaking spaces.
 - Saves initial nodes for easy restoration.
 - Allows splitting into lines, words, or letters as needed.
+- Much faster than GSAP or SplitType.
 
 :::note
 Apply `fontKerning: none` to prevent layout shifts.
 :::
 
-## Example
+## Demo
 
-Explore live examples on CodePen:
-
-### With Letters
+Explore a basic demo on CodePen:
 
 <iframe 
   height="500"
@@ -30,51 +29,30 @@ Explore live examples on CodePen:
     width: '100%'
   }} 
   scrolling="no" 
-  title="Vevet Example"
+  title="Vevet Demo"
   src="https://codepen.io/anton-bobrov/embed/gbbYKQN?default-tab=result"
   frameborder="no"
   loading="lazy"
   allowtransparency="true"
   allowfullscreen="true"
 >
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/gbbYKQN">Vevet Example</a> by Anton Bobrov.
+  See the Pen <a href="https://codepen.io/anton-bobrov/pen/gbbYKQN">Vevet Demo</a> by Anton Bobrov.
 </iframe>
 
-### With HTML
+## More demos
 
-<iframe 
-  height="550"
-  style={{
-    width: '100%'
-  }} 
-  scrolling="no" 
-  title="Vevet Example"
-  src="https://codepen.io/anton-bobrov/embed/ZYYzRwy?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/ZYYzRwy">Vevet Example</a> by Anton Bobrov.
-</iframe>
+To explore more demos, click [here](./demos).
 
-### With Lines Mask
 
-<iframe 
-  height="600"
-  style={{
-    width: '100%'
-  }} 
-  scrolling="no" 
-  title="Vevet Example"
-  src="https://codepen.io/anton-bobrov/embed/vEEBrPP?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/vEEBrPP">Vevet Example</a> by Anton Bobrov.
-</iframe>
+
+## Performance
+
+SplitText is a fast alternative to `GSAP SplitText` or `split-type`.
+
+See perfomance comparison of:
+  - [words splitting](https://measurethat.net/Benchmarks/Show/31805/3/vevetsplittext-vs-splittype-vs-gsapsplittext-split-into#latest_results_block)
+  - [words+letter splitting](https://measurethat.net/Benchmarks/Show/31806/2/vevetsplittext-vs-splittype-vs-gsapsplittext-split-into#latest_results_block)
+  - [lines+words+letters splitting](https://measurethat.net/Benchmarks/Show/31847/2/vevetsplittext-vs-splittype-vs-gsapsplittext-split-into#latest_results_block)
 
 
 
