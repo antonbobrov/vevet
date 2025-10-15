@@ -245,15 +245,15 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 - **Default:** `auto`  
 - Throttle wheel events, value in milliseconds. Works only if `followWheel` is disabled.
 
-#### `wheelNoFollowThreshold` {#props.wheelNoFollowThreshold}
-- **Type:** `number`
-- **Default:** `100`  
-- Minimum distance in pixels to trigger snap update. Works only if `followWheel` is disabled.
-
 #### `stickOnWheelEnd` {#props.stickOnWheelEnd}
 - **Type:** `boolean`  
 - **Default:** `true`  
 - Enable snapping on wheel stop. Works with `followWheel` enabled.
+
+#### `stickOnWheelEndThreshold` {#props.stickOnWheelEndThreshold}
+- **Type:** `number`  
+- **Default:** `30`  
+- Snapping threshold for `stickOnWheelEnd`.
 
 
 

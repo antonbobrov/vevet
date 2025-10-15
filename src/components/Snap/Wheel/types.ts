@@ -28,7 +28,7 @@ export interface ISnapWheelProps {
    * Throttle wheel events, value in milliseconds.
    * Works only if `followWheel` is disabled.
    *
-   * - `auto` - value based on transition duration
+   * - `auto` - automatic detection when `wheel` is enabled
    * - `number - value in milliseconds
    *
    * @default `auto`
@@ -36,14 +36,14 @@ export interface ISnapWheelProps {
   wheelThrottle?: number | 'auto';
 
   /**
-   * Minimum distance in pixels to trigger snap update. Works only if `followWheel` is disabled.
-   * @default 100
-   */
-  wheelNoFollowThreshold?: number;
-
-  /**
    * Enable snapping on wheel stop. Works with `followWheel` enabled.
    * @default true
    */
   stickOnWheelEnd?: boolean;
+
+  /**
+   * Snapping threshold for `stickOnWheelEnd`
+   * @default 30
+   */
+  stickOnWheelEndThreshold?: number;
 }

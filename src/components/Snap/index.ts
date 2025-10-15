@@ -98,8 +98,8 @@ export class Snap<
       wheelAxis: 'auto',
       followWheel: true,
       wheelThrottle: 'auto',
-      wheelNoFollowThreshold: 100,
       stickOnWheelEnd: true,
+      stickOnWheelEndThreshold: 30,
       slideSize: 'auto',
     } as TRequiredProps<MutableProps>;
   }
@@ -494,11 +494,11 @@ export class Snap<
       return undefined;
     }
 
-    const magnet = magnets.reduce((p, c) =>
+    const closestMagnet = magnets.reduce((p, c) =>
       Math.abs(c.magnet - coord) < Math.abs(p.magnet - coord) ? c : p,
     );
 
-    return { ...magnet, diff: magnet.magnet - coord };
+    return { ...closestMagnet, diff: closestMagnet.magnet - coord };
   }
 
   /** Cancel sticky behavior */
