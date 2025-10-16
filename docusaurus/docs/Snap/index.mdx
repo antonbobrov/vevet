@@ -21,9 +21,9 @@ Manages carousel-like behavior. Supports
 - Snap does not apply any styles to the container or slides, it only provides logic, which allows you building custom carousels.
 :::
 
-## Example
+## Demo
 
-Explore a basic example on CodePen:
+Explore a basic demo on CodePen:
 
 <iframe 
   height="500"
@@ -31,15 +31,19 @@ Explore a basic example on CodePen:
     width: '100%'
   }} 
   scrolling="no" 
-  title="Vevet Example"
+  title="Vevet Demo"
   src="https://codepen.io/anton-bobrov/embed/RNNjdxK?default-tab=result"
   frameborder="no"
   loading="lazy"
   allowtransparency="true"
   allowfullscreen="true"
 >
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/RNNjdxK">Vevet Example</a> by Anton Bobrov.
+  See the Pen <a href="https://codepen.io/anton-bobrov/pen/RNNjdxK">Vevet Demo</a> by Anton Bobrov.
 </iframe>
+
+## More demos
+
+To explore more demos, click [here](./simple-demos).
 
 
 
@@ -77,36 +81,37 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 - **Type:** `'horizontal' | 'vertical'`  
 - **Default:** `'horizontal'`  
 - Sliding direction.  
-  **See [example](basic-examples#vertical)**
+  **See [demo](simple-demos#vertical)**
 
 #### `centered` {#props.centered}
 - **Type:** `boolean`  
 - **Default:** `false`  
 - Centered slides.  
-  **See [example](basic-examples#centered)**
+  **See [demo](simple-demos#centered)**
 
 #### `loop` {#props.loop}
 - **Type:** `boolean`  
 - **Default:** `false`  
 - Detects if need to loop the slides.  
-  **See [example](basic-examples#loop)**
+  **See [demo](simple-demos#loop)**
 
 #### `gap` {#props.gap}
 - **Type:** `number | string`  
 - **Default:** `0`  
-- The gap between slides. Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.
+- The gap between slides. Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.  
+  **See [demo](simple-demos#gap)**
 
 #### `lerp` {#props.lerp}
 - **Type:** `number`  
 - **Default:** `0.2`  
 - Linear interpolation factor for smooth animation.  
-  **See [example](basic-examples#smooth)**
+  **See [demo](simple-demos#hypersmooth)**
 
 #### `freemode` {#props.freemode}
 - **Type:** `boolean | 'sticky'`
 - **Default:** `false`  
-- Enables freemode, with or without sticky magnets.
-  **See [example](basic-examples#freemode)**
+- Enables freemode, with or without sticky magnets.  
+  **See [demo](simple-demos#freemode)**
 
 #### `stickOnResize` {#props.stickOnResize}
 - **Type:** `boolean`  
@@ -117,25 +122,26 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 - **Type:** `number`  
 - **Default:** `0`  
 - Friction that makes the slides tend to the nearest slide magnet. The value is a number between `0 and 1` which is multiplied by the `lerp` value. `0` disables friction.  
-  **See [example](basic-examples#friction)**
+  **See [demo](simple-demos#friction)**
 
 #### `edgeFriction` {#props.edgeFriction}
 - **Type:** `number`  
 - **Default:** `0.85`  
-- Maximum friction between the final slide and the maximum translation value. From `0 to 1`. The higher value the more resistance is applied.
+- Maximum friction between the final slide and the maximum translation value. From `0 to 1`. The higher value the more resistance is applied.  
+  **See [demo](simple-demos#edge-friction)**
 
 #### `duration` {#props.duration}
 - **Type:** `number | ((distance: number) => number)`  
 - **Default:** `500`  
 - Slide animation duration.  
-  **See [example](basic-examples#smooth)**
+  **See [demo](simple-demos#hypersmooth)**
 
 #### `easing` {#props.easing}
 - **Type:** `TEasingType`  
 - **Default:** `EaseOutCubic`  
 - Easing type for smoother animation. Accepts standard easing types or an array of bezier values.  
   See [easing types](/docs/utils#easing-types) for more information  
-  **See [example](basic-examples#bounce)**
+  **See [demo](simple-demos#easing)**
 
 #### `slideSize` {#props.slideSize}
 - **Type:** `'auto' | 'stretch' | number | string`  
@@ -155,13 +161,14 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 #### `grabCursor` {#props.grabCursor}
 - **Type:** `boolean`  
 - **Default:** `false`  
-- User will see the "grab" cursor when hovering and "grabbing" when swiping.
+- User will see the "grab" cursor when hovering and "grabbing" when swiping.  
+  **See [demo](simple-demos#grab-cursor)**
 
 #### `swipeSpeed` {#props.swipeSpeed}
 - **Type:** `number`  
 - **Default:** `1`  
 - Speed factor for swipe movements.  
-  **See [example](basic-examples#reverse-swipe)**
+  **See [demo](simple-demos#reverse-swipe)**
 
 #### `swipeAxis` {#props.swipeAxis}
 - **Type:** `'x' | 'y' | 'auto'`  
@@ -171,7 +178,8 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 #### `followSwipe` {#props.followSwipe}
 - **Type:** `boolean`  
 - **Default:** `false`  
-- If `false`, then slider will be animated only when you release the finger, it will not move while you hold your finger on it.
+- If `false`, then slider will be animated only when you release the finger, it will not move while you hold your finger on it.  
+  **See [demo](simple-demos#swipe-no-follow)**
 
 #### `shortSwipes` {#props.shortSwipes}
 - **Type:** `boolean`  
@@ -192,7 +200,7 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 - **Type:** `boolean`  
 - **Default:** `false`  
 - Defines if `friction` is allowed when swiping. Doesn't work with short swipes or when `followSwipe` is `false`.  
-  **See [example](basic-examples#friction)**
+  **See [demo](simple-demos#friction)**
 
 #### `swipeLerp` {#props.swipeLerp}
 - **Type:** `number | false`  
@@ -223,7 +231,7 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 - **Type:** `boolean`  
 - **Default:** `false`  
 - Enable or disable mouse wheel control.  
-  **See [example](basic-examples#wheel)**
+  **See [demo](simple-demos#wheel)**
 
 #### `wheelSpeed` {#props.wheelSpeed}
 - **Type:** `number`  
@@ -233,12 +241,14 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 #### `wheelAxis` {#props.wheelAxis}
 - **Type:** `'x' | 'y' | 'auto'`  
 - **Default:** `'auto'`  
-- Wheel axis. If `auto`, the axis will be automatically detected depending on `direction`.
+- Wheel axis. If `auto`, the axis will be automatically detected depending on `direction`.  
+  **See [demo](simple-demos#wheel)**
 
 #### `followWheel` {#props.followWheel}
 - **Type:** `boolean`  
 - **Default:** `true`  
-- If `false`, disables smooth, continuous scrolling behavior from the mouse wheel and instead updates the snap position in discrete steps (like pagination).
+- If `false`, disables smooth, continuous scrolling behavior from the mouse wheel and instead updates the snap position in discrete steps (like pagination).  
+  **See [demo](simple-demos#throttled-wheel)**
 
 #### `wheelThrottle` {#props.wheelThrottle}
 - **Type:** `number` | 'auto'  
@@ -248,7 +258,8 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 #### `stickOnWheelEnd` {#props.stickOnWheelEnd}
 - **Type:** `boolean`  
 - **Default:** `true`  
-- Enable snapping on wheel stop. Works with `followWheel` enabled.
+- Enable snapping on wheel stop. Works with `followWheel` enabled.  
+  **See [demo](simple-demos#free-wheel)**
 
 #### `stickOnWheelEndThreshold` {#props.stickOnWheelEndThreshold}
 - **Type:** `number`  
