@@ -27,11 +27,9 @@ To prevent layout shifts, hide native scrollbars in your CSS:
 ```
 :::
 
-## Examples
+## Demo
 
-Explore live examples on CodePen:
-
-### Body Scrollbar
+Explore a basic demo on CodePen:
 
 <iframe 
   height="400"
@@ -49,41 +47,9 @@ Explore live examples on CodePen:
   See the Pen <a href="https://codepen.io/anton-bobrov/pen/XJJrYYa">Vevet Example</a> by Anton Bobrov.
 </iframe>
 
-### Inner Scrollbar
+## More demos
 
-<iframe 
-  height="400"
-  style={{
-    width: '100%'
-  }} 
-  scrolling="no" 
-  title="Vevet Example"
-  src="https://codepen.io/anton-bobrov/embed/emmOKjW?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/emmOKjW">Vevet Example</a> by Anton Bobrov.
-</iframe>
-
-### Horizontal Scrollbar
-
-<iframe 
-  height="400"
-  style={{
-    width: '100%'
-  }} 
-  scrolling="no" 
-  title="Vevet Example"
-  src="https://codepen.io/anton-bobrov/embed/wBBwXEv?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/wBBwXEv">Vevet Example</a> by Anton Bobrov.
-</iframe>
+To explore more demos, click [here](./demos).
 
 
 
@@ -116,7 +82,8 @@ Static properties are set during initialization and cannot be modified later.
 - **Default:** `'y'`  
 - Defines the scrolling axis:  
   - `'x'` for horizontal scrolling  
-  - `'y'` for vertical scrolling
+  - `'y'` for vertical scrolling  
+  **See [demo](demos#horzontal-scrollbar)**
 
 #### `draggable` {#props.draggable}
 - **Type:** `boolean`  
@@ -126,7 +93,8 @@ Static properties are set during initialization and cannot be modified later.
 #### `autoHide` {#props.autoHide}
 - **Type:** `boolean`  
 - **Default:** `true`  
-- Automatically hides the scrollbar when inactive.
+- Automatically hides the scrollbar when inactive.  
+  **See [demo](demos#autohide)**
 
 #### `resizeDebounce` {#props.resizeDebounce}
 - **Type:** `number`  
@@ -142,12 +110,14 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 - **Type:** `number | string`  
 - **Default:** `50`  
 - Minimum size of the scrollbar thumb.  
-- Can be specified as a number (pixels) or as a CSS unit string (`px`, `rem`, `vw`, `vh`, `svh`).
+- Can be specified as a number (pixels) or as a CSS unit string (`px`, `rem`, `vw`, `vh`, `svh`).  
+  **See [demo](demos#min-size)**
 
 #### `autoSize` {#props.autoSize}
 - **Type:** `boolean`  
 - **Default:** `true`  
-- Enables automatic adjustment of the scrollbar thumb size based on the content and container.
+- Enables automatic adjustment of the scrollbar thumb size based on the content and container.  
+  **See [demo](demos#no-auto-size)**
 
 
 
