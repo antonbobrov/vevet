@@ -1,5 +1,20 @@
 # Changelog
 
+## [5.1.1](https://github.com/antonbobrov/vevet/compare/v5.1.0...v5.1.1) (2025-10-17)
+
+
+### closest
+
+* return target if values are empty ([9b7eed3](https://github.com/antonbobrov/vevet/commit/9b7eed3e3a67ce6afd272c352e7b704bf9e57138))
+
+### Swipe
+
+* fix velocity calculations ([f017013](https://github.com/antonbobrov/vevet/commit/f017013951df11536f33019b63716cf21792b192))
+
+### Timeline
+
+* make duration always finite ([c0cfc35](https://github.com/antonbobrov/vevet/commit/c0cfc35184cd202f6e09446ff0ff807406ec4a61))
+
 # [5.1.0](https://github.com/antonbobrov/vevet/compare/v5.0.11...v5.1.0) (2025-10-15)
 
 
