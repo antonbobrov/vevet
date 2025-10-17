@@ -541,7 +541,7 @@ export class Swipe<
       if (angleDiff > 180) angleDiff -= 360;
       if (angleDiff < -180) angleDiff += 360;
 
-      const deltatTime = current.timestamp - previous.timestamp;
+      const deltatTime = Math.max(current.timestamp - previous.timestamp, 1);
 
       const sx = (deltaX / deltatTime) * 1000;
       const sy = (deltaY / deltatTime) * 1000;
@@ -599,7 +599,7 @@ export class Swipe<
     const duration = inertiaDuration(distance);
 
     // Check if the animation duration is positive
-    if (duration <= 0) {
+    if (Number.isNaN(duration) || !Number.isFinite(duration) || duration <= 0) {
       this.callbacks.emit('inertiaFail', undefined);
 
       return;
