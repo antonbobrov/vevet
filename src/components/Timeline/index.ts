@@ -101,7 +101,13 @@ export class Timeline<
    * Get the timeline duration, ensuring it is at least 0 ms.
    */
   get duration() {
-    return Math.max(this.props.duration, 0);
+    const source = this.props.duration;
+
+    if (Number.isNaN(source) || !Number.isFinite(source) || source < 0) {
+      return 0;
+    }
+
+    return this.props.duration;
   }
 
   constructor(props?: StaticProps & MutableProps) {
