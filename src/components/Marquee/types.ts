@@ -27,11 +27,16 @@ export interface IMarqueeStaticProps extends IModuleStaticProps {
   hasWillChange?: boolean;
 
   /**
-   * Indicates whether to clone the marquee nodes.
    * Indicates whether to clone the marquee nodes. Can be set to `false` if DOM cloning is not preferred.
    * @default true
    */
   cloneNodes?: boolean;
+
+  /**
+   * Indicates the direction of the marquee animation.
+   * @default 'horizontal'
+   */
+  direction?: 'horizontal' | 'vertical';
 }
 
 /**

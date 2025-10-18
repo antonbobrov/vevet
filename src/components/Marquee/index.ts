@@ -35,6 +35,7 @@ export class Marquee<
       resizeDebounce: 0,
       hasWillChange: true,
       cloneNodes: true,
+      direction: 'horizontal',
     } as TRequiredProps<StaticProps>;
   }
 
@@ -52,8 +53,8 @@ export class Marquee<
     } as TRequiredProps<MutableProps>;
   }
 
-  /** Current container width */
-  protected _width = 0;
+  /** Current container size (width or height depending on direction) */
+  protected _size = 0;
 
   /** Initial child nodes of the container */
   protected _initialNodes: ChildNode[] = [];
@@ -61,31 +62,53 @@ export class Marquee<
   /** Array of marquee element nodes */
   protected _elements: HTMLElement[] = [];
 
-  /** Array of widths of each child element */
-  protected _widths: number[] = [];
+  /** Array of sizes of each child element */
+  protected _sizes: number[] = [];
 
-  /** Total width of all elements in the marquee */
-  protected _totalWidth = 0;
+  /** Total size of all elements in the marquee */
+  protected _totalSize = 0;
 
-  /** Total width of all elements in the marquee */
+  /** Total size of all elements in the marquee (width or height depending on direction) */
+  get totalSize() {
+    return this._totalSize;
+  }
+
+  /**
+   * Total width of all elements in the marquee
+   * @deprecated Use `totalSize` instead
+   */
   get totalWidth() {
-    return this._totalWidth;
+    return this.totalSize;
   }
 
   /** Last setup handler for teardown */
   protected _lastSetup?: () => void;
 
-  /** The current X coordinate of the marquee. */
-  protected _x = 0;
+  /** The current marquee coordinate. */
+  protected _coord = 0;
 
-  /** The current X coordinate of the marquee. */
+  /** The current marquee coordinate. */
+  get coord() {
+    return this._coord;
+  }
+
+  set coord(value) {
+    this._coord = value;
+    this.render(0);
+  }
+
+  /** The current coordinate of the marquee. */
   get x() {
-    return this._x;
+    return this.coord;
   }
 
   set x(value) {
-    this._x = value;
-    this.render(0);
+    this.coord = value;
+  }
+
+  /** Check if the marquee is vertical */
+  get isVertical() {
+    return this.props.direction === 'vertical';
   }
 
   /** Raf instance */
@@ -98,6 +121,7 @@ export class Marquee<
     super(props);
 
     const { container } = this.props;
+    const { isVertical } = this;
 
     if (!container) {
       throw new Error('Marquee container is not defined');
@@ -106,11 +130,15 @@ export class Marquee<
     // Apply base styles to the container
     container.style.position = 'relative';
     container.style.display = 'flex';
-    container.style.flexDirection = 'row';
+    container.style.flexDirection = isVertical ? 'column' : 'row';
     container.style.alignItems = 'center';
     container.style.justifyContent = 'flex-start';
-    container.style.width = '100%';
     container.style.overflow = 'hidden';
+    if (isVertical) {
+      container.style.height = '100%';
+    } else {
+      container.style.width = '100%';
+    }
 
     // Setup elements in the marquee
     this._setup();
@@ -239,11 +267,15 @@ export class Marquee<
     const el = element;
 
     el.style.position = isAbsolute ? 'absolute' : 'relative';
-    el.style.top = isAbsolute ? '50%' : '0';
-    el.style.left = '0';
-    el.style.width = element.style.width || 'max-content';
+    el.style.top = isAbsolute && !this.isVertical ? '50%' : '0';
+    el.style.left = isAbsolute && this.isVertical ? '50%' : '0';
     el.style.willChange = this.props.hasWillChange ? 'transform' : '';
     el.style.flexShrink = '0';
+    if (this.isVertical) {
+      el.style.height = element.style.height || 'max-content';
+    } else {
+      el.style.width = element.style.width || 'max-content';
+    }
   }
 
   /** Resizes the marquee, recalculating element positions and cloning if necessary. */
@@ -252,23 +284,27 @@ export class Marquee<
       return;
     }
 
-    const { props } = this;
+    const { props, isVertical } = this;
     const { container } = props;
+
     const gap = toPixels(props.gap);
 
     // Update container width
-    this._width = container.offsetWidth;
+    this._size = isVertical ? container.offsetHeight : container.offsetWidth;
 
-    // Update element widths
-    this._widths = this._elements.map((element) => element.offsetWidth + gap);
-    this._totalWidth = this._widths.reduce((a, b) => a + b, 0);
+    // Update element sizes
+    this._sizes = this._elements.map(
+      (element) =>
+        (isVertical ? element.offsetHeight : element.offsetWidth) + gap,
+    );
+    this._totalSize = this._sizes.reduce((a, b) => a + b, 0);
 
     // Determine how many times to duplicate elements
-    const maxWidth = Math.max(...this._widths);
-    const copyQuantity = Math.ceil((this._width + maxWidth) / this._totalWidth);
+    const maxSize = Math.max(...this._sizes);
+    const copyQuantity = Math.ceil((this._size + maxSize) / this._totalSize);
 
-    // update total width
-    this._totalWidth = Math.max(this._totalWidth, this._width + maxWidth);
+    // update total size
+    this._totalSize = Math.max(this._totalSize, this._size + maxSize);
 
     // Clone elements if necessary
     if (props.cloneNodes && copyQuantity > 1) {
@@ -305,30 +341,38 @@ export class Marquee<
       return;
     }
 
+    const { isVertical, props } = this;
+
     // Update animation time
-    this._x -= toPixels(step);
+    this._coord -= toPixels(step);
 
     // Calculate current position of the elements
-    const centerX = this._width * 0.5;
-    const position = this._x + (this.props.centered ? centerX : 0);
+    const centerCoord =
+      this._size * 0.5 + this._sizes[0] / 2 - toPixels(props.gap);
+    const position = this._coord + (props.centered ? centerCoord : 0);
 
     // Update each element's position
-    let prevStaticX = 0;
+    let prevStaticCoord = 0;
     for (let index = 0; index < this._elements.length; index += 1) {
       const element = this._elements[index];
-      const elementWidth = this._widths[index];
+      const elementSize = this._sizes[index];
 
-      const x = loop(
-        position + prevStaticX,
-        -elementWidth,
-        this._totalWidth - elementWidth,
+      const coord = loop(
+        position + prevStaticCoord,
+        -elementSize,
+        this._totalSize - elementSize,
       );
 
       // Apply transformations to position the element
-      const y = element.style.position === 'relative' ? '0' : '-50%';
-      element.style.transform = `translate(${x}px, ${y})`;
+      if (isVertical) {
+        const x = element.style.position === 'relative' ? '0' : '-50%';
+        element.style.transform = `translate(${x}, ${coord}px)`;
+      } else {
+        const y = element.style.position === 'relative' ? '0' : '-50%';
+        element.style.transform = `translate(${coord}px, ${y})`;
+      }
 
-      prevStaticX += elementWidth;
+      prevStaticCoord += elementSize;
     }
 
     // Trigger render callbacks
