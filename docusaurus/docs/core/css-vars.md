@@ -19,9 +19,7 @@ To prevent this, it is recommended to calculate these values manually on the fir
 
 ### HTML Script
 
-```tsx
-import { presetCssVars } from 'vevet';
-
+```html
 <script>
   var presetVevetCss = function update() {
     if (window.vevet5) {
