@@ -12,10 +12,13 @@ export const Carousel: FC = () => {
     const instance = new Snap({
       container: ref.current,
       direction: 'horizontal',
+      grabCursor: true,
       wheel: true,
       wheelAxis: 'y',
       centered: true,
       loop: true,
+      shortSwipes: false,
+      freemode: 'sticky',
     });
 
     instance.on('update', () => {

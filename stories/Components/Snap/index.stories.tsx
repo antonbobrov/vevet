@@ -12,6 +12,8 @@ import { SlickGap as SlickGapComponent } from './SlickGap';
 import { Virtual as VirtualComponent } from './Virtual';
 import { DynamicWidth as DynamicWidthComponent } from './DynamicWidth';
 import { CreativeScale as CreativeScaleComponent } from './CreativeScale';
+import { CreativeSine as CreativeSineComponent } from './CreativeSine';
+import { Stack3D as Stack3DComponent } from './Stack3D';
 
 const meta: Meta = {
   title: 'Components/Snap',
@@ -40,5 +42,9 @@ export const SlickGap: StoryFn = () => <SlickGapComponent />;
 export const DynamicWidth: StoryFn = () => <DynamicWidthComponent />;
 
 export const CreativeScale: StoryFn = () => <CreativeScaleComponent />;
+
+export const CreativeSine: StoryFn = () => <CreativeSineComponent />;
+
+export const Stack3D: StoryFn = () => <Stack3DComponent />;
 
 export const Virtual: StoryFn = () => <VirtualComponent />;
