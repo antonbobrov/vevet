@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.1.2](https://github.com/antonbobrov/vevet/compare/v5.1.1...v5.1.2) (2025-10-21)
+
+
+### Marquee
+
+* add `direction`, `totalSize` & `coord`. Allow vertial animation ([79c7b1a](https://github.com/antonbobrov/vevet/commit/79c7b1a9061ddae5f4dba9eb0578be41e2a0344b))
+
 ## [5.1.1](https://github.com/antonbobrov/vevet/compare/v5.1.0...v5.1.1) (2025-10-17)
 
 
