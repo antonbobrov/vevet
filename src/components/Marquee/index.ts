@@ -97,7 +97,10 @@ export class Marquee<
     this.render(0);
   }
 
-  /** The current coordinate of the marquee. */
+  /**
+   * The current coordinate of the marquee.
+   * @deprecated Use `coord` instead
+   */
   get x() {
     return this.coord;
   }
