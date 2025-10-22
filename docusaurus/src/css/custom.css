@@ -12,10 +12,7 @@
   --color-coral: #FF7F87;
   --color-mint: #C2F9EF;
   --color-night: #11192A;
-  --gradient-cosmic: linear-gradient(135deg, var(--color-ultramarine) 0%, var(--color-amethyst) 50%, var(--color-aurora-teal) 100%);
-  --gradient-sunset: linear-gradient(135deg, var(--color-coral) 0%, var(--color-champagne) 100%);
-  --gradient-northern: linear-gradient(165deg, var(--color-night) 0%, var(--color-sapphire) 40%, #003A52 100%);
-  --gradient-frosted: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(194, 249, 239, 0.7) 100%);
+  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
 
   --ifm-background-color: #f8f9ff;
   --ifm-color-primary: var(--color-ultramarine);
@@ -33,7 +30,7 @@
   --ifm-navbar-shadow: none;
   --ifm-navbar-height: 4.5rem;
   --ifm-menu-link-padding-horizontal: 0.75rem;
-  --ifm-menu-link-padding-vertical: 0.75rem;
+  --ifm-menu-link-padding-vertical: 0.875rem;
   --ifm-code-padding-horizontal: 0.5rem;
   --ifm-code-padding-vertical: 0.25rem;
   --ifm-pre-padding: 1.5rem;

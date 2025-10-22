@@ -18,9 +18,8 @@
   width: 500px;
   height: 500px;
   border-radius: 50%;
-  background: var(--gradient-cosmic);
-  opacity: 0.1;
-  filter: blur(60px);
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, transparent 70%); 
+  opacity: 0.2;
   z-index: -1;
 }
 
@@ -32,9 +31,8 @@
   width: 400px;
   height: 400px;
   border-radius: 50%;
-  background: var(--gradient-sunset);
-  opacity: 0.1;
-  filter: blur(60px);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%);
+  opacity: 0.3;
   z-index: -1;
 }
 
@@ -43,23 +41,16 @@
   font-size: 6rem;
   line-height: 1.35;
   margin-bottom: var(--space-md);
-  background: var(--gradient-cosmic);
+  background: var(--accent-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   background-size: 200% auto;
-  animation: shimmer 8s infinite;
 }
 
 .subtitle {
   font-size: 1.5rem;
   margin-block: 2rem;
-}
-
-@keyframes shimmer {
-  0% { background-position: 0% center; }
-  50% { background-position: 100% center; }
-  100% { background-position: 0% center; }
 }
 
 .buttons {
@@ -78,16 +69,11 @@
 
   width: 100%;
   height: 3.5rem;
-  padding: 0 2rem;
+  padding: 0 1.875rem;
   border: 0;
   cursor: pointer;
 
-  background: linear-gradient(
-    135deg,
-    rgb(13, 110, 253) 0%,
-    rgb(140, 122, 230) 50%,
-    rgb(0, 201, 177) 100%
-  );
+  background: var(--accent-gradient);
   background-size: 200% auto;
   box-shadow: 0 4px 20px rgba(13, 110, 253, 0.1);
   border-radius: 50vw;
@@ -104,7 +90,7 @@
   background-position: right center;
   text-decoration: none;
   transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(13, 110, 253, 0.4);
+  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
   color: #fff;
 }
 

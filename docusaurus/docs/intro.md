@@ -10,16 +10,16 @@ Vevet.js is a flexible client-side JavaScript library for creative web developme
 
 The library consists of:
 
-- [core](/docs/core)  
+- **[core](/docs/core)**  
   Handles viewport events, page load states, and provides essential info about the viewport and user agent.
 
-- [components](/docs/Marquee)  
+- **[components](/docs/Marquee)**  
   A collection of abstract and functional modules such as loaders, scroll tools, split text, carousels, and more.
   
-- [base](/docs/base/Callbacks)  
+- **[base](/docs/base/Callbacks)**  
   Basic abstract classes.
   
-- [utils](/docs/utils)  
+- **[utils](/docs/utils)**  
   Lightweight internal utilities.
 
 ## Installation
@@ -30,7 +30,7 @@ The library consists of:
 npm install vevet
 ```
 
-JavaScript:
+**JavaScript:**
 
 ```ts
 import { vevet } from 'vevet';
@@ -38,7 +38,7 @@ import { vevet } from 'vevet';
 console.log(vevet.version); // => 5.0.0
 ```
 
-SCSS:
+**SCSS:**
 
 ```scss
 @import '~vevet/lib/styles/index';
