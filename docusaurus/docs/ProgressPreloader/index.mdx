@@ -81,31 +81,31 @@ Static properties are set during initialization and cannot be modified later.
 All **[Preloader's accessors](/docs/Preloader/#accessors)** are available in this class.
 :::
 
-### loadedWeight
+### `loadedWeight`
 
 Type: `number`
 
 Loaded weight.
 
-### loadProgress
+### `loadProgress`
 
 Type: `number`
 
 Current loading progress (0 to 1).
 
-### progress
+### `progress`
 
 Type: `number`
 
 Gets the current interpolated progress value (0 to 1).
 
-### resources
+### `resources`
 
 Type: `IProgressPreloaderResource[]`
 
 The list of custom resources to preload.
 
-#### IPointersItem Structure
+**IPointersItem Structure**
 
 ```ts
 interface IProgressPreloaderResource {
@@ -119,7 +119,7 @@ interface IProgressPreloaderResource {
 - `weight`: A resource may be split into multiple parts. This is the resource weight
 - `loaded`: Loaded weight
 
-### totalWeight
+### `totalWeight`
 
 Type: `number`
 
@@ -133,7 +133,7 @@ Calculates the total number of resources to preload, including their weight.
 All **[Preloader's methods](/docs/Preloader/#methods)** are available in this class.
 :::
 
-### addResource
+### `addResource`
 
 Adds a custom resource.
 
@@ -146,7 +146,7 @@ instance.addResource(document.getElementById('preload-me'), 100);
 instance.addResource('my-resource', 20);
 ```
 
-### resolveResource
+### `resolveResource`
 
 Emits a resource load event and updates the count of loaded resources.
 
@@ -163,7 +163,7 @@ instance.resolveResource('my-resource', 20);
 All **[Preloader's callbacks](/docs/Preloader/#callbacks)** are available in this class.
 :::
 
-### progress
+### `progress`
 
 Fired when the preloader's progress updates.
 
@@ -174,7 +174,7 @@ const destruct = instance.on('progress', () => console.log('progress update'));
 destruct();
 ```
 
-### resource
+### `resource`
 
 Fired each time a resource is loaded during preloading.
 

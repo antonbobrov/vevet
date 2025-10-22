@@ -14,8 +14,6 @@ sidebar_position: -900
 
 ## Usage
 
-### JavaScript Example
-
 ```ts
 import { vevet } from 'vevet';
 

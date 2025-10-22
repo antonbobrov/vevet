@@ -50,49 +50,49 @@ Static properties are set during initialization and cannot be modified later.
 All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
 :::
 
-### inProgress
+### `inProgress`
 
 Type: `{ x: number; y: number }`
 
 Calculates the progress of the section entering the root element.
 
-### isVisible
+### `isVisible`
 
 Type: `boolean`
 
 Indicates whether the section is currently visible within the viewport or root element.
 
-### moveProgress
+### `moveProgress`
 
 Type: `{ x: number; y: number }`
 
 Calculates the progress of the section's movement within the root element.
 
-### outProgress
+### `outProgress`
 
 Type: `{ x: number; y: number }`
 
 Calculates the progress of the section leaving the root element.
 
-### progress
+### `progress`
 
 Type: `{ x: number; y: number }`
 
 Calculates the global scroll progress of the section relative to the root element.
 
-### rootBounds
+### `rootBounds`
 
 Type: `{ height: number; left: number; top: number; width: number }`
 
 The bounds of the root element used for scroll calculations.
 
-### section
+### `section`
 
 Type: `Element`
 
 Returns the section element being tracked for scroll progress.
 
-### sectionBounds
+### `sectionBounds`
 
 Type: `{ height: number; left: number; top: number; width: number }`
 
@@ -106,13 +106,13 @@ The bounds of the section element relative to the root element.
 All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
 :::
 
-### getProgress
+### `getProgress`
 
 Calculates the section scroll progress relative to the root element.
 
 The function takes top or left corner of the section as the reference point.
 
-#### Parameters
+**Parameters**
   - `topThreshold: number`
   Top threshold of the section position.
 
@@ -132,7 +132,7 @@ const progress = instance.getProgress(0, vevet.width, vevet.height / 2, 0);
 // `progress.y` is `1` when the top corner of the section is at the center of the viewport or root element
 ```
 
-### update
+### `update`
 
 Updates the section and root bounds, and emits an update callback.
 
@@ -148,7 +148,7 @@ instance.update();
 All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
 :::
 
-### update
+### `update`
 
 Triggered on each scroll progress update.
 

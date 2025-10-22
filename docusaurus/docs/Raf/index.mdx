@@ -55,37 +55,37 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
 :::
 
-### duration
+### `duration`
 
 Type: `number`
 
 Duration of the last frame in ms
 
-### fps
+### `fps`
 
 Type: `number`
 
 Real-time FPS
 
-### fpsFactor
+### `fpsFactor`
 
 Type: `number`
 
 Scaling coefficient based on a 60 FPS target
 
-### index
+### `index`
 
 Type: `number`
 
 Current frame index
 
-### isPlaying
+### `isPlaying`
 
 Type: `boolean`
 
 Playback state of the animation frame
 
-### timestamp
+### `timestamp`
 
 Type: `number`
 
@@ -99,7 +99,7 @@ Timestamp of the current frame
 All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
 :::
 
-### lerpFactor
+### `lerpFactor`
 
 Calculate linear interpolation factor to make animations run the same regardless of FPS
 
@@ -110,7 +110,7 @@ const ease = instance.lerpFactor(0.1);
 lerp(from, to, ease);
 ```
 
-### pause
+### `pause`
 
 Pause the animation loop
 
@@ -118,7 +118,7 @@ Pause the animation loop
 instance.pause();
 ```
 
-### play
+### `play`
 
 Start the animation loop
 
@@ -134,7 +134,7 @@ instance.play();
 All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
 :::
 
-### play
+### `play`
 
 Triggered when the animation starts
 
@@ -145,7 +145,7 @@ const destruct = instance.on('play', () => console.log('play'));
 destruct();
 ```
 
-### pause
+### `pause`
 
 Triggered when the animation is paused
 
@@ -156,7 +156,7 @@ const destruct = instance.on('pause', () => console.log('pause'));
 destruct();
 ```
 
-### toggle
+### `toggle`
 
 Triggered when play/pause state toggles
 
@@ -167,7 +167,7 @@ const destruct = instance.on('toggle', () => console.log('toggle'));
 destruct();
 ```
 
-### frame
+### `frame`
 
 Triggered on every animation frame
 

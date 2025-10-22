@@ -84,31 +84,31 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
 :::
 
-### container
+### `container`
 
 Type: `Element | Window`
 
 The cursor container
 
-### coords
+### `coords`
 
 Type: `{ height: number; width: number; x: number; y: number; }`
 
 The current coordinates. These are updated during cursor movement.
 
-### domContainer
+### `domContainer`
 
 Type: `HTMLElement`
 
 Returns the DOM parent for the cursor element.
 
-### hoveredElement
+### `hoveredElement`
 
 Type: `undefined  | ICursorHoveredElement`
 
 Stores information about the currently hovered element, including dimensions and interactive properties.
 
-#### ICursorHoveredElement Structure
+**ICursorHoveredElement Structure**
 
 ```ts
 interface ICursorHoveredElement {
@@ -126,25 +126,25 @@ interface ICursorHoveredElement {
 - `padding`: Additional padding around the cursor.
 - `sticky`: Whether the cursor remains centered on the element.
 
-### inner
+### `inner`
 
 Type: `HTMLElement`
 
 The inner element of the custom cursor, allowing additional styling.
 
-### outer
+### `outer`
 
 Type: `HTMLElement`
 
 The outer element representing the visual cursor.
 
-### prefix
+### `prefix`
 
 Type: `string`
 
 Classname prefix for styling elements.
 
-### targetCoords
+### `targetCoords`
 
 Type: `{ height: number; width: number; x: number; y: number }`
 
@@ -158,7 +158,7 @@ Target coordinates of the cursor (without smooth interpolation).
 All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
 :::
 
-### attachCursor
+### `attachCursor`
 
 Registers a cursor type.
 
@@ -169,7 +169,7 @@ instance.attachCursor({
 });
 ```
 
-### attachElement
+### `attachElement`
 
 Registers an element to interact with the cursor, enabling dynamic size and position changes based on hover effects.
 
@@ -187,7 +187,7 @@ const hoveredElement = instance.attachElement({
 hoveredElement();
 ```
 
-### render
+### `render`
 
 Manually triggers a cursor render.
 
@@ -195,7 +195,7 @@ Manually triggers a cursor render.
 canvas.render();
 ```
 
-### updateProps
+### `updateProps`
 
 Dynamically updates instance properties.
 
@@ -206,7 +206,7 @@ instance.updateProps({
 });
 ```
 
-### destroy
+### `destroy`
 
 Destroys the instance and cleans up resources.
 
@@ -222,7 +222,7 @@ canvas.destroy();
 All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
 :::
 
-### render
+### `render`
 
 Triggered on each render to update the cursor's position.
 

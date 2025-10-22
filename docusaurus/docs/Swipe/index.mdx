@@ -234,61 +234,61 @@ interface ISwipeCoords {
 All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
 :::
 
-### accum
+### `accum`
 
 Type: `ISwipeVec2`
 
 Accumulated movement.
 
-### container
+### `container`
 
 Type: `HTMLElement | SVGElement`
 
 Event target element.
 
-### coords
+### `coords`
 
 Type: `ISwipeCoords`
 
 Returns current swipe coordinates.
 
-### current
+### `current`
 
 Type: `ISwipeMatrix`
 
 Current coordinate.
 
-### diff
+### `diff`
 
 Type: `ISwipeMatrix`
 
 Difference between start and current coordinates.
 
-### hasInertia
+### `hasInertia`
 
 Type: `boolean`
 
 Indicates if inertia is active.
 
-### isSwiping
+### `isSwiping`
 
 Type: `boolean`
 
 Indicates if a swipe is active.
 
-### prev
+### `prev`
 
 Type: `ISwipeMatrix`
 
 Previous coordinate.
 
-### start
+### `start`
 
 Type: `ISwipeMatrix`
 
 Start coordinate.
 
-### step
+### `step`
 
 Type: `ISwipeMatrix`
 
@@ -302,7 +302,7 @@ Difference between start and previous coordinates.
 All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
 :::
 
-### cancelInertia
+### `cancelInertia`
 
 Destroys the inertia animation.
 
@@ -318,7 +318,7 @@ instance.cancelInertia();
 All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
 :::
 
-### start
+### `start`
 
 Swipe start event.
 
@@ -330,7 +330,7 @@ const destruct = instance.on('start', (coords) => console.log(coords));
 destruct();
 ```
 
-### move
+### `move`
 
 Swipe move event.
 
@@ -342,7 +342,7 @@ const destruct = instance.on('move', (coords) => console.log(coords));
 destruct();
 ```
 
-### end
+### `end`
 
 Swipe end event.
 
@@ -354,7 +354,7 @@ const destruct = instance.on('end', (coords) => console.log(coords));
 destruct();
 ```
 
-### toTop
+### `toTop`
 
 Swipe from bottom to top.
 
@@ -365,7 +365,7 @@ const destruct = instance.on('toTop', () => console.log('from bottom to top'));
 destruct();
 ```
 
-### toTop
+### `toBottom`
 
 Swipe from top to bottom.
 
@@ -376,7 +376,7 @@ const destruct = instance.on('toBottom', () => console.log('from top to bottom')
 destruct();
 ```
 
-### toRight
+### `toRight`
 
 Swipe from left to right.
 
@@ -387,7 +387,7 @@ const destruct = instance.on('toRight', () => console.log('from left to right'))
 destruct();
 ```
 
-### toLeft
+### `toLeft`
 
 Swipe from right to left.
 
@@ -398,7 +398,7 @@ const destruct = instance.on('toLeft', () => console.log('from right to left'));
 destruct();
 ```
 
-### touchstart
+### `touchstart`
 
 Triggered on `touchstart` listener. Triggered before any action related to this event is processed.
 
@@ -409,7 +409,7 @@ const destruct = instance.on('touchstart', (event) => console.log(event));
 destruct();
 ```
 
-### touchmove
+### `touchmove`
 
 Triggered on `touchmove` listener. Triggered before any action related to this event is processed.
 
@@ -420,7 +420,7 @@ const destruct = instance.on('touchmove', (event) => console.log(event));
 destruct();
 ```
 
-### mousemove
+### `mousemove`
 
 Triggered on `mousemove` listener. Triggered before any action related to this event is processed.
 
@@ -431,7 +431,7 @@ const destruct = instance.on('mousemove', (event) => console.log(event));
 destruct();
 ```
 
-### abort
+### `abort`
 
 Triggered when swipe is aborted.
 
@@ -442,7 +442,7 @@ const destruct = instance.on('abort', () => console.log('swipe aborted'));
 destruct();
 ```
 
-### preventEdgeSwipe
+### `preventEdgeSwipe`
 
 Triggered on edge swipe preventing.
 
@@ -453,7 +453,7 @@ const destruct = instance.on('preventEdgeSwipe', () => console.log('edge swipe p
 destruct();
 ```
 
-### inertiaStart
+### `inertiaStart`
 
 Triggered on inertia start.
 
@@ -464,7 +464,7 @@ const destruct = instance.on('inertiaStart', () => console.log('inertia start'))
 destruct();
 ```
 
-### inertiaStart
+### `inertiaStart`
 
 Triggered on inertia progress.
 
@@ -475,7 +475,7 @@ const destruct = instance.on('inertia', () => console.log('inertia in progress')
 destruct();
 ```
 
-### inertiaEnd
+### `inertiaEnd`
 
 Triggered on inertia end.
 
@@ -486,7 +486,7 @@ const destruct = instance.on('inertiaEnd', () => console.log('inertia end'));
 destruct();
 ```
 
-### inertiaFail
+### `inertiaFail`
 
 Triggered when inertia fails to start because of lack of momentum.
 
@@ -497,7 +497,7 @@ const destruct = instance.on('inertiaFail', () => console.log('inertia fail'));
 destruct();
 ```
 
-### inertiaCancel
+### `inertiaCancel`
 
 Triggered when inertia is cancelled.
 

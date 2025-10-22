@@ -61,7 +61,7 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
 :::
 
-### isHidden
+### `isHidden`
 
 Type: `boolean`
 
@@ -75,7 +75,7 @@ Returns whether the preloader is currently hidden.
 All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
 :::
 
-### hide
+### `hide`
 
 Hides the preloader with a custom animation duration.
 
@@ -86,7 +86,7 @@ const cancelCallback = instance.hide(500, () => console.log('hide'));
 cancelCallback?.();
 ```
 
-### onHidden
+### `onHidden`
 
 Registers a callback for when the preloader is fully hidden.
 
@@ -97,7 +97,7 @@ const cancel = instance.onHidden(() => console.log('hidden'));
 cancel?.();
 ```
 
-### onHide
+### `onHide`
 
 Registers a callback for when the preloader starts hiding.
 
@@ -116,7 +116,7 @@ cancel?.();
 All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
 :::
 
-### loaded
+### `loaded`
 
 Triggered when the page is fully loaded.
 
@@ -127,7 +127,7 @@ const destruct = instance.on('loaded', () => console.log('loaded'));
 destruct();
 ```
 
-### hide
+### `hide`
 
 Triggered when the preloader starts hiding.
 
@@ -138,7 +138,7 @@ const destruct = instance.on('hide', () => console.log('hide'));
 destruct();
 ```
 
-### hidden
+### `hidden`
 
 Triggered when the preloader is completely hidden.
 

@@ -57,37 +57,37 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
 :::
 
-### duration
+### `duration`
 
 Type: `number`
 
 Get the timeline duration, ensuring it is at least 0 ms.
 
-### eased
+### `eased`
 
 Type: `number`
 
 Get the eased progress of the timeline, derived from the easing function.
 
-### isPaused
+### `isPaused`
 
 Type: `boolean`
 
 Whether the timeline is paused.
 
-### isPlaying
+### `isPlaying`
 
 Type: `boolean`
 
 Whether the timeline is currently playing.
 
-### isReversed
+### `isReversed`
 
 Type: `boolean`
 
 Whether the timeline is reversed (progress decreases over time).
 
-### progress
+### `progress`
 
 Type: `number`
 
@@ -101,7 +101,7 @@ Get or set the linear progress of the timeline. Setting this triggers an update 
 All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
 :::
 
-### pause
+### `pause`
 
 Pause the timeline, halting progress without resetting it.
 
@@ -109,7 +109,7 @@ Pause the timeline, halting progress without resetting it.
 instance.pause();
 ```
 
-### play
+### `play`
 
 Play the timeline, advancing progress toward completion. Does nothing if the timeline is destroyed or already completed.
 
@@ -117,7 +117,7 @@ Play the timeline, advancing progress toward completion. Does nothing if the tim
 instance.play();
 ```
 
-### reset
+### `reset`
 
 Reset the timeline to the beginning (progress = 0).
 
@@ -125,7 +125,7 @@ Reset the timeline to the beginning (progress = 0).
 instance.reset();
 ```
 
-### reverse
+### `reverse`
 
 Reverse the timeline, moving progress toward the start. Does nothing if the timeline is destroyed or already at the start.
 
@@ -141,7 +141,7 @@ instance.reverse();
 All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
 :::
 
-### start
+### `start`
 
 Triggered when the timeline starts.
 
@@ -152,7 +152,7 @@ const destruct = instance.on('start', () => console.log('start'));
 destruct();
 ```
 
-### update
+### `update`
 
 Triggered during timeline updates with progress values.
 
@@ -165,7 +165,7 @@ const destruct = instance.on('update', ({ progress, eased }) => {
 destruct();
 ```
 
-### end
+### `end`
 
 Triggered when the timeline completes.
 

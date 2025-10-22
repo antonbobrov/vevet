@@ -113,13 +113,13 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
 :::
 
-### totalSize
+### `totalSize`
 
 Type: `number`
 
 Total size of all elements in the marquee
 
-### coord
+### `coord`
 
 Type: `number`
 
@@ -133,7 +133,7 @@ The current marquee coordinate.
 All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
 :::
 
-### render
+### `render`
 
 Renders the marquee, adjusting element positions.
 
@@ -142,7 +142,7 @@ instance.render(2); // with step 2
 instance.render(-1); // with step -1
 ```
 
-### resize
+### `resize`
 
 Resizes the marquee, recalculating element positions and cloning if necessary.
 
@@ -150,7 +150,7 @@ Resizes the marquee, recalculating element positions and cloning if necessary.
 instance.resize();
 ```
 
-### updateProps
+### `updateProps`
 
 Dynamically updates instance properties.
 
@@ -160,7 +160,7 @@ instance.updateProps({
 });
 ```
 
-### destroy
+### `destroy`
 
 Destroys the instance and cleans up resources.
 
@@ -176,7 +176,7 @@ instance.destroy();
 All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
 :::
 
-### render
+### `render`
 
 Called during marquee rendering.
 
@@ -187,7 +187,7 @@ const destruct = instance.on('render', () => console.log('render'));
 destruct();
 ```
 
-### resize
+### `resize`
 
 Called on marquee resize
 

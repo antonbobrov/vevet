@@ -103,49 +103,49 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
 :::
 
-### canRender
+### `canRender`
 
 Type: `boolean`
 
 Checks if the canvas is ready to render.
 
-### canvas
+### `canvas`
 
 Type: `HTMLCanvasElement`
 
 The canvas element instance.
 
-### ctx
+### `ctx`
 
 Type: `CanvasRenderingContext2D`
 
 The 2D rendering context.
 
-### dpr
+### `dpr`
 
 Type: `number`
 
 Current device pixel ratio.
 
-### height
+### `height`
 
 Type: `number`
 
 Canvas height (DPR applied).
 
-### offsetHeight
+### `offsetHeight`
 
 Type: `number`
 
 Height without DPR scaling.
 
-### offsetWidth
+### `offsetWidth`
 
 Type: `number`
 
 Width without DPR scaling.
 
-### width
+### `width`
 
 Type: `number`
 
@@ -159,7 +159,7 @@ Canvas width (DPR applied).
 All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
 :::
 
-### render
+### `render`
 
 Renders content on the canvas if it's ready.
 
@@ -169,7 +169,7 @@ instance.render(({ canvas, ctx, dpr, width, height }) => {
 });
 ```
 
-### resize
+### `resize`
 
 Triggers a canvas resize based on container or viewport dimensions.
 
@@ -177,7 +177,7 @@ Triggers a canvas resize based on container or viewport dimensions.
 instance.resize();
 ```
 
-### updateProps
+### `updateProps`
 
 Updates instance properties.
 
@@ -188,7 +188,7 @@ instance.updateProps({
 });
 ```
 
-### destroy
+### `destroy`
 
 Destroys the instance and cleans up resources.
 
@@ -204,7 +204,7 @@ instance.destroy();
 All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
 :::
 
-### resize
+### `resize`
 
 Fires when the canvas is resized.
 

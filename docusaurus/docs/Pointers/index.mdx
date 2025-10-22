@@ -70,37 +70,37 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
 :::
 
-### container
+### `container`
 
 Type: `HTMLElement`
 
 Returns the container element handling events.
 
-### isStarted
+### `isStarted`
 
 Type: `boolean`
 
 Indicates whether the `start` event has been triggered.
 
-### maxPointers
+### `maxPointers`
 
 Type: `number`
 
 Returns the maximum number of pointers that can be tracked.
 
-### minPointers
+### `minPointers`
 
 Type: `number`
 
 Returns the minimum number of pointers required to trigger events.
 
-### pointersMap
+### `pointersMap`
 
 Type: `Map<number, IPointersItem>`
 
 Returns the map of active pointers.
 
-#### IPointersItem Structure
+**IPointersItem Structure**
 
 ```ts
 interface IPointersItem {
@@ -124,7 +124,7 @@ interface IPointersItem {
 - `step`: Movement offset from the previous position.
 - `accum`: Total accumulated movement since start
 
-#### IPointersVec2 Structure
+**IPointersVec2 Structure**
 
 ```ts
 interface IPointersVec2 {
@@ -152,7 +152,7 @@ All **[Module's methods](/docs/base/Module/#methods)** are available in this cla
 All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
 :::
 
-### start
+### `start`
 
 Fired when the required number of pointers is reached.
 
@@ -163,7 +163,7 @@ const destruct = instance.on('start', () => console.log('start'));
 destruct();
 ```
 
-### pointerdown
+### `pointerdown`
 
 Fired when a pointer is added.
 
@@ -174,7 +174,7 @@ const destruct = instance.on('pointerdown', ({ event, pointer }) => console.log(
 destruct();
 ```
 
-### pointermove
+### `pointermove`
 
 Fired when a pointer moves.
 
@@ -185,7 +185,7 @@ const destruct = instance.on('pointermove', ({ event, pointer }) => console.log(
 destruct();
 ```
 
-### pointerup
+### `pointerup`
 
 Fired when a pointer is removed.
 
@@ -196,7 +196,7 @@ const destruct = instance.on('pointerup', ({ pointer }) => console.log('pointeru
 destruct();
 ```
 
-### end
+### `end`
 
 Fired when pointer events are canceled.
 

@@ -275,145 +275,145 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
 :::
 
-### activeIndex
+### `activeIndex`
 
 Type: `number`
 
 Active slide index
 
-### activeSlide
+### `activeSlide`
 
 Type: [SnapSlide](./SnapSlide)
 
 Active slide
 
-### axis
+### `axis`
 
 Type: `"x" | "y"`
 
 Get axis name depending on direction
 
-### container
+### `container`
 
 Type: `HTMLElement`
 
 Get container
 
-### domSize
+### `domSize`
 
 Type: `number`
 
 Container size depending on direction (width or height)
 
-### eventsEmitter
+### `eventsEmitter`
 
 Type: `HTMLElement`
 
 Get events emitter
 
-### firstSlideSize
+### `firstSlideSize`
 
 Type: `number`
 
 Get first slide size
 
-### isEmpty
+### `isEmpty`
 
 Type: `boolean`
 
 Defines if there's nothing to animate
 
-### isTransitioning
+### `isTransitioning`
 
 Type: `boolean`
 
 If transition in progress
 
-### scrollableSlides
+### `scrollableSlides`
 
 Type: [SnapSlide](./SnapSlide)[]
 
 Scrollable slides (which size is larger than the container)
 
-### slides
+### `slides`
 
 Type: [SnapSlide](./SnapSlide)[]
 
 All slides
 
-### track.canLoop
+### `track.canLoop`
 
 Type: `boolean`
 
 If can loop
 
-### track.current
+### `track.current`
 
 Type: `number`
 
 Gets/sets the current track value.
 
-### track.isEnd
+### `track.isEnd`
 
 Type: `boolean`
 
 If the end has been reached
 
-### track.isInterpolated
+### `track.isInterpolated`
 
 Type: `boolean`
 
 Whether the track is interpolated
 
-### track.isSlideScrolling
+### `track.isSlideScrolling`
 
 Type: `boolean`
 
 Check if the active slide is larger than the container and is being scrolled
 
-### track.isStart
+### `track.isStart`
 
 Type: `boolean`
 
 If the start has been reached
 
-### track.loopCount
+### `track.loopCount`
 
 Type: `number`
 
 Get loop count
 
-### track.loopedCurrent
+### `track.loopedCurrent`
 
 Type: `number`
 
 Get looped current value
 
-### track.max
+### `track.max`
 
 Type: `number`
 
 Get maximum track value
 
-### track.min
+### `track.min`
 
 Type: `number`
 
 Get minimum track value
 
-### track.offset
+### `track.offset`
 
 Type: `number`
 
 Get track offset
 
-### track.progress
+### `track.progress`
 
 Type: `number`
 
 Get track progress. From 0 to 1 if not loop. From -Infinity to Infinity if loop
 
-### track.target
+### `track.target`
 
 Type: `number`
 
@@ -427,7 +427,7 @@ Gets/sets the target track value
 All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
 :::
 
-### cancelTransition
+### `cancelTransition`
 
 Cancel sticky behavior
 
@@ -435,7 +435,7 @@ Cancel sticky behavior
 instance.cancelTransition();
 ```
 
-### next
+### `next`
 
 Go to next slide
 
@@ -443,7 +443,7 @@ Go to next slide
 instance.next({ duration: 500, skip: 1 });
 ```
 
-### prev
+### `prev`
 
 Go to previous slide
 
@@ -451,7 +451,7 @@ Go to previous slide
 instance.prev({ duration: 500, skip: 1 });
 ```
 
-### render
+### `render`
 
 Force slides rendering
 
@@ -459,7 +459,7 @@ Force slides rendering
 instance.render();
 ```
 
-### resize
+### `resize`
 
 Request resize (handled with debounce timeout)
 
@@ -467,7 +467,7 @@ Request resize (handled with debounce timeout)
 instance.resize(true);
 ```
 
-### stick
+### `stick`
 
 Stick to the nearest magnet
 
@@ -475,7 +475,7 @@ Stick to the nearest magnet
 instance.stick();
 ```
 
-### toCoord
+### `toCoord`
 
 Go to a definite coordinate
 
@@ -483,7 +483,7 @@ Go to a definite coordinate
 instance.toCoord(1365, { duration: 250 });
 ```
 
-### toSlide
+### `toSlide`
 
 Go to a slide by index
 
@@ -491,7 +491,7 @@ Go to a slide by index
 instance.toSlide(1, { direction: 'next', duration: 500 });
 ```
 
-### track.clampTarget
+### `track.clampTarget`
 
 Clamp target value between min and max values
 
@@ -499,7 +499,7 @@ Clamp target value between min and max values
 instance.track.clampTarget();
 ```
 
-### track.iterateTarget
+### `track.iterateTarget`
 
 Iterate track target value
 
@@ -507,7 +507,7 @@ Iterate track target value
 instance.track.iterateTarget(50);
 ```
 
-### track.loopCoord
+### `track.loopCoord`
 
 Loop a coordinate if can loop
 
@@ -515,7 +515,7 @@ Loop a coordinate if can loop
 instance.track.loop(1234);
 ```
 
-### track.lerp
+### `track.lerp`
 
 Interpolate the current track value
 
@@ -523,7 +523,7 @@ Interpolate the current track value
 instance.track.lerp(0.1);
 ```
 
-### track.set
+### `track.set`
 
 Set current & target value instantly
 
@@ -531,7 +531,7 @@ Set current & target value instantly
 instance.track.set(1350);
 ```
 
-### getNearestMagnet
+### `getNearestMagnet`
 
 Get nearest magnet to the current position
 
@@ -547,7 +547,7 @@ const magnet = instance.getNearestMagnet(1234);
 All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
 :::
 
-### activeSlide
+### `activeSlide`
 
 Triggered on active slide change
 
@@ -558,7 +558,7 @@ const destruct = instance.on('activeSlide', (slide) => console.log(slide.index))
 destruct();
 ```
 
-### rafPause
+### `rafPause`
 
 Triggered on requestAnimationFrame pause
 
@@ -569,7 +569,7 @@ const destruct = instance.on('rafPause', () => console.log('pause'));
 destruct();
 ```
 
-### rafPlay
+### `rafPlay`
 
 Triggered on requestAnimationFrame play
 
@@ -580,7 +580,7 @@ const destruct = instance.on('rafPlay', () => console.log('play'));
 destruct();
 ```
 
-### reflow
+### `reflow`
 
 Triggered on carousel calculation
 
@@ -590,7 +590,7 @@ const destruct = instance.on('reflow', () => console.log('reflow'));
 // Cancel the callback
 destruct();
 
-### resize
+### `resize`
 
 Triggered on carousel resize
 
@@ -601,7 +601,7 @@ const destruct = instance.on('resize', () => console.log('resize'));
 destruct();
 ```
 
-### swipe
+### `swipe`
 
 Triggered on swipe move
 
@@ -612,18 +612,7 @@ const destruct = instance.on('swipe', (coord) => console.log(coord));
 destruct();
 ```
 
-### swipe
-
-Triggered on swipe move
-
-```ts
-const destruct = instance.on('swipe', (coord) => console.log(coord));
-
-// Cancel the callback
-destruct();
-```
-
-### swipeEnd
+### `swipeEnd`
 
 Triggered on swipe end
 
@@ -634,7 +623,7 @@ const destruct = instance.on('swipeEnd', (coord) => console.log(coord));
 destruct();
 ```
 
-### swipeStart
+### `swipeStart`
 
 Triggered on swipe start
 
@@ -645,7 +634,7 @@ const destruct = instance.on('swipeStart', (coord) => console.log(coord));
 destruct();
 ```
 
-### timelineEnd
+### `timelineEnd`
 
 Triggered on timeline animation end
 
@@ -656,18 +645,7 @@ const destruct = instance.on('timelineEnd', () => console.log('end'));
 destruct();
 ```
 
-### timelineEnd
-
-Triggered on timeline animation end
-
-```ts
-const destruct = instance.on('timelineEnd', () => console.log('end'));
-
-// Cancel the callback
-destruct();
-```
-
-### timelineStart
+### `timelineStart`
 
 Triggered on timeline animation start
 
@@ -678,18 +656,7 @@ const destruct = instance.on('timelineStart', () => console.log('start'));
 destruct();
 ```
 
-### timelineStart
-
-Triggered on timeline animation start
-
-```ts
-const destruct = instance.on('timelineStart', () => console.log('start'));
-
-// Cancel the callback
-destruct();
-```
-
-### timelineUpdate
+### `timelineUpdate`
 
 Triggered on timeline animation progress update
 
@@ -702,7 +669,7 @@ const destruct = instance.on('timelineUpdate', ({ progress, eased }) => {
 destruct();
 ```
 
-### update
+### `update`
 
 Triggered on carousel coords update
 
@@ -713,7 +680,7 @@ const destruct = instance.on('update', () => console.log('update'));
 destruct();
 ```
 
-### wheel
+### `wheel`
 
 Triggered on wheel event
 
@@ -724,7 +691,7 @@ const destruct = instance.on('wheel', (evt) => console.log(evt));
 destruct();
 ```
 
-### wheelEnd
+### `wheelEnd`
 
 Triggered on wheel events end
 
@@ -735,7 +702,7 @@ const destruct = instance.on('wheelEnd', () => console.log('end'));
 destruct();
 ```
 
-### wheelStart
+### `wheelStart`
 
 Triggered on wheel events start
 
@@ -746,7 +713,7 @@ const destruct = instance.on('wheelStart', () => console.log('start'));
 destruct();
 ```
 
-### swipeInertiaStart
+### `swipeInertiaStart`
 
 Triggered on swipe inertia start
 
@@ -757,7 +724,7 @@ const destruct = instance.on('swipeInertiaStart', () => console.log('start'));
 destruct();
 ```
 
-### swipeInertiaEnd
+### `swipeInertiaEnd`
 
 Triggered on swipe inertia end
 
@@ -768,7 +735,7 @@ const destruct = instance.on('swipeInertiaEnd', () => console.log('end'));
 destruct();
 ```
 
-### swipeInertiaCancel
+### `swipeInertiaCancel`
 
 Triggered on swipe inertia cancel
 
@@ -779,7 +746,7 @@ const destruct = instance.on('swipeInertiaCancel', () => console.log('cancel'));
 destruct();
 ```
 
-### swipeInertiaFail
+### `swipeInertiaFail`
 
 Triggered on swipe inertia fail
 

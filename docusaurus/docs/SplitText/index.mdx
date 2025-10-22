@@ -134,19 +134,19 @@ Static properties are set during initialization and cannot be modified later.
 All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
 :::
 
-### letters
+### `letters`
 
 Type: `HTMLElement[]`
 
 Retrieves an array of letter elements.
 
-### lettersMeta
+### `lettersMeta`
 
 Type: `ISplitTextLetterMeta[]`
 
 Retrieves an array of letters metadata.
 
-#### ISplitTextLetterMeta Structure
+**ISplitTextLetterMeta Structure**
 
 ```ts
 interface ISplitTextLetterMeta {
@@ -154,19 +154,19 @@ interface ISplitTextLetterMeta {
 }
 ```
 
-### lines
+### `lines`
 
 Type: `HTMLElement[]`
 
 Retrieves an array of line elements.
 
-### linesMeta
+### `linesMeta`
 
 Type: `ISplitTextLineMeta[]`
 
 Retrieves an array of lines metadata.
 
-#### ISplitTextLineMeta Structure
+**ISplitTextLineMeta Structure**
 
 ```ts
 interface ISplitTextLineMeta {
@@ -176,19 +176,19 @@ interface ISplitTextLineMeta {
 }
 ```
 
-### words
+### `words`
 
 Type: `HTMLElement[]`
 
 Retrieves an array of word elements.
 
-### wordsMeta
+### `wordsMeta`
 
 Type: `ISplitTextWordMeta[]`
 
 Retrieves an array of words metadata.
 
-#### ISplitTextWordMeta Structure
+**ISplitTextWordMeta Structure**
 
 ```ts
 interface ISplitTextWordMeta {
@@ -205,7 +205,7 @@ interface ISplitTextWordMeta {
 All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
 :::
 
-### split
+### `split`
 
 Splits the text into letters, words, and optionally lines based on configuration.
 
@@ -221,7 +221,7 @@ instance.split();
 All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
 :::
 
-### beforeSplit
+### `beforeSplit`
 
 Called before the text is split
 
@@ -232,7 +232,7 @@ const destruct = instance.on('beforeSplit', () => console.log('beforeSplit'));
 destruct();
 ```
 
-### split
+### `split`
 
 Called after the text has been split.
 

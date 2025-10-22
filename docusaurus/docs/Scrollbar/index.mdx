@@ -127,73 +127,73 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
 :::
 
-### axis
+### `axis`
 
 Type: `"x" | "y"`
 
 Scrolling direction
 
-### container
+### `container`
 
 Type: `Window | HTMLElement`
 
 The element to which the scrollbar is applied.
 
-### outer
+### `outer`
 
 Type: `HTMLElement`
 
 Scrollbar outer element
 
-### parent
+### `parent`
 
 Type: `HTMLElement`
 
 The element where the scrollbar is appended. If `parent` is not set, it defaults to `container` or `document.body` (if applied to `window`).
 
-### scrollableSize
+### `scrollableSize`
 
 Type: `number`
 
 Returns the total scrollable distance.
 
-### scrollElement
+### `scrollElement`
 
 Type: `HTMLElement`
 
 The actual scrollable element. Returns `document.documentElement` for `window`, otherwise the `container` itself.
 
-### scrollSize
+### `scrollSize`
 
 Type: `number`
 
 Returns the total scroll width/height of the content.
 
-### scrollValue
+### `scrollValue`
 
 Type: `number`
 
 Returns scrollTop or scrollLeft of the scrollable element.
 
-### thumb
+### `thumb`
 
 Type: `HTMLElement`
 
 Scrollbar thumb element (draggable handle).
 
-### thumbSize
+### `thumbSize`
 
 Type: `number`
 
 Returns the current thumb size.
 
-### track
+### `track`
 
 Type: `HTMLElement`
 
 Scrollbar track element (the container of the thumb).
 
-### trackSize
+### `trackSize`
 
 Type: `number`
 
@@ -207,7 +207,7 @@ Returns the current track size.
 All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
 :::
 
-### resize
+### `resize`
 
 Force-resize the scrollbar.
 
@@ -223,7 +223,7 @@ instance.resize();
 All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
 :::
 
-### update
+### `update`
 
 Triggered when the scrollbar updates its position.
 
@@ -234,7 +234,7 @@ const destruct = instance.on('update', () => console.log('update'));
 destruct();
 ```
 
-### resize
+### `resize`
 
 Triggered when the scrollbar resizes.
 
@@ -245,7 +245,7 @@ const destruct = instance.on('resize', () => console.log('resize'));
 destruct();
 ```
 
-### show
+### `show`
 
 Triggered when the scrollbar is shown
 
@@ -256,7 +256,7 @@ const destruct = instance.on('show', () => console.log('show'));
 destruct();
 ```
 
-### hide
+### `hide`
 
 Triggered when the scrollbar is hidden
 
@@ -267,7 +267,7 @@ const destruct = instance.on('hide', () => console.log('hide'));
 destruct();
 ```
 
-### swipeStart
+### `swipeStart`
 
 Triggered on swipe start
 
@@ -278,7 +278,7 @@ const destruct = instance.on('swipeStart', (coords) => console.log(coords));
 destruct();
 ```
 
-### swipe
+### `swipe`
 
 Triggered on swipe move
 
@@ -289,7 +289,7 @@ const destruct = instance.on('swipe', (coords) => console.log(coords));
 destruct();
 ```
 
-### swipeEnd
+### `swipeEnd`
 
 Triggered on swipe end
 

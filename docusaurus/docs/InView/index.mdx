@@ -73,17 +73,19 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
 :::
 
-### elements
+### `elements`
 
 Type: `Element[]`
 
 Returns all elements currently being observed.
 
-### isInitialStart
+### `isInitialStart`
 
 Type: `boolean`
 
 Indicates whether the observation has started for the first time.
+
+
 
 ## Methods
 
@@ -91,7 +93,7 @@ Indicates whether the observation has started for the first time.
 All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
 :::
 
-### addElement
+### `addElement`
 
 Registers an element for visibility observation. If the element has a `data-in-view-class` attribute, the specified class will be applied upon entering the viewport.
 
@@ -102,7 +104,7 @@ const observable = instance.addElement(document.getElementById('element'));
 observable();
 ```
 
-### removeElement
+### `removeElement`
 
 Removes an element from observation, preventing further visibility tracking.
 
@@ -110,7 +112,7 @@ Removes an element from observation, preventing further visibility tracking.
 instance.removeElement(document.getElementById('element'));
 ```
 
-### updateProps
+### `updateProps`
 
 Dynamically updates instance properties.
 
@@ -120,7 +122,7 @@ instance.updateProps({
 });
 ```
 
-### destroy
+### `destroy`
 
 Destroys the instance and removes all observers.
 
@@ -136,7 +138,7 @@ instance.destroy();
 All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
 :::
 
-### in
+### `in`
 
 Fires when an element enters the viewport.
 
@@ -147,7 +149,7 @@ const destruct = instance.on('in', ({ element }) => console.log(element, 'entere
 destruct();
 ```
 
-### out
+### `out`
 
 Fires when an element leaves the viewport.
 
