@@ -43,8 +43,8 @@ const config: Config = {
 
     navbar: {
       logo: {
-        alt: 'Vevet Logo',
-        src: 'img/vevet-logo.svg',
+        alt: 'vevet.js logo',
+        src: 'img/vevet-logo-ub.svg',
       },
       items: [
         {

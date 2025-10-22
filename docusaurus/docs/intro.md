@@ -6,7 +6,7 @@ sidebar_position: -1000
 
 ## Introduction
 
-**Vevet.js** is a flexible client-side JavaScript library for creative web development.
+Vevet.js is a flexible client-side JavaScript library for creative web development. Build stunning interactive experiences with&nbsp;a&nbsp;comprehensive toolkit of components and utilities.
 
 The library consists of:
 

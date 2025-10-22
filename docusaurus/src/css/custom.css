@@ -1,8 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap');
 
 :root {
+  --ifm-font-family-base: 'Ubuntu', sans-serif;
+
   --color-sapphire: #1E2B52;
-  --color-ultramarine: #0D6EFD;
+  --color-ultramarine: #6366f1;
   --color-aurora-teal: #00C9B1;
   --color-amethyst: #8C7AE6;
   --color-champagne: #F4D69D;
@@ -13,8 +16,6 @@
   --gradient-sunset: linear-gradient(135deg, var(--color-coral) 0%, var(--color-champagne) 100%);
   --gradient-northern: linear-gradient(165deg, var(--color-night) 0%, var(--color-sapphire) 40%, #003A52 100%);
   --gradient-frosted: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(194, 249, 239, 0.7) 100%);
-
-  --ifm-font-family-base: 'Outfit', sans-serif;
 
   --ifm-background-color: #f8f9ff;
   --ifm-color-primary: var(--color-ultramarine);
@@ -41,6 +42,7 @@
   --ifm-toc-padding-vertical: 0.75rem;
   --ifm-table-cell-padding: 1rem;
   --ifm-code-font-size: 95%;
+  --ifm-leading-desktop: 1.35;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */

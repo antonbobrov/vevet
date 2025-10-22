@@ -12,7 +12,7 @@ function HomepageHeader() {
 
   return (
     <header className={styles.mainScreen}>
-      <h1 className={styles.title}>vevet</h1>
+      <h1 className={styles.title}>vevet.js</h1>
       
       <p className={styles.subtitle}>{siteConfig.tagline}</p>
 

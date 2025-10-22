@@ -39,10 +39,9 @@
 }
 
 .title {
-  font-family: 'Lora', serif;
   font-weight: 700;
   font-size: 6rem;
-  line-height: 1;
+  line-height: 1.35;
   margin-bottom: var(--space-md);
   background: var(--gradient-cosmic);
   -webkit-background-clip: text;
