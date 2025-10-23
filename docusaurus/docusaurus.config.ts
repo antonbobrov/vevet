@@ -79,9 +79,9 @@ const config: Config = {
     },
     
     algolia: {
-      appId: 'MSAF9XJGA7',
-      apiKey: '3ca26ace2526c74dccc014381db15fe5',
-      indexName: 'antonbobrovio',
+      appId: '38KHSXH1BV',
+      apiKey: '97f484a607220fbe1ecef8d25e8f36f7',
+      indexName: 'Vevet',
       contextualSearch: true,
       searchParameters: {},
       searchPagePath: 'search',
