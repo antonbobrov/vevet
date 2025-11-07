@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.1.4](https://github.com/antonbobrov/vevet/compare/v5.1.3...v5.1.4) (2025-11-07)
+
+
+### SplitText
+
+* fix line splitting for center alignment ([73260fd](https://github.com/antonbobrov/vevet/commit/73260fd0d331492aa2fd3c99ddac78205e5fccf1))
+
 ## [5.1.3](https://github.com/antonbobrov/vevet/compare/v5.1.2...v5.1.3) (2025-11-07)
 
 
