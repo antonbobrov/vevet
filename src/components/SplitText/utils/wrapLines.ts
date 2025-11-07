@@ -1,4 +1,5 @@
 import { ISplitTextLineMeta, ISplitTextWordMeta } from '../types';
+import { getTextAalignment } from './getTextAalignment';
 
 interface IProps {
   container: HTMLElement;
@@ -51,7 +52,7 @@ export function wrapLines({
   lineWrapperClassName,
   tagName,
 }: IProps) {
-  const { direction } = getComputedStyle(container);
+  const direction = getTextAalignment(container);
 
   const linesMeta: ILine[] = [];
   let lineIndex = -1;
@@ -77,14 +78,15 @@ export function wrapLines({
 
     // create new line if the top position changes
 
+    const isNextTop = lastBounding && bounds.top >= lastBounding.top;
+    const isNextLeft = lastBounding && bounds.left >= lastBounding.left;
+    const isPrevLeft = lastBounding && bounds.left <= lastBounding.left;
+
     if (
       !lastBounding ||
-      (bounds.top >= lastBounding.top &&
-        bounds.left <= lastBounding.left &&
-        direction === 'ltr') ||
-      (bounds.top >= lastBounding.top &&
-        bounds.left >= lastBounding.left &&
-        direction === 'rtl')
+      (isNextTop && isPrevLeft && direction === 'left') ||
+      (isNextTop && isNextLeft && direction === 'right') ||
+      (isNextTop && direction === 'center')
     ) {
       lineIndex += 1;
 
