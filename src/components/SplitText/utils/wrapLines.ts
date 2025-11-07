@@ -78,7 +78,7 @@ export function wrapLines({
 
     // create new line if the top position changes
 
-    const isNextTop = lastBounding && bounds.top >= lastBounding.top;
+    const isNextTop = lastBounding && bounds.top > lastBounding.top;
     const isNextLeft = lastBounding && bounds.left >= lastBounding.left;
     const isPrevLeft = lastBounding && bounds.left <= lastBounding.left;
 
