@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.1.3](https://github.com/antonbobrov/vevet/compare/v5.1.2...v5.1.3) (2025-11-07)
+
+
+### SplitText
+
+* better support of text direction and alignment ([8919519](https://github.com/antonbobrov/vevet/commit/8919519b7530645f525ee7ee783c2b6e9d49cca1))
+
 ## [5.1.2](https://github.com/antonbobrov/vevet/compare/v5.1.1...v5.1.2) (2025-10-21)
 
 
