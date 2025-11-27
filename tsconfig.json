@@ -6,6 +6,7 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
     "skipLibCheck": true,
     "strict": true,
     "isolatedModules": true,

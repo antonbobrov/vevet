@@ -1,6 +1,7 @@
 import { TRequiredProps } from '@/internal/requiredProps';
 import { Module } from '@/base/Module';
 import { IRafCallbacksMap, IRafMutableProps, IRafStaticProps } from './types';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 
 export * from './types';
 
@@ -108,8 +109,9 @@ export class Raf<
   }
 
   /** Start the animation loop */
+  @noopIfDestroyed
   public play() {
-    if (this.isDestroyed || this.props.enabled) {
+    if (this.props.enabled) {
       return;
     }
 
@@ -131,6 +133,7 @@ export class Raf<
   }
 
   /** Pause the animation loop */
+  @noopIfDestroyed
   public pause() {
     if (!this.props.enabled) {
       return;

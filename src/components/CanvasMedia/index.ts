@@ -7,6 +7,7 @@ import {
 } from './types';
 import { Canvas, ICanvasRenderArg } from '../Canvas';
 import { addEventListener } from '@/utils';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 
 export * from './types';
 
@@ -74,6 +75,7 @@ export class CanvasMedia<
   }
 
   /** Resize the canvas */
+  @noopIfDestroyed
   public resize() {
     super.resize();
 
@@ -96,6 +98,7 @@ export class CanvasMedia<
   }
 
   /** Pre-renders the media resource onto the canvas. */
+  @noopIfDestroyed
   public render() {
     super.render((props) => this._prerender(props));
   }

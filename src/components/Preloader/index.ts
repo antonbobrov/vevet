@@ -99,6 +99,10 @@ export class Preloader<
    * @returns Returns an action destructor.
    */
   public hide(duration: number, callback?: () => void) {
+    if (this.isDestroyed) {
+      return undefined;
+    }
+
     if (!this._isLoaded || this._shouldHide) {
       return undefined;
     }
@@ -161,6 +165,10 @@ export class Preloader<
    * @returns A destructor.
    */
   public onHide(action: () => void) {
+    if (this.isDestroyed) {
+      return () => {};
+    }
+
     if (this._shouldHide) {
       action();
 
@@ -177,6 +185,10 @@ export class Preloader<
    * @returns A destructor.
    */
   public onHidden(action: () => void) {
+    if (this.isDestroyed) {
+      return () => {};
+    }
+
     if (this._isHidden) {
       action();
 

@@ -5,6 +5,7 @@ import {
   ICallbacksMap,
   TCallbacksAction,
 } from './types';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 
 export * from './types';
 
@@ -14,6 +15,9 @@ export * from './types';
  * @group Base
  */
 export class Callbacks<Types extends ICallbacksMap = ICallbacksMap> {
+  /** Whether the instance has been destroyed. */
+  private _isDestroyed = false;
+
   /** Storage for registered callbacks. */
   private _list: ICallback<Types>[] = [];
 
@@ -29,6 +33,7 @@ export class Callbacks<Types extends ICallbacksMap = ICallbacksMap> {
    * @param settings - Optional callback settings (e.g., timeout, one-time).
    * @returns Callback ID and a removal function.
    */
+  @noopIfDestroyed
   public add<T extends keyof Types>(
     target: T,
     action: TCallbacksAction<Types[T]>,
@@ -53,6 +58,7 @@ export class Callbacks<Types extends ICallbacksMap = ICallbacksMap> {
    * @param settings - Optional callback settings (e.g., timeout, one-time).
    * @returns A function to remove the callback.
    */
+  @noopIfDestroyed
   public on<T extends keyof Types>(
     target: T,
     action: TCallbacksAction<Types[T]>,
@@ -70,6 +76,7 @@ export class Callbacks<Types extends ICallbacksMap = ICallbacksMap> {
    * @param id - ID of the callback to remove.
    * @returns `true` if the callback was removed, `false` otherwise.
    */
+  @noopIfDestroyed
   public remove(id: string) {
     return this._remove(id);
   }
@@ -130,6 +137,7 @@ export class Callbacks<Types extends ICallbacksMap = ICallbacksMap> {
    * @param target - Event name to trigger.
    * @param arg - Argument to pass to the callbacks.
    */
+  @noopIfDestroyed
   public emit<T extends keyof Types>(target: T, arg: Types[T]) {
     this._list.forEach((callback) => {
       if (callback.target === target) {
@@ -139,7 +147,10 @@ export class Callbacks<Types extends ICallbacksMap = ICallbacksMap> {
   }
 
   /** Removes all registered callbacks. */
+  @noopIfDestroyed
   public destroy() {
     this._removeAll();
+
+    this._isDestroyed = true;
   }
 }

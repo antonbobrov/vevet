@@ -8,6 +8,7 @@ import { Module } from '@/base';
 import { TRequiredProps } from '@/internal/requiredProps';
 import { initVevet } from '@/global/initVevet';
 import { addEventListener, clampScope } from '@/utils';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 
 export * from './types';
 
@@ -142,6 +143,7 @@ export class ScrollProgress<
   }
 
   /** Updates the section and root bounds, and emits an update callback. */
+  @noopIfDestroyed
   public update() {
     const { section, props } = this;
     const container = props.root;

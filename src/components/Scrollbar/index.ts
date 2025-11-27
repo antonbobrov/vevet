@@ -9,6 +9,7 @@ import { initVevet } from '@/global/initVevet';
 import { addEventListener, clamp, onResize, toPixels } from '@/utils';
 import { createScrollbarStyles } from './styles';
 import { ISwipeCoords, Swipe } from '../Swipe';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 
 export * from './types';
 
@@ -361,6 +362,7 @@ export class Scrollbar<
   }
 
   /** Resize the scrollbar. */
+  @noopIfDestroyed
   public resize() {
     const { scrollableSize, scrollSize, outer, track, thumb, props, axis } =
       this;

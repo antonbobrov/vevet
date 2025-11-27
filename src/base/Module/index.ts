@@ -6,6 +6,7 @@ import {
   IModuleStaticProps,
 } from './types';
 import { mergeWithNoUndefined } from '@/internal/mergeWithNoUndefined';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 
 // todo: jsdoc
 
@@ -97,6 +98,7 @@ export class Module<
   }
 
   /** Change module's mutable properties */
+  @noopIfDestroyed
   public updateProps(props: Partial<MutableProps>) {
     this._props = {
       ...this._props,
@@ -112,6 +114,12 @@ export class Module<
    * @param action - The function to execute during destruction.
    */
   public onDestroy(action: () => void) {
+    if (this.isDestroyed) {
+      action();
+
+      return;
+    }
+
     this._destroyable.push(action);
   }
 
@@ -122,6 +130,7 @@ export class Module<
    * @param listener - The function to execute when the event is triggered.
    * @param settings - Additional settings for the callback.
    */
+  @noopIfDestroyed
   public on<T extends keyof CallbacksMap>(
     target: T,
     listener: TCallbacksAction<CallbacksMap[T]>,
@@ -159,11 +168,8 @@ export class Module<
   /**
    * Destroys the module, cleaning up resources, callbacks, and event listeners.
    */
+  @noopIfDestroyed
   public destroy() {
-    if (this.isDestroyed) {
-      return;
-    }
-
     this._destroy();
   }
 

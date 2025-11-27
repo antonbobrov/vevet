@@ -29,6 +29,7 @@ import { SnapSwipe } from './Swipe';
 import { SnapTrack } from './Track';
 import { SnapKeyboard } from './Keyboard';
 import { initVevet } from '@/global/initVevet';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 
 export * from './types';
 export * from './Slide';
@@ -213,6 +214,7 @@ export class Snap<
   }
 
   /** Request resize (handled with debounce timeout) */
+  @noopIfDestroyed
   public resize(isManual = false) {
     if (isManual) {
       this._resizeHandler.resize();
@@ -363,6 +365,7 @@ export class Snap<
   }
 
   /** Render slides */
+  @noopIfDestroyed
   public render(frameDuration = 0) {
     if (this.isEmpty) {
       return;
@@ -508,6 +511,7 @@ export class Snap<
   }
 
   /** Stick to the nearest magnet */
+  @noopIfDestroyed
   public stick() {
     const { magnet } = this;
 
@@ -520,7 +524,7 @@ export class Snap<
 
   /** Go to a definite coordinate */
   public toCoord(coordinate: number, options?: ISnapTransitionArg) {
-    if (this.isEmpty) {
+    if (this.isEmpty || this.isDestroyed) {
       return false;
     }
 
@@ -591,7 +595,7 @@ export class Snap<
     const { isEmpty, activeIndex, slides, track, props } = this;
     const { current, max, loopCount } = track;
 
-    if (isEmpty) {
+    if (isEmpty || this.isDestroyed) {
       return false;
     }
 

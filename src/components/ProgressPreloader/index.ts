@@ -13,6 +13,7 @@ import {
 import { Preloader } from '../Preloader';
 import { Raf } from '../Raf';
 import { initVevet } from '@/global/initVevet';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 
 export * from './types';
 
@@ -207,11 +208,8 @@ export class ProgressPreloader<
    * @param id - The custom resource element or identifier to preload.
    * @param weight - The resource weight
    */
+  @noopIfDestroyed
   public addResource(id: Element | string, weight = 1) {
-    if (this.isDestroyed) {
-      return;
-    }
-
     const hasResource = this.resources.some((item) => item.id === id);
 
     if (hasResource) {
@@ -225,11 +223,8 @@ export class ProgressPreloader<
    * Emits a resource load event and updates the count of loaded resources.
    * @param id - The resource element or identifier being loaded.
    */
+  @noopIfDestroyed
   public resolveResource(id: Element | string, loadedWeight?: number) {
-    if (this.isDestroyed) {
-      return;
-    }
-
     const resource = this.resources.find((item) => item.id === id);
     if (!resource) {
       return;

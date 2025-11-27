@@ -8,6 +8,7 @@ import {
   TCanvasRender,
 } from './types';
 import { initVevet } from '@/global/initVevet';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 
 export * from './types';
 
@@ -168,6 +169,7 @@ export class Canvas<
   }
 
   /** Triggers a canvas resize based on container or viewport dimensions. */
+  @noopIfDestroyed
   public resize() {
     const core = initVevet();
     const { props, canvas } = this;
@@ -211,6 +213,7 @@ export class Canvas<
    *
    * @param render - A function that performs the actual rendering on the canvas.
    */
+  @noopIfDestroyed
   public render(render: TCanvasRender) {
     if (!this.canRender) {
       return;

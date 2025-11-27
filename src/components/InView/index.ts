@@ -8,6 +8,7 @@ import {
 } from './types';
 import { Module } from '@/base/Module';
 import { initVevet } from '@/global/initVevet';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 
 export * from './types';
 
@@ -245,6 +246,7 @@ export class InView<
    *
    * @returns A function to stop observing the element.
    */
+  @noopIfDestroyed
   public addElement(element: Element) {
     const finalElement = element as IInViewElement;
     finalElement.$vevetInViewBool = undefined;
@@ -260,6 +262,7 @@ export class InView<
   /**
    * Removes an element from observation, preventing further visibility tracking.
    */
+  @noopIfDestroyed
   public removeElement(element: Element) {
     const finalElement = element as IInViewElement;
 

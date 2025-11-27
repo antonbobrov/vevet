@@ -13,6 +13,7 @@ import { addEventListener } from '@/utils/listeners';
 import { initVevet } from '@/global/initVevet';
 import { lerp } from '@/utils/math';
 import { createCursorStyles } from './styles';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 
 export * from './types';
 
@@ -376,6 +377,7 @@ export class Cursor<
    * @param {number} [enterTimeout=100] The timeout before the hover effect is applied.
    * @returns Returns a destructor
    */
+  @noopIfDestroyed
   public attachElement(settings: ICursorHoveredElement, enterTimeout = 100) {
     const data: ICursorHoveredElement = {
       width: null,
@@ -450,6 +452,7 @@ export class Cursor<
   /**
    * Registers a cursor type.
    */
+  @noopIfDestroyed
   public attachCursor({ element, type }: ICursorType) {
     this._types.push({ element, type });
 
@@ -490,6 +493,7 @@ export class Cursor<
   }
 
   /** Renders the cursor. */
+  @noopIfDestroyed
   public render() {
     this._calculate();
     this._renderElements();

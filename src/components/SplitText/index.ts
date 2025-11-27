@@ -13,6 +13,7 @@ import { Module } from '@/base';
 import { TRequiredProps } from '@/internal/requiredProps';
 import { initVevet } from '@/global/initVevet';
 import { saveInitialNodes } from './utils/saveInitialNodes';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 
 export * from './types';
 
@@ -192,6 +193,7 @@ export class SplitText<
   /**
    * Splits the text into letters, words, and optionally lines based on configuration.
    */
+  @noopIfDestroyed
   public split() {
     this.callbacks.emit('beforeSplit', undefined);
 

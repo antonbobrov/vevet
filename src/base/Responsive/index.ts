@@ -2,6 +2,7 @@
 import { initVevet } from '@/global/initVevet';
 import { TResponsiveProps, TResponsiveRule, TResponsiveSource } from './types';
 import { Module } from '../Module';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 
 export * from './types';
 
@@ -185,11 +186,8 @@ export class Responsive<T extends TResponsiveSource> {
    *
    * The instance is destroyed automatically when it is used to mutate Module's props.
    */
+  @noopIfDestroyed
   public destroy() {
-    if (this._isDestroyed) {
-      return;
-    }
-
     this._isDestroyed = true;
 
     this._destructors.forEach((destructor) => destructor());

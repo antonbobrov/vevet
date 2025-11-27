@@ -7,6 +7,7 @@ import {
   ITimelineStaticProps,
 } from './types';
 import { initVevet } from '@/global/initVevet';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 
 export * from './types';
 
@@ -126,8 +127,9 @@ export class Timeline<
    * Play the timeline, advancing progress toward completion.
    * Does nothing if the timeline is destroyed or already completed.
    */
+  @noopIfDestroyed
   public play() {
-    if (this.isDestroyed || this.progress === 1) {
+    if (this.progress === 1) {
       return;
     }
 
@@ -144,8 +146,9 @@ export class Timeline<
    * Reverse the timeline, moving progress toward the start.
    * Does nothing if the timeline is destroyed or already at the start.
    */
+  @noopIfDestroyed
   public reverse() {
-    if (this.isDestroyed || this.progress === 0) {
+    if (this.progress === 0) {
       return;
     }
 
@@ -161,11 +164,8 @@ export class Timeline<
   /**
    * Pause the timeline, halting progress without resetting it.
    */
+  @noopIfDestroyed
   public pause() {
-    if (this.isDestroyed) {
-      return;
-    }
-
     this._isPaused = true;
 
     if (this._raf) {
@@ -178,11 +178,8 @@ export class Timeline<
   /**
    * Reset the timeline to the beginning (progress = 0).
    */
+  @noopIfDestroyed
   public reset() {
-    if (this.isDestroyed) {
-      return;
-    }
-
     this.pause();
     this.progress = 0;
   }

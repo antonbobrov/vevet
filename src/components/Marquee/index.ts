@@ -10,6 +10,7 @@ import { Module } from '@/base/Module';
 import { Raf } from '../Raf';
 import { initVevet } from '@/global/initVevet';
 import { toPixels } from '@/utils';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 
 export * from './types';
 
@@ -282,11 +283,8 @@ export class Marquee<
   }
 
   /** Resizes the marquee, recalculating element positions and cloning if necessary. */
+  @noopIfDestroyed
   public resize() {
-    if (this.isDestroyed) {
-      return;
-    }
-
     const { props, isVertical } = this;
     const { container } = props;
 
@@ -332,6 +330,7 @@ export class Marquee<
   }
 
   /** Renders the marquee, adjusting element positions. */
+  @noopIfDestroyed
   public render(step?: number) {
     this._render(step);
   }
