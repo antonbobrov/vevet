@@ -1,5 +1,5 @@
-import { detect } from 'detect-browser';
-import isMobileJs from 'ismobilejs';
+import InAppSpy from 'inapp-spy';
+import Bowser from 'bowser';
 import manifest from '../manifest.json';
 import { createPageLoad } from './handlers/createPageLoad';
 import { ICoreProps } from './types';
@@ -23,13 +23,23 @@ export function Core(input: Partial<ICoreProps>): ICore {
 
   // device info
 
-  const browserData = detect();
-  const device = isMobileJs();
+  const bowser = Bowser.getParser(window.navigator.userAgent);
 
-  const osName = (browserData?.os || '')?.split(' ')[0].toLowerCase();
-  const browserName = (browserData?.name || '').toLowerCase();
+  const { isInApp, appName } = InAppSpy();
+  const inAppBrowser = isInApp ? (appName || 'unknown').toLowerCase() : false;
 
-  const isMobile = device.phone || device.tablet;
+  const browser = bowser.getBrowser();
+  const os = bowser.getOS();
+
+  const browserName =
+    browser.name?.replaceAll(' ', '_').toLowerCase() ?? 'unknown';
+  const osName = os.name?.replaceAll(' ', '_').toLowerCase() ?? 'unknown';
+
+  const platform = bowser.getPlatform().type;
+  const isPhone = platform === 'mobile';
+  const isTablet = platform === 'tablet';
+
+  const isMobile = isPhone || isTablet;
 
   // events
 
@@ -37,7 +47,7 @@ export function Core(input: Partial<ICoreProps>): ICore {
     prefix,
     applyClassNames: props.applyClassNames,
   });
-  const viewport = createViewport({ prefix, props, isMobile });
+  const viewport = createViewport({ prefix, props, isMobile, isInApp });
 
   // output
 
@@ -47,11 +57,12 @@ export function Core(input: Partial<ICoreProps>): ICore {
     version: manifest.version,
     props,
     prefix,
-    phone: device.phone,
-    tablet: device.tablet,
+    phone: isPhone,
+    tablet: isTablet,
     mobile: isMobile,
     osName,
     browserName,
+    inAppBrowser,
     doc: document,
     html: document.documentElement,
     body: document.body,

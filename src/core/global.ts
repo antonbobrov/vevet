@@ -29,7 +29,8 @@ export interface ICore extends IViewport {
    * OS name in lowercase. Popular results:
    *
    * - windows
-   * - mac
+   * - macos
+   * - linux
    * - android
    * - ios
    */
@@ -39,15 +40,13 @@ export interface ICore extends IViewport {
    * Browser name in lowercase. Popular results:
    *
    * - chrome
-   * - edge-chromium
+   * - microsoft_edge
    * - opera
    * - firefox
    * - safari
-   * - ios (safari & in-app safari)
-   * - crios (chrome in ios)
-   * - samsung
-   * - yandexbrowser
-   * - ios-webview
+   * - opera
+   * - samsung_internet_for_ndroid
+   * - yandex_browser
    */
   browserName: string;
 
@@ -102,4 +101,7 @@ export interface ICore extends IViewport {
    * destruct();
    */
   onResize: TViewportCallbacksOn;
+
+  // todo
+  inAppBrowser: false | string;
 }

@@ -15,6 +15,7 @@ export const Component: FC = () => {
       'mobile',
       'browserName',
       'osName',
+      'inAppBrowser',
       'loaded',
       'lg',
       'md',
@@ -50,12 +51,23 @@ export const Component: FC = () => {
         Update features
       </button>
 
+      <br />
+
+      <br />
+
+      <a href="/?path=/story/core--default">page</a>
+
       {features &&
         Object.keys(features).map((key) => {
           const value = features[key];
           const stringValue = String(value);
 
-          return <div key={key}>{`${key}: ${stringValue}`}</div>;
+          return (
+            <div
+              key={key}
+              style={{ margin: '20px 0' }}
+            >{`${key}: ${stringValue}`}</div>
+          );
         })}
     </div>
   );

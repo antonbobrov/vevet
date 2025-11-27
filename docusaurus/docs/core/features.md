@@ -51,7 +51,8 @@ Detects if the application is running on a mobile device (tablet or phone).
 Returns the name of the operating system.  
 Popular results:
   - windows
-  - mac
+  - macos
+  - linux
   - android
   - ios
 
@@ -61,15 +62,13 @@ Popular results:
 Returns the name of the browser.  
 Popular results:
   - chrome
-  - edge-chromium
+  - microsoft_edge
   - opera
   - firefox
   - safari
-  - ios (safari & in-app safari)
-  - crios (chrome in ios)
-  - samsung
-  - yandexbrowser
-  - ios-webview
+  - opera
+  - samsung_internet_for_ndroid
+  - yandex_browser
 
 ---
 
