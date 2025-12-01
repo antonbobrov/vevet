@@ -82,6 +82,22 @@ export interface ISplitTextStaticProps extends IModuleStaticProps {
    * @default null
    */
   ignore?: string | HTMLElement[] | ((element: HTMLElement) => boolean) | null;
+
+  /**
+   * Optional callback to preprocess text before it is split into words.
+   * This function receives the original text and should return the modified text.
+   * It is useful for languages like Chinese where standard word splitting may not work correctly.
+   * 
+   * @example
+   * 
+   * const segmenter = new Intl.Segmenter('zh', { granularity: 'word' });
+   * 
+   * const instance = new SplitText({
+   *   container,
+   *   prepareText: (source) => [...segmenter.segment(source)].map((s) => s.segment).join(' '),
+    });
+   */
+  prepareText?: (text: string) => string;
 }
 
 /** Mutable properties for the SplitText module */

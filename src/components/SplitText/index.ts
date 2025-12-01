@@ -55,6 +55,7 @@ export class SplitText<
       lineWrapperClass: this._cn('__line-wrapper'),
       resizeDebounce: 0,
       ignore: null,
+      prepareText: (text) => text,
     } as TRequiredProps<StaticProps>;
   }
 
@@ -214,8 +215,15 @@ export class SplitText<
       return;
     }
 
-    const { container, letterTag, wordTag, wordClass, letterClass, ignore } =
-      this.props;
+    const {
+      container,
+      letterTag,
+      wordTag,
+      wordClass,
+      letterClass,
+      ignore,
+      prepareText,
+    } = this.props;
 
     this._isBaseSplit = true;
 
@@ -227,6 +235,7 @@ export class SplitText<
       letterTag,
       wordTag,
       ignore,
+      prepareText,
     });
 
     this._wordsMeta = wordsMeta;

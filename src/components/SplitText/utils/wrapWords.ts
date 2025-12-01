@@ -6,12 +6,19 @@ interface IProps {
   classname: string;
   tagName: keyof HTMLElementTagNameMap;
   ignore: ISplitTextStaticProps['ignore'];
+  prepareText: ISplitTextStaticProps['prepareText'];
 }
 
 /**
  * Wraps each word inside the container in an HTML element with the specified tag and class.
  */
-export function wrapWords({ container, classname, tagName, ignore }: IProps) {
+export function wrapWords({
+  container,
+  classname,
+  tagName,
+  ignore,
+  prepareText,
+}: IProps) {
   const whitespace = String.fromCharCode(32); // ASCII for space
 
   const baseElement = document.createElement(tagName);
@@ -54,7 +61,7 @@ export function wrapWords({ container, classname, tagName, ignore }: IProps) {
     // If the node is a text node, split it into words
     if (node.nodeType === 3) {
       const parent = node.parentElement ?? container;
-      const text = node.nodeValue ?? '';
+      let text = node.nodeValue ?? '';
 
       // Handle case where node contains only whitespace
       if (text === whitespace) {
@@ -66,6 +73,7 @@ export function wrapWords({ container, classname, tagName, ignore }: IProps) {
       }
 
       // Wrap each word in an element and insert it into the DOM
+      text = prepareText ? prepareText(text) : text;
       const splitWords = text.split(whitespace);
       splitWords.forEach((wordContents, index) => {
         if (wordContents) {

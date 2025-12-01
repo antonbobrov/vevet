@@ -10,6 +10,7 @@ interface IProps {
   letterTag: keyof HTMLElementTagNameMap;
   wordTag: keyof HTMLElementTagNameMap;
   ignore: ISplitTextStaticProps['ignore'];
+  prepareText: ISplitTextStaticProps['prepareText'];
 }
 
 /**
@@ -23,6 +24,7 @@ export function splitBase({
   letterTag,
   wordTag,
   ignore,
+  prepareText,
 }: IProps) {
   // Prepare the fragment
   const prepareFragment = document.createDocumentFragment();
@@ -36,6 +38,7 @@ export function splitBase({
     classname: wordClassName,
     tagName: wordTag,
     ignore,
+    prepareText,
   });
 
   const lettersMeta: ISplitTextLetterMeta[] = [];

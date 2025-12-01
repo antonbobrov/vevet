@@ -27,12 +27,16 @@ export const Component: FC<IProps> = ({
       return undefined;
     }
 
+    // const segmenter = new Intl.Segmenter('th', { granularity: 'word' });
+
     const instance = new SplitText({
       container,
       letters,
       lines,
       linesWrapper,
       ignore,
+      // prepareText: (source) =>
+      //   [...segmenter.segment(source)].map((s) => s.segment).join(' '),
     });
 
     return () => instance.destroy();
