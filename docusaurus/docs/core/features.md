@@ -55,7 +55,6 @@ Popular results:
   - android
   - ios
 
-
 ### `vevet.browserName`
 - **Type**: `string`  
 Returns the name of the browser.  
@@ -70,6 +69,10 @@ Popular results:
   - samsung
   - yandexbrowser
   - ios-webview
+
+### `vevet.inAppBrowser`
+- **Type**: `string`  
+Detects In-App Browser and returns its name, otherwise - `false`.
 
 ---
 

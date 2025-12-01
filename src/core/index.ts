@@ -1,5 +1,6 @@
 import { detect } from 'detect-browser';
 import isMobileJs from 'ismobilejs';
+import InAppSpy from 'inapp-spy';
 import manifest from '../manifest.json';
 import { createPageLoad } from './handlers/createPageLoad';
 import { ICoreProps } from './types';
@@ -31,6 +32,9 @@ export function Core(input: Partial<ICoreProps>): ICore {
 
   const isMobile = device.phone || device.tablet;
 
+  const { isInApp, appName } = InAppSpy();
+  const inAppBrowser = isInApp ? (appName || 'unknown').toLowerCase() : false;
+
   // events
 
   const pageLoad = createPageLoad({
@@ -52,6 +56,7 @@ export function Core(input: Partial<ICoreProps>): ICore {
     mobile: isMobile,
     osName,
     browserName,
+    inAppBrowser,
     doc: document,
     html: document.documentElement,
     body: document.body,

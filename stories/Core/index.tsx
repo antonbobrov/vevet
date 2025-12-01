@@ -14,6 +14,7 @@ export const Component: FC = () => {
       'phone',
       'mobile',
       'browserName',
+      'inAppBrowser',
       'osName',
       'loaded',
       'lg',
@@ -55,7 +56,12 @@ export const Component: FC = () => {
           const value = features[key];
           const stringValue = String(value);
 
-          return <div key={key}>{`${key}: ${stringValue}`}</div>;
+          return (
+            <div
+              key={key}
+              style={{ margin: '1rem 0' }}
+            >{`${key}: ${stringValue}`}</div>
+          );
         })}
     </div>
   );

@@ -51,6 +51,11 @@ export interface ICore extends IViewport {
    */
   browserName: string;
 
+  /**
+   * Detects In-App Browser and returns its name, otherwise - `false`.
+   */
+  inAppBrowser: false | string;
+
   /** Document */
   doc: Document;
 
