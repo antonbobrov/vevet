@@ -10,6 +10,7 @@ import { addEventListener, clamp, onResize, toPixels } from '@/utils';
 import { createScrollbarStyles } from './styles';
 import { ISwipeCoords, Swipe } from '../Swipe';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { getTextDirection } from '@/internal/textDirection';
 
 export * from './types';
 
@@ -107,8 +108,14 @@ export class Scrollbar<
   /** Previous scroll value */
   protected _prevScrollValue = 0;
 
+  /** Detects if the container is RTL */
+  protected _isRtl = false;
+
   constructor(props?: StaticProps & MutableProps) {
     super(props);
+
+    // detect features
+    this._isRtl = getTextDirection(this.parent) === 'rtl';
 
     // No need to remove styles on destroy
     createScrollbarStyles(this.prefix);
@@ -410,7 +417,11 @@ export class Scrollbar<
   /** Render the scrollbar. */
   protected _render() {
     const { scrollValue, scrollableSize, axis, thumbSize, trackSize } = this;
-    const scrollProgress = clamp(scrollValue / scrollableSize);
+    let scrollProgress = clamp(Math.abs(scrollValue) / scrollableSize);
+
+    if (this._isRtl && axis === 'x') {
+      scrollProgress = 1 - scrollProgress;
+    }
 
     const translate = (trackSize - thumbSize) * scrollProgress;
     const x = axis === 'x' ? translate : 0;
