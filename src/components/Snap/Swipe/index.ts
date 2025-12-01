@@ -168,7 +168,7 @@ export class SnapSwipe {
   protected _handleSwipeMove(coords: ISwipeCoords) {
     const { snap } = this;
     const { props, track, callbacks } = snap;
-    const { followSwipe: shouldFollow } = props;
+    const { followSwipe: shouldFollow, swipeSpeed } = props;
 
     if (!shouldFollow && !track.isSlideScrolling) {
       return;
@@ -176,7 +176,7 @@ export class SnapSwipe {
 
     // Normalize swipe delta
     const swipeDelta = this.axis === 'x' ? coords.step.x : coords.step.y;
-    const speed = this.hasInertia ? 1 : props.swipeSpeed;
+    const speed = this.hasInertia ? Math.sign(swipeSpeed) : swipeSpeed;
     const delta = swipeDelta * -speed;
 
     // Update track target
