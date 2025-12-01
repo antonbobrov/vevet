@@ -14,6 +14,7 @@ import { initVevet } from '@/global/initVevet';
 import { lerp } from '@/utils/math';
 import { createCursorStyles } from './styles';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { getTextDirection } from '@/internal/textDirection';
 
 export * from './types';
 
@@ -221,6 +222,10 @@ export class Cursor<
       cn(container instanceof Window ? '-in-window' : '-in-element'),
     );
     outer.classList.add(cn('-disabled'));
+
+    // set direction
+    const direction = getTextDirection(outer);
+    outer.classList.add(cn(`_${direction}`));
 
     // Create inner element
     const inner = document.createElement('div');

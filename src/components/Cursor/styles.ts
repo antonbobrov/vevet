@@ -54,6 +54,10 @@ export function createCursorStyles(prefix: string) {
       transition: transform 0.25s;
     }
 
+    .${prefix}_rtl .${prefix}__inner {
+      margin-right: calc(var(--cursor-w) / -2);
+    }
+
     .${prefix}__inner > * {
       position: absolute;
       top: 50%;
