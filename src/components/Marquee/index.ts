@@ -11,6 +11,7 @@ import { Raf } from '../Raf';
 import { initVevet } from '@/global/initVevet';
 import { toPixels } from '@/utils';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { getTextDirection } from '@/internal/textDirection';
 
 export * from './types';
 
@@ -131,17 +132,21 @@ export class Marquee<
       throw new Error('Marquee container is not defined');
     }
 
+    // get direction
+    const textDirection = getTextDirection(container);
+
     // Apply base styles to the container
-    container.style.position = 'relative';
-    container.style.display = 'flex';
-    container.style.flexDirection = isVertical ? 'column' : 'row';
-    container.style.alignItems = 'center';
-    container.style.justifyContent = 'flex-start';
-    container.style.overflow = 'hidden';
+    const { style } = container;
+    style.position = 'relative';
+    style.display = 'flex';
+    style.flexDirection = isVertical ? 'column' : 'row';
+    style.alignItems = 'center';
+    style.justifyContent = textDirection === 'rtl' ? 'flex-end' : 'flex-start';
+    style.overflow = 'hidden';
     if (isVertical) {
-      container.style.height = '100%';
+      style.height = '100%';
     } else {
-      container.style.width = '100%';
+      style.width = '100%';
     }
 
     // Setup elements in the marquee
@@ -255,10 +260,11 @@ export class Marquee<
     }
 
     const wrapper = document.createElement('span');
-    wrapper.style.position = 'relative';
-    wrapper.style.display = 'block';
-    wrapper.style.width = 'max-content';
-    wrapper.style.whiteSpace = 'nowrap';
+    const { style } = wrapper;
+    style.position = 'relative';
+    style.display = 'block';
+    style.width = 'max-content';
+    style.whiteSpace = 'nowrap';
 
     wrapper.appendChild(node);
     container.appendChild(wrapper);
@@ -269,16 +275,17 @@ export class Marquee<
    */
   protected _applyNodeStyles(element: HTMLElement, isAbsolute: boolean) {
     const el = element;
+    const { style } = el;
 
-    el.style.position = isAbsolute ? 'absolute' : 'relative';
-    el.style.top = isAbsolute && !this.isVertical ? '50%' : '0';
-    el.style.left = isAbsolute && this.isVertical ? '50%' : '0';
-    el.style.willChange = this.props.hasWillChange ? 'transform' : '';
-    el.style.flexShrink = '0';
+    style.position = isAbsolute ? 'absolute' : 'relative';
+    style.top = isAbsolute && !this.isVertical ? '50%' : '0';
+    style.left = isAbsolute && this.isVertical ? '50%' : '0';
+    style.willChange = this.props.hasWillChange ? 'transform' : '';
+    style.flexShrink = '0';
     if (this.isVertical) {
-      el.style.height = element.style.height || 'max-content';
+      style.height = style.height || 'max-content';
     } else {
-      el.style.width = element.style.width || 'max-content';
+      style.width = style.width || 'max-content';
     }
   }
 
@@ -358,6 +365,7 @@ export class Marquee<
     for (let index = 0; index < this._elements.length; index += 1) {
       const element = this._elements[index];
       const elementSize = this._sizes[index];
+      const { style } = element;
 
       const coord = loop(
         position + prevStaticCoord,
@@ -367,11 +375,11 @@ export class Marquee<
 
       // Apply transformations to position the element
       if (isVertical) {
-        const x = element.style.position === 'relative' ? '0' : '-50%';
-        element.style.transform = `translate(${x}, ${coord}px)`;
+        const x = style.position === 'relative' ? '0' : '-50%';
+        style.transform = `translate(${x}, ${coord}px)`;
       } else {
-        const y = element.style.position === 'relative' ? '0' : '-50%';
-        element.style.transform = `translate(${coord}px, ${y})`;
+        const y = style.position === 'relative' ? '0' : '-50%';
+        style.transform = `translate(${coord}px, ${y})`;
       }
 
       prevStaticCoord += elementSize;
