@@ -41,7 +41,8 @@ export function Core(input: Partial<ICoreProps>): ICore {
     prefix,
     applyClassNames: props.applyClassNames,
   });
-  const viewport = createViewport({ prefix, props, isMobile });
+
+  const viewport = createViewport({ prefix, props, isMobile, isInApp });
 
   // output
 

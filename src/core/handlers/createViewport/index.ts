@@ -7,11 +7,13 @@ interface IProps {
   prefix: string;
   props: ICoreProps;
   isMobile: boolean;
+  isInApp: boolean;
 }
 
-export function createViewport({ prefix, props, isMobile }: IProps) {
+export function createViewport({ prefix, props, isMobile, isInApp }: IProps) {
   const html = document.documentElement;
 
+  // create styles
   let styles = document.getElementById('vevet_css_preset');
   if (!styles) {
     styles = document.createElement('style');
@@ -19,6 +21,17 @@ export function createViewport({ prefix, props, isMobile }: IProps) {
     document.body.appendChild(styles);
   }
 
+  // create svh helper
+  const svhHelper = document.createElement('div');
+  svhHelper.id = 'vevet_svh_helper';
+  svhHelper.style.position = 'fixed';
+  svhHelper.style.top = '-100svh';
+  svhHelper.style.left = '-100px';
+  svhHelper.style.width = '1px';
+  svhHelper.style.height = '100svh';
+  document.body.appendChild(svhHelper);
+
+  // media queries
   const mqDesktop = window.matchMedia(`(min-width: ${props.md + 0.001}px)`);
   const mqTablet = window.matchMedia(
     `(min-width: ${props.sm + 0.001}px) and (max-width: ${props.md}px)`,
@@ -141,11 +154,21 @@ export function createViewport({ prefix, props, isMobile }: IProps) {
       data.lg = true;
     }
 
-    // update sHeight && svh only when the width changes
-    // or for desktop
-    if (prevWidth !== data.width || !data.sHeight || !isMobile) {
-      data.sHeight = root.clientHeight;
-      data.svh = data.sHeight / 100;
+    // for in-app browser, update svh only if width changed
+    if (isMobile && isInApp) {
+      const rootHeight = root.clientHeight;
+
+      if (prevWidth !== data.width || !data.sHeight) {
+        data.sHeight = rootHeight;
+        data.svh = data.sHeight / 100;
+      } else if (prevWidth === data.width && rootHeight < data.sHeight) {
+        data.sHeight = rootHeight;
+        data.svh = data.sHeight / 100;
+      }
+    } else {
+      // when other browser, update svh directly
+      data.svh = svhHelper.clientHeight / 100 || root.clientHeight / 100;
+      data.sHeight = data.svh * 100;
     }
   }
 
