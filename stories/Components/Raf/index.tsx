@@ -24,10 +24,11 @@ export const Component: FC<IProps> = ({ fps: fpsProp }) => {
     const instance = new Raf({
       fps: fpsProp,
       enabled: true,
-      onToggle: () => setIsPlaying(instance.isPlaying),
-      onFrame: () => updateProps(instance),
-      onProps: () => updateProps(instance),
     });
+
+    instance.on('toggle', () => setIsPlaying(instance.isPlaying));
+    instance.on('frame', () => updateProps(instance));
+    instance.on('props', () => updateProps(instance));
 
     setRaf(instance);
     updateProps(instance);
