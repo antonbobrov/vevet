@@ -77,6 +77,8 @@ export const Test: FC = () => {
             
           .slide {
             position: absolute;
+            top: 0;
+            left: 0;
             width: 200px;
             height: 300px;
             display: flex;

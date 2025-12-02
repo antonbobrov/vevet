@@ -1,6 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/react';
 import React from 'react';
 import { Test as TestComponent } from './Test';
+import { Rtl as RtlComponent } from './Rtl';
 import { Carousel as CarouselComponent } from './Carousel';
 import { Fade as FadeComponent } from './Fade';
 import { Cards as CardsComponent } from './Cards';
@@ -22,6 +23,8 @@ const meta: Meta = {
 export default meta;
 
 export const Test: StoryFn = () => <TestComponent />;
+
+export const Rtl: StoryFn = () => <RtlComponent />;
 
 export const Fade: StoryFn = () => <FadeComponent />;
 
