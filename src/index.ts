@@ -1,5 +1,6 @@
 import { ICore } from './core/global';
 import { initVevet } from './global/initVevet';
+import { isBrowser } from './internal/env';
 
 export { initVevet };
 
@@ -8,9 +9,7 @@ export { initVevet };
  *
  * @group Core
  */
-export const vevet = (
-  typeof window !== 'undefined' ? initVevet() : undefined
-) as Readonly<ICore>;
+export const vevet = (isBrowser ? initVevet() : undefined) as Readonly<ICore>;
 
 export const app = vevet;
 

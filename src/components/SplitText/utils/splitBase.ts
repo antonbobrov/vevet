@@ -1,3 +1,4 @@
+import { doc } from '@/internal/env';
 import { ISplitTextLetterMeta, ISplitTextStaticProps } from '../types';
 import { wrapLetters } from './wrapLetters';
 import { wrapWords } from './wrapWords';
@@ -30,7 +31,7 @@ export function splitBase({
   ...props
 }: IProps) {
   // Prepare the fragment
-  const prepareFragment = document.createDocumentFragment();
+  const prepareFragment = doc.createDocumentFragment();
   while (container.childNodes[0]) {
     prepareFragment.appendChild(container.childNodes[0]);
   }

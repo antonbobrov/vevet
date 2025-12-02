@@ -14,6 +14,7 @@ import { addEventListener, clamp, EaseOutCubic } from '@/utils';
 import { initVevet } from '@/global/initVevet';
 import { Timeline } from '../Timeline';
 import { cursorStyles } from './styles';
+import { body } from '@/internal/env';
 
 export * from './types';
 
@@ -188,6 +189,7 @@ export class Swipe<
   /** Applies touch-action and cursor styles */
   protected _setInlineStyles() {
     const { container, axis } = this.props;
+    const { style } = container;
 
     const cursor = this.props.grabCursor ? 'grab' : '';
 
@@ -198,8 +200,8 @@ export class Swipe<
       touchAction = 'pan-x';
     }
 
-    container.style.cursor = cursor;
-    container.style.touchAction = touchAction;
+    style.cursor = cursor;
+    style.touchAction = touchAction;
   }
 
   /** Handles `touchstart` events */
@@ -404,7 +406,7 @@ export class Swipe<
 
       // apply cursor
       if (this.props.grabCursor && this._cursorStyles) {
-        initVevet().body.append(this._cursorStyles);
+        body.append(this._cursorStyles);
       }
     }
 

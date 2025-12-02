@@ -7,8 +7,8 @@ import {
 } from './types';
 import { TRequiredProps } from '@/internal/requiredProps';
 import { addEventListener, clamp } from '@/utils';
-import { initVevet } from '@/global/initVevet';
 import { styles } from './styles';
+import { body } from '@/internal/env';
 
 export * from './types';
 
@@ -238,7 +238,7 @@ export class Pointers<
 
     // Apply styles to prevent user-select
     if (props.disableUserSelect) {
-      initVevet().body.append(styles!);
+      body.append(styles!);
     }
 
     // Trigger start callback

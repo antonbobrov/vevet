@@ -1,6 +1,8 @@
 import { IViewport, TViewportCallbacks } from './types';
 import { Callbacks } from '@/base/Callbacks';
 import { ICoreProps } from '@/core/types';
+import { cnToggle } from '@/internal/cn';
+import { body, doc, html } from '@/internal/env';
 import { addEventListener } from '@/utils/listeners';
 
 interface IProps {
@@ -11,25 +13,24 @@ interface IProps {
 }
 
 export function createViewport({ prefix, props, isMobile, isInApp }: IProps) {
-  const html = document.documentElement;
-
   // create styles
-  let styles = document.getElementById('vevet_css_preset');
+  let styles = doc.getElementById('vevet_css_preset');
   if (!styles) {
-    styles = document.createElement('style');
+    styles = doc.createElement('style');
     styles.id = 'vevet_css_preset';
-    document.body.appendChild(styles);
+    body.appendChild(styles);
   }
 
   // create svh helper
-  const svhHelper = document.createElement('div');
+  const svhHelper = doc.createElement('div');
+  const { style } = svhHelper;
   svhHelper.id = 'vevet_svh_helper';
-  svhHelper.style.position = 'fixed';
-  svhHelper.style.top = '-100svh';
-  svhHelper.style.left = '-100px';
-  svhHelper.style.width = '1px';
-  svhHelper.style.height = '100svh';
-  document.body.appendChild(svhHelper);
+  style.position = 'fixed';
+  style.top = '-100svh';
+  style.left = '-100px';
+  style.width = '1px';
+  style.height = '100svh';
+  body.appendChild(svhHelper);
 
   // media queries
   const mqDesktop = window.matchMedia(`(min-width: ${props.md + 0.001}px)`);
@@ -85,8 +86,8 @@ export function createViewport({ prefix, props, isMobile, isInApp }: IProps) {
   addEventListener(window, 'resize', () => debounceResize());
 
   const observer = new ResizeObserver(() => debounceResize());
-  observer.observe(document.documentElement);
-  observer.observe(document.body);
+  observer.observe(html);
+  observer.observe(body);
 
   /** Event on window resize */
   function onResize() {
@@ -129,12 +130,11 @@ export function createViewport({ prefix, props, isMobile, isInApp }: IProps) {
   function updateValues() {
     const { width: prevWidth } = data;
 
-    const root = document.documentElement;
-    const rootStyles = getComputedStyle(root);
+    const rootStyles = getComputedStyle(html);
 
     data.width = window.innerWidth;
     data.height = window.innerHeight;
-    data.scrollbarWidth = window.innerWidth - root.clientWidth;
+    data.scrollbarWidth = window.innerWidth - html.clientWidth;
     data.vw = data.width / 100;
     data.vh = data.height / 100;
     data.rem = parseFloat(rootStyles.fontSize);
@@ -156,7 +156,7 @@ export function createViewport({ prefix, props, isMobile, isInApp }: IProps) {
 
     // for in-app browser, update svh only if width changed
     if (isMobile && isInApp) {
-      const rootHeight = root.clientHeight;
+      const rootHeight = html.clientHeight;
 
       if (prevWidth !== data.width || !data.sHeight) {
         data.sHeight = rootHeight;
@@ -167,7 +167,7 @@ export function createViewport({ prefix, props, isMobile, isInApp }: IProps) {
       }
     } else {
       // when other browser, update svh directly
-      data.svh = svhHelper.clientHeight / 100 || root.clientHeight / 100;
+      data.svh = svhHelper.clientHeight / 100 || html.clientHeight / 100;
       data.sHeight = data.svh * 100;
     }
   }
@@ -178,12 +178,12 @@ export function createViewport({ prefix, props, isMobile, isInApp }: IProps) {
       return;
     }
 
-    html.classList.toggle(`${prefix}lg`, data.lg);
-    html.classList.toggle(`${prefix}md`, data.md);
-    html.classList.toggle(`${prefix}sm`, data.sm);
+    cnToggle(html, `${prefix}lg`, data.lg);
+    cnToggle(html, `${prefix}md`, data.md);
+    cnToggle(html, `${prefix}sm`, data.sm);
 
-    html.classList.toggle(`${prefix}landscape`, data.landscape);
-    html.classList.toggle(`${prefix}portrait`, data.portrait);
+    cnToggle(html, `${prefix}landscape`, data.landscape);
+    cnToggle(html, `${prefix}portrait`, data.portrait);
   }
 
   /** Update CSS variables */

@@ -1,5 +1,7 @@
+import { cnAdd } from '@/internal/cn';
 import { ISplitTextLineMeta, ISplitTextWordMeta } from '../types';
 import { getTextAalignment } from './getTextAalignment';
+import { doc } from '@/internal/env';
 
 interface IProps {
   container: HTMLElement;
@@ -58,10 +60,10 @@ export function wrapLines({
   let lineIndex = -1;
   let lastBounding: DOMRect | null = null;
 
-  const baseElement = document.createElement(tagName);
+  const baseElement = doc.createElement(tagName);
   baseElement.style.display = 'block';
   baseElement.setAttribute('aria-hidden', 'true');
-  baseElement.classList.add(lineClassName);
+  cnAdd(baseElement, lineClassName);
 
   const boundings = wordsMeta.map((wordMeta) =>
     wordMeta.element.getBoundingClientRect(),
@@ -95,9 +97,9 @@ export function wrapLines({
       let wrapper: HTMLElement | undefined;
 
       if (hasLinesWrapper) {
-        wrapper = document.createElement(tagName);
+        wrapper = doc.createElement(tagName);
         wrapper.style.display = 'block';
-        wrapper.classList.add(lineWrapperClassName);
+        cnAdd(wrapper, lineWrapperClassName);
         wrapper.appendChild(element);
       }
 
@@ -123,7 +125,7 @@ export function wrapLines({
   linesMeta.forEach((line) => {
     container.insertBefore(line.wrapper ?? line.element, line.nodes[0]);
 
-    const fragment = document.createDocumentFragment();
+    const fragment = doc.createDocumentFragment();
     fragment.append(...line.nodes);
     line.element.append(fragment);
   });

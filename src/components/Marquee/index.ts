@@ -12,6 +12,7 @@ import { initVevet } from '@/global/initVevet';
 import { toPixels } from '@/utils';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { getTextDirection } from '@/internal/textDirection';
+import { doc } from '@/internal/env';
 
 export * from './types';
 
@@ -261,7 +262,7 @@ export class Marquee<
       return;
     }
 
-    const wrapper = document.createElement('span');
+    const wrapper = doc.createElement('span');
     const { style } = wrapper;
     style.position = 'relative';
     style.display = 'block';

@@ -5,6 +5,8 @@ import {
   ISplitTextWordMeta,
 } from '../types';
 import { isIgnored } from './isIgnored';
+import { cnAdd } from '@/internal/cn';
+import { doc } from '@/internal/env';
 
 interface IProps {
   wordsMeta: ISplitTextWordMeta[];
@@ -19,9 +21,9 @@ interface IProps {
 export function wrapLetters({ wordsMeta, classname, tagName, ignore }: IProps) {
   const lettersMeta: ISplitTextLetterMeta[] = [];
 
-  const baseElement = document.createElement(tagName);
+  const baseElement = doc.createElement(tagName);
   baseElement.style.display = 'inline-block';
-  baseElement.classList.add(classname);
+  cnAdd(baseElement, classname);
 
   // Iterate over each word to wrap its letters
   wordsMeta.forEach((wordMeta) => {
@@ -45,7 +47,7 @@ export function wrapLetters({ wordsMeta, classname, tagName, ignore }: IProps) {
 
     splitLetters.forEach((letterContents) => {
       const element = baseElement.cloneNode(false) as HTMLElement;
-      element.appendChild(document.createTextNode(letterContents));
+      element.appendChild(doc.createTextNode(letterContents));
 
       // Append the letter element to the word's container
       wordMeta.element.insertBefore(element, textNode);

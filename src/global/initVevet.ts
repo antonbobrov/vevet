@@ -1,6 +1,7 @@
 import { Core } from '@/core';
 import { ICore } from '@/core/global';
 import { ICoreProps } from '@/core/types';
+import { isBrowser } from '@/internal/env';
 
 declare global {
   interface Window {
@@ -26,6 +27,6 @@ export function initVevet() {
 }
 
 // auto initialize
-if (typeof window !== 'undefined') {
+if (isBrowser) {
   window.vevet5 = initVevet();
 }

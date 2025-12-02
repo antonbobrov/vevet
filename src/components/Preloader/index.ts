@@ -7,6 +7,7 @@ import {
 import { Module, TModuleCallbacksProps } from '@/base/Module';
 import { Timeline } from '../Timeline';
 import { initVevet } from '@/global/initVevet';
+import { isNumber } from '@/internal/isNumber';
 
 export * from './types';
 
@@ -87,7 +88,7 @@ export class Preloader<
     this._isLoaded = true;
     this.callbacks.emit('loaded', undefined);
 
-    if (typeof this.props.hide === 'number') {
+    if (isNumber(this.props.hide)) {
       this.hide(this.props.hide);
     }
   }
@@ -143,8 +144,9 @@ export class Preloader<
     this.onDestroy(() => tm.destroy());
 
     tm.on('update', ({ progress }) => {
-      container.style.opacity = String(1 - progress);
-      container.style.display = progress === 1 ? 'none' : 'flex';
+      const { style } = container;
+      style.opacity = String(1 - progress);
+      style.display = progress === 1 ? 'none' : 'flex';
     });
 
     tm.on('end', () => onHidden());

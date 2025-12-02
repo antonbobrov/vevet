@@ -1,6 +1,8 @@
 import { Callbacks } from '@/base/Callbacks';
 import { IPageLoadCallbacksMap } from './types';
 import { addEventListener } from '@/utils/listeners';
+import { cnAdd, cnRemove } from '@/internal/cn';
+import { doc, html } from '@/internal/env';
 
 interface IProps {
   prefix: string;
@@ -12,7 +14,7 @@ export function createPageLoad({ prefix, applyClassNames }: IProps) {
 
   let isLoaded = false;
 
-  if (document.readyState === 'complete') {
+  if (doc.readyState === 'complete') {
     setTimeout(() => handleLoaded(), 0);
   } else {
     addEventListener(window, 'load', () => handleLoaded());
@@ -20,16 +22,15 @@ export function createPageLoad({ prefix, applyClassNames }: IProps) {
 
   /** Callback on page loaded */
   function handleLoaded() {
-    const html = document.documentElement;
     const { body } = document;
 
     isLoaded = true;
 
     if (applyClassNames) {
-      html.classList.remove(`${prefix}loading`);
-      body.classList.remove(`${prefix}loading`);
+      cnRemove(html, `${prefix}loading`);
+      cnRemove(body, `${prefix}loading`);
 
-      html.classList.add(`${prefix}loaded`);
+      cnAdd(html, `${prefix}loaded`);
     }
 
     callbacks.emit('loaded', undefined);

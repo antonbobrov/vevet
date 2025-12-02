@@ -9,6 +9,8 @@ import {
 } from './types';
 import { initVevet } from '@/global/initVevet';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { isNumber } from '@/internal/isNumber';
+import { doc } from '@/internal/env';
 
 export * from './types';
 
@@ -125,7 +127,7 @@ export class Canvas<
     this._dpr = 1;
 
     // Create canvas element
-    this._canvas = document.createElement('canvas');
+    this._canvas = doc.createElement('canvas');
 
     // Add canvas styles
     const { style } = this._canvas;
@@ -178,7 +180,7 @@ export class Canvas<
     const { container } = this.props;
 
     // Calculate DPR
-    this._dpr = typeof props.dpr === 'number' ? props.dpr : core.dpr;
+    this._dpr = isNumber(props.dpr) ? props.dpr : core.dpr;
 
     // Calculate new width and height
     let newWidth = 0;

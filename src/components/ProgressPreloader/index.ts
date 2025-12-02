@@ -15,6 +15,8 @@ import { Raf } from '../Raf';
 import { initVevet } from '@/global/initVevet';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { TModuleCallbacksProps } from '@/base';
+import { cnHas } from '@/internal/cn';
+import { doc } from '@/internal/env';
 
 export * from './types';
 
@@ -137,9 +139,9 @@ export class ProgressPreloader<
       return;
     }
 
-    let list = Array.from(document.querySelectorAll('img'));
+    let list = Array.from(doc.querySelectorAll('img'));
     list = list.filter((resource) => {
-      const isIgnored = resource.classList.contains(this.props.ignoreClassName);
+      const isIgnored = cnHas(resource, this.props.ignoreClassName);
 
       return !isIgnored && resource.loading !== 'lazy';
     });
@@ -163,9 +165,9 @@ export class ProgressPreloader<
       return;
     }
 
-    let list = Array.from(document.querySelectorAll('video'));
+    let list = Array.from(doc.querySelectorAll('video'));
     list = list.filter(
-      (resource) => !resource.classList.contains(this.props.ignoreClassName),
+      (resource) => !cnHas(resource, this.props.ignoreClassName),
     );
 
     this._resources.push(
@@ -183,9 +185,9 @@ export class ProgressPreloader<
 
   /** Preload custom resources */
   protected _fetchResources() {
-    let list = Array.from(document.querySelectorAll(this.props.customSelector));
+    let list = Array.from(doc.querySelectorAll(this.props.customSelector));
     list = list.filter(
-      (resource) => !resource.classList.contains(this.props.ignoreClassName),
+      (resource) => !cnHas(resource, this.props.ignoreClassName),
     );
 
     list.forEach((element) => {

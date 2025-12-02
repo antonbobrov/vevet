@@ -1,5 +1,7 @@
+import { cnAdd } from '@/internal/cn';
 import { ISplitTextStaticProps, ISplitTextWordMeta } from '../types';
 import { isIgnored } from './isIgnored';
+import { doc } from '@/internal/env';
 
 type TBaseProps = Pick<
   ISplitTextStaticProps,
@@ -26,10 +28,10 @@ export function wrapWords({
 }: IProps) {
   const wordDelimiterOutput = wordDelimiterOutputProp || wordDelimiter;
 
-  const baseElement = document.createElement(tagName);
+  const baseElement = doc.createElement(tagName);
   baseElement.style.display = 'inline-block';
   baseElement.setAttribute('aria-hidden', 'true');
-  baseElement.classList.add(classname);
+  cnAdd(baseElement, classname);
 
   const wordsMeta: ISplitTextWordMeta[] = [];
   let prevNonBreakingWord: HTMLElement | null = null;
@@ -71,10 +73,7 @@ export function wrapWords({
       // Handle case where node contains only whitespace
       if (text === wordDelimiter) {
         prevNonBreakingWord = null;
-        parent?.insertBefore(
-          document.createTextNode(wordDelimiterOutput),
-          node,
-        );
+        parent?.insertBefore(doc.createTextNode(wordDelimiterOutput), node);
         node.remove();
 
         return;
@@ -87,7 +86,7 @@ export function wrapWords({
       splitWords.forEach((wordContents, index) => {
         if (wordContents) {
           const element = baseElement.cloneNode(false) as HTMLElement;
-          element.appendChild(document.createTextNode(wordContents));
+          element.appendChild(doc.createTextNode(wordContents));
           prevNonBreakingWord = element;
 
           wordsMeta.push({ element, letters: [] });
@@ -97,10 +96,7 @@ export function wrapWords({
 
         // Add a whitespace between words, except after the last word
         if (index < splitWords.length - 1) {
-          parent?.insertBefore(
-            document.createTextNode(wordDelimiterOutput),
-            node,
-          );
+          parent?.insertBefore(doc.createTextNode(wordDelimiterOutput), node);
         }
       });
 

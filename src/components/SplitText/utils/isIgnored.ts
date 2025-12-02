@@ -1,3 +1,4 @@
+import { isString } from '@/internal/isString';
 import { ISplitTextStaticProps } from '../types';
 
 export function isIgnored(
@@ -8,7 +9,7 @@ export function isIgnored(
     return false;
   }
 
-  if (typeof ignore === 'string') {
+  if (isString(ignore)) {
     return element.matches(ignore);
   }
 

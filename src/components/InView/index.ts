@@ -9,6 +9,7 @@ import {
 import { Module, TModuleCallbacksProps } from '@/base/Module';
 import { initVevet } from '@/global/initVevet';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { cnToggle } from '@/internal/cn';
 
 export * from './types';
 
@@ -204,7 +205,7 @@ export class InView<
     const className = element.getAttribute('data-in-view-class');
 
     if (className) {
-      element.classList.toggle(className, isInView);
+      cnToggle(element, className, isInView);
     }
 
     this.callbacks.emit(isInView ? 'in' : 'out', { element });

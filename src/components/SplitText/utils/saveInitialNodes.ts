@@ -1,3 +1,5 @@
+import { doc } from '@/internal/env';
+
 interface IClone {
   node: Node;
   cssText: string | null;
@@ -25,7 +27,7 @@ export function saveInitialNodes(root: Node) {
   // Return a function to restore the initial nodes
   return {
     restore: () => {
-      const fragment = document.createDocumentFragment();
+      const fragment = doc.createDocumentFragment();
 
       flatArray.forEach((element) => {
         const { node, cssText } = element;

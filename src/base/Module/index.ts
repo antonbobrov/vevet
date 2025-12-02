@@ -7,6 +7,8 @@ import {
 } from './types';
 import { mergeWithNoUndefined } from '@/internal/mergeWithNoUndefined';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { cnAdd, cnHas, cnRemove } from '@/internal/cn';
+import { initVevet } from '@/global/initVevet';
 
 // todo: jsdoc
 
@@ -44,7 +46,7 @@ export class Module<
 
   /** Optional prefix for classnames used by the module */
   get prefix() {
-    return '';
+    return initVevet().prefix;
   }
 
   /** The name of the module, derived from the class name */
@@ -171,12 +173,12 @@ export class Module<
    * @param className - The class name to toggle.
    */
   protected _addTempClassName(element: Element, className: string) {
-    const isAlreadyExists = element.classList.contains(className);
+    const isAlreadyExists = cnHas(element, className);
 
     if (!isAlreadyExists) {
-      element.classList.add(className);
+      cnAdd(element, className);
 
-      this.onDestroy(() => element.classList.remove(className));
+      this.onDestroy(() => cnRemove(element, className));
     }
   }
 

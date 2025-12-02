@@ -6,6 +6,8 @@ import { createPageLoad } from './handlers/createPageLoad';
 import { ICoreProps } from './types';
 import { createViewport } from './handlers/createViewport';
 import { ICore } from './global';
+import { cnAdd, cnToggle } from '@/internal/cn';
+import { body, doc, html } from '@/internal/env';
 
 export function Core(input: Partial<ICoreProps>): ICore {
   // set default properties
@@ -58,9 +60,9 @@ export function Core(input: Partial<ICoreProps>): ICore {
     osName,
     browserName,
     inAppBrowser,
-    doc: document,
-    html: document.documentElement,
-    body: document.body,
+    doc,
+    html,
+    body,
     loaded: false,
     onLoad: pageLoad.onLoad,
     onResize: (...params) => viewport.callbacks.on(...params),
@@ -93,17 +95,15 @@ export function Core(input: Partial<ICoreProps>): ICore {
       return;
     }
 
-    const { html } = output;
+    cnAdd(html, `${prefix}os-${osName}`);
 
-    html.classList.add(`${prefix}os-${osName}`);
+    cnAdd(html, `${prefix}browser-${browserName}`);
 
-    html.classList.add(`${prefix}browser-${browserName}`);
+    cnToggle(html, `${prefix}phone`, output.phone);
 
-    html.classList.toggle(`${prefix}phone`, output.phone);
+    cnToggle(html, `${prefix}tablet`, output.tablet);
 
-    html.classList.toggle(`${prefix}tablet`, output.tablet);
-
-    html.classList.toggle(`${prefix}mobile`, output.mobile);
+    cnToggle(html, `${prefix}mobile`, output.mobile);
   })();
 
   return output;

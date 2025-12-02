@@ -8,6 +8,7 @@ import {
 } from './types';
 import { initVevet } from '@/global/initVevet';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { isUndefined } from '@/internal/isUndefined';
 
 export * from './types';
 
@@ -75,7 +76,7 @@ export class Timeline<
    * Whether the timeline is currently playing.
    */
   get isPlaying() {
-    return typeof this._raf !== 'undefined';
+    return !isUndefined(this._raf);
   }
 
   /** Indicates whether the timeline is currently reversed. */

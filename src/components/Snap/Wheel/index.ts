@@ -1,6 +1,7 @@
 import { addEventListener, clamp, normalizeWheel } from '@/utils';
 import { Snap } from '..';
 import { initVevet } from '@/global/initVevet';
+import { isNumber } from '@/internal/isNumber';
 
 const deltasCount = 6;
 
@@ -235,7 +236,7 @@ export class SnapWheel {
 
     // NUMBER
 
-    if (typeof wheelThrottle === 'number') {
+    if (isNumber(wheelThrottle)) {
       return timeDiff < wheelThrottle;
     }
 

@@ -11,6 +11,8 @@ import { createScrollbarStyles } from './styles';
 import { ISwipeCoords, Swipe } from '../Swipe';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { getTextDirection } from '@/internal/textDirection';
+import { cnAdd, cnHas, cnRemove, cnToggle } from '@/internal/cn';
+import { body, doc, html } from '@/internal/env';
 
 export * from './types';
 
@@ -131,7 +133,7 @@ export class Scrollbar<
     this._setSwipe();
 
     // Initialize
-    this.outer.classList.add(this._cn('_inited'));
+    cnAdd(this.outer, this._cn('_inited'));
   }
 
   /** Handles property mutations */
@@ -153,9 +155,7 @@ export class Scrollbar<
   get parent() {
     const { parent, container } = this.props;
 
-    return (
-      parent || (container instanceof Window ? initVevet().body : container)
-    );
+    return parent || (container instanceof Window ? body : container);
   }
 
   /**
@@ -163,7 +163,7 @@ export class Scrollbar<
    * Returns `document.documentElement` for `window`, otherwise the `container` itself.
    */
   get scrollElement() {
-    return this.container instanceof Window ? initVevet().html : this.container;
+    return this.container instanceof Window ? html : this.container;
   }
 
   /**
@@ -217,7 +217,6 @@ export class Scrollbar<
 
   /** Create elements */
   protected _create() {
-    const app = initVevet();
     const { parent, scrollElement } = this;
 
     const isInWindow = this.container instanceof Window;
@@ -233,8 +232,8 @@ export class Scrollbar<
 
     // Apply global styles
     if (isInWindow) {
-      this._addTempClassName(app.html, this._cn('-scrollable'));
-      this._addTempClassName(app.body, this._cn('-scrollable'));
+      this._addTempClassName(html, this._cn('-scrollable'));
+      this._addTempClassName(body, this._cn('-scrollable'));
     } else {
       this._addTempClassName(scrollElement, this._cn('-scrollable'));
     }
@@ -248,12 +247,12 @@ export class Scrollbar<
 
     const { props, axis } = this;
 
-    const element = document.createElement('div');
-    element.classList.add(cn(''));
-    element.classList.add(cn(`_${axis}`));
+    const element = doc.createElement('div');
+    cnAdd(element, cn(''));
+    cnAdd(element, cn(`_${axis}`));
 
     if (props.class) {
-      element.classList.add(props.class);
+      cnAdd(element, props.class);
     }
 
     if (this.container instanceof Window) {
@@ -273,9 +272,9 @@ export class Scrollbar<
 
     const { axis } = this;
 
-    const element = document.createElement('div');
-    element.classList.add(cn('__track'));
-    element.classList.add(cn(`__track_${axis}`));
+    const element = doc.createElement('div');
+    cnAdd(element, cn('__track'));
+    cnAdd(element, cn(`__track_${axis}`));
 
     return element;
   }
@@ -284,9 +283,9 @@ export class Scrollbar<
   protected _createThumb() {
     const cn = this._cn.bind(this);
 
-    const element = document.createElement('div');
-    element.classList.add(cn('__thumb'));
-    element.classList.add(cn(`__thumb_${this.axis}`));
+    const element = doc.createElement('div');
+    cnAdd(element, cn('__thumb'));
+    cnAdd(element, cn(`__thumb_${this.axis}`));
 
     return element;
   }
@@ -379,7 +378,7 @@ export class Scrollbar<
     const isHorizontal = axis === 'x';
 
     // Define if the scrollbar is empty
-    outer.classList.toggle(this._cn('_empty'), scrollableSize === 0);
+    cnToggle(outer, this._cn('_empty'), scrollableSize === 0);
 
     // Save sizes
     const trackSize = isHorizontal ? track.offsetWidth : track.offsetHeight;
@@ -398,10 +397,11 @@ export class Scrollbar<
     }
 
     // Apply sizes
+    const { style } = thumb;
     if (isHorizontal) {
-      thumb.style.width = `${newThumbSize}px`;
+      style.width = `${newThumbSize}px`;
     } else {
-      thumb.style.height = `${newThumbSize}px`;
+      style.height = `${newThumbSize}px`;
     }
 
     // Reset timeouts
@@ -442,8 +442,8 @@ export class Scrollbar<
 
     if (scrollValue !== this._prevScrollValue) {
       this._addInActionTimeout = setTimeout(() => {
-        if (!outer.classList.contains(inActionClass)) {
-          outer.classList.add(inActionClass);
+        if (!cnHas(outer, inActionClass)) {
+          cnAdd(outer, inActionClass);
           this.callbacks.emit('show', undefined);
         }
       }, 50);
@@ -458,7 +458,7 @@ export class Scrollbar<
     }
 
     this._removeInActionTimeout = setTimeout(() => {
-      outer.classList.remove(inActionClass);
+      cnRemove(outer, inActionClass);
       this.callbacks.emit('hide', undefined);
     }, 500);
   }

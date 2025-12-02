@@ -30,6 +30,9 @@ import { SnapTrack } from './Track';
 import { SnapKeyboard } from './Keyboard';
 import { initVevet } from '@/global/initVevet';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { isUndefined } from '@/internal/isUndefined';
+import { isNumber } from '@/internal/isNumber';
+import { isString } from '@/internal/isString';
 
 export * from './types';
 export * from './Slide';
@@ -386,7 +389,7 @@ export class Snap<
     if (
       magnet &&
       magnet.slide.index !== this._activeIndex &&
-      (typeof this._targetIndex === 'undefined' ||
+      (isUndefined(this._targetIndex) ||
         magnet.slide.index === this._targetIndex)
     ) {
       this._activeIndex = magnet.slide.index;
@@ -540,8 +543,7 @@ export class Snap<
 
     const durationProp = options?.duration ?? props.duration;
 
-    let duration =
-      typeof durationProp === 'number' ? durationProp : durationProp(diff);
+    let duration = isNumber(durationProp) ? durationProp : durationProp(diff);
     if (diff === 0) {
       duration = 0;
     }
@@ -641,7 +643,7 @@ export class Snap<
     const targetMagnetMax = targetMagnet + max;
     const allMagnets = [targetMagnetMin, targetMagnet, targetMagnetMax];
 
-    if (typeof direction === 'string') {
+    if (isString(direction)) {
       const magnets = allMagnets.filter((magnet) =>
         direction === 'next' ? magnet >= current : magnet <= current,
       );

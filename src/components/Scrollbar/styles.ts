@@ -1,3 +1,5 @@
+import { body, doc } from '@/internal/env';
+
 let style: HTMLStyleElement | null = null;
 
 export function createScrollbarStyles(prefix: string) {
@@ -5,8 +7,8 @@ export function createScrollbarStyles(prefix: string) {
     return style;
   }
 
-  style = document.createElement('style');
-  document.body.appendChild(style);
+  style = doc.createElement('style');
+  body.appendChild(style);
 
   style.innerHTML = `
     .${prefix}-scrollable {

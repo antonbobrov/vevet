@@ -1,4 +1,6 @@
 import { initVevet } from '@/global/initVevet';
+import { isBrowser } from '@/internal/env';
+import { isNumber } from '@/internal/isNumber';
 
 type TCache = Map<string | number, number>;
 
@@ -7,8 +9,6 @@ declare global {
     vevet5_toPixelsCache: TCache;
   }
 }
-
-const isBrowser = typeof window !== 'undefined';
 
 /**
  * Transform value to pixels. Supported units: `px` | 'rem' | 'vw' | 'vh' | 'svh'.
@@ -44,7 +44,7 @@ export function toPixels(value: string | number) {
   let finalValue = 0;
   const num = parseFloat(`${value}`);
 
-  if (typeof value === 'number') {
+  if (isNumber(value)) {
     finalValue = value;
   } else if (Number.isNaN(num)) {
     finalValue = 0;

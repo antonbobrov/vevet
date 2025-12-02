@@ -15,6 +15,9 @@ import { lerp } from '@/utils/math';
 import { createCursorStyles } from './styles';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { getTextDirection } from '@/internal/textDirection';
+import { isNumber } from '@/internal/isNumber';
+import { cnAdd, cnRemove, cnToggle } from '@/internal/cn';
+import { body, doc } from '@/internal/env';
 
 export * from './types';
 
@@ -67,7 +70,7 @@ export class Cursor<
   /** Returns the DOM parent for the cursor element. */
   get domContainer() {
     if (this.container instanceof Window) {
-      return initVevet().body;
+      return body;
     }
 
     return this.container as HTMLElement;
@@ -145,13 +148,13 @@ export class Cursor<
 
       if (hoveredElement.width === 'auto') {
         width = bounding.width;
-      } else if (typeof hoveredElement.width === 'number') {
+      } else if (isNumber(hoveredElement.width)) {
         width = hoveredElement.width;
       }
 
       if (hoveredElement.height === 'auto') {
         height = bounding.height;
-      } else if (typeof hoveredElement.height === 'number') {
+      } else if (isNumber(hoveredElement.height)) {
         height = hoveredElement.height;
       }
 
@@ -200,10 +203,11 @@ export class Cursor<
   protected _createElements() {
     const { container, domContainer } = this;
     const cn = this._cn.bind(this);
+    const { style } = domContainer;
 
     // Hide native cursor
     if (this.props.hideNative) {
-      domContainer.style.cursor = 'none';
+      style.cursor = 'none';
 
       this._addTempClassName(domContainer, cn('-hide-default'));
     }
@@ -212,28 +216,29 @@ export class Cursor<
     this._addTempClassName(domContainer, cn('-container'));
 
     // Set container position
-    if (domContainer !== initVevet().body) {
-      domContainer.style.position = 'relative';
+    if (domContainer !== body) {
+      style.position = 'relative';
     }
 
     // Create outer element
-    const outer = document.createElement('div');
+    const outer = doc.createElement('div');
     domContainer.append(outer);
-    outer.classList.add(cn(''));
-    outer.classList.add(
+    cnAdd(outer, cn(''));
+    cnAdd(
+      outer,
       cn(container instanceof Window ? '-in-window' : '-in-element'),
     );
-    outer.classList.add(cn('-disabled'));
+    cnAdd(outer, cn('-disabled'));
 
     // set direction
     const direction = getTextDirection(outer);
-    outer.classList.add(cn(`_${direction}`));
+    cnAdd(outer, cn(`_${direction}`));
 
     // Create inner element
-    const inner = document.createElement('div');
+    const inner = doc.createElement('div');
     outer.append(inner);
-    inner.classList.add(cn('__inner'));
-    inner.classList.add(cn('-disabled'));
+    cnAdd(inner, cn('__inner'));
+    cnAdd(inner, cn('-disabled'));
     outer.append(inner);
 
     // assign
@@ -242,7 +247,7 @@ export class Cursor<
 
     // Destroy the cursor
     this.onDestroy(() => {
-      domContainer.style.cursor = '';
+      style.cursor = '';
 
       inner.remove();
       outer.remove();
@@ -315,8 +320,8 @@ export class Cursor<
   protected _toggle(enabled: boolean) {
     const className = this._cn('-disabled');
 
-    this.outer.classList.toggle(className, !enabled);
-    this.inner.classList.toggle(className, !enabled);
+    cnToggle(this.outer, className, !enabled);
+    cnToggle(this.inner, className, !enabled);
 
     this._raf.updateProps({ enabled });
   }
@@ -328,12 +333,12 @@ export class Cursor<
     this._targetCoords.x = evt.clientX;
     this._targetCoords.y = evt.clientY;
 
-    this.outer.classList.add(this._cn('-visible'));
+    cnAdd(this.outer, this._cn('-visible'));
   }
 
   /** Handles mouse leave events. */
   protected _handleMouseLeave() {
-    this.outer.classList.remove(this._cn('-visible'));
+    cnRemove(this.outer, this._cn('-visible'));
   }
 
   /** Handles mouse move events. */
@@ -348,7 +353,7 @@ export class Cursor<
       this._isFirstMove = false;
     }
 
-    this.outer.classList.add(this._cn('-visible'));
+    cnAdd(this.outer, this._cn('-visible'));
 
     if (this.props.enabled) {
       this._raf.play();
@@ -360,8 +365,8 @@ export class Cursor<
     const className = this._cn('-click');
 
     if (evt.which === 1) {
-      this.outer.classList.add(className);
-      this.inner.classList.add(className);
+      cnAdd(this.outer, className);
+      cnAdd(this.inner, className);
     }
   }
 
@@ -369,8 +374,8 @@ export class Cursor<
   protected _handleMouseUp() {
     const className = this._cn('-click');
 
-    this.outer.classList.remove(className);
-    this.inner.classList.remove(className);
+    cnRemove(this.outer, className);
+    cnRemove(this.inner, className);
   }
 
   /** Handles window blur events. */
@@ -480,7 +485,7 @@ export class Cursor<
         : null;
 
     this._types.forEach((item) => {
-      item.element.classList.toggle('active', item.type === activeType);
+      cnToggle(item.element, 'active', item.type === activeType);
     });
   }
 
@@ -553,8 +558,9 @@ export class Cursor<
     }
 
     // Update DOM coordinates
-    outer.style.transform = `translate(${x}px, ${y}px)`;
-    outer.style.setProperty('--cursor-w', `${width}px`);
-    outer.style.setProperty('--cursor-h', `${height}px`);
+    const { style } = outer;
+    style.transform = `translate(${x}px, ${y}px)`;
+    style.setProperty('--cursor-w', `${width}px`);
+    style.setProperty('--cursor-h', `${height}px`);
   }
 }
