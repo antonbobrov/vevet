@@ -35,6 +35,9 @@ export const Component: FC<IProps> = ({
       lines,
       linesWrapper,
       ignore,
+      onSplit: () => {
+        console.log('split props');
+      },
       // wordDelimiter: ',',
       // wordDelimiterOutput: '--',
       // prepareText: (source) =>

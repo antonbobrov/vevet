@@ -27,27 +27,21 @@ export const Test: FC = () => {
       loop: false,
       gap: 20,
       grabCursor: true,
+      onActiveSlide: () => setActiveIndex(instance.activeIndex),
+      onUpdate: () => {
+        setIsStart(instance.track.isStart);
+        setIsEnd(instance.track.isEnd);
+
+        instance.slides.forEach(({ element, coord, progress }, index) => {
+          element!.style.transform = `translateX(${coord}px)`;
+
+          const info = infos[index];
+          info.innerHTML = `${index} / ${progress.toFixed(2)} / ${Math.round(coord)}`;
+        });
+      },
     });
 
     setSnap(instance);
-
-    instance.on('activeSlide', () => {
-      setActiveIndex(instance.activeIndex);
-    });
-
-    instance.on('update', () => {
-      setIsStart(instance.track.isStart);
-      setIsEnd(instance.track.isEnd);
-    });
-
-    instance.on('update', () => {
-      instance.slides.forEach(({ element, coord, progress }, index) => {
-        element!.style.transform = `translateX(${coord}px)`;
-
-        const info = infos[index];
-        info.innerHTML = `${index} / ${progress.toFixed(2)} / ${Math.round(coord)}`;
-      });
-    });
 
     return () => instance.destroy();
   }, []);

@@ -8,6 +8,7 @@ import {
 import { Canvas, ICanvasRenderArg } from '../Canvas';
 import { addEventListener } from '@/utils';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { TModuleCallbacksProps } from '@/base';
 
 export * from './types';
 
@@ -40,7 +41,9 @@ export class CanvasMedia<
     } as TRequiredProps<MutableProps>;
   }
 
-  constructor(props?: StaticProps & MutableProps) {
+  constructor(
+    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+  ) {
     super(props);
 
     this._setMediaEvents();

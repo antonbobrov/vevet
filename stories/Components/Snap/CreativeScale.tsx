@@ -18,15 +18,14 @@ export const CreativeScale: FC = () => {
       lerp: 0.05,
       swipeLerp: 0.05,
       duration: 1000,
-    });
+      onUpdate: () => {
+        instance.slides.forEach(({ element, coord, progress }) => {
+          const scaleFactor = 3.5;
+          const scale = clamp((scaleFactor - Math.abs(progress)) / scaleFactor);
 
-    instance.on('update', () => {
-      instance.slides.forEach(({ element, coord, progress }) => {
-        const scaleFactor = 3.5;
-        const scale = clamp((scaleFactor - Math.abs(progress)) / scaleFactor);
-
-        element!.style.transform = `translateX(${coord}px) translateY(-50%) scale(${scale})`;
-      });
+          element!.style.transform = `translateX(${coord}px) translateY(-50%) scale(${scale})`;
+        });
+      },
     });
 
     return () => instance.destroy();

@@ -14,14 +14,13 @@ export const Fade: FC = () => {
       direction: 'horizontal',
       followSwipe: false,
       loop: true,
-    });
+      onUpdate: () => {
+        instance.slides.forEach(({ element, progress }) => {
+          const opacity = clamp(1 - Math.abs(progress));
 
-    instance.on('update', () => {
-      instance.slides.forEach(({ element, progress }) => {
-        const opacity = clamp(1 - Math.abs(progress));
-
-        element!.style.opacity = `${opacity}`;
-      });
+          element!.style.opacity = `${opacity}`;
+        });
+      },
     });
 
     return () => instance.destroy();

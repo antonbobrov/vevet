@@ -11,18 +11,16 @@ export const Component: FC = () => {
 
     const instance = new InView({
       hasOut: true,
-    });
-
-    instance.on('in', ({ element }) => {
-      if (element instanceof HTMLElement) {
-        element.style.background = '#f00';
-      }
-    });
-
-    instance.on('out', ({ element }) => {
-      if (element instanceof HTMLElement) {
-        element.style.background = '#000';
-      }
+      onIn: ({ element }) => {
+        if (element instanceof HTMLElement) {
+          element.style.background = '#f00';
+        }
+      },
+      onOut: ({ element }) => {
+        if (element instanceof HTMLElement) {
+          element.style.background = '#000';
+        }
+      },
     });
 
     const elements = ref.current.querySelectorAll('*');

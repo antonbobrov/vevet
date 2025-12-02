@@ -6,7 +6,7 @@ import {
   IInViewMutableProps,
   IInViewStaticProps,
 } from './types';
-import { Module } from '@/base/Module';
+import { Module, TModuleCallbacksProps } from '@/base/Module';
 import { initVevet } from '@/global/initVevet';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 
@@ -77,7 +77,9 @@ export class InView<
   /**
    * Initializes the `InView` module.
    */
-  constructor(props?: StaticProps & MutableProps) {
+  constructor(
+    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+  ) {
     super(props);
 
     this._setup();

@@ -19,3 +19,7 @@ export interface IModuleCallbacksMap extends ICallbacksMap {
    */
   props: undefined;
 }
+
+export type TModuleCallbacksProps<T> = Partial<{
+  [K in keyof T as `on${Capitalize<string & K>}`]: (data: T[K]) => void;
+}>;

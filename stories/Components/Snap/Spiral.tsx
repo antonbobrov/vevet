@@ -17,16 +17,15 @@ export const Spiral: FC = () => {
       centered: true,
       loop: false,
       gap: 0,
-    });
+      onUpdate: () => {
+        instance.slides.forEach(({ element, coord, progress }) => {
+          const scale = 1.15 - clamp(Math.abs(progress) * 0.5);
 
-    instance.on('update', () => {
-      instance.slides.forEach(({ element, coord, progress }) => {
-        const scale = 1.15 - clamp(Math.abs(progress) * 0.5);
+          const rotateX = progress * -45;
 
-        const rotateX = progress * -45;
-
-        element!.style.transform = `translate3d(0, ${coord}px, 0) rotateY(${rotateX}deg) scale(${scale})`;
-      });
+          element!.style.transform = `translate3d(0, ${coord}px, 0) rotateY(${rotateX}deg) scale(${scale})`;
+        });
+      },
     });
 
     return () => instance.destroy();

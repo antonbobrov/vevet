@@ -1,5 +1,5 @@
 import { TRequiredProps } from '@/internal/requiredProps';
-import { Module } from '@/base/Module';
+import { Module, TModuleCallbacksProps } from '@/base/Module';
 import { IRafCallbacksMap, IRafMutableProps, IRafStaticProps } from './types';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 
@@ -83,7 +83,9 @@ export class Raf<
     return 60 / this.fps;
   }
 
-  constructor(props?: StaticProps & MutableProps) {
+  constructor(
+    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+  ) {
     super(props);
 
     // Initialize FPS

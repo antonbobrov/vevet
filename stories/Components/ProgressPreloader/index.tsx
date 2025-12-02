@@ -17,17 +17,11 @@ export const Component: FC = () => {
       container: ref.current,
       preloadImages: true,
       preloadVideos: true,
+      onProgress: () => setProgress(instance.progress),
+      onResource: (res) => console.log('resource', res),
     });
 
     setPreloader(instance);
-
-    instance.on('progress', () => {
-      setProgress(instance.progress);
-    });
-
-    instance.on('resource', (res) => {
-      console.log('resource', res);
-    });
 
     const timeout = setTimeout(() => setIsCustomResourceLoaded(true), 2000);
 

@@ -17,15 +17,14 @@ export const SlickGap: FC = () => {
       centered: true,
       loop: true,
       freemode: true,
-    });
+      onUpdate: () => {
+        instance.slides.forEach(({ element, coord, progress }) => {
+          const absGap = Math.abs(progress) * -50;
+          const gap = progress * absGap;
 
-    instance.on('update', () => {
-      instance.slides.forEach(({ element, coord, progress }) => {
-        const absGap = Math.abs(progress) * -50;
-        const gap = progress * absGap;
-
-        element!.style.transform = `translateX(${coord + gap}px)`;
-      });
+          element!.style.transform = `translateX(${coord + gap}px)`;
+        });
+      },
     });
 
     return () => instance.destroy();

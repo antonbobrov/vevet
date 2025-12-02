@@ -1,5 +1,5 @@
 import { TRequiredProps } from '@/internal/requiredProps';
-import { Module } from '@/base/Module';
+import { Module, TModuleCallbacksProps } from '@/base/Module';
 import { clamp, easing } from '@/utils/math';
 import {
   ITimelineCallbacksMap,
@@ -111,7 +111,9 @@ export class Timeline<
     return this.props.duration;
   }
 
-  constructor(props?: StaticProps & MutableProps) {
+  constructor(
+    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+  ) {
     super(props);
 
     // Initialize default values

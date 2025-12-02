@@ -19,16 +19,15 @@ export const CreativeSine: FC = () => {
       edgeFriction: 1,
       freemode: 'sticky',
       shortSwipes: false,
-    });
+      onUpdate: () => {
+        instance.slides.forEach(({ element, progress }) => {
+          const scale = clamp(1 - Math.abs(progress));
 
-    instance.on('update', () => {
-      instance.slides.forEach(({ element, progress }) => {
-        const scale = clamp(1 - Math.abs(progress));
+          const width = lerp(10, 100, scale);
 
-        const width = lerp(10, 100, scale);
-
-        element!.style.width = `${width}%`;
-      });
+          element!.style.width = `${width}%`;
+        });
+      },
     });
 
     return () => instance.destroy();

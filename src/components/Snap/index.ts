@@ -1,4 +1,4 @@
-import { Module } from '@/base';
+import { Module, TModuleCallbacksProps } from '@/base';
 import { Timeline } from '../Timeline';
 import {
   ISnapCallbacksMap,
@@ -141,7 +141,9 @@ export class Snap<
   /** Target slide index */
   protected _targetIndex?: number;
 
-  constructor(props?: StaticProps & MutableProps) {
+  constructor(
+    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+  ) {
     super(props);
 
     const { container, activeIndex } = this.props;

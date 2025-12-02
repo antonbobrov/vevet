@@ -88,6 +88,21 @@ export class Module<
       },
       { ...props },
     ) as TRequiredProps<MutableProps & StaticProps>;
+
+    // Initialize callbacks
+
+    const callbacksProps = Object.keys(this._props).filter((key) =>
+      key.startsWith('on'),
+    );
+
+    callbacksProps.forEach((key) => {
+      let target = key.slice(2);
+      target = target.charAt(0).toLowerCase() + target.slice(1);
+      this._callbacks.on(
+        target as keyof CallbacksMap,
+        this._props[key as keyof typeof props],
+      );
+    });
   }
 
   /**

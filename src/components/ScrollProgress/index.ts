@@ -4,7 +4,7 @@ import {
   IScrollProgressMutableProps,
   IScrollProgressStaticProps,
 } from './types';
-import { Module } from '@/base';
+import { Module, TModuleCallbacksProps } from '@/base';
 import { TRequiredProps } from '@/internal/requiredProps';
 import { initVevet } from '@/global/initVevet';
 import { addEventListener, clampScope } from '@/utils';
@@ -84,7 +84,9 @@ export class ScrollProgress<
     return this._sectionBounds;
   }
 
-  constructor(props?: StaticProps & MutableProps) {
+  constructor(
+    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+  ) {
     super(props);
 
     this._isVisible = !this.props.optimized;

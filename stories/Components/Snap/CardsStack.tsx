@@ -21,23 +21,22 @@ export const CardsStack: FC = () => {
       gap: 20,
       wheel: true,
       wheelAxis: 'y',
-    });
+      onUpdate: () => {
+        instance.slides.forEach(({ element, size, progress }) => {
+          const translationAmp = size * 0.5;
 
-    instance.on('update', () => {
-      instance.slides.forEach(({ element, size, progress }) => {
-        const translationAmp = size * 0.5;
+          const isPrev = progress > 0;
+          const rotateAmp = isPrev ? 20 : 160;
 
-        const isPrev = progress > 0;
-        const rotateAmp = isPrev ? 20 : 160;
+          let rotate = rotateAmp * Math.abs(progress);
+          rotate = clamp(rotate, 0, 180);
 
-        let rotate = rotateAmp * Math.abs(progress);
-        rotate = clamp(rotate, 0, 180);
+          const depth = progress ** 2 * -size * (isPrev ? 0.35 : 0.5);
+          const x = translationAmp * -progress;
 
-        const depth = progress ** 2 * -size * (isPrev ? 0.35 : 0.5);
-        const x = translationAmp * -progress;
-
-        element!.style.transform = `translateX(${x}px) translateZ(${depth}px) rotateY(${rotate}deg)`;
-      });
+          element!.style.transform = `translateX(${x}px) translateZ(${depth}px) rotateY(${rotate}deg)`;
+        });
+      },
     });
 
     return () => instance.destroy();

@@ -15,15 +15,14 @@ export const Glide: FC = () => {
       edgeFriction: 1,
       wheel: true,
       wheelAxis: 'y',
-    });
+      onUpdate: () => {
+        instance.slides.forEach(({ element, progress, coord, size }) => {
+          const parallax = clamp(progress, 0, 1);
+          const x = coord + parallax * (size / 2);
 
-    instance.on('update', () => {
-      instance.slides.forEach(({ element, progress, coord, size }) => {
-        const parallax = clamp(progress, 0, 1);
-        const x = coord + parallax * (size / 2);
-
-        element!.style.transform = `translateX(${x}px)`;
-      });
+          element!.style.transform = `translateX(${x}px)`;
+        });
+      },
     });
 
     return () => instance.destroy();

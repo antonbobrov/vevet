@@ -1,6 +1,6 @@
 import { TRequiredProps } from '@/internal/requiredProps';
 import { onResize } from '@/utils/listeners/onResize';
-import { Module } from '@/base/Module';
+import { Module, TModuleCallbacksProps } from '@/base/Module';
 import {
   ICanvasCallbacksMap,
   ICanvasMutableProps,
@@ -105,7 +105,9 @@ export class Canvas<
   /**
    * Constructor for the Ctx2D class.
    */
-  constructor(props?: StaticProps & MutableProps) {
+  constructor(
+    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+  ) {
     super(props);
 
     const {

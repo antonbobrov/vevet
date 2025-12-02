@@ -11,15 +11,13 @@ export const Test: FC = () => {
 
     const instance = new Swipe({
       container: ref.current,
-    });
-
-    instance.on('move', (data) => {
-      instance.container.innerHTML = `${data.diff.x.toFixed(2)} ${data.diff.y.toFixed(2)}`;
-    });
-
-    instance.on('end', () => {
-      console.log('end');
-      ref.current!.innerHTML = 'end';
+      onMove: ({ diff }) => {
+        instance.container.innerHTML = `${diff.x.toFixed(2)} ${diff.y.toFixed(2)}`;
+      },
+      onEnd: () => {
+        console.log('end');
+        ref.current!.innerHTML = 'end';
+      },
     });
 
     return () => instance.destroy();

@@ -17,13 +17,12 @@ export const Rtl: FC = () => {
       loop: true,
       gap: 20,
       swipeSpeed: -1,
-    });
-
-    instance.on('update', () => {
-      instance.slides.forEach(({ element, coord }) => {
-        const x = -coord;
-        element!.style.transform = `translateX(${x}px)`;
-      });
+      onUpdate: () => {
+        instance.slides.forEach(({ element, coord }) => {
+          const x = -coord;
+          element!.style.transform = `translateX(${x}px)`;
+        });
+      },
     });
 
     return () => instance.destroy();

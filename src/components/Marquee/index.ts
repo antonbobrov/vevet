@@ -6,7 +6,7 @@ import {
   IMarqueeMutableProps,
   IMarqueeStaticProps,
 } from './types';
-import { Module } from '@/base/Module';
+import { Module, TModuleCallbacksProps } from '@/base/Module';
 import { Raf } from '../Raf';
 import { initVevet } from '@/global/initVevet';
 import { toPixels } from '@/utils';
@@ -122,7 +122,9 @@ export class Marquee<
   /** Intersection observer */
   protected _intersection?: IntersectionObserver;
 
-  constructor(props?: StaticProps & MutableProps) {
+  constructor(
+    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+  ) {
     super(props);
 
     const { container } = this.props;

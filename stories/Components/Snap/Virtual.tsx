@@ -41,6 +41,15 @@ export const Virtual: FC = () => {
       centered: true,
       loop: true,
       gap: '5vw',
+      onUpdate: () => {
+        instance.slides.forEach((slide) => {
+          const { element, coord, isVisible } = slide;
+
+          if (isVisible) {
+            element!.style.transform = `translate(${coord}px, 0)`;
+          }
+        });
+      },
     });
 
     instance.container.onclick = () => {
@@ -48,16 +57,6 @@ export const Virtual: FC = () => {
         slides: [...instance.slides, ...createSlides(10)],
       });
     };
-
-    instance.on('update', () => {
-      instance.slides.forEach((slide) => {
-        const { element, coord, isVisible } = slide;
-
-        if (isVisible) {
-          element!.style.transform = `translate(${coord}px, 0)`;
-        }
-      });
-    });
 
     return () => instance.destroy();
   }, []);

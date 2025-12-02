@@ -14,27 +14,24 @@ export const Inner: FC<IProps> = ({ direction, root }) => {
       const handler = new ScrollProgress({
         section,
         root,
-      });
+        onUpdate: () => {
+          const inProgress =
+            direction === 'x' ? handler.inProgress.x : handler.inProgress.y;
+          const moveProgress =
+            direction === 'x' ? handler.moveProgress.x : handler.moveProgress.y;
+          const outProgress =
+            direction === 'x' ? handler.outProgress.x : handler.outProgress.y;
+          const progress =
+            direction === 'x' ? handler.progress.x : handler.progress.y;
 
-      const update = () => {
-        const inProgress =
-          direction === 'x' ? handler.inProgress.x : handler.inProgress.y;
-        const moveProgress =
-          direction === 'x' ? handler.moveProgress.x : handler.moveProgress.y;
-        const outProgress =
-          direction === 'x' ? handler.outProgress.x : handler.outProgress.y;
-        const progress =
-          direction === 'x' ? handler.progress.x : handler.progress.y;
-
-        section.innerHTML = `
+          section.innerHTML = `
           <p>in: ${inProgress.toFixed(2)}</p>
           <p>move: ${moveProgress.toFixed(2)}</p>
           <p>out: ${outProgress.toFixed(2)}</p>
           <p>global: ${progress.toFixed(2)}</p>
         `;
-      };
-
-      handler.on('update', () => update());
+        },
+      });
 
       return handler;
     });

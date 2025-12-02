@@ -9,7 +9,7 @@ import {
   ISplitTextStaticProps,
   ISplitTextWordMeta,
 } from './types';
-import { Module } from '@/base';
+import { Module, TModuleCallbacksProps } from '@/base';
 import { TRequiredProps } from '@/internal/requiredProps';
 import { initVevet } from '@/global/initVevet';
 import { saveInitialNodes } from './utils/saveInitialNodes';
@@ -150,7 +150,9 @@ export class SplitText<
   /**
    * Initializes the SplitText instance and saves the initial state.
    */
-  constructor(props?: StaticProps & MutableProps) {
+  constructor(
+    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+  ) {
     super(props);
 
     const { container } = this.props;

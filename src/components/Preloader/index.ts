@@ -4,7 +4,7 @@ import {
   IPreloaderMutableProps,
   IPreloaderStaticProps,
 } from './types';
-import { Module } from '@/base/Module';
+import { Module, TModuleCallbacksProps } from '@/base/Module';
 import { Timeline } from '../Timeline';
 import { initVevet } from '@/global/initVevet';
 
@@ -56,7 +56,9 @@ export class Preloader<
     return this._isHidden;
   }
 
-  constructor(props?: StaticProps & MutableProps) {
+  constructor(
+    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+  ) {
     super(props);
 
     // Handle page load event

@@ -10,51 +10,48 @@ export const Cards: FC = () => {
     if (!ref.current) {
       return undefined;
     }
+    let startIndex = 0;
 
     const instance = new Snap({
       container: ref.current,
       direction: 'horizontal',
       wheel: true,
       wheelAxis: 'y',
-    });
+      onSwipeStart: () => {
+        startIndex = instance.activeIndex;
+      },
+      onUpdate: () => {
+        const baseRotation = 6;
+        const baseX = 12;
+        const baseZ = -100;
+        const maxVisible = 6;
 
-    let startIndex = 0;
+        console.log(startIndex);
 
-    instance.on('swipeStart', () => {
-      startIndex = instance.activeIndex;
-    });
+        instance.slides.forEach(({ element, index, progress }) => {
+          let x = -baseX * progress;
+          let rotate = progress * -baseRotation;
+          const z = Math.abs(progress) * baseZ;
 
-    instance.on('update', () => {
-      const baseRotation = 6;
-      const baseX = 12;
-      const baseZ = -100;
-      const maxVisible = 6;
-
-      console.log(startIndex);
-
-      instance.slides.forEach(({ element, index, progress }) => {
-        let x = -baseX * progress;
-        let rotate = progress * -baseRotation;
-        const z = Math.abs(progress) * baseZ;
-
-        if (inRange(progress, -1, 1)) {
-          if (startIndex === index) {
-            x += Math.sin(Math.PI * progress) * -60;
-          } else {
-            x += Math.sin(Math.PI * progress) * -20;
+          if (inRange(progress, -1, 1)) {
+            if (startIndex === index) {
+              x += Math.sin(Math.PI * progress) * -60;
+            } else {
+              x += Math.sin(Math.PI * progress) * -20;
+            }
           }
-        }
 
-        x = clamp(x, -baseX * maxVisible, baseX * maxVisible);
+          x = clamp(x, -baseX * maxVisible, baseX * maxVisible);
 
-        rotate = clamp(
-          rotate,
-          -baseRotation * maxVisible,
-          baseRotation * maxVisible,
-        );
+          rotate = clamp(
+            rotate,
+            -baseRotation * maxVisible,
+            baseRotation * maxVisible,
+          );
 
-        element!.style.transform = `translateX(${x}%) translateZ(${z}px) rotate(${rotate}deg)`;
-      });
+          element!.style.transform = `translateX(${x}%) translateZ(${z}px) rotate(${rotate}deg)`;
+        });
+      },
     });
 
     return () => instance.destroy();

@@ -11,23 +11,22 @@ export const Basic: FC = () => {
     const instance = new Timeline({
       duration: 1000,
       easing: EaseInOutCubic,
+      onUpdate: ({ progress, eased }) => {
+        if (inputRef.current) {
+          inputRef.current.value = `${progress}`;
+        }
+
+        if (thumbRef.current) {
+          thumbRef.current.style.left = `${eased * 100}%`;
+        }
+      },
+      onStart: () => {
+        console.log('start');
+      },
+      onEnd: () => console.log('end'),
     });
 
     setTimeline(instance);
-
-    instance.on('update', ({ progress, eased }) => {
-      if (inputRef.current) {
-        inputRef.current.value = `${progress}`;
-      }
-
-      if (thumbRef.current) {
-        thumbRef.current.style.left = `${eased * 100}%`;
-      }
-    });
-
-    instance.on('start', () => console.log('start'));
-
-    instance.on('end', () => console.log('end'));
 
     return () => instance.destroy();
   }, []);

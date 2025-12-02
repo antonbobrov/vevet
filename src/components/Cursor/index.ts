@@ -7,7 +7,7 @@ import {
   ICursorStaticProps,
   ICursorType,
 } from './types';
-import { Module } from '@/base/Module';
+import { Module, TModuleCallbacksProps } from '@/base/Module';
 import { Raf } from '../Raf';
 import { addEventListener } from '@/utils/listeners';
 import { initVevet } from '@/global/initVevet';
@@ -173,7 +173,9 @@ export class Cursor<
   /** Active cursor types */
   protected _activeTypes: string[];
 
-  constructor(props?: StaticProps & MutableProps) {
+  constructor(
+    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+  ) {
     super(props);
 
     // Set default variables

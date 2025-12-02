@@ -1,4 +1,4 @@
-import { Module } from '@/base';
+import { Module, TModuleCallbacksProps } from '@/base';
 import {
   IPointersCallbacksMap,
   IPointersItem,
@@ -88,7 +88,9 @@ export class Pointers<
     return clamp(this.props.maxPointers, this.props.minPointers, Infinity);
   }
 
-  constructor(props?: StaticProps & MutableProps) {
+  constructor(
+    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+  ) {
     super(props);
 
     // Defaults

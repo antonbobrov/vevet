@@ -23,15 +23,14 @@ export const DynamicWidth: FC = () => {
       wheelAxis: 'y',
       freemode: true,
       stickOnResize: false,
+      onUpdate: () => {
+        instance.slides.forEach(({ element, coord }) => {
+          element!.style.transform = `translateX(${coord}px)`;
+        });
+      },
     });
 
     setSnap(instance);
-
-    instance.on('update', () => {
-      instance.slides.forEach(({ element, coord }) => {
-        element!.style.transform = `translateX(${coord}px)`;
-      });
-    });
 
     return () => instance.destroy();
   }, []);
@@ -53,27 +52,28 @@ export const DynamicWidth: FC = () => {
       const fromWidth = (element.offsetWidth / vevet.width) * 100;
       const startTrack = snap.track.current;
 
-      const tm = new Timeline({ duration: 500 });
+      const tm = new Timeline({
+        duration: 500,
+        onUpdate: ({ eased }) => {
+          const toWidth = isExpanding ? 45 : 20;
+          element.style.width = `${lerp(fromWidth, toWidth, eased)}vw`;
 
-      tm.on('update', ({ eased }) => {
-        const toWidth = isExpanding ? 45 : 20;
-        element.style.width = `${lerp(fromWidth, toWidth, eased)}vw`;
+          slide.resize(true);
 
-        slide.resize(true);
-
-        if (timelineIndex.current === index) {
-          if (isExpanding) {
-            snap.track.set(
-              lerp(
-                startTrack,
-                clamp(slide.staticCoord, snap.track.min, snap.track.max),
-                eased,
-              ),
-            );
-          } else {
-            snap.track.clampTarget();
+          if (timelineIndex.current === index) {
+            if (isExpanding) {
+              snap.track.set(
+                lerp(
+                  startTrack,
+                  clamp(slide.staticCoord, snap.track.min, snap.track.max),
+                  eased,
+                ),
+              );
+            } else {
+              snap.track.clampTarget();
+            }
           }
-        }
+        },
       });
 
       tm.play();

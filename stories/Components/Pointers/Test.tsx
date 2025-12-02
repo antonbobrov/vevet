@@ -17,27 +17,23 @@ export const Test: FC = () => {
       relative: true,
       minPointers: 2,
       maxPointers: 5,
-    });
+      onPointermove: ({ pointer }) => {
+        const finger = thumbs[pointer.index];
 
-    instance.on('pointermove', ({ pointer }) => {
-      const finger = thumbs[pointer.index];
+        finger.style.opacity = '1';
+        finger.style.transform = `translate(${pointer.current.x}px, ${pointer.current.y}px)`;
+      },
+      onPointerup: ({ pointer }) => {
+        const finger = thumbs[pointer.index];
 
-      finger.style.opacity = '1';
-      finger.style.transform = `translate(${pointer.current.x}px, ${pointer.current.y}px)`;
-    });
-
-    instance.on('pointerup', ({ pointer }) => {
-      const finger = thumbs[pointer.index];
-
-      finger.style.opacity = '0';
-    });
-
-    instance.on('start', () => {
-      container.style.backgroundColor = '#ccc';
-    });
-
-    instance.on('end', () => {
-      container.style.backgroundColor = '';
+        finger.style.opacity = '0';
+      },
+      onStart: () => {
+        container.style.backgroundColor = '#ccc';
+      },
+      onEnd: () => {
+        container.style.backgroundColor = '';
+      },
     });
 
     return () => instance?.destroy();

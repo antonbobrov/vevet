@@ -14,6 +14,7 @@ import { Preloader } from '../Preloader';
 import { Raf } from '../Raf';
 import { initVevet } from '@/global/initVevet';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { TModuleCallbacksProps } from '@/base';
 
 export * from './types';
 
@@ -107,7 +108,9 @@ export class ProgressPreloader<
   /** Animation frame instance for managing smooth progress updates. */
   protected _raf: Raf;
 
-  constructor(props?: StaticProps & MutableProps) {
+  constructor(
+    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+  ) {
     super(props);
 
     // Initialize animation frame if interpolation is enabled

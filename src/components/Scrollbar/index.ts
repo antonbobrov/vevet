@@ -1,5 +1,5 @@
 import { TRequiredProps } from '@/internal/requiredProps';
-import { Module } from '@/base';
+import { Module, TModuleCallbacksProps } from '@/base';
 import {
   IScrollbarCallbacksMap,
   IScrollbarMutableProps,
@@ -111,7 +111,9 @@ export class Scrollbar<
   /** Detects if the container is RTL */
   protected _isRtl = false;
 
-  constructor(props?: StaticProps & MutableProps) {
+  constructor(
+    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+  ) {
     super(props);
 
     // detect features

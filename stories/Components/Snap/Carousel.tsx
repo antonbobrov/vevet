@@ -19,15 +19,14 @@ export const Carousel: FC = () => {
       loop: true,
       shortSwipes: false,
       freemode: 'sticky',
-    });
+      onUpdate: () => {
+        instance.slides.forEach(({ element, coord, progress }) => {
+          const z = Math.abs(progress ** 2) * -150;
+          const rZ = progress * 5;
 
-    instance.on('update', () => {
-      instance.slides.forEach(({ element, coord, progress }) => {
-        const z = Math.abs(progress ** 2) * -150;
-        const rZ = progress * 5;
-
-        element!.style.transform = `translateX(${coord}px) translateZ(${z}px) rotateZ(${rZ}deg)`;
-      });
+          element!.style.transform = `translateX(${coord}px) translateZ(${z}px) rotateZ(${rZ}deg)`;
+        });
+      },
     });
 
     return () => instance.destroy();

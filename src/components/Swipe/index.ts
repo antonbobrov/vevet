@@ -1,4 +1,4 @@
-import { Module } from '@/base';
+import { Module, TModuleCallbacksProps } from '@/base';
 import { TRequiredProps } from '@/internal/requiredProps';
 import {
   ISwipeCallbacksMap,
@@ -126,7 +126,9 @@ export class Swipe<
   /** Cursor styles */
   protected _cursorStyles: HTMLStyleElement;
 
-  constructor(props?: StaticProps & MutableProps) {
+  constructor(
+    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+  ) {
     super(props);
 
     const { container, buttons, pointers } = this.props;
