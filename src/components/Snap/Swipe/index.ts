@@ -27,6 +27,7 @@ export class SnapSwipe {
       minTime: props.swipeMinTime,
       threshold: props.swipeThreshold,
       axis: this.axis,
+      ratio: props.swipeSpeed,
       inertia: false,
       inertiaDuration: props.swipeInertiaDuration,
       inertiaRatio: props.swipeInertiaRatio,
@@ -52,6 +53,7 @@ export class SnapSwipe {
           minTime: snap.props.swipeMinTime,
           threshold: snap.props.swipeThreshold,
           axis: this.axis,
+          ratio: props.swipeSpeed,
           inertiaDuration: snap.props.swipeInertiaDuration,
           inertiaRatio: snap.props.swipeInertiaRatio,
         });
@@ -168,7 +170,7 @@ export class SnapSwipe {
   protected _handleSwipeMove(coords: ISwipeCoords) {
     const { snap } = this;
     const { props, track, callbacks } = snap;
-    const { followSwipe: shouldFollow, swipeSpeed } = props;
+    const { followSwipe: shouldFollow } = props;
 
     if (!shouldFollow && !track.isSlideScrolling) {
       return;
@@ -176,8 +178,7 @@ export class SnapSwipe {
 
     // Normalize swipe delta
     const swipeDelta = this.axis === 'x' ? coords.step.x : coords.step.y;
-    const speed = this.hasInertia ? Math.sign(swipeSpeed) : swipeSpeed;
-    const delta = swipeDelta * -speed;
+    const delta = swipeDelta * -1;
 
     // Update track target
     track.iterateTarget(delta);
@@ -300,7 +301,7 @@ export class SnapSwipe {
       return;
     }
 
-    const normalizedDiff = Math.sign(diff) * Math.sign(props.swipeSpeed);
+    const normalizedDiff = Math.sign(diff);
 
     if (this._startIndex !== snap.activeIndex) {
       if (normalizedDiff < 0 && activeSlide.progress > 0) {

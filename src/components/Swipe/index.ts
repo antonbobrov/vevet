@@ -59,6 +59,7 @@ export class Swipe<
       enabled: true,
       relative: false,
       axis: null,
+      ratio: 1,
       grabCursor: false,
       willAbort: () => false,
       threshold: 5,
@@ -287,6 +288,7 @@ export class Swipe<
   /** Parses pointer coordinates relative to the container */
   protected _decodeCoords(event: MouseEvent | TouchEvent): ISwipeMatrix {
     const { props } = this;
+    const { container, ratio } = props;
 
     const clientX =
       'touches' in event ? event.touches[0].clientX : event.clientX;
@@ -300,7 +302,7 @@ export class Swipe<
     let centerY = initVevet().height / 2;
 
     if (props.relative) {
-      const bounding = props.container.getBoundingClientRect();
+      const bounding = container.getBoundingClientRect();
 
       x = clientX - bounding.left;
       y = clientY - bounding.top;
@@ -311,7 +313,11 @@ export class Swipe<
     const angleRad = Math.atan2(clientY - centerY, clientX - centerX);
     const angle = (angleRad * 180) / Math.PI;
 
-    return { x, y, angle };
+    return {
+      x: x * ratio,
+      y: y * ratio,
+      angle,
+    };
   }
 
   /** Handles move events */

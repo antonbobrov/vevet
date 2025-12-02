@@ -56,6 +56,12 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
   axis?: null | 'x' | 'y';
 
   /**
+   * Swipe move ratio (multiplier).
+   * @default 1
+   */
+  ratio?: number;
+
+  /**
    * Shows "grab" and "grabbing" cursors during interaction.
    * @default false
    */
