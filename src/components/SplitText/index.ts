@@ -56,6 +56,8 @@ export class SplitText<
       resizeDebounce: 0,
       ignore: null,
       prepareText: (text) => text,
+      wordDelimiter: String.fromCharCode(32),
+      wordDelimiterOutput: null,
     } as TRequiredProps<StaticProps>;
   }
 
@@ -223,6 +225,8 @@ export class SplitText<
       letterClass,
       ignore,
       prepareText,
+      wordDelimiter,
+      wordDelimiterOutput,
     } = this.props;
 
     this._isBaseSplit = true;
@@ -236,6 +240,8 @@ export class SplitText<
       wordTag,
       ignore,
       prepareText,
+      wordDelimiter,
+      wordDelimiterOutput,
     });
 
     this._wordsMeta = wordsMeta;

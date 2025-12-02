@@ -139,6 +139,16 @@ const instance = new SplitText({
 });
 ```
 
+#### `wordDelimiter` {#props.wordDelimiter}
+- **Type:** `string`  
+- **Default:** `(whitespace)`  
+- Specifies a custom delimiter used to split text into words. By default, splitting occurs on regular whitespace.
+
+#### `wordDelimiterOutput` {#props.wordDelimiterOutput}
+- **Type:** `string | null`  
+- **Default:** `null`  
+- Provides an alternative delimiter to use when outputting the split words. Useful when a custom input delimiter is used but the output should differ.
+
 
 
 ## Accessors

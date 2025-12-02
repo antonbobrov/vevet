@@ -1,12 +1,15 @@
 import { ISplitTextStaticProps, ISplitTextWordMeta } from '../types';
 import { isIgnored } from './isIgnored';
 
-interface IProps {
+type TBaseProps = Pick<
+  ISplitTextStaticProps,
+  'ignore' | 'prepareText' | 'wordDelimiter' | 'wordDelimiterOutput'
+>;
+
+interface IProps extends TBaseProps {
   container: ChildNode;
   classname: string;
   tagName: keyof HTMLElementTagNameMap;
-  ignore: ISplitTextStaticProps['ignore'];
-  prepareText: ISplitTextStaticProps['prepareText'];
 }
 
 /**
@@ -18,8 +21,10 @@ export function wrapWords({
   tagName,
   ignore,
   prepareText,
+  wordDelimiter = ' ',
+  wordDelimiterOutput: wordDelimiterOutputProp,
 }: IProps) {
-  const whitespace = String.fromCharCode(32); // ASCII for space
+  const wordDelimiterOutput = wordDelimiterOutputProp || wordDelimiter;
 
   const baseElement = document.createElement(tagName);
   baseElement.style.display = 'inline-block';
@@ -64,9 +69,12 @@ export function wrapWords({
       let text = node.nodeValue ?? '';
 
       // Handle case where node contains only whitespace
-      if (text === whitespace) {
+      if (text === wordDelimiter) {
         prevNonBreakingWord = null;
-        parent?.insertBefore(document.createTextNode(whitespace), node);
+        parent?.insertBefore(
+          document.createTextNode(wordDelimiterOutput),
+          node,
+        );
         node.remove();
 
         return;
@@ -74,7 +82,8 @@ export function wrapWords({
 
       // Wrap each word in an element and insert it into the DOM
       text = prepareText ? prepareText(text) : text;
-      const splitWords = text.split(whitespace);
+      const splitWords = text.split(wordDelimiter);
+
       splitWords.forEach((wordContents, index) => {
         if (wordContents) {
           const element = baseElement.cloneNode(false) as HTMLElement;
@@ -88,7 +97,10 @@ export function wrapWords({
 
         // Add a whitespace between words, except after the last word
         if (index < splitWords.length - 1) {
-          parent?.insertBefore(document.createTextNode(whitespace), node);
+          parent?.insertBefore(
+            document.createTextNode(wordDelimiterOutput),
+            node,
+          );
         }
       });
 

@@ -35,8 +35,10 @@ export const Component: FC<IProps> = ({
       lines,
       linesWrapper,
       ignore,
+      // wordDelimiter: ',',
+      // wordDelimiterOutput: '--',
       // prepareText: (source) =>
-      //   [...segmenter.segment(source)].map((s) => s.segment).join(' '),
+      //   [...segmenter.segment(source)].map((s) => s.segment).join(','),
     });
 
     return () => instance.destroy();

@@ -2,15 +2,18 @@ import { ISplitTextLetterMeta, ISplitTextStaticProps } from '../types';
 import { wrapLetters } from './wrapLetters';
 import { wrapWords } from './wrapWords';
 
-interface IProps {
+type TBaseProps = Pick<
+  ISplitTextStaticProps,
+  'ignore' | 'prepareText' | 'wordDelimiter' | 'wordDelimiterOutput'
+>;
+
+interface IProps extends TBaseProps {
   container: HTMLElement;
   letterClassName: string;
   wordClassName: string;
   hasLetters: boolean;
   letterTag: keyof HTMLElementTagNameMap;
   wordTag: keyof HTMLElementTagNameMap;
-  ignore: ISplitTextStaticProps['ignore'];
-  prepareText: ISplitTextStaticProps['prepareText'];
 }
 
 /**
@@ -24,7 +27,7 @@ export function splitBase({
   letterTag,
   wordTag,
   ignore,
-  prepareText,
+  ...props
 }: IProps) {
   // Prepare the fragment
   const prepareFragment = document.createDocumentFragment();
@@ -34,11 +37,11 @@ export function splitBase({
 
   // Wrap the text into words
   const wordsMeta = wrapWords({
+    ...props,
     container: prepareFragment as any,
     classname: wordClassName,
     tagName: wordTag,
     ignore,
-    prepareText,
   });
 
   const lettersMeta: ISplitTextLetterMeta[] = [];

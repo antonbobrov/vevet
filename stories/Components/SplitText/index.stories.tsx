@@ -2,10 +2,6 @@ import type { StoryObj, Meta } from '@storybook/react';
 import React from 'react';
 import { Component } from '.';
 
-// todo: chinese example
-// todo: arabic example
-// todo: thai example
-
 type TComponent = typeof Component;
 
 const meta: Meta<TComponent> = {

@@ -98,6 +98,20 @@ export interface ISplitTextStaticProps extends IModuleStaticProps {
     });
    */
   prepareText?: (text: string) => string;
+
+  /**
+   * Specifies a custom delimiter used to split text into words.
+   * By default, splitting occurs on regular whitespace.
+   * @default " "
+   */
+  wordDelimiter?: string;
+
+  /**
+   * Provides an alternative delimiter to use when outputting the split words.
+   * Useful when a custom input delimiter is used but the output should differ.
+   * @default null
+   */
+  wordDelimiterOutput?: string | null;
 }
 
 /** Mutable properties for the SplitText module */
