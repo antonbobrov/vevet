@@ -13,11 +13,10 @@ export const CreativeSine: FC = () => {
       container: ref.current,
       direction: 'horizontal',
       centered: true,
-      duration: (d) => d,
+      duration: (d) => d / 2,
       slideSize: 'stretch',
       edgeFriction: 1,
-      freemode: 'sticky',
-      shortSwipes: false,
+      freemode: false,
       onUpdate: () => {
         instance.slides.forEach(({ element, progress }) => {
           const scale = clamp(1 - Math.abs(progress));

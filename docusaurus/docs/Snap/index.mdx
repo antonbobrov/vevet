@@ -757,3 +757,91 @@ const destruct = instance.on('swipeInertiaFail', () => console.log('fail'));
 // Cancel the callback
 destruct();
 ```
+
+
+
+## Parallax
+
+Snap does not modify element styles by default, but it provides a set of optional parallax utilities for DOM elements.  
+
+Parallax effects are enabled using `data-` attributes.
+
+### Parallax Effects
+
+Each parallax attribute maps directly to a corresponding CSS transform (or opacity):
+
+- `data-snap-parallax-x` -> `translateX()`
+- `data-snap-parallax-y` -> `translateY()`
+- `data-snap-parallax-z` -> `translateZ()`
+- `data-snap-parallax-scale` -> `scale()` - value is added to `1`
+- `data-snap-parallax-scale-x` -> `scaleX()` - value is added to `1`
+- `data-snap-parallax-scale-y` -> `scaleY()` - value is added to `1`
+- `data-snap-parallax-skew` -> `skew()`
+- `data-snap-parallax-skew-x` -> `skewX()`
+- `data-snap-parallax-skew-y` -> `skewY()`
+- `data-snap-parallax-rotate` -> `rotate()`
+- `data-snap-parallax-rotate-x` -> `rotateX()`
+- `data-snap-parallax-rotate-y` -> `rotateY()`
+- `data-snap-parallax-rotate-z` -> `rotateZ()`
+- `data-snap-parallax-opacity` -> `opacity` - **should contain negative values only**, decreasing the current opacity.
+
+All effect attributes accept numbers or any supported CSS unit.
+
+### Parallax Timeline
+
+By default, parallax values are applied while the slide transition progress is between `-1` and `1`.
+
+You can inspect slide progress in [this demo](/docs/Snap/simple-demos#progress).
+
+To change the active range, use the `data-snap-parallax-scope` attribute:
+- numeric range like `data-snap-parallax-scope="-2, 2"`
+- infinite range like `data-snap-parallax-scope="-Infinity, Infinity"`
+
+The scope applies to all parallax effects inside a slide unless overridden per effect:
+
+```html
+data-snap-parallax-y-scope="-2, 2"
+```
+
+### Parallax Strength
+
+Use `data-snap-parallax-[effect]-influence` to apply the effect only during dragging or wheeling.
+
+The parallax value will smoothly increase or decrease based on interaction intensity, producing more "organic" motion.
+
+### Positive Values
+
+`data-snap-parallax-[effect]-abs` forces the effect to use absolute (non-negative) values.
+
+This is useful for properties like `scale()` where negative values are undesirable.
+
+### Parallax example
+
+Organic Gap:
+
+```html
+<div className="slide">
+  <div
+    className="wrap"
+    data-snap-parallax-x="-200%"
+    data-snap-parallax-x-scope="-Infinity, Infinity"
+    data-snap-parallax-x-influence
+  >
+    Slide Info
+  </div>
+</div>
+```
+
+Scale:
+
+```html
+<div className="slide">
+  <div
+    className="wrap"
+    data-snap-parallax-opacity="-0.33"
+    data-snap-parallax-opacity-scope="-4,4"
+  >
+    Slide Info
+  </div>
+</div>
+```

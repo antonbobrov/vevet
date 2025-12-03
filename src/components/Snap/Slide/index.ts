@@ -1,6 +1,8 @@
 import { clamp, IOnResize, onResize, toPixels, uid } from '@/utils';
 import { Snap } from '..';
 import { ISnapSlideProps } from './types';
+import { SnapSlideParallax } from '../SlideParallax';
+import { parallaxAttributes } from '../SlideParallax/constants';
 
 export class SnapSlide {
   constructor(
@@ -9,6 +11,7 @@ export class SnapSlide {
   ) {
     this._id = uid('snap-slide');
     this._index = 0;
+    this._parallax = [];
 
     const defaultProps: ISnapSlideProps = {
       virtual: false,
@@ -60,6 +63,9 @@ export class SnapSlide {
   protected get snap() {
     return this._snap;
   }
+
+  /** Slide parallax elements */
+  protected _parallax?: SnapSlideParallax[];
 
   /** Events on slide resize */
   protected _onResize?: IOnResize;
@@ -173,6 +179,10 @@ export class SnapSlide {
     this._snap = snap;
     this._index = index;
 
+    this._parallax = this._getParallaxNodes().map(
+      (node) => new SnapSlideParallax(snap, this, node),
+    );
+
     if (this.element && this.sizeProp === 'auto') {
       this._onResize = onResize({
         element: this.element,
@@ -189,11 +199,27 @@ export class SnapSlide {
   public detach() {
     this._snap = undefined;
     this._onResize?.remove();
+    this._parallax?.forEach((parallax) => parallax.destroy());
   }
 
   /** Render the slide */
   public render() {
     this._toggleAppend();
+
+    this._parallax?.forEach((parallax) => parallax.render());
+  }
+
+  /** Get list of parallax nodes */
+  protected _getParallaxNodes() {
+    const { element } = this;
+    if (!element) {
+      return [];
+    }
+
+    const selector = parallaxAttributes.map((attr) => `[${attr}]`).join(',');
+    const nodeList = element.querySelectorAll(selector);
+
+    return Array.from(nodeList) as HTMLElement[];
   }
 
   /** Toggle slide append/remove */

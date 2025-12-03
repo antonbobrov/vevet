@@ -15,6 +15,9 @@ import { DynamicWidth as DynamicWidthComponent } from './DynamicWidth';
 import { CreativeScale as CreativeScaleComponent } from './CreativeScale';
 import { CreativeSine as CreativeSineComponent } from './CreativeSine';
 import { Stack3D as Stack3DComponent } from './Stack3D';
+import { InfluenceParallaxGap as InfluenceParallaxGapComponent } from './InfluenceParallaxGap';
+import { InfluenceParallaxSkew as InfluenceParallaxSkewComponent } from './InfluenceParallaxSkew';
+import { ParallaxStickers as ParallaxStickersComponent } from './ParallaxStickers';
 
 const meta: Meta = {
   title: 'Components/Snap',
@@ -49,5 +52,15 @@ export const CreativeScale: StoryFn = () => <CreativeScaleComponent />;
 export const CreativeSine: StoryFn = () => <CreativeSineComponent />;
 
 export const Stack3D: StoryFn = () => <Stack3DComponent />;
+
+export const InfluenceParallaxGap: StoryFn = () => (
+  <InfluenceParallaxGapComponent />
+);
+
+export const InfluenceParallaxSkew: StoryFn = () => (
+  <InfluenceParallaxSkewComponent />
+);
+
+export const ParallaxStickers: StoryFn = () => <ParallaxStickersComponent />;
 
 export const Virtual: StoryFn = () => <VirtualComponent />;
