@@ -28,18 +28,14 @@ import { SnapWheel } from './Wheel';
 import { SnapSwipe } from './Swipe';
 import { SnapTrack } from './Track';
 import { SnapKeyboard } from './Keyboard';
-import { initVevet } from '@/global/initVevet';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { isUndefined } from '@/internal/isUndefined';
 import { isNumber } from '@/internal/isNumber';
 import { isString } from '@/internal/isString';
+import { initVevet } from '@/global/initVevet';
 
 export * from './types';
 export * from './Slide';
-
-// todo: add examples for freemode: sticky
-
-// todo: fix freemode with negative swipeSpeed
 
 // todo: jsdoc
 
@@ -76,7 +72,7 @@ export class Snap<
       centered: false,
       loop: false,
       gap: 0,
-      lerp: 0.2,
+      lerp: initVevet().mobile ? 1 : 0.2,
       freemode: false,
       stickOnResize: true,
       friction: 0,
@@ -92,7 +88,6 @@ export class Snap<
       shortSwipesDuration: 300,
       shortSwipesThreshold: 30,
       swipeFriction: false,
-      swipeLerp: initVevet().mobile ? 1 : 0.6,
       swipeThreshold: 5,
       swipeMinTime: 0,
       swipeInertiaDuration: (distance) => clamp(distance, 500, 2000),
@@ -349,16 +344,10 @@ export class Snap<
       return;
     }
 
-    const { track, props, _swipe: swipe } = this;
-
-    // Get lerp factor
-    const lerpFactor =
-      (swipe.isSwiping || swipe.hasInertia) && props.swipeLerp
-        ? props.swipeLerp
-        : props.lerp;
+    const { track, props } = this;
 
     // Interpolate track value
-    track.lerp(this._raf.lerpFactor(lerpFactor));
+    track.lerp(this._raf.lerpFactor(props.lerp));
 
     // Stop raf if target reached
     if (track.isInterpolated) {

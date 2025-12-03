@@ -13,7 +13,6 @@ export const CreativeSine: FC = () => {
       container: ref.current,
       direction: 'horizontal',
       centered: true,
-      swipeLerp: 0.2,
       duration: (d) => d,
       slideSize: 'stretch',
       edgeFriction: 1,

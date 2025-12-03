@@ -55,12 +55,6 @@ export interface ISnapSwipeProps {
   swipeFriction?: boolean;
 
   /**
-   * Linear interpolation factor for smooth progress updates during swipe move. `false` means that the main `lerp` option will be used
-   * @default `vevet.mobile ? 1 : 0.6`
-   */
-  swipeLerp?: number | false;
-
-  /**
    * Length in pixels that must be swiped to trigger swipe start.
    * @default 5
    */

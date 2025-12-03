@@ -16,7 +16,6 @@ export const CreativeScale: FC = () => {
       centered: true,
       loop: true,
       lerp: 0.05,
-      swipeLerp: 0.05,
       duration: 1000,
       onUpdate: () => {
         instance.slides.forEach(({ element, coord, progress }) => {

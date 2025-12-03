@@ -103,7 +103,7 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 
 #### `lerp` {#props.lerp}
 - **Type:** `number`  
-- **Default:** `0.2`  
+- **Default:** `vevet.mobile ? 1 : 0.2`  
 - Linear interpolation factor for smooth animation.  
   **See [demo](simple-demos#hypersmooth)**
 
@@ -202,11 +202,6 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 - **Default:** `false`  
 - Defines if `friction` is allowed when swiping. Doesn't work with short swipes or when `followSwipe` is `false`.  
   **See [demo](simple-demos#friction)**
-
-#### `swipeLerp` {#props.swipeLerp}
-- **Type:** `number | false`  
-- **Default:** `vevet.mobile ? 1 : 0.6`  
-- Linear interpolation factor for smooth progress updates during swipe move. `false` means that the main `lerp` option will be used.
 
 #### `swipeThreshold` {#props.swipeThreshold}
 - **Type:** `number`  
