@@ -342,14 +342,17 @@ export class Swipe<
 
     // check if can start
     if (!this._isSwiping) {
-      const { threshold, minTime, axis, willAbort } = this.props;
+      const { threshold, ratio, minTime, axis, willAbort } = this.props;
+      const speed = Math.abs(ratio);
+
       const diff = {
         x: matrix.x - this._startCoord.x,
         y: matrix.y - this._startCoord.y,
       };
 
       // check threshold
-      if (Math.sqrt(diff.x ** 2 + diff.y ** 2) < threshold) {
+      const dist = Math.sqrt((diff.x / speed) ** 2 + (diff.y / speed) ** 2);
+      if (dist < threshold) {
         return;
       }
 
