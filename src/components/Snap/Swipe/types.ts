@@ -80,7 +80,7 @@ export interface ISnapSwipeProps {
 
   /**
    * Inertia strength.
-   * @default 0.3
+   * @default 0.5
    */
   swipeInertiaRatio?: number;
 }

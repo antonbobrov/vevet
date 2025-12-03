@@ -96,7 +96,7 @@ export class Snap<
       swipeThreshold: 5,
       swipeMinTime: 0,
       swipeInertiaDuration: (distance) => clamp(distance, 500, 2000),
-      swipeInertiaRatio: 0.3,
+      swipeInertiaRatio: 0.5,
       wheel: false,
       wheelSpeed: 1,
       wheelAxis: 'auto',
