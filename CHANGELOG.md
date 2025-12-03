@@ -1,5 +1,49 @@
 # Changelog
 
+# [5.2.0](https://github.com/antonbobrov/vevet/compare/v5.1.4...v5.2.0) (2025-12-03)
+
+
+### Components
+
+* allow callbacks in props ([ea3639c](https://github.com/antonbobrov/vevet/commit/ea3639cc5e21fa61ce3a21c6e50d5b94de022a11))
+* better destroyal logic ([7bfedf7](https://github.com/antonbobrov/vevet/commit/7bfedf7ef13d407873fbd2c01122ea8e706b7943))
+
+### Core
+
+* add `inAppBrowser` ([f26499d](https://github.com/antonbobrov/vevet/commit/f26499d8b2917e7170ed385da4e5a39f7463b1b5))
+* update `svh` calculation, use native svh for classic browsers ([140d57c](https://github.com/antonbobrov/vevet/commit/140d57cd97668f41563358b7262b6226f5b8b268))
+
+### Cursor
+
+* support RTL ([0f92260](https://github.com/antonbobrov/vevet/commit/0f9226033df76660b7562893e2321fe49e5237e2))
+
+### Marquee
+
+* support RTL ([235e666](https://github.com/antonbobrov/vevet/commit/235e666add69712e3df399b93cc8fb69f75e747a))
+
+### Scrollbar
+
+* support RTL ([1183a5b](https://github.com/antonbobrov/vevet/commit/1183a5b12d6643288bad683636353fcf8e7b13bf))
+
+### Snap
+
+* `swipeInertiaRatio` defaults to 0.5 ([3d6c725](https://github.com/antonbobrov/vevet/commit/3d6c7254481d0d8c6daad7c47e369902c7a5c490))
+* add `track.influence` ([5efa107](https://github.com/antonbobrov/vevet/commit/5efa10710d3201bbed1839340251e877dee02170))
+* add parallax ([7446dac](https://github.com/antonbobrov/vevet/commit/7446dac11926c53dfb923e1bddc9f5669ce4fd70))
+* fix swipe inertia with negative speed ([527199a](https://github.com/antonbobrov/vevet/commit/527199acd3adda510188500b9dc127ae1c5378ed))
+* remove `swipeLerp` ([df0f5ae](https://github.com/antonbobrov/vevet/commit/df0f5aefef0a753a65e183b2fe323226c71c9d1c))
+* respect `swipeSpeed` for short swipes & no-follow swipes ([6e5de09](https://github.com/antonbobrov/vevet/commit/6e5de091246234bb6379a803280adab21916dd84))
+
+### SplitText
+
+* add `prepareText` ([c941af2](https://github.com/antonbobrov/vevet/commit/c941af29d889b07252e2bc787afdb69b9c6506f7))
+* add `wordDelimiter` and `wordDelimiterOutput` ([203c93d](https://github.com/antonbobrov/vevet/commit/203c93dd154c361ccf6a0e6dd23fe95d6ef234f3))
+
+### Swipe
+
+* add `ratio` (multiplier) ([d7c408d](https://github.com/antonbobrov/vevet/commit/d7c408da0c325f3c35fff846dc817dbb9e80b11e))
+* respect `ratio` when detecting swipe start ([98bd49d](https://github.com/antonbobrov/vevet/commit/98bd49dba2b61bf35cf14c57969320cc7ac64bef))
+
 ## [5.1.4](https://github.com/antonbobrov/vevet/compare/v5.1.3...v5.1.4) (2025-11-07)
 
 
