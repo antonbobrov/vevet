@@ -4,5 +4,6 @@
 - npm v10.8.2
 
 ## Tasks:
-- release: `npx release-it`
+- start storybook `npm run storybook`
 - start docusaurus `cd docusaurus` & `npm run start`
+- release: `npx release-it`
