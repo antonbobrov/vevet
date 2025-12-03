@@ -551,6 +551,7 @@ export class Snap<
     tm.on('update', (data) => {
       track.current = lerp(start, end, data.eased);
       track.target = track.current;
+      track.influence *= 1 - data.progress;
 
       if (data.progress === 1) {
         this._targetIndex = undefined;

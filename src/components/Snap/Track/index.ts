@@ -5,6 +5,23 @@ import { toPixels } from '@/utils';
 export class SnapTrack {
   constructor(protected snap: Snap) {}
 
+  /** Interpolation influence */
+  protected _influence = {
+    current: 0,
+    target: 0,
+  };
+
+  /** Gets the interpolation influence */
+  get influence() {
+    return this._influence.current;
+  }
+
+  /** Sets the interpolation influence */
+  set influence(value: number) {
+    this._influence.current = value;
+    this._influence.target = value;
+  }
+
   /** The current track value */
   protected _current = 0;
 
@@ -28,13 +45,21 @@ export class SnapTrack {
 
   /** Sets the target track value */
   set target(value: number) {
+    const { domSize } = this.snap;
+    const diff = value - this._target;
+
     this._target = value;
+
+    this._influence.target += domSize ? diff / domSize : 0;
+    this._influence.target = clamp(this._influence.target, -0.2, 0.2);
   }
 
   /** Set a value to current & target value instantly */
   public set(value: number) {
     this.current = value;
     this.target = value;
+    this._influence.current = 0;
+    this._influence.target = 0;
   }
 
   /** If can loop */
@@ -65,9 +90,12 @@ export class SnapTrack {
   }
 
   /** Interpolate the current track value */
-  public lerp(factor: number) {
+  public lerp(initialFactor: number) {
     let { target } = this;
     const { snap, min, max } = this;
+
+    let lerpFactor = initialFactor;
+    const influence = this._influence;
 
     // Edge space & resistance
 
@@ -89,20 +117,31 @@ export class SnapTrack {
     // Interpolate current value
 
     const rest = Math.abs(this.current - target);
-    const fastThreshold = 5;
+    const fastThreshold = 3;
 
     if (rest < fastThreshold) {
       const fastProgress = 1 - rest / fastThreshold;
-      const additionalFactor = (1 - factor) / 3;
-      factor += additionalFactor * fastProgress;
+      const additionalFactor = (1 - lerpFactor) / 15;
+      lerpFactor += additionalFactor * fastProgress;
     }
 
-    this.current = lerp(this.current, target, factor, 0.000001);
+    this.current = lerp(this.current, target, lerpFactor, 0.000001);
+
+    // Interpolate influence
+
+    influence.target = lerp(influence.target, 0, initialFactor, 0.000001);
+
+    influence.current = lerp(
+      influence.current,
+      influence.target,
+      lerpFactor,
+      0.000001,
+    );
   }
 
   /** Whether the track is interpolated */
   get isInterpolated() {
-    return this.current === this.target;
+    return this.current === this.target && this._influence.current === 0;
   }
 
   /** Get minimum track value */
