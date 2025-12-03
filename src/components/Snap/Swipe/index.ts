@@ -99,7 +99,10 @@ export class SnapSwipe {
 
   /** Swipe difference between start and current coordinates */
   protected get diff() {
-    return this.axis === 'x' ? this._swipe.diff.x : this._swipe.diff.y;
+    const initialDiff =
+      this.axis === 'x' ? this._swipe.diff.x : this._swipe.diff.y;
+
+    return initialDiff / Math.abs(this.snap.props.swipeSpeed);
   }
 
   protected _handleVelocityModifier(source: ISwipeMatrix) {
