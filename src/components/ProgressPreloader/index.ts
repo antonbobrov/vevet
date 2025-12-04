@@ -14,9 +14,9 @@ import { Preloader } from '../Preloader';
 import { Raf } from '../Raf';
 import { initVevet } from '@/global/initVevet';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { TModuleCallbacksProps } from '@/base';
 import { cnHas } from '@/internal/cn';
 import { doc } from '@/internal/env';
+import { TModuleOnCallbacksProps } from '@/base';
 
 export * from './types';
 
@@ -31,17 +31,14 @@ const PAGE_RESOURCE = `vevet-page-${Math.random()}`;
  * @group Components
  */
 export class ProgressPreloader<
-  CallbacksMap extends
-    IProgressPreloaderCallbacksMap = IProgressPreloaderCallbacksMap,
-  StaticProps extends
-    IProgressPreloaderStaticProps = IProgressPreloaderStaticProps,
-  MutableProps extends
-    IProgressPreloaderMutableProps = IProgressPreloaderMutableProps,
-> extends Preloader<CallbacksMap, StaticProps, MutableProps> {
+  C extends IProgressPreloaderCallbacksMap = IProgressPreloaderCallbacksMap,
+  S extends IProgressPreloaderStaticProps = IProgressPreloaderStaticProps,
+  M extends IProgressPreloaderMutableProps = IProgressPreloaderMutableProps,
+> extends Preloader<C, S, M> {
   /**
    * Retrieves the default static properties.
    */
-  public _getStatic(): TRequiredProps<StaticProps> {
+  public _getStatic(): TRequiredProps<S> {
     return {
       ...super._getStatic(),
       preloadImages: true,
@@ -50,14 +47,14 @@ export class ProgressPreloader<
       ignoreClassName: 'js-preload-ignore',
       lerp: 0.1,
       endDuration: 500,
-    } as TRequiredProps<StaticProps>;
+    } as TRequiredProps<S>;
   }
 
   /**
    * Retrieves the default mutable properties.
    */
-  public _getMutable(): TRequiredProps<MutableProps> {
-    return { ...super._getMutable() } as TRequiredProps<MutableProps>;
+  public _getMutable(): TRequiredProps<M> {
+    return { ...super._getMutable() } as TRequiredProps<M>;
   }
 
   /**
@@ -111,9 +108,10 @@ export class ProgressPreloader<
   protected _raf: Raf;
 
   constructor(
-    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+    props?: S & M,
+    onCallbacks?: TModuleOnCallbacksProps<C, ProgressPreloader<C, S, M>>,
   ) {
-    super(props);
+    super(props, onCallbacks as any);
 
     // Initialize animation frame if interpolation is enabled
     this._raf = new Raf();

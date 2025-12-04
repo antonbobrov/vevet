@@ -9,7 +9,7 @@ import {
   ISplitTextStaticProps,
   ISplitTextWordMeta,
 } from './types';
-import { Module, TModuleCallbacksProps } from '@/base';
+import { Module, TModuleOnCallbacksProps } from '@/base';
 import { TRequiredProps } from '@/internal/requiredProps';
 import { initVevet } from '@/global/initVevet';
 import { saveInitialNodes } from './utils/saveInitialNodes';
@@ -33,14 +33,14 @@ export * from './types';
  * @group Components
  */
 export class SplitText<
-  CallbacksMap extends ISplitTextCallbacksMap = ISplitTextCallbacksMap,
-  StaticProps extends ISplitTextStaticProps = ISplitTextStaticProps,
-  MutableProps extends ISplitTextMutableProps = ISplitTextMutableProps,
-> extends Module<CallbacksMap, StaticProps, MutableProps> {
+  C extends ISplitTextCallbacksMap = ISplitTextCallbacksMap,
+  S extends ISplitTextStaticProps = ISplitTextStaticProps,
+  M extends ISplitTextMutableProps = ISplitTextMutableProps,
+> extends Module<C, S, M> {
   /**
    * Retrieves the default static properties.
    */
-  public _getStatic(): TRequiredProps<StaticProps> {
+  public _getStatic(): TRequiredProps<S> {
     return {
       ...super._getStatic(),
       letters: false,
@@ -58,14 +58,14 @@ export class SplitText<
       prepareText: (text) => text,
       wordDelimiter: String.fromCharCode(32),
       wordDelimiterOutput: null,
-    } as TRequiredProps<StaticProps>;
+    } as TRequiredProps<S>;
   }
 
   /**
    * Retrieves the default mutable properties.
    */
-  public _getMutable(): TRequiredProps<MutableProps> {
-    return { ...super._getMutable() } as TRequiredProps<MutableProps>;
+  public _getMutable(): TRequiredProps<M> {
+    return { ...super._getMutable() } as TRequiredProps<M>;
   }
 
   /**
@@ -151,9 +151,10 @@ export class SplitText<
    * Initializes the SplitText instance and saves the initial state.
    */
   constructor(
-    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+    props?: S & M,
+    onCallbacks?: TModuleOnCallbacksProps<C, SplitText<C, S, M>>,
   ) {
-    super(props);
+    super(props, onCallbacks as any);
 
     const { container } = this.props;
     const { style } = container;

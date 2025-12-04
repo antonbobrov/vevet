@@ -1,4 +1,4 @@
-import { Module, TModuleCallbacksProps } from '@/base';
+import { Module, TModuleOnCallbacksProps } from '@/base';
 import { Timeline } from '../Timeline';
 import {
   ISnapCallbacksMap,
@@ -50,21 +50,21 @@ export * from './Slide';
  * @group Components
  */
 export class Snap<
-  CallbacksMap extends ISnapCallbacksMap = ISnapCallbacksMap,
-  StaticProps extends ISnapStaticProps = ISnapStaticProps,
-  MutableProps extends ISnapMutableProps = ISnapMutableProps,
-> extends Module<CallbacksMap, StaticProps, MutableProps> {
+  C extends ISnapCallbacksMap = ISnapCallbacksMap,
+  S extends ISnapStaticProps = ISnapStaticProps,
+  M extends ISnapMutableProps = ISnapMutableProps,
+> extends Module<C, S, M> {
   /** Retrieves the default static properties. */
-  public _getStatic(): TRequiredProps<StaticProps> {
+  public _getStatic(): TRequiredProps<S> {
     return {
       ...super._getStatic(),
       eventsEmitter: null,
       activeIndex: 0,
-    } as TRequiredProps<StaticProps>;
+    } as TRequiredProps<S>;
   }
 
   /** Retrieves the default mutable properties. */
-  public _getMutable(): TRequiredProps<MutableProps> {
+  public _getMutable(): TRequiredProps<M> {
     return {
       ...super._getMutable(),
       slides: false,
@@ -100,7 +100,7 @@ export class Snap<
       stickOnWheelEnd: true,
       stickOnWheelEndThreshold: 30,
       slideSize: 'auto',
-    } as TRequiredProps<MutableProps>;
+    } as TRequiredProps<M>;
   }
 
   /** Animation frame for smooth animations */
@@ -140,9 +140,10 @@ export class Snap<
   protected _targetIndex?: number;
 
   constructor(
-    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+    props?: S & M,
+    onCallbacks?: TModuleOnCallbacksProps<C, Snap<C, S, M>>,
   ) {
-    super(props);
+    super(props, onCallbacks as any);
 
     const { container, activeIndex } = this.props;
 

@@ -6,7 +6,7 @@ import {
   IInViewMutableProps,
   IInViewStaticProps,
 } from './types';
-import { Module, TModuleCallbacksProps } from '@/base/Module';
+import { Module, TModuleOnCallbacksProps } from '@/base/Module';
 import { initVevet } from '@/global/initVevet';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { cnToggle } from '@/internal/cn';
@@ -22,31 +22,31 @@ export * from './types';
  * @group Components
  */
 export class InView<
-  CallbacksMap extends IInViewCallbacksMap = IInViewCallbacksMap,
-  StaticProps extends IInViewStaticProps = IInViewStaticProps,
-  MutableProps extends IInViewMutableProps = IInViewMutableProps,
-> extends Module<CallbacksMap, StaticProps, MutableProps> {
+  C extends IInViewCallbacksMap = IInViewCallbacksMap,
+  S extends IInViewStaticProps = IInViewStaticProps,
+  M extends IInViewMutableProps = IInViewMutableProps,
+> extends Module<C, S, M> {
   /**
    * Returns default static properties.
    */
-  public _getStatic(): TRequiredProps<StaticProps> {
+  public _getStatic(): TRequiredProps<S> {
     return {
       ...super._getStatic(),
       hasOut: true,
       maxInitialDelay: 1000,
       scrollDirection: 'vertical',
-    } as TRequiredProps<StaticProps>;
+    } as TRequiredProps<S>;
   }
 
   /**
    * Returns default mutable properties.
    */
-  public _getMutable(): TRequiredProps<MutableProps> {
+  public _getMutable(): TRequiredProps<M> {
     return {
       ...super._getMutable(),
       enabled: true,
       rootMargin: '0% 0% -5% 0%',
-    } as TRequiredProps<MutableProps>;
+    } as TRequiredProps<M>;
   }
 
   /** Intersection observer for detecting elements entering the viewport. */
@@ -79,9 +79,10 @@ export class InView<
    * Initializes the `InView` module.
    */
   constructor(
-    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+    props?: S & M,
+    onCallbacks?: TModuleOnCallbacksProps<C, InView<C, S, M>>,
   ) {
-    super(props);
+    super(props, onCallbacks as any);
 
     this._setup();
   }

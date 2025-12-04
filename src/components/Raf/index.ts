@@ -1,5 +1,5 @@
 import { TRequiredProps } from '@/internal/requiredProps';
-import { Module, TModuleCallbacksProps } from '@/base/Module';
+import { Module, TModuleOnCallbacksProps } from '@/base/Module';
 import { IRafCallbacksMap, IRafMutableProps, IRafStaticProps } from './types';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 
@@ -13,23 +13,23 @@ export * from './types';
  * @group Components
  */
 export class Raf<
-  CallbacksMap extends IRafCallbacksMap = IRafCallbacksMap,
-  StaticProps extends IRafStaticProps = IRafStaticProps,
-  MutableProps extends IRafMutableProps = IRafMutableProps,
-> extends Module<CallbacksMap, StaticProps, MutableProps> {
+  C extends IRafCallbacksMap = IRafCallbacksMap,
+  S extends IRafStaticProps = IRafStaticProps,
+  M extends IRafMutableProps = IRafMutableProps,
+> extends Module<C, S, M> {
   /** Get default static properties */
-  public _getStatic(): TRequiredProps<StaticProps> {
-    return { ...super._getStatic() } as TRequiredProps<StaticProps>;
+  public _getStatic(): TRequiredProps<S> {
+    return { ...super._getStatic() } as TRequiredProps<S>;
   }
 
   /** Get default mutable properties */
-  public _getMutable(): TRequiredProps<MutableProps> {
+  public _getMutable(): TRequiredProps<M> {
     return {
       ...super._getMutable(),
       fps: 'auto',
       enabled: false,
       fpsRecalcFrames: 10,
-    } as TRequiredProps<MutableProps>;
+    } as TRequiredProps<M>;
   }
 
   /** Indicates if the animation frame is currently running */
@@ -84,9 +84,10 @@ export class Raf<
   }
 
   constructor(
-    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+    props?: S & M,
+    onCallbacks?: TModuleOnCallbacksProps<C, Raf<C, S, M>>,
   ) {
-    super(props);
+    super(props, onCallbacks as any);
 
     // Initialize FPS
     this._fps = this.props.fps === 'auto' ? this._fps : this.props.fps;
@@ -117,7 +118,7 @@ export class Raf<
       return;
     }
 
-    this.updateProps({ enabled: true } as MutableProps);
+    this.updateProps({ enabled: true } as M);
   }
 
   /** Internal method to start the loop */
@@ -141,7 +142,7 @@ export class Raf<
       return;
     }
 
-    this.updateProps({ enabled: false } as MutableProps);
+    this.updateProps({ enabled: false } as M);
   }
 
   /** Internal method to pause the loop */

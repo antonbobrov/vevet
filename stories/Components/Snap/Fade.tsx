@@ -9,19 +9,23 @@ export const Fade: FC = () => {
       return undefined;
     }
 
-    const instance = new Snap({
-      container: ref.current,
-      direction: 'horizontal',
-      followSwipe: false,
-      loop: true,
-      onUpdate: () => {
-        instance.slides.forEach(({ element, progress }) => {
-          const opacity = clamp(1 - Math.abs(progress));
-
-          element!.style.opacity = `${opacity}`;
-        });
+    const instance = new Snap(
+      {
+        container: ref.current,
+        direction: 'horizontal',
+        followSwipe: false,
+        loop: true,
       },
-    });
+      {
+        onUpdate: (data, { slides }) => {
+          slides.forEach(({ element, progress }) => {
+            const opacity = clamp(1 - Math.abs(progress));
+
+            element!.style.opacity = `${opacity}`;
+          });
+        },
+      },
+    );
 
     return () => instance.destroy();
   }, []);

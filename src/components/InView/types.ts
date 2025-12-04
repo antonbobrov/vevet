@@ -51,16 +51,12 @@ export interface IInViewCallbacksMap extends IModuleCallbacksMap {
   /**
    * Fires when an element enters the viewport.
    */
-  in: {
-    element: Element;
-  };
+  in: { element: Element };
 
   /**
    * Fires when an element leaves the viewport.
    */
-  out: {
-    element: Element;
-  };
+  out: { element: Element };
 }
 
 /**

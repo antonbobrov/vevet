@@ -4,7 +4,7 @@ import {
   IPreloaderMutableProps,
   IPreloaderStaticProps,
 } from './types';
-import { Module, TModuleCallbacksProps } from '@/base/Module';
+import { Module, TModuleOnCallbacksProps } from '@/base/Module';
 import { Timeline } from '../Timeline';
 import { initVevet } from '@/global/initVevet';
 import { isNumber } from '@/internal/isNumber';
@@ -20,25 +20,25 @@ export * from './types';
  * @group Components
  */
 export class Preloader<
-  CallbacksMap extends IPreloaderCallbacksMap = IPreloaderCallbacksMap,
-  StaticProps extends IPreloaderStaticProps = IPreloaderStaticProps,
-  MutableProps extends IPreloaderMutableProps = IPreloaderMutableProps,
-> extends Module<CallbacksMap, StaticProps, MutableProps> {
+  C extends IPreloaderCallbacksMap = IPreloaderCallbacksMap,
+  S extends IPreloaderStaticProps = IPreloaderStaticProps,
+  M extends IPreloaderMutableProps = IPreloaderMutableProps,
+> extends Module<C, S, M> {
   /**
    * Retrieves the default static properties.
    */
-  public _getStatic(): TRequiredProps<StaticProps> {
+  public _getStatic(): TRequiredProps<S> {
     return {
       ...super._getStatic(),
       hide: 250,
-    } as TRequiredProps<StaticProps>;
+    } as TRequiredProps<S>;
   }
 
   /**
    * Retrieves the default mutable properties.
    */
-  public _getMutable(): TRequiredProps<MutableProps> {
-    return { ...super._getMutable() } as TRequiredProps<MutableProps>;
+  public _getMutable(): TRequiredProps<M> {
+    return { ...super._getMutable() } as TRequiredProps<M>;
   }
 
   /** Indicates if the preloader is in the process of being hidden. */
@@ -58,9 +58,10 @@ export class Preloader<
   }
 
   constructor(
-    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+    props?: S & M,
+    onCallbacks?: TModuleOnCallbacksProps<C, Preloader<C, S, M>>,
   ) {
-    super(props);
+    super(props, onCallbacks as any);
 
     // Handle page load event
     const timeout = setTimeout(() => {

@@ -2,8 +2,8 @@ import { Module } from '../Module';
 
 export type TResponsiveSource = Record<string, any> | Module;
 
-export type TResponsivePick<T> =
-  T extends Module<any, any, any>
+export type TResponsivePick<T extends TResponsiveSource> =
+  T['_getMutable'] extends Function
     ? Partial<ReturnType<T['_getMutable']>>
     : Partial<T>;
 
@@ -24,6 +24,5 @@ export type TResponsiveRule<T extends TResponsiveSource> = {
   props: TResponsivePick<T>;
 };
 
-export type TResponsiveProps<T extends TResponsiveSource> = T extends Module
-  ? T['props']
-  : T;
+export type TResponsiveProps<T extends TResponsiveSource> =
+  T['_getMutable'] extends Function ? T['props'] : T;

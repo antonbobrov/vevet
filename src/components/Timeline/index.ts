@@ -1,5 +1,5 @@
 import { TRequiredProps } from '@/internal/requiredProps';
-import { Module, TModuleCallbacksProps } from '@/base/Module';
+import { Module, TModuleOnCallbacksProps } from '@/base/Module';
 import { clamp, easing } from '@/utils/math';
 import {
   ITimelineCallbacksMap,
@@ -21,22 +21,22 @@ export * from './types';
  * @group Components
  */
 export class Timeline<
-  CallbacksMap extends ITimelineCallbacksMap = ITimelineCallbacksMap,
-  StaticProps extends ITimelineStaticProps = ITimelineStaticProps,
-  MutableProps extends ITimelineMutableProps = ITimelineMutableProps,
-> extends Module<CallbacksMap, StaticProps, MutableProps> {
+  C extends ITimelineCallbacksMap = ITimelineCallbacksMap,
+  S extends ITimelineStaticProps = ITimelineStaticProps,
+  M extends ITimelineMutableProps = ITimelineMutableProps,
+> extends Module<C, S, M> {
   /** Get default static properties. */
-  public _getStatic(): TRequiredProps<StaticProps> {
-    return { ...super._getStatic() } as TRequiredProps<StaticProps>;
+  public _getStatic(): TRequiredProps<S> {
+    return { ...super._getStatic() } as TRequiredProps<S>;
   }
 
   /** Get default mutable properties. */
-  public _getMutable(): TRequiredProps<MutableProps> {
+  public _getMutable(): TRequiredProps<M> {
     return {
       ...super._getMutable(),
       easing: initVevet().props.easing,
       duration: 1000,
-    } as TRequiredProps<MutableProps>;
+    } as TRequiredProps<M>;
   }
 
   /** Current linear progress of the timeline (0 to 1). */
@@ -113,9 +113,10 @@ export class Timeline<
   }
 
   constructor(
-    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+    props?: S & M,
+    onCallbacks?: TModuleOnCallbacksProps<C, Timeline<C, S, M>>,
   ) {
-    super(props);
+    super(props, onCallbacks as any);
 
     // Initialize default values
     this._progress = 0;

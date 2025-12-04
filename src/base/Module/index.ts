@@ -4,6 +4,7 @@ import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
+  TModuleOnCallbacksProps,
 } from './types';
 import { mergeWithNoUndefined } from '@/internal/mergeWithNoUndefined';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
@@ -65,7 +66,7 @@ export class Module<
   }
 
   /** Callbacks instance */
-  protected _callbacks: Callbacks<CallbacksMap>;
+  protected _callbacks: Callbacks<CallbacksMap, this>;
 
   /**
    * Retrieves the module's callbacks instance.
@@ -80,8 +81,14 @@ export class Module<
   /**
    * Creates a new instance of the Module class.
    */
-  constructor(props?: StaticProps & MutableProps) {
-    this._callbacks = new Callbacks();
+  constructor(
+    props?: StaticProps & MutableProps,
+    onCallbacks?: TModuleOnCallbacksProps<
+      CallbacksMap,
+      Module<CallbacksMap, StaticProps, MutableProps>
+    >,
+  ) {
+    this._callbacks = new Callbacks({ ctx: this });
 
     this._props = mergeWithNoUndefined(
       {
@@ -93,18 +100,20 @@ export class Module<
 
     // Initialize callbacks
 
-    const callbacksProps = Object.keys(this._props).filter((key) =>
-      key.startsWith('on'),
-    );
-
-    callbacksProps.forEach((key) => {
-      let target = key.slice(2);
-      target = target.charAt(0).toLowerCase() + target.slice(1);
-      this._callbacks.on(
-        target as keyof CallbacksMap,
-        this._props[key as keyof typeof props],
+    if (onCallbacks) {
+      const callbacksProps = Object.keys(onCallbacks).filter((key) =>
+        key.startsWith('on'),
       );
-    });
+
+      callbacksProps.forEach((key) => {
+        let target = key.slice(2);
+        target = target.charAt(0).toLowerCase() + target.slice(1);
+        this._callbacks.on(
+          target as keyof CallbacksMap,
+          onCallbacks[key as keyof typeof props],
+        );
+      });
+    }
   }
 
   /**
@@ -150,7 +159,7 @@ export class Module<
   @noopIfDestroyed
   public on<T extends keyof CallbacksMap>(
     target: T,
-    listener: TCallbacksAction<CallbacksMap[T]>,
+    listener: TCallbacksAction<CallbacksMap[T], this>,
     settings: ICallbacksSettings = {},
   ) {
     return this.callbacks.on(target, listener, settings);

@@ -8,7 +8,7 @@ import {
 import { Canvas, ICanvasRenderArg } from '../Canvas';
 import { addEventListener } from '@/utils';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { TModuleCallbacksProps } from '@/base';
+import { TModuleOnCallbacksProps } from '@/base';
 
 export * from './types';
 
@@ -21,30 +21,31 @@ export * from './types';
  * @group Components
  */
 export class CanvasMedia<
-  CallbacksMap extends ICanvasMediaCallbacksMap = ICanvasMediaCallbacksMap,
-  StaticProps extends ICanvasMediaStaticProps = ICanvasMediaStaticProps,
-  MutableProps extends ICanvasMediaMutableProps = ICanvasMediaMutableProps,
-> extends Canvas<CallbacksMap, StaticProps, MutableProps> {
+  C extends ICanvasMediaCallbacksMap = ICanvasMediaCallbacksMap,
+  S extends ICanvasMediaStaticProps = ICanvasMediaStaticProps,
+  M extends ICanvasMediaMutableProps = ICanvasMediaMutableProps,
+> extends Canvas<C, S, M> {
   /** Get default static properties */
-  public _getStatic(): TRequiredProps<StaticProps> {
+  public _getStatic(): TRequiredProps<S> {
     return {
       ...super._getStatic(),
       autoRenderVideo: true,
-    } as TRequiredProps<StaticProps>;
+    } as TRequiredProps<S>;
   }
 
   /** Get default mutable properties */
-  public _getMutable(): TRequiredProps<MutableProps> {
+  public _getMutable(): TRequiredProps<M> {
     return {
       ...super._getMutable(),
       rule: 'cover',
-    } as TRequiredProps<MutableProps>;
+    } as TRequiredProps<M>;
   }
 
   constructor(
-    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+    props?: S & M,
+    onCallbacks?: TModuleOnCallbacksProps<C, CanvasMedia<C, S, M>>,
   ) {
-    super(props);
+    super(props, onCallbacks as any);
 
     this._setMediaEvents();
   }

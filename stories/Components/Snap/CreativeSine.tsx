@@ -9,24 +9,28 @@ export const CreativeSine: FC = () => {
       return undefined;
     }
 
-    const instance = new Snap({
-      container: ref.current,
-      direction: 'horizontal',
-      centered: true,
-      duration: (d) => d / 2,
-      slideSize: 'stretch',
-      edgeFriction: 1,
-      freemode: false,
-      onUpdate: () => {
-        instance.slides.forEach(({ element, progress }) => {
-          const scale = clamp(1 - Math.abs(progress));
-
-          const width = lerp(10, 100, scale);
-
-          element!.style.width = `${width}%`;
-        });
+    const instance = new Snap(
+      {
+        container: ref.current,
+        direction: 'horizontal',
+        centered: true,
+        duration: (d) => d / 2,
+        slideSize: 'stretch',
+        edgeFriction: 1,
+        freemode: false,
       },
-    });
+      {
+        onUpdate: (data, { slides }) => {
+          slides.forEach(({ element, progress }) => {
+            const scale = clamp(1 - Math.abs(progress));
+
+            const width = lerp(10, 100, scale);
+
+            element!.style.width = `${width}%`;
+          });
+        },
+      },
+    );
 
     return () => instance.destroy();
   }, []);

@@ -9,16 +9,20 @@ export const Test: FC = () => {
       return undefined;
     }
 
-    const instance = new Swipe({
-      container: ref.current,
-      onMove: ({ diff }) => {
-        instance.container.innerHTML = `${diff.x.toFixed(2)} ${diff.y.toFixed(2)}`;
+    const instance = new Swipe(
+      {
+        container: ref.current,
       },
-      onEnd: () => {
-        console.log('end');
-        ref.current!.innerHTML = 'end';
+      {
+        onMove: ({ diff }) => {
+          instance.container.innerHTML = `${diff.x.toFixed(2)} ${diff.y.toFixed(2)}`;
+        },
+        onEnd: () => {
+          console.log('end');
+          ref.current!.innerHTML = 'end';
+        },
       },
-    });
+    );
 
     return () => instance.destroy();
   }, []);

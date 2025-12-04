@@ -11,32 +11,37 @@ export const Panorama: FC = () => {
       return undefined;
     }
 
-    const instance = new Snap({
-      container: ref.current,
-      direction: 'horizontal',
-      wheel: true,
-      wheelAxis: 'y',
-      centered: true,
-      loop: true,
-      gap: 10,
-      freemode: true,
-      onUpdate: () => {
-        const depth = 200;
-        const rotation = 20;
-        const scale = 1 / (180 / rotation);
-        const halfAngle = (rotation * Math.PI) / 180 / 2;
-
-        instance.slides.forEach(({ element, coord, progress, size }) => {
-          const factor = 1 - Math.cos(progress * scale * Math.PI);
-
-          const xOffset = progress * (size / 3) * factor;
-          const zOffset = ((size * 0.5) / Math.sin(halfAngle)) * factor - depth;
-          const rotateY = progress * rotation;
-
-          element!.style.transform = `translateX(${coord + xOffset}px) translateZ(${zOffset}px) rotateY(${rotateY}deg)`;
-        });
+    const instance = new Snap(
+      {
+        container: ref.current,
+        direction: 'horizontal',
+        wheel: true,
+        wheelAxis: 'y',
+        centered: true,
+        loop: true,
+        gap: 10,
+        freemode: true,
       },
-    });
+      {
+        onUpdate: (data, { slides }) => {
+          const depth = 200;
+          const rotation = 20;
+          const scale = 1 / (180 / rotation);
+          const halfAngle = (rotation * Math.PI) / 180 / 2;
+
+          slides.forEach(({ element, coord, progress, size }) => {
+            const factor = 1 - Math.cos(progress * scale * Math.PI);
+
+            const xOffset = progress * (size / 3) * factor;
+            const zOffset =
+              ((size * 0.5) / Math.sin(halfAngle)) * factor - depth;
+            const rotateY = progress * rotation;
+
+            element!.style.transform = `translateX(${coord + xOffset}px) translateZ(${zOffset}px) rotateY(${rotateY}deg)`;
+          });
+        },
+      },
+    );
 
     return () => instance.destroy();
   }, []);

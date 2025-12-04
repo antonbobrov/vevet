@@ -13,15 +13,19 @@ export const Component: FC<IProps> = ({ hide }) => {
       return undefined;
     }
 
-    const instance = new Preloader({
-      container: ref.current,
-      hide,
-      onDestroy: () => console.log('destroy'),
-      onHidden: () => console.log('hidden'),
-      onHide: () => console.log('hide'),
-      onLoaded: () => console.log('loaded'),
-      onProps: () => console.log('props'),
-    });
+    const instance = new Preloader(
+      {
+        container: ref.current,
+        hide,
+      },
+      {
+        onDestroy: () => console.log('destroy'),
+        onHidden: () => console.log('hidden'),
+        onHide: () => console.log('hide'),
+        onLoaded: () => console.log('loaded'),
+        onProps: () => console.log('props'),
+      },
+    );
 
     setPreloader(instance);
 

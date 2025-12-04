@@ -1,4 +1,4 @@
-import { ICallbacksMap } from '../Callbacks';
+import { ICallbacksMap, TCallbacksAction } from '../Callbacks';
 
 export interface IModuleStaticProps {
   __staticProp?: null;
@@ -20,6 +20,6 @@ export interface IModuleCallbacksMap extends ICallbacksMap {
   props: undefined;
 }
 
-export type TModuleCallbacksProps<T> = Partial<{
-  [K in keyof T as `on${Capitalize<string & K>}`]: (data: T[K]) => void;
+export type TModuleOnCallbacksProps<T, Ctx> = Partial<{
+  [K in keyof T as `on${Capitalize<string & K>}`]: TCallbacksAction<T[K], Ctx>;
 }>;

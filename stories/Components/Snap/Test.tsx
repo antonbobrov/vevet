@@ -18,28 +18,32 @@ export const Test: FC = () => {
       document.querySelectorAll<HTMLElement>('.js-slide-info'),
     );
 
-    const instance = new Snap({
-      container: ref.current,
-      direction: 'horizontal',
-      wheel: true,
-      wheelAxis: 'y',
-      centered: false,
-      loop: false,
-      gap: 20,
-      grabCursor: true,
-      onActiveSlide: () => setActiveIndex(instance.activeIndex),
-      onUpdate: () => {
-        setIsStart(instance.track.isStart);
-        setIsEnd(instance.track.isEnd);
-
-        instance.slides.forEach(({ element, coord, progress }, index) => {
-          element!.style.transform = `translateX(${coord}px)`;
-
-          const info = infos[index];
-          info.innerHTML = `${index} / ${progress.toFixed(2)} / ${Math.round(coord)}`;
-        });
+    const instance = new Snap(
+      {
+        container: ref.current,
+        direction: 'horizontal',
+        wheel: true,
+        wheelAxis: 'y',
+        centered: false,
+        loop: false,
+        gap: 20,
+        grabCursor: true,
       },
-    });
+      {
+        onActiveSlide: (slide) => setActiveIndex(slide.index),
+        onUpdate: (data, { slides, track }) => {
+          setIsStart(track.isStart);
+          setIsEnd(track.isEnd);
+
+          slides.forEach(({ element, coord, progress }, index) => {
+            element!.style.transform = `translateX(${coord}px)`;
+
+            const info = infos[index];
+            info.innerHTML = `${index} / ${progress.toFixed(2)} / ${Math.round(coord)}`;
+          });
+        },
+      },
+    );
 
     setSnap(instance);
 

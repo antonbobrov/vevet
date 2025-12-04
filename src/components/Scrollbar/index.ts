@@ -1,5 +1,5 @@
 import { TRequiredProps } from '@/internal/requiredProps';
-import { Module, TModuleCallbacksProps } from '@/base';
+import { Module, TModuleOnCallbacksProps } from '@/base';
 import {
   IScrollbarCallbacksMap,
   IScrollbarMutableProps,
@@ -24,12 +24,12 @@ export * from './types';
  * @group Components
  */
 export class Scrollbar<
-  CallbacksMap extends IScrollbarCallbacksMap = IScrollbarCallbacksMap,
-  StaticProps extends IScrollbarStaticProps = IScrollbarStaticProps,
-  MutableProps extends IScrollbarMutableProps = IScrollbarMutableProps,
-> extends Module<CallbacksMap, StaticProps, MutableProps> {
+  C extends IScrollbarCallbacksMap = IScrollbarCallbacksMap,
+  S extends IScrollbarStaticProps = IScrollbarStaticProps,
+  M extends IScrollbarMutableProps = IScrollbarMutableProps,
+> extends Module<C, S, M> {
   /** Get default static properties. */
-  public _getStatic(): TRequiredProps<StaticProps> {
+  public _getStatic(): TRequiredProps<S> {
     return {
       ...super._getStatic(),
       container: window,
@@ -39,16 +39,16 @@ export class Scrollbar<
       draggable: true,
       autoHide: true,
       resizeDebounce: 10,
-    } as TRequiredProps<StaticProps>;
+    } as TRequiredProps<S>;
   }
 
   /** Get default mutable properties. */
-  public _getMutable(): TRequiredProps<MutableProps> {
+  public _getMutable(): TRequiredProps<M> {
     return {
       ...super._getMutable(),
       minSize: 50,
       autoSize: true,
-    } as TRequiredProps<MutableProps>;
+    } as TRequiredProps<M>;
   }
 
   get prefix() {
@@ -114,9 +114,10 @@ export class Scrollbar<
   protected _isRtl = false;
 
   constructor(
-    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+    props?: S & M,
+    onCallbacks?: TModuleOnCallbacksProps<C, Scrollbar<C, S, M>>,
   ) {
-    super(props);
+    super(props, onCallbacks as any);
 
     // detect features
     this._isRtl = getTextDirection(this.parent) === 'rtl';

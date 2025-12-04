@@ -1,4 +1,4 @@
-import { Module, TModuleCallbacksProps } from '@/base';
+import { Module, TModuleOnCallbacksProps } from '@/base';
 import {
   IPointersCallbacksMap,
   IPointersItem,
@@ -24,14 +24,14 @@ export * from './types';
  * @group Components
  */
 export class Pointers<
-  CallbacksMap extends IPointersCallbacksMap = IPointersCallbacksMap,
-  StaticProps extends IPointersStaticProps = IPointersStaticProps,
-  MutableProps extends IPointersMutableProps = IPointersMutableProps,
-> extends Module<CallbacksMap, StaticProps, MutableProps> {
+  C extends IPointersCallbacksMap = IPointersCallbacksMap,
+  S extends IPointersStaticProps = IPointersStaticProps,
+  M extends IPointersMutableProps = IPointersMutableProps,
+> extends Module<C, S, M> {
   /**
    * Returns the default static properties.
    */
-  public _getStatic(): TRequiredProps<StaticProps> {
+  public _getStatic(): TRequiredProps<S> {
     return {
       ...super._getStatic(),
       buttons: [0],
@@ -39,17 +39,17 @@ export class Pointers<
       minPointers: 1,
       maxPointers: 5,
       disableUserSelect: true,
-    } as TRequiredProps<StaticProps>;
+    } as TRequiredProps<S>;
   }
 
   /**
    * Returns the default mutable properties.
    */
-  public _getMutable(): TRequiredProps<MutableProps> {
+  public _getMutable(): TRequiredProps<M> {
     return {
       ...super._getMutable(),
       enabled: true,
-    } as TRequiredProps<MutableProps>;
+    } as TRequiredProps<M>;
   }
 
   /**
@@ -89,9 +89,10 @@ export class Pointers<
   }
 
   constructor(
-    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+    props?: S & M,
+    onCallbacks?: TModuleOnCallbacksProps<C, Pointers<C, S, M>>,
   ) {
-    super(props);
+    super(props, onCallbacks as any);
 
     // Defaults
     this._pointersMap = new Map();

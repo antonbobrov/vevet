@@ -1,6 +1,6 @@
 import { TRequiredProps } from '@/internal/requiredProps';
 import { onResize } from '@/utils/listeners/onResize';
-import { Module, TModuleCallbacksProps } from '@/base/Module';
+import { Module, TModuleOnCallbacksProps } from '@/base/Module';
 import {
   ICanvasCallbacksMap,
   ICanvasMutableProps,
@@ -22,12 +22,12 @@ export * from './types';
  * @group Components
  */
 export class Canvas<
-  CallbacksMap extends ICanvasCallbacksMap = ICanvasCallbacksMap,
-  StaticProps extends ICanvasStaticProps = ICanvasStaticProps,
-  MutableProps extends ICanvasMutableProps = ICanvasMutableProps,
-> extends Module<CallbacksMap, StaticProps, MutableProps> {
+  C extends ICanvasCallbacksMap = ICanvasCallbacksMap,
+  S extends ICanvasStaticProps = ICanvasStaticProps,
+  M extends ICanvasMutableProps = ICanvasMutableProps,
+> extends Module<C, S, M> {
   /** Get default static properties */
-  public _getStatic(): TRequiredProps<StaticProps> {
+  public _getStatic(): TRequiredProps<S> {
     return {
       ...super._getStatic(),
       container: null,
@@ -36,17 +36,17 @@ export class Canvas<
       resizeOnRuntime: false,
       viewportTarget: 'any',
       resizeDebounce: 0,
-    } as TRequiredProps<StaticProps>;
+    } as TRequiredProps<S>;
   }
 
   /** Get default mutable properties */
-  public _getMutable(): TRequiredProps<MutableProps> {
+  public _getMutable(): TRequiredProps<M> {
     return {
       ...super._getMutable(),
       width: 'auto',
       height: 'auto',
       dpr: 'auto',
-    } as TRequiredProps<MutableProps>;
+    } as TRequiredProps<M>;
   }
 
   /** The canvas element created for rendering */
@@ -108,9 +108,10 @@ export class Canvas<
    * Constructor for the Ctx2D class.
    */
   constructor(
-    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+    props?: S & M,
+    onCallbacks?: TModuleOnCallbacksProps<C, Canvas<C, S, M>>,
   ) {
-    super(props);
+    super(props, onCallbacks as any);
 
     const {
       append: shouldAppend,

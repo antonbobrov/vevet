@@ -12,15 +12,19 @@ export const Rotation: FC = () => {
 
     let angle = 0;
 
-    const instance = new Swipe({
-      container: ref.current,
-      inertia: true,
-      onMove: ({ step }) => {
-        angle += step.angle;
-
-        rotateRef.current!.style.transform = `rotate(${angle}deg)`;
+    const instance = new Swipe(
+      {
+        container: ref.current,
+        inertia: true,
       },
-    });
+      {
+        onMove: ({ step }) => {
+          angle += step.angle;
+
+          rotateRef.current!.style.transform = `rotate(${angle}deg)`;
+        },
+      },
+    );
 
     return () => instance.destroy();
   }, []);

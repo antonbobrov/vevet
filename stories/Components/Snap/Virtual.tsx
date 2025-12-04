@@ -31,26 +31,30 @@ export const Virtual: FC = () => {
       return undefined;
     }
 
-    const instance = new Snap({
-      container: ref.current,
-      slides: createSlides(500),
-      direction: 'horizontal',
-      wheel: true,
-      wheelAxis: 'y',
-      swipeAxis: 'x',
-      centered: true,
-      loop: true,
-      gap: '5vw',
-      onUpdate: () => {
-        instance.slides.forEach((slide) => {
-          const { element, coord, isVisible } = slide;
-
-          if (isVisible) {
-            element!.style.transform = `translate(${coord}px, 0)`;
-          }
-        });
+    const instance = new Snap(
+      {
+        container: ref.current,
+        slides: createSlides(500),
+        direction: 'horizontal',
+        wheel: true,
+        wheelAxis: 'y',
+        swipeAxis: 'x',
+        centered: true,
+        loop: true,
+        gap: '5vw',
       },
-    });
+      {
+        onUpdate: (data, { slides }) => {
+          slides.forEach((slide) => {
+            const { element, coord, isVisible } = slide;
+
+            if (isVisible) {
+              element!.style.transform = `translate(${coord}px, 0)`;
+            }
+          });
+        },
+      },
+    );
 
     instance.container.onclick = () => {
       instance.updateProps({

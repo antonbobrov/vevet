@@ -11,18 +11,22 @@ export const Large: FC = () => {
 
     let y = 0;
 
-    const instance = new Swipe({
-      container: ref.current,
-      inertia: true,
-      grabCursor: true,
-      onMove: ({ step }) => {
-        const { container } = instance;
-
-        y = clamp(y + step.y, -(container.clientHeight - vevet.height), 0);
-
-        container.style.transform = `translateY(${y}px)`;
+    const instance = new Swipe(
+      {
+        container: ref.current,
+        inertia: true,
+        grabCursor: true,
       },
-    });
+      {
+        onMove: ({ step }) => {
+          const { container } = instance;
+
+          y = clamp(y + step.y, -(container.clientHeight - vevet.height), 0);
+
+          container.style.transform = `translateY(${y}px)`;
+        },
+      },
+    );
 
     return () => instance.destroy();
   }, []);

@@ -1,4 +1,4 @@
-import { Module, TModuleCallbacksProps } from '@/base';
+import { Module, TModuleOnCallbacksProps } from '@/base';
 import { TRequiredProps } from '@/internal/requiredProps';
 import {
   ISwipeCallbacksMap,
@@ -35,27 +35,27 @@ const VELOCITIES_COUNT = 4;
  * @group Components
  */
 export class Swipe<
-  CallbacksMap extends ISwipeCallbacksMap = ISwipeCallbacksMap,
-  StaticProps extends ISwipeStaticProps = ISwipeStaticProps,
-  MutableProps extends ISwipeMutableProps = ISwipeMutableProps,
-> extends Module<CallbacksMap, StaticProps, MutableProps> {
+  C extends ISwipeCallbacksMap = ISwipeCallbacksMap,
+  S extends ISwipeStaticProps = ISwipeStaticProps,
+  M extends ISwipeMutableProps = ISwipeMutableProps,
+> extends Module<C, S, M> {
   /**
    * Returns default static properties.
    */
-  public _getStatic(): TRequiredProps<StaticProps> {
+  public _getStatic(): TRequiredProps<S> {
     return {
       ...super._getStatic(),
       thumb: null,
       buttons: [0],
       pointers: 1,
       disableUserSelect: true,
-    } as TRequiredProps<StaticProps>;
+    } as TRequiredProps<S>;
   }
 
   /**
    * Returns default mutable properties.
    */
-  public _getMutable(): TRequiredProps<MutableProps> {
+  public _getMutable(): TRequiredProps<M> {
     return {
       ...super._getMutable(),
       enabled: true,
@@ -78,7 +78,7 @@ export class Swipe<
       distanceModifier: false,
       inertiaRatio: 1,
       inertiaDistanceThreshold: 50,
-    } as TRequiredProps<MutableProps>;
+    } as TRequiredProps<M>;
   }
 
   /** Pointer event manager */
@@ -129,9 +129,10 @@ export class Swipe<
   protected _cursorStyles: HTMLStyleElement;
 
   constructor(
-    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+    props?: S & M,
+    onCallbacks?: TModuleOnCallbacksProps<C, Swipe<C, S, M>>,
   ) {
-    super(props);
+    super(props, onCallbacks as any);
 
     const { container, thumb, buttons, pointers } = this.props;
 

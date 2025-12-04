@@ -9,21 +9,25 @@ export const Rtl: FC = () => {
       return undefined;
     }
 
-    const instance = new Snap({
-      container: ref.current,
-      direction: 'horizontal',
-      wheel: true,
-      wheelAxis: 'y',
-      loop: true,
-      gap: 20,
-      swipeSpeed: -1,
-      onUpdate: () => {
-        instance.slides.forEach(({ element, coord }) => {
-          const x = -coord;
-          element!.style.transform = `translateX(${x}px)`;
-        });
+    const instance = new Snap(
+      {
+        container: ref.current,
+        direction: 'horizontal',
+        wheel: true,
+        wheelAxis: 'y',
+        loop: true,
+        gap: 20,
+        swipeSpeed: -1,
       },
-    });
+      {
+        onUpdate: (data, { slides }) => {
+          slides.forEach(({ element, coord }) => {
+            const x = -coord;
+            element!.style.transform = `translateX(${x}px)`;
+          });
+        },
+      },
+    );
 
     return () => instance.destroy();
   }, []);

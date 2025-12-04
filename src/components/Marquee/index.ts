@@ -6,7 +6,7 @@ import {
   IMarqueeMutableProps,
   IMarqueeStaticProps,
 } from './types';
-import { Module, TModuleCallbacksProps } from '@/base/Module';
+import { Module, TModuleOnCallbacksProps } from '@/base/Module';
 import { Raf } from '../Raf';
 import { initVevet } from '@/global/initVevet';
 import { toPixels } from '@/utils';
@@ -27,23 +27,23 @@ export * from './types';
  * @group Components
  */
 export class Marquee<
-  CallbacksMap extends IMarqueeCallbacksMap = IMarqueeCallbacksMap,
-  StaticProps extends IMarqueeStaticProps = IMarqueeStaticProps,
-  MutableProps extends IMarqueeMutableProps = IMarqueeMutableProps,
-> extends Module<CallbacksMap, StaticProps, MutableProps> {
+  C extends IMarqueeCallbacksMap = IMarqueeCallbacksMap,
+  S extends IMarqueeStaticProps = IMarqueeStaticProps,
+  M extends IMarqueeMutableProps = IMarqueeMutableProps,
+> extends Module<C, S, M> {
   /** Get default static properties. */
-  public _getStatic(): TRequiredProps<StaticProps> {
+  public _getStatic(): TRequiredProps<S> {
     return {
       ...super._getStatic(),
       resizeDebounce: 0,
       hasWillChange: true,
       cloneNodes: true,
       direction: 'horizontal',
-    } as TRequiredProps<StaticProps>;
+    } as TRequiredProps<S>;
   }
 
   /** Get default mutable properties. */
-  public _getMutable(): TRequiredProps<MutableProps> {
+  public _getMutable(): TRequiredProps<M> {
     return {
       ...super._getMutable(),
       speed: 1,
@@ -53,7 +53,7 @@ export class Marquee<
       centered: false,
       adjustSpeed: true,
       pauseOnOut: true,
-    } as TRequiredProps<MutableProps>;
+    } as TRequiredProps<M>;
   }
 
   /** Current container size (width or height depending on direction) */
@@ -124,9 +124,10 @@ export class Marquee<
   protected _intersection?: IntersectionObserver;
 
   constructor(
-    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+    props?: S & M,
+    onCallbacks?: TModuleOnCallbacksProps<C, Marquee<C, S, M>>,
   ) {
-    super(props);
+    super(props, onCallbacks as any);
 
     const { container } = this.props;
     const { isVertical } = this;

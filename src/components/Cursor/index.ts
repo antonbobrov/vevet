@@ -7,7 +7,7 @@ import {
   ICursorStaticProps,
   ICursorType,
 } from './types';
-import { Module, TModuleCallbacksProps } from '@/base/Module';
+import { Module, TModuleOnCallbacksProps } from '@/base/Module';
 import { Raf } from '../Raf';
 import { addEventListener } from '@/utils/listeners';
 import { initVevet } from '@/global/initVevet';
@@ -30,21 +30,21 @@ export * from './types';
  * @group Components
  */
 export class Cursor<
-  CallbacksMap extends ICursorCallbacksMap = ICursorCallbacksMap,
-  StaticProps extends ICursorStaticProps = ICursorStaticProps,
-  MutableProps extends ICursorMutableProps = ICursorMutableProps,
-> extends Module<CallbacksMap, StaticProps, MutableProps> {
+  C extends ICursorCallbacksMap = ICursorCallbacksMap,
+  S extends ICursorStaticProps = ICursorStaticProps,
+  M extends ICursorMutableProps = ICursorMutableProps,
+> extends Module<C, S, M> {
   /** Get default static properties */
-  public _getStatic(): TRequiredProps<StaticProps> {
+  public _getStatic(): TRequiredProps<S> {
     return {
       ...super._getStatic(),
       container: window,
       hideNative: false,
-    } as TRequiredProps<StaticProps>;
+    } as TRequiredProps<S>;
   }
 
   /** Get default mutable properties */
-  public _getMutable(): TRequiredProps<MutableProps> {
+  public _getMutable(): TRequiredProps<M> {
     return {
       ...super._getMutable(),
       enabled: true,
@@ -52,7 +52,7 @@ export class Cursor<
       height: 50,
       lerp: 0.2,
       autoStop: true,
-    } as TRequiredProps<MutableProps>;
+    } as TRequiredProps<M>;
   }
 
   /**
@@ -177,9 +177,10 @@ export class Cursor<
   protected _activeTypes: string[];
 
   constructor(
-    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+    props?: S & M,
+    onCallbacks?: TModuleOnCallbacksProps<C, Cursor<C, S, M>>,
   ) {
-    super(props);
+    super(props, onCallbacks as any);
 
     // Set default variables
     const { width, height, enabled: isEnabled } = this.props;

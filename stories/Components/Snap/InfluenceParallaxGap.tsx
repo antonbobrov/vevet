@@ -11,20 +11,24 @@ export const InfluenceParallaxGap: FC = () => {
       return undefined;
     }
 
-    const instance = new Snap({
-      container: ref.current,
-      centered: true,
-      loop: true,
-      shortSwipes: false,
-      gap: 5,
-      lerp: 0.2,
-      freemode: 'sticky',
-      onUpdate: () => {
-        instance.slides.forEach(({ element, coord }) => {
-          element!.style.transform = `translateX(${coord}px)`;
-        });
+    const instance = new Snap(
+      {
+        container: ref.current,
+        centered: true,
+        loop: true,
+        shortSwipes: false,
+        gap: 5,
+        lerp: 0.2,
+        freemode: 'sticky',
       },
-    });
+      {
+        onUpdate: (data, { slides }) => {
+          slides.forEach(({ element, coord }) => {
+            element!.style.transform = `translateX(${coord}px)`;
+          });
+        },
+      },
+    );
 
     return () => instance.destroy();
   }, []);

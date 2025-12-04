@@ -9,19 +9,23 @@ export const Component: FC = () => {
       return undefined;
     }
 
-    const instance = new InView({
-      hasOut: true,
-      onIn: ({ element }) => {
-        if (element instanceof HTMLElement) {
-          element.style.background = '#f00';
-        }
+    const instance = new InView(
+      {
+        hasOut: true,
       },
-      onOut: ({ element }) => {
-        if (element instanceof HTMLElement) {
-          element.style.background = '#000';
-        }
+      {
+        onIn: ({ element }) => {
+          if (element instanceof HTMLElement) {
+            element.style.background = '#f00';
+          }
+        },
+        onOut: ({ element }) => {
+          if (element instanceof HTMLElement) {
+            element.style.background = '#000';
+          }
+        },
       },
-    });
+    );
 
     const elements = ref.current.querySelectorAll('*');
     elements.forEach((element) => instance.addElement(element));

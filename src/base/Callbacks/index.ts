@@ -4,6 +4,7 @@ import {
   ICallbacksSettings,
   ICallbacksMap,
   TCallbacksAction,
+  ICallbacksProps,
 } from './types';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 
@@ -14,12 +15,17 @@ export * from './types';
  *
  * @group Base
  */
-export class Callbacks<Types extends ICallbacksMap = ICallbacksMap> {
+export class Callbacks<
+  Types extends ICallbacksMap = ICallbacksMap,
+  Ctx extends any = any,
+> {
+  constructor(protected _props: ICallbacksProps<Ctx> = {}) {}
+
   /** Whether the instance has been destroyed. */
   private _isDestroyed = false;
 
   /** Storage for registered callbacks. */
-  private _list: ICallback<Types>[] = [];
+  private _list: ICallback<Types, Ctx>[] = [];
 
   /** Returns the list of all registered callbacks. */
   get list() {
@@ -36,7 +42,7 @@ export class Callbacks<Types extends ICallbacksMap = ICallbacksMap> {
   @noopIfDestroyed
   public add<T extends keyof Types>(
     target: T,
-    action: TCallbacksAction<Types[T]>,
+    action: TCallbacksAction<Types[T], Ctx>,
     settings: ICallbacksSettings = {},
   ) {
     const id = uid('callback');
@@ -61,7 +67,7 @@ export class Callbacks<Types extends ICallbacksMap = ICallbacksMap> {
   @noopIfDestroyed
   public on<T extends keyof Types>(
     target: T,
-    action: TCallbacksAction<Types[T]>,
+    action: TCallbacksAction<Types[T], Ctx>,
     settings: ICallbacksSettings = {},
   ) {
     const callback = this.add(target, action, settings);
@@ -118,13 +124,15 @@ export class Callbacks<Types extends ICallbacksMap = ICallbacksMap> {
    * @param parameter - Argument to pass to the callback.
    */
   private _callAction(
-    { id, timeout, action, ...callback }: ICallback<Types>,
+    { id, timeout, action, ...callback }: ICallback<Types, Ctx>,
     parameter: Types[keyof Types],
   ) {
+    const { ctx } = this._props;
+
     if (timeout) {
-      setTimeout(() => action(parameter as any), timeout);
+      setTimeout(() => action(parameter as any, ctx as any), timeout);
     } else {
-      action(parameter as any);
+      action(parameter as any, ctx as any);
     }
 
     if (callback.once) {

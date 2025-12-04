@@ -15,16 +15,20 @@ export const Circle: FC = () => {
 
     let angle = 0;
 
-    const instance = new Swipe({
-      container: ref.current,
-      thumb: thumbRef.current,
-      inertia: true,
-      onMove: ({ step }) => {
-        angle += step.angle;
-
-        rotateRef.current!.style.transform = `rotate(${angle}deg)`;
+    const instance = new Swipe(
+      {
+        container: ref.current,
+        thumb: thumbRef.current,
+        inertia: true,
       },
-    });
+      {
+        onMove: ({ step }) => {
+          angle += step.angle;
+
+          rotateRef.current!.style.transform = `rotate(${angle}deg)`;
+        },
+      },
+    );
 
     return () => instance.destroy();
   }, []);

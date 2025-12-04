@@ -4,7 +4,7 @@ import {
   IScrollProgressMutableProps,
   IScrollProgressStaticProps,
 } from './types';
-import { Module, TModuleCallbacksProps } from '@/base';
+import { Module, TModuleOnCallbacksProps } from '@/base';
 import { TRequiredProps } from '@/internal/requiredProps';
 import { initVevet } from '@/global/initVevet';
 import { addEventListener, clampScope } from '@/utils';
@@ -22,25 +22,23 @@ export * from './types';
  * @group Components
  */
 export class ScrollProgress<
-  CallbacksMap extends
-    IScrollProgressCallbacksMap = IScrollProgressCallbacksMap,
-  StaticProps extends IScrollProgressStaticProps = IScrollProgressStaticProps,
-  MutableProps extends
-    IScrollProgressMutableProps = IScrollProgressMutableProps,
-> extends Module<CallbacksMap, StaticProps, MutableProps> {
+  C extends IScrollProgressCallbacksMap = IScrollProgressCallbacksMap,
+  S extends IScrollProgressStaticProps = IScrollProgressStaticProps,
+  M extends IScrollProgressMutableProps = IScrollProgressMutableProps,
+> extends Module<C, S, M> {
   /** Retrieves the default static properties. */
-  public _getStatic(): TRequiredProps<StaticProps> {
+  public _getStatic(): TRequiredProps<S> {
     return {
       ...super._getStatic(),
       root: null,
       optimized: true,
       useSvh: false,
-    } as TRequiredProps<StaticProps>;
+    } as TRequiredProps<S>;
   }
 
   /** Retrieves the default mutable properties. */
-  public _getMutable(): TRequiredProps<MutableProps> {
-    return { ...super._getMutable() } as TRequiredProps<MutableProps>;
+  public _getMutable(): TRequiredProps<M> {
+    return { ...super._getMutable() } as TRequiredProps<M>;
   }
 
   /**
@@ -85,9 +83,10 @@ export class ScrollProgress<
   }
 
   constructor(
-    props?: StaticProps & MutableProps & TModuleCallbacksProps<CallbacksMap>,
+    props?: S & M,
+    onCallbacks?: TModuleOnCallbacksProps<C, ScrollProgress<C, S, M>>,
   ) {
-    super(props);
+    super(props, onCallbacks as any);
 
     this._isVisible = !this.props.optimized;
 

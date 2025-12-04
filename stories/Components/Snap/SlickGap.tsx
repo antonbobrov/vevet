@@ -9,23 +9,27 @@ export const SlickGap: FC = () => {
       return undefined;
     }
 
-    const instance = new Snap({
-      container: ref.current,
-      direction: 'horizontal',
-      wheel: true,
-      wheelAxis: 'y',
-      centered: true,
-      loop: true,
-      freemode: true,
-      onUpdate: () => {
-        instance.slides.forEach(({ element, coord, progress }) => {
-          const absGap = Math.abs(progress) * -50;
-          const gap = progress * absGap;
-
-          element!.style.transform = `translateX(${coord + gap}px)`;
-        });
+    const instance = new Snap(
+      {
+        container: ref.current,
+        direction: 'horizontal',
+        wheel: true,
+        wheelAxis: 'y',
+        centered: true,
+        loop: true,
+        freemode: true,
       },
-    });
+      {
+        onUpdate: (data, { slides }) => {
+          slides.forEach(({ element, coord, progress }) => {
+            const absGap = Math.abs(progress) * -50;
+            const gap = progress * absGap;
+
+            element!.style.transform = `translateX(${coord + gap}px)`;
+          });
+        },
+      },
+    );
 
     return () => instance.destroy();
   }, []);

@@ -1,4 +1,11 @@
 /**
+ * todo
+ */
+export interface ICallbacksProps<Ctx> {
+  ctx?: Ctx;
+}
+
+/**
  * Maps event types to their callback parameter types.
  */
 export interface ICallbacksMap {}
@@ -22,17 +29,15 @@ export interface ICallbacksSettings {
 
 /**
  * Defines a callback function's signature.
- * - If `Parameter` is `undefined`, the callback takes no arguments.
- * - Otherwise, it takes a single argument of type `Parameter`.
  */
-export type TCallbacksAction<Parameter> = Parameter extends undefined
-  ? () => void
-  : (arg: Parameter) => void;
+export type TCallbacksAction<Parameter, Ctx> = Parameter extends undefined
+  ? (data: undefined, ctx: Ctx) => void
+  : (data: Parameter, ctx: Ctx) => void;
 
 /**
  * Represents a registered callback with its settings and metadata.
  */
-export interface ICallback<Types> extends ICallbacksSettings {
+export interface ICallback<Types, Ctx> extends ICallbacksSettings {
   /** Unique identifier for the callback. */
   id: string;
 
@@ -40,5 +45,5 @@ export interface ICallback<Types> extends ICallbacksSettings {
   target: keyof Types;
 
   /** Callback function to execute. */
-  action: TCallbacksAction<Types[keyof Types]>;
+  action: TCallbacksAction<Types[keyof Types], Ctx>;
 }

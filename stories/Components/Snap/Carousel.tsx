@@ -9,25 +9,29 @@ export const Carousel: FC = () => {
       return undefined;
     }
 
-    const instance = new Snap({
-      container: ref.current,
-      direction: 'horizontal',
-      grabCursor: true,
-      wheel: true,
-      wheelAxis: 'y',
-      centered: true,
-      loop: true,
-      shortSwipes: false,
-      freemode: 'sticky',
-      onUpdate: () => {
-        instance.slides.forEach(({ element, coord, progress }) => {
-          const z = Math.abs(progress ** 2) * -150;
-          const rZ = progress * 5;
-
-          element!.style.transform = `translateX(${coord}px) translateZ(${z}px) rotateZ(${rZ}deg)`;
-        });
+    const instance = new Snap(
+      {
+        container: ref.current,
+        direction: 'horizontal',
+        grabCursor: true,
+        wheel: true,
+        wheelAxis: 'y',
+        centered: true,
+        loop: true,
+        shortSwipes: false,
+        freemode: 'sticky',
       },
-    });
+      {
+        onUpdate: (data, { slides }) => {
+          slides.forEach(({ element, coord, progress }) => {
+            const z = Math.abs(progress ** 2) * -150;
+            const rZ = progress * 5;
+
+            element!.style.transform = `translateX(${coord}px) translateZ(${z}px) rotateZ(${rZ}deg)`;
+          });
+        },
+      },
+    );
 
     return () => instance.destroy();
   }, []);
