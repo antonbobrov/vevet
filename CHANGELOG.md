@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.2.1](https://github.com/antonbobrov/vevet/compare/v5.2.0...v5.2.1) (2025-12-04)
+
+
+### Component
+
+* move on-callbacks outside props ([435cc15](https://github.com/antonbobrov/vevet/commit/435cc159748fdecf855dbc5dce0483308a53e98c))
+
+### Swipe
+
+* add `thumb` ([a69b0fe](https://github.com/antonbobrov/vevet/commit/a69b0feea263871b80a7ea0cd05135aa5038374a))
+
 # [5.2.0](https://github.com/antonbobrov/vevet/compare/v5.1.4...v5.2.0) (2025-12-03)
 
 
