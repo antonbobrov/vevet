@@ -45,6 +45,7 @@ export class Swipe<
   public _getStatic(): TRequiredProps<StaticProps> {
     return {
       ...super._getStatic(),
+      thumb: null,
       buttons: [0],
       pointers: 1,
       disableUserSelect: true,
@@ -132,7 +133,7 @@ export class Swipe<
   ) {
     super(props);
 
-    const { container, buttons, pointers } = this.props;
+    const { container, thumb, buttons, pointers } = this.props;
 
     // set default data
     this._coords = {
@@ -151,7 +152,7 @@ export class Swipe<
 
     // create pointers
     this._pointers = new Pointers({
-      container,
+      container: thumb || container,
       buttons,
       minPointers: pointers,
       maxPointers: pointers,

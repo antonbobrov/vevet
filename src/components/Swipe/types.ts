@@ -10,6 +10,12 @@ export interface ISwipeStaticProps extends IModuleStaticProps {
   container: HTMLElement | SVGElement;
 
   /**
+   * An element that triggers the swipe start.
+   * Calculations remain relative to the container regardless of this element.
+   */
+  thumb?: HTMLElement | SVGElement | null;
+
+  /**
    * Determines which mouse buttons trigger events.
    * - 0: Main button pressed, usually the left button or the un-initialized state
    * - 1: Auxiliary button pressed, usually the wheel button or the middle button (if present)

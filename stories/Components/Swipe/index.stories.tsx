@@ -5,6 +5,7 @@ import { Direction as DirectionComponent } from './Direction';
 import { Drag as DragComponent } from './Drag';
 import { Ball as BallComponent } from './Ball';
 import { Rotation as RotationComponent } from './Rotation';
+import { Circle as CircleComponent } from './Circle';
 import { Large as LargeComponent } from './Large';
 
 const meta: Meta = {
@@ -22,5 +23,7 @@ export const Drag: StoryFn = () => <DragComponent />;
 export const Ball: StoryFn = () => <BallComponent />;
 
 export const Rotation: StoryFn = () => <RotationComponent />;
+
+export const Circle: StoryFn = () => <CircleComponent />;
 
 export const Large: StoryFn = () => <LargeComponent />;
