@@ -7,6 +7,7 @@ import {
   ICallbacksProps,
 } from './types';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { safeAction } from '@/internal/safeAction';
 
 export * from './types';
 
@@ -130,9 +131,12 @@ export class Callbacks<
     const { ctx } = this._props;
 
     if (timeout) {
-      setTimeout(() => action(parameter as any, ctx as any), timeout);
+      setTimeout(
+        () => safeAction(() => action(parameter as any, ctx as any)),
+        timeout,
+      );
     } else {
-      action(parameter as any, ctx as any);
+      safeAction(() => action(parameter as any, ctx as any));
     }
 
     if (callback.once) {
