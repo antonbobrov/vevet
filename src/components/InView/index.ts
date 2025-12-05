@@ -10,6 +10,8 @@ import { Module, TModuleOnCallbacksProps } from '@/base/Module';
 import { initVevet } from '@/global/initVevet';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { cnToggle } from '@/internal/cn';
+import { getTextDirection } from '@/internal/textDirection';
+import { body } from '@/internal/env';
 
 export * from './types';
 
@@ -75,6 +77,9 @@ export class InView<
     return this._elements;
   }
 
+  /** Detects if the container is RTL */
+  protected _isRtl = false;
+
   /**
    * Initializes the `InView` module.
    */
@@ -83,6 +88,9 @@ export class InView<
     onCallbacks?: TModuleOnCallbacksProps<C, InView<C, S, M>>,
   ) {
     super(props, onCallbacks as any);
+
+    // get direction
+    this._isRtl = getTextDirection(body) === 'rtl';
 
     this._setup();
   }
@@ -216,10 +224,10 @@ export class InView<
    * Calculates the delay before triggering an element's visibility event.
    */
   protected _getElementDelay(element: IInViewElement) {
-    const { props } = this;
+    const { scrollDirection, maxInitialDelay } = this.props;
     const app = initVevet();
 
-    if (!this.isInitialStart || props.maxInitialDelay <= 0) {
+    if (!this.isInitialStart || maxInitialDelay <= 0) {
       return 0;
     }
 
@@ -232,15 +240,17 @@ export class InView<
       height: app.height,
     };
 
-    const progress = clamp(
-      props.scrollDirection === 'horizontal'
+    let progress = clamp(
+      scrollDirection === 'horizontal'
         ? (bounding.left - rootBounding.left) / rootBounding.width
         : (bounding.top - rootBounding.top) / rootBounding.height,
-      0,
-      1,
     );
 
-    return progress * props.maxInitialDelay;
+    if (this._isRtl && scrollDirection === 'horizontal') {
+      progress = 1 - progress;
+    }
+
+    return progress * maxInitialDelay;
   }
 
   /**
