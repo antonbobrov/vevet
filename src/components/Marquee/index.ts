@@ -123,6 +123,9 @@ export class Marquee<
   /** Intersection observer */
   protected _intersection?: IntersectionObserver;
 
+  /** Detects if the container is RTL */
+  protected _isRtl = false;
+
   constructor(
     props?: S & M,
     onCallbacks?: TModuleOnCallbacksProps<C, Marquee<C, S, M>>,
@@ -137,7 +140,7 @@ export class Marquee<
     }
 
     // get direction
-    const textDirection = getTextDirection(container);
+    this._isRtl = getTextDirection(container) === 'rtl';
 
     // Apply base styles to the container
     const { style } = container;
@@ -145,7 +148,7 @@ export class Marquee<
     style.display = 'flex';
     style.flexDirection = isVertical ? 'column' : 'row';
     style.alignItems = 'center';
-    style.justifyContent = textDirection === 'rtl' ? 'flex-end' : 'flex-start';
+    style.justifyContent = this._isRtl ? 'flex-end' : 'flex-start';
     style.overflow = 'hidden';
     if (isVertical) {
       style.height = '100%';
@@ -349,12 +352,13 @@ export class Marquee<
   /**
    * Renders the marquee, calculating element positions based on the provided speed.
    */
-  protected _render(step = this.props.speed) {
+  protected _render(stepProp = this.props.speed) {
     if (this.isDestroyed) {
       return;
     }
 
     const { isVertical, props } = this;
+    const step = this._isRtl ? -stepProp : stepProp;
 
     // Update animation time
     this._coord -= toPixels(step);
