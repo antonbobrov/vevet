@@ -441,6 +441,39 @@ const destruct = instance.on('mousemove', (event) => console.log(event));
 destruct();
 ```
 
+### `pointerdown`
+
+Triggered on `pointerdown` listener.
+
+```ts
+const destruct = instance.on('pointerdown', ({ event, pointer }) => console.log(event, pointer));
+
+// Cancel the callback
+destruct();
+```
+
+### `pointermove`
+
+Triggered on `pointermove` listener.
+
+```ts
+const destruct = instance.on('pointermove', ({ event, pointer }) => console.log(event, pointer));
+
+// Cancel the callback
+destruct();
+```
+
+### `pointerup`
+
+Triggered on `pointerup` listener.
+
+```ts
+const destruct = instance.on('pointerup', ({ pointer }) => console.log(pointer));
+
+// Cancel the callback
+destruct();
+```
+
 ### `abort`
 
 Triggered when swipe is aborted.

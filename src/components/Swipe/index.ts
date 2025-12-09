@@ -135,6 +135,7 @@ export class Swipe<
     super(props, onCallbacks as any);
 
     const { container, thumb, buttons, pointers } = this.props;
+    const { callbacks } = this;
 
     // set default data
     this._coords = {
@@ -163,6 +164,13 @@ export class Swipe<
 
     // add pointer events
     this._pointers.on('start', () => this._handlePointersStart());
+    this._pointers.on('pointerdown', (data) =>
+      callbacks.emit('pointerdown', data),
+    );
+    this._pointers.on('pointermove', (data) =>
+      callbacks.emit('pointermove', data),
+    );
+    this._pointers.on('pointerup', (data) => callbacks.emit('pointerup', data));
 
     // add listeners
 

@@ -4,6 +4,7 @@ import {
   IModuleStaticProps,
 } from '@/base';
 import { TEasingType } from '@/utils/math/easing';
+import { IPointersCallbacksMap } from '../Pointers';
 
 export interface ISwipeStaticProps extends IModuleStaticProps {
   /** Event listener container. */
@@ -158,7 +159,9 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
   inertiaDistanceThreshold?: number;
 }
 
-export interface ISwipeCallbacksMap extends IModuleCallbacksMap {
+export interface ISwipeCallbacksMap
+  extends IModuleCallbacksMap,
+    Pick<IPointersCallbacksMap, 'pointerdown' | 'pointermove' | 'pointerup'> {
   /** Swipe start event. */
   start: ISwipeCoords;
 
