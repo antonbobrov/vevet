@@ -38,6 +38,12 @@ export interface ISnapMutableProps
   slides?: (HTMLElement | SnapSlide)[] | false;
 
   /**
+   * Indicates the number of slides to scroll on swipe or wheel.
+   * @default 1
+   */
+  slidesToScroll?: number;
+
+  /**
    * Sliding direction
    * @default 'horizontal'
    */

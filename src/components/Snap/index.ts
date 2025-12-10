@@ -65,6 +65,7 @@ export class Snap<
     return {
       ...super._getMutable(),
       slides: false,
+      slidesToScroll: 1,
       direction: 'horizontal',
       centered: false,
       loop: false,
@@ -617,7 +618,10 @@ export class Snap<
   }
 
   /** Go to next slide */
-  public next({ skip = 1, ...options }: ISnapNexPrevArg = {}) {
+  public next({
+    skip = this.props.slidesToScroll,
+    ...options
+  }: ISnapNexPrevArg = {}) {
     const { props, slides, activeIndex } = this;
 
     const index = props.loop
@@ -628,7 +632,10 @@ export class Snap<
   }
 
   /** Go to previous slide */
-  public prev({ skip = 1, ...options }: ISnapNexPrevArg = {}) {
+  public prev({
+    skip = this.props.slidesToScroll,
+    ...options
+  }: ISnapNexPrevArg = {}) {
     const { props, slides, activeIndex } = this;
 
     const index = props.loop

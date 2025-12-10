@@ -15,6 +15,7 @@ Manages carousel-like behavior. Supports
 - Swipe/Drag events
 - Custom gaps with css units supported
 - Smooth transitions
+- Parallax effects
 - and more...
 
 :::note
@@ -76,6 +77,11 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 - **Type:** (`HTMLElement` | [SnapSlide](./SnapSlide))[] | `false`;
 - **Default:** `false`  
 - Slides instances. If `false`, all container's children will be considered as slides.
+
+#### `slidesToScroll` {#props.slidesToScroll}
+- **Type:** `number`;
+- **Default:** `1`  
+-  Indicates the number of slides to scroll on swipe or wheel.
 
 #### `direction` {#props.direction}
 - **Type:** `'horizontal' | 'vertical'`  
