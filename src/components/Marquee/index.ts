@@ -132,15 +132,16 @@ export class Marquee<
   ) {
     super(props, onCallbacks as any);
 
-    const { container } = this.props;
+    const { container, direction } = this.props;
     const { isVertical } = this;
 
     if (!container) {
       throw new Error('Marquee container is not defined');
     }
 
-    // get direction
-    this._isRtl = getTextDirection(container) === 'rtl';
+    // Update direction
+    this._isRtl =
+      getTextDirection(container) === 'rtl' && direction === 'horizontal';
 
     // Apply base styles to the container
     const { style } = container;
