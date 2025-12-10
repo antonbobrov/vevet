@@ -1,8 +1,8 @@
 import { clamp, IOnResize, onResize, toPixels, uid } from '@/utils';
-import { Snap } from '..';
 import { ISnapSlideProps } from './types';
 import { SnapSlideParallax } from '../SlideParallax';
 import { parallaxAttributes } from '../SlideParallax/constants';
+import { Snap } from '../..';
 
 export class SnapSlide {
   constructor(
@@ -94,7 +94,7 @@ export class SnapSlide {
   }
 
   /** Current coordinate. Do not update it manually! */
-  public setCoord(value: number) {
+  public $_setCoord(value: number) {
     this._coord = value;
 
     this._isVisible =
@@ -109,7 +109,7 @@ export class SnapSlide {
   }
 
   /** Static coordinate (as if the slide was never moved). Do not update it manually! Alignment: start */
-  public setStaticCoord(value: number) {
+  public $_setStaticCoord(value: number) {
     this._staticCoord = value;
   }
 
@@ -119,7 +119,7 @@ export class SnapSlide {
   }
 
   /** Current progress of slide movement: from -1 to 1. Do not update it manually! */
-  public setProgress(value: number) {
+  public $_setProgress(value: number) {
     this._progress = value;
   }
 
@@ -203,7 +203,7 @@ export class SnapSlide {
   }
 
   /** Render the slide */
-  public render() {
+  public $_render() {
     this._toggleAppend();
 
     this._parallax?.forEach((parallax) => parallax.render());

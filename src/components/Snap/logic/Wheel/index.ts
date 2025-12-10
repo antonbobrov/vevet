@@ -1,14 +1,12 @@
 import { addEventListener, clamp, normalizeWheel } from '@/utils';
-import { Snap } from '..';
+import { Snap } from '../..';
 import { initVevet } from '@/global/initVevet';
 import { isNumber } from '@/internal/isNumber';
+import { SnapLogic } from '../SnapLogic';
 
 const deltasCount = 6;
 
-export class SnapWheel {
-  /** Listeners to destruct */
-  protected _destructor: () => void;
-
+export class SnapWheel extends SnapLogic {
   /** Detects if wheel event is started */
   protected _hasStarted = false;
 
@@ -21,26 +19,20 @@ export class SnapWheel {
   /** Last time wheel event was fired */
   protected _lastWheelTime = 0;
 
-  constructor(protected _snap: Snap) {
-    _snap.on('destroy', () => this._destroy(), { protected: true });
+  constructor(snap: Snap) {
+    super(snap);
 
-    this._destructor = addEventListener(_snap.eventsEmitter, 'wheel', (event) =>
+    const listener = addEventListener(snap.eventsEmitter, 'wheel', (event) =>
       this._handleWheel(event),
     );
-  }
 
-  /** Destroy wheel listeners */
-  protected _destroy() {
-    this._destructor();
+    this.addDestructor(() => {
+      listener();
 
-    if (this._debounceEnd) {
-      clearTimeout(this._debounceEnd);
-    }
-  }
-
-  /** Snap component */
-  protected get snap() {
-    return this._snap;
+      if (this._debounceEnd) {
+        clearTimeout(this._debounceEnd);
+      }
+    });
   }
 
   /** Get absolute deltas */
@@ -57,8 +49,7 @@ export class SnapWheel {
    * Handles wheel events
    */
   protected _handleWheel(event: WheelEvent) {
-    const { snap } = this;
-    const { props } = snap;
+    const { props, axis } = this.snap;
 
     if (!props.wheel) {
       return;
@@ -68,7 +59,7 @@ export class SnapWheel {
 
     // Get delta
     const wheelData = normalizeWheel(event);
-    const wheelAxis = props.wheelAxis === 'auto' ? snap.axis : props.wheelAxis;
+    const wheelAxis = props.wheelAxis === 'auto' ? axis : props.wheelAxis;
     const delta = wheelAxis === 'x' ? wheelData.pixelX : wheelData.pixelY;
 
     // Start
@@ -103,14 +94,13 @@ export class SnapWheel {
       return;
     }
 
-    const { snap } = this;
-    const { props } = snap;
+    const { props, callbacks } = this.snap;
 
     // Save delta
     this._addDelta(delta);
 
     // Move callback
-    snap.callbacks.emit('wheel', event);
+    callbacks.emit('wheel', event);
 
     // Handle wheel logic
     if (props.followWheel) {
@@ -128,7 +118,7 @@ export class SnapWheel {
     snap.cancelTransition();
 
     // Update track target
-    snap.track.iterateTarget(delta * snap.props.wheelSpeed);
+    snap.track.$_iterateTarget(delta * snap.props.wheelSpeed);
     snap.track.clampTarget();
   }
 
@@ -177,11 +167,11 @@ export class SnapWheel {
         if (shouldFollow) {
           snap.cancelTransition();
 
-          track.iterateTarget(direction);
+          track.$_iterateTarget(direction);
           track.clampTarget();
 
           if (!isTouchPad) {
-            track.current = track.target;
+            track.$_current = track.target;
           }
         } else if (direction === 1) {
           if (!snap.props.loop && snap.activeIndex === snap.slides.length - 1) {
@@ -223,7 +213,7 @@ export class SnapWheel {
         end,
       );
 
-      track.target += clampedLoopedTarget - loopedTarget;
+      track.$_target = track.target + clampedLoopedTarget - loopedTarget;
       track.clampTarget();
     }
   }

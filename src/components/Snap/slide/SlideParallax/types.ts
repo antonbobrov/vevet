@@ -1,4 +1,4 @@
-import { Snap, SnapSlide } from '..';
+import { Snap, SnapSlide } from '../..';
 
 export interface ISnapSlideParallaxProps {
   snap: Snap;

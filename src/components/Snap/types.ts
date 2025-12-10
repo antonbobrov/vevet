@@ -3,13 +3,13 @@ import {
   IModuleMutableProps,
   IModuleStaticProps,
 } from '@/base';
-import { SnapSlide } from './Slide';
+import { SnapSlide } from './slide/Slide';
 import { TEasingType } from '@/utils/math';
-import { ISnapWheelProps } from './Wheel/types';
-import { ISnapSwipeProps } from './Swipe/types';
+import { ISnapWheelProps } from './logic/Wheel/types';
+import { ISnapSwipeProps } from './logic/Swipe/types';
 import { ISwipeCoords } from '../Swipe';
 import { ITimelineProgressArg } from '../Timeline';
-import { ISnapSlideProps } from './Slide/types';
+import { ISnapSlideProps } from './slide/Slide/types';
 
 /** Static properties for the Snap component */
 export interface ISnapStaticProps extends IModuleStaticProps {

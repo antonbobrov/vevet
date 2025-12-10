@@ -10,7 +10,6 @@ import {
   ISnapTransitionArg,
 } from './types';
 import { TRequiredProps } from '@/internal/requiredProps';
-import { Raf } from '../Raf';
 import {
   IOnResize,
   onResize,
@@ -23,11 +22,11 @@ import {
   closest,
   clamp,
 } from '@/utils';
-import { SnapSlide } from './Slide';
-import { SnapWheel } from './Wheel';
-import { SnapSwipe } from './Swipe';
-import { SnapTrack } from './Track';
-import { SnapKeyboard } from './Keyboard';
+import { SnapSlide } from './slide/Slide';
+import { SnapWheel } from './logic/Wheel';
+import { SnapSwipe } from './logic/Swipe';
+import { SnapTrack } from './logic/Track';
+import { SnapKeyboard } from './logic/Keyboard';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { isUndefined } from '@/internal/isUndefined';
 import { isNumber } from '@/internal/isNumber';
@@ -35,9 +34,7 @@ import { isString } from '@/internal/isString';
 import { initVevet } from '@/global/initVevet';
 
 export * from './types';
-export * from './Slide';
-
-// todo: jsdoc
+export * from './slide/Slide';
 
 /**
  * Snap/Carousel handler.
@@ -103,9 +100,6 @@ export class Snap<
     } as TRequiredProps<M>;
   }
 
-  /** Animation frame for smooth animations */
-  protected _raf: Raf;
-
   /** Wheel events */
   protected _wheel: SnapWheel;
 
@@ -160,12 +154,6 @@ export class Snap<
 
     // initial resize
     this._resizeHandler.debounceResize();
-
-    // Create the animation frame
-    this._raf = new Raf();
-    this._raf.on('frame', () => this._handleRaf());
-    this._raf.on('play', () => this._callbacks.emit('rafPlay', undefined));
-    this._raf.on('pause', () => this._callbacks.emit('rafPause', undefined));
 
     // fetch slides
     this._fetchSlides();
@@ -316,7 +304,7 @@ export class Snap<
 
     // Calculate static values
     slides.reduce((prev, slide) => {
-      slide.setStaticCoord(prev);
+      slide.$_setStaticCoord(prev);
 
       if (slide.size > this.domSize) {
         this._scrollableSlides.push(slide);
@@ -337,26 +325,6 @@ export class Snap<
 
     // Render after resize
     this.render();
-  }
-
-  /** Handle RAF update, interpolate track values */
-  protected _handleRaf() {
-    if (this.isTransitioning) {
-      return;
-    }
-
-    const { track, props } = this;
-
-    // Interpolate track value
-    track.lerp(this._raf.lerpFactor(props.lerp));
-
-    // Stop raf if target reached
-    if (track.isInterpolated) {
-      this._raf.pause();
-    }
-
-    // Render the scene
-    this.render(this._raf.duration);
   }
 
   /** Render slides */
@@ -400,7 +368,7 @@ export class Snap<
       !track.isSlideScrolling &&
       !props.freemode
     ) {
-      track.target = damp(
+      track.$_target = damp(
         track.target,
         track.current + magnet.diff,
         props.friction * props.lerp,
@@ -410,7 +378,7 @@ export class Snap<
     }
 
     // Render slides
-    this.slides.forEach((slide) => slide.render());
+    this.slides.forEach((slide) => slide.$_render());
 
     // Emit Calbacks
     this.callbacks.emit('update', undefined);
@@ -427,13 +395,13 @@ export class Snap<
       const { staticCoord, size } = slide;
 
       if (!track.canLoop) {
-        slide.setCoord(staticCoord + offset - track.current);
+        slide.$_setCoord(staticCoord + offset - track.current);
 
         return;
       }
 
       if (isCentered) {
-        slide.setCoord(
+        slide.$_setCoord(
           loop(
             staticCoord + offset - track.current,
             -track.max / 2 + offset,
@@ -444,7 +412,7 @@ export class Snap<
         return;
       }
 
-      slide.setCoord(
+      slide.$_setCoord(
         loop(staticCoord - track.current, -size, track.max - size),
       );
     });
@@ -464,12 +432,12 @@ export class Snap<
 
       if (this.props.centered) {
         const center = domSize / 2 - size / 2;
-        slide.setProgress(scoped(coord, center, center - size));
+        slide.$_setProgress(scoped(coord, center, center - size));
 
         return;
       }
 
-      slide.setProgress(scoped(coord, 0, -size));
+      slide.$_setProgress(scoped(coord, 0, -size));
     });
   }
 
@@ -550,9 +518,9 @@ export class Snap<
     });
 
     tm.on('update', (data) => {
-      track.current = lerp(start, end, data.eased);
-      track.target = track.current;
-      track.influence *= 1 - data.progress;
+      track.$_current = lerp(start, end, data.eased);
+      track.$_target = track.current;
+      track.$_influence = track.influence * (1 - data.progress);
 
       if (data.progress === 1) {
         this._targetIndex = undefined;
@@ -679,8 +647,6 @@ export class Snap<
     this._resizeHandler.remove();
 
     this.cancelTransition();
-
-    this._raf.destroy();
 
     this._slides.forEach((slide) => slide.detach());
   }

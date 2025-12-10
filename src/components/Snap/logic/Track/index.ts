@@ -1,9 +1,25 @@
 import { clamp, inRange, lerp, loop, scoped } from '@/utils/math';
-import { Snap } from '..';
 import { toPixels } from '@/utils';
+import { SnapLogic } from '../SnapLogic';
+import { Snap } from '../..';
+import { Raf } from '@/components/Raf';
 
-export class SnapTrack {
-  constructor(protected snap: Snap) {}
+export class SnapTrack extends SnapLogic {
+  constructor(snap: Snap) {
+    super(snap);
+
+    // Create the animation frame
+    this._raf = new Raf();
+    this._raf.on('frame', () => this._handleRaf());
+    this._raf.on('play', () => snap.callbacks.emit('rafPlay', undefined));
+    this._raf.on('pause', () => snap.callbacks.emit('rafPause', undefined));
+
+    // Destroy raf
+    this.addDestructor(() => this._raf.destroy());
+  }
+
+  /** The animation frame */
+  protected _raf: Raf;
 
   /** Interpolation influence */
   protected _influence = {
@@ -17,7 +33,7 @@ export class SnapTrack {
   }
 
   /** Sets the interpolation influence */
-  set influence(value: number) {
+  set $_influence(value: number) {
     this._influence.current = value;
     this._influence.target = value;
   }
@@ -34,7 +50,7 @@ export class SnapTrack {
   }
 
   /** Sets the current track value */
-  set current(value: number) {
+  set $_current(value: number) {
     this._current = value;
   }
 
@@ -44,7 +60,7 @@ export class SnapTrack {
   }
 
   /** Sets the target track value */
-  set target(value: number) {
+  set $_target(value: number) {
     const { domSize } = this.snap;
     const diff = value - this._target;
 
@@ -56,15 +72,17 @@ export class SnapTrack {
 
   /** Set a value to current & target value instantly */
   public set(value: number) {
-    this.current = value;
-    this.target = value;
+    this.$_current = value;
+    this.$_target = value;
     this._influence.current = 0;
     this._influence.target = 0;
   }
 
   /** If can loop */
   get canLoop() {
-    return this.snap.props.loop && this.snap.slides.length > 1;
+    const { snap } = this;
+
+    return snap.props.loop && snap.slides.length > 1;
   }
 
   /** Get looped current value */
@@ -84,15 +102,35 @@ export class SnapTrack {
     return Math.floor(this.current / this.max);
   }
 
+  /** Handle RAF update, interpolate track values */
+  protected _handleRaf() {
+    const { snap } = this;
+
+    if (snap.isTransitioning) {
+      return;
+    }
+
+    // Interpolate track value
+    this.$_lerp(this._raf.lerpFactor(snap.props.lerp));
+
+    // Stop raf if target reached
+    if (this.isInterpolated) {
+      this._raf.pause();
+    }
+
+    // Render the scene
+    snap.render(this._raf.duration);
+  }
+
   /** Loop a coordinate if can loop */
   public loopCoord(coord: number) {
     return this.canLoop ? loop(coord, this.min, this.max) : coord;
   }
 
   /** Interpolate the current track value */
-  public lerp(initialFactor: number) {
-    let { target } = this;
+  public $_lerp(initialFactor: number) {
     const { snap, min, max } = this;
+    let { target } = this;
 
     let lerpFactor = initialFactor;
     const influence = this._influence;
@@ -100,8 +138,8 @@ export class SnapTrack {
     // Edge space & resistance
 
     if (!snap.props.loop) {
-      const { domSize, props } = snap;
-      const edgeSpace = (1 - props.edgeFriction) * domSize;
+      const { domSize } = snap;
+      const edgeSpace = (1 - snap.props.edgeFriction) * domSize;
 
       if (target < min) {
         const edgeProgress = 1 - scoped(target, -domSize, min);
@@ -125,7 +163,7 @@ export class SnapTrack {
       lerpFactor += additionalFactor * fastProgress;
     }
 
-    this.current = lerp(this.current, target, lerpFactor, 0.000001);
+    this.$_current = lerp(this.current, target, lerpFactor, 0.000001);
 
     // Interpolate influence
 
@@ -140,7 +178,7 @@ export class SnapTrack {
   }
 
   /** Whether the track is interpolated */
-  get isInterpolated() {
+  protected get isInterpolated() {
     return this.current === this.target && this._influence.current === 0;
   }
 
@@ -205,27 +243,19 @@ export class SnapTrack {
   }
 
   /** Iterate track target value */
-  public iterateTarget(delta: number) {
-    const { snap } = this;
+  public $_iterateTarget(delta: number) {
+    this.$_target = this.target + delta;
 
-    this.target += delta;
-
-    // @ts-ignore
-    // eslint-disable-next-line no-underscore-dangle
-    snap._raf.play();
+    this._raf.play();
   }
 
   /** Clamp target value between min and max values */
   public clampTarget() {
-    const { snap } = this;
-
     if (!this.canLoop) {
-      this.target = clamp(this.target, this.min, this.max);
+      this.$_target = clamp(this.target, this.min, this.max);
     }
 
-    // @ts-ignore
-    // eslint-disable-next-line no-underscore-dangle
-    snap._raf.play();
+    this._raf.play();
   }
 
   /** If the start has been reached */

@@ -1,5 +1,4 @@
 import { clamp } from '@/utils';
-import { Snap, SnapSlide } from '..';
 import {
   opacity,
   parallaxAttributes,
@@ -8,6 +7,7 @@ import {
 } from './constants';
 import { parallaxAttrPrefix } from './globals';
 import { ISnapSlideParallaxItem, ISnapSlideParallaxType } from './types';
+import { Snap, SnapSlide } from '../..';
 
 export class SnapSlideParallax {
   protected _observer: MutationObserver;

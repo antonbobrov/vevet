@@ -1,10 +1,11 @@
-import { Snap } from '..';
 import { ISwipeCoords, ISwipeMatrix, Swipe } from '@/components/Swipe';
 import { clamp } from '@/utils';
+import { SnapLogic } from '../SnapLogic';
+import { Snap } from '../..';
 
-export class SnapSwipe {
+export class SnapSwipe extends SnapLogic {
   /** Swipe events */
-  protected _swipe: Swipe;
+  protected swipe: Swipe;
 
   /** Active index on swipe start */
   protected _startIndex: number;
@@ -12,15 +13,15 @@ export class SnapSwipe {
   /** Swipe start time */
   protected _startTime: number;
 
-  constructor(protected snap: Snap) {
-    snap.on('destroy', () => this._destroy(), { protected: true });
+  constructor(snap: Snap) {
+    super(snap);
 
     const { props, activeIndex } = snap;
 
     this._startIndex = activeIndex;
     this._startTime = 0;
 
-    this._swipe = new Swipe({
+    const swipe = new Swipe({
       container: snap.eventsEmitter,
       enabled: props.swipe,
       grabCursor: props.grabCursor,
@@ -34,20 +35,23 @@ export class SnapSwipe {
       velocityModifier: this._handleVelocityModifier.bind(this),
       inertiaDistanceThreshold: 5,
     });
+    this.swipe = swipe;
 
-    this._swipe.on('start', (data) => this._handleSwipeStart(data));
-    this._swipe.on('move', (data) => this._handleSwipeMove(data));
-    this._swipe.on('end', (data) => this._handleSwipeEnd(data));
-    this._swipe.on('inertiaStart', () => this._handleSwipeInertiaStart());
-    this._swipe.on('inertiaEnd', () => this._handleSwipeInertiaEnd());
-    this._swipe.on('inertiaFail', () => this._handleSwipeInertiaFail());
-    this._swipe.on('inertiaCancel', () => this._handleSwipeInertiaCancel());
+    this.addDestructor(() => swipe.destroy());
 
-    // on props change
+    swipe.on('start', (data) => this._handleSwipeStart(data));
+    swipe.on('move', (data) => this._handleSwipeMove(data));
+    swipe.on('end', (data) => this._handleSwipeEnd(data));
+    swipe.on('inertiaStart', () => this._handleSwipeInertiaStart());
+    swipe.on('inertiaEnd', () => this._handleSwipeInertiaEnd());
+    swipe.on('inertiaFail', () => this._handleSwipeInertiaFail());
+    swipe.on('inertiaCancel', () => this._handleSwipeInertiaCancel());
+
+    // handle props change
     snap.on(
       'props',
       () => {
-        this._swipe.updateProps({
+        swipe.updateProps({
           enabled: snap.props.swipe,
           grabCursor: snap.props.grabCursor,
           minTime: snap.props.swipeMinTime,
@@ -63,24 +67,24 @@ export class SnapSwipe {
   }
 
   /** Axis name depending on swipe direction */
-  get axis() {
-    const { snap } = this;
+  protected get axis() {
+    const { props, axis } = this.snap;
 
-    return snap.props.swipeAxis === 'auto' ? snap.axis : snap.props.swipeAxis;
+    return props.swipeAxis === 'auto' ? axis : props.swipeAxis;
   }
 
   /** Check if swiping in action */
   get isSwiping() {
-    return this._swipe.isSwiping;
+    return this.swipe.isSwiping;
   }
 
   /** Check if inertia is active */
-  get hasInertia() {
-    return this._swipe.hasInertia;
+  protected get hasInertia() {
+    return this.swipe.hasInertia;
   }
 
   /** Detect if swipe is short */
-  get isShort() {
+  protected get isShort() {
     const { props } = this.snap;
 
     if (!props.shortSwipes) {
@@ -99,12 +103,14 @@ export class SnapSwipe {
 
   /** Swipe difference between start and current coordinates */
   protected get diff() {
-    const initialDiff =
-      this.axis === 'x' ? this._swipe.diff.x : this._swipe.diff.y;
+    const { diff } = this.swipe;
+
+    const initialDiff = this.axis === 'x' ? diff.x : diff.y;
 
     return initialDiff / Math.abs(this.snap.props.swipeSpeed);
   }
 
+  /** Modify swipe velocity */
   protected _handleVelocityModifier(source: ISwipeMatrix) {
     const { props, track, activeSlide, domSize } = this.snap;
     const { coord, size: slideSize } = activeSlide;
@@ -117,7 +123,7 @@ export class SnapSwipe {
 
     // Update target coordinate
 
-    track.target = track.current;
+    track.$_target = track.current;
 
     // Sticky freemode
 
@@ -146,9 +152,7 @@ export class SnapSwipe {
     return output;
   }
 
-  /**
-   * Handles swipe `start` event.
-   */
+  /** Handles swipe `start` event */
   protected _handleSwipeStart(coords: ISwipeCoords) {
     const { snap } = this;
 
@@ -167,11 +171,9 @@ export class SnapSwipe {
     snap.callbacks.emit('swipeStart', coords);
   }
 
-  /**
-   * Handles swipe `move` event.
-   */
+  /** Handles swipe `move` event */
   protected _handleSwipeMove(coords: ISwipeCoords) {
-    const { snap } = this;
+    const { snap, swipe } = this;
     const { props, track, callbacks } = snap;
     const { followSwipe: shouldFollow } = props;
 
@@ -184,10 +186,10 @@ export class SnapSwipe {
     const delta = swipeDelta * -1;
 
     // Update track target
-    track.iterateTarget(delta);
+    track.$_iterateTarget(delta);
 
     // Clamp target if inertia is animating
-    if (this._swipe.hasInertia) {
+    if (swipe.hasInertia) {
       track.clampTarget();
     }
 
@@ -238,12 +240,12 @@ export class SnapSwipe {
 
   /** End swipe action */
   protected _end() {
-    const { snap, _swipe: swipe } = this;
+    const { snap, swipe } = this;
     const { props, track } = snap;
 
     // Handle freemode
     if (props.freemode) {
-      this._swipe.updateProps({ inertia: true });
+      swipe.updateProps({ inertia: true });
 
       // Clamp & stick if out of bounds
       if (
@@ -256,7 +258,7 @@ export class SnapSwipe {
 
       // End short swipe
       if (this.isShort && props.freemode === 'sticky') {
-        this._swipe.updateProps({ inertia: false });
+        swipe.updateProps({ inertia: false });
         swipe.cancelInertia();
 
         this._endShort();
@@ -267,13 +269,13 @@ export class SnapSwipe {
 
     // Enable inertia if active slide is being scrolled
     if (track.isSlideScrolling) {
-      this._swipe.updateProps({ inertia: true });
+      swipe.updateProps({ inertia: true });
 
       return;
     }
 
     // Disable inertia
-    this._swipe.updateProps({ inertia: false });
+    swipe.updateProps({ inertia: false });
 
     // Return if followSwipe is disabled
     if (!props.followSwipe) {
@@ -340,10 +342,5 @@ export class SnapSwipe {
     } else {
       snap.prev();
     }
-  }
-
-  /** Destroy swipe */
-  protected _destroy() {
-    this._swipe.destroy();
   }
 }
