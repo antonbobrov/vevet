@@ -37,6 +37,12 @@ export interface IMarqueeStaticProps extends IModuleStaticProps {
    * @default 'horizontal'
    */
   direction?: 'horizontal' | 'vertical';
+
+  /**
+   * Indicateds the behavior of the marquee animation.
+   * @default 'inifinite'
+   */
+  behavior?: 'inifinite' | 'alternate' | 'slide';
 }
 
 /**

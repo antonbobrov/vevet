@@ -41,3 +41,15 @@ export const WithoutClones: StoryObj<TComponent> = {
     cloneNodes: false,
   },
 };
+
+export const Alternate: StoryObj<TComponent> = {
+  args: {
+    behavior: 'alternate',
+  },
+};
+
+export const Slide: StoryObj<TComponent> = {
+  args: {
+    behavior: 'slide',
+  },
+};

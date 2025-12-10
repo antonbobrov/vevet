@@ -39,6 +39,7 @@ export class Marquee<
       hasWillChange: true,
       cloneNodes: true,
       direction: 'horizontal',
+      behavior: 'inifinite',
     } as TRequiredProps<S>;
   }
 
@@ -70,6 +71,12 @@ export class Marquee<
 
   /** Total size of all elements in the marquee */
   protected _totalSize = 0;
+
+  /** Number of times to duplicate elements */
+  protected _copyCount = 0;
+
+  /** Step direction */
+  protected _stepDir = 1;
 
   /** Total size of all elements in the marquee (width or height depending on direction) */
   get totalSize() {
@@ -115,6 +122,15 @@ export class Marquee<
   /** Check if the marquee is vertical */
   get isVertical() {
     return this.props.direction === 'vertical';
+  }
+
+  /** Get marquee behavior */
+  get behavior() {
+    if (['inifinite', 'alternate', 'slide'].includes(this.props.behavior)) {
+      return this.props.behavior;
+    }
+
+    return 'inifinite';
   }
 
   /** Raf instance */
@@ -300,7 +316,31 @@ export class Marquee<
   /** Resizes the marquee, recalculating element positions and cloning if necessary. */
   @noopIfDestroyed
   public resize() {
-    const { props, isVertical } = this;
+    const { props, behavior } = this;
+    const { container } = props;
+
+    // Update sizes
+    this._updateSizes();
+
+    // Clone elements if necessary
+    if (props.cloneNodes && behavior === 'inifinite' && this._copyCount > 1) {
+      this._cloneNodes(this._copyCount);
+
+      // Update element references after cloning
+      this._elements = Array.from(container.children) as any;
+      this.resize();
+    }
+
+    // Trigger resize callbacks
+    this.callbacks.emit('resize', undefined);
+
+    // Rerender the marquee
+    setTimeout(() => this.render(0), 0);
+  }
+
+  /** Update marquee sizes */
+  protected _updateSizes() {
+    const { props, isVertical, behavior } = this;
     const { container } = props;
 
     const gap = toPixels(props.gap);
@@ -313,35 +353,34 @@ export class Marquee<
       (element) =>
         (isVertical ? element.offsetHeight : element.offsetWidth) + gap,
     );
+
+    // Update total size
     this._totalSize = this._sizes.reduce((a, b) => a + b, 0);
 
     // Determine how many times to duplicate elements
     const maxSize = Math.max(...this._sizes);
-    const copyQuantity = Math.ceil((this._size + maxSize) / this._totalSize);
+    this._copyCount = Math.ceil((this._size + maxSize) / this._totalSize);
 
-    // update total size
-    this._totalSize = Math.max(this._totalSize, this._size + maxSize);
-
-    // Clone elements if necessary
-    if (props.cloneNodes && copyQuantity > 1) {
-      for (let i = 1; i < copyQuantity; i += 1) {
-        this._elements.forEach((element) => {
-          const copy = element.cloneNode(true) as HTMLElement;
-          this._applyNodeStyles(copy, true);
-          container.appendChild(copy);
-        });
-      }
-
-      // Update element references after cloning
-      this._elements = Array.from(container.children) as any;
-      this.resize();
+    // Update total size
+    if (behavior === 'inifinite') {
+      this._totalSize = Math.max(this._totalSize, this._size + maxSize);
+    } else {
+      this._totalSize -= gap;
     }
+  }
 
-    // Trigger resize callbacks
-    this.callbacks.emit('resize', undefined);
+  /** Clone nodes */
+  protected _cloneNodes(count: number) {
+    const { props } = this;
+    const { container } = props;
 
-    // Rerender the marquee
-    setTimeout(() => this.render(0), 0);
+    for (let i = 1; i < count; i += 1) {
+      this._elements.forEach((element) => {
+        const copy = element.cloneNode(true) as HTMLElement;
+        this._applyNodeStyles(copy, true);
+        container.appendChild(copy);
+      });
+    }
   }
 
   /** Renders the marquee, adjusting element positions. */
@@ -358,16 +397,19 @@ export class Marquee<
       return;
     }
 
-    const { isVertical, props } = this;
+    const { isVertical, behavior } = this;
     const step = this._isRtl ? -stepProp : stepProp;
+    const stepNum = toPixels(step);
+    const stepSign = stepNum > 0 ? 1 : -1;
+
+    // Handle behavior
+    this._handleBehavior(stepSign);
 
     // Update animation time
-    this._coord -= toPixels(step);
+    this._coord -= stepNum * this._stepDir;
 
     // Calculate current position of the elements
-    const centerCoord =
-      this._size * 0.5 + this._sizes[0] / 2 - toPixels(props.gap);
-    const position = this._coord + (props.centered ? centerCoord : 0);
+    const position = this._getPosition(stepSign);
 
     // Update each element's position
     let prevStaticCoord = 0;
@@ -376,11 +418,10 @@ export class Marquee<
       const elementSize = this._sizes[index];
       const { style } = element;
 
-      const coord = loop(
-        position + prevStaticCoord,
-        -elementSize,
-        this._totalSize - elementSize,
-      );
+      let coord = position + prevStaticCoord;
+      if (behavior === 'inifinite') {
+        coord = loop(coord, -elementSize, this._totalSize - elementSize);
+      }
 
       // Apply transformations to position the element
       if (isVertical) {
@@ -396,6 +437,57 @@ export class Marquee<
 
     // Trigger render callbacks
     this.callbacks.emit('render', undefined);
+  }
+
+  /** Get coordinate position with centered offset */
+  protected _getPosition(stepSign: number) {
+    const { props, behavior } = this;
+
+    if (behavior === 'alternate') {
+      return this._coord;
+    }
+
+    if (behavior === 'slide') {
+      return stepSign > 0
+        ? this._coord + this._size
+        : this._coord - this._totalSize;
+    }
+
+    const gap = toPixels(props.gap);
+    const centerCoord = this._size * 0.5 + this._sizes[0] / 2 - gap;
+
+    return this._coord + (props.centered ? centerCoord : 0);
+  }
+
+  /** Modify input coordinate and update states */
+  protected _handleBehavior(stepSign: number) {
+    const { coord, behavior } = this;
+
+    if (behavior === 'alternate') {
+      const diff = this._totalSize - this._size;
+      const absDiff = Math.abs(diff);
+
+      if (diff > 0) {
+        if (coord <= -absDiff) {
+          this._stepDir = -stepSign;
+        } else if (coord >= 0) {
+          this._stepDir = stepSign;
+        }
+      } else if (coord <= 0) {
+        this._stepDir = -stepSign;
+      } else if (coord >= absDiff) {
+        this._stepDir = stepSign;
+      }
+    }
+
+    if (behavior === 'slide') {
+      const s = Math.max(this._size, this._totalSize);
+      if (stepSign > 0 && coord <= -s) {
+        this._coord = -s;
+      } else if (stepSign < 0 && coord >= s) {
+        this._coord = s;
+      }
+    }
   }
 
   /**

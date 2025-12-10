@@ -22,6 +22,7 @@ export const Component: FC<IProps> = (props) => {
     const instance = new Marquee({
       ...props,
       container: ref.current,
+      // direction: 'vertical',
     });
 
     const responsive = new Responsive(instance, [
@@ -52,6 +53,18 @@ export const Component: FC<IProps> = (props) => {
         Play
       </button>
 
+      <input
+        type="range"
+        min={-1}
+        max={1}
+        step={0.1}
+        defaultValue={1}
+        onChange={(evt) => {
+          const num = parseFloat(evt.currentTarget.value);
+          marquee?.updateProps({ speed: num });
+        }}
+      />
+
       <button
         type="button"
         onClick={() => marquee?.updateProps({ enabled: false })}
@@ -72,7 +85,14 @@ export const Component: FC<IProps> = (props) => {
       <br />
 
       <div
-        style={{ background: '#ccc', width, maxWidth: '100%', fontSize: 20 }}
+        dir="rtl"
+        style={{
+          background: '#ccc',
+          width,
+          maxWidth: '100%',
+          height: 300,
+          fontSize: 20,
+        }}
       >
         <div ref={ref}>
           <div>
@@ -86,6 +106,18 @@ export const Component: FC<IProps> = (props) => {
           <div>
             <span>Text 3</span>
           </div>
+
+          {/* <div>
+            <span>Text 1</span>
+          </div>
+
+          <div>
+            <span>Text 2</span>
+          </div>
+
+          <div>
+            <span>Text 3</span>
+          </div> */}
         </div>
       </div>
     </>
