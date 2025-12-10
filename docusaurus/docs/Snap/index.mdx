@@ -128,7 +128,7 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 #### `friction` {#props.friction}
 - **Type:** `number`  
 - **Default:** `0`  
-- Friction that makes the slides tend to the nearest slide magnet. The value is a number between `0 and 1` which is multiplied by the `lerp` value. `0` disables friction.  
+- Friction that makes the slides tend to the nearest slide magnet. The value is a number between `0 and 1` which is multiplied by the `lerp` value. `0` disables friction. Note: friction is not applied for `shortSwipes`.   
   **See [demo](simple-demos#friction)**
 
 #### `edgeFriction` {#props.edgeFriction}
@@ -253,7 +253,7 @@ Mutable properties can be updated at runtime using `.updateProps()`.
   **See [demo](simple-demos#throttled-wheel)**
 
 #### `wheelThrottle` {#props.wheelThrottle}
-- **Type:** `number` | 'auto'  
+- **Type:** `number` | `'auto'`  
 - **Default:** `auto`  
 - Throttle wheel events, value in milliseconds. Works only if `followWheel` is disabled.
 
