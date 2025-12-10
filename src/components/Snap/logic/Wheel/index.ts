@@ -175,7 +175,9 @@ export class SnapWheel extends SnapLogic {
           }
         } else if (direction === 1) {
           if (!snap.props.loop && snap.activeIndex === snap.slides.length - 1) {
-            return;
+            if (!snap.props.rewind) {
+              return;
+            }
           }
 
           this._lastWheelTime = +new Date();
@@ -183,7 +185,9 @@ export class SnapWheel extends SnapLogic {
           snap.next();
         } else {
           if (!snap.props.loop && snap.activeIndex === 0) {
-            return;
+            if (!snap.props.rewind) {
+              return;
+            }
           }
 
           this._lastWheelTime = +new Date();

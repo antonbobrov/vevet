@@ -80,6 +80,13 @@ export interface ISnapMutableProps
   freemode?: boolean | 'sticky';
 
   /**
+   * Enables wrap-around navigation: advancing from the last slide jumps to the first,
+   * and going back from the first jumps to the last. Has no effect when `loop` mode is enabled.
+   * @default false
+   */
+  rewind?: boolean;
+
+  /**
    * Stick to the nearest slide on window resize
    * @default true
    */

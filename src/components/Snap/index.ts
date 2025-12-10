@@ -72,6 +72,7 @@ export class Snap<
       gap: 0,
       lerp: initVevet().mobile ? 1 : 0.2,
       freemode: false,
+      rewind: false,
       stickOnResize: true,
       friction: 0,
       edgeFriction: 0.85,
@@ -624,9 +625,13 @@ export class Snap<
   }: ISnapNexPrevArg = {}) {
     const { props, slides, activeIndex } = this;
 
-    const index = props.loop
-      ? loop(activeIndex + skip, 0, slides.length)
-      : Math.min(activeIndex + skip, slides.length - 1);
+    let index = loop(activeIndex + skip, 0, slides.length);
+
+    if (!props.loop) {
+      index = props.rewind
+        ? loop(activeIndex + skip, 0, slides.length)
+        : Math.min(activeIndex + skip, slides.length - 1);
+    }
 
     return this.toSlide(index, { ...options, direction: 'next' });
   }
@@ -638,9 +643,13 @@ export class Snap<
   }: ISnapNexPrevArg = {}) {
     const { props, slides, activeIndex } = this;
 
-    const index = props.loop
-      ? loop(activeIndex - skip, 0, slides.length)
-      : Math.max(activeIndex - skip, 0);
+    let index = loop(activeIndex - skip, 0, slides.length);
+
+    if (!props.loop) {
+      index = props.rewind
+        ? loop(activeIndex - skip, 0, slides.length)
+        : Math.max(activeIndex - skip, 0);
+    }
 
     return this.toSlide(index, { ...options, direction: 'prev' });
   }

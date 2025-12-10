@@ -81,7 +81,8 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 #### `slidesToScroll` {#props.slidesToScroll}
 - **Type:** `number`;
 - **Default:** `1`  
--  Indicates the number of slides to scroll on swipe or wheel.
+-  Indicates the number of slides to scroll on swipe or wheel.  
+  **See [demo](simple-demos#slides-to-scroll)**
 
 #### `direction` {#props.direction}
 - **Type:** `'horizontal' | 'vertical'`  
@@ -119,6 +120,12 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 - Enables freemode, with or without sticky magnets.   
   Note that you may need to disable `shortSwipes` when using `sticky` freemode.  
   **See [demo](simple-demos#freemode)**
+
+#### `rewind` {#props.rewind}
+- **Type:** `boolean`
+- **Default:** `false`  
+- Enables wrap-around navigation: advancing from the last slide jumps to the first, and going back from the first jumps to the last. Has no effect when `loop` mode is enabled.  
+  **See [demo](simple-demos#rewind)**
 
 #### `stickOnResize` {#props.stickOnResize}
 - **Type:** `boolean`  
