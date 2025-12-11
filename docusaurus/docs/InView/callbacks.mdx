@@ -1,0 +1,57 @@
+---
+sidebar_position: 3
+---
+
+import Head from '@docusaurus/Head';
+
+# Callbacks
+
+<Head>
+  <title>InView Callbacks | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### `in`
+
+Fires when an element enters the viewport.
+
+```ts
+const observer = new InView({ }, {
+  onIn: ({ element }) => console.log(element, 'entered viewport'),
+});
+```
+
+or:
+
+```ts
+const destruct = observer.on('in', ({ element }) => {
+  console.log(element, 'entered viewport');
+});
+
+// Cancel the callback
+destruct();
+```
+
+### `out`
+
+Fires when an element leaves the viewport.
+
+```ts
+const observer = new InView({ }, {
+  onOut: ({ element }) => console.log(element, 'left viewport'),
+});
+```
+
+or:
+
+```ts
+const destruct = observer.on('out', ({ element }) => {
+  console.log(element, 'left viewport');
+});
+
+// Cancel the callback
+destruct();
+```

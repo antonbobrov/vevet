@@ -1,0 +1,39 @@
+---
+sidebar_position: 1
+---
+
+import Head from '@docusaurus/Head';
+
+# Accessors
+
+<Head>
+  <title>InView Accessors | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### `elements`
+
+Type: `Element[]`
+
+Returns all elements currently being observed.
+
+```js
+const observer = new InView();
+
+observer.elements // returns an array of observable elements
+```
+
+### `isInitialStart`
+
+Type: `boolean`
+
+Indicates whether the observation has started for the first time.
+
+```js
+const observer = new InView();
+
+observer.isInitialStart // true or false
+```

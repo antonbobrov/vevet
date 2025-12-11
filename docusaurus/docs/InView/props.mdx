@@ -1,0 +1,91 @@
+---
+sidebar_position: 0
+---
+
+import Head from '@docusaurus/Head';
+
+# Props
+
+<Head>
+  <title>InView Props | vevet.js</title>
+</Head>
+
+## Static Props
+
+Static properties are set during initialization and cannot be modified later.
+
+### `hasOut` {#props.hasOut}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Determines whether elements leaving the viewport should trigger an event.
+- **See [demo](demos#in-out-animation)**
+
+```js
+const observer = new InView({
+  hasOut: true
+});
+```
+
+### `maxInitialDelay` {#props.maxInitialDelay}
+- **Type:** `number`  
+- **Default:** `1000`  
+- Sets the maximum delay (in milliseconds) for initial element visibility. Delay is calculated based on element position.
+- **See [demo](demos#control)**
+
+```js
+const observer = new InView({
+  maxInitialDelay: 1000
+});
+```
+
+### `scrollDirection` {#props.scrollDirection}
+- **Type:** `'horizontal' | 'vertical'`  
+- **Default:** `'vertical'`  
+- Defines the primary scrolling axis used for delay calculations.
+- **See [demo](demos#horizontal-inview)**
+
+```js
+const observer = new InView({
+  scrollDirection: 'horizontal'
+});
+```
+
+
+
+## Mutable Props
+
+Mutable properties can be updated at runtime using `.updateProps()`.
+
+### `enabled` {#props.enabled}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Enables or disables the `IntersectionObserver` instance.
+- **See [demo](demos#control)**
+
+```js
+const observer = new InView({
+  enabled: false
+});
+
+// change value
+observer.updateProps({
+  enabled: true
+});
+```
+
+### `rootMargin` {#props.rootMargin}
+- **Type:** `string`  
+- **Default:** `'0% 0% -5% 0%'`  
+- Specifies the root margin offsets for the `IntersectionObserver`, allowing fine-tuned visibility detection.
+- **Read more about [rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin)**
+
+```js
+const observer = new InView({
+  rootMargin: '0% 0% -5% 0%'
+});
+
+// change value
+observer.updateProps({
+  rootMargin: '0% 0% -15% 0%'
+});
+```

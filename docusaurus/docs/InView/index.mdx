@@ -6,11 +6,13 @@ toc_max_heading_level: 6
 
 # InView
 
-InView is a visibility detection utility that leverages the `IntersectionObserver` API to monitor when elements enter or leave the viewport. It provides customizable options for triggering events, delaying visibility changes, and dynamically adding CSS classes to elements based on their visibility state.
+InView is a visibility detection utility that leverages the `IntersectionObserver API` to monitor when elements enter or leave the viewport. 
 
-## Example
+It provides customizable options for triggering events, delaying visibility changes, and dynamically adding CSS classes to elements based on their visibility state.
 
-Explore a live example on CodePen:
+
+
+## Basic Example
 
 <iframe 
   height="600"
@@ -28,138 +30,71 @@ Explore a live example on CodePen:
   See the Pen <a href="https://codepen.io/anton-bobrov/pen/EaaYRmX">Vevet Example</a> by Anton Bobrov.
 </iframe>
 
+
+
 ## More demos
 
 To explore more demos, click [here](./demos).
 
 
 
-## Props
+## Initialization
 
-### Static Props
+InView is easy to initialize:
 
-Static properties are set during initialization and cannot be modified later.
-
-#### `hasOut` {#props.hasOut}
-- **Type:** `boolean`  
-- **Default:** `true`  
-- Determines whether elements leaving the viewport should trigger an event.
-
-#### `maxInitialDelay` {#props.maxInitialDelay}
-- **Type:** `number`  
-- **Default:** `1000`  
-- Sets the maximum delay (in milliseconds) for initial element visibility. Delay is calculated based on element position.
-
-#### `scrollDirection` {#props.scrollDirection}
-- **Type:** `'horizontal' | 'vertical'`  
-- **Default:** `'vertical'`  
-- Defines the primary scrolling axis used for delay calculations.
-
-### Mutable Props
-
-Mutable properties can be updated at runtime using `.updateProps()`.
-
-#### `enabled` {#props.enabled}
-- **Type:** `boolean`  
-- **Default:** `true`  
-- Enables or disables the `IntersectionObserver` instance.
-
-#### `rootMargin` {#props.rootMargin}
-- **Type:** `string`  
-- **Default:** `'0% 0% -5% 0%'`  
-- Specifies the root margin offsets for the `IntersectionObserver`, allowing fine-tuned visibility detection.
-
-
-
-## Accessors
-
-:::note
-All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
-:::
-
-### `elements`
-
-Type: `Element[]`
-
-Returns all elements currently being observed.
-
-### `isInitialStart`
-
-Type: `boolean`
-
-Indicates whether the observation has started for the first time.
-
-
-
-## Methods
-
-:::note
-All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
-:::
-
-### `addElement`
-
-Registers an element for visibility observation. If the element has a `data-in-view-class` attribute, the specified class will be applied upon entering the viewport.
-
-```ts
-const observable = instance.addElement(document.getElementById('element'));
-
-// Stop observing the element
-observable();
+```html
+<h1 id="observable-element">Hello, World!</h1>
 ```
 
-### `removeElement`
+```js
+import { InView } from "vevet";
 
-Removes an element from observation, preventing further visibility tracking.
+const observer = new InView();
 
-```ts
-instance.removeElement(document.getElementById('element'));
-```
-
-### `updateProps`
-
-Dynamically updates instance properties.
-
-```ts
-instance.updateProps({
-  enabled: false,
+observer.on('in', ({ element }) => {
+  console.log('do something with', element);
 });
+
+observer.addElement(
+  document.getElementById('observable-element')
+);
 ```
 
-### `destroy`
+InView can add a custom class to an element when it enters the viewport, and remove the class when it leaves the viewport.
 
-Destroys the instance and removes all observers.
+For such a behavior, use `data-in-view-class`:
 
-```ts
-instance.destroy();
+```html
+<h1 class="observable-element" data-in-view-class="fadeInUp">InView</h1>
 ```
 
-
-
-## Callbacks
-
-:::note
-All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::caution Class Behavior
+The class from `data-in-view-class` is added when the element enters the viewport and removed once it leaves it  
+(if `hasOut: true`).  
+This allows creating fully CSS-driven scroll animations without JavaScript transitions.
 :::
 
-### `in`
+:::caution Zero-Size Elements
+InView cannot detect visibility of elements with `display: none` or zero height/width.  
+Ensure the element has a measurable size before adding it to the observer.
+:::
 
-Fires when an element enters the viewport.
+Stop observing the element
 
-```ts
-const destruct = instance.on('in', ({ element }) => console.log(element, 'entered viewport'));
-
-// Cancel the callback
-destruct();
+```js
+observer.removeElement(yourElement);
 ```
 
-### `out`
+Destroy InView
 
-Fires when an element leaves the viewport.
-
-```ts
-const destruct = instance.on('out', ({ element }) => console.log(element, 'left viewport'));
-
-// Cancel the callback
-destruct();
+```js
+observer.destroy();
 ```
+
+
+
+## Best Practices
+
+- Prefer adding a **single InView instance** and registering multiple elements instead of creating many observers.
+- Avoid observing extremely large numbers of elements — group content into sections when possible.
+- Use `hasOut: false` if you only need one-time triggers — this improves performance and reduces callback spam.

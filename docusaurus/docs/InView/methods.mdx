@@ -1,0 +1,66 @@
+---
+sidebar_position: 2
+---
+
+import Head from '@docusaurus/Head';
+
+# Methods
+
+<Head>
+  <title>InView Methods | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+:::
+
+### `addElement`
+
+Registers an element for visibility observation. If the element has a `data-in-view-class` attribute, the specified class will be applied upon entering the viewport.
+
+:::note Dynamic Content
+If new elements are added to the DOM after initialization (e.g., via AJAX or React rendering),  
+they must be registered manually using `addElement()`.
+:::
+
+```ts
+const observer = new InView();
+
+const destruct = observer.addElement(document.getElementById('element'));
+
+// Stop observing the element
+destruct();
+```
+
+### `removeElement`
+
+Removes an element from observation, preventing further visibility tracking.
+
+```ts
+const observer = new InView();
+
+observer.addElement(document.getElementById('element'));
+observer.removeElement(document.getElementById('element'));
+```
+
+### `updateProps`
+
+Dynamically updates instance properties.
+
+```ts
+const observer = new InView();
+
+observer.updateProps({
+  enabled: false,
+});
+```
+
+### `destroy`
+
+Destroys the instance and removes all observers.
+
+```ts
+const observer = new InView();
+
+observer.destroy();
+```
