@@ -1,0 +1,114 @@
+---
+sidebar_position: 1
+---
+
+import Head from '@docusaurus/Head';
+
+# Accessors
+
+<Head>
+  <title>SplitText Accessors | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### `letters`
+
+Type: `HTMLElement[]`
+
+Retrieves an array of letter elements.
+
+```js
+const text = new SplitText({ container });
+
+text.letters; // returns an array of letters
+```
+
+### `lettersMeta`
+
+Type: `ISplitTextLetterMeta[]`
+
+Retrieves an array of letters metadata.
+
+```js
+const text = new SplitText({ container });
+
+text.lettersMeta; // returns an array of letters data
+```
+
+**ISplitTextLetterMeta Structure**
+
+```ts
+interface ISplitTextLetterMeta {
+  element: HTMLElement;
+}
+```
+
+### `lines`
+
+Type: `HTMLElement[]`
+
+Retrieves an array of line elements.
+
+```js
+const text = new SplitText({ container });
+
+text.lines; // returns an array of lines
+```
+
+### `linesMeta`
+
+Type: `ISplitTextLineMeta[]`
+
+Retrieves an array of lines metadata.
+
+```js
+const text = new SplitText({ container });
+
+text.linesMeta; // returns an array of lines data
+```
+
+**ISplitTextLineMeta Structure**
+
+```ts
+interface ISplitTextLineMeta {
+  element: HTMLElement;
+  words: ISplitTextWordMeta[];
+  wrapper?: HTMLElement;
+}
+```
+
+### `words`
+
+Type: `HTMLElement[]`
+
+Retrieves an array of word elements.
+
+```js
+const text = new SplitText({ container });
+
+text.words; // returns an array of words
+```
+
+### `wordsMeta`
+
+Type: `ISplitTextWordMeta[]`
+
+Retrieves an array of words metadata.
+
+```js
+const text = new SplitText({ container });
+
+text.wordsMeta; // returns an array of words data
+```
+
+**ISplitTextWordMeta Structure**
+
+```ts
+interface ISplitTextWordMeta {
+  element: HTMLElement;
+  letters: ISplitTextLetterMeta[];
+}
+```

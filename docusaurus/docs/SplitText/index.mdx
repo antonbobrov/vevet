@@ -8,18 +8,16 @@ toc_max_heading_level: 6
 
 `SplitText` splits text within a container into individual lines, words, and letters.
 
-Features:
-- Supports resizing, HTML content, and special symbols like emojis.
-- Handles multi-line breaks and non-breaking spaces.
-- Saves initial nodes for easy restoration.
-- Allows splitting into lines, words, or letters as needed.
-- Much faster than GSAP or SplitType.
+**Features:**
+- Supports resizing with automatic resplitting.
+- Dynamic content is fully preserved — initial DOM nodes are saved and can be restored on destroy.
+- Correctly handles HTML, emojis, multibyte symbols, `<br>` tags and `&nbsp;`.
 
 :::note
 Apply `fontKerning: none` to prevent layout shifts.
 :::
 
-## Demo
+## Basic Demo
 
 Explore a basic demo on CodePen:
 
@@ -39,6 +37,8 @@ Explore a basic demo on CodePen:
   See the Pen <a href="https://codepen.io/anton-bobrov/pen/gbbYKQN">Vevet Demo</a> by Anton Bobrov.
 </iframe>
 
+
+
 ## More demos
 
 To explore more demos, click [here](./demos).
@@ -46,6 +46,11 @@ To explore more demos, click [here](./demos).
 
 
 ## Performance
+
+:::tip Performance
+SplitText is extremely fast, but keep in mind that splitting into letters generates a large number of DOM nodes.  
+For best performance, apply splitting only to short text blocks (headlines, captions).
+:::
 
 SplitText is a fast alternative to `GSAP SplitText` or `split-type`.
 
@@ -56,212 +61,71 @@ See perfomance comparison of:
 
 
 
-## Props
+## Best Practices
 
-### Static Props
+- Avoid applying animations directly to the container — animate the generated lines/words/letters instead.
+- For perfectly stable line splitting, set `font-kerning: none` and ensure fonts are fully loaded before initialization.
+- Inline formatting tags (e.g., `<strong>`, `<em>`) are supported, but heavy nested markup may affect line detection accuracy.
 
-Static properties are set during initialization and cannot be modified later.
 
-#### `container` {#props.container}
-- **Type:** `HTMLElement`  
-- The text container where the text will be split.
+## Initialization
 
-#### `letters` {#props.letters}
-- **Type:** `boolean`  
-- **Default:** `false`  
-- Whether to split the text into individual letters.
+:::note Resizing Behavior
+SplitText automatically recalculates lines on every resize.  
+:::
 
-#### `lines` {#props.lines}
-- **Type:** `boolean`  
-- **Default:** `false`  
-- Whether to split the text into lines.
+SplitText is easy to initialize:
 
-#### `linesWrapper` {#props.linesWrapper}
-- **Type:** `boolean`  
-- **Default:** `false`  
-- Whether to wrap each line in an additional container.
+```html
+<div id="quote">
+  Vevet <b>SplitText</b> is a <u>flexible</u> utility that enables seamless text <button>splitting</button>
+  into words, letters, or lines as needed.
+</div>
+```
 
-#### `letterTag` {#props.letterTag}
-- **Type:** `string`  
-- **Default:** `'span'`  
-- The HTML tag to wrap each letter.
+```js
+import { SplitText } from "vevet";
 
-#### `wordTag` {#props.wordTag}
-- **Type:** `string`  
-- **Default:** `'span'`  
-- The HTML tag to wrap each word.
-
-#### `lineTag` {#props.lineTag}
-- **Type:** `string`  
-- **Default:** `'span'`  
-- The HTML tag to wrap each line.
-
-#### `letterClass` {#props.letterClass}
-- **Type:** `string`  
-- **Default:** `'v-split-text__letter'`  
-- CSS class name applied to each letter.
-
-#### `wordClass` {#props.wordClass}
-- **Type:** `string`  
-- **Default:** `'v-split-text__word'`  
-- CSS class name applied to each word.
-
-#### `lineClass` {#props.lineClass}
-- **Type:** `string`  
-- **Default:** `'v-split-text__line'`  
-- CSS class name applied to each line.
-
-#### `lineWrapperClass` {#props.lineWrapperClass}
-- **Type:** `string`  
-- **Default:** `'v-split-text__line-wrapper'`  
-- CSS class name applied to the line wrapper.
-
-#### `resizeDebounce` {#props.resizeDebounce}
-- **Type:** `number`  
-- **Default:** `0`  
-- Debounce delay in milliseconds for the resize event.
-
-#### `ignore` {#props.ignore}
-- **Type:** `string | HTMLElement[] | ((element: HTMLElement) => boolean) | null`  
-- **Default:** `null`  
-- Elements or selectors to exclude from splitting. Can be a CSS selector string, an array of HTMLElements, or a function that returns a boolean.
-
-#### `prepareText` {#props.prepareText}
-- **Type:** `(text: string) => string`  
-- **Default:** `(text) => text`  
-- Optional callback to preprocess text before it is split into words. This function receives the original text and should return the modified text. It is useful for languages like Chinese where standard word splitting may not work correctly.
-```ts
-const segmenter = new Intl.Segmenter('zh', { granularity: 'word' });
-
-const instance = new SplitText({
-  container,
-  prepareText: (source) => [...segmenter.segment(source)].map((s) => s.segment).join(' '),
+const text = new SplitText({
+  container: document.getElementById("quote"),
+  letters: true
 });
 ```
 
-#### `wordDelimiter` {#props.wordDelimiter}
-- **Type:** `string`  
-- **Default:** `(whitespace)`  
-- Specifies a custom delimiter used to split text into words. By default, splitting occurs on regular whitespace.
+Manual splitting (supported for lines only):
 
-#### `wordDelimiterOutput` {#props.wordDelimiterOutput}
-- **Type:** `string | null`  
-- **Default:** `null`  
-- Provides an alternative delimiter to use when outputting the split words. Useful when a custom input delimiter is used but the output should differ.
-
-
-
-## Accessors
-
-:::note
-All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
-:::
-
-### `letters`
-
-Type: `HTMLElement[]`
-
-Retrieves an array of letter elements.
-
-### `lettersMeta`
-
-Type: `ISplitTextLetterMeta[]`
-
-Retrieves an array of letters metadata.
-
-**ISplitTextLetterMeta Structure**
-
-```ts
-interface ISplitTextLetterMeta {
-  element: HTMLElement;
-}
+```js
+text.split();
 ```
 
-### `lines`
+Add animation:
 
-Type: `HTMLElement[]`
+```js
+import { SplitText } from "vevets";
+import { animate, stagger } from "animejs";
 
-Retrieves an array of line elements.
-
-### `linesMeta`
-
-Type: `ISplitTextLineMeta[]`
-
-Retrieves an array of lines metadata.
-
-**ISplitTextLineMeta Structure**
-
-```ts
-interface ISplitTextLineMeta {
-  element: HTMLElement;
-  words: ISplitTextWordMeta[];
-  wrapper?: HTMLElement;
-}
+const text = new SplitText(
+  {
+    container: document.getElementById("quote"),
+    letters: true
+  },
+  {
+    onSplit: (data, { letters }) => {
+      animate(letters, {
+        duration: 800,
+        opacity: { from: 0, to: 1 },
+        ease: "outBack",
+        delay: stagger(12),
+        y: { from: -50, to: 0 },
+        rotateX: { from: 270, to: 0 }
+      });
+    }
+  }
+);
 ```
 
-### `words`
+Destroy SplitText
 
-Type: `HTMLElement[]`
-
-Retrieves an array of word elements.
-
-### `wordsMeta`
-
-Type: `ISplitTextWordMeta[]`
-
-Retrieves an array of words metadata.
-
-**ISplitTextWordMeta Structure**
-
-```ts
-interface ISplitTextWordMeta {
-  element: HTMLElement;
-  letters: ISplitTextLetterMeta[];
-}
-```
-
-
-
-## Methods
-
-:::note
-All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
-:::
-
-### `split`
-
-Splits the text into letters, words, and optionally lines based on configuration.
-
-```ts
-instance.split();
-```
-
-
-
-## Callbacks
-
-:::note
-All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
-:::
-
-### `beforeSplit`
-
-Called before the text is split
-
-```ts
-const destruct = instance.on('beforeSplit', () => console.log('beforeSplit'));
-
-// Cancel the callback
-destruct();
-```
-
-### `split`
-
-Called after the text has been split.
-
-```ts
-const destruct = instance.on('split', () => console.log('split'));
-
-// Cancel the callback
-destruct();
+```js
+text.destroy();
 ```

@@ -1,0 +1,204 @@
+---
+sidebar_position: 0
+---
+
+import Head from '@docusaurus/Head';
+
+# Props
+
+<Head>
+  <title>SplitText Props | vevet.js</title>
+</Head>
+
+:::note
+All `SplitText` props are static and cannot be changed in runtime.
+:::
+
+## Static Props
+
+Static properties are set during initialization and cannot be modified later.
+
+### `container` {#props.container}
+- **Type:** `HTMLElement`  
+- The text container where the text will be split.
+
+```js
+const text = new SplitText({
+  container: document.getElementById('split-text')
+});
+```
+
+### `letters` {#props.letters}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Whether to split the text into individual letters.
+- **See [demo](demos#animated-letters)**
+
+```js
+const text = new SplitText({
+  letters: true
+});
+```
+
+### `lines` {#props.lines}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Whether to split the text into lines.
+- **See [demo](demos#animated-lines)**
+
+```js
+const text = new SplitText({
+  lines: true
+});
+```
+
+### `linesWrapper` {#props.linesWrapper}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Whether to wrap each line in an additional container.
+- **See [demo](demos#reveal-lines)**
+
+```js
+const text = new SplitText({
+  linesWrapper: true
+});
+```
+
+### `letterTag` {#props.letterTag}
+- **Type:** `string`  
+- **Default:** `'span'`  
+- The HTML tag to wrap each letter.
+
+```js
+const text = new SplitText({
+  letterTag: 'span'
+});
+```
+
+### `wordTag` {#props.wordTag}
+- **Type:** `string`  
+- **Default:** `'span'`  
+- The HTML tag to wrap each word.
+
+```js
+const text = new SplitText({
+  wordTag: 'span'
+});
+```
+
+### `lineTag` {#props.lineTag}
+- **Type:** `string`  
+- **Default:** `'span'`  
+- The HTML tag to wrap each line.
+
+```js
+const text = new SplitText({
+  lineTag: 'span'
+});
+```
+
+### `letterClass` {#props.letterClass}
+- **Type:** `string`  
+- **Default:** `'v-split-text__letter'`  
+- CSS class name applied to each letter.
+
+```js
+const text = new SplitText({
+  letterClass: 'letter'
+});
+```
+
+### `wordClass` {#props.wordClass}
+- **Type:** `string`  
+- **Default:** `'v-split-text__word'`  
+- CSS class name applied to each word.
+
+```js
+const text = new SplitText({
+  wordClass: 'word'
+});
+```
+
+### `lineClass` {#props.lineClass}
+- **Type:** `string`  
+- **Default:** `'v-split-text__line'`  
+- CSS class name applied to each line.
+
+```js
+const text = new SplitText({
+  lineClass: 'line'
+});
+```
+
+### `lineWrapperClass` {#props.lineWrapperClass}
+- **Type:** `string`  
+- **Default:** `'v-split-text__line-wrapper'`  
+- CSS class name applied to the line wrapper.
+
+```js
+const text = new SplitText({
+  lineWrapperClass: 'line-wrapper'
+});
+```
+
+### `resizeDebounce` {#props.resizeDebounce}
+- **Type:** `number`  
+- **Default:** `0`  
+- Debounce delay in milliseconds for the resize event.
+
+```js
+const text = new SplitText({
+  resizeDebounce: 0
+});
+```
+
+### `ignore` {#props.ignore}
+- **Type:** `string | HTMLElement[] | ((element: HTMLElement) => boolean) | null`  
+- **Default:** `null`  
+- Elements or selectors to exclude from splitting. Can be a CSS selector string, an array of HTMLElements, or a function that returns a boolean.
+- **See [demo](demos#ignore-selectors)**
+
+```js
+const text = new SplitText({
+  ignore: '.ignore-me'
+});
+```
+
+### `prepareText` {#props.prepareText}
+- **Type:** `(text: string) => string`  
+- **Default:** `(text) => text`  
+- Optional callback to preprocess text before it is split into words. This function receives the original text and should return the modified text. It is useful for languages like Chinese where standard word splitting may not work correctly.
+- **See [demo](demos#chinese)**
+
+```ts
+const segmenter = new Intl.Segmenter('zh', { granularity: 'word' });
+
+const text = new SplitText({
+  container,
+  prepareText: (source) => [...segmenter.segment(source)].map((s) => s.segment).join(' '),
+});
+```
+
+### `wordDelimiter` {#props.wordDelimiter}
+- **Type:** `string`  
+- **Default:** `(whitespace)`  
+- Specifies a custom delimiter used to split text into words. By default, splitting occurs on regular whitespace.
+- **See [demo](demos#word-delimiter)**
+
+```js
+const text = new SplitText({
+  wordDelimiter: ' '
+});
+```
+
+### `wordDelimiterOutput` {#props.wordDelimiterOutput}
+- **Type:** `string | null`  
+- **Default:** `null`  
+- Provides an alternative delimiter to use when outputting the split words. Useful when a custom input delimiter is used but the output should differ.
+- **See [demo](demos#word-delimiter)**
+
+```js
+const text = new SplitText({
+  wordDelimiterOutput: '—'
+});
+```

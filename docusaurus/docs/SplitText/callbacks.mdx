@@ -1,0 +1,57 @@
+---
+sidebar_position: 3
+---
+
+import Head from '@docusaurus/Head';
+
+# Callbacks
+
+<Head>
+  <title>SplitText Callbacks | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### `beforeSplit`
+
+Called before the text is split
+
+```ts
+const text = new SplitText({
+  container
+}, {
+  onBeforeSplit: () => console.log('before split'),
+});
+```
+
+or:
+
+```ts
+const destruct = text.on('beforeSplit', () => console.log('before split'));
+
+// Cancel the callback
+destruct();
+```
+
+### `split`
+
+Called after the text has been split.
+
+```ts
+const text = new SplitText({
+  container
+}, {
+  onSplit: () => console.log('split'),
+});
+```
+
+or:
+
+```ts
+const destruct = text.on('split', () => console.log('split'));
+
+// Cancel the callback
+destruct();
+```
