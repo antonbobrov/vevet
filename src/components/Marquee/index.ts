@@ -297,13 +297,16 @@ export class Marquee<
     }
   }
 
+  /** Marquee gap */
+  protected get gap() {
+    return Math.max(toPixels(this.props.gap), 0);
+  }
+
   /** Resizes the marquee, recalculating element positions and cloning if necessary. */
   @noopIfDestroyed
   public resize() {
-    const { props, isVertical } = this;
+    const { props, isVertical, gap } = this;
     const { container } = props;
-
-    const gap = toPixels(props.gap);
 
     // Update container width
     this._size = isVertical ? container.offsetHeight : container.offsetWidth;
@@ -358,15 +361,14 @@ export class Marquee<
       return;
     }
 
-    const { isVertical, props } = this;
+    const { isVertical, props, gap } = this;
     const step = this._isRtl ? -stepProp : stepProp;
 
     // Update animation time
     this._coord -= toPixels(step);
 
     // Calculate current position of the elements
-    const centerCoord =
-      this._size * 0.5 + this._sizes[0] / 2 - toPixels(props.gap);
+    const centerCoord = this._size * 0.5 + this._sizes[0] / 2 - gap;
     const position = this._coord + (props.centered ? centerCoord : 0);
 
     // Update each element's position
