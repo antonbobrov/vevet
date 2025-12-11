@@ -1,0 +1,57 @@
+---
+sidebar_position: 3
+---
+
+import Head from '@docusaurus/Head';
+
+# Callbacks
+
+<Head>
+  <title>Marquee Callbacks | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### `render`
+
+Called during marquee rendering.
+
+```ts
+const marquee = new Marquee({
+  container
+}, {
+  onRender: () => console.log('render'),
+});
+```
+
+or:
+
+```ts
+const destruct = marquee.on('render', () => console.log('render'));
+
+// Cancel the callback
+destruct();
+```
+
+### `resize`
+
+Called on marquee resize
+
+```ts
+const marquee = new Marquee({
+  container
+}, {
+  onResize: () => console.log('resize'),
+});
+```
+
+or:
+
+```ts
+const destruct = marquee.on('resize', () => console.log('resize'));
+
+// Cancel the callback
+destruct();
+```

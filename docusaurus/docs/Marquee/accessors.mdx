@@ -1,0 +1,46 @@
+---
+sidebar_position: 1
+---
+
+import Head from '@docusaurus/Head';
+
+# Accessors
+
+<Head>
+  <title>Marquee Accessors | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### `totalSize`
+
+Type: `number`
+
+Total size of all elements in the marquee
+
+```js
+const marquee = new Marquee({ container });
+
+marquee.totalSize // returns scrollable size of marquee
+```
+
+### `coord`
+
+Type: `number`
+
+Gets/Sets the current marquee coordinate.
+
+The value is updated on every animation frame depending on the `speed` prop.
+
+Setting coord manually overrides the current position.
+
+During `resize()`, the coordinate may be normalized to ensure correct looping.
+
+```js
+const marquee = new Marquee({ container });
+
+marquee.coord // returns current marquee coordinate
+marquee.coord = 0; // reset to initial position
+```

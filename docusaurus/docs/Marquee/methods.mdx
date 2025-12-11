@@ -1,0 +1,58 @@
+---
+sidebar_position: 2
+---
+
+import Head from '@docusaurus/Head';
+
+# Methods
+
+<Head>
+  <title>Marquee Methods | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+:::
+
+### `render`
+
+Renders the marquee, adjusting element positions.
+
+```ts
+const marquee = new Marquee({ container });
+
+marquee.render(2); // with step 2
+marquee.render(-1); // with step -1
+```
+
+### `resize`
+
+Resizes the marquee, recalculating element positions and cloning if necessary.
+
+```ts
+const marquee = new Marquee({ container });
+
+marquee.resize();
+```
+
+### `updateProps`
+
+Dynamically updates instance properties.
+
+```ts
+const marquee = new Marquee({ container });
+
+marquee.updateProps({
+  enabled: false,
+});
+```
+
+### `destroy`
+
+Destroys the instance and cleans up resources.
+
+```ts
+const marquee = new Marquee({ container });
+
+marquee.destroy();
+```

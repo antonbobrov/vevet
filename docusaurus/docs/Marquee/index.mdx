@@ -8,9 +8,9 @@ toc_max_heading_level: 6
 
 A custom marquee component that smoothly scrolls its child elements.
 
-This component is designed to loop elements horizontally within a container, with support for customization such as speed, gap, pause on hover, and more.
 
-## Demo
+
+## Basic Demo
 
 Explore a basic demo on CodePen:
 
@@ -30,170 +30,88 @@ Explore a basic demo on CodePen:
   See the Pen <a href="https://codepen.io/anton-bobrov/pen/zxxOadw">Vevet Example</a> by Anton Bobrov.
 </iframe>
 
+
+
 ## More demos
 
 To explore more demos, click [here](./demos).
 
+## Advantages
+- **Automatic Cloning of Child Nodes**  
+Seamlessly duplicates content to ensure a continuous marquee without visual gaps.
 
+- **Horizontal and Vertical Modes**  
+Works in both directions with the same API — no extra configuration needed.
 
-## Props
+- **Flexible Speed Control**  
+Supports dynamic speed updates and smooth runtime adjustments.
 
-### Static Props
+- **Custom Speed & Gap With CSS Units**  
+Both speed and gap accept any CSS length unit (px, rem, vw, etc.), with gap supporting only zero or positive values.
 
-Static properties are set during initialization and cannot be modified later.
+- **Playback Control API**  
+Programmatically play, pause, and restart the marquee.
 
-#### `container` {#props.container}
-- **Type:** `HTMLElement`  
-- The container element that holds the marquee content.
+- **Pause on Hover**  
+Optional hover-based pausing built in.
 
-#### `resizeDebounce` {#props.resizeDebounce}
-- **Type:** `number`  
-- **Default:** `0`  
-- The debounce delay for the resize event in milliseconds.
-
-#### `hasWillChange` {#props.hasWillChange}
-- **Type:** `boolean`  
-- **Default:** `true`  
-- Determines whether to apply the `will-change` CSS property to the marquee elements to optimize rendering. Setting this to `true` may improve performance.
-
-#### `cloneNodes` {#props.cloneNodes}
-- **Type:** `boolean`  
-- **Default:** `true`  
-- Indicates whether to clone the marquee nodes. Can be set to `false` if DOM cloning is not preferred.
-
-#### `direction` {#props.direction}
-- **Type:** `'horizontal' | 'vertical'`
-- **Default:** `'horizontal'`  
-- Indicates the direction of the marquee animation.
-
-### Mutable Props
-
-Mutable properties can be updated at runtime using `.updateProps()`.
-
-#### `speed` {#props.speed}
-- **Type:** `number | string`  
-- **Default:** `1`  
-- The speed of the marquee animation. Supports CSS units like `px`, `rem`, `vw`, `vh`, `svh`.
-
-#### `gap` {#props.gap}
-- **Type:** `number | string`  
-- **Default:** `0`  
-- The gap between the marquee elements. Supports CSS units like `px`, `rem`, `vw`, `vh`, `svh`.
-
-#### `enabled` {#props.enabled}
-- **Type:** `boolean`  
-- **Default:** `true`  
-- Enables or disables the marquee animation. When `false`, the marquee will be paused.
-
-#### `pauseOnHover` {#props.pauseOnHover}
-- **Type:** `boolean`  
-- **Default:** `false`  
-- Pauses the marquee when the mouse hovers over it.
-
-#### `centered` {#props.centered}
-- **Type:** `boolean`  
-- **Default:** `false`  
-- Centers the marquee content within the container.
-
-#### `adjustSpeed` {#props.adjustSpeed}
-- **Type:** `boolean`  
-- **Default:** `true`  
-- When needed, uses dynamic FPS factor to adjust the speed of the marquee.
-
-#### `pauseOnOut` {#props.pauseOnOut}
-- **Type:** `boolean`  
-- **Default:** `true`  
-- Pauses the marquee when the mouse leaves the viewport.
+- **Default Styling Included**  
+Ships with minimal required CSS (or inline styles), so the marquee works out-of-the-box without custom styling.
 
 
 
-## Accessors
+## Best Practices
 
-:::note
-All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
-:::
-
-### `totalSize`
-
-Type: `number`
-
-Total size of all elements in the marquee
-
-### `coord`
-
-Type: `number`
-
-The current marquee coordinate.
+To ensure smooth and predictable marquee behavior:
+- Use either plain text or a group of elements as children — the component is optimized for both.
+- Child elements should preferably use inline-block or block display values for correct width calculation.
+- The gap property should always be 0 or a positive value. Negative values are not supported.
+- When using complex layouts inside the marquee, avoid margin collapsing and ensure elements have measurable width/height.
+- For vertical marquee, define an explicit container height.
 
 
 
-## Methods
+## Initialization
 
-:::note
-All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
-:::
+Marquee is easy to initialize:
 
-### `render`
-
-Renders the marquee, adjusting element positions.
-
-```ts
-instance.render(2); // with step 2
-instance.render(-1); // with step -1
+```html
+<div id="marquee">Breaking News🔥</div>
 ```
 
-### `resize`
 
-Resizes the marquee, recalculating element positions and cloning if necessary.
+```js
+import { Marquee } from "vevet";
 
-```ts
-instance.resize();
-```
-
-### `updateProps`
-
-Dynamically updates instance properties.
-
-```ts
-instance.updateProps({
-  enabled: false,
+const marquee = new Marquee({
+  container: document.getElementById("marquee")
 });
 ```
 
-### `destroy`
+Stop marquee:
 
-Destroys the instance and cleans up resources.
-
-```ts
-instance.destroy();
+```js
+marquee.updateProps({
+  enabled: false
+});
 ```
 
+Play marquee:
 
-
-## Callbacks
-
-:::note
-All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
-:::
-
-### `render`
-
-Called during marquee rendering.
-
-```ts
-const destruct = instance.on('render', () => console.log('render'));
-
-// Cancel the callback
-destruct();
+```js
+marquee.updateProps({
+  enabled: true
+});
 ```
 
-### `resize`
+Manual rendering:
 
-Called on marquee resize
+```js
+marquee.render(2); // moves marquee two pixels forward
+```
 
-```ts
-const destruct = instance.on('resize', () => console.log('resize'));
+Destroy marquee
 
-// Cancel the callback
-destruct();
+```js
+marquee.destroy();
 ```
