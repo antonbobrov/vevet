@@ -1,100 +1,102 @@
+import { clamp } from '@/utils';
 import { parallaxAttrPrefix } from './globals';
-import { ISnapSlideParallaxType } from './types';
+import { ISnapSlideParallaxGroup } from './types';
 
 function attrName(name: string) {
   return `${parallaxAttrPrefix}${name}`;
 }
 
-export const transform = 'transform';
-export const opacity = 'opacity';
+export const parallaxGroups: ISnapSlideParallaxGroup[] = [
+  {
+    name: 'transform',
+    types: [
+      {
+        n: attrName('x'),
+        p: 'translateX',
+        u: 'px',
+      },
+      {
+        n: attrName('y'),
+        p: 'translateY',
+        u: 'px',
+      },
+      {
+        n: attrName('z'),
+        p: 'translateZ',
+        u: 'px',
+      },
+      {
+        n: attrName('scale'),
+        p: 'scale',
+        u: '',
+        modifier: (value) => value + 1,
+      },
+      {
+        n: attrName('scale-x'),
+        p: 'scaleX',
+        u: '',
+        modifier: (value) => value + 1,
+      },
+      {
+        n: attrName('scale-y'),
+        p: 'scaleY',
+        u: '',
+        modifier: (value) => value + 1,
+      },
+      {
+        n: attrName('skew'),
+        p: 'skew',
+        u: 'deg',
+      },
+      {
+        n: attrName('skew-x'),
+        p: 'skewX',
+        u: 'deg',
+      },
+      {
+        n: attrName('skew-y'),
+        p: 'skewY',
+        u: 'deg',
+      },
+      {
+        n: attrName('rotate'),
+        p: 'rotate',
+        u: 'deg',
+      },
+      {
+        n: attrName('rotate-x'),
+        p: 'rotateX',
+        u: 'deg',
+      },
+      {
+        n: attrName('rotate-y'),
+        p: 'rotateY',
+        u: 'deg',
+      },
+      {
+        n: attrName('rotate-z'),
+        p: 'rotateZ',
+        u: 'deg',
+      },
+    ],
+  },
 
-export const parallaxGroups = [transform, opacity];
-
-export const parallaxTypes: ISnapSlideParallaxType[] = [
   {
-    name: attrName('x'),
-    prop: 'translateX',
-    belongsTo: transform,
-    unit: 'px',
-  },
-  {
-    name: attrName('y'),
-    prop: 'translateY',
-    belongsTo: transform,
-    unit: 'px',
-  },
-  {
-    name: attrName('z'),
-    prop: 'translateZ',
-    belongsTo: transform,
-    unit: 'px',
-  },
-  {
-    name: attrName('scale'),
-    prop: 'scale',
-    belongsTo: transform,
-    unit: '',
-  },
-  {
-    name: attrName('scale-x'),
-    prop: 'scaleX',
-    belongsTo: transform,
-    unit: '',
-  },
-  {
-    name: attrName('scale-y'),
-    prop: 'scaleY',
-    belongsTo: transform,
-    unit: '',
-  },
-  {
-    name: attrName('skew'),
-    prop: 'skew',
-    belongsTo: transform,
-    unit: 'deg',
-  },
-  {
-    name: attrName('skew-x'),
-    prop: 'skewX',
-    belongsTo: transform,
-    unit: 'deg',
-  },
-  {
-    name: attrName('skew-y'),
-    prop: 'skewY',
-    belongsTo: transform,
-    unit: 'deg',
-  },
-  {
-    name: attrName('rotate'),
-    prop: 'rotate',
-    belongsTo: transform,
-    unit: 'deg',
-  },
-  {
-    name: attrName('rotate-x'),
-    prop: 'rotateX',
-    belongsTo: transform,
-    unit: 'deg',
-  },
-  {
-    name: attrName('rotate-y'),
-    prop: 'rotateY',
-    belongsTo: transform,
-    unit: 'deg',
-  },
-  {
-    name: attrName('rotate-z'),
-    prop: 'rotateZ',
-    belongsTo: transform,
-    unit: 'deg',
-  },
-  {
-    name: attrName('opacity'),
-    prop: opacity,
-    belongsTo: opacity,
-    unit: '',
+    name: 'opacity',
+    types: [
+      {
+        n: attrName('opacity'),
+        p: 'opacity',
+        u: '',
+        isAbs: true,
+        modifier: (value) => clamp(value + 1, 0, 1),
+      },
+    ],
   },
 ];
 
-export const parallaxAttributes = parallaxTypes.map(({ name }) => name);
+export const parallaxTypes = Object.values(parallaxGroups)
+  .map(({ types }) => types)
+  .flat();
+
+export const parallaxAttributes = parallaxTypes.map(({ n }) => n);

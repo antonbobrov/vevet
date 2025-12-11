@@ -165,7 +165,8 @@ Mutable properties can be updated at runtime using `.updateProps()`.
   - `stretch` detects slide size as the container size.  
   - `number` defines the slide size in pixels.  
   - CSS units like `px`, `rem`, `vw`, `vh`, `svh`.  
-- Note that this property does not change real slide sizes. It is used for virtual slides & custom logic.
+- Note that this property does not change real slide sizes. It is used for virtual slides & custom logic.  
+**See [demo](simple-demos#virtual)**
 
 #### `swipe` {#props.swipe}
 - **Type:** `boolean`  
@@ -809,12 +810,14 @@ You can inspect slide progress in [this demo](/docs/Snap/simple-demos#progress).
 
 To change the active range, use the `data-snap-parallax-scope` attribute:
 - numeric range like `data-snap-parallax-scope="-2, 2"`
-- infinite range like `data-snap-parallax-scope="-Infinity, Infinity"`
+- infinite range like `data-snap-parallax-scope="none"` or `data-snap-parallax-scope="-Infinity, Infinity"`
 
-The scope applies to all parallax effects inside a slide unless overridden per effect:
+The scope applies to all parallax effects inside a slide unless overridden per effect via `data-snap-parallax-[effect]-scope`:
 
 ```html
-data-snap-parallax-y-scope="-2, 2"
+data-snap-parallax-scope="-2, 2"
+<!-- or -->
+data-snap-parallax-scale-scope="-2, 2"
 ```
 
 ### Parallax Strength
@@ -828,6 +831,12 @@ The parallax value will smoothly increase or decrease based on interaction inten
 `data-snap-parallax-[effect]-abs` forces the effect to use absolute (non-negative) values.
 
 This is useful for properties like `scale()` where negative values are undesirable.
+
+### Value Offset
+
+`data-snap-parallax-[effect]-offset` accepts numeric value and forces value offset for the active slide.
+
+This might be useful for reverse animations.
 
 ### Direction
 

@@ -1,13 +1,8 @@
-import { clamp } from '@/utils';
-import {
-  opacity,
-  parallaxAttributes,
-  parallaxGroups,
-  parallaxTypes,
-} from './constants';
+import { parallaxAttributes, parallaxGroups, parallaxTypes } from './constants';
 import { parallaxAttrPrefix } from './globals';
 import { ISnapSlideParallaxItem, ISnapSlideParallaxType } from './types';
 import { Snap, SnapSlide } from '../..';
+import { clamp } from '@/utils';
 
 export class SnapSlideParallax {
   protected _observer: MutationObserver;
@@ -62,40 +57,46 @@ export class SnapSlideParallax {
       [-1, 1],
     );
 
-    this._types = parallaxTypes.filter(({ name }) =>
-      element.hasAttribute(name),
-    );
+    this._types = parallaxTypes.filter(({ n }) => element.hasAttribute(n));
 
     this._items = this._types.map(
-      ({ name, prop, belongsTo, unit: defaultUnit }) => {
-        const scopeAttr = `${name}-scope`;
+      ({ n, p, u: defaultUnit, isAbs: isAbsProp, modifier }) => {
+        const group = parallaxGroups.find(
+          ({ types }) => types.find((type) => type.n === n)!!,
+        );
 
-        const scopeValue = element.hasAttribute(scopeAttr)
+        const scopeAttr = `${n}-scope`;
+        const scope = element.hasAttribute(scopeAttr)
           ? this._getScope(element, scopeAttr, [-1, 1])
           : defaultScope;
 
-        const attrValue = element.getAttribute(name) ?? '';
-        const target = parseFloat(attrValue.replace('|', '')) || 0;
+        const attrValue = element.getAttribute(n) ?? '';
+        const target = parseFloat(attrValue) || 0;
         const unit = attrValue.replace(/[-\d.]+/g, '') || defaultUnit;
 
-        const influenceAttr = `${name}-influence`;
+        const offsetAttr = `${n}-offset`;
+        const offset = parseFloat(element.getAttribute(offsetAttr) ?? '') || 0;
+
+        const influenceAttr = `${n}-influence`;
         const isInfluence = element.hasAttribute(influenceAttr);
 
-        const directionalAttr = `${name}-directional`;
+        const directionalAttr = `${n}-directional`;
         const isDirectional = element.hasAttribute(directionalAttr);
 
-        const absAttr = `${name}-abs`;
-        const isAbs = element.hasAttribute(absAttr);
+        const absAttr = `${n}-abs`;
+        const isAbs = isAbsProp || element.hasAttribute(absAttr);
 
         return {
-          name,
-          prop,
-          belongsTo,
-          unit,
-          scope: scopeValue,
+          n,
+          p,
+          u: unit,
+          group: group?.name!,
+          modifier,
+          scope,
           progress: 0,
           target,
           value: 0,
+          offset,
           isInfluence,
           isDirectional,
           isAbs,
@@ -111,6 +112,11 @@ export class SnapSlideParallax {
     defaultValue: number[],
   ) {
     const attrValue = element.getAttribute(name) ?? '';
+
+    if (attrValue.trim().toLowerCase() === 'none') {
+      return [-Infinity, Infinity];
+    }
+
     const cleanValue = attrValue.replace(/[\s\\[\]]+/g, '');
     const minMax = cleanValue.split(',');
     const minRaw = parseFloat(minMax[0]);
@@ -133,6 +139,8 @@ export class SnapSlideParallax {
 
     const globalProgress = slide.progress;
 
+    // Calculate parallax values
+
     items.forEach((item) => {
       let progress = clamp(globalProgress, ...item.scope);
 
@@ -144,32 +152,32 @@ export class SnapSlideParallax {
         progress = Math.abs(progress) * Math.sign(snap.track.influence);
       }
 
-      if (item.isAbs || item.prop === opacity) {
+      if (item.isAbs) {
         progress = Math.abs(progress);
       }
 
       item.progress = progress;
-      item.value = progress * item.target;
+      item.value = item.offset + progress * item.target;
 
-      if (item.prop.includes('scale') || item.prop === opacity) {
-        item.value = 1 + item.value;
+      if (item.modifier) {
+        item.value = item.modifier(item.value);
       }
     });
 
-    parallaxGroups.forEach((group) => {
-      const groupItems = items.filter((item) => item.belongsTo === group);
+    parallaxGroups.forEach(({ name: groupName }) => {
+      const groupItems = items.filter((item) => item.group === groupName);
 
-      const styles = groupItems.map(({ value, prop, unit }) => {
-        if (group === opacity) {
+      const styles = groupItems.map(({ value, p, u }) => {
+        if (groupName === 'opacity') {
           return `${value}`;
         }
 
-        return `${prop}(${value}${unit})`;
+        return `${p}(${value}${u})`;
       });
 
       const styleString = styles.join(' ');
 
-      element.style[group as any] = styleString;
+      element.style[groupName as any] = styleString;
     });
   }
 
