@@ -20,10 +20,11 @@ export const DynamicWidth: FC = () => {
         direction: 'horizontal',
         gap: '1vw',
         wheel: true,
-        // todo: adapt for loop
         wheelAxis: 'y',
         freemode: true,
         stickOnResize: false,
+        edgeFriction: 1,
+        grabCursor: true,
       },
       {
         onUpdate: (data, { slides }) => {
@@ -65,7 +66,7 @@ export const DynamicWidth: FC = () => {
             const toWidth = isExpanding ? 45 : 20;
             element.style.width = `${lerp(fromWidth, toWidth, eased)}vw`;
 
-            slide.resize(true);
+            slide.resize();
 
             if (timelineIndex.current === index) {
               if (isExpanding) {

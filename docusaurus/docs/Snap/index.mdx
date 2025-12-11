@@ -475,10 +475,11 @@ instance.render();
 
 ### `resize`
 
-Request resize (handled with debounce timeout)
+Request resize (handled with debounce timeout if `false` is passed as an argument)
 
 ```ts
-instance.resize(true);
+instance.resize();
+instance.resize(false); // with debounce
 ```
 
 ### `stick`
@@ -827,6 +828,10 @@ The parallax value will smoothly increase or decrease based on interaction inten
 `data-snap-parallax-[effect]-abs` forces the effect to use absolute (non-negative) values.
 
 This is useful for properties like `scale()` where negative values are undesirable.
+
+### Direction
+
+`data-snap-parallax-[effect]-directional` adjusts the value’s sign automatically based on the scroll direction.
 
 ### Parallax example
 

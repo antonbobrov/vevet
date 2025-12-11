@@ -206,7 +206,7 @@ export class Snap<
 
   /** Request resize (handled with debounce timeout) */
   @noopIfDestroyed
-  public resize(isManual = false) {
+  public resize(isManual = true) {
     if (isManual) {
       this._resizeHandler.resize();
     } else {

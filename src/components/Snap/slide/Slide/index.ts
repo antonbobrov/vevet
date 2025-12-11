@@ -153,7 +153,7 @@ export class SnapSlide {
   }
 
   /** Resize the slide & trigger snap reflow */
-  public resize(isManual = false) {
+  public resize(isManual = true) {
     const { element, snap } = this;
 
     if (!snap) {
@@ -187,12 +187,12 @@ export class SnapSlide {
       this._onResize = onResize({
         element: this.element,
         viewportTarget: 'width',
-        callback: () => this.resize(),
+        callback: () => this.resize(false),
         name: 'Snap Slide',
       });
     }
 
-    this.resize();
+    this.resize(false);
   }
 
   /** Detach the slide from the Snap class */
