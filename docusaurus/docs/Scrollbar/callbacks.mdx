@@ -1,0 +1,148 @@
+---
+sidebar_position: 3
+---
+
+import Head from '@docusaurus/Head';
+
+# Callbacks
+
+<Head>
+  <title>Scrollbar Callbacks | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### `update`
+
+Triggered when the scrollbar updates its position.
+
+```ts
+const instance = new Scrollbar({ }, {
+  onUpdate: () => console.log('update'),
+});
+```
+
+or:
+
+```ts
+const destruct = instance.on('update', () => console.log('update'));
+
+// Cancel the callback
+destruct();
+```
+
+### `resize`
+
+Triggered when the scrollbar resizes.
+
+```ts
+const instance = new Scrollbar({ }, {
+  onResize: () => console.log('resize'),
+});
+```
+
+or:
+
+```ts
+const destruct = instance.on('resize', () => console.log('resize'));
+
+// Cancel the callback
+destruct();
+```
+
+### `show`
+
+Triggered when the scrollbar is shown
+
+```ts
+const instance = new Scrollbar({ }, {
+  onShow: () => console.log('show'),
+});
+```
+
+or:
+
+```ts
+const destruct = instance.on('show', () => console.log('show'));
+
+// Cancel the callback
+destruct();
+```
+
+### `hide`
+
+Triggered when the scrollbar is hidden
+
+```ts
+const instance = new Scrollbar({ }, {
+  onHide: () => console.log('hide'),
+});
+```
+
+or:
+
+```ts
+const destruct = instance.on('hide', () => console.log('hide'));
+
+// Cancel the callback
+destruct();
+```
+
+### `swipeStart`
+
+Triggered on swipe start
+
+```ts
+const instance = new Scrollbar({ }, {
+  onSwipeStart: (coords) => console.log(coords),
+});
+```
+
+or:
+
+```ts
+const destruct = instance.on('swipeStart', (coords) => console.log(coords));
+
+// Cancel the callback
+destruct();
+```
+
+### `swipe`
+
+Triggered on swipe move
+
+```ts
+const instance = new Scrollbar({ }, {
+  onSwipe: (coords) => console.log(coords),
+});
+```
+
+or:
+
+```ts
+const destruct = instance.on('swipe', (coords) => console.log(coords));
+
+// Cancel the callback
+destruct();
+```
+
+### `swipeEnd`
+
+Triggered on swipe end
+
+```ts
+const instance = new Scrollbar({ }, {
+  onSwipeEnd: (coords) => console.log(coords),
+});
+```
+
+or:
+
+```ts
+const destruct = instance.on('swipeEnd', (coords) => console.log(coords));
+
+// Cancel the callback
+destruct();
+```

@@ -1,0 +1,148 @@
+---
+sidebar_position: 0
+---
+
+import Head from '@docusaurus/Head';
+
+# Props
+
+<Head>
+  <title>Scrollbar Props | vevet.js</title>
+</Head>
+
+## Static Props
+
+Static properties are set during initialization and cannot be modified later.
+
+### `container` {#props.container}
+- **Type:** `Window | HTMLElement`  
+- **Default:** `window`  
+- The element whose scroll position the scrollbar reflects.
+- For nested scroll areas, pass a custom `HTMLElement`.
+- **See [demo](demos#inner-scrollbar)**
+
+```js
+// window
+const instance = new Scrollbar();
+
+// custom element
+const instance = new Scrollbar({
+  container: document.getElementById("container")
+});
+```
+
+### `parent` {#props.parent}
+- **Type:** `false | HTMLElement`  
+- **Default:** `false`  
+- The parent element where the scrollbar should be appended.  
+- If set to `false`, the scrollbar is appended directly to the `container`.  
+- Use `parent` for correct behavior when the scrollbar is applied to an HTML element instead of Window.
+- **See [demo](demos#inner-scrollbar)**
+
+```js
+const instance = new Scrollbar({
+  parent: document.getElementById("parent")
+});
+```
+
+### `class` {#props.class}
+- **Type:** `string | false`  
+- **Default:** `false`  
+- Additional CSS class applied to the scrollbar track.  
+- If `false`, no extra class is applied.
+
+```js
+const instance = new Scrollbar({
+  class: "my-custom-scrollbar"
+});
+```
+
+### `axis` {#props.axis}
+- **Type:** `'x' | 'y'`  
+- **Default:** `'y'`  
+- Defines the scrolling axis:  
+  - `'x'` for horizontal scrolling  
+  - `'y'` for vertical scrolling  
+- **See [demo](demos#horzontal-scrollbar)**
+
+```js
+const instance = new Scrollbar({
+  axis: "x"
+});
+```
+
+### `draggable` {#props.draggable}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Determines whether the scrollbar thumb is draggable.
+
+```js
+const instance = new Scrollbar({
+  draggable: true
+});
+```
+
+### `autoHide` {#props.autoHide}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Automatically hides the scrollbar when inactive.  
+- **See [demo](demos#autohide)**
+
+```js
+const instance = new Scrollbar({
+  autoHide: false
+});
+```
+
+### `resizeDebounce` {#props.resizeDebounce}
+- **Type:** `number`  
+- **Default:** `0`  
+- Debounce delay in milliseconds for resize event handling.  
+- Helps improve performance by limiting frequency of resize calculations.
+
+```js
+const instance = new Scrollbar({
+  resizeDebounce: 0
+});
+```
+
+
+
+## Mutable Props
+
+Mutable properties can be updated at runtime using `.updateProps()`.
+
+### `minSize` {#props.minSize}
+- **Type:** `number | string`  
+- **Default:** `50`  
+- Minimum size of the scrollbar thumb.  
+- Can be specified as a number (pixels) or as a CSS unit string (`px`, `rem`, `vw`, `vh`, `svh`).  
+- **See [demo](demos#min-size)**
+
+```js
+const instance = new Scrollbar({
+  minSize: 50
+});
+
+// change value
+instance.updateProps({
+  minSize: "10rem"
+});
+```
+
+### `autoSize` {#props.autoSize}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Enables automatic adjustment of the scrollbar thumb size based on the content and container.  
+- **See [demo](demos#no-auto-size)**
+
+```js
+const instance = new Scrollbar({
+  autoSize: true
+});
+
+// change value
+instance.updateProps({
+  autoSize: false
+});
+```

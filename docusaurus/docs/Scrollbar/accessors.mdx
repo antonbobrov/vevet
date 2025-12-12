@@ -1,0 +1,159 @@
+---
+sidebar_position: 1
+---
+
+import Head from '@docusaurus/Head';
+
+# Accessors
+
+<Head>
+  <title>Scrollbar Accessors | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### `axis`
+
+Type: `"x" | "y"`
+
+Scrolling direction
+
+```js
+const instance = new Scrollbar();
+
+instance.axis; // returns "x" or "y"
+```
+
+### `container`
+
+Type: `Window | HTMLElement`
+
+The element to which the scrollbar is applied.
+
+```js
+const instance = new Scrollbar();
+
+instance.container; // returns Window or HTMLElement
+```
+
+### `outer`
+
+Type: `HTMLElement`
+
+Scrollbar outer element
+
+```js
+const instance = new Scrollbar();
+
+instance.outer; // returns the scrollbar wrapper element
+```
+
+### `parent`
+
+Type: `HTMLElement`
+
+The element where the scrollbar is appended. If `parent` is not set, it defaults to `container` or `document.body` (if applied to `window`).
+
+```js
+const instance = new Scrollbar();
+
+instance.parent; // returns the element inside which scrollbar is appended
+```
+
+### `scrollableSize`
+
+Type: `number`
+
+Returns the total scrollable distance.
+
+```js
+const instance = new Scrollbar();
+
+instance.scrollableSize; // returns container scrollable size
+```
+
+### `scrollElement`
+
+Type: `HTMLElement`
+
+The actual scrollable element. Returns `document.documentElement` for `window`, otherwise the `container` itself.
+
+```js
+const instance = new Scrollbar();
+
+instance.scrollElement; // returns target scrollable element
+```
+
+### `scrollSize`
+
+Type: `number`
+
+Returns the total scroll width/height of the content.
+
+```js
+const instance = new Scrollbar();
+
+instance.scrollSize;
+```
+
+### `scrollValue`
+
+Type: `number`
+
+Returns scrollTop or scrollLeft of the scrollable element.
+
+```js
+const instance = new Scrollbar();
+
+instance.scrollValue; // returns scrollTop or scrollLeft value
+```
+
+### `thumb`
+
+Type: `HTMLElement`
+
+Scrollbar thumb element (draggable handle).
+
+```js
+const instance = new Scrollbar();
+
+instance.thumb; // returns the scrollbar lever element
+```
+
+### `thumbSize`
+
+Type: `number`
+
+Returns the current thumb size.
+
+```js
+const instance = new Scrollbar();
+
+instance.thumb; // returns size of the scrollbar lever element
+```
+
+### `track`
+
+Type: `HTMLElement`
+
+Scrollbar track element (the container of the thumb).
+
+```js
+const instance = new Scrollbar();
+
+instance.track; // returns the scrollbar track container
+```
+
+### `trackSize`
+
+Type: `number`
+
+Returns the current track size.
+
+```js
+const instance = new Scrollbar();
+
+instance.trackSize; // returns size of the scrollbar track container
+```
