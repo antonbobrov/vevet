@@ -1,0 +1,72 @@
+---
+sidebar_position: 2
+---
+
+import Head from '@docusaurus/Head';
+
+# Methods
+
+<Head>
+  <title>Preloader Methods | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+:::
+
+### `hide`
+
+Hides the preloader with a custom animation duration.  
+The method works only after the page is loaded — if called earlier or when already hidden, it returns `undefined`.
+
+See **[demo](demos#custom-hiding-logic)**
+
+```ts
+const preloader = new Preloader({
+  container: document.getElementById("container")
+});
+
+preloader.hide(500); // hide preloader within 500ms
+
+// hide preloader within 500ms and emit a callback
+preloader.hide(500, () => {
+  console.log('hide');
+});
+
+// notice that the callback may be destroyed before it is called
+const cancel = preloader.hide(500, () => {
+  console.log('hide');
+});
+cancel?.();
+
+const result = preloader.hide(500, () => {
+  console.log('hide');
+});
+// => undefined if the page isn't loaded yet or the preloader is already hidden
+```
+
+### `onHidden`
+
+Registers a callback for when the preloader is fully hidden.
+
+```ts
+const preloader = new Preloader({
+  container: document.getElementById("container")
+});
+
+const cancelCallback = preloader.onHidden(() => console.log('hidden'));
+cancelCallback();
+```
+
+### `onHide`
+
+Registers a callback for when the preloader starts hiding.
+
+```ts
+const preloader = new Preloader({
+  container: document.getElementById("container")
+});
+
+const cancelCallback = preloader.onHide(() => console.log('hide'));
+cancelCallback?.();
+```

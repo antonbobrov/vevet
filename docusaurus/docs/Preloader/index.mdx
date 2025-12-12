@@ -6,7 +6,9 @@ toc_max_heading_level: 6
 
 # Preloader
 
-Page preloader component that manages the visibility and lifecycle of a loading screen. The module does not provide styling for the container.
+Page preloader component that manages the visibility and lifecycle of a loading screen
+
+
 
 ## Example
 
@@ -28,127 +30,51 @@ Explore a live example on CodePen:
   See the Pen <a href="https://codepen.io/anton-bobrov/pen/VYYZdyB">Vevet Example</a> by Anton Bobrov.
 </iframe>
 
+
+
 ## More demos
 
 To explore more demos, click [here](./demos).
 
 
 
-## Props
+## Initialization
 
-### Static Props
-
-Static properties are set during initialization and cannot be modified later.
-
-#### `container` {#props.container}
-- **Type:** `HTMLElement | null`  
-- **Default:** `null`  
-- The container for the preloader. Set it to `null` if you only need the preloader logic.
-
-#### `hide` {#props.hide}
-- **Type:** `false | number`  
-- **Default:** `250`  
-- Defines whether to automatically hide the preloader container.  
-  - `false`: Disables the hiding animation, allowing manual control.  
-  - `number`: Specifies the animation duration in milliseconds.  
-- Works only if the container is an HTML element.
-
-### Mutable Props
-
-Mutable properties can be updated at runtime using `.updateProps()`.
-
-
-
-## Accessors
-
-:::note
-All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::caution
+The module does not provide styling for the container.
 :::
 
-### `isHidden`
-
-Type: `boolean`
-
-Returns whether the preloader is currently hidden.
-
-
-
-## Methods
-
-:::note
-All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
-:::
-
-### `hide`
-
-Hides the preloader with a custom animation duration.
-
-```ts
-const cancelCallback = instance.hide(500, () => console.log('hide'));
-
-// If need to cancel the callback
-cancelCallback?.();
+```html
+<div id="preloader">Loading...</div>
 ```
 
-### `onHidden`
+```css
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
 
-Registers a callback for when the preloader is fully hidden.
-
-```ts
-const cancel = instance.onHidden(() => console.log('hidden'));
-
-// If need to cancel the callback
-cancel?.();
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 ```
 
-### `onHide`
+```js
+import { Preloader } from "vevet";
 
-Registers a callback for when the preloader starts hiding.
-
-```ts
-const cancel = instance.onHide(() => console.log('hide'));
-
-// If need to cancel the callback
-cancel?.();
+const preloader = new Preloader({
+  container: document.getElementById("preloader"),
+  hide: 700
+});
 ```
 
+Destroy preloader:
 
-
-## Callbacks
-
-:::note
-All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
-:::
-
-### `loaded`
-
-Triggered when the page is fully loaded.
-
-```ts
-const destruct = instance.on('loaded', () => console.log('loaded'));
-
-// Cancel the callback
-destruct();
-```
-
-### `hide`
-
-Triggered when the preloader starts hiding.
-
-```ts
-const destruct = instance.on('hide', () => console.log('hide'));
-
-// Cancel the callback
-destruct();
-```
-
-### `hidden`
-
-Triggered when the preloader is completely hidden.
-
-```ts
-const destruct = instance.on('hidden', () => console.log('hidden'));
-
-// Cancel the callback
-destruct();
+```js
+preloader.destroy();
 ```

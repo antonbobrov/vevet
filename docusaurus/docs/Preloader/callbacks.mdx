@@ -1,0 +1,79 @@
+---
+sidebar_position: 3
+---
+
+import Head from '@docusaurus/Head';
+
+# Callbacks
+
+<Head>
+  <title>Preloader Callbacks | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### `loaded`
+
+Triggered once, when the page is fully loaded.
+
+```ts
+const preloader = new Preloader({
+  container: document.getElementById("container"),
+}, {
+  onLoaded: () => console.log('loaded'),
+});
+```
+
+or:
+
+```ts
+const destruct = preloader.on('loaded', () => console.log('loaded'));
+
+// Cancel the callback
+destruct();
+```
+
+### `hide`
+
+Triggered when the preloader starts hiding — either automatically (if `hide` props is a number) or via manual `.hide()`.
+
+```ts
+const preloader = new Preloader({
+  container: document.getElementById("container"),
+}, {
+  onHide: () => console.log('hide'),
+});
+```
+
+or:
+
+```ts
+const destruct = preloader.on('hide', () => console.log('hide'));
+
+// Cancel the callback
+destruct();
+```
+
+### `hidden`
+
+Triggered only after the hiding animation fully completes.  
+If hiding is disabled (`hide: false`) — this callback runs **only after a manual `.hide()`**.
+
+```ts
+const preloader = new Preloader({
+  container: document.getElementById("container"),
+}, {
+  onHidden: () => console.log('hidden'),
+});
+```
+
+or:
+
+```ts
+const destruct = preloader.on('hidden', () => console.log('hidden'));
+
+// Cancel the callback
+destruct();
+```

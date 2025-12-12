@@ -1,0 +1,62 @@
+---
+sidebar_position: 0
+---
+
+import Head from '@docusaurus/Head';
+
+# Props
+
+<Head>
+  <title>Preloader Props | vevet.js</title>
+</Head>
+
+## Static Props
+
+Static properties are set during initialization and cannot be modified later.
+
+### `container` {#props.container}
+- **Type:** `HTMLElement | null`  
+- **Default:** `null`  
+- The container for the preloader. 
+- Set it to `null` if you only need the preloader logic.
+
+```js
+const preloader = new Preloader({
+  container: document.getElementById("container")
+});
+```
+
+### `hide` {#props.hide}
+- **Type:** `false | number`  
+- **Default:** `250`  
+- Defines whether to automatically hide the preloader container.  
+  - `false`: Disables the hiding animation, allowing manual control.  
+  - `number`: Specifies the animation duration in milliseconds.  
+- Works only if the container is an HTML element.  
+- **The hide animation runs only after the page is fully loaded.**  
+  Calling `.hide()` before the `loaded` event will return `undefined`.  
+- **See [demo](demos#custom-hiding-logic)**
+
+```js
+const preloader = new Preloader({
+  container: document.getElementById("container"),
+  hide: 500, // the preloader will be hidden within 500ms when the page is loaded
+});
+```
+
+```js
+const preloader = new Preloader(
+  {
+    container: document.getElementById("container"),
+    hide: false, // do not hide the preloader automatically
+  },
+  {
+    onLoaded: () => {
+      // some action
+
+      // hide manually
+      preloader.hide();
+    }
+  }
+);
+```

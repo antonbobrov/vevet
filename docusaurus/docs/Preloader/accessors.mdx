@@ -1,0 +1,32 @@
+---
+sidebar_position: 1
+---
+
+import Head from '@docusaurus/Head';
+
+# Accessors
+
+<Head>
+  <title>Preloader Accessors | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### `isHidden`
+
+Type: `boolean`
+
+Returns whether the preloader is currently hidden.  
+This becomes `true` only after:
+- the page is fully loaded, and  
+- the hiding animation (automatic or manual) is completed.
+
+```js
+const preloader = new Preloader({
+  container: document.getElementById("container")
+});
+
+preloader.isHidden; // detect final hidden state
+```
