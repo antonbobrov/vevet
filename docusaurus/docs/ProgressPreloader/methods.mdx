@@ -1,0 +1,47 @@
+---
+sidebar_position: 2
+---
+
+import Head from '@docusaurus/Head';
+
+# Methods
+
+<Head>
+  <title>ProgressPreloader Methods | vevet.js</title>
+</Head>
+
+:::note
+All **[Preloader's methods](/docs/Preloader/methods)** are available in this class.
+:::
+
+### `addResource`
+
+Adds a custom or virtual resource.  
+A resource with the same `id` cannot be added twice.
+
+```ts
+// preload a custom resource with its weight `100`
+// the element itself may have the attributes: `data-weight` and `data-loaded`
+preloader.addResource(document.getElementById('preload-me'), 100);
+
+// add a virtual resource
+preloader.addResource('my-resource', 20);
+```
+
+### `resolveResource`
+
+Updates the loaded amount of a virtual resource.  
+The loaded value cannot exceed the resource's total weight.
+
+```ts
+preloader.resolveResource('my-resource', 20);
+```
+
+### `destroy`
+
+Destroys the instance and cleans up resources.
+
+```ts
+preloader.destroy();
+```
+

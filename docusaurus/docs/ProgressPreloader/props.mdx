@@ -1,0 +1,111 @@
+---
+sidebar_position: 0
+---
+
+import Head from '@docusaurus/Head';
+
+# Props
+
+<Head>
+  <title>ProgressPreloader Props | vevet.js</title>
+</Head>
+
+:::note
+All **[Preloader's props](/docs/Preloader/props)** are available in this class.
+:::
+
+### Static Props
+
+Static properties are set during initialization and cannot be modified later.
+
+### `preloadImages` {#props.preloadImages}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Enables automatic preloading of images.
+- Ignores lazy images.
+- Does not load resources twice.
+
+```js
+const preloader = new ProgressPreloader({
+  container: document.getElementById("container"),
+  preloadImages: true,
+});
+```
+
+### `preloadVideos` {#props.preloadVideos}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Enables automatic preloading of videos.
+
+```js
+const preloader = new ProgressPreloader({
+  container: document.getElementById("container"),
+  preloadVideos: false,
+});
+```
+
+### `customSelector` {#props.customSelector}
+- **Type:** `string`  
+- **Default:** `'.js-preload'`  
+- Selector for virtual resources to preload.  
+- Elements should have `data-weight` and `data-loaded` attributes.  
+  Preloader observes `data-loaded` change and updates progress when needed.  
+  Example: `data-weight="10"` indicates weight; `data-loaded="10"` means fully loaded.
+- **See [demo](demos#virtual-resources)**
+
+```js
+const preloader = new ProgressPreloader({
+  container: document.getElementById("container"),
+  customSelector: '.js-preload',
+});
+```
+
+```html
+<div class="js-preload" data-weight="4" data-loaded="3"></div>
+```
+
+### `ignoreClassName` {#props.ignoreClassName}
+- **Type:** `string`  
+- **Default:** `'js-preload-ignore'`  
+- Class name for elements to exclude from preloading.
+
+```js
+const preloader = new ProgressPreloader({
+  container: document.getElementById("container"),
+  ignoreClassName: '.js-preload-ignore',
+});
+```
+
+```html
+<!-- The image will not be accepted by the preloader -->
+<img src="..." class="js-preload-ignore" />
+```
+
+### `lerp` {#props.lerp}
+- **Type:** `number`  
+- **Default:** `0.1`  
+- Controls how smoothly the visible progress value ([progress](accessors#progress)) interpolates toward the real loading progress ([loadProgress](accessors#loadprogress)).
+- Lower values → slower, smoother animation.  
+- `1` disables interpolation and makes `progress` equal to `loadProgress` every frame.
+- This affects only **visual animation**, not the real loading state.
+
+```js
+const preloader = new ProgressPreloader({
+  container: document.getElementById("container"),
+  lerp: 0.1, // smooth progress animation
+  lerp: 1, // instant progress change
+});
+```
+
+### `endDuration` {#props.endDuration}
+- **Type:** `number`  
+- **Default:** `500`  
+- Duration (in ms) for a forced completion animation when all resources are loaded but the current interpolated [progress](accessors#progress) is still below `1`.  
+  This creates a smooth "finish animation" even if the last resources load instantly
+
+```js
+const preloader = new ProgressPreloader({
+  container: document.getElementById("container"),
+  endDuration: 500
+});
+```

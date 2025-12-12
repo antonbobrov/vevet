@@ -70,3 +70,15 @@ const preloader = new Preloader({
 const cancelCallback = preloader.onHide(() => console.log('hide'));
 cancelCallback?.();
 ```
+
+### `destroy`
+
+Destroys the instance and cleans up resources.
+
+```ts
+const preloader = new Preloader({
+  container: document.getElementById("container")
+});
+
+preloader.destroy();
+```

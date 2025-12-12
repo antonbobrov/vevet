@@ -1,0 +1,62 @@
+---
+sidebar_position: 3
+---
+
+import Head from '@docusaurus/Head';
+
+# Callbacks
+
+<Head>
+  <title>ProgressPreloader Callbacks | vevet.js</title>
+</Head>
+
+:::note
+All **[Preloader's callbacks](/docs/Preloader/callbacks)** are available in this class.
+:::
+
+### `progress`
+
+Fired when the preloader's progress updates.
+
+```ts
+const preloader = new ProgressPreloader({
+  container: document.getElementById("container"),
+}, {
+  onProgress: () => console.log(preloader.progress),
+});
+```
+
+or:
+
+```ts
+const destruct = preloader.on('progress', () => console.log(preloader.progress));
+
+// Cancel the callback
+destruct();
+```
+
+### `resource`
+
+Fired whenever a resource updates its loaded weight —  
+both DOM-based (`data-loaded` changes) and virtual resources.
+
+```ts
+const preloader = new ProgressPreloader({
+  container: document.getElementById("container"),
+}, {
+  onResource: ({ id, weight, loaded }) => {
+    console.log(id, `loaded ${loaded} / ${weight}`);
+  }
+});
+```
+
+or:
+
+```ts
+const destruct = preloader.on('resource', ({ id, weight, loaded }) => {
+  console.log(id, `loaded ${loaded} / ${weight}`);
+});
+
+// Cancel the callback
+destruct();
+```
