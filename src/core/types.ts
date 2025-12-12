@@ -5,22 +5,6 @@ import { TEasingType } from '@/utils/math/easing';
  */
 export interface ICoreProps {
   /**
-   * Medium breakpoint in pixels.
-   * When changing this property, you need to
-   * update the SASS variable: `$md`. The values must be equal.
-   * @default 1199
-   */
-  md: number;
-
-  /**
-   * Small breakpoint in pixels.
-   * When changing this property, you need to
-   * update the SASS variable: `$sm`. The values must be equal.
-   * @default 999
-   */
-  sm: number;
-
-  /**
    * Timeout (in milliseconds) for viewport callbacks debouncing.
    * @default 0
    */

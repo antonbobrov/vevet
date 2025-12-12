@@ -208,15 +208,3 @@ Device pixel ratio.
 ### `vevet.lowerDpr`
 - **Type**: `number`  
 Lower device pixel ratio (1 for desktop, up to 2 for mobile devices).
-
-### `vevet.sm`
-- **Type**: `boolean`  
-Indicates if the SM breakpoint is active. See [Customization](./customization).
-
-### `vevet.md`
-- **Type**: `boolean`  
-Indicates if the MD breakpoint is active. See [Customization](./customization).
-
-### `vevet.lg`
-- **Type**: `boolean`  
-Indicates if the LG breakpoint is active (greater than MD). See [Customization](./customization).

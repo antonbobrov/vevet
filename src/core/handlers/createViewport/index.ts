@@ -32,13 +32,6 @@ export function createViewport({ prefix, props, isMobile, isInApp }: IProps) {
   style.height = '100svh';
   body.appendChild(svhHelper);
 
-  // media queries
-  const mqDesktop = window.matchMedia(`(min-width: ${props.md + 0.001}px)`);
-  const mqTablet = window.matchMedia(
-    `(min-width: ${props.sm + 0.001}px) and (max-width: ${props.md}px)`,
-  );
-  const mqPhone = window.matchMedia(`(max-width: ${props.sm}px)`);
-
   // create callbacks
   const callbacks: TViewportCallbacks = new Callbacks();
 
@@ -56,9 +49,6 @@ export function createViewport({ prefix, props, isMobile, isInApp }: IProps) {
     portrait: false,
     dpr: window.devicePixelRatio,
     lowerDpr: window.devicePixelRatio,
-    sm: true,
-    md: false,
-    lg: false,
   };
 
   // update values for the first time
@@ -142,17 +132,6 @@ export function createViewport({ prefix, props, isMobile, isInApp }: IProps) {
     data.portrait = data.width < data.height;
     data.dpr = window.devicePixelRatio;
     data.lowerDpr = !isMobile ? 1 : Math.min(data.dpr, 2);
-    data.sm = false;
-    data.md = false;
-    data.lg = false;
-
-    if (mqPhone.matches) {
-      data.sm = true;
-    } else if (mqTablet.matches) {
-      data.md = true;
-    } else if (mqDesktop.matches) {
-      data.lg = true;
-    }
 
     // for in-app browser, update svh only if width changed
     if (isMobile && isInApp) {
@@ -177,10 +156,6 @@ export function createViewport({ prefix, props, isMobile, isInApp }: IProps) {
     if (!props.applyClassNames) {
       return;
     }
-
-    cnToggle(html, `${prefix}lg`, data.lg);
-    cnToggle(html, `${prefix}md`, data.md);
-    cnToggle(html, `${prefix}sm`, data.sm);
 
     cnToggle(html, `${prefix}landscape`, data.landscape);
     cnToggle(html, `${prefix}portrait`, data.portrait);

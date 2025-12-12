@@ -110,18 +110,8 @@ export class Responsive<T extends TResponsiveSource> {
       if (at === 'mobile' && app.mobile) {
         return true;
       }
+
       if (at === 'non_mobile' && !app.mobile) {
-        return true;
-      }
-      if (at === 'lg' && app.lg) {
-        return true;
-      }
-
-      if (at === 'md' && app.md) {
-        return true;
-      }
-
-      if (at === 'sm' && app.sm) {
         return true;
       }
 

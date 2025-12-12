@@ -13,8 +13,6 @@ export function Core(input: Partial<ICoreProps>): ICore {
   // set default properties
 
   const defaultProps: ICoreProps = {
-    md: 1199,
-    sm: 999,
     resizeDebounce: 0,
     easing: [0.25, 0.1, 0.25, 1],
     applyClassNames: false,

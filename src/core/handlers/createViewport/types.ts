@@ -83,15 +83,6 @@ export interface IViewport {
 
   /** Lower device pixel ratio (1 for desktop and maximum 2 for mobile devices) */
   lowerDpr: number;
-
-  /** SM breakpoint is active */
-  sm: boolean;
-
-  /** MD breakpoint is active */
-  md: boolean;
-
-  /** LG breakpoint is active */
-  lg: boolean;
 }
 
 export type TViewportCallbacks = Callbacks<IViewportCallbacksMap>;

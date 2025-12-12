@@ -23,7 +23,7 @@ console.log(vevet.osName); // => 'windows'
 console.log(vevet.browserName); // => 'chrome'
 ```
 
-Learn more in the **[Features Documentation](./features)** and **[SCSS Features](./scss)** .
+Learn more in the **[Features Documentation](./features)**.
 
 ## Customization
 
