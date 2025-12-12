@@ -19,12 +19,6 @@ import { vevet } from 'vevet';
 console.log(vevet.version); // => 5.0.0
 ```
 
-SCSS:
-
-```scss
-@import '~vevet/lib/styles/index';
-```
-
 ## CDN Usage
 
 ```html

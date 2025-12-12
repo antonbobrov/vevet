@@ -10,7 +10,7 @@ sidebar_position: 1
 - responding to viewport changes
 - and more.
 
-## NPM Usage Example
+## NPM Usage
 
 ```ts
 import { vevet } from 'vevet';
@@ -21,7 +21,11 @@ console.log(vevet.osName); // => 'windows'
 console.log(vevet.browserName); // => 'chrome'
 ```
 
-## CDN Usage Example
+## CDN Usage
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/vevet@5/lib/cdn/vevet.iife.min.js"></script>
+```
 
 ```js
 console.log(Vevet.app); // => ICore instance
@@ -30,7 +34,11 @@ console.log(Vevet.app.osName); // => 'windows'
 console.log(Vevet.app.browserName); // => 'chrome'
 ```
 
+
+
 ---
+
+
 
 ## System
 
@@ -74,7 +82,11 @@ Popular results:
 - **Type**: `string`  
 Detects In-App Browser and returns its name, otherwise - `false`.
 
+
+
 ---
+
+
 
 ## App
 
@@ -98,7 +110,11 @@ Represents the `<html>` element.
 - **Type**: `HTMLElement`  
 Represents the `<body>` element.
 
+
+
 ---
+
+
 
 ## Page Load
 
@@ -120,7 +136,11 @@ const destruct = vevet.onLoad(() => {
 destruct();
 ```
 
+
+
 ---
+
+
 
 ## Viewport
 

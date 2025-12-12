@@ -4,6 +4,8 @@ sidebar_position: -1000
 
 # Vevet.js
 
+
+
 ## Introduction
 
 Vevet.js is a flexible client-side JavaScript library for creative web development. Build stunning interactive experiences with&nbsp;a&nbsp;comprehensive toolkit of components and utilities.
@@ -22,6 +24,8 @@ The library consists of:
 - **[utils](/docs/utils)**  
   Lightweight internal utilities.
 
+
+
 ## Installation
 
 ### Using NPM
@@ -36,12 +40,6 @@ npm install vevet
 import { vevet } from 'vevet';
 
 console.log(vevet.version); // => 5.0.0
-```
-
-**SCSS:**
-
-```scss
-@import '~vevet/lib/styles/index';
 ```
 
 ### Using CDN

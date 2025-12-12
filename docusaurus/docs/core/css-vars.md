@@ -13,9 +13,14 @@ sidebar_position: 4
 
 ## Layout Shift Issue
 
-These variables are dynamically set when the JavaScript code loads and the library initializes. However, this process may cause noticeable layout shifts.
+:::caution
+These variables are dynamically set when the JavaScript code loads and the library initializes.   
+However, this process may cause noticeable layout shifts.  
+To prevent this, it is recommended to calculate these values manually on the first render.  
+Vevet provides a built-in solution for this:
+:::
 
-To prevent this, it is recommended to calculate these values manually on the first render. Vevet provides a built-in solution for this.
+
 
 ### HTML Script
 
@@ -52,6 +57,8 @@ To prevent this, it is recommended to calculate these values manually on the fir
   presetVevetCss();
 </script>
 ```
+
+
 
 ### Next.js
 
