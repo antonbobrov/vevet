@@ -1,0 +1,91 @@
+---
+sidebar_position: 1
+---
+
+import Head from '@docusaurus/Head';
+
+# Accessors
+
+<Head>
+  <title>Raf Accessors | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### `duration`
+
+Type: `number`
+
+Duration of the last frame in ms.
+
+```js
+const raf = new Raf();
+
+raf.duration; // returns duration of the last frame in ms
+```
+
+### `fps`
+
+Type: `number`
+
+Real-time FPS. **See [demo](demos#info)**
+
+```js
+const raf = new Raf();
+
+raf.fps; // returns real-time fps
+```
+
+### `fpsFactor`
+
+Type: `number`
+
+Scaling coefficient based on a 60 FPS target.  
+
+Useful for making physics and easing consistent regardless of monitor refresh rate.
+
+**See [demo](demos#info)**
+
+```js
+const raf = new Raf();
+
+raf.fpsFactor; // returns scaling coefficient
+```
+
+### `index`
+
+Type: `number`
+
+Current frame index. **See [demo](demos#info)**
+
+```js
+const raf = new Raf();
+
+raf.index; // returns frame index
+```
+
+### `isPlaying`
+
+Type: `boolean`
+
+Playback state of the RAF loop.
+
+```js
+const raf = new Raf();
+
+raf.isPlaying; // true or false
+```
+
+### `timestamp`
+
+Type: `number`
+
+Timestamp of the current frame. **See [demo](demos#info)**
+
+```js
+const raf = new Raf();
+
+raf.timestamp; // returns timestamp
+```

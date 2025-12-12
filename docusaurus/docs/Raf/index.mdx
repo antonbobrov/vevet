@@ -6,11 +6,15 @@ toc_max_heading_level: 6
 
 # Raf
 
-Manages an animation frame loop with configurable FPS and playback controls.
+- Manages a requestAnimationFrame loop
+- Supports custom FPS throttling (including dynamic `'auto'` mode)
+- Provides playback control (play, pause)
+- Measures real-time FPS and frame duration
+- Includes tools for frame-rate–independent animations (damping)
 
-## Example
 
-Explore a live example on CodePen:
+
+## Basic Demo
 
 <iframe 
   height="500"
@@ -28,160 +32,87 @@ Explore a live example on CodePen:
   See the Pen <a href="https://codepen.io/anton-bobrov/pen/EaaYREw">Vevet Example</a> by Anton Bobrov.
 </iframe>
 
+
+
 ## More demos
 
 To explore more demos, click [here](./demos).
 
 
 
-## Props
+## Initialization
 
-### Mutable Props
+Raf is easy to initialize:
 
-Mutable properties can be updated at runtime using `.updateProps()`.
+```js
+import { Raf } from "vevet";
 
-#### `fps` {#props.fps}
-- **Type:** `'auto' | number`  
-- **Default:** `'auto'`  
-- Frames per second (FPS) for the animation.  
-- Use `'auto'` to enable dynamic FPS adjustment.
+const raf = new Raf({ enabled: true });
 
-#### `enabled` {#props.enabled}
-- **Type:** `boolean`  
-- **Default:** `false`  
-- Enables or disables the Raf animation loop.
+raf.on('frame', () => {
+  console.log('your logic');
+});
+```
 
+Disabled by default:
 
+```js
+import { Raf } from "vevet";
 
-## Accessors
+const raf = new Raf({
+  enabled: false
+});
+```
 
-:::note
-All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
-:::
+Predefined FPS or adaptive FPS:
 
-### `duration`
+```js
+import { Raf } from "vevet";
 
-Type: `number`
+const raf = new Raf({
+  enabled: true,
+  fps: "auto" // or fps: [number]
+});
+```
 
-Duration of the last frame in ms
+Get real-time FPS:
 
-### `fps`
+```js
+import { Raf } from "vevet";
 
-Type: `number`
+const raf = new Raf({
+  enabled: true,
+  fps: 30
+}, {
+  onFrame: ({ fps }) => {
+    console.log(fps);
+  }
+});
+```
 
-Real-time FPS
-
-### `fpsFactor`
-
-Type: `number`
-
-Scaling coefficient based on a 60 FPS target
-
-### `index`
-
-Type: `number`
-
-Current frame index
-
-### `isPlaying`
-
-Type: `boolean`
-
-Playback state of the animation frame
-
-### `timestamp`
-
-Type: `number`
-
-Timestamp of the current frame
-
-
-
-## Methods
-
-:::note
-All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
-:::
-
-### `lerpFactor`
-
-Calculate linear interpolation factor to make animations run the same regardless of FPS
+Damping (used for consistent animations across 60Hz, 120Hz, and others, **see [demo](demos#damping)**):
 
 ```ts
-const ease = instance.lerpFactor(0.1);
+const ease = raf.lerpFactor(0.1);
 
 // and use it in your lerp
 lerp(from, to, ease);
 ```
 
-### `pause`
-
-Pause the animation loop
+Play:
 
 ```ts
-instance.pause();
+raf.play();
 ```
 
-### `play`
-
-Start the animation loop
+Pause:
 
 ```ts
-instance.play();
+raf.pause();
 ```
 
+Destroy
 
-
-## Callbacks
-
-:::note
-All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
-:::
-
-### `play`
-
-Triggered when the animation starts
-
-```ts
-const destruct = instance.on('play', () => console.log('play'));
-
-// Cancel the callback
-destruct();
-```
-
-### `pause`
-
-Triggered when the animation is paused
-
-```ts
-const destruct = instance.on('pause', () => console.log('pause'));
-
-// Cancel the callback
-destruct();
-```
-
-### `toggle`
-
-Triggered when play/pause state toggles
-
-```ts
-const destruct = instance.on('toggle', () => console.log('toggle'));
-
-// Cancel the callback
-destruct();
-```
-
-### `frame`
-
-Triggered on every animation frame
-
-```ts
-const destruct = instance.on('frame', ({ fps, fpsFactor, duration }) => {
-  console.log('current FPS', fps);
-  console.log('scaling coefficient based on a 60 FPS target', fpsFactor);
-  console.log('duration of the last frame in ms', duration);
-});
-
-// Cancel the callback
-destruct();
+```js
+raf.destroy();
 ```

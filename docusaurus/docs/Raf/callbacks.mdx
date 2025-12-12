@@ -1,0 +1,99 @@
+---
+sidebar_position: 3
+---
+
+import Head from '@docusaurus/Head';
+
+# Callbacks
+
+<Head>
+  <title>Raf Callbacks | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### `play`
+
+Triggered when the animation starts
+
+```ts
+const raf = new Raf({ }, {
+  onPlay: () => console.log('play'),
+});
+```
+
+or:
+
+```ts
+const destruct = raf.on('play', () => console.log('play'));
+
+// Cancel the callback
+destruct();
+```
+
+### `pause`
+
+Triggered when the animation is paused
+
+```ts
+const raf = new Raf({ }, {
+  onPause: () => console.log('pause'),
+});
+```
+
+or:
+
+```ts
+const destruct = raf.on('pause', () => console.log('pause'));
+
+// Cancel the callback
+destruct();
+```
+
+### `toggle`
+
+Triggered when play/pause state toggles
+
+```ts
+const raf = new Raf({ }, {
+  onToggle: () => console.log('toggle'),
+});
+```
+
+or:
+
+```ts
+const destruct = raf.on('toggle', () => console.log('toggle'));
+
+// Cancel the callback
+destruct();
+```
+
+### `frame`
+
+Triggered on every animation frame
+
+```ts
+const raf = new Raf({ }, {
+  onFrame: ({ fps, fpsFactor, duration }) => {
+    console.log('current FPS', fps);
+    console.log('scaling coefficient based on a 60 FPS target', fpsFactor);
+    console.log('duration of the last frame in ms', duration);
+  }
+});
+```
+
+or:
+
+```ts
+const destruct = raf.on('frame', ({ fps, fpsFactor, duration }) => {
+  console.log('current FPS', fps);
+  console.log('scaling coefficient based on a 60 FPS target', fpsFactor);
+  console.log('duration of the last frame in ms', duration);
+});
+
+// Cancel the callback
+destruct();
+```
