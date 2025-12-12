@@ -1,0 +1,73 @@
+---
+sidebar_position: 4
+---
+
+import Head from '@docusaurus/Head';
+
+# Interfaces
+
+<Head>
+  <title>Swipe Interfaces | vevet.js</title>
+</Head>
+
+## ISwipeVec2
+
+```ts
+interface ISwipeVec2 {
+  x: number;
+  y: number;
+}
+```
+
+## ISwipeCanMoveArg
+
+```ts
+interface ISwipeCanMoveArg {
+  type: 'touch' | 'mouse';
+  matrix: ISwipeMatrix;
+  start: ISwipeVec2;
+  diff: ISwipeVec2;
+}
+```
+
+## ISwipeMatrix
+
+```ts
+interface ISwipeMatrix {
+  x: number; // pixels
+  y: number; // pixels
+  angle: number; // degrees
+}
+```
+
+## ISwipeVelocity
+
+```ts
+interface ISwipeVelocity {
+  x: number; // pixels
+  y: number; // pixels
+  angle: number; // degrees
+  timestamp: number;
+}
+```
+
+## ISwipeCoords
+
+```ts
+interface ISwipeCoords {
+  /** Event timestamp. */
+  timestamp: number;
+  /** Start position. */
+  start: ISwipeMatrix;
+  /** Previous position. */
+  prev: ISwipeMatrix;
+  /** Current position. */
+  current: ISwipeMatrix;
+  /** Movement offset from start. */
+  diff: ISwipeMatrix;
+  /** Movement offset from previous position. */
+  step: ISwipeMatrix;
+  /** Total accumulated movement. */
+  accum: ISwipeVec2;
+}
+```

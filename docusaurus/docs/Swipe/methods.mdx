@@ -1,0 +1,39 @@
+---
+sidebar_position: 2
+---
+
+import Head from '@docusaurus/Head';
+
+# Methods
+
+<Head>
+  <title>Swipe Methods | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+:::
+
+### `cancelInertia`
+
+Destroys the inertia animation.
+
+```ts
+const observer = new Swipe({
+  container: document.getElementById("container")
+});
+
+observer.cancelInertia();
+```
+
+### `destroy`
+
+Destroys the instance and cleans up resources.
+
+```ts
+const observer = new Swipe({
+  container: document.getElementById("container")
+});
+
+observer.destroy();
+```

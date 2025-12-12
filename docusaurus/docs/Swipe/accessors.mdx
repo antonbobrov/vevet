@@ -1,0 +1,146 @@
+---
+sidebar_position: 1
+---
+
+import Head from '@docusaurus/Head';
+
+# Accessors
+
+<Head>
+  <title>Swipe Accessors | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### `accum`
+
+Type: **[ISwipeVec2](interfaces#iswipevec2)**
+
+Accumulated movement.
+
+Returns current swipe coordinates.
+
+```js
+const instance = new Swipe();
+
+instance.accum.x;
+instance.accum.y;
+```
+
+### `container`
+
+Type: `HTMLElement | SVGElement`
+
+Event target element.
+
+```js
+const instance = new Swipe();
+
+instance.container; // returns swipe container element
+```
+
+### `coords`
+
+Type: **[ISwipeCoords](interfaces#iswipecoords)**
+
+```js
+const instance = new Swipe();
+
+instance.coords; // returns all coordinates data
+```
+
+### `current`
+
+Type: **[ISwipeMatrix](interfaces#iswipematrix)**
+
+Current coordinate.
+
+```js
+const instance = new Swipe();
+
+instance.current.x;
+instance.current.y;
+instance.current.angle;
+```
+
+### `diff`
+
+Type: **[ISwipeMatrix](interfaces#iswipematrix)**
+
+Difference between start and current coordinates.
+
+```js
+const instance = new Swipe();
+
+instance.diff.x;
+instance.diff.y;
+instance.diff.angle;
+```
+
+### `hasInertia`
+
+Type: `boolean`
+
+Indicates if inertia is active.
+
+```js
+const instance = new Swipe();
+
+instance.hasInertia; // true or false
+```
+
+### `isSwiping`
+
+Type: `boolean`
+
+Indicates if a swipe is active.
+
+```js
+const instance = new Swipe();
+
+instance.isSwiping; // true or false
+```
+
+### `prev`
+
+Type: **[ISwipeMatrix](interfaces#iswipematrix)**
+
+Previous coordinate.
+
+```js
+const instance = new Swipe();
+
+instance.prev.x;
+instance.prev.y;
+instance.prev.angle;
+```
+
+### `start`
+
+Type: **[ISwipeMatrix](interfaces#iswipematrix)**
+
+Start coordinate.
+
+```js
+const instance = new Swipe();
+
+instance.start.x;
+instance.start.y;
+instance.start.angle;
+```
+
+### `step`
+
+Type: **[ISwipeMatrix](interfaces#iswipematrix)**
+
+Difference between current and previous coordinates.
+
+```js
+const instance = new Swipe();
+
+instance.step.x;
+instance.step.y;
+instance.step.angle;
+```
