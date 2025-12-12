@@ -104,6 +104,13 @@ export class ProgressPreloader<
     return this._progress;
   }
 
+  /**
+   * Linear interpolation factor
+   */
+  protected get lerpEase() {
+    return clamp(Math.abs(this.props.lerp));
+  }
+
   /** Animation frame instance for managing smooth progress updates. */
   protected _raf: Raf;
 
@@ -114,13 +121,16 @@ export class ProgressPreloader<
     super(props, onCallbacks as any);
 
     // Initialize animation frame if interpolation is enabled
-    this._raf = new Raf();
+    this._raf = new Raf({ enabled: true });
     this._raf.on('frame', ({ lerpFactor }) => {
-      this._handleUpdate(
-        lerp(this._progress, this.loadProgress, lerpFactor(this.props.lerp)),
+      const newProgress = lerp(
+        this._progress,
+        this.loadProgress,
+        lerpFactor(this.lerpEase),
       );
+
+      this._handleUpdate(newProgress);
     });
-    this._raf.play();
 
     // Start preloading resources
     this._fetchImages();
