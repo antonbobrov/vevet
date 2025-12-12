@@ -1,0 +1,88 @@
+---
+sidebar_position: 1
+---
+
+import Head from '@docusaurus/Head';
+
+# Accessors
+
+<Head>
+  <title>Pointers Accessors | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### `container`
+
+Type: `HTMLElement | SVGElement`
+
+Returns the container element handling events.
+
+```js
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+});
+
+pointers.container; // container element
+```
+
+### `isStarted`
+
+Type: `boolean`
+
+Indicates whether the `start` event has been triggered.
+
+```js
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+});
+
+pointers.isStarted; // true or false
+```
+
+### `maxPointers`
+
+Type: `number`
+
+Returns the maximum number of pointers that can be tracked.
+
+```js
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+});
+
+pointers.maxPointers; // maximum number of pointers
+```
+
+### `minPointers`
+
+Type: `number`
+
+Returns the minimum number of pointers required to trigger events.
+
+```js
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+});
+
+pointers.minPointers; // minimum number of pointers
+```
+
+### `pointersMap`
+
+Type: `Map<number,` [IPointersItem](interfaces#ipointersitem)`>`
+
+Contains all currently active pointers.  
+Keys correspond to native `pointerId` values from Pointer Events API.  
+Entries are updated every frame and preserved until the pointer is fully released (`pointerup` / `pointercancel`).
+
+```js
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+});
+
+pointers.pointersMap; // map of active pointers
+```
+

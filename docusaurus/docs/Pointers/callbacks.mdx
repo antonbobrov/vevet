@@ -1,0 +1,120 @@
+---
+sidebar_position: 3
+---
+
+import Head from '@docusaurus/Head';
+
+# Callbacks
+
+<Head>
+  <title>Pointers Callbacks | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### `start`
+
+Fired when the required number of pointers is reached.
+
+```ts
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+}, {
+  onStart: () => console.log('start'),
+});
+```
+
+or:
+
+```ts
+const destruct = pointers.on('start', () => console.log('start'));
+
+// Cancel the callback
+destruct();
+```
+
+### `pointerdown`
+
+Fired when a pointer is added.
+
+```ts
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+}, {
+  onPointerdown: ({ event, pointer }) => console.log('pointerdown'),
+});
+```
+
+or:
+
+```ts
+const destruct = pointers.on('pointerdown', ({ event, pointer }) => console.log('pointerdown'));
+
+// Cancel the callback
+destruct();
+```
+
+### `pointermove`
+
+Fired when a pointer moves.
+
+```ts
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+}, {
+  onPointermove: ({ event, pointer }) => console.log('pointermove'),
+});
+```
+
+or:
+
+```ts
+const destruct = pointers.on('pointermove', ({ event, pointer }) => console.log('pointermove'));
+
+// Cancel the callback
+destruct();
+```
+
+### `pointerup`
+
+Fired when a pointer is removed.
+
+```ts
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+}, {
+  onPointerup: ({ pointer }) => console.log('pointerup'),
+});
+```
+
+or:
+
+```ts
+const destruct = pointers.on('pointerup', ({ pointer }) => console.log('pointerup'));
+
+// Cancel the callback
+destruct();
+```
+
+### `end`
+
+Fired when pointer events are canceled.
+
+```ts
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+}, {
+  onEnd: () => console.log('end'),
+});
+```
+
+or:
+
+```ts
+const destruct = pointers.on('end', () => console.log('end'));
+
+// Cancel the callback
+destruct();
+```

@@ -1,0 +1,101 @@
+---
+sidebar_position: 0
+---
+
+import Head from '@docusaurus/Head';
+
+# Props
+
+<Head>
+  <title>Pointers Props | vevet.js</title>
+</Head>
+
+### Static Props
+
+Static properties are set during initialization and cannot be modified later.
+
+### `container` {#props.container}
+- **Type:** `HTMLElement | SVGElement`  
+- The element that listens for pointer events.
+
+```js
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+});
+```
+
+### `relative` {#props.relative}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Calculate pointer coordinates relative to the container instead of the viewport.
+
+```js
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+  relative: true,
+});
+```
+
+### `buttons` {#props.buttons}
+- **Type:** `number[]`  
+- **Default:** `[0]`  
+- Determines which mouse buttons trigger events.
+  - 0: Main button pressed, usually the left button or the un-initialized state
+  - 1: Auxiliary button pressed, usually the wheel button or the middle button (if present)
+  - 2: Secondary button pressed, usually the right button
+  - 3: Fourth button, typically the Browser Back button
+  - 4: Fifth button, typically the Browser Forward button
+
+  See [MouseEvent.button](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button).
+
+```js
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+  buttons: [0],
+});
+```
+
+### `minPointers` {#props.minPointers}
+- **Type:** `number`  
+- **Default:** `1`  
+- Minimum number of active pointers (fingers) required to trigger the "start" callback.
+
+```js
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+  minPointers: 2,
+});
+```
+
+### `maxPointers` {#props.maxPointers}
+- **Type:** `number`  
+- **Default:** `5`  
+- Maximum number of pointers that can be tracked simultaneously.
+
+```js
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+  maxPointers: 5,
+});
+```
+
+### Mutable Props
+
+Mutable properties can be updated at runtime using `.updateProps()`.
+
+### `enabled` {#props.enabled}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Enables or disables pointer events.
+
+```js
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+  enabled: false
+});
+
+// change value
+pointers.updateProps({
+  enabled: true
+});
+```

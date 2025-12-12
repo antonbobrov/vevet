@@ -1,0 +1,35 @@
+---
+sidebar_position: 4
+---
+
+import Head from '@docusaurus/Head';
+
+# Interfaces
+
+<Head>
+  <title>Pointers Interfaces | vevet.js</title>
+</Head>
+
+## IPointersItem
+
+```ts
+interface IPointersItem {
+  id: number; // Native pointerId from the browser.
+  index: number; // Index assigned to the pointer.
+  start: IPointersVec2; // Coordinates recorded on pointerdown.
+  prev: IPointersVec2; // Coordinates from the previous update cycle.
+  current: IPointersVec2; // Latest coordinates of the pointer.
+  diff: IPointersVec2; // Difference between current and start positions.
+  step: IPointersVec2; // Movement delta between current and prev.
+  accum: IPointersVec2; // Total accumulated movement across all updates.
+}
+```
+
+## IPointersVec2
+
+```ts
+interface IPointersVec2 {
+  x: number; // X-coordinate relative to the container.
+  y: number; // Y-coordinate relative to the container.
+}
+```
