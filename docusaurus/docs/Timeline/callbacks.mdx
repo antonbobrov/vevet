@@ -1,0 +1,85 @@
+---
+sidebar_position: 3
+---
+
+import Head from '@docusaurus/Head';
+
+# Callbacks
+
+<Head>
+  <title>Timeline Callbacks | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### `start`
+
+Triggered when the timeline starts.
+
+```ts
+const tm = new Timeline({ }, {
+  onStart: () => console.log('start'),
+});
+```
+
+or:
+
+```ts
+const destruct = tm.on('start', () => console.log('start'));
+
+// Cancel the callback
+destruct();
+```
+
+### `update`
+
+Triggered on every timeline update.
+
+Provides both:
+- `progress` — linear progress (`0 → 1`)
+- `eased` — progress with easing applied  
+
+```ts
+const tm = new Timeline({ }, {
+  onUpdate: ({ progress, eased }) => {
+    // progress — linear
+    // eased — eased value
+  }
+});
+```
+
+or:
+
+```ts
+const destruct = tm.on('update', ({ progress, eased }) => {
+  console.log('update', progress, eased);
+});
+
+// Cancel the callback
+destruct();
+```
+
+This allows you to:
+- use `progress` for logic,
+- use `eased` for animation interpolation.
+
+### `end`
+
+Triggered when the timeline completes.
+
+```ts
+const tm = new Timeline({ }, {
+  onEnd: () => console.log('end'),
+});
+```
+
+or:
+
+```ts
+const destruct = tm.on('end', () => console.log('end'));
+
+// Cancel the callback
+destruct();
+```

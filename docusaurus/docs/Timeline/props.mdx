@@ -1,0 +1,50 @@
+---
+sidebar_position: 0
+---
+
+import Head from '@docusaurus/Head';
+
+# Props
+
+<Head>
+  <title>Timeline Props | vevet.js</title>
+</Head>
+
+## Mutable Props
+
+Mutable properties can be updated at runtime using `.updateProps()`.
+
+### `duration` {#props.duration}
+- **Type:** `number`  
+- **Default:** `1000`  
+- Timeline duration in milliseconds. Only positive values are accepted.
+
+```js
+const tm = new Timeline({
+  duration: 1000
+});
+
+// change value
+tm.updateProps({
+  duration: 500
+});
+```
+
+### `easing` {#props.easing}
+- **Type:** `TEasingType`  
+- **Default:** `inherited from core settings` - [see settings](/docs/core/customization#modifying-settings). 
+- Easing function for timeline progression.  
+  Accepts standard easing types or an array of bezier values.  
+  Use `false` for linear progress.  
+  See [easing types](/docs/utils#easing-types) for more information.
+
+```js
+const tm = new Timeline({
+  easing: [0.25, 0.1, 0.25, 1],
+});
+
+// change value
+tm.updateProps({
+  easing: EaseInOutCubic
+});
+```

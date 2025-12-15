@@ -1,0 +1,94 @@
+---
+sidebar_position: 1
+---
+
+import Head from '@docusaurus/Head';
+
+# Accessors
+
+<Head>
+  <title>Timeline Accessors | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### `duration`
+
+Type: `number`
+
+Get the timeline duration, ensuring it is at least 0 ms.
+
+```js
+const tm = new Timeline();
+
+tm.duration; // returns timeline duration
+```
+
+### `eased`
+
+Type: `number`
+
+Get the eased progress of the timeline, derived from the easing function.
+
+```js
+const tm = new Timeline();
+
+tm.eased; // timeline progress with easing applied (0 to 1)
+```
+
+### `isPaused`
+
+Type: `boolean`
+
+Whether the timeline is paused.
+
+```js
+const tm = new Timeline();
+
+tm.isPaused; // true or false
+```
+
+### `isPlaying`
+
+Type: `boolean`
+
+Whether the timeline is currently playing.
+
+```js
+const tm = new Timeline();
+
+tm.isPlaying; // true or false
+```
+
+### `isReversed`
+
+Type: `boolean`
+
+Whether the timeline is reversed (progress decreases over time).
+
+```js
+const tm = new Timeline();
+
+tm.isReversed; // true or false
+```
+
+### `progress`
+
+Type: `number`
+
+Get or set the linear progress of the timeline in the range **0 to 1.**
+
+Setting this value:
+- immediately updates the internal state,
+- triggers the update callback,
+- recalculates the eased value.
+
+```js
+const tm = new Timeline();
+
+tm.progress; // timeline progress (0 to 1)
+
+tm.progress = 0.5;
+```

@@ -10,6 +10,8 @@ A simple timeline class for managing animations with easing and precise progress
 
 It provides methods for playing, reversing, pausing, and resetting the timeline.
 
+
+
 ## Example
 
 Explore a live example on CodePen:
@@ -32,146 +34,34 @@ Explore a live example on CodePen:
 
 
 
-## Props
+## Initialization
 
-### Mutable Props
-
-Mutable properties can be updated at runtime using `.updateProps()`.
-
-#### `duration` {#props.duration}
-- **Type:** `number`  
-- **Default:** `1000`  
-- Timeline duration in milliseconds.
-
-#### `easing` {#props.easing}
-- **Type:** `TEasingType`  
-- **Default:** `false`  
-- Easing function for timeline progression. Accepts standard easing types or an array of bezier values.  
-- See [easing types](/docs/utils#easing-types) for more information.
-
-
-
-## Accessors
-
-:::note
-All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::caution
+- `Timeline` does not work with DOM elements or styles — **it performs time and easing calculations only.**
+- Animation is **disabled by default.** You must explicitly call `.play()` to start it.
+- `Timeline` does **not run automatically** on creation, even if callbacks are provided.
+- The timeline operates in the range **0 → 1**, regardless of duration.
 :::
 
-### `duration`
+```js
+import { Timeline } from "vevet";
 
-Type: `number`
+const tm = new Timeline(
+  { duration: 350, easing: [0.25, 0.1, 0.25, 1] },
+  {
+    onUpdate: ({ eased }) => {
+      // your animation here
+    },
+  }
+);
 
-Get the timeline duration, ensuring it is at least 0 ms.
+tm.play();
 
-### `eased`
-
-Type: `number`
-
-Get the eased progress of the timeline, derived from the easing function.
-
-### `isPaused`
-
-Type: `boolean`
-
-Whether the timeline is paused.
-
-### `isPlaying`
-
-Type: `boolean`
-
-Whether the timeline is currently playing.
-
-### `isReversed`
-
-Type: `boolean`
-
-Whether the timeline is reversed (progress decreases over time).
-
-### `progress`
-
-Type: `number`
-
-Get or set the linear progress of the timeline. Setting this triggers an update and associated callbacks.
-
-
-
-## Methods
-
-:::note
-All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
-:::
-
-### `pause`
-
-Pause the timeline, halting progress without resetting it.
-
-```ts
-instance.pause();
+tm.pause();
 ```
 
-### `play`
+Destroy the instance:
 
-Play the timeline, advancing progress toward completion. Does nothing if the timeline is destroyed or already completed.
-
-```ts
-instance.play();
-```
-
-### `reset`
-
-Reset the timeline to the beginning (progress = 0).
-
-```ts
-instance.reset();
-```
-
-### `reverse`
-
-Reverse the timeline, moving progress toward the start. Does nothing if the timeline is destroyed or already at the start.
-
-```ts
-instance.reverse();
-```
-
-
-
-## Callbacks
-
-:::note
-All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
-:::
-
-### `start`
-
-Triggered when the timeline starts.
-
-```ts
-const destruct = instance.on('start', () => console.log('start'));
-
-// Cancel the callback
-destruct();
-```
-
-### `update`
-
-Triggered during timeline updates with progress values.
-
-```ts
-const destruct = instance.on('update', ({ progress, eased }) => {
-  console.log('update', progress, eased);
-});
-
-// Cancel the callback
-destruct();
-```
-
-### `end`
-
-Triggered when the timeline completes.
-
-```ts
-const destruct = instance.on('end', () => console.log('end'));
-
-// Cancel the callback
-destruct();
+```js
+tm.destroy();
 ```
