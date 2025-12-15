@@ -144,7 +144,7 @@ export class Cursor<
     if (hoveredElement) {
       const bounding = hoveredElement.element.getBoundingClientRect();
 
-      if (hoveredElement.sticky) {
+      if (hoveredElement.snap) {
         x = bounding.left + bounding.width / 2;
         y = bounding.top + bounding.height / 2;
       }

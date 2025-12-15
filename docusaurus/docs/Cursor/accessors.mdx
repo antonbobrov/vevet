@@ -73,7 +73,7 @@ interface ICursorHoveredElement {
   width?: number | "auto" | null;
   height?: number | "auto" | null;
   padding?: number;
-  sticky?: boolean;
+  snap?: boolean;
 }
 ```
 
@@ -81,7 +81,7 @@ interface ICursorHoveredElement {
 - `width`: Custom width for the cursor when hovering over this element (`number`, "auto", or `null`).
 - `height`: Custom height for the cursor when hovering over this element (`number`, "auto", or `null`).
 - `padding`: Additional padding around the cursor.
-- `sticky`: Whether the cursor remains centered (snap) on the element.
+- `snap`: Indicates whether the hover state snaps to the element center.
 
 ```js
 const cursor = new Cursor();
@@ -90,7 +90,7 @@ cursor.hoveredElement.element; // Element
 cursor.hoveredElement.width; // number | "auto" | null
 cursor.hoveredElement.height; // number | "auto" | null
 cursor.hoveredElement.padding; // number
-cursor.hoveredElement.sticky; // boolean
+cursor.hoveredElement.snap; // boolean
 ```
 
 ### `inner`

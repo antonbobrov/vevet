@@ -101,9 +101,9 @@ export interface ICursorHoveredElement {
   type?: string;
 
   /**
-   * Indicates whether the hover state should persist on the element.
+   * Indicates whether the hover state snaps to the element center.
    */
-  sticky?: boolean;
+  snap?: boolean;
 
   /**
    * Target width of the cursor while hovering over this element.

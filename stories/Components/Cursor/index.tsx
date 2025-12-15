@@ -4,7 +4,7 @@ import { Cursor } from '@/index';
 export const Component: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
   const refWithSize = useRef<HTMLButtonElement>(null);
-  const refWithSticky = useRef<HTMLButtonElement>(null);
+  const refWithSnap = useRef<HTMLButtonElement>(null);
   const refWithType = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -49,13 +49,13 @@ export const Component: FC = () => {
       });
     }
 
-    if (refWithSticky.current) {
+    if (refWithSnap.current) {
       instance.attachElement({
-        element: refWithSticky.current,
+        element: refWithSnap.current,
         width: 'auto',
         height: 'auto',
         padding: 10,
-        sticky: true,
+        snap: true,
       });
     }
 
@@ -102,8 +102,8 @@ export const Component: FC = () => {
         culpa harum!
       </p>
 
-      <button ref={refWithSticky} type="button">
-        Sticky on hover
+      <button ref={refWithSnap} type="button">
+        Snap on hover
       </button>
     </div>
   );
