@@ -4,6 +4,7 @@ import {
   ICursorFullCoords,
   ICursorHoveredElement,
   ICursorMutableProps,
+  ICursorPathPoint,
   ICursorStaticProps,
   ICursorType,
 } from './types';
@@ -11,13 +12,14 @@ import { Module, TModuleOnCallbacksProps } from '@/base/Module';
 import { Raf } from '../Raf';
 import { addEventListener } from '@/utils/listeners';
 import { initVevet } from '@/global/initVevet';
-import { lerp } from '@/utils/math';
+import { clamp, lerp } from '@/utils/math';
 import { createCursorStyles } from './styles';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { getTextDirection } from '@/internal/textDirection';
 import { isNumber } from '@/internal/isNumber';
 import { cnAdd, cnRemove, cnToggle } from '@/internal/cn';
 import { body, doc } from '@/internal/env';
+import { svgQuadraticCurvePath } from './utils/svgQuadraticCurvePath';
 
 export * from './types';
 
@@ -40,6 +42,7 @@ export class Cursor<
       ...super._getStatic(),
       container: window,
       hideNative: false,
+      behavior: 'default',
     } as TRequiredProps<S>;
   }
 
@@ -109,7 +112,7 @@ export class Cursor<
     return this._hoveredElement;
   }
 
-  set hoveredElement(value) {
+  protected set hoveredElement(value) {
     this._hoveredElement = value;
   }
 
@@ -167,6 +170,20 @@ export class Cursor<
     return { x, y, width, height };
   }
 
+  /** Cursor SVG Path Points */
+  protected _pathPoints: ICursorPathPoint[] = [];
+
+  /** Cursor SVG Path */
+  protected _path: SVGPathElement;
+
+  /** Returns an SVG path element which represents the cursor movement */
+  get path() {
+    return this._path;
+  }
+
+  /** Cursor Path Line */
+  protected _pathLine = { current: 0, target: 0 };
+
   /** Defines if the cursor has been moved after initialization */
   protected _isFirstMove = true;
 
@@ -189,6 +206,12 @@ export class Cursor<
     this._types = [];
     this._activeTypes = [];
 
+    // Create an SVG path
+    this._path = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'path',
+    )!;
+
     // No need to remove styles on destroy
     createCursorStyles(this.prefix);
 
@@ -198,6 +221,11 @@ export class Cursor<
 
     // enable by default
     this._toggle(isEnabled);
+  }
+
+  /** Check if the cursor has a path */
+  protected get hasPath() {
+    return this.props.behavior === 'path';
   }
 
   /** Creates the custom cursor and appends it to the DOM. */
@@ -329,10 +357,17 @@ export class Cursor<
 
   /** Handles mouse enter events. */
   protected _handleMouseEnter(evt: MouseEvent) {
-    this._coords.x = evt.clientX;
-    this._coords.y = evt.clientY;
-    this._targetCoords.x = evt.clientX;
-    this._targetCoords.y = evt.clientY;
+    if (!this.props.enabled) {
+      return;
+    }
+
+    const { clientX: x, clientY: y } = evt;
+    this._coords.x = x;
+    this._coords.y = y;
+    this._targetCoords.x = x;
+    this._targetCoords.y = y;
+
+    this._addPathPoint(true);
 
     cnAdd(this.outer, this._cn('-visible'));
   }
@@ -344,20 +379,106 @@ export class Cursor<
 
   /** Handles mouse move events. */
   protected _handleMouseMove(evt: MouseEvent) {
-    this._targetCoords.x = evt.clientX;
-    this._targetCoords.y = evt.clientY;
+    if (!this.props.enabled) {
+      return;
+    }
+
+    const { clientX: x, clientY: y } = evt;
+
+    this._targetCoords.x = x;
+    this._targetCoords.y = y;
 
     if (this._isFirstMove) {
-      this._coords.x = evt.clientX;
-      this._coords.y = evt.clientY;
+      this._coords.x = x;
+      this._coords.y = y;
 
       this._isFirstMove = false;
     }
+
+    this._addPathPoint();
 
     cnAdd(this.outer, this._cn('-visible'));
 
     if (this.props.enabled) {
       this._raf.play();
+    }
+  }
+
+  /** Update SVG Path */
+  protected _addPathPoint(isInstant = false) {
+    if (!this.hasPath) {
+      return;
+    }
+
+    const target = this._targetCoords;
+    const points = this._pathPoints;
+    const path = this._path;
+    const line = this._pathLine;
+
+    // Add point
+    const newPoint = { x: target.x, y: target.y, length: 0 };
+    points.push(newPoint);
+
+    // Update path
+    path.setAttribute('d', svgQuadraticCurvePath(points));
+
+    // Update total length
+    const totalLength = path.getTotalLength();
+    newPoint.length = totalLength;
+    line.target = totalLength;
+
+    // Instant update of line
+    if (isInstant) {
+      line.current = line.target;
+    }
+  }
+
+  /** Minimize SVG Path */
+  protected _minimizePath() {
+    if (!this.hasPath) {
+      return;
+    }
+
+    const points = this._pathPoints;
+    const line = this._pathLine;
+
+    if (points.length < 3) {
+      return;
+    }
+
+    let accumulated = 0;
+    let removeCount = 0;
+
+    for (let i = 1; i < points.length; i += 1) {
+      const dx = points[i].x - points[i - 1].x;
+      const dy = points[i].y - points[i - 1].y;
+      const segLength = Math.hypot(dx, dy);
+
+      if (accumulated + segLength < line.current) {
+        accumulated += segLength;
+        removeCount += 1;
+      } else {
+        break;
+      }
+    }
+
+    if (removeCount > 0) {
+      let removedLength = 0;
+
+      for (let i = 1; i <= removeCount; i += 1) {
+        const dx = points[i].x - points[i - 1].x;
+        const dy = points[i].y - points[i - 1].y;
+        removedLength += Math.hypot(dx, dy);
+      }
+
+      points.splice(0, removeCount);
+
+      // Fix line after points removed
+      line.current = Math.max(0, line.current - removedLength);
+      line.target = Math.max(0, line.target - removedLength);
+
+      // Update path
+      this._path.setAttribute('d', svgQuadraticCurvePath(points));
     }
   }
 
@@ -495,13 +616,18 @@ export class Cursor<
    * @returns {boolean} True if all coordinates are interpolated, false otherwise.
    */
   protected get isInterpolated() {
-    const { coords, targetCoords } = this;
+    const { coords, targetCoords, _pathLine: line, props } = this;
+
+    const isPathInterpolated = line.current === line.target;
+    const isCoordsInterpolated =
+      coords.x === targetCoords.x && coords.y === targetCoords.y;
+    const isWidthInterpolated = coords.width === targetCoords.width;
+    const isHeightInterpolated = coords.height === targetCoords.height;
 
     return (
-      coords.x === targetCoords.x &&
-      coords.y === targetCoords.y &&
-      coords.width === targetCoords.width &&
-      coords.height === targetCoords.height
+      isWidthInterpolated &&
+      isHeightInterpolated &&
+      (props.behavior === 'path' ? isPathInterpolated : isCoordsInterpolated)
     );
   }
 
@@ -521,10 +647,21 @@ export class Cursor<
 
   /** Recalculates current coordinates. */
   protected _calculate() {
-    const { targetCoords, _coords: coords } = this;
+    this._minimizePath();
 
-    coords.x = this._lerp(coords.x, targetCoords.x);
-    coords.y = this._lerp(coords.y, targetCoords.y);
+    const { targetCoords, _coords: coords, _pathLine: line } = this;
+
+    line.current = this._lerp(line.current, line.target);
+
+    try {
+      const lineCoord = this._path.getPointAtLength(line.current);
+      coords.x = lineCoord.x;
+      coords.y = lineCoord.y;
+    } catch {
+      coords.x = this._lerp(coords.x, targetCoords.x);
+      coords.y = this._lerp(coords.y, targetCoords.y);
+    }
+
     coords.width = this._lerp(coords.width, targetCoords.width);
     coords.height = this._lerp(coords.height, targetCoords.height);
   }
@@ -536,10 +673,12 @@ export class Cursor<
    * @returns {number} The interpolated value.
    */
   protected _lerp(current: number, target: number) {
+    const lerpFactor = clamp(this.props.lerp, 0, 1);
+
     const value = lerp(
       current,
       target,
-      this._raf.lerpFactor(this.props.lerp),
+      this._raf.lerpFactor(lerpFactor),
       0.0001,
     );
 

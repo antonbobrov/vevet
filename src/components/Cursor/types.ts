@@ -17,6 +17,12 @@ export interface ICursorStaticProps extends IModuleStaticProps {
    * @default false
    */
   hideNative?: boolean;
+
+  /**
+   * Cursor behavior
+   * @default 'default'
+   */
+  behavior?: 'default' | 'path';
 }
 
 export interface ICursorMutableProps extends IModuleMutableProps {
@@ -64,11 +70,12 @@ export interface ICursorCallbacksMap extends IModuleCallbacksMap {
 }
 
 /**
- * Represents the cursor's position.
+ * Represents the cursor's point on a path.
  */
-export interface ICursorCoords {
+export interface ICursorPathPoint {
   x: number;
   y: number;
+  length: number;
 }
 
 /**
