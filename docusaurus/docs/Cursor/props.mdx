@@ -1,0 +1,140 @@
+---
+sidebar_position: 0
+---
+
+import Head from '@docusaurus/Head';
+
+# Props
+
+<Head>
+  <title>Cursor Props | vevet.js</title>
+</Head>
+
+## Static Props
+
+Static properties are set during initialization and cannot be modified later.
+
+### `container` {#props.container}
+- **Type:** `Element | window`  
+- **Default:** `window`  
+- The container where the custom cursor is active.  
+  Use `window` for full-window activation.
+
+```js
+const cursor = new Cursor({
+  container: document.getElementById("cursor-container")
+});
+```
+
+### `hideNative` {#props.hideNative}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Hides the native cursor if set to `true`.
+
+```js
+const cursor = new Cursor({
+  hideNative: true
+});
+```
+
+### `behavior` {#props.behavior}
+- **Type:** `"default"` | `"path"`  
+- **Default:** `"default"`  
+- Defines how the cursor follows the native pointer  
+  `default` — Cursor interpolates toward the current pointer position.  
+  `path` — Cursor follows a smooth SVG path repeating the pointer trajectory.  
+  Use `path` for decorative or expressive cursor effects.
+
+```js
+const cursor = new Cursor({
+  behavior: "path"
+});
+```
+
+
+
+## Mutable Props
+
+Mutable properties can be updated at runtime using `.updateProps()`.
+
+### `enabled` {#props.enabled}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Enables or disables the custom cursor interactions.
+
+```js
+const cursor = new Cursor({
+  enabled: false,
+});
+
+// change value
+cursor.updateProps({
+  enabled: true
+});
+```
+
+### `width` {#props.width}
+- **Type:** `number`  
+- **Default:** `50`  
+- The initial width of the custom cursor.
+
+```js
+const cursor = new Cursor({
+  width: 50
+});
+
+// change value
+cursor.updateProps({
+  width: 100
+});
+```
+
+### `height` {#props.height}
+- **Type:** `number`  
+- **Default:** `50`  
+- The initial height of the custom cursor.
+
+```js
+const cursor = new Cursor({
+  height: 50
+});
+
+// change value
+cursor.updateProps({
+  height: 100
+});
+```
+
+### `lerp` {#props.lerp}
+- **Type:** `number`  
+- **Default:** `0.2`  
+- Linear interpolation factor for smooth cursor movement.  
+  The value must be between `0` and `1`, with higher values indicating faster movement.
+
+```js
+const cursor = new Cursor({
+  lerp: 0.2
+});
+
+// change value
+cursor.updateProps({
+  lerp: 0.05
+});
+```
+
+### `autoStop` {#props.autoStop}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Automatically stops the internal `requestAnimationFrame` loop when cursor position and size reach target values.  
+  Set to `false` if you need continuous rendering (e.g. for shaders or custom effects).
+
+```js
+const cursor = new Cursor({
+  autoStop: true
+});
+
+// change value
+cursor.updateProps({
+  autoStop: false
+});
+```

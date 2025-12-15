@@ -1,0 +1,146 @@
+---
+sidebar_position: 1
+---
+
+import Head from '@docusaurus/Head';
+
+# Accessors
+
+<Head>
+  <title>Cursor Accessors | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### `container`
+
+Type: `Element | Window`
+
+The cursor container.
+
+```js
+const cursor = new Cursor();
+
+cursor.container; // returns cursor container
+```
+
+### `coords`
+
+Type: `{ height: number; width: number; x: number; y: number; }`
+
+The **current interpolated state** of the cursor.  
+These values change smoothly over time and should be used for rendering logic.
+
+```js
+const cursor = new Cursor();
+
+cursor.coords.x;
+cursor.coords.y;
+cursor.coords.width;
+cursor.coords.height;
+```
+
+### `domContainer`
+
+Type: `HTMLElement`
+
+Returns the DOM parent for the cursor element.
+
+```js
+const cursor = new Cursor();
+
+cursor.domContainer; // cursor DOM parent
+```
+
+### `hoveredElement`
+
+Type: `undefined  | ICursorHoveredElement`
+
+Stores information about the currently hovered element.
+
+- Exists only while hovering an attached element.
+- Set to `undefined` when no interactive element is hovered.
+
+**Works for attached elements only. See [.attachElement()](methods#attachelement).**
+
+**ICursorHoveredElement Structure**
+
+```ts
+interface ICursorHoveredElement {
+  element: Element;
+  width?: number | "auto" | null;
+  height?: number | "auto" | null;
+  padding?: number;
+  sticky?: boolean;
+}
+```
+
+- `element`: The DOM element currently being hovered.
+- `width`: Custom width for the cursor when hovering over this element (`number`, "auto", or `null`).
+- `height`: Custom height for the cursor when hovering over this element (`number`, "auto", or `null`).
+- `padding`: Additional padding around the cursor.
+- `sticky`: Whether the cursor remains centered (snap) on the element.
+
+```js
+const cursor = new Cursor();
+
+cursor.hoveredElement.element; // Element
+cursor.hoveredElement.width; // number | "auto" | null
+cursor.hoveredElement.height; // number | "auto" | null
+cursor.hoveredElement.padding; // number
+cursor.hoveredElement.sticky; // boolean
+```
+
+### `inner`
+
+Type: `HTMLElement`
+
+The inner element of the custom cursor. Should be used for setting additional styling.
+
+```js
+const cursor = new Cursor();
+
+cursor.inner; // HTMLElement
+```
+
+### `outer`
+
+Type: `HTMLElement`
+
+The outer element representing the visual cursor.
+
+```js
+const cursor = new Cursor();
+
+cursor.outer; // HTMLElement
+```
+
+### `targetCoords`
+
+Type: `{ height: number; width: number; x: number; y: number }`
+
+The **target cursor state** without interpolation.  
+Represents the immediate result of pointer movement or hover changes.
+
+```js
+const cursor = new Cursor();
+
+cursor.targetCoords.x;
+cursor.targetCoords.y;
+cursor.targetCoords.width;
+cursor.targetCoords.height;
+```
+
+### `path`
+
+Type: `SVGPathElement`
+
+Returns an SVG Path element which contains a smooth curve of a user's movement. Work for `behavior: "path"` only. [Read more](props#props.behavior)
+
+```js
+const cursor = new Cursor();
+
+cursor.path; // SVGPathElement
+```

@@ -6,11 +6,14 @@ toc_max_heading_level: 6
 
 # Cursor
 
-A customizable custom cursor component with smooth animations and hover interactions. Supports dynamic appearance changes and enhanced user interaction.
+A customizable smooth cursor component with hover interactions.
 
-## Example
+The cursor is rendered independently from the native pointer and smoothly interpolates
+its position, size, and appearance based on user input and hovered elements.
 
-Explore a live example on CodePen:
+
+
+## Basic Demo
 
 <iframe 
   height="600"
@@ -30,206 +33,101 @@ Explore a live example on CodePen:
 
 
 
-## Props
+## More demos
 
-### Static Props
+To explore more demos, click [here](./demos).
 
-Static properties are set during initialization and cannot be modified later.
 
-#### `container` {#props.container}
-- **Type:** `Element | window`  
-- **Default:** `window`  
-- The container where the custom cursor is active.  
-  Use `window` for full-window activation.
+## Advantages
 
-#### `hideNative` {#props.hideNative}
-- **Type:** `boolean`  
-- **Default:** `false`  
-- Hides the native cursor if set to `true`.
-
-### Mutable Props
-
-Mutable properties can be updated at runtime using `.updateProps()`.
-
-#### `enabled` {#props.enabled}
-- **Type:** `boolean`  
-- **Default:** `true`  
-- Enables or disables the custom cursor interactions.
-
-#### `width` {#props.width}
-- **Type:** `number`  
-- **Default:** `50`  
-- The initial width of the custom cursor.
-
-#### `height` {#props.height}
-- **Type:** `number`  
-- **Default:** `50`  
-- The initial height of the custom cursor.
-
-#### `lerp` {#props.lerp}
-- **Type:** `number`  
-- **Default:** `0.2`  
-- Linear interpolation factor for smooth cursor movement. The value must be between `0` and `1`, with higher values indicating faster movement.
-
-#### `autoStop` {#props.autoStop}
-- **Type:** `boolean`  
-- **Default:** `true`  
-- Stops rendering the cursor automatically when its coordinates and size closely match the target values.
+- Smooth interpolated movement
+- Dynamic size
+- Multiple cursor types
+- Hover-based interactions
+- Click recognition
+- Optional native cursor hiding
 
 
 
-## Accessors
+## Initialization
+
+Initialize the cursor:
 
 :::note
-All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+- The cursor starts rendering automatically when `enabled: true`.
+- The native cursor is **not hidden by default** — use `hideNative: true` if needed.
+- Cursor visuals are created internally; styling should be applied via `.inner` or `.outer`.
 :::
 
-### `container`
+```js
+import { Cursor } from "vevet";
 
-Type: `Element | Window`
-
-The cursor container
-
-### `coords`
-
-Type: `{ height: number; width: number; x: number; y: number; }`
-
-The current coordinates. These are updated during cursor movement.
-
-### `domContainer`
-
-Type: `HTMLElement`
-
-Returns the DOM parent for the cursor element.
-
-### `hoveredElement`
-
-Type: `undefined  | ICursorHoveredElement`
-
-Stores information about the currently hovered element, including dimensions and interactive properties.
-
-**ICursorHoveredElement Structure**
-
-```ts
-interface ICursorHoveredElement {
-  element: Element;
-  width?: number | "auto" | null;
-  height?: number | "auto" | null;
-  padding?: number;
-  sticky?: boolean;
-}
-```
-
-- `element`: The DOM element currently being hovered.
-- `width`: Custom width for the cursor when hovering over this element (`number`, "auto", or `null`).
-- `height`: Custom height for the cursor when hovering over this element (`number`, "auto", or `null`).
-- `padding`: Additional padding around the cursor.
-- `sticky`: Whether the cursor remains centered on the element.
-
-### `inner`
-
-Type: `HTMLElement`
-
-The inner element of the custom cursor, allowing additional styling.
-
-### `outer`
-
-Type: `HTMLElement`
-
-The outer element representing the visual cursor.
-
-### `prefix`
-
-Type: `string`
-
-Classname prefix for styling elements.
-
-### `targetCoords`
-
-Type: `{ height: number; width: number; x: number; y: number }`
-
-Target coordinates of the cursor (without smooth interpolation).
-
-
-
-## Methods
-
-:::note
-All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
-:::
-
-### `attachCursor`
-
-Registers a cursor type.
-
-```ts
-instance.attachCursor({
-  element: document.getElementById('curor-type'),
-  type: 'some_type',
+const cursor = new Cursor({
+  container: window,
+  width: 60,
+  height: 60,
+  lerp: 0.1,
+  behavior: "default",
 });
 ```
 
-### `attachElement`
+Add hoverable elements:
 
-Registers an element to interact with the cursor, enabling dynamic size and position changes based on hover effects.
-
-```ts
-const hoveredElement = instance.attachElement({
+```js
+cursor.attachElement({
   element: document.getElementById('hover-element'),
-  type: 'some_type',
-  width: 'auto',
-  height: 'auto',
-  padding: 10,
-  sticky: true,
-});
-
-// Remove interaction
-hoveredElement();
-```
-
-### `render`
-
-Manually triggers a cursor render.
-
-```ts
-canvas.render();
-```
-
-### `updateProps`
-
-Dynamically updates instance properties.
-
-```ts
-instance.updateProps({
-  width: 100,
+  width: 200,
   height: 100,
 });
 ```
 
-### `destroy`
+Without size change:
 
-Destroys the instance and cleans up resources.
+```js
+cursor.attachElement({
+  element: document.getElementById('hover-element'),
+  width: null,
+  height: null,
+});
+```
 
-```ts
-canvas.destroy();
+Sticky cursor:
+
+```js
+cursor.attachElement({
+  element: document.getElementById('hover-element'),
+  sticky: true,
+});
+```
+
+Custom cursor type:
+
+```js
+cursor.attachCursor({
+  element: document.getElementById('curor-type'),
+  type: 'some_type', // unique type identifier
+});
+
+// and apply it to an element when hovered
+cursor.attachElement({
+  element: document.getElementById('hover-element'),
+  type: 'some_type', // unique type identifier
+});
+```
+
+Destroy the cursor:
+
+```js
+cursor.destroy();
 ```
 
 
 
-## Callbacks
+## Best Practices
 
-:::note
-All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
-:::
-
-### `render`
-
-Triggered on each render to update the cursor's position.
-
-```ts
-const destruct = instance.on('render', () => console.log('Cursor rendered'));
-
-// Cancel the callback
-destruct();
-```
-
+- Use `Cursor` as a **visual layer**, not as a logic controller.
+- Prefer styling via `.inner` and `.outer` instead of replacing DOM nodes.
+- Keep `lerp` values low (0.05–0.2) for smooth motion.
+- Use `attachElement()` only for interactive elements to avoid unnecessary listeners.
+- Disable `autoStop` only when continuous rendering is required.
+- **Do not use `Cursor` on mobile devices** — custom cursors negatively impact usability and performance on touch screens.

@@ -1,0 +1,39 @@
+---
+sidebar_position: 3
+---
+
+import Head from '@docusaurus/Head';
+
+# Callbacks
+
+<Head>
+  <title>Cursor Callbacks | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### `render`
+
+Triggered on each render frame when the cursor is active.
+
+Useful for:
+- syncing external animations,
+- debugging cursor state,
+- custom visual effects.
+
+```ts
+const cursor = new Cursor({ }, {
+  onRender: () => console.log('render'),
+});
+```
+
+or:
+
+```ts
+const destruct = cursor.on('render', () => console.log('Cursor rendered'));
+
+// Cancel the callback
+destruct();
+```

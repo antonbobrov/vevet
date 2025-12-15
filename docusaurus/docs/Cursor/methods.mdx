@@ -1,0 +1,88 @@
+---
+sidebar_position: 2
+---
+
+import Head from '@docusaurus/Head';
+
+# Methods
+
+<Head>
+  <title>Cursor Methods | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+:::
+
+### `attachCursor`
+
+Registers a cursor type. Accepts the `element` and appends it to the [.inner](accessors#inner) element.
+
+```ts
+const cursor = new Cursor();
+
+cursor.attachCursor({
+  element: document.getElementById('curor-type'),
+  type: 'some_type', // unique type identifier
+});
+```
+
+### `attachElement`
+
+Registers a hoverable element.
+
+When hovered, the cursor can:
+- change size,
+- snap to element center,
+- switch cursor type.
+
+Returns a cleanup function that removes all listeners and bindings.
+
+```ts
+const cursor = new Cursor();
+
+const remove = cursor.attachElement({
+  element: document.getElementById('hover-element'), // hoverable element
+  type: 'some_type', // registered cursor type which appears on this element
+  width: 'auto', // custom cursor width applied when element is hovered
+  height: 'auto', // custom cursor height applied when element is hovered
+  padding: 10, // additinal value added to the cursor size
+  sticky: true, // snap position to the element's center
+});
+
+// Remove interaction
+remove();
+```
+
+### `render`
+
+Manually triggers a cursor render.
+
+```ts
+const cursor = new Cursor();
+
+cursor.render();
+```
+
+### `updateProps`
+
+Dynamically updates instance properties.
+
+```ts
+const cursor = new Cursor();
+
+cursor.updateProps({
+  width: 100,
+  height: 100,
+});
+```
+
+### `destroy`
+
+Destroys the instance and cleans up resources.
+
+```ts
+const cursor = new Cursor();
+
+cursor.destroy();
+```
