@@ -1,0 +1,39 @@
+---
+sidebar_position: 2
+---
+
+import Head from '@docusaurus/Head';
+
+# Methods
+
+<Head>
+  <title>CanvasMedia Methods | vevet.js</title>
+</Head>
+
+:::note
+All **[Canvas' methods](/docs/Canvas/methods)** are available in this class.
+:::
+
+### `render`
+
+Pre-renders the media resource onto the canvas.  
+For video elements, this renders the **current frame**.  
+This method is called automatically **after initialization and resize**.
+
+```ts
+const canvas = new CanvasMedia({
+  container: document.getElementById("container"),
+  media: document.querySelector("img"),
+  append: true,
+});
+
+canvas.render();
+```
+
+### `destroy`
+
+Destroys the instance and cleans up resources.
+
+```ts
+canvas.destroy();
+```

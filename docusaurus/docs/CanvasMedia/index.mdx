@@ -6,7 +6,11 @@ toc_max_heading_level: 6
 
 # CanvasMedia
 
-The **CanvasMedia** class enables pre-rendering of media assets (such as images and videos) onto a canvas. This technique optimizes performance by reducing payload size and preparing media for further efficient use.
+`CanvasMedia` is designed for **pre-rendering** media into a canvas layer.
+It does not replace video or image playback, but prepares rasterized content
+for performant reuse in animations, effects, and transitions.
+
+
 
 ## Basic Demo
 
@@ -28,86 +32,53 @@ The **CanvasMedia** class enables pre-rendering of media assets (such as images 
 
 
 
-## Props
+## Initialization
 
-:::note
-All **[Canvas' props](/docs/Canvas/#props)** are available in this class.
+:::caution
+- The provided `media` **must be fully loaded** before initialization.
+- `CanvasMedia` does not handle media loading internally.
 :::
 
-### Static Props
+Create a CanvasMedia instance and prerender an image inside it:
 
-Static properties are set during initialization and cannot be modified later.
+```js
+const instance = new CanvasMedia({
+  container: document.getElementById("container"),
+  media: document.querySelector("img"),
+  append: false,
+});
+```
 
-#### `media` {#props.media}
-- **Type:**  
-  - `Canvas`  
-  - `HTMLImageElement`  
-  - `SVGImageElement`  
-  - `HTMLVideoElement`  
-  - `HTMLCanvasElement`  
-- The media element to be rendered. Accepts a Canvas instance or common media elements like images and videos.
+Or video:
 
-#### `autoRenderVideo` {#props.autoRenderVideo}
-- **Type:** `boolean`  
-- **Default:** `true`  
-- If `true`, video elements will automatically render on each frame update.
+```js
+const instance = new CanvasMedia({
+  container: document.getElementById("container"),
+  media: document.querySelector("video"),
+  append: true,
+});
+```
 
-### Mutable Props
+Catch the moment when your resource is rendered:
 
-Mutable properties may be changed in runtime via [.updateProps](#updateprops)
+```js
+instance.on("render", () => {
+  console.log("do something with your canvas", instance.canvas);
+});
+```
 
-#### `rule` {#props.rule}
-- **Type:**  
-  - `cover`  
-  - `contain`  
-  - `top-left`  
-  - `top-right`  
-  - `bottom-left`  
-  - `bottom-right`  
-  - `center`  
-- **Default:** `'cover'`  
-- Defines how the media element is positioned within the canvas.
+Destroy the canvas:
 
-
-
-## Accessors
-
-:::note
-All **[Canvas' accessors](/docs/Canvas/#accessors)** are available in this class.
-:::
-
-
-
-## Methods
-
-:::note
-All **[Canvas' methods](/docs/Canvas/#methods)** are available in this class.
-:::
-
-### `render`
-
-Pre-renders the media resource onto the canvas.
-
-```ts
-instance.render();
+```js
+instance.destroy();
 ```
 
 
 
-## Callbacks
+## Best Practices
 
-:::note
-All **[Canvas' callbacks](/docs/Canvas/#callbacks)** are available in this class.
-:::
-
-### `render`
-
-Fires after the media element has been rendered onto the canvas.
-
-```ts
-const destruct = instance.on('render', () => console.log('Canvas rendered'));
-
-// Cancel the callback
-destruct();
-```
-
+- Ensure media is loaded (`img.complete`, `video.readyState >= 2`) before creating `CanvasMedia`.
+- Use `CanvasMedia` for **visual reuse**, not as a replacement for `<video>` playback.
+- Disable `autoRenderVideo` if you control rendering manually or need lower CPU usage.
+- Prefer `rule: "cover"` for full-background visuals and `"contain"` for preserving aspect ratio.
+- Combine `CanvasMedia` with `Canvas` or `Raf` utilities for animation pipelines.

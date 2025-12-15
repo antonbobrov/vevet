@@ -1,0 +1,37 @@
+---
+sidebar_position: 3
+---
+
+import Head from '@docusaurus/Head';
+
+# Callbacks
+
+<Head>
+  <title>CanvasMedia Callbacks | vevet.js</title>
+</Head>
+
+:::note
+All **[Canvas's callbacks](/docs/Canvas/callbacks)** are available in this class.
+:::
+
+### `render`
+
+Fires when the canvas is rendered.
+
+```ts
+const canvas = new CanvasMedia({
+  container: document.getElementById("container"),
+  media: document.querySelector("img"),
+}, {
+  onRender: () => console.log('render'),
+});
+```
+
+or:
+
+```ts
+const destruct = canvas.on('render', () => console.log('render'));
+
+// Cancel the callback
+destruct();
+```
