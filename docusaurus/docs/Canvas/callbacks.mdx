@@ -1,0 +1,34 @@
+---
+sidebar_position: 3
+---
+
+import Head from '@docusaurus/Head';
+
+# Callbacks
+
+<Head>
+  <title>Canvas Callbacks | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### `resize`
+
+Fires when the canvas is resized.
+
+```ts
+const canvas = new Canvas({ }, {
+  onResize: () => console.log('resize'),
+});
+```
+
+or:
+
+```ts
+const destruct = canvas.on('resize', () => console.log('resize'));
+
+// Cancel the callback
+destruct();
+```

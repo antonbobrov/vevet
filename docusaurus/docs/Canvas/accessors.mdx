@@ -1,0 +1,111 @@
+---
+sidebar_position: 1
+---
+
+import Head from '@docusaurus/Head';
+
+# Accessors
+
+<Head>
+  <title>Canvas Accessors | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### `canRender`
+
+Type: `boolean`
+
+Checks if the canvas is ready to render. Returns `false` if canvas `width` or `height` is `0`
+
+```js
+const canvas = new Canvas();
+
+canvas.canRender; // true or false
+```
+
+### `canvas`
+
+Type: `HTMLCanvasElement`
+
+The canvas element instance.
+
+```js
+const canvas = new Canvas();
+
+canvas.canvas; // HTMLCanvasElement
+```
+
+### `ctx`
+
+Type: `CanvasRenderingContext2D`
+
+The 2D rendering context.
+
+```js
+const canvas = new Canvas();
+
+canvas.ctx; // CanvasRenderingContext2D
+```
+
+### `dpr`
+
+Type: `number`
+
+Current device pixel ratio.
+
+```js
+const canvas = new Canvas();
+
+canvas.dpr; // returns device pixel ratio
+```
+
+### `height`
+
+Type: `number`
+
+Canvas height (DPR applied).
+
+```js
+const canvas = new Canvas();
+
+canvas.height; // returns canvas height
+```
+
+### `offsetHeight`
+
+Type: `number`
+
+Height without DPR scaling.
+
+```js
+const canvas = new Canvas();
+
+canvas.offsetHeight; // returns canvas height without DPR applied 
+```
+
+### `offsetWidth`
+
+Type: `number`
+
+Width without DPR scaling.
+
+```js
+const canvas = new Canvas();
+
+canvas.offsetWidth; // returns canvas width without DPR applied 
+```
+
+### `width`
+
+Type: `number`
+
+Canvas width (DPR applied).
+
+```js
+const canvas = new Canvas();
+
+canvas.width; // returns canvas width
+```

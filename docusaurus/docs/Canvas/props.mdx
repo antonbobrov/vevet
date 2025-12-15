@@ -1,0 +1,136 @@
+---
+sidebar_position: 0
+---
+
+import Head from '@docusaurus/Head';
+
+# Props
+
+<Head>
+  <title>Canvas Props | vevet.js</title>
+</Head>
+
+## Static Props
+
+Static properties are set during initialization and cannot be modified later.
+
+### `container` {#props.container}
+- **Type:** `HTMLElement | null`  
+- **Default:** `null`  
+- Parent element used to determine canvas size. If `null`, it uses the viewport.
+
+```js
+const canvas = new Canvas({
+  container: document.getElementById("container")
+});
+```
+
+### `append` {#props.append}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- If `true`, appends the canvas to the `container`. Ignored if `container` is `null`.
+
+```js
+const canvas = new Canvas({
+  append: false,
+});
+```
+
+### `resizeOnInit` {#props.resizeOnInit}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Automatically adjusts canvas size on initialization.
+
+```js
+const canvas = new Canvas({
+  resizeOnInit: true,
+});
+```
+
+### `resizeOnRuntime` {#props.resizeOnRuntime}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Enables dynamic resizing based on viewport or container changes.
+- **Disabled by default**
+
+```js
+const canvas = new Canvas({
+  resizeOnRuntime: true,
+});
+```
+
+### `viewportTarget` {#props.viewportTarget}
+- **Type:** `'width' | 'height' | 'both' | 'onlyWidth' | 'onlyHeight' | 'any' | 'trigger'`  
+- **Default:** `'any'`  
+- Defines which dimension(s) should trigger a resize. [Learn more](/docs/core/features#vevetonresize)
+
+```js
+const canvas = new Canvas({
+  viewportTarget: 'any',
+});
+```
+
+### `resizeDebounce` {#props.resizeDebounce}
+- **Type:** `number`  
+- **Default:** `0`  
+- Debounce time (ms) for resize handling.
+
+```js
+const canvas = new Canvas({
+  resizeDebounce: 0,
+});
+```
+
+
+
+## Mutable Props
+
+Mutable properties can be updated at runtime using `.updateProps()`.
+
+### `width` {#props.width}
+- **Type:** `'auto' | number`  
+- **Default:** `'auto'`  
+- Canvas width. Use `'auto'` to match the container's width.
+
+```js
+const canvas = new Canvas({
+  width: "auto"
+});
+
+// change value
+canvas.updateProps({
+  width: 100
+});
+```
+
+### `height` {#props.height}
+- **Type:** `'auto' | number`  
+- **Default:** `'auto'`  
+- Canvas height. Use `'auto'` to match the container's height.
+
+```js
+const canvas = new Canvas({
+  height: "auto"
+});
+
+// change value
+canvas.updateProps({
+  height: 100
+});
+```
+
+### `dpr` {#props.dpr}
+- **Type:** `'auto' | number`  
+- **Default:** `'auto'`  
+- Device Pixel Ratio (DPR). Use `'auto'` for automatic detection.
+
+```js
+const canvas = new Canvas({
+  dpr: "auto"
+});
+
+// change value
+canvas.updateProps({
+  dpr: 100
+});
+```

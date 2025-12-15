@@ -1,0 +1,61 @@
+---
+sidebar_position: 2
+---
+
+import Head from '@docusaurus/Head';
+
+# Methods
+
+<Head>
+  <title>Canvas Methods | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+:::
+
+### `render`
+
+Renders content on the canvas **only if `canRender === true`**.  
+If the canvas has zero size, the render callback will be skipped.
+
+```ts
+const instance = new Canvas();
+
+instance.render(({ canvas, ctx, dpr, width, height }) => {
+  // Draw your scene here
+});
+```
+
+### `resize`
+
+Triggers a canvas resize based on container or viewport dimensions.
+
+```ts
+const instance = new Canvas();
+
+instance.resize();
+```
+
+### `updateProps`
+
+Updates instance properties.
+
+```ts
+const instance = new Canvas();
+
+instance.updateProps({
+  width: 100,
+  height: 100,
+});
+```
+
+### `destroy`
+
+Destroys the instance and cleans up resources.
+
+```ts
+const instance = new Canvas();
+
+instance.destroy();
+```

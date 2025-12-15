@@ -8,18 +8,9 @@ toc_max_heading_level: 6
 
 The **Canvas** class simplifies working with an HTML5 Canvas element and its 2D rendering context. 
 
-## Overview
 
-This class provides a streamlined approach to handling a canvas by:
-- Automatically creating the `<canvas>` element.
-- Managing resizing based on viewport or container size.
-- Offering access to useful properties like `width`, `height`, `dpr`, and `context`.
-- Supporting both automatic and manual resizing.
-- Implementing conditional rendering to prevent errors when the canvas is invisible or has zero size.
 
-## Example
-
-Explore a live example on CodePen:
+## Basic Demo
 
 <iframe 
   height="450"
@@ -39,179 +30,79 @@ Explore a live example on CodePen:
 
 
 
-## Props
+## Overview
 
-### Static Props
-
-Static properties are set during initialization and cannot be modified later.
-
-#### `container` {#props.container}
-- **Type:** `HTMLElement | null`  
-- **Default:** `null`  
-- Parent element used to determine canvas size. If `null`, it uses the viewport.
-
-#### `append` {#props.append}
-- **Type:** `boolean`  
-- **Default:** `true`  
-- If `true`, appends the canvas to the `container`. Ignored if `container` is `null`.
-
-#### `resizeOnInit` {#props.resizeOnInit}
-- **Type:** `boolean`  
-- **Default:** `true`  
-- Automatically adjusts canvas size on initialization.
-
-#### `resizeOnRuntime` {#props.resizeOnRuntime}
-- **Type:** `boolean`  
-- **Default:** `false`  
-- Enables dynamic resizing based on viewport or container changes.
-
-#### `viewportTarget` {#props.viewportTarget}
-- **Type:** `'width' | 'height' | 'both' | 'onlyWidth' | 'onlyHeight' | 'any' | 'trigger'`  
-- **Default:** `'any'`  
-- Defines which dimension(s) should trigger a resize. [Learn more](/docs/core/features#onResize)
-
-#### `resizeDebounce` {#props.resizeDebounce}
-- **Type:** `number`  
-- **Default:** `0`  
-- Debounce time (ms) for resize handling.
-
-
-### Mutable Props
-
-Mutable properties can be updated at runtime using `.updateProps()`.
-
-#### `width` {#props.width}
-- **Type:** `'auto' | number`  
-- **Default:** `'auto'`  
-- Canvas width. Use `'auto'` to match the container's width.
-
-#### `height` {#props.height}
-- **Type:** `'auto' | number`  
-- **Default:** `'auto'`  
-- Canvas height. Use `'auto'` to match the container's height.
-
-#### `dpr` {#props.dpr}
-- **Type:** `'auto' | number`  
-- **Default:** `'auto'`  
-- Device Pixel Ratio (DPR). Use `'auto'` for automatic detection.
+This class provides a streamlined approach to handling a canvas by:
+- Automatically creating the `<canvas>` element.
+- Managing resizing based on viewport or container size.
+- Offering access to useful properties like `width`, `height`, `dpr`, and `context`.
+- Supporting both automatic and manual resizing.
+- Implementing conditional rendering to prevent errors when the canvas is invisible or has zero size.
 
 
 
-## Accessors
+## Initialization
 
 :::note
-All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+If the canvas or its container has zero width or height (e.g. `display: none`),
+rendering will be skipped automatically to prevent errors.
 :::
 
-### `canRender`
+Create a Canvas instance with auto-sizing:
 
-Type: `boolean`
-
-Checks if the canvas is ready to render.
-
-### `canvas`
-
-Type: `HTMLCanvasElement`
-
-The canvas element instance.
-
-### `ctx`
-
-Type: `CanvasRenderingContext2D`
-
-The 2D rendering context.
-
-### `dpr`
-
-Type: `number`
-
-Current device pixel ratio.
-
-### `height`
-
-Type: `number`
-
-Canvas height (DPR applied).
-
-### `offsetHeight`
-
-Type: `number`
-
-Height without DPR scaling.
-
-### `offsetWidth`
-
-Type: `number`
-
-Width without DPR scaling.
-
-### `width`
-
-Type: `number`
-
-Canvas width (DPR applied).
-
-
-
-## Methods
-
-:::note
-All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
-:::
-
-### `render`
-
-Renders content on the canvas if it's ready.
-
-```ts
-instance.render(({ canvas, ctx, dpr, width, height }) => {
-  // Draw your scene here
+```js
+const instance = new Canvas({
+  container: document.getElementById('container'),
+  append: true,
+  resizeOnInit: true,
+  resizeOnRuntime: true,
 });
 ```
 
-### `resize`
+Or predefined sizes:
 
-Triggers a canvas resize based on container or viewport dimensions.
-
-```ts
-instance.resize();
-```
-
-### `updateProps`
-
-Updates instance properties.
-
-```ts
-instance.updateProps({
-  width: 100,
-  height: 100,
+```js
+const instance = new Canvas({
+  container: document.getElementById('container'),
+  width: 300,
+  height: 200,
 });
 ```
 
-### `destroy`
+Render your content:
 
-Destroys the instance and cleans up resources.
+```js
+const render = ({ ctx, width, height }) => {
+  ctx.beginPath();
+  ctx.fillStyle = "#f8f9ff";
+  ctx.fillRect(0, 0, width, height);
+  ctx.closePath();
 
-```ts
+  ctx.beginPath();
+  ctx.fillStyle = "#0D6EFD";
+  ctx.fillRect(10, 10, 50, 50);
+  ctx.closePath();
+};
+
+// instant render (will be cleared after resize)
+instance.render(render);
+
+// render on each resize
+instance.on("resize", () => instance.render(render));
+```
+
+Destroy canvas
+
+```js
 instance.destroy();
 ```
 
 
 
-## Callbacks
+## Best Practices
 
-:::note
-All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
-:::
-
-### `resize`
-
-Fires when the canvas is resized.
-
-```ts
-const destruct = instance.on('resize', () => console.log('Canvas resized'));
-
-// Cancel the callback
-destruct();
-```
-
+- Always check `canRender` before performing expensive draw operations.
+- Prefer using the provided `render()` method instead of accessing `ctx` directly — it automatically guards against zero-size renders.
+- Use `resizeOnRuntime` only when necessary, as frequent resizes can be expensive.
+- When working with animations, combine `Canvas` with `Raf` utilities instead of manual `requestAnimationFrame`.
+- For high-performance scenes, consider limiting `dpr` to a fixed value instead of `'auto'`.
