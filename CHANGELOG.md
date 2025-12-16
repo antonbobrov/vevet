@@ -1,5 +1,47 @@
 # Changelog
 
+# [5.3.0](https://github.com/antonbobrov/vevet/compare/v5.2.1...v5.3.0) (2025-12-16)
+
+
+### Callbacks
+
+* use try/catch in actions ([7507d8f](https://github.com/antonbobrov/vevet/commit/7507d8fae5482a02ece16f27dcaa20f4d0289204))
+
+### Core
+
+* remove viewport breakpoints ([c56b86b](https://github.com/antonbobrov/vevet/commit/c56b86b0265222b6e1b6696f82e450be1aae3de9))
+
+### Cursor
+
+* add `behavior` & `path` ([bc2a7fe](https://github.com/antonbobrov/vevet/commit/bc2a7fe4bb0998d14d1b03d6470e656da4174e94))
+* rename `sticky` to `snap` ([374f564](https://github.com/antonbobrov/vevet/commit/374f5645032198d618d71d459b0a04648dafd0c7))
+
+### InView
+
+* respect RTL ([9badca6](https://github.com/antonbobrov/vevet/commit/9badca6acfa12ed14ffa6b6323f521123736891c))
+
+### Marquee
+
+* fix negative gap ([653e8a5](https://github.com/antonbobrov/vevet/commit/653e8a53c93c992bea46f492755530e37a5c6f16))
+* fix RTL for vertical mode ([202dd2a](https://github.com/antonbobrov/vevet/commit/202dd2a78f3198816265d245e8e35c015390af98))
+* reverse speed for RTL ([9efad4f](https://github.com/antonbobrov/vevet/commit/9efad4fb823972a57868bbe50703d30933c13232))
+
+### ProgressPreloader
+
+* clamp lerp ([1b6a45e](https://github.com/antonbobrov/vevet/commit/1b6a45e32cb4990b2d9a192fdc8a78014562ed1e))
+
+### Snap
+
+* add `rewind` ([70d032f](https://github.com/antonbobrov/vevet/commit/70d032f2d0b110f0f401536f8b185744d84becd8))
+* add `slidesToScroll` ([e573e87](https://github.com/antonbobrov/vevet/commit/e573e8770749bf9d1015f81f4399a4831f52f530))
+* add offset parallax ([c5f3e47](https://github.com/antonbobrov/vevet/commit/c5f3e47701fa248f30b12288ebea60e3617e6e1c))
+* disable resize debounce by default ([0bef1d7](https://github.com/antonbobrov/vevet/commit/0bef1d760166d50e55bccdd6dce509d0349211a5))
+* make `container` required ([4283ca0](https://github.com/antonbobrov/vevet/commit/4283ca0ed2fc143242a3adae37af7315a16b38b1))
+
+### Swipe
+
+* add `pointerdown`, `pointermove` & `pointerup` callbacks ([896e5d9](https://github.com/antonbobrov/vevet/commit/896e5d9798dbeb5588ca077baab1e70c987ebb66))
+
 ## [5.2.1](https://github.com/antonbobrov/vevet/compare/v5.2.0...v5.2.1) (2025-12-04)
 
 
