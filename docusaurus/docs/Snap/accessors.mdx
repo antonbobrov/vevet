@@ -1,0 +1,272 @@
+---
+sidebar_position: 1
+---
+
+import Head from '@docusaurus/Head';
+
+# Accessors
+
+<Head>
+  <title>Snap Accessors | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's accessors](/docs/base/Module/#accessors)** are available in this class.
+:::
+
+### `activeIndex`
+
+Type: `number`
+
+Returns the index of the currently active slide.
+
+```js
+snap.activeIndex; // active slide index
+```
+
+### `activeSlide`
+
+Type: **[SnapSlide](./slide)**
+
+Returns the currently active slide instance.
+
+```js
+snap.activeSlide; // active slide instance
+```
+
+### `axis`
+
+Type: `"x" | "y"`
+
+Returns the axis based on the current direction.
+
+```js
+snap.axis; // "x" or "y"
+```
+
+### `container`
+
+Type: `HTMLElement`
+
+Returns the carousel container element.
+
+```js
+snap.container; // HTMLElement
+```
+
+### `domSize`
+
+Type: `number`
+
+Returns the container size depending on direction (`width` or `height`).
+
+```js
+snap.domSize; // number
+```
+
+### `eventsEmitter`
+
+Type: `HTMLElement`
+
+Returns the element used to emit swipe and wheel events.
+
+```js
+snap.eventsEmitter; // HTMLElement
+```
+
+### `firstSlideSize`
+
+Type: `number`
+
+Returns the size of the first slide.
+
+```js
+snap.firstSlideSize; // number
+```
+
+### `isEmpty`
+
+Type: `boolean`
+
+Indicates whether there are no slides to animate.
+
+```js
+snap.isEmpty; // true or false
+```
+
+### `isTransitioning`
+
+Type: `boolean`
+
+Indicates whether a transition animation is currently in progress.
+
+```js
+snap.isTransitioning; // true or false
+```
+
+### `scrollableSlides`
+
+Type: [SnapSlide](./slide)[]
+
+Returns slides whose size exceeds the container size.
+
+```js
+snap.scrollableSlides; // array of slide instance
+```
+
+### `slides`
+
+Type: [SnapSlide](./slide)[]
+
+Returns all slide instances.
+
+```js
+snap.slides; // slide instances array
+```
+
+### `track.canLoop`
+
+Type: `boolean`
+
+Indicates whether looping is currently possible.
+
+```js
+snap.track.canLoop; // true or false
+```
+
+### `track.current`
+
+Type: `number`
+
+Returns the current track value.
+
+```js
+snap.track.current; // number
+```
+
+### `track.isEnd`
+
+Type: `boolean`
+
+Indicates whether the end has been reached.  
+**Works only for non-looping carousels.**
+
+```js
+snap.track.isEnd; // true or false
+```
+
+### `track.isInterpolated`
+
+Type: `boolean`
+
+Indicates whether the track values are currently interpolated.
+
+```js
+snap.track.isInterpolated; // true or false
+```
+
+### `track.isSlideScrolling`
+
+Type: `boolean`
+
+Indicates whether the active slide is larger than the container and is currently being scrolled.
+
+```js
+snap.track.isSlideScrolling; // true or false
+```
+
+### `track.isStart`
+
+Type: `boolean`
+
+Indicates whether the start has been reached.  
+**Works only for non-looping carousels.**
+
+```js
+snap.track.isStart; // true or false
+```
+
+### `track.loopCount`
+
+Type: `number`
+
+Returns the number of completed loops.  
+Works only in loop mode and can contain both positive and negative values.
+
+```js
+snap.track.loopCount; // number
+```
+
+### `track.loopedCurrent`
+
+Type: `number`
+
+Returns the looped current track value. Uses the **[.track.loopCoord()](methods#trackloopcoord)** method internally.
+
+```js
+snap.track.loopedCurrent; // number
+```
+
+### `track.max`
+
+Type: `number`
+
+Returns the maximum track value.
+
+```js
+snap.track.max; // number
+```
+
+### `track.min`
+
+Type: `number`
+
+Returns the minimum track value.
+
+```js
+snap.track.min; // number
+```
+
+### `track.offset`
+
+Type: `number`
+
+Returns the track offset.  
+When `centered` mode is enabled, the offset is always `greater than 0`.
+
+```js
+snap.track.offset; // number
+```
+
+### `track.progress`
+
+Type: `number`
+
+Returns the track progress:
+- from `0` to `1` in non-loop mode
+- from `-Infinity` to `Infinity` in loop mode
+
+```js
+snap.track.progress; // number
+```
+
+### `track.target`
+
+Type: `number`
+
+Returns the target track value.
+
+```js
+snap.track.target; // number
+```
+
+### `track.influence`
+
+Type: `number`
+
+Returns the influence applied from the current value to the target, caused by swipe or wheel input.  
+Can be positive or negative depending on scroll direction.
+
+```js
+snap.track.influence; // number
+```

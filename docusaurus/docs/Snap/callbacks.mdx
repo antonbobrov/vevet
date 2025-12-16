@@ -1,0 +1,417 @@
+---
+sidebar_position: 3
+---
+
+import Head from '@docusaurus/Head';
+
+# Callbacks
+
+<Head>
+  <title>Snap Callbacks | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+:::
+
+### `activeSlide`
+
+Triggered when the active slide changes.  
+The callback receives the active slide instance. See **[SnapSlide](./slide)**.
+
+```ts
+const snap = new Snap({
+  container,
+}, {
+  onActiveSlide: (slide) => console.log(slide.index),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('activeSlide', (slide) => console.log(slide.index));
+
+// Cancel the callback
+destruct();
+```
+
+### `rafPause`
+
+Triggered when the requestAnimationFrame loop is paused.
+
+```ts
+const snap = new Snap({
+  container,
+}, {
+  onRafPause: () => console.log('pause'),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('rafPause', () => console.log('pause'));
+
+// Cancel the callback
+destruct();
+```
+
+### `rafPlay`
+
+Triggered when the requestAnimationFrame loop resumes.
+
+```ts
+const snap = new Snap({
+  container,
+}, {
+  onRafPlay: () => console.log('play'),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('rafPlay', () => console.log('play'));
+
+// Cancel the callback
+destruct();
+```
+
+### `reflow`
+
+Triggered when the carousel recalculates slides, sizes, or magnets.
+
+```ts
+const snap = new Snap({
+  container,
+}, {
+  onReflow: () => console.log('reflow'),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('reflow', () => console.log('reflow'));
+
+// Cancel the callback
+destruct();
+```
+
+### `resize`
+
+Triggered when the carousel is resized.
+
+```ts
+const snap = new Snap({
+  container,
+}, {
+  onResize: () => console.log('resize'),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('resize', () => console.log('resize'));
+
+// Cancel the callback
+destruct();
+```
+
+### `swipe`
+
+Triggered during swipe movement.
+
+```ts
+const snap = new Snap({
+  container,
+}, {
+  onSwipe: (coord) => console.log(coord),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('swipe', (coord) => console.log(coord));
+
+// Cancel the callback
+destruct();
+```
+
+### `swipeStart`
+
+Triggered when a swipe starts.
+
+```ts
+const snap = new Snap({
+  container,
+}, {
+  onSwipeStart: (coord) => console.log(coord),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('swipeStart', (coord) => console.log(coord));
+
+// Cancel the callback
+destruct();
+```
+
+### `swipeEnd`
+
+Triggered when a swipe ends.
+
+```ts
+const snap = new Snap({
+  container,
+}, {
+  onSwipeEnd: (coord) => console.log(coord),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('swipeEnd', (coord) => console.log(coord));
+
+// Cancel the callback
+destruct();
+```
+
+### `timelineStart`
+
+Triggered on timeline animation start.
+
+```ts
+const snap = new Snap({
+  container,
+}, {
+  onTimelineStart: () => console.log('start'),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('timelineStart', () => console.log('start'));
+
+// Cancel the callback
+destruct();
+```
+
+### `timelineUpdate`
+
+Triggered on timeline animation progress update.
+
+```ts
+const snap = new Snap({
+  container,
+}, {
+  onTimelineUpdate: ({ progress, eased }) => console.log(progress, eased),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('timelineUpdate', ({ progress, eased }) => {
+  console.log(progress, eased);
+});
+
+// Cancel the callback
+destruct();
+```
+
+### `timelineEnd`
+
+Triggered when a timeline animation ends.
+
+```ts
+const snap = new Snap({
+  container,
+}, {
+  onTimelineEnd: () => console.log('end'),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('timelineEnd', () => console.log('end'));
+
+// Cancel the callback
+destruct();
+```
+
+### `update`
+
+Triggered on every carousel coordinate update.
+
+```ts
+const snap = new Snap({
+  container,
+}, {
+  onUpdate: () => console.log('update'),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('update', () => console.log('update'));
+
+// Cancel the callback
+destruct();
+```
+
+### `wheel`
+
+Triggered on mouse wheel input.
+
+```ts
+const snap = new Snap({
+  container,
+}, {
+  onWheel: (evt) => console.log(evt),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('wheel', (evt) => console.log(evt));
+
+// Cancel the callback
+destruct();
+```
+
+### `wheelStart`
+
+Triggered when wheel input starts.
+
+```ts
+const snap = new Snap({
+  container,
+}, {
+  onWheelStart: () => console.log('start'),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('wheelStart', () => console.log('start'));
+
+// Cancel the callback
+destruct();
+```
+
+### `wheelEnd`
+
+Triggered when wheel input ends.
+
+```ts
+const snap = new Snap({
+  container,
+}, {
+  onWheelEnd: () => console.log('end'),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('wheelEnd', () => console.log('end'));
+
+// Cancel the callback
+destruct();
+```
+
+### `swipeInertiaStart`
+
+Triggered when swipe inertia starts.  
+
+```ts
+const snap = new Snap({
+  container,
+}, {
+  onSwipeInertiaStart: () => console.log('start'),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('swipeInertiaStart', () => console.log('start'));
+
+// Cancel the callback
+destruct();
+```
+
+### `swipeInertiaEnd`
+
+Triggered when swipe inertia ends.
+
+```ts
+const snap = new Snap({
+  container,
+}, {
+  onSwipeInertiaEnd: () => console.log('end'),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('swipeInertiaEnd', () => console.log('end'));
+
+// Cancel the callback
+destruct();
+```
+
+### `swipeInertiaCancel`
+
+Triggered when swipe inertia is canceled.
+
+```ts
+const snap = new Snap({
+  container,
+}, {
+  onSwipeInertiaCancel: () => console.log('cancel'),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('swipeInertiaCancel', () => console.log('cancel'));
+
+// Cancel the callback
+destruct();
+```
+
+### `swipeInertiaFail`
+
+Triggered when swipe inertia fails to start.
+
+```ts
+const snap = new Snap({
+  container,
+}, {
+  onSwipeInertiaFail: () => console.log('fail'),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('swipeInertiaFail', () => console.log('fail'));
+
+// Cancel the callback
+destruct();
+```

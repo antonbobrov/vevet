@@ -1,0 +1,196 @@
+---
+sidebar_position: 2
+---
+
+import Head from '@docusaurus/Head';
+
+# Methods
+
+<Head>
+  <title>Snap Methods | vevet.js</title>
+</Head>
+
+:::note
+All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+:::
+
+### `next`
+
+Navigate to the next slide.
+
+```ts
+const snap = new Snap({ container });
+
+instance.next({ duration: 500 });
+
+instance.next({ duration: 500, skip: 2 }); // skip two slides
+```
+
+### `prev`
+
+Navigate to the previous slide.
+
+```ts
+const snap = new Snap({ container });
+
+instance.prev({ duration: 500 });
+
+instance.prev({ duration: 500, skip: 2 }); // skip two slides
+```
+
+### `toCoord`
+
+Snap to a specific track coordinate.
+
+```ts
+const snap = new Snap({ container });
+
+snap.toCoord(1365);
+
+// with duration
+snap.toCoord(1365, { duration: 250 });
+
+// custom easing
+snap.toCoord(1365, {
+  duration: 250,
+  easing: EaseInOutCubic,
+});
+
+// with callbacks
+snap.toCoord(1365, {
+  duration: 250,
+  easing: EaseInOutCubic,
+  onStart: () => console.log('start'),
+  onUpdate: ({ progress, eased }) => console.log(progress, eased),
+  onEnd: () => console.log('end'),
+});
+```
+
+### `toSlide`
+
+Navigate to a slide by index (starting from `0`).
+
+```ts
+const snap = new Snap({ container });
+
+instance.toSlide(2);
+
+// with duration
+snap.toSlide(2, { duration: 250 });
+
+// custom easing
+snap.toSlide(2, {
+  duration: 250,
+  easing: EaseInOutCubic,
+});
+
+// with callbacks
+snap.toSlide(2, {
+  duration: 250,
+  easing: EaseInOutCubic,
+  onStart: () => console.log('start'),
+  onUpdate: ({ progress, eased }) => console.log(progress, eased),
+  onEnd: () => console.log('end'),
+});
+
+
+// define animation direction (loop mode only)
+snap.toSlide(2, {
+  direction: "prev"
+});
+```
+
+### `render`
+
+Force coordinate recalculation and re-render slides.
+
+```ts
+const snap = new Snap({ container });
+
+instance.render();
+```
+
+### `resize`
+
+Request a resize update.  
+If `false` is passed, the resize is handled with a debounce timeout.
+
+```ts
+const snap = new Snap({ container });
+
+instance.resize(); // instant resize
+instance.resize(false); // with debounce
+```
+
+### `stick`
+
+Snap to the nearest slide magnet.
+
+```ts
+const snap = new Snap({ container });
+
+instance.stick();
+```
+
+### `getNearestMagnet`
+
+Return the nearest magnet relative to a target coordinate.
+
+```ts
+const snap = new Snap({ container });
+
+const magnet = instance.getNearestMagnet(1234);
+
+magnet.diff; // difference with current coordinate
+magnet.magnet; // magnet coordinate
+magnet.slide; // magnet slide instance
+```
+
+### `cancelTransition`
+
+Cancel the current transition to a target slide or coordinate.
+
+```ts
+const snap = new Snap({ container });
+
+instance.cancelTransition();
+```
+
+### `track.clampTarget`
+
+Clamp the target value between the minimum and maximum track values.
+
+```ts
+const snap = new Snap({ container });
+
+instance.track.clampTarget();
+```
+
+### `track.loopCoord`
+
+Wrap a coordinate between the minimum and maximum track values and return a normalized looped value.   
+**See [loop utilities](/docs/utils/#loop).**
+
+```ts
+const snap = new Snap({ container });
+
+// when track.min=0 & track.max=1100
+instance.track.loop(0); // => 0
+instance.track.loop(1100); // => 0
+instance.track.loop(1101); // => 1
+instance.track.loop(-1101); // => 1099
+instance.track.loop(5000); // => 600
+```
+
+### `track.set`
+
+Instantly set the current and target track values without starting an animation.  
+After manually updating the values, you must call `.render()`.
+
+```ts
+const snap = new Snap({ container });
+
+instance.track.set(1350);
+
+instance.render();
+```

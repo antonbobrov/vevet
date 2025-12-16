@@ -1,0 +1,234 @@
+---
+sidebar_position: 4
+---
+
+import Head from '@docusaurus/Head';
+
+# Parallax
+
+<Head>
+  <title>Snap Parallax | vevet.js</title>
+</Head>
+
+Snap does not modify element styles by default, but it provides a set of optional parallax utilities for DOM elements.  
+
+Parallax effects are enabled using `data-` attributes.
+
+:::caution
+Do not apply parallax directly to the slide element. Use inner wrappers instead.
+:::
+
+
+
+## Demos
+
+<iframe 
+  height="500"
+  style={{
+    width: '100%'
+  }} 
+  scrolling="no" 
+  title="Vevet Demo"
+  src="https://codepen.io/anton-bobrov/embed/gbrqRjZ?default-tab=result"
+  frameborder="no"
+  loading="lazy"
+  allowtransparency="true"
+  allowfullscreen="true"
+>
+  See the Pen <a href="https://codepen.io/anton-bobrov/pen/gbrqRjZ">Vevet Demo</a> by Anton Bobrov.
+</iframe>
+
+<iframe 
+  height="500"
+  style={{
+    width: '100%'
+  }} 
+  scrolling="no" 
+  title="Vevet Demo"
+  src="https://codepen.io/anton-bobrov/embed/gbrqRXB?default-tab=result"
+  frameborder="no"
+  loading="lazy"
+  allowtransparency="true"
+  allowfullscreen="true"
+>
+  See the Pen <a href="https://codepen.io/anton-bobrov/pen/gbrqRXB">Vevet Demo</a> by Anton Bobrov.
+</iframe>
+
+
+
+## Parallax Effects
+
+Each parallax attribute maps directly to a corresponding CSS transform (or opacity):
+
+- `data-snap-parallax-x` -> `translateX()`
+- `data-snap-parallax-y` -> `translateY()`
+- `data-snap-parallax-z` -> `translateZ()`
+- `data-snap-parallax-scale` -> `scale()` - value is added to `1`
+- `data-snap-parallax-scale-x` -> `scaleX()` - value is added to `1`
+- `data-snap-parallax-scale-y` -> `scaleY()` - value is added to `1`
+- `data-snap-parallax-skew` -> `skew()`
+- `data-snap-parallax-skew-x` -> `skewX()`
+- `data-snap-parallax-skew-y` -> `skewY()`
+- `data-snap-parallax-rotate` -> `rotate()`
+- `data-snap-parallax-rotate-x` -> `rotateX()`
+- `data-snap-parallax-rotate-y` -> `rotateY()`
+- `data-snap-parallax-rotate-z` -> `rotateZ()`
+- `data-snap-parallax-opacity` -> `opacity` - **should contain negative values only**, decreasing the current opacity.  
+  The value is added to the current opacity and clamped to [0, 1]
+
+All effect attributes accept numbers or any supported CSS unit.
+
+
+
+## Parallax Timeline (scope)
+
+By default, parallax values are applied while the slide transition progress is between `-1` and `1`.
+
+You can inspect slide progress in **[this demo](/docs/Snap/basic-demos#progress)**.
+
+To change the active range, use the `data-snap-parallax-scope` attribute:
+- numeric range like `data-snap-parallax-scope="-2, 2"`
+- infinite range like `data-snap-parallax-scope="none"` or `data-snap-parallax-scope="-Infinity, Infinity"`
+
+A scope with identical start and end values (e.g. `1,1`) produces a **constant parallax value**, effectively disabling interpolation.
+
+The scope applies to all parallax effects inside a slide unless overridden per effect via `data-snap-parallax-[effect]-scope`:
+
+```html
+<div class="slide">
+  <div
+    class="wrap"
+    data-snap-parallax-x="-200%"
+    data-snap-parallax-scope="-2, 2"
+  >
+    Slide Info
+  </div>
+</div>
+
+<!-- OR -->
+<div class="slide">
+  <div
+    class="wrap"
+    data-snap-parallax-x="-200%"
+    data-snap-parallax-scale-scope="-2, 2"
+  >
+    Slide Info
+  </div>
+</div>
+```
+
+## Parallax Strength (influence)
+
+Use `data-snap-parallax-[effect]-influence` to apply the effect only during dragging or wheeling.
+
+The parallax value will smoothly increase or decrease based on interaction intensity, producing more "organic" motion.
+
+```html
+<div class="slide">
+  <div 
+    class="wrap" 
+    data-snap-parallax-skew="-200" 
+    data-snap-parallax-skew-scope="1,1" 
+    data-snap-parallax-skew-influence
+  >
+    Slide Info
+  </div>
+</div>
+```
+
+
+
+## Positive Values
+
+`data-snap-parallax-[effect]-abs` forces the effect to use absolute (non-negative) values.
+
+This is useful for properties like `scale()` where negative values are undesirable.
+
+```html
+<div class="slide">
+  <div
+    class="wrap"
+    data-snap-parallax-scale="-0.5"
+    data-snap-parallax-scale-abs
+  >
+    Slide Info
+  </div>
+</div>
+```
+
+
+
+## Value Offset
+
+`data-snap-parallax-[effect]-offset` accepts numeric value and forces value offset for the active slide.
+
+This might be useful for reverse animations.
+
+```html
+<div class="slide">
+  <div
+    class="wrap"
+    data-snap-parallax-scale="0.5"
+    data-snap-parallax-scale-offset="-0.5"
+    data-snap-parallax-scale-scope="-2,2"
+    data-snap-parallax-scale-abs
+  >
+    Slide Info
+  </div>
+</div>
+```
+
+
+
+## Direction
+
+`data-snap-parallax-[effect]-directional` adjusts the value’s sign automatically based on the scroll direction.
+
+```html
+<div class="slide">
+  <div 
+    class="wrap" 
+    data-snap-parallax-skew="-200" 
+    data-snap-parallax-skew-scope="1,1" 
+    data-snap-parallax-skew-influence
+    data-snap-parallax-skew-directional
+  >
+    Slide Info
+  </div>
+</div>
+```
+
+
+
+## Parallax example
+
+### Organic Gap
+
+```html
+<div class="slide">
+  <div
+    class="wrap"
+    data-snap-parallax-x="-200%"
+    data-snap-parallax-x-scope="-Infinity, Infinity"
+    data-snap-parallax-x-influence
+  >
+    Slide Info
+  </div>
+</div>
+```
+
+### Scale from Center
+
+```html
+<div class="slide">
+  <div
+    class="wrap"
+    data-snap-parallax-scale="0.5"
+    data-snap-parallax-scale-offset="-0.5"
+    data-snap-parallax-scale-scope="-2,2"
+    data-snap-parallax-scale-abs
+  >
+    Slide Info
+  </div>
+</div>
+```

@@ -1,14 +1,16 @@
 ---
-sidebar_position: 3
+sidebar_position: 5
 toc_min_heading_level: 2  
 toc_max_heading_level: 6
 ---
 
 # SnapSlide
 
-The `SnapSlide` class lets you create virtual slides in the `Snap` system.  
-When initializing a `Snap` instance, you can skip the `slides` parameter—child elements of the container will be used by default.  
-For custom logic, use `SnapSlide` directly.
+The `SnapSlide` class allows you to create virtual slides within the `Snap` system.  
+When initializing a `Snap` instance, you may omit the `slides` parameter — in this case, the container's child elements will be used automatically.  
+For advanced or fully custom logic, you can work with `SnapSlide` directly.
+
+
 
 ## Basic Demo
 
@@ -36,7 +38,8 @@ For custom logic, use `SnapSlide` directly.
 
 - **Type:** `HTMLElement | null`  
 - **Default:** _none_  
-- The slide’s HTML element, or `null` for fully virtual slides.
+- The slide's associated HTML element.  
+  Use `null` to create a fully virtual slide without a DOM element.
 
 ### `props`
 
@@ -45,53 +48,56 @@ For custom logic, use `SnapSlide` directly.
 - **Type:** `'auto' | 'stretch' | number | string`  
 - **Default:** `'auto'`  
 - Defines the slide size:
-  - `'auto'` — Based on the element or container.
-  - `'stretch'` — Matches the container size.
+  - `'auto'` — Based on the element size or container size.
+  - `'stretch'` — Always matches the container size.
   - `number` — Size in pixels.
-  - CSS units like `px`, `rem`, `vw`, `vh`, `svh`.
+  - CSS units such as `px`, `rem`, `vw`, `vh`, `svh`.
 
 #### `virtual`
 
 - **Type:** `boolean`  
 - **Default:** `true`  
-- If `true`, the slide is virtual and will be appended to the container only when visible.
+- If enabled, the slide is treated as virtual and will be appended to the container only when it becomes visible.
+
+
 
 ## Accessors
 
 ### `coord`
 
 - **Type:** `number`  
-- Current coordinate in pixels (X or Y, depending on direction).
+- Current slide coordinate in pixels (X or Y, depending on Snap direction).
 
 ### `element`
 
 - **Type:** `HTMLElement | null`  
-- Associated DOM element.
+- The associated DOM element, if any.
 
 ### `id`
 
 - **Type:** `string`  
-- Slide ID.
+- Unique slide identifier.
 
 ### `index`
 
 - **Type:** `number`  
-- Slide index.
+- Slide index within the Snap instance.
 
 ### `isVisible`
 
 - **Type:** `boolean`  
-- Whether the slide is currently visible.
+- Indicates whether the slide is currently visible.
 
 ### `magnets`
 
 - **Type:** `number[]`  
-- Magnetic points (static coordinates with dynamic alignment).
+- Magnetic snap points for the slide  
+  (static coordinates with dynamic alignment).
 
 ### `progress`
 
 - **Type:** `number`  
-- Movement progress from `-1` to `1`.
+- Normalized slide movement progress, from `-1` to `1`.
 
 ### `size`
 
@@ -101,13 +107,15 @@ For custom logic, use `SnapSlide` directly.
 ### `staticCoord`
 
 - **Type:** `number`  
-- Static coordinate (unaffected by movement).
+- Static slide coordinate, unaffected by movement or animation.
+
+
 
 ## Methods
 
 ### `resize()`
 
-Resize the slide and trigger Snap layout reflow.
+Recalculate the slide size and trigger a Snap layout reflow.
 
 ```ts
 slide.resize();

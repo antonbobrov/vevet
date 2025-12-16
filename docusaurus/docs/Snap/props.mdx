@@ -1,0 +1,697 @@
+---
+sidebar_position: 0
+---
+
+import Head from '@docusaurus/Head';
+
+# Props
+
+<Head>
+  <title>Snap Props | vevet.js</title>
+</Head>
+
+## Static Props
+
+Static properties are set during initialization and cannot be modified later.
+
+### `container` {#props.container}
+- **Type:** `HTMLElement`  
+- **Default:** _none_  
+- HTML container element where listeners are attached.
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+});
+```
+
+### `eventsEmitter` {#props.eventsEmitter}
+- **Type:** `HTMLElement | null`  
+- **Default:** `null`  
+- HTML element used for swipe and wheel events.
+
+```js
+const snap = new Snap({
+  eventsEmitter: document.getElementById("parent"),
+});
+```
+
+### `activeIndex` {#props.activeIndex}
+- **Type:** `number`  
+- **Default:** `0`  
+- Default active index.
+
+```js
+const snap = new Snap({
+  activeIndex: 5,
+});
+```
+
+
+
+## Mutable Props
+
+Mutable properties can be updated at runtime using `.updateProps()`.
+
+### `slides` {#props.slides}
+- **Type:** (`HTMLElement` | [**SnapSlide**](./slide))[] | `false`; // todo: change link
+- **Default:** `false`  
+- Slides instances. If `false`, all container's children will be considered as slides.
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  slides: false, // get all container's children
+});
+
+// used to add or remove slides, for example, when DOM changes
+snap.updateProps({
+  slides: Array.from(document.querySelectorAll('.slide')),
+});
+```
+
+### `slidesToScroll` {#props.slidesToScroll}
+- **Type:** `number`;
+- **Default:** `1`  
+-  Indicates the number of slides to scroll on swipe or wheel.  
+  **See [demo](basic-demos#slides-to-scroll)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  slidesToScroll: 1,
+});
+
+// change value
+snap.updateProps({
+  slidesToScroll: 2,
+});
+```
+
+### `direction` {#props.direction}
+- **Type:** `'horizontal' | 'vertical'`  
+- **Default:** `'horizontal'`  
+- Sliding direction.  
+  **See [demo](basic-demos#vertical)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  direction: 'horizontal',
+});
+
+// change value
+snap.updateProps({
+  direction: 'vertical',
+});
+```
+
+### `centered` {#props.centered}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Center all slides and their magnets.  
+  **See [demo](basic-demos#centered)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  centered: true,
+});
+
+// change value
+snap.updateProps({
+  centered: false,
+});
+```
+
+### `loop` {#props.loop}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Detects if need to loop the slides.  
+  **See [demo](basic-demos#loop)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  loop: true,
+});
+
+// change value
+snap.updateProps({
+  loop: false,
+});
+```
+
+### `gap` {#props.gap}
+- **Type:** `number | string`  
+- **Default:** `0`  
+- The gap between slides. Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.  
+  **See [demo](basic-demos#gap)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  gap: 20,
+});
+
+// change value
+snap.updateProps({
+  gap: '2rem',
+});
+```
+
+### `lerp` {#props.lerp}
+- **Type:** `number`  
+- **Default:** `vevet.mobile ? 1 : 0.2`  
+- Linear interpolation factor for smooth animation (between `0` and `1`) with higher values indicating faster movement.  
+  **See [demo](basic-demos#hypersmooth)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  lerp: 0.1,
+});
+
+// change value
+snap.updateProps({
+  lerp: 1,
+});
+```
+
+### `freemode` {#props.freemode}
+- **Type:** `boolean | 'sticky'`
+- **Default:** `false`  
+- Freemode allows swiping and wheeling with or without magnets snap.
+- `false` - enables magnets
+- `true` - disables magnets
+- `"sticky"` - allows swipe with inertia and snapping to the nearest slide.  
+  Note that you may need to disable `shortSwipes` when using `sticky` freemode.  
+  **See [demo](basic-demos#freemode)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  freemode: false,
+});
+
+// change value
+
+snap.updateProps({
+  freemode: true,
+});
+
+snap.updateProps({
+  freemode: 'sticky',
+});
+```
+
+### `rewind` {#props.rewind}
+- **Type:** `boolean`
+- **Default:** `false`  
+- Enables wrap-around navigation: advancing from the last slide jumps to the first, and going back from the first jumps to the last. Has no effect when `loop` mode is enabled.  
+  **See [demo](basic-demos#rewind)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  rewind: false,
+});
+
+// change value
+snap.updateProps({
+  rewind: true,
+});
+```
+
+### `stickOnResize` {#props.stickOnResize}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Snap to the nearest slide on carousel resize.  
+- **See [demo](advanced-demos#expand-slide)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  stickOnResize: true,
+});
+
+// change value
+snap.updateProps({
+  stickOnResize: false,
+});
+```
+
+### `friction` {#props.friction}
+- **Type:** `number`  
+- **Default:** `0`  
+- Friction that makes the slides tend to the nearest slide magnet when wheeling or swiping.  
+  The value is a number between `0` and `1` which is multiplied by the `lerp` value.  
+  Higher values mean stronger friction. `0` disables friction.  
+- Friction is not applied for `shortSwipes`. 
+- Friction is disabled for swipes by default. See **[.swipeFriction](#props.swipeFriction)**.  
+- **See [demo](basic-demos#friction)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  friction: 0,
+});
+
+// enable friction
+snap.updateProps({
+  friction: 0.3,
+});
+```
+
+### `edgeFriction` {#props.edgeFriction}
+- **Type:** `number`  
+- **Default:** `0.85`  
+- Maximum friction between the final slide and the maximum translation value. Also swipe bouncing.  
+  The value must be `0 to 1`. The higher value the more resistance is applied.  
+  **See [demo](basic-demos#edge-friction)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  edgeFriction: 0.85,
+});
+
+// change value
+snap.updateProps({
+  edgeFriction: 1,
+});
+```
+
+### `duration` {#props.duration}
+- **Type:** `number | ((distance: number) => number)`  
+- **Default:** `500`  
+- Slide animation duration.  
+  **See [demo](basic-demos#hypersmooth)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  duration: 500,
+});
+
+// change value
+snap.updateProps({
+  duration: 1250,
+});
+```
+
+### `easing` {#props.easing}
+- **Type:** `TEasingType`  
+- **Default:** `EaseOutCubic`  
+- Easing type for smoother animation. Accepts standard easing types or an array of bezier values.  
+  See **[easing types](/docs/utils#easing-types)** for more information.  
+  **See [demo](basic-demos#easing)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  easing: EaseOutCubic,
+});
+
+// change value
+snap.updateProps({
+  easing: EaseOutBounce,
+});
+```
+
+### `slideSize` {#props.slideSize}
+- **Type:** `'auto' | 'stretch' | number | string`  
+- **Default:** `'auto'`  
+- Default slide size. Supported values:  
+  - `auto` detects slide size depending on the element size.  
+  - `stretch` detects slide size as the container size.  
+  - `number` defines the slide size in pixels.  
+  - CSS units like `px`, `rem`, `vw`, `vh`, `svh`.  
+- Note that this property does not change real slide sizes. It is used for virtual slides & custom logic.  
+**See [demo](basic-demos#virtual)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  slideSize: 'auto',
+});
+
+// change value
+
+snap.updateProps({
+  slideSize: '90vw',
+});
+
+snap.updateProps({
+  slideSize: 'stretch',
+});
+```
+
+### `swipe` {#props.swipe}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Enable or disable swipe events.
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  swipe: true,
+});
+
+// change value
+snap.updateProps({
+  swipe: false,
+});
+```
+
+### `grabCursor` {#props.grabCursor}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- User will see the "grab" cursor when hovering and "grabbing" when swiping.  
+  **See [demo](basic-demos#grab-cursor)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  grabCursor: false,
+});
+
+// change value
+snap.updateProps({
+  grabCursor: true,
+});
+```
+
+### `swipeSpeed` {#props.swipeSpeed}
+- **Type:** `number`  
+- **Default:** `1`  
+- Speed factor for swipe movements.  
+  **See [demo](basic-demos#reverse-swipe)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  swipeSpeed: 1,
+});
+
+// change value
+snap.updateProps({
+  swipeSpeed: 2.5,
+});
+```
+
+### `swipeAxis` {#props.swipeAxis}
+- **Type:** `'x' | 'y' | 'auto'`  
+- **Default:** `'auto'`  
+- Swipe axis. If `auto`, the axis will be automatically detected depending on `direction`.
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  swipeAxis: 'y',
+});
+
+// change value
+snap.updateProps({
+  swipeAxis: 'x',
+});
+```
+
+### `followSwipe` {#props.followSwipe}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- If `false`, the carousel will be animated only when you release the finger, it will not move while you hold your finger on it.  
+  **See [demo](basic-demos#swipe-no-follow)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  followSwipe: true,
+});
+
+// change value
+snap.updateProps({
+  followSwipe: false,
+});
+``` 
+
+### `shortSwipes` {#props.shortSwipes}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- When `true`, swipes shorter than `shortSwipeDuration` can trigger slide change.  
+  Short swipes work only when `followSwipe` is `true`.
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  shortSwipes: true,
+});
+
+// change value
+snap.updateProps({
+  shortSwipes: false,
+});
+``` 
+
+### `shortSwipesDuration` {#props.shortSwipesDuration}
+- **Type:** `number`  
+- **Default:** `300`  
+- Short swipe maximum duration.
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  shortSwipesDuration: 300,
+});
+
+// change value
+snap.updateProps({
+  shortSwipesDuration: 1500,
+});
+``` 
+
+### `shortSwipesThreshold` {#props.shortSwipesThreshold}
+- **Type:** `number`  
+- **Default:** `30`  
+- Minimum distance in pixels to trigger slide change for short swipes.
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  shortSwipesThreshold: 30,
+});
+
+// change value
+snap.updateProps({
+  shortSwipesThreshold: 10,
+});
+``` 
+
+### `swipeFriction` {#props.swipeFriction}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Defines if `friction` is allowed when swiping. Doesn't work with short swipes or when `followSwipe` is `false`.  
+  **See [demo](basic-demos#friction)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  swipeFriction: false,
+});
+
+// change value
+snap.updateProps({
+  swipeFriction: true,
+});
+``` 
+
+### `swipeThreshold` {#props.swipeThreshold}
+- **Type:** `number`  
+- **Default:** `5`  
+- Length in pixels that must be swiped to trigger swipe start.
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  swipeThreshold: 5,
+});
+
+// change value
+snap.updateProps({
+  swipeThreshold: 3,
+});
+``` 
+
+### `swipeMinTime` {#props.swipeMinTime}
+- **Type:** `number`  
+- **Default:** `0`  
+- The minimum time from the start of a real swipe that identifies the moment the carousel swipe begins.
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  swipeMinTime: 0,
+});
+
+// change value
+snap.updateProps({
+  swipeMinTime: 1000,
+});
+``` 
+
+### `swipeInertiaDuration` {#props.swipeInertiaDuration}
+- **Type:** `(distance: number) => number`  
+- **Default:** `(distance) => clamp(distance, 500, 2000)`  
+- Inertia duration.
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  swipeInertiaDuration:  (distance) => clamp(distance, 500, 2000),
+});
+
+// inertia duration is equal to the distance
+snap.updateProps({
+  swipeInertiaDuration: (distance) => distance,
+});
+``` 
+
+### `swipeInertiaRatio` {#props.swipeInertiaRatio}
+- **Type:** `number`  
+- **Default:** `0.5`  
+- Inertia strength.
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  swipeInertiaRatio: 0.3,
+});
+
+// change value
+snap.updateProps({
+  swipeInertiaRatio: 0.5,
+});
+``` 
+
+### `wheel` {#props.wheel}
+- **Type:** `boolean`  
+- **Default:** `false`  
+- Enable or disable mouse wheel control.  
+  **See [demo](basic-demos#wheel)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  wheel: true,
+});
+
+// change value
+snap.updateProps({
+  wheel: false,
+});
+``` 
+
+### `wheelSpeed` {#props.wheelSpeed}
+- **Type:** `number`  
+- **Default:** `1`  
+- Speed factor for mouse wheel control.
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  wheelSpeed: 1,
+});
+
+// change value
+snap.updateProps({
+  wheelSpeed: 2,
+});
+``` 
+
+### `wheelAxis` {#props.wheelAxis}
+- **Type:** `'x' | 'y' | 'auto'`  
+- **Default:** `'auto'`  
+- Wheel axis. If `auto`, the axis will be automatically detected depending on **[direction](#props.direction)**.  
+  **See [demo](basic-demos#wheel)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  wheelAxis: 'auto',
+});
+
+// change value
+snap.updateProps({
+  wheelAxis: 'y',
+});
+``` 
+
+### `followWheel` {#props.followWheel}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- If `false`, disables smooth, continuous scrolling behavior from the mouse wheel and instead updates the snap position in discrete steps (like pagination).  
+  **See [demo](basic-demos#throttled-wheel)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  followWheel: true,
+});
+
+// change value
+snap.updateProps({
+  followWheel: false,
+});
+``` 
+
+### `wheelThrottle` {#props.wheelThrottle}
+- **Type:** `number` | `'auto'`  
+- **Default:** `auto`  
+- Throttle wheel events, value in milliseconds. Works only if **[followWheel](#props.followWheel)** is disabled.
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  wheelThrottle: 'auto',
+});
+
+// throttled by 1000ms
+snap.updateProps({
+  wheelThrottle: 1000,
+});
+``` 
+
+### `stickOnWheelEnd` {#props.stickOnWheelEnd}
+- **Type:** `boolean`  
+- **Default:** `true`  
+- Enable snapping when wheel stop. Works with **[followWheel](#props.followWheel)** enabled.  
+  **See [demo](basic-demos#free-wheel)**
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  stickOnWheelEnd: true,
+});
+
+// change value
+snap.updateProps({
+  stickOnWheelEnd: false,
+});
+``` 
+
+### `stickOnWheelEndThreshold` {#props.stickOnWheelEndThreshold}
+- **Type:** `number`  
+- **Default:** `30`  
+- Snapping threshold for **[stickOnWheelEnd](#props.stickOnWheelEnd)**.
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  stickOnWheelEndThreshold: 30,
+});
+
+// change value
+snap.updateProps({
+  stickOnWheelEndThreshold: 100,
+});
+``` 
