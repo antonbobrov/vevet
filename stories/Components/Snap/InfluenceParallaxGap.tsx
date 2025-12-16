@@ -1,8 +1,6 @@
 import React, { FC, useEffect, useRef } from 'react';
 import { Snap } from '@/index';
 
-// todo: codepen demo
-
 export const InfluenceParallaxGap: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
 

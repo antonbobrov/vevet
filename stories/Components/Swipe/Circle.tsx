@@ -1,8 +1,6 @@
 import React, { FC, useEffect, useRef } from 'react';
 import { Swipe } from '@/index';
 
-// todo: codepen demo
-
 export const Circle: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
   const rotateRef = useRef<HTMLDivElement>(null);
