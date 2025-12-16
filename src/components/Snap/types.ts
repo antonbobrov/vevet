@@ -87,7 +87,7 @@ export interface ISnapMutableProps
   rewind?: boolean;
 
   /**
-   * Stick to the nearest slide on window resize
+   * Snap to the nearest slide on carousel resize
    * @default true
    */
   stickOnResize?: boolean;

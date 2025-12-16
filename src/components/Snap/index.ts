@@ -136,7 +136,7 @@ export class Snap<
   protected _targetIndex?: number;
 
   constructor(
-    props?: S & M,
+    props: S & M,
     onCallbacks?: TModuleOnCallbacksProps<C, Snap<C, S, M>>,
   ) {
     super(props, onCallbacks as any);
