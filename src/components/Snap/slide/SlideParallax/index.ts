@@ -112,9 +112,14 @@ export class SnapSlideParallax {
     defaultValue: number[],
   ) {
     const attrValue = element.getAttribute(name) ?? '';
+    const attrStringValue = attrValue.trim().toLowerCase();
 
-    if (attrValue.trim().toLowerCase() === 'none') {
+    if (attrStringValue === 'none') {
       return [-Infinity, Infinity];
+    }
+
+    if (attrStringValue === 'const') {
+      return [1, 1];
     }
 
     const cleanValue = attrValue.replace(/[\s\\[\]]+/g, '');
