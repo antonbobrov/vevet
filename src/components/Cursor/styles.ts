@@ -64,14 +64,13 @@ export function createCursorStyles(prefix: string) {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: scale(0.75) translate(-62.5%, -62.5%);
+      transform: translate(-50%, -50%);
       opacity: 0;
       transition: opacity 0.25s linear, transform 0.25s linear;
     }
 
     .${prefix}__inner > *.active {
       opacity: 1;
-      transform: scale(1) translate(-50%, -50%);
     }
   `;
 
