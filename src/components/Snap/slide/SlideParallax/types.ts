@@ -26,7 +26,9 @@ export interface ISnapSlideParallaxItem extends ISnapSlideParallaxType {
   target: number;
   value: number;
   offset: number;
-  isInfluence: boolean;
+  min: number;
+  max: number;
+  influence: number;
   isDirectional: boolean;
   isAbs: boolean;
 }

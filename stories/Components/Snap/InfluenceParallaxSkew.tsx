@@ -17,7 +17,7 @@ export const InfluenceParallaxSkew: FC = () => {
         shortSwipes: false,
         gap: 20,
         lerp: 0.2,
-        freemode: 'sticky',
+        freemode: true,
       },
       {
         onUpdate: (data, { slides }) => {
@@ -92,9 +92,11 @@ export const InfluenceParallaxSkew: FC = () => {
             <div
               className="wrap"
               style={{ backgroundColor: color }}
-              data-snap-parallax-skew="-200"
-              data-snap-parallax-skew-scope="1,1"
-              data-snap-parallax-skew-influence
+              data-snap-parallax-skew="-40"
+              data-snap-parallax-skew-min="-40"
+              data-snap-parallax-skew-max="40"
+              data-snap-parallax-skew-scope="const"
+              data-snap-parallax-skew-influence="5"
               data-snap-parallax-skew-directional
             >
               {index}

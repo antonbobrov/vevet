@@ -17,7 +17,7 @@ export const InfluenceParallaxGap: FC = () => {
         shortSwipes: false,
         gap: 5,
         lerp: 0.2,
-        freemode: 'sticky',
+        freemode: true,
       },
       {
         onUpdate: (data, { slides }) => {
@@ -92,9 +92,9 @@ export const InfluenceParallaxGap: FC = () => {
             <div
               className="wrap"
               style={{ backgroundColor: color }}
-              data-snap-parallax-x="-200%"
-              data-snap-parallax-x-scope="-Infinity, Infinity"
-              data-snap-parallax-x-influence
+              data-snap-parallax-x="-50%"
+              data-snap-parallax-x-scope="none"
+              data-snap-parallax-x-influence="3"
             >
               {index}
             </div>

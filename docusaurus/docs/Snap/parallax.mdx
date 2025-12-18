@@ -91,8 +91,6 @@ To change the active range, use the `data-snap-parallax-scope` attribute:
 - infinite range like `data-snap-parallax-scope="none"` or `data-snap-parallax-scope="-Infinity, Infinity"`
 - constant range like `data-snap-parallax-scope="const"` `data-snap-parallax-scope="1,1"`; should be used with `data-snap-parallax-[effect]-influence`
 
-A scope with identical start and end values (e.g. `1,1`) produces a **constant parallax value**, effectively disabling interpolation.
-
 The scope applies to all parallax effects inside a slide unless overridden per effect via `data-snap-parallax-[effect]-scope`:
 
 ```html
@@ -117,6 +115,8 @@ The scope applies to all parallax effects inside a slide unless overridden per e
   </div>
 </div>
 ```
+
+
 
 ## Parallax Strength (influence)
 
@@ -151,6 +151,28 @@ This is useful for properties like `scale()` where negative values are undesirab
     class="wrap"
     data-snap-parallax-scale="-0.5"
     data-snap-parallax-scale-abs
+  >
+    Slide Info
+  </div>
+</div>
+```
+
+
+
+## Clamping (min-max)
+
+data-snap-parallax-[effect]-min` and `data-snap-parallax-[effect]-max` clamp the **final computed parallax value**, preventing it from going below or above the defined bounds:
+
+```html
+<div class="slide">
+  <div
+    class="wrap"
+    data-snap-parallax-scale="-0.25"
+    data-snap-parallax-scale-scope="-2,2"
+    data-snap-parallax-scale-abs
+    data-snap-parallax-scale-min="0.5"
+    data-snap-parallax-scale-max="1"
+    data-snap-parallax-scale-influence="3"
   >
     Slide Info
   </div>
@@ -210,8 +232,7 @@ This might be useful for reverse animations.
   <div
     class="wrap"
     data-snap-parallax-x="-200%"
-    data-snap-parallax-x-scope="-Infinity, Infinity"
-    data-snap-parallax-x-influence
+    data-snap-parallax-x-scope="none"
   >
     Slide Info
   </div>
@@ -224,9 +245,8 @@ This might be useful for reverse animations.
 <div class="slide">
   <div
     class="wrap"
-    data-snap-parallax-scale="0.5"
-    data-snap-parallax-scale-offset="-0.5"
-    data-snap-parallax-scale-scope="-2,2"
+    data-snap-parallax-scale="-0.2"
+    data-snap-parallax-scale-scope="-1,1"
     data-snap-parallax-scale-abs
   >
     Slide Info

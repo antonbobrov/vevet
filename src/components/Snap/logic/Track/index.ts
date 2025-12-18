@@ -67,7 +67,7 @@ export class SnapTrack extends SnapLogic {
     this._target = value;
 
     this._influence.target += domSize ? diff / domSize : 0;
-    this._influence.target = clamp(this._influence.target, -0.2, 0.2);
+    this._influence.target = clamp(this._influence.target, -1, 1);
   }
 
   /** Set a value to current & target value instantly */
@@ -167,7 +167,7 @@ export class SnapTrack extends SnapLogic {
 
     // Interpolate influence
 
-    influence.target = lerp(influence.target, 0, initialFactor, 0.000001);
+    influence.target = lerp(influence.target, 0, lerpFactor, 0.000001);
 
     influence.current = lerp(
       influence.current,

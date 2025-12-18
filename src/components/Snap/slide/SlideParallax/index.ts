@@ -70,15 +70,18 @@ export class SnapSlideParallax {
           ? this._getScope(element, scopeAttr, [-1, 1])
           : defaultScope;
 
-        const attrValue = element.getAttribute(n) ?? '';
-        const target = parseFloat(attrValue) || 0;
+        const attrValue = this._getAttr(element, n);
         const unit = attrValue.replace(/[-\d.]+/g, '') || defaultUnit;
+        const target = this._getFloatAttr(element, n, 0);
 
-        const offsetAttr = `${n}-offset`;
-        const offset = parseFloat(element.getAttribute(offsetAttr) ?? '') || 0;
+        const offset = this._getFloatAttr(element, `${n}-offset`, 0);
+        const min = this._getFloatAttr(element, `${n}-min`, -Infinity);
+        const max = this._getFloatAttr(element, `${n}-max`, Infinity);
 
         const influenceAttr = `${n}-influence`;
-        const isInfluence = element.hasAttribute(influenceAttr);
+        const influence = element.hasAttribute(influenceAttr)
+          ? this._getFloatAttr(element, `${n}-influence`, 1)
+          : 0;
 
         const directionalAttr = `${n}-directional`;
         const isDirectional = element.hasAttribute(directionalAttr);
@@ -97,12 +100,30 @@ export class SnapSlideParallax {
           target,
           value: 0,
           offset,
-          isInfluence,
+          min,
+          max,
+          influence,
           isDirectional,
           isAbs,
         };
       },
     );
+  }
+
+  /** Get parallax attribute */
+  protected _getAttr(element: HTMLElement, name: string) {
+    return element.getAttribute(name) ?? '';
+  }
+
+  /** Get parallax float attribute */
+  protected _getFloatAttr(
+    element: HTMLElement,
+    name: string,
+    defaultValue: number,
+  ) {
+    const float = parseFloat(this._getAttr(element, name));
+
+    return Number.isNaN(float) ? defaultValue : float;
   }
 
   /** Get parallax scope */
@@ -111,7 +132,7 @@ export class SnapSlideParallax {
     name: string,
     defaultValue: number[],
   ) {
-    const attrValue = element.getAttribute(name) ?? '';
+    const attrValue = this._getAttr(element, name);
     const attrStringValue = attrValue.trim().toLowerCase();
 
     if (attrStringValue === 'none') {
@@ -149,8 +170,8 @@ export class SnapSlideParallax {
     items.forEach((item) => {
       let progress = clamp(globalProgress, ...item.scope);
 
-      if (item.isInfluence) {
-        progress *= Math.abs(snap.track.influence);
+      if (Math.abs(item.influence) > 0) {
+        progress *= Math.abs(snap.track.influence) * item.influence;
       }
 
       if (item.isDirectional) {
@@ -167,6 +188,8 @@ export class SnapSlideParallax {
       if (item.modifier) {
         item.value = item.modifier(item.value);
       }
+
+      item.value = clamp(item.value, item.min, item.max);
     });
 
     parallaxGroups.forEach(({ name: groupName }) => {
