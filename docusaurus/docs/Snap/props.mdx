@@ -56,7 +56,7 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 ### `slides` {#props.slides}
 - **Type:** (`HTMLElement` | [**SnapSlide**](./slide))[] | `false`;
 - **Default:** `false`  
-- Slides instances. If `false`, all container's children will be considered as slides.
+- Slide instances. If `false`, all container's children will be considered as slides.
 
 ```js
 const snap = new Snap({
@@ -127,7 +127,7 @@ snap.updateProps({
 ### `loop` {#props.loop}
 - **Type:** `boolean`  
 - **Default:** `false`  
-- Detects if need to loop the slides.  
+- Determines whether to loop the slides.  
   **See [demo](basic-demos#loop)**
 
 ```js
@@ -181,7 +181,7 @@ snap.updateProps({
 ### `freemode` {#props.freemode}
 - **Type:** `boolean | 'sticky'`
 - **Default:** `false`  
-- Freemode allows swiping and wheeling with or without magnets snap.
+- Freemode allows swiping and wheeling with or without magnet snapping.
 - `false` - enables magnets
 - `true` - disables magnets
 - `"sticky"` - allows swipe with inertia and snapping to the nearest slide.  
@@ -367,7 +367,7 @@ snap.updateProps({
 ### `grabCursor` {#props.grabCursor}
 - **Type:** `boolean`  
 - **Default:** `false`  
-- User will see the "grab" cursor when hovering and "grabbing" when swiping.  
+- Users will see the "grab" cursor when hovering and "grabbing" when swiping.  
   **See [demo](basic-demos#grab-cursor)**
 
 ```js
@@ -420,7 +420,7 @@ snap.updateProps({
 ### `followSwipe` {#props.followSwipe}
 - **Type:** `boolean`  
 - **Default:** `false`  
-- If `false`, the carousel will be animated only when you release the finger, it will not move while you hold your finger on it.  
+- If `false`, the carousel will be animated only when you release your finger; it will not move while you hold your finger on it.  
   **See [demo](basic-demos#swipe-no-follow)**
 
 ```js
@@ -525,7 +525,7 @@ snap.updateProps({
 ### `swipeMinTime` {#props.swipeMinTime}
 - **Type:** `number`  
 - **Default:** `0`  
-- The minimum time from the start of a real swipe that identifies the moment the carousel swipe begins.
+- The minimum time from the start of a real swipe that identifies when the carousel swipe begins.
 
 ```js
 const snap = new Snap({

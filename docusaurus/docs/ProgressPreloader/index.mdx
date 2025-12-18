@@ -94,23 +94,23 @@ const preloader = new ProgressPreloader(
 );
 ```
 
-Add a custom resource
+Add a custom resource:
 
 ```html
-<div class="js-preload" data-weight="10">
+<div class="js-preload" data-weight="10"></div>
 
 <!-- Update its 'loaded' attribute -->
-<div class="js-preload" data-weight="10" data-loaded="7">
+<div class="js-preload" data-weight="10" data-loaded="7"></div>
 ```
 
-Add virtual resource
+Add a virtual resource:
 
 ```js
 preloader.addResource('my-resource', 20);
 preloader.resolveResource('my-resource', 15);
 ```
 
-Destroy preloader:
+Destroy the preloader:
 
 ```js
 preloader.destroy();

@@ -11,7 +11,7 @@ import Head from '@docusaurus/Head';
 </Head>
 
 :::note
-All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+All **[Module methods](/docs/base/Module/#methods)** are available in this class.
 :::
 
 ### `next`
@@ -21,9 +21,9 @@ Navigate to the next slide.
 ```ts
 const snap = new Snap({ container });
 
-instance.next({ duration: 500 });
+snap.next({ duration: 500 });
 
-instance.next({ duration: 500, skip: 2 }); // skip two slides
+snap.next({ duration: 500, skip: 2 }); // skip two slides
 ```
 
 ### `prev`
@@ -33,9 +33,9 @@ Navigate to the previous slide.
 ```ts
 const snap = new Snap({ container });
 
-instance.prev({ duration: 500 });
+snap.prev({ duration: 500 });
 
-instance.prev({ duration: 500, skip: 2 }); // skip two slides
+snap.prev({ duration: 500, skip: 2 }); // skip two slides
 ```
 
 ### `toCoord`
@@ -107,7 +107,7 @@ Force coordinate recalculation and re-render slides.
 ```ts
 const snap = new Snap({ container });
 
-instance.render();
+snap.render();
 ```
 
 ### `resize`
@@ -118,8 +118,8 @@ If `false` is passed, the resize is handled with a debounce timeout.
 ```ts
 const snap = new Snap({ container });
 
-instance.resize(); // instant resize
-instance.resize(false); // with debounce
+snap.resize(); // instant resize
+snap.resize(false); // with debounce
 ```
 
 ### `stick`
@@ -129,7 +129,7 @@ Snap to the nearest slide magnet.
 ```ts
 const snap = new Snap({ container });
 
-instance.stick();
+snap.stick();
 ```
 
 ### `getNearestMagnet`
@@ -139,7 +139,7 @@ Return the nearest magnet relative to a target coordinate.
 ```ts
 const snap = new Snap({ container });
 
-const magnet = instance.getNearestMagnet(1234);
+const magnet = snap.getNearestMagnet(1234);
 
 magnet.diff; // difference with current coordinate
 magnet.magnet; // magnet coordinate
@@ -153,7 +153,7 @@ Cancel the current transition to a target slide or coordinate.
 ```ts
 const snap = new Snap({ container });
 
-instance.cancelTransition();
+snap.cancelTransition();
 ```
 
 ### `track.clampTarget`
@@ -163,7 +163,7 @@ Clamp the target value between the minimum and maximum track values.
 ```ts
 const snap = new Snap({ container });
 
-instance.track.clampTarget();
+snap.track.clampTarget();
 ```
 
 ### `track.loopCoord`
@@ -175,11 +175,11 @@ Wrap a coordinate between the minimum and maximum track values and return a norm
 const snap = new Snap({ container });
 
 // when track.min=0 & track.max=1100
-instance.track.loop(0); // => 0
-instance.track.loop(1100); // => 0
-instance.track.loop(1101); // => 1
-instance.track.loop(-1101); // => 1099
-instance.track.loop(5000); // => 600
+snap.track.loopCoord(0); // => 0
+snap.track.loopCoord(1100); // => 0
+snap.track.loopCoord(1101); // => 1
+snap.track.loopCoord(-1101); // => 1099
+snap.track.loopCoord(5000); // => 600
 ```
 
 ### `track.set`
@@ -190,7 +190,7 @@ After manually updating the values, you must call `.render()`.
 ```ts
 const snap = new Snap({ container });
 
-instance.track.set(1350);
+snap.track.set(1350);
 
-instance.render();
+snap.render();
 ```

@@ -33,7 +33,7 @@ Manages pointer events, including tracking multiple pointers, and emitting callb
 ## Callbacks
 
 :::note
-All **[Module's callbacks](/docs/base/Module/#callbacks)** are available in this class.
+All **[Module callbacks](/docs/base/Module/#callbacks)** are available in this class.
 :::
 
 
@@ -66,20 +66,20 @@ import { Pointers } from "vevet";
 
 const container = document.getElementById("container");
 
-new Pointers(
+const pointers = new Pointers(
   {
     container,
     relative: true,
   },
   {
     onPointermove: ({ pointer }) => {
-      console.later(pointer.current.x, pointer.current.y)
+      console.log(pointer.current.x, pointer.current.y)
     },
   }
 );
 ```
 
-Destroy pointers: 
+Destroy the pointers instance: 
 
 ```js
 pointers.destroy();

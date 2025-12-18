@@ -54,7 +54,7 @@ For best performance, apply splitting only to short text blocks (headlines, capt
 
 SplitText is a fast alternative to `GSAP SplitText` or `split-type`.
 
-See perfomance comparison of:
+See performance comparison of:
   - [words splitting](https://measurethat.net/Benchmarks/Show/31805/3/vevetsplittext-vs-splittype-vs-gsapsplittext-split-into#latest_results_block)
   - [words+letter splitting](https://measurethat.net/Benchmarks/Show/31806/2/vevetsplittext-vs-splittype-vs-gsapsplittext-split-into#latest_results_block)
   - [lines+words+letters splitting](https://measurethat.net/Benchmarks/Show/31847/2/vevetsplittext-vs-splittype-vs-gsapsplittext-split-into#latest_results_block)
@@ -102,7 +102,7 @@ text.split();
 Add animation:
 
 ```js
-import { SplitText } from "vevets";
+import { SplitText } from "vevet";
 import { animate, stagger } from "animejs";
 
 const text = new SplitText(
@@ -125,7 +125,7 @@ const text = new SplitText(
 );
 ```
 
-Destroy SplitText
+Destroy the SplitText instance:
 
 ```js
 text.destroy();

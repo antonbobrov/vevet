@@ -11,7 +11,7 @@ import Head from '@docusaurus/Head';
 </Head>
 
 :::note
-All **[Module's methods](/docs/base/Module/#methods)** are available in this class.
+All **[Module methods](/docs/base/Module/#methods)** are available in this class.
 :::
 
 ### `attachCursor`
@@ -22,7 +22,7 @@ Registers a cursor type. Accepts the `element` and appends it to the [.inner](ac
 const cursor = new Cursor();
 
 cursor.attachCursor({
-  element: document.getElementById('curor-type'),
+  element: document.getElementById('cursor-type'),
   type: 'some_type', // unique type identifier
 });
 ```
@@ -46,7 +46,7 @@ const remove = cursor.attachElement({
   type: 'some_type', // registered cursor type which appears on this element
   width: 'auto', // custom cursor width applied when element is hovered
   height: 'auto', // custom cursor height applied when element is hovered
-  padding: 10, // additinal value added to the cursor size
+  padding: 10, // additional value added to the cursor size
   snap: true, // snap position to the element's center
 });
 

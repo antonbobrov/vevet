@@ -191,7 +191,7 @@ Current viewport height.
 
 ### `vevet.sHeight`
 - **Type**: `number`  
-Current small viewport height. Equivalent to `100svh`. Used to prevent layout shifts in browsers like In-App Safari while native svh works not properly. 
+Current small viewport height. Equivalent to `100svh`. Used to prevent layout shifts in browsers like In-App Safari where native svh does not work properly. 
 
 ### `vevet.scrollbarWidth`
 - **Type**: `number`  

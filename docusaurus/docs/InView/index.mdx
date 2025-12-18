@@ -62,14 +62,14 @@ observer.addElement(
 
 InView can add a custom class to an element when it enters the viewport, and remove the class when it leaves the viewport.
 
-For such a behavior, use `data-in-view-class`:
+To enable this behavior, use `data-in-view-class`:
 
 ```html
 <h1 class="observable-element" data-in-view-class="fadeInUp">InView</h1>
 ```
 
 :::caution Class Behavior
-The class from `data-in-view-class` is added when the element enters the viewport and removed once it leaves it  
+The class from `data-in-view-class` is added when the element enters the viewport and removed once the element leaves the viewport  
 (if `hasOut: true`).  
 This allows creating fully CSS-driven scroll animations without JavaScript transitions.
 :::
@@ -79,13 +79,13 @@ InView cannot detect visibility of elements with `display: none` or zero height/
 Ensure the element has a measurable size before adding it to the observer.
 :::
 
-Stop observing the element
+Stop observing an element
 
 ```js
 observer.removeElement(yourElement);
 ```
 
-Destroy InView
+Destroy the InView instance
 
 ```js
 observer.destroy();
