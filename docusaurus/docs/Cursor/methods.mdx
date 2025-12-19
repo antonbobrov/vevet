@@ -29,7 +29,7 @@ cursor.attachCursor({
 });
 ```
 
-### `attachElement`
+### `attachHover`
 
 Registers a **hoverable element** and binds cursor interactions to it.
 
@@ -46,7 +46,7 @@ For the full configuration options, see **[CursorHoverElement](interfaces#icurso
 ```ts
 const cursor = new Cursor();
 
-const remove = cursor.attachElement({
+const remove = cursor.attachHover({
   element: document.getElementById('hover-element'), // hoverable element
   type: 'some_type',
   snap: true,

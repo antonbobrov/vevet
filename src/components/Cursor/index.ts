@@ -462,7 +462,7 @@ export class Cursor<
    * @returns Returns a destructor
    */
   @noopIfDestroyed
-  public attachElement(settings: ICursorHoverElementProps) {
+  public attachHover(settings: ICursorHoverElementProps) {
     const element = new CursorHoverElement(
       settings,
       (data) => this._handleElementEnter(data),

@@ -74,7 +74,7 @@ const cursor = new Cursor({
 Add hoverable elements:
 
 ```js
-cursor.attachElement({
+cursor.attachHover({
   element: document.getElementById('hover-element'),
   width: 200,
   height: 100,
@@ -84,7 +84,7 @@ cursor.attachElement({
 Without size change:
 
 ```js
-cursor.attachElement({
+cursor.attachHover({
   element: document.getElementById('hover-element'),
   width: null,
   height: null,
@@ -94,7 +94,7 @@ cursor.attachElement({
 Snap cursor:
 
 ```js
-cursor.attachElement({
+cursor.attachHover({
   element: document.getElementById('hover-element'),
   snap: true,
 });
@@ -109,7 +109,7 @@ cursor.attachCursor({
 });
 
 // and apply it to an element when hovered
-cursor.attachElement({
+cursor.attachHover({
   element: document.getElementById('hover-element'),
   type: 'some_type', // unique type identifier
 });
@@ -128,6 +128,6 @@ cursor.destroy();
 - Use `Cursor` as a **visual layer**, not as a logic controller.
 - Prefer styling via `.inner` and `.outer` instead of replacing DOM nodes.
 - Keep `lerp` values low (0.05–0.2) for smooth motion.
-- Use `attachElement()` only for interactive elements to avoid unnecessary listeners.
+- Use `attachHover()` only for interactive elements to avoid unnecessary listeners.
 - Disable `autoStop` only when continuous rendering is required.
 - **Do not use `Cursor` on mobile devices** — custom cursors negatively impact usability and performance on touch screens.

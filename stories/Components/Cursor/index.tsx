@@ -48,13 +48,13 @@ export const Component: FC = () => {
       type: 'some_type',
     });
 
-    instance.attachElement({
+    instance.attachHover({
       element: instance.domContainer,
       type: 'default',
     });
 
     if (refWithSize.current) {
-      instance.attachElement({
+      instance.attachHover({
         element: refWithSize.current,
         width: 'auto',
         height: 'auto',
@@ -63,7 +63,7 @@ export const Component: FC = () => {
     }
 
     if (refWithType.current) {
-      instance.attachElement({
+      instance.attachHover({
         element: refWithType.current,
         type: 'some_type',
         width: null,
@@ -72,7 +72,7 @@ export const Component: FC = () => {
     }
 
     if (refWithSnap.current) {
-      instance.attachElement({
+      instance.attachHover({
         element: refWithSnap.current,
         width: '10rem',
         height: 'auto',
