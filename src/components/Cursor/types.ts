@@ -86,6 +86,21 @@ export interface ICursorCallbacksMap extends IModuleCallbacksMap {
    * Triggered when an attached element is no longer hovered.
    */
   hoverLeave: CursorHoverElement;
+
+  /**
+   * Triggered when a cursor type is visible.
+   */
+  typeShow: ICursorType;
+
+  /**
+   * Triggered when a cursor type becomes invisible.
+   */
+  typeHide: ICursorType;
+
+  /**
+   * Triggered when no cursor type is applied.
+   */
+  noType: undefined;
 }
 
 /**
@@ -107,12 +122,10 @@ export interface ICursorFullCoords extends ICursorTargetCoords {
 }
 
 /**
- * Information about the currently hovered element affecting cursor behavior.
+ * Custom cursor type configuration.
  */
 export interface ICursorType {
-  /**
-   * The currently hovered element.
-   */
+  /** Custom cursor element */
   element: Element;
 
   /** Cursor type */

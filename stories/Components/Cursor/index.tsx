@@ -33,7 +33,7 @@ export const Component: FC = () => {
     instance.path.style.stroke = '#f00';
 
     const defaultCursor = document.createElement('div');
-    defaultCursor.innerHTML = '';
+    defaultCursor.innerHTML = 'default';
 
     const someTypeCursor = document.createElement('div');
     someTypeCursor.innerHTML = 'some_type';

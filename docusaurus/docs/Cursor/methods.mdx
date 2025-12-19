@@ -20,6 +20,8 @@ Registers a **cursor type** and appends its element into the cursor's **[inner](
 
 Each cursor type is identified by a unique `type` string and can later be activated when hovering elements.
 
+See **[ICursorType](interfaces#icursortype)**.
+
 ```ts
 const cursor = new Cursor();
 
@@ -41,7 +43,7 @@ While hovering the element, the cursor can:
 
 Returns a **cleanup function** that removes all listeners and bindings.
 
-For the full configuration options, see **[CursorHoverElement](interfaces#icursorhoverelementprops)**.
+For the full configuration options, see **[ICursorHoverElementProps](interfaces#icursorhoverelementprops)**.
 
 ```ts
 const cursor = new Cursor();

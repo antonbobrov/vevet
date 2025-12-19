@@ -525,6 +525,8 @@ export class Cursor<
 
   /** Enable or disable a cursor type */
   protected _toggleType(type: string, isEnabled: boolean) {
+    const targetType = this._types.find((item) => item.type === type);
+
     if (isEnabled) {
       this._activeTypes.push(type);
     } else {
@@ -539,6 +541,14 @@ export class Cursor<
     this._types.forEach((item) => {
       cnToggle(item.element, 'active', item.type === activeType);
     });
+
+    if (targetType) {
+      this.callbacks.emit(isEnabled ? 'typeShow' : 'typeHide', targetType);
+    }
+
+    if (!activeType) {
+      this.callbacks.emit('noType', undefined);
+    }
   }
 
   /**

@@ -51,7 +51,7 @@ const cursor = new Cursor({ }, {
 or:
 
 ```ts
-const destruct = cursor.on('hoverEnter', () => (data) => console.log(data));
+const destruct = cursor.on('hoverEnter', (data) => console.log(data));
 
 // Cancel the callback
 destruct();
@@ -70,7 +70,64 @@ const cursor = new Cursor({ }, {
 or:
 
 ```ts
-const destruct = cursor.on('hoverLeave', () => (data) => console.log(data));
+const destruct = cursor.on('hoverLeave', (data) => console.log(data));
+
+// Cancel the callback
+destruct();
+```
+
+### `typeShow`
+
+Triggered when a cursor type is visible.
+
+```ts
+const cursor = new Cursor({ }, {
+  onTypeShow: (data) => console.log(data),
+});
+```
+
+or:
+
+```ts
+const destruct = cursor.on('typeShow', (data) => console.log(data));
+
+// Cancel the callback
+destruct();
+```
+
+### `typeHide`
+
+Triggered when a cursor type becomes invisible.
+
+```ts
+const cursor = new Cursor({ }, {
+  onTypeHide: (data) => console.log(data),
+});
+```
+
+or:
+
+```ts
+const destruct = cursor.on('typeHide', (data) => console.log(data));
+
+// Cancel the callback
+destruct();
+```
+
+### `noType`
+
+Triggered when no cursor type is applied.
+
+```ts
+const cursor = new Cursor({ }, {
+  onNoType: (data) => console.log(data),
+});
+```
+
+or:
+
+```ts
+const destruct = cursor.on('noType', () => console.log('no type applied'));
 
 // Cancel the callback
 destruct();
