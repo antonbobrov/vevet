@@ -37,3 +37,41 @@ const destruct = cursor.on('render', () => console.log('Cursor rendered'));
 // Cancel the callback
 destruct();
 ```
+
+### `hoverEnter`
+
+Triggered when an attached element is hovered.
+
+```ts
+const cursor = new Cursor({ }, {
+  onHoverEnter: (data) => console.log(data),
+});
+```
+
+or:
+
+```ts
+const destruct = cursor.on('hoverEnter', () => (data) => console.log(data));
+
+// Cancel the callback
+destruct();
+```
+
+### `hoverLeave`
+
+Triggered when an attached element is no longer hovered.
+
+```ts
+const cursor = new Cursor({ }, {
+  onHoverLeave: (data) => console.log(data),
+});
+```
+
+or:
+
+```ts
+const destruct = cursor.on('hoverLeave', () => (data) => console.log(data));
+
+// Cancel the callback
+destruct();
+```

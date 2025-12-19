@@ -489,6 +489,8 @@ export class Cursor<
       this._toggleType(data.type, true);
     }
 
+    this.callbacks.emit('hoverEnter', data);
+
     if (this.props.enabled) {
       this._raf.play();
     }
@@ -503,6 +505,8 @@ export class Cursor<
     if (data.type) {
       this._toggleType(data.type, false);
     }
+
+    this.callbacks.emit('hoverLeave', data);
 
     if (this.props.enabled) {
       this._raf.play();

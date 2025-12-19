@@ -3,6 +3,7 @@ import {
   IModuleMutableProps,
   IModuleStaticProps,
 } from '@/base/Module';
+import { CursorHoverElement } from './HoverElement';
 
 export interface ICursorStaticProps extends IModuleStaticProps {
   /**
@@ -75,6 +76,16 @@ export interface ICursorCallbacksMap extends IModuleCallbacksMap {
    * Triggered on each render to update the cursor's position.
    */
   render: undefined;
+
+  /**
+   * Triggered when an attached element is hovered.
+   */
+  hoverEnter: CursorHoverElement;
+
+  /**
+   * Triggered when an attached element is no longer hovered.
+   */
+  hoverLeave: CursorHoverElement;
 }
 
 /**
