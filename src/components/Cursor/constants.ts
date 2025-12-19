@@ -1,0 +1,1 @@
+export const LERP_APPROXIMATION = 0.0001;

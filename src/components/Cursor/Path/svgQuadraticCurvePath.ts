@@ -1,4 +1,4 @@
-import { ICursorPathPoint } from '../types';
+import { ICursorPathPoint } from './types';
 
 export const svgQuadraticCurvePath = (points: ICursorPathPoint[]) => {
   let path = `M${points[0].x},${points[0].y}`;

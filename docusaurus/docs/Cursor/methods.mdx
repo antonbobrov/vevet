@@ -16,38 +16,44 @@ All **[Module methods](/docs/base/Module/#methods)** are available in this class
 
 ### `attachCursor`
 
-Registers a cursor type. Accepts the `element` and appends it to the [.inner](accessors#inner) element.
+Registers a **cursor type** and appends its element into the cursor's **[inner](accessors#inner)** container.
+
+Each cursor type is identified by a unique `type` string and can later be activated when hovering elements.
 
 ```ts
 const cursor = new Cursor();
 
 cursor.attachCursor({
   element: document.getElementById('cursor-type'),
-  type: 'some_type', // unique type identifier
+  type: 'some_type', // unique cursor type identifier
 });
 ```
 
 ### `attachElement`
 
-Registers a hoverable element.
+Registers a **hoverable element** and binds cursor interactions to it.
 
-When hovered, the cursor can:
+While hovering the element, the cursor can:
 - change size,
-- snap to element center,
+- snap to the element center,
+- apply sticky behavior,
 - switch cursor type.
 
-Returns a cleanup function that removes all listeners and bindings.
+Returns a **cleanup function** that removes all listeners and bindings.
+
+For the full configuration options, see **[CursorHoverElement](interfaces#icursorhoverelementprops)**.
 
 ```ts
 const cursor = new Cursor();
 
 const remove = cursor.attachElement({
   element: document.getElementById('hover-element'), // hoverable element
-  type: 'some_type', // registered cursor type which appears on this element
-  width: 'auto', // custom cursor width applied when element is hovered
-  height: 'auto', // custom cursor height applied when element is hovered
-  padding: 10, // additional value added to the cursor size
-  snap: true, // snap position to the element's center
+  type: 'some_type',
+  snap: true,
+  width: 'auto',
+  height: 'auto',
+  padding: 10,
+  sticky: true,
 });
 
 // Remove interaction
@@ -56,7 +62,7 @@ remove();
 
 ### `render`
 
-Manually triggers a cursor render.
+Usually not required, as rendering is handled automatically, but can be useful after manual state changes.
 
 ```ts
 const cursor = new Cursor();
@@ -66,7 +72,7 @@ cursor.render();
 
 ### `updateProps`
 
-Dynamically updates instance properties.
+Dynamically updates cursor instance properties at runtime.
 
 ```ts
 const cursor = new Cursor();
@@ -79,7 +85,7 @@ cursor.updateProps({
 
 ### `destroy`
 
-Destroys the instance and cleans up resources.
+Destroys the cursor instance and cleans up resources.
 
 ```ts
 const cursor = new Cursor();

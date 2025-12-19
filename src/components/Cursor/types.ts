@@ -70,15 +70,6 @@ export interface ICursorCallbacksMap extends IModuleCallbacksMap {
 }
 
 /**
- * Represents the cursor's point on a path.
- */
-export interface ICursorPathPoint {
-  x: number;
-  y: number;
-  length: number;
-}
-
-/**
  * Represents the cursor's position and size.
  */
 export interface ICursorFullCoords {
@@ -86,41 +77,6 @@ export interface ICursorFullCoords {
   y: number;
   width: number;
   height: number;
-}
-
-/**
- * Information about the currently hovered element affecting cursor behavior.
- */
-export interface ICursorHoveredElement {
-  /**
-   * The currently hovered element.
-   */
-  element: Element;
-
-  /** Cursor type */
-  type?: string;
-
-  /**
-   * Indicates whether the hover state snaps to the element center.
-   */
-  snap?: boolean;
-
-  /**
-   * Target width of the cursor while hovering over this element.
-   * @default null
-   */
-  width?: null | number | 'auto';
-
-  /**
-   * Target height of the cursor while hovering over this element.
-   * @default null
-   */
-  height?: null | number | 'auto';
-
-  /**
-   * Padding around the cursor while hovering over this element.
-   */
-  padding?: number;
 }
 
 /**

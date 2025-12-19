@@ -30,8 +30,8 @@ cursor.container; // returns cursor container
 
 Type: `{ height: number; width: number; x: number; y: number; }`
 
-The **current interpolated state** of the cursor.  
-These values change smoothly over time and should be used for rendering logic.
+The **current interpolated cursor state**.  
+These values are smoothed over time using interpolation and are intended for **rendering and animation logic**.
 
 ```js
 const cursor = new Cursor();
@@ -56,41 +56,27 @@ cursor.domContainer; // cursor DOM parent
 
 ### `hoveredElement`
 
-Type: `undefined  | ICursorHoveredElement`
+Type: `undefined` | **[CursorHoverElement](interfaces#cursorhoverelement)**
 
-Stores information about the currently hovered element.
+Contains information about the currently hovered **attached** element.
 
-- Exists only while hovering an attached element.
-- Set to `undefined` when no interactive element is hovered.
+- Available only while hovering an element registered via `.attachElement()`
+- Automatically resets to `undefined` when no interactive element is hovered
 
 **Works for attached elements only. See [.attachElement()](methods#attachelement).**
-
-**ICursorHoveredElement Structure**
-
-```ts
-interface ICursorHoveredElement {
-  element: Element;
-  width?: number | "auto" | null;
-  height?: number | "auto" | null;
-  padding?: number;
-  snap?: boolean;
-}
-```
-
-- `element`: The DOM element currently being hovered.
-- `width`: Custom width for the cursor when hovering over this element (`number`, "auto", or `null`).
-- `height`: Custom height for the cursor when hovering over this element (`number`, "auto", or `null`).
-- `padding`: Additional padding around the cursor.
-- `snap`: Indicates whether the hover state snaps to the element center.
 
 ```js
 const cursor = new Cursor();
 
-cursor.hoveredElement.element; // Element
-cursor.hoveredElement.width; // number | "auto" | null
-cursor.hoveredElement.height; // number | "auto" | null
-cursor.hoveredElement.padding; // number
-cursor.hoveredElement.snap; // boolean
+cursor.hoveredElement.element;
+cursor.hoveredElement.type;
+cursor.hoveredElement.snap;
+cursor.hoveredElement.width;
+cursor.hoveredElement.height;
+cursor.hoveredElement.padding;
+cursor.hoveredElement.sticky;
+cursor.hoveredElement.stickyX;
+cursor.hoveredElement.stickyY;
 ```
 
 ### `inner`
@@ -121,8 +107,8 @@ cursor.outer; // HTMLElement
 
 Type: `{ height: number; width: number; x: number; y: number }`
 
-The **target cursor state** without interpolation.  
-Represents the immediate result of pointer movement or hover changes.
+The **raw, non-interpolated cursor state**.  
+Represents the immediate result of pointer movement or hover state changes.
 
 ```js
 const cursor = new Cursor();
@@ -137,7 +123,9 @@ cursor.targetCoords.height;
 
 Type: `SVGPathElement`
 
-Returns an SVG Path element which contains a smooth curve of a user's movement. Work for `behavior: "path"` only. [Read more](props#props.behavior)
+An SVG `<path>` element that stores a smoothed curve of the user’s pointer movement. Available only when `behavior: "path"` is enabled. 
+
+**[Read more](props#props.behavior)** / **[Demo](demos#tail-path-cursor)**
 
 ```js
 const cursor = new Cursor();

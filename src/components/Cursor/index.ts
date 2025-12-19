@@ -2,9 +2,7 @@ import { TRequiredProps } from '@/internal/requiredProps';
 import {
   ICursorCallbacksMap,
   ICursorFullCoords,
-  ICursorHoveredElement,
   ICursorMutableProps,
-  ICursorPathPoint,
   ICursorStaticProps,
   ICursorType,
 } from './types';
@@ -16,12 +14,16 @@ import { clamp, lerp } from '@/utils/math';
 import { createCursorStyles } from './styles';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { getTextDirection } from '@/internal/textDirection';
-import { isNumber } from '@/internal/isNumber';
 import { cnAdd, cnRemove, cnToggle } from '@/internal/cn';
 import { body, doc } from '@/internal/env';
-import { svgQuadraticCurvePath } from './utils/svgQuadraticCurvePath';
+import { CursorPath } from './Path';
+import { CursorHoverElement } from './HoverElement';
+import { ICursorHoverElementProps } from './HoverElement/types';
+import { LERP_APPROXIMATION } from './constants';
+import { isNumber } from '@/internal/isNumber';
 
 export * from './types';
+export type { ICursorHoverElementProps };
 
 /**
  * A customizable custom cursor component with smooth animations and hover interactions.
@@ -58,6 +60,74 @@ export class Cursor<
     } as TRequiredProps<M>;
   }
 
+  /** The outer element of the custom cursor */
+  protected _outer!: HTMLElement;
+
+  /** The inner element of the custom cursor. */
+  protected _inner!: HTMLElement;
+
+  /** Attached hover elements */
+  protected _hoverElements: CursorHoverElement[] = [];
+
+  /** Active hovered element */
+  protected _activeHoverElements: CursorHoverElement[] = [];
+
+  /** Request animation frame handler */
+  protected _raf!: Raf;
+
+  /** The current coordinates */
+  protected _coords: ICursorFullCoords;
+
+  /** Target coordinates of the cursor. Element dimensions are not considered here (in getter - yes). */
+  protected _targetCoords: ICursorFullCoords;
+
+  /** Defines if the cursor has been moved after initialization */
+  protected _isFirstMove = true;
+
+  /** Cursor types */
+  protected _types: ICursorType[];
+
+  /** Active cursor types */
+  protected _activeTypes: string[];
+
+  /** Cursor Path Instance */
+  protected _path: CursorPath;
+
+  constructor(
+    props?: S & M,
+    onCallbacks?: TModuleOnCallbacksProps<C, Cursor<C, S, M>>,
+  ) {
+    super(props, onCallbacks as any);
+
+    // Set default variables
+    const { width, height, enabled: isEnabled } = this.props;
+    this._coords = { x: 0, y: 0, width, height };
+    this._targetCoords = { x: 0, y: 0, width, height };
+    this._types = [];
+    this._activeTypes = [];
+
+    // Create cursor path
+    this._path = new CursorPath(this.hasPath);
+
+    // No need to remove styles on destroy
+    createCursorStyles(this.prefix);
+
+    // Setup
+    this._createElements();
+    this._setEvents();
+
+    // enable by default
+    this._toggle(isEnabled);
+  }
+
+  /**
+   * The current coordinates (x, y, width, height).
+   * These are updated during cursor movement.
+   */
+  get coords() {
+    return this._coords;
+  }
+
   /**
    * Classname prefix for styling elements.
    */
@@ -79,9 +149,6 @@ export class Cursor<
     return this.container as HTMLElement;
   }
 
-  /** The outer element of the custom cursor */
-  protected _outer!: HTMLElement;
-
   /**
    * The outer element of the custom cursor.
    * This is the visual element that represents the cursor on screen.
@@ -89,9 +156,6 @@ export class Cursor<
   get outer() {
     return this._outer;
   }
-
-  /** The inner element of the custom cursor. */
-  protected _inner!: HTMLElement;
 
   /**
    * The inner element of the custom cursor.
@@ -101,37 +165,15 @@ export class Cursor<
     return this._inner;
   }
 
-  /** The currently hovered element */
-  protected _hoveredElement?: ICursorHoveredElement;
-
   /**
    * The currently hovered element.
    * Stores information about the element that the cursor is currently interacting with.
    */
-  get hoveredElement() {
-    return this._hoveredElement;
+  get hoveredElement(): CursorHoverElement | undefined {
+    const activeElements = this._activeHoverElements;
+
+    return activeElements[activeElements.length - 1];
   }
-
-  protected set hoveredElement(value) {
-    this._hoveredElement = value;
-  }
-
-  /** Request animation frame handler */
-  protected _raf!: Raf;
-
-  /** The current coordinates */
-  protected _coords: ICursorFullCoords;
-
-  /**
-   * The current coordinates (x, y, width, height).
-   * These are updated during cursor movement.
-   */
-  get coords() {
-    return this._coords;
-  }
-
-  /** Target coordinates of the cursor (without smooth interpolation). */
-  protected _targetCoords: ICursorFullCoords;
 
   /** Target coordinates of the cursor (without smooth interpolation). */
   get targetCoords() {
@@ -142,26 +184,13 @@ export class Cursor<
     let padding = 0;
 
     if (hoveredElement) {
-      const bounding = hoveredElement.element.getBoundingClientRect();
+      const dimensions = hoveredElement.getDimensions();
 
-      if (hoveredElement.snap) {
-        x = bounding.left + bounding.width / 2;
-        y = bounding.top + bounding.height / 2;
-      }
-
-      if (hoveredElement.width === 'auto') {
-        width = bounding.width;
-      } else if (isNumber(hoveredElement.width)) {
-        width = hoveredElement.width;
-      }
-
-      if (hoveredElement.height === 'auto') {
-        height = bounding.height;
-      } else if (isNumber(hoveredElement.height)) {
-        height = hoveredElement.height;
-      }
-
-      padding = hoveredElement.padding ?? 0;
+      width = dimensions.width ?? width;
+      height = dimensions.height ?? height;
+      x = dimensions.x ?? x;
+      y = dimensions.y ?? y;
+      padding = dimensions.padding;
     }
 
     width += padding * 2;
@@ -170,57 +199,9 @@ export class Cursor<
     return { x, y, width, height };
   }
 
-  /** Cursor SVG Path Points */
-  protected _pathPoints: ICursorPathPoint[] = [];
-
-  /** Cursor SVG Path */
-  protected _path: SVGPathElement;
-
   /** Returns an SVG path element which represents the cursor movement */
   get path() {
-    return this._path;
-  }
-
-  /** Cursor Path Line */
-  protected _pathLine = { current: 0, target: 0 };
-
-  /** Defines if the cursor has been moved after initialization */
-  protected _isFirstMove = true;
-
-  /** Cursor types */
-  protected _types: ICursorType[];
-
-  /** Active cursor types */
-  protected _activeTypes: string[];
-
-  constructor(
-    props?: S & M,
-    onCallbacks?: TModuleOnCallbacksProps<C, Cursor<C, S, M>>,
-  ) {
-    super(props, onCallbacks as any);
-
-    // Set default variables
-    const { width, height, enabled: isEnabled } = this.props;
-    this._coords = { x: 0, y: 0, width, height };
-    this._targetCoords = { x: 0, y: 0, width, height };
-    this._types = [];
-    this._activeTypes = [];
-
-    // Create an SVG path
-    this._path = document.createElementNS(
-      'http://www.w3.org/2000/svg',
-      'path',
-    )!;
-
-    // No need to remove styles on destroy
-    createCursorStyles(this.prefix);
-
-    // Setup
-    this._createElements();
-    this._setEvents();
-
-    // enable by default
-    this._toggle(isEnabled);
+    return this._path.path;
   }
 
   /** Check if the cursor has a path */
@@ -362,12 +343,14 @@ export class Cursor<
     }
 
     const { clientX: x, clientY: y } = evt;
+    const target = this._targetCoords;
+
     this._coords.x = x;
     this._coords.y = y;
-    this._targetCoords.x = x;
-    this._targetCoords.y = y;
+    target.x = x;
+    target.y = y;
 
-    this._addPathPoint(true);
+    this._path.addPoint(target, true);
 
     cnAdd(this.outer, this._cn('-visible'));
   }
@@ -384,9 +367,10 @@ export class Cursor<
     }
 
     const { clientX: x, clientY: y } = evt;
+    const target = this._targetCoords;
 
-    this._targetCoords.x = x;
-    this._targetCoords.y = y;
+    target.x = x;
+    target.y = y;
 
     if (this._isFirstMove) {
       this._coords.x = x;
@@ -395,90 +379,12 @@ export class Cursor<
       this._isFirstMove = false;
     }
 
-    this._addPathPoint();
+    this._path.addPoint(target);
 
     cnAdd(this.outer, this._cn('-visible'));
 
     if (this.props.enabled) {
       this._raf.play();
-    }
-  }
-
-  /** Update SVG Path */
-  protected _addPathPoint(isInstant = false) {
-    if (!this.hasPath) {
-      return;
-    }
-
-    const target = this._targetCoords;
-    const points = this._pathPoints;
-    const path = this._path;
-    const line = this._pathLine;
-
-    // Add point
-    const newPoint = { x: target.x, y: target.y, length: 0 };
-    points.push(newPoint);
-
-    // Update path
-    path.setAttribute('d', svgQuadraticCurvePath(points));
-
-    // Update total length
-    const totalLength = path.getTotalLength();
-    newPoint.length = totalLength;
-    line.target = totalLength;
-
-    // Instant update of line
-    if (isInstant) {
-      line.current = line.target;
-    }
-  }
-
-  /** Minimize SVG Path */
-  protected _minimizePath() {
-    if (!this.hasPath) {
-      return;
-    }
-
-    const points = this._pathPoints;
-    const line = this._pathLine;
-
-    if (points.length < 3) {
-      return;
-    }
-
-    let accumulated = 0;
-    let removeCount = 0;
-
-    for (let i = 1; i < points.length; i += 1) {
-      const dx = points[i].x - points[i - 1].x;
-      const dy = points[i].y - points[i - 1].y;
-      const segLength = Math.hypot(dx, dy);
-
-      if (accumulated + segLength < line.current) {
-        accumulated += segLength;
-        removeCount += 1;
-      } else {
-        break;
-      }
-    }
-
-    if (removeCount > 0) {
-      let removedLength = 0;
-
-      for (let i = 1; i <= removeCount; i += 1) {
-        const dx = points[i].x - points[i - 1].x;
-        const dy = points[i].y - points[i - 1].y;
-        removedLength += Math.hypot(dx, dy);
-      }
-
-      points.splice(0, removeCount);
-
-      // Fix line after points removed
-      line.current = Math.max(0, line.current - removedLength);
-      line.target = Math.max(0, line.target - removedLength);
-
-      // Update path
-      this._path.setAttribute('d', svgQuadraticCurvePath(points));
     }
   }
 
@@ -507,59 +413,31 @@ export class Cursor<
 
   /**
    * Registers an element to interact with the cursor, enabling dynamic size and position changes based on hover effects.
-   * @param settings The settings for the hovered element.
-   * @param {number} [enterTimeout=100] The timeout before the hover effect is applied.
    * @returns Returns a destructor
    */
   @noopIfDestroyed
-  public attachElement(settings: ICursorHoveredElement, enterTimeout = 100) {
-    const data: ICursorHoveredElement = {
-      width: null,
-      height: null,
-      ...settings,
+  public attachElement(settings: ICursorHoverElementProps) {
+    const element = new CursorHoverElement(
+      settings,
+      (data) => this._handleElementEnter(data),
+      (data) => this._handleElementLeave(data),
+    );
+
+    this._hoverElements.push(element);
+
+    const destroy = () => {
+      this._hoverElements = this._hoverElements.filter((i) => i !== element);
+      element.destroy();
     };
 
-    const { element } = data;
+    this.onDestroy(() => destroy());
 
-    let timeout: NodeJS.Timeout | undefined;
-
-    if (element.matches(':hover')) {
-      this._handleElementEnter(data);
-    }
-
-    const mouseEnter = addEventListener(element, 'mouseenter', () => {
-      timeout = setTimeout(() => this._handleElementEnter(data), enterTimeout);
-    });
-
-    const mouseLeave = addEventListener(element, 'mouseleave', () => {
-      if (timeout) {
-        clearTimeout(timeout);
-      }
-
-      this._handleElementLeave(data);
-    });
-
-    const remove = () => {
-      if (this.hoveredElement?.element === element) {
-        this.hoveredElement = undefined;
-      }
-
-      mouseEnter();
-      mouseLeave();
-
-      if (timeout) {
-        clearTimeout(timeout);
-      }
-    };
-
-    this.onDestroy(() => remove());
-
-    return () => remove();
+    return () => destroy();
   }
 
-  /** Handle element enter */
-  protected _handleElementEnter(data: ICursorHoveredElement) {
-    this.hoveredElement = { ...data };
+  /** Handle element mouse enter event */
+  protected _handleElementEnter(data: CursorHoverElement) {
+    this._activeHoverElements.push(data);
 
     if (data.type) {
       this._toggleType(data.type, true);
@@ -570,9 +448,11 @@ export class Cursor<
     }
   }
 
-  /** Handle element leave */
-  protected _handleElementLeave(data: ICursorHoveredElement) {
-    this.hoveredElement = undefined;
+  /** Handle element mouse leave event */
+  protected _handleElementLeave(data: CursorHoverElement) {
+    this._activeHoverElements = this._activeHoverElements.filter(
+      (i) => i !== data,
+    );
 
     if (data.type) {
       this._toggleType(data.type, false);
@@ -601,10 +481,10 @@ export class Cursor<
       this._activeTypes = this._activeTypes.filter((item) => type !== item);
     }
 
+    const activeTypes = this._activeTypes;
+
     const activeType =
-      this._activeTypes.length > 0
-        ? this._activeTypes[this._activeTypes.length - 1]
-        : null;
+      activeTypes.length > 0 ? activeTypes[activeTypes.length - 1] : null;
 
     this._types.forEach((item) => {
       cnToggle(item.element, 'active', item.type === activeType);
@@ -616,15 +496,20 @@ export class Cursor<
    * @returns {boolean} True if all coordinates are interpolated, false otherwise.
    */
   protected get isInterpolated() {
-    const { coords, targetCoords, _pathLine: line, props } = this;
+    const { coords, targetCoords, props } = this;
 
-    const isPathInterpolated = line.current === line.target;
+    const isPathInterpolated = this._path.isInterpolated;
     const isCoordsInterpolated =
       coords.x === targetCoords.x && coords.y === targetCoords.y;
     const isWidthInterpolated = coords.width === targetCoords.width;
     const isHeightInterpolated = coords.height === targetCoords.height;
 
+    const isElementsInterpolated = !this._hoverElements.find(
+      (element) => !element.isInterpolated,
+    );
+
     return (
+      isElementsInterpolated &&
       isWidthInterpolated &&
       isHeightInterpolated &&
       (props.behavior === 'path' ? isPathInterpolated : isCoordsInterpolated)
@@ -647,16 +532,20 @@ export class Cursor<
 
   /** Recalculates current coordinates. */
   protected _calculate() {
-    this._minimizePath();
+    const { targetCoords, _coords: coords } = this;
+    const lerpFactor = this._getLerpFactor();
 
-    const { targetCoords, _coords: coords, _pathLine: line } = this;
-
-    line.current = this._lerp(line.current, line.target);
+    this._path.lerp(lerpFactor);
+    this._path.minimize();
 
     try {
-      const lineCoord = this._path.getPointAtLength(line.current);
-      coords.x = lineCoord.x;
-      coords.y = lineCoord.y;
+      if (this.hasPath) {
+        const pathCoord = this._path.coord;
+        coords.x = pathCoord.x;
+        coords.y = pathCoord.y;
+      } else {
+        throw new Error('No path');
+      }
     } catch {
       coords.x = this._lerp(coords.x, targetCoords.x);
       coords.y = this._lerp(coords.y, targetCoords.y);
@@ -666,21 +555,21 @@ export class Cursor<
     coords.height = this._lerp(coords.height, targetCoords.height);
   }
 
-  /**
-   * Performs linear interpolation.
-   * @param {number} current The current value.
-   * @param {number} target The target value.
-   * @returns {number} The interpolated value.
-   */
-  protected _lerp(current: number, target: number) {
-    const lerpFactor = clamp(this.props.lerp, 0, 1);
+  /** Gets the interpolation factor. */
+  protected _getLerpFactor(input = this.props.lerp) {
+    if (!isNumber(input)) {
+      return 1;
+    }
 
-    const value = lerp(
-      current,
-      target,
-      this._raf.lerpFactor(lerpFactor),
-      0.0001,
-    );
+    const lerpFactor = clamp(input, 0, 1);
+
+    return this._raf.lerpFactor(lerpFactor);
+  }
+
+  /** Performs linear interpolation. */
+  protected _lerp(current: number, target: number) {
+    const lerpFactor = this._getLerpFactor();
+    const value = lerp(current, target, lerpFactor, LERP_APPROXIMATION);
 
     return value;
   }
@@ -688,8 +577,8 @@ export class Cursor<
   /** Renders the cursor elements. */
   protected _renderElements() {
     const { container, domContainer, outer } = this;
-    let { x, y } = this.coords;
     const { width, height } = this.coords;
+    let { x, y } = this.coords;
 
     if (!(container instanceof Window)) {
       const bounding = domContainer.getBoundingClientRect();
@@ -702,5 +591,10 @@ export class Cursor<
     style.transform = `translate(${x}px, ${y}px)`;
     style.setProperty('--cursor-w', `${width}px`);
     style.setProperty('--cursor-h', `${height}px`);
+
+    // Render element
+    this._hoverElements.forEach((element) =>
+      element.render(this._getLerpFactor(element.stickyLerp)),
+    );
   }
 }

@@ -1,0 +1,146 @@
+---
+sidebar_position: 4
+---
+
+import Head from '@docusaurus/Head';
+
+# Interfaces
+
+<Head>
+  <title>Cursor Interfaces | vevet.js</title>
+</Head>
+
+## CursorHoverElement
+
+Runtime representation of a hoverable element attached to the cursor.
+This object is created internally and exposed via the  
+**[hoveredElement](accessors#hoveredelement)** accessor while the element is hovered.
+
+```ts
+class CursorHoverElement {
+  /** Hoverable DOM element */
+  get element(): Element;
+
+  /** Cursor type applied for this element */
+  get type(): string;
+
+  /** Whether the cursor snaps to the element center */
+  get snap(): boolean;
+
+  /** Target cursor width while hovering */
+  get width(): null | number | 'auto';
+
+  /** Target cursor height while hovering */
+  get height(): null | number | 'auto';
+
+  /** Padding applied around the cursor */
+  get padding(): number;
+
+  /** Whether the element sticks to the cursor */
+  get sticky(): boolean;
+
+  /** Sticky parallax strength on the X axis */
+  get stickyX(): number;
+
+  /** Sticky parallax strength on the Y axis */
+  get stickyY(): number;
+}
+```
+
+
+
+## ICursorHoverElementProps
+
+Configuration object passed to **[attachElement()](methods#attachelement)**  
+to define cursor behavior for a specific hoverable element.
+
+```ts
+interface ICursorHoverElementProps {
+  /** Hoverable DOM element */
+  element: Element;
+
+  /** Cursor type to activate on hover */
+  type?: string;
+
+  /**
+   * Debounce time for hover events, in milliseconds
+   * @default 16
+   */
+  hoverDebounce?: number;
+
+  /**
+   * Snap cursor to the element center.
+   * Does not work with `behavior: "path"`.
+   * @default false
+   */
+  snap?: boolean;
+
+  /**
+   * Target cursor width on hover.
+   * Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.
+   * @default null
+   */
+  width?: null | number | 'auto' | (string & {});
+
+  /**
+   * Target cursor height on hover.
+   * Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.
+   * @default null
+   */
+  height?: null | number | 'auto' | (string & {});
+
+  /**
+   * Padding applied around the cursor.
+   * Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.
+   * @default 0
+   */
+  padding?: number | string;
+
+  /**
+   * Enable sticky behavior for the hovered element.
+   * @default false
+   */
+  sticky?: boolean;
+
+  /**
+   * Linear interpolation factor for smooth sticky animation.
+   * @default this.props.lerp
+   */
+  stickyLerp?: number;
+
+  /**
+   * Sticky animation amplitude.
+   * Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.
+   * @default 'auto'
+   */
+  stickyAmplitude?:
+    | TCursorHoverElementStickyAmplitude
+    | TCursorHoverElementStickyAmplitudeObject;
+}
+```
+
+
+
+## TCursorHoverElementStickyAmplitude
+
+Defines the amplitude of the sticky animation.
+
+```ts
+export type TCursorHoverElementStickyAmplitude =
+  | number
+  | 'auto'
+  | (string & {});
+```
+
+
+
+## TCursorHoverElementStickyAmplitudeObject
+
+Axis-based sticky amplitude configuration.
+
+```ts
+export type TCursorHoverElementStickyAmplitudeObject = {
+  x: TCursorHoverElementStickyAmplitude;
+  y: TCursorHoverElementStickyAmplitude;
+};
+```
