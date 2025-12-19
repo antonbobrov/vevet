@@ -51,6 +51,20 @@ const cursor = new Cursor({
 });
 ```
 
+### `transformModifier` {#props.transformmodifier}
+- **Type:** `(coords: ICursorFullCoords) => string`  
+- **Default:** 
+  ```ts
+  (coords) => `translate(${coords.x}px, ${coords.y}px)`
+  ```
+- Modifier for the cursor transform.
+
+```js
+const cursor = new Cursor({
+  transformModifier: (coords) => `translate(${coords.x}px, ${coords.y}px) rotate(${coords.angle}deg)`
+});
+```
+
 
 
 ## Mutable Props

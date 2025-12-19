@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useRef } from 'react';
 import { Cursor } from '@/index';
 
-// todo: demo with sticky hover both x & y axis
+// todo: demo with sticky hover (both x & y axis), angle and velocity scale
 
 export const Component: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -18,8 +18,13 @@ export const Component: FC = () => {
     const instance = new Cursor({
       container: ref.current,
       width: '7rem',
-      height: '5rem',
+      height: '7rem',
       lerp: 0.2,
+      // transformModifier: (coords) => {
+      //   const scale = coords.velocity * 0.5;
+
+      //   return `translate(${coords.x}px, ${coords.y}px) rotate(${coords.angle}deg) scale(${1 + scale}, ${1 - scale})`;
+      // },
       // behavior: 'path', // todo: fix snap with path
     });
 
@@ -28,7 +33,7 @@ export const Component: FC = () => {
     instance.path.style.stroke = '#f00';
 
     const defaultCursor = document.createElement('div');
-    defaultCursor.innerHTML = 'default';
+    defaultCursor.innerHTML = '';
 
     const someTypeCursor = document.createElement('div');
     someTypeCursor.innerHTML = 'some_type';
@@ -75,7 +80,7 @@ export const Component: FC = () => {
         snap: true,
         sticky: true,
         stickyLerp: 0.2,
-        stickyAmplitude: { x: 'auto', y: 'auto' },
+        stickyAmplitude: { x: '2rem', y: 'auto' },
       });
     }
 
@@ -83,7 +88,7 @@ export const Component: FC = () => {
   }, []);
 
   return (
-    <div style={{ position: 'relative', height: '100vh' }}>
+    <div style={{ position: 'relative', height: '100vh', overflow: 'hidden' }}>
       <svg
         ref={svgRef}
         style={{

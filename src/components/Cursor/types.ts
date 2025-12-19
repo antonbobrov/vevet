@@ -23,6 +23,12 @@ export interface ICursorStaticProps extends IModuleStaticProps {
    * @default 'default'
    */
   behavior?: 'default' | 'path';
+
+  /**
+   * Modifier for the cursor transform.
+   * @default (coords) => `translate(${coords.x}px, ${coords.y}px)`
+   */
+  transformModifier?: (coords: ICursorFullCoords) => string;
 }
 
 export interface ICursorMutableProps extends IModuleMutableProps {
@@ -72,11 +78,19 @@ export interface ICursorCallbacksMap extends IModuleCallbacksMap {
 }
 
 /**
- * Represents the cursor's position and size.
+ * Represents the cursor's target position, angle and velocity.
  */
-export interface ICursorFullCoords {
+export interface ICursorTargetCoords {
   x: number;
   y: number;
+  angle: number;
+  velocity: number;
+}
+
+/**
+ * Represents the cursor's coordinates, angle and size.
+ */
+export interface ICursorFullCoords extends ICursorTargetCoords {
   width: number;
   height: number;
 }

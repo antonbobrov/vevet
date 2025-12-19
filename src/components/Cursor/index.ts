@@ -4,6 +4,7 @@ import {
   ICursorFullCoords,
   ICursorMutableProps,
   ICursorStaticProps,
+  ICursorTargetCoords,
   ICursorType,
 } from './types';
 import { Module, TModuleOnCallbacksProps } from '@/base/Module';
@@ -46,6 +47,7 @@ export class Cursor<
       container: window,
       hideNative: false,
       behavior: 'default',
+      transformModifier: ({ x, y }) => `translate(${x}px, ${y}px)`,
     } as TRequiredProps<S>;
   }
 
@@ -80,7 +82,7 @@ export class Cursor<
   protected _coords: ICursorFullCoords;
 
   /** Target coordinates of the cursor. Element dimensions are not considered here (in getter - yes). */
-  protected _targetCoords: ICursorFullCoords;
+  protected _rawTarget: ICursorTargetCoords;
 
   /** Defines if the cursor has been moved after initialization */
   protected _isFirstMove = true;
@@ -104,8 +106,15 @@ export class Cursor<
     const { initialWidth, initialHeight } = this;
 
     // Set default variables
-    this._coords = { x: 0, y: 0, width: initialWidth, height: initialHeight };
-    this._targetCoords = { ...this._coords };
+    this._coords = {
+      x: 0,
+      y: 0,
+      width: initialWidth,
+      height: initialHeight,
+      angle: 0,
+      velocity: 0,
+    };
+    this._rawTarget = { ...this._coords };
     this._types = [];
     this._activeTypes = [];
 
@@ -189,13 +198,13 @@ export class Cursor<
   }
 
   /** Target coordinates of the cursor (without smooth interpolation). */
-  get targetCoords() {
+  get targetCoords(): ICursorFullCoords {
     const { hoveredElement, initialWidth, initialHeight } = this;
+    let { x, y } = this._rawTarget;
+    const { angle, velocity } = this._rawTarget;
 
     let width = initialWidth;
     let height = initialHeight;
-
-    let { x, y } = this._targetCoords;
     let padding = 0;
 
     if (hoveredElement) {
@@ -211,7 +220,7 @@ export class Cursor<
     width += padding * 2;
     height += padding * 2;
 
-    return { x, y, width, height };
+    return { x, y, width, height, angle, velocity };
   }
 
   /** Returns an SVG path element which represents the cursor movement */
@@ -358,7 +367,7 @@ export class Cursor<
     }
 
     const { clientX: x, clientY: y } = evt;
-    const target = this._targetCoords;
+    const target = this._rawTarget;
 
     this._coords.x = x;
     this._coords.y = y;
@@ -382,22 +391,44 @@ export class Cursor<
     }
 
     const { clientX: x, clientY: y } = evt;
-    const target = this._targetCoords;
+    const target = this._rawTarget;
+    const { x: prevX, y: prevY } = target;
 
+    // Calculate angle
+    const deltaX = prevX - this._coords.x;
+    const deltaY = prevY - this._coords.y;
+    const prevAngle = target.angle;
+    const rawAngle = (Math.atan2(deltaY, deltaX) * 180) / Math.PI;
+    const targetAngle =
+      prevAngle + ((((rawAngle - prevAngle) % 360) + 540) % 360) - 180;
+
+    // Calculate velocity
+    const velocity =
+      Math.min(Math.sqrt(deltaX ** 2 + deltaY ** 2) * 2, 150) / 150;
+
+    // Update target coordinates
     target.x = x;
     target.y = y;
+    target.angle = targetAngle;
+    target.velocity = velocity;
 
+    // Update interpolated coords if first move
     if (this._isFirstMove) {
-      this._coords.x = x;
-      this._coords.y = y;
+      this._coords.x = target.x;
+      this._coords.y = target.y;
+      this._coords.angle = target.angle;
+      this._coords.velocity = target.velocity;
 
       this._isFirstMove = false;
     }
 
+    // Add path point
     this._path.addPoint(target);
 
+    // Handle classnames
     cnAdd(this.outer, this._cn('-visible'));
 
+    // Enable animation
     if (this.props.enabled) {
       this._raf.play();
     }
@@ -513,21 +544,26 @@ export class Cursor<
   protected get isInterpolated() {
     const { coords, targetCoords, props } = this;
 
-    const isPathInterpolated = this._path.isInterpolated;
-    const isCoordsInterpolated =
-      coords.x === targetCoords.x && coords.y === targetCoords.y;
-    const isWidthInterpolated = coords.width === targetCoords.width;
-    const isHeightInterpolated = coords.height === targetCoords.height;
+    const isWidthDone = coords.width === targetCoords.width;
+    const isHeightDone = coords.height === targetCoords.height;
+    const isAngleDone = coords.angle === targetCoords.angle;
+    const isVelocityDone = coords.velocity === targetCoords.velocity;
 
-    const isElementsInterpolated = !this._hoverElements.find(
+    const isElementsDone = !this._hoverElements.find(
       (element) => !element.isInterpolated,
     );
 
+    const isPathDone = this._path.isInterpolated;
+    const isCoordsDone =
+      coords.x === targetCoords.x && coords.y === targetCoords.y;
+
     return (
-      isElementsInterpolated &&
-      isWidthInterpolated &&
-      isHeightInterpolated &&
-      (props.behavior === 'path' ? isPathInterpolated : isCoordsInterpolated)
+      isWidthDone &&
+      isHeightDone &&
+      isAngleDone &&
+      isVelocityDone &&
+      isElementsDone &&
+      (props.behavior === 'path' ? isPathDone : isCoordsDone)
     );
   }
 
@@ -547,7 +583,7 @@ export class Cursor<
 
   /** Recalculates current coordinates. */
   protected _calculate() {
-    const { targetCoords, _coords: coords } = this;
+    const { targetCoords: target, _coords: coords } = this;
     const lerpFactor = this._getLerpFactor();
 
     this._path.lerp(lerpFactor);
@@ -562,12 +598,16 @@ export class Cursor<
         throw new Error('No path');
       }
     } catch {
-      coords.x = this._lerp(coords.x, targetCoords.x);
-      coords.y = this._lerp(coords.y, targetCoords.y);
+      coords.x = this._lerp(coords.x, target.x);
+      coords.y = this._lerp(coords.y, target.y);
     }
 
-    coords.width = this._lerp(coords.width, targetCoords.width);
-    coords.height = this._lerp(coords.height, targetCoords.height);
+    coords.width = this._lerp(coords.width, target.width);
+    coords.height = this._lerp(coords.height, target.height);
+    coords.angle = this._lerp(coords.angle, target.angle);
+
+    this._rawTarget.velocity = this._lerp(this._rawTarget.velocity, 0);
+    coords.velocity = this._lerp(coords.velocity, this._rawTarget.velocity);
   }
 
   /** Gets the interpolation factor. */
@@ -591,9 +631,9 @@ export class Cursor<
 
   /** Renders the cursor elements. */
   protected _renderElements() {
-    const { container, domContainer, outer } = this;
-    const { width, height } = this.coords;
-    let { x, y } = this.coords;
+    const { container, domContainer, outer, props, coords } = this;
+    const { width, height } = coords;
+    let { x, y } = coords;
 
     if (!(container instanceof Window)) {
       const bounding = domContainer.getBoundingClientRect();
@@ -603,9 +643,9 @@ export class Cursor<
 
     // Update DOM coordinates
     const { style } = outer;
-    style.transform = `translate(${x}px, ${y}px)`;
     style.setProperty('--cursor-w', `${width}px`);
     style.setProperty('--cursor-h', `${height}px`);
+    style.transform = props.transformModifier({ ...coords, x, y });
 
     // Render element
     this._hoverElements.forEach((element) =>
