@@ -1,4 +1,5 @@
-import { body, doc } from '@/internal/env';
+import { doc } from '@/internal/env';
+import { prependStyles } from '@/internal/prependStyles';
 
 let style: HTMLStyleElement | null = null;
 
@@ -8,7 +9,7 @@ export function createCursorStyles(prefix: string) {
   }
 
   style = doc.createElement('style');
-  body.appendChild(style);
+  prependStyles(style);
 
   style.innerHTML = `
     .${prefix}-container.${prefix}-hide-default,
