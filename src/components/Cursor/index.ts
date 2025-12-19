@@ -21,6 +21,7 @@ import { CursorHoverElement } from './HoverElement';
 import { ICursorHoverElementProps } from './HoverElement/types';
 import { LERP_APPROXIMATION } from './constants';
 import { isNumber } from '@/internal/isNumber';
+import { toPixels } from '@/utils';
 
 export * from './types';
 export type { ICursorHoverElementProps };
@@ -99,10 +100,12 @@ export class Cursor<
   ) {
     super(props, onCallbacks as any);
 
+    const { enabled: isEnabled } = this.props;
+    const { initialWidth, initialHeight } = this;
+
     // Set default variables
-    const { width, height, enabled: isEnabled } = this.props;
-    this._coords = { x: 0, y: 0, width, height };
-    this._targetCoords = { x: 0, y: 0, width, height };
+    this._coords = { x: 0, y: 0, width: initialWidth, height: initialHeight };
+    this._targetCoords = { ...this._coords };
     this._types = [];
     this._activeTypes = [];
 
@@ -118,6 +121,16 @@ export class Cursor<
 
     // enable by default
     this._toggle(isEnabled);
+  }
+
+  /** Cursor initial width */
+  get initialWidth() {
+    return toPixels(this.props.width);
+  }
+
+  /** Cursor initial width */
+  get initialHeight() {
+    return toPixels(this.props.height);
   }
 
   /**
@@ -177,17 +190,19 @@ export class Cursor<
 
   /** Target coordinates of the cursor (without smooth interpolation). */
   get targetCoords() {
-    const { hoveredElement, props } = this;
+    const { hoveredElement, initialWidth, initialHeight } = this;
+
+    let width = initialWidth;
+    let height = initialHeight;
 
     let { x, y } = this._targetCoords;
-    let { width, height } = props;
     let padding = 0;
 
     if (hoveredElement) {
       const dimensions = hoveredElement.getDimensions();
 
-      width = dimensions.width ?? width;
-      height = dimensions.height ?? height;
+      width = dimensions.width ?? initialWidth;
+      height = dimensions.height ?? initialHeight;
       x = dimensions.x ?? x;
       y = dimensions.y ?? y;
       padding = dimensions.padding;

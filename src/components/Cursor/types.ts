@@ -34,15 +34,17 @@ export interface ICursorMutableProps extends IModuleMutableProps {
 
   /**
    * The initial width of the custom cursor.
+   * Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.
    * @default 50
    */
-  width?: number;
+  width?: number | string;
 
   /**
    * The initial height of the custom cursor.
+   * Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.
    * @default 50
    */
-  height?: number;
+  height?: number | string;
 
   /**
    * Linear interpolation factor for smooth cursor movement.

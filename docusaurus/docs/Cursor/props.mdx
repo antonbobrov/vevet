@@ -76,7 +76,7 @@ cursor.updateProps({
 ### `width` {#props.width}
 - **Type:** `number`  
 - **Default:** `50`  
-- The initial width of the custom cursor.
+- The initial width of the custom cursor. Supports css units like `px`, `rem`, `vw`, `vh`, `svh`. 
 
 ```js
 const cursor = new Cursor({
@@ -85,14 +85,14 @@ const cursor = new Cursor({
 
 // change value
 cursor.updateProps({
-  width: 100
+  width: '3rem'
 });
 ```
 
 ### `height` {#props.height}
 - **Type:** `number`  
 - **Default:** `50`  
-- The initial height of the custom cursor.
+- The initial height of the custom cursor. Supports css units like `px`, `rem`, `vw`, `vh`, `svh`. 
 
 ```js
 const cursor = new Cursor({
@@ -101,7 +101,7 @@ const cursor = new Cursor({
 
 // change value
 cursor.updateProps({
-  height: 100
+  height: '3rem'
 });
 ```
 

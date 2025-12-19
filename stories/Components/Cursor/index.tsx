@@ -17,8 +17,8 @@ export const Component: FC = () => {
 
     const instance = new Cursor({
       container: ref.current,
-      width: 60,
-      height: 60,
+      width: '7rem',
+      height: '5rem',
       lerp: 0.2,
       // behavior: 'path', // todo: fix snap with path
     });
