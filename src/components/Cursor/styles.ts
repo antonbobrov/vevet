@@ -52,8 +52,6 @@ export function createCursorStyles(prefix: string) {
       margin-top: calc(var(--cursor-h) / -2);
 
       background-color: rgba(0, 0, 0, 0.25);
-
-      transition: transform 0.25s;
     }
 
     .${prefix}_rtl .${prefix}__inner {
@@ -66,7 +64,7 @@ export function createCursorStyles(prefix: string) {
       left: 50%;
       transform: translate(-50%, -50%);
       opacity: 0;
-      transition: opacity 0.25s linear, transform 0.25s linear;
+      transition: opacity 0.25s linear;
     }
 
     .${prefix}__inner > *.active {
