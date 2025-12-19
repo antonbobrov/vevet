@@ -1,5 +1,32 @@
 # Changelog
 
+# [5.4.0](https://github.com/antonbobrov/vevet/compare/v5.3.0...v5.4.0) (2025-12-19)
+
+
+### Cursor
+
+* add `hoverEnter` and `hoverLeave` callbacks ([7faa1d4](https://github.com/antonbobrov/vevet/commit/7faa1d4e28714c1c0596304eb5fe0d9eeff72b99))
+* add `sticky`, `stickyLerp`, `stickyAmplitude` and allow CSS units for hoverable elements ([7f0bb67](https://github.com/antonbobrov/vevet/commit/7f0bb67a3d351bcdfbba7c714fe2511214704fe5))
+* add `transformModifier`, `coords.angle` and `coords.velocity` ([4c3c467](https://github.com/antonbobrov/vevet/commit/4c3c46774f32810acf9767c320aba0a5185959ae))
+* add `typeShow`, `typeHide` and `noType` callbacks ([e270ce3](https://github.com/antonbobrov/vevet/commit/e270ce38f0f52302dc316b87b56f986ce6083197))
+* add CSS units suport for `width` & `height` ([fc72e12](https://github.com/antonbobrov/vevet/commit/fc72e12e54bca61c58b8ec67e45f313034eb5048))
+* fix inner styles ([b8b7ec2](https://github.com/antonbobrov/vevet/commit/b8b7ec269cdc1e430e018714c2e53f3077a3db28))
+* rename `attachElement` -> `attachHover` ([b6aa08e](https://github.com/antonbobrov/vevet/commit/b6aa08e6a8023b41b6f909c07a16a07ab523bcfa))
+* update inner element animation ([13f6e3a](https://github.com/antonbobrov/vevet/commit/13f6e3ae240cf14354a38eb8c9854b8133923dec))
+
+### Global
+
+* avoid styles overriding ([1080e50](https://github.com/antonbobrov/vevet/commit/1080e506f12580c71f80931ac309f57cd3c1e1e5))
+
+### ProgressPreloader
+
+* add `resourceContainer` ([ab5955d](https://github.com/antonbobrov/vevet/commit/ab5955d2cdc640d3e96efb18559e872898781d05))
+
+### Snap
+
+* add `data-snap-parallax-scope="const"` ([2f70c6d](https://github.com/antonbobrov/vevet/commit/2f70c6d332ca995b0fb22db5f2eb8b66a8414dfd))
+* parallax - add `min` and `max` values ([647183f](https://github.com/antonbobrov/vevet/commit/647183f643dc6d122742bef123c76855e720732b))
+
 # [5.3.0](https://github.com/antonbobrov/vevet/compare/v5.2.1...v5.3.0) (2025-12-16)
 
 
