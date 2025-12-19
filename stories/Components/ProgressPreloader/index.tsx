@@ -1,21 +1,25 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { ProgressPreloader } from '@/index';
 
+// todo: preloader resourceContainer demo
+
 export const Component: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
+  const resourceContainerRef = useRef<HTMLDivElement>(null);
 
   const [progress, setProgress] = useState(0);
   const [preloader, setPreloader] = useState<ProgressPreloader | null>(null);
   const [isCustomResourceLoaded, setIsCustomResourceLoaded] = useState(false);
 
   useEffect(() => {
-    if (!ref.current) {
+    if (!ref.current || !resourceContainerRef.current) {
       return undefined;
     }
 
     const instance = new ProgressPreloader(
       {
         container: ref.current,
+        resourceContainer: resourceContainerRef.current,
         preloadImages: true,
         preloadVideos: true,
       },
@@ -77,29 +81,31 @@ export const Component: FC = () => {
         height={200}
       />
 
-      <img
-        src="https://picsum.photos/400/601"
-        alt=""
-        crossOrigin="anonymous"
-        loading="lazy"
-        height={200}
-      />
+      <div ref={resourceContainerRef}>
+        <img
+          src="https://picsum.photos/400/601"
+          alt=""
+          crossOrigin="anonymous"
+          loading="lazy"
+          height={200}
+        />
 
-      <img
-        src="https://picsum.photos/400/602"
-        alt=""
-        crossOrigin="anonymous"
-        className="js-preload-ignore"
-        height={200}
-      />
+        <img
+          src="https://picsum.photos/400/602"
+          alt=""
+          crossOrigin="anonymous"
+          className="js-preload-ignore"
+          height={200}
+        />
 
-      <video
-        height={200}
-        autoPlay
-        muted
-        controls
-        src="https://www.shutterstock.com/shutterstock/videos/1080319025/preview/stock-footage-abstract-tech-earth-globalization-in-d-motion-graphic-concept-transmit-ai-networking-on-fiber.mp4"
-      />
+        <video
+          height={200}
+          autoPlay
+          muted
+          controls
+          src="https://www.shutterstock.com/shutterstock/videos/1080319025/preview/stock-footage-abstract-tech-earth-globalization-in-d-motion-graphic-concept-transmit-ai-networking-on-fiber.mp4"
+        />
+      </div>
     </>
   );
 };

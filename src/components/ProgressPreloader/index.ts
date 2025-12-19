@@ -41,6 +41,7 @@ export class ProgressPreloader<
   public _getStatic(): TRequiredProps<S> {
     return {
       ...super._getStatic(),
+      resourceContainer: null,
       preloadImages: true,
       preloadVideos: false,
       customSelector: '.js-preload',
@@ -141,13 +142,18 @@ export class ProgressPreloader<
     initVevet().onLoad(() => this.resolveResource(PAGE_RESOURCE));
   }
 
+  /** Container source for preloader resources. */
+  get resourceContainer() {
+    return this.props.resourceContainer ?? doc;
+  }
+
   /** Preload images */
   protected _fetchImages() {
     if (!this.props.preloadImages) {
       return;
     }
 
-    let list = Array.from(doc.querySelectorAll('img'));
+    let list = Array.from(this.resourceContainer.querySelectorAll('img'));
     list = list.filter((resource) => {
       const isIgnored = cnHas(resource, this.props.ignoreClassName);
 
@@ -173,7 +179,7 @@ export class ProgressPreloader<
       return;
     }
 
-    let list = Array.from(doc.querySelectorAll('video'));
+    let list = Array.from(this.resourceContainer.querySelectorAll('video'));
     list = list.filter(
       (resource) => !cnHas(resource, this.props.ignoreClassName),
     );
@@ -193,7 +199,10 @@ export class ProgressPreloader<
 
   /** Preload custom resources */
   protected _fetchResources() {
-    let list = Array.from(doc.querySelectorAll(this.props.customSelector));
+    let list = Array.from(
+      this.resourceContainer.querySelectorAll(this.props.customSelector),
+    );
+
     list = list.filter(
       (resource) => !cnHas(resource, this.props.ignoreClassName),
     );

@@ -9,6 +9,12 @@ import {
  */
 export interface IProgressPreloaderStaticProps extends IPreloaderStaticProps {
   /**
+   * Container source for preloader resources.
+   * @default null
+   */
+  resourceContainer?: HTMLElement | null;
+
+  /**
    * Enables automatic preloading of images.
    * @default true
    */

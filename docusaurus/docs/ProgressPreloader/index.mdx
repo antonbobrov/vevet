@@ -6,7 +6,7 @@ toc_max_heading_level: 6
 
 # ProgressPreloader
 
-Page preloader for calculating and displaying the loading progress of resources (images, videos, custom elements).
+Page preloader for **tracking and displaying** the loading progress of resources (images, videos, custom elements).
 - Takes images and videos into account
 - Supports virtual resources
 - Calculates smooth loading progress for better animations.
@@ -40,9 +40,9 @@ To explore more demos, click [here](./demos).
 
 
 ## Features
-- Smooth progress calculation.
+- Smooth progress calculation based on observed loading state.
 - Custom resource weight.
-- Virtual resources.
+- Virtual resources for manual or async progress control.
 
 
 
@@ -120,6 +120,7 @@ preloader.destroy();
 
 ## Best Practices
 
+- The preloader does **not** perform resource loading — it only tracks loading progress.
 - Preloading lazy images is not supported — they are ignored automatically.
 - Avoid assigning extremely high resource weight values; balanced weights create smoother progress.
 - Virtual resources are ideal for async operations (API, WebGL, timers).

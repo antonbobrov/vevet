@@ -18,11 +18,24 @@ All **[Preloader's props](/docs/Preloader/props)** are available in this class.
 
 Static properties are set during initialization and cannot be modified later.
 
+### `resourceContainer` {#props.resourceContainer}
+- **Type:** `HTMLElement` | `null`  
+- **Default:** `null`  
+- Container source for preloader resources.
+
+```js
+const preloader = new ProgressPreloader({
+  container: document.getElementById("container"),
+  resourceContainer: document.getElementById("resource-container"),
+});
+```
+
 ### `preloadImages` {#props.preloadImages}
 - **Type:** `boolean`  
 - **Default:** `true`  
-- Enables automatic preloading of images.
+- Enables automatic **tracking** of image loading.
 - Ignores lazy images.
+- Does not initiate network requests or load resources manually.
 - Does not load resources twice.
 
 ```js
@@ -35,7 +48,8 @@ const preloader = new ProgressPreloader({
 ### `preloadVideos` {#props.preloadVideos}
 - **Type:** `boolean`  
 - **Default:** `false`  
-- Enables automatic preloading of videos.
+- Enables automatic **tracking** of video loading progress.
+- Does not force video loading — only observes existing load state.
 
 ```js
 const preloader = new ProgressPreloader({
@@ -49,7 +63,8 @@ const preloader = new ProgressPreloader({
 - **Default:** `'.js-preload'`  
 - Selector for virtual resources to preload.  
 - Elements should have `data-weight` and `data-loaded` attributes.  
-  Preloader observes `data-loaded` change and updates progress when needed.  
+  Preloader observes `data-loaded` changes and recalculates progress accordingly.  
+  The actual loading logic must be handled externally.
   Example: `data-weight="10"` indicates weight; `data-loaded="10"` means fully loaded.
 - **See [demo](demos#virtual-resources)**
 
