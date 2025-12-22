@@ -221,7 +221,7 @@ export class Marquee<
     this._initialNodes = [...Array.from(container.childNodes)];
 
     // Wrap text node if necessary
-    this._wrapTextNode();
+    this._wrapTextNodes();
 
     // Store element references
     this._elements = Array.from(container.children) as any;
@@ -256,26 +256,24 @@ export class Marquee<
   /**
    * Wraps the first text node in the container in a span if no other elements exist.
    */
-  protected _wrapTextNode() {
+  protected _wrapTextNodes() {
     const { container } = this.props;
 
-    const hasOneNode = container.childNodes.length === 1;
-    const node = container.childNodes[0];
+    const nodes = this._initialNodes;
 
-    // Wrap text node if it's the first child and not already wrapped
-    if (!node || node.nodeType !== 3 || !hasOneNode) {
-      return;
-    }
+    nodes.forEach((node) => {
+      if (node.nodeType === 3) {
+        const wrapper = doc.createElement('span');
+        const { style } = wrapper;
+        style.position = 'relative';
+        style.display = 'block';
+        style.width = 'max-content';
+        style.whiteSpace = 'nowrap';
 
-    const wrapper = doc.createElement('span');
-    const { style } = wrapper;
-    style.position = 'relative';
-    style.display = 'block';
-    style.width = 'max-content';
-    style.whiteSpace = 'nowrap';
-
-    wrapper.appendChild(node);
-    container.appendChild(wrapper);
+        container.insertBefore(wrapper, node);
+        wrapper.appendChild(node);
+      }
+    });
   }
 
   /**
@@ -433,6 +431,30 @@ export class Marquee<
       container.removeChild(container.firstChild);
     }
 
+    // Restore the initial nodes
     this._initialNodes.forEach((node) => container.appendChild(node));
+
+    // Restore elements style
+    this._elements.forEach((element) => {
+      const { style } = element;
+      style.position = '';
+      style.top = '';
+      style.left = '';
+      style.flexShrink = '';
+      style.width = '';
+      style.transform = '';
+      style.willChange = '';
+    });
+
+    // Restore container style
+    const containerStyle = container.style;
+    containerStyle.position = '';
+    containerStyle.display = '';
+    containerStyle.flexDirection = '';
+    containerStyle.alignItems = '';
+    containerStyle.justifyContent = '';
+    containerStyle.overflow = '';
+    containerStyle.height = '';
+    containerStyle.width = '';
   }
 }
