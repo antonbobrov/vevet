@@ -13,6 +13,7 @@ import { toPixels } from '@/utils';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { getTextDirection } from '@/internal/textDirection';
 import { doc } from '@/internal/env';
+import { isFiniteNumber } from '@/internal/isFiniteNumber';
 
 export * from './types';
 
@@ -57,7 +58,7 @@ export class Marquee<
   }
 
   /** Current container size (width or height depending on direction) */
-  protected _size = 0;
+  protected _containerSize = 0;
 
   /** Initial child nodes of the container */
   protected _initialNodes: ChildNode[] = [];
@@ -307,7 +308,9 @@ export class Marquee<
     const { container } = props;
 
     // Update container width
-    this._size = isVertical ? container.offsetHeight : container.offsetWidth;
+    this._containerSize = isVertical
+      ? container.offsetHeight
+      : container.offsetWidth;
 
     // Update element sizes
     this._sizes = this._elements.map(
@@ -318,13 +321,15 @@ export class Marquee<
 
     // Determine how many times to duplicate elements
     const maxSize = Math.max(...this._sizes);
-    const copyQuantity = Math.ceil((this._size + maxSize) / this._totalSize);
+    const copyQuantity = Math.ceil(
+      (this._containerSize + maxSize) / this._totalSize,
+    );
 
     // update total size
-    this._totalSize = Math.max(this._totalSize, this._size + maxSize);
+    this._totalSize = Math.max(this._totalSize, this._containerSize + maxSize);
 
     // Clone elements if necessary
-    if (props.cloneNodes && copyQuantity > 1) {
+    if (props.cloneNodes && isFiniteNumber(copyQuantity) && copyQuantity > 1) {
       for (let i = 1; i < copyQuantity; i += 1) {
         this._elements.forEach((element) => {
           const copy = element.cloneNode(true) as HTMLElement;
@@ -366,7 +371,7 @@ export class Marquee<
     this._coord -= toPixels(step);
 
     // Calculate current position of the elements
-    const centerCoord = this._size * 0.5 + this._sizes[0] / 2 - gap;
+    const centerCoord = this._containerSize * 0.5 + this._sizes[0] / 2 - gap;
     const position = this._coord + (props.centered ? centerCoord : 0);
 
     // Update each element's position
