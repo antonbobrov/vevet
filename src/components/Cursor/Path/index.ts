@@ -2,6 +2,7 @@ import { lerp } from '@/utils';
 import { svgQuadraticCurvePath } from './svgQuadraticCurvePath';
 import { ICursorPathPoint, ICursorPathVec2 } from './types';
 import { LERP_APPROXIMATION } from '../constants';
+import { isFiniteNumber } from '@/internal/isFiniteNumber';
 
 export class CursorPath {
   /** Cursor SVG Path Points */
@@ -81,7 +82,7 @@ export class CursorPath {
       }
     }
 
-    if (removeCount > 0) {
+    if (isFiniteNumber(removeCount) && removeCount > 0) {
       let removedLength = 0;
 
       for (let i = 1; i <= removeCount; i += 1) {
