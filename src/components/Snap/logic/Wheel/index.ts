@@ -126,7 +126,7 @@ export class SnapWheel extends SnapLogic {
   protected _handleNoFollow(delta: number) {
     // vars
     const { snap, isTouchPad, isGainingDelta } = this;
-    const { track, activeSlide, domSize } = snap;
+    const { track, activeSlide, containerSize } = snap;
 
     // Detect wheel throttling
     if (this._detectNoFollowThrottle()) {
@@ -144,7 +144,7 @@ export class SnapWheel extends SnapLogic {
           if (delta > 0) {
             shouldFollow = true;
           }
-        } else if (activeSlide.coord === domSize - activeSlide.size) {
+        } else if (activeSlide.coord === containerSize - activeSlide.size) {
           if (delta < 0) {
             shouldFollow = true;
           }

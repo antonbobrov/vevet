@@ -65,6 +65,7 @@ export class Snap<
     return {
       ...super._getMutable(),
       slides: false,
+      containerSize: 'auto',
       slidesToScroll: 1,
       direction: 'horizontal',
       centered: false,
@@ -115,7 +116,7 @@ export class Snap<
   protected _keyboard: SnapKeyboard;
 
   /** Container size */
-  protected _domSize = 0;
+  protected _containerSize = 0;
 
   /** All slides */
   protected _slides: SnapSlide[] = [];
@@ -222,7 +223,7 @@ export class Snap<
     this.cancelTransition();
 
     // update container size
-    this._domSize =
+    this._containerSize =
       direction === 'horizontal'
         ? container.offsetWidth
         : container.offsetHeight;
@@ -245,8 +246,22 @@ export class Snap<
   }
 
   /** Container size depending on direction (width or height) */
+  get containerSize() {
+    const { containerSize } = this.props;
+
+    if (containerSize === 'auto') {
+      return this._containerSize;
+    }
+
+    return toPixels(containerSize);
+  }
+
+  /**
+   * Container size depending on direction (width or height)
+   * @deprecated
+   */
   get domSize() {
-    return this._domSize;
+    return this.containerSize;
   }
 
   /** All slides */
@@ -308,7 +323,7 @@ export class Snap<
     slides.reduce((prev, slide) => {
       slide.$_setStaticCoord(prev);
 
-      if (slide.size > this.domSize) {
+      if (slide.size > this.containerSize) {
         this._scrollableSlides.push(slide);
       }
 
@@ -391,7 +406,9 @@ export class Snap<
     const { slides, track } = this;
     const { centered: isCentered } = this.props;
 
-    const offset = isCentered ? this._domSize / 2 - this.firstSlideSize / 2 : 0;
+    const offset = isCentered
+      ? this.containerSize / 2 - this.firstSlideSize / 2
+      : 0;
 
     slides.forEach((slide) => {
       const { staticCoord, size } = slide;
@@ -427,13 +444,13 @@ export class Snap<
 
   /** Update slides progress */
   protected _updateSlidesProgress() {
-    const { slides, domSize } = this;
+    const { slides, containerSize } = this;
 
     slides.forEach((slide) => {
       const { coord, size } = slide;
 
       if (this.props.centered) {
-        const center = domSize / 2 - size / 2;
+        const center = containerSize / 2 - size / 2;
         slide.$_setProgress(scoped(coord, center, center - size));
 
         return;

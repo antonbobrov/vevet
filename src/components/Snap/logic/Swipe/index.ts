@@ -112,7 +112,7 @@ export class SnapSwipe extends SnapLogic {
 
   /** Modify swipe velocity */
   protected _handleVelocityModifier(source: ISwipeMatrix) {
-    const { props, track, activeSlide, domSize } = this.snap;
+    const { props, track, activeSlide, containerSize } = this.snap;
     const { coord, size: slideSize } = activeSlide;
 
     // Simple freemode
@@ -146,7 +146,12 @@ export class SnapSwipe extends SnapLogic {
 
     // Freemode: false, when slides are scrolled
 
-    const value = clamp(source[this.axis], -coord, domSize - slideSize - coord);
+    const value = clamp(
+      source[this.axis],
+      -coord,
+      containerSize - slideSize - coord,
+    );
+
     const output = { ...source, [this.axis]: value };
 
     return output;

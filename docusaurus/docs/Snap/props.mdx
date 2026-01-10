@@ -70,6 +70,26 @@ snap.updateProps({
 });
 ```
 
+### `containerSize`
+
+- **Type:** `'auto' | number | string`  
+- **Default:** `'auto'`  
+- Defines the container size:
+  - `'auto'` — Based on the container size.
+  - `number` — Size in pixels.
+  - CSS units such as `px`, `rem`, `vw`, `vh`, `svh`.
+
+```js
+const snap = new Snap({
+  container: document.getElementById("container"),
+  containerSize: 'auto',
+});
+
+snap.updateProps({
+  containerSize: 500,
+});
+```
+
 ### `slidesToScroll` {#props.slidesToScroll}
 - **Type:** `number`;
 - **Default:** `1`  

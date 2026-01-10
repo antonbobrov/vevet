@@ -38,6 +38,15 @@ export interface ISnapMutableProps
   slides?: (HTMLElement | SnapSlide)[] | false;
 
   /**
+   * Container size. Supported values:
+   * - `auto` detects slide size depending on the container size.
+   * - `number` defines the slide size in pixels.
+   * - css units like `px`, `rem`, `vw`, `vh`, `svh`.
+   * @default 'auto'
+   */
+  containerSize?: number | 'auto' | (string & {});
+
+  /**
    * Indicates the number of slides to scroll on swipe or wheel.
    * @default 1
    */

@@ -100,7 +100,7 @@ export class SnapSlide {
     this._isVisible =
       this.size > 0 &&
       this.coord > -this.size &&
-      this.coord < (this.snap?.domSize ?? 0);
+      this.coord < (this.snap?.containerSize ?? 0);
   }
 
   /** Static coordinate (as if the slide was never moved) */
@@ -137,11 +137,11 @@ export class SnapSlide {
     }
 
     if (sizeProp === 'stretch') {
-      return snap.domSize;
+      return snap.containerSize;
     }
 
     if (sizeProp === 'auto') {
-      return this._domSize ?? snap.domSize;
+      return this._domSize ?? snap.containerSize;
     }
 
     return toPixels(sizeProp);
@@ -247,7 +247,8 @@ export class SnapSlide {
     }
 
     const { snap, staticCoord, size, index } = this;
-    const { domSize, track, firstSlideSize } = snap;
+    const { containerSize, track, firstSlideSize } = snap;
+
     let points: number[] = [];
 
     if (index === 0 && snap.props.loop) {
@@ -257,18 +258,18 @@ export class SnapSlide {
     if (snap.props.centered) {
       const point = staticCoord + size / 2 - firstSlideSize / 2;
 
-      if (size > domSize) {
+      if (size > containerSize) {
         points.push(point);
-        points.push(point + (domSize - size) / 2);
-        points.push(point - (domSize - size) / 2);
+        points.push(point + (containerSize - size) / 2);
+        points.push(point - (containerSize - size) / 2);
       } else {
         points.push(point);
       }
     } else {
       points.push(staticCoord);
 
-      if (size > domSize) {
-        points.push(staticCoord + (size - domSize));
+      if (size > containerSize) {
+        points.push(staticCoord + (size - containerSize));
       }
     }
 

@@ -61,12 +61,12 @@ export class SnapTrack extends SnapLogic {
 
   /** Sets the target track value */
   set $_target(value: number) {
-    const { domSize } = this.snap;
+    const { containerSize } = this.snap;
     const diff = value - this._target;
 
     this._target = value;
 
-    this._influence.target += domSize ? diff / domSize : 0;
+    this._influence.target += containerSize ? diff / containerSize : 0;
     this._influence.target = clamp(this._influence.target, -1, 1);
   }
 
@@ -94,7 +94,9 @@ export class SnapTrack extends SnapLogic {
   get offset() {
     const { snap } = this;
 
-    return snap.props.centered ? snap.domSize / 2 - snap.firstSlideSize / 2 : 0;
+    return snap.props.centered
+      ? snap.containerSize / 2 - snap.firstSlideSize / 2
+      : 0;
   }
 
   /** Get loop count */
@@ -138,14 +140,14 @@ export class SnapTrack extends SnapLogic {
     // Edge space & resistance
 
     if (!snap.props.loop) {
-      const { domSize } = snap;
-      const edgeSpace = (1 - snap.props.edgeFriction) * domSize;
+      const { containerSize } = snap;
+      const edgeSpace = (1 - snap.props.edgeFriction) * containerSize;
 
       if (target < min) {
-        const edgeProgress = 1 - scoped(target, -domSize, min);
+        const edgeProgress = 1 - scoped(target, -containerSize, min);
         target = min - edgeProgress * edgeSpace;
       } else if (target > max) {
-        const edgeProgress = scoped(target, max, max + domSize);
+        const edgeProgress = scoped(target, max, max + containerSize);
         target = max + edgeProgress * edgeSpace;
       }
 
@@ -193,8 +195,8 @@ export class SnapTrack extends SnapLogic {
     if (snap.props.centered) {
       const firstSlide = snap.slides[0];
 
-      if (firstSlide.size > snap.domSize) {
-        return snap.domSize / 2 - firstSlide.size / 2;
+      if (firstSlide.size > snap.containerSize) {
+        return snap.containerSize / 2 - firstSlide.size / 2;
       }
     }
 
@@ -203,7 +205,7 @@ export class SnapTrack extends SnapLogic {
 
   /** Get maximum track value */
   get max() {
-    const { domSize, slides, isEmpty, props } = this.snap;
+    const { containerSize, slides, isEmpty, props } = this.snap;
     const { canLoop } = this;
 
     if (isEmpty) {
@@ -216,17 +218,17 @@ export class SnapTrack extends SnapLogic {
 
     let max = canLoop
       ? lastCoordWithSlide + toPixels(props.gap)
-      : lastCoordWithSlide - domSize;
+      : lastCoordWithSlide - containerSize;
 
     if (canLoop) {
       return max;
     }
 
     if (props.centered) {
-      max += domSize / 2 - firstSlide.size / 2;
+      max += containerSize / 2 - firstSlide.size / 2;
 
-      if (lastSlide.size < domSize) {
-        max += domSize / 2 - lastSlide.size / 2;
+      if (lastSlide.size < containerSize) {
+        max += containerSize / 2 - lastSlide.size / 2;
       }
     }
 
@@ -279,10 +281,10 @@ export class SnapTrack extends SnapLogic {
   /** Check if the active slide is larger than the container and is being scrolled */
   get isSlideScrolling() {
     const { snap } = this;
-    const { domSize } = snap;
+    const { containerSize } = snap;
 
     return snap.scrollableSlides.some(({ size, coord }) =>
-      inRange(coord, domSize - size, 0),
+      inRange(coord, containerSize - size, 0),
     );
   }
 }
