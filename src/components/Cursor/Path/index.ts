@@ -1,12 +1,15 @@
 import { lerp } from '@/utils';
-import { svgQuadraticCurvePath } from './svgQuadraticCurvePath';
-import { ICursorPathPoint, ICursorPathVec2 } from './types';
+import { ICursorPathVec2 } from './types';
 import { LERP_APPROXIMATION } from '../constants';
-import { isFiniteNumber } from '@/internal/isFiniteNumber';
+import {
+  catmullRomSplinePointAtLength,
+  catmullRomSplineTotalLength,
+} from './utils/catmullRom';
+import { svgQuadraticCurvePath } from './utils/svgQuadraticCurvePath';
 
 export class CursorPath {
   /** Cursor SVG Path Points */
-  protected _points: ICursorPathPoint[] = [];
+  protected _points: ICursorPathVec2[] = [];
 
   /** Cursor SVG Path */
   protected _path: SVGPathElement;
@@ -42,16 +45,14 @@ export class CursorPath {
     const path = this._path;
     const line = this._line;
 
-    // Add point
-    const newPoint = { x: coords.x, y: coords.y, length: 0 };
-    points.push(newPoint);
+    // Add the final point
+    points.push({ x: coords.x, y: coords.y });
 
     // Update path
     path.setAttribute('d', svgQuadraticCurvePath(points));
 
     // Update total length
-    const totalLength = path.getTotalLength();
-    newPoint.length = totalLength;
+    const totalLength = catmullRomSplineTotalLength(points);
     line.target = totalLength;
 
     // Instant update of line
@@ -62,51 +63,49 @@ export class CursorPath {
 
   /** Minimize SVG Path */
   public minimize() {
-    if (!this._isEnabled) {
+    if (!this._isEnabled || this._points.length < 3) {
       return;
     }
 
     const points = this._points;
     const line = this._line;
+    const currentPosition = line.current;
 
-    if (points.length < 3) {
-      return;
-    }
-
-    let accumulated = 0;
+    // Find how many points we can remove
+    // We need to keep at least 2 points for Catmull-Rom spline
     let removeCount = 0;
 
-    for (let i = 1; i < points.length; i += 1) {
-      const dx = points[i].x - points[i - 1].x;
-      const dy = points[i].y - points[i - 1].y;
-      const segLength = Math.hypot(dx, dy);
+    // Check each point to see if the path length to it is less than current position
+    for (let i = 1; i < points.length - 1; i += 1) {
+      const subsetPoints = points.slice(0, i + 2);
+      const lengthToPoint = catmullRomSplineTotalLength(subsetPoints);
 
-      if (accumulated + segLength < line.current) {
-        accumulated += segLength;
-        removeCount += 1;
+      if (lengthToPoint < currentPosition) {
+        removeCount = i + 1;
       } else {
         break;
       }
     }
 
-    if (isFiniteNumber(removeCount) && removeCount > 0) {
-      let removedLength = 0;
-
-      for (let i = 1; i <= removeCount; i += 1) {
-        const dx = points[i].x - points[i - 1].x;
-        const dy = points[i].y - points[i - 1].y;
-        removedLength += Math.hypot(dx, dy);
-      }
-
-      points.splice(0, removeCount);
-
-      // Fix line after points removed
-      line.current = Math.max(0, line.current - removedLength);
-      line.target = Math.max(0, line.target - removedLength);
-
-      // Update path
-      this._path.setAttribute('d', svgQuadraticCurvePath(points));
+    if (removeCount === 0) {
+      return;
     }
+
+    // Save total length before removal
+    const totalLengthBefore = catmullRomSplineTotalLength(points);
+
+    // Remove points
+    points.splice(0, removeCount);
+
+    // Calculate total length after removal and adjust line positions
+    const totalLengthAfter = catmullRomSplineTotalLength(points);
+    const removedLength = totalLengthBefore - totalLengthAfter;
+
+    line.current = Math.max(0, line.current - removedLength);
+    line.target = Math.max(0, line.target - removedLength);
+
+    // Update path
+    this._path.setAttribute('d', svgQuadraticCurvePath(points));
   }
 
   /** Check if the path is interpolated */
@@ -123,6 +122,19 @@ export class CursorPath {
 
   /** Get current coordinate */
   get coord() {
-    return this._path.getPointAtLength(this._line.current);
+    if (this._points.length === 0) {
+      return { x: 0, y: 0 };
+    }
+
+    if (this._points.length === 1) {
+      return { x: this._points[0].x, y: this._points[0].y };
+    }
+
+    const point = catmullRomSplinePointAtLength(
+      this._points,
+      this._line.current,
+    );
+
+    return point;
   }
 }
