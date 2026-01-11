@@ -23,6 +23,13 @@ export class CursorPath {
       'http://www.w3.org/2000/svg',
       'path',
     )!;
+
+    const path = this._path;
+
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('stroke-linejoin', 'round');
+    path.setAttribute('fill', 'transparent');
+    path.setAttribute('stroke', '#f00');
   }
 
   /** Update SVG Path */
