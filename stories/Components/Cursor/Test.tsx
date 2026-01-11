@@ -1,17 +1,14 @@
 import React, { FC, useEffect, useRef } from 'react';
 import { Cursor } from '@/index';
 
-// todo: demo with sticky hover (both x & y axis), angle and velocity scale
-
-export const Component: FC = () => {
+export const Test: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const svgRef = useRef<SVGSVGElement>(null);
   const refWithSize = useRef<HTMLButtonElement>(null);
   const refWithSnap = useRef<HTMLButtonElement>(null);
   const refWithType = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (!ref.current || !svgRef.current) {
+    if (!ref.current) {
       return undefined;
     }
 
@@ -20,17 +17,7 @@ export const Component: FC = () => {
       width: '7rem',
       height: '7rem',
       lerp: 0.2,
-      // transformModifier: (coords) => {
-      //   const scale = coords.velocity * 0.5;
-
-      //   return `translate(${coords.x}px, ${coords.y}px) rotate(${coords.angle}deg) scale(${1 + scale}, ${1 - scale})`;
-      // },
-      // behavior: 'path', // todo: fix snap with path
     });
-
-    svgRef.current.append(instance.path);
-    instance.path.style.fill = 'transparent';
-    instance.path.style.stroke = '#f00';
 
     const defaultCursor = document.createElement('div');
     defaultCursor.innerHTML = 'default';
@@ -89,18 +76,6 @@ export const Component: FC = () => {
 
   return (
     <div style={{ position: 'relative', height: '100vh', overflow: 'hidden' }}>
-      <svg
-        ref={svgRef}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          pointerEvents: 'none',
-        }}
-      />
-
       <div ref={ref}>
         <p>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deserunt

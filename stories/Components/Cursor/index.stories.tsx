@@ -1,13 +1,14 @@
-import type { StoryObj, Meta } from '@storybook/react';
-import { Component } from '.';
+import React from 'react';
+import type { Meta, StoryFn } from '@storybook/react';
+import { Test as TestComponent } from './Test';
+import { Path as PathComponent } from './Path';
 
-type TComponent = typeof Component;
-
-const meta: Meta<TComponent> = {
+const meta: Meta = {
   title: 'Components/Cursor',
-  component: Component,
 };
 
 export default meta;
 
-export const Default: StoryObj<TComponent> = {};
+export const Test: StoryFn = () => <TestComponent />;
+
+export const Path: StoryFn = () => <PathComponent />;
