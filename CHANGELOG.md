@@ -1,5 +1,22 @@
 # Changelog
 
+# [5.5.0](https://github.com/antonbobrov/vevet/compare/v5.4.0...v5.5.0) (2026-01-12)
+
+
+### Cursor
+
+* add default path styles ([15bf466](https://github.com/antonbobrov/vevet/commit/15bf46656690f614a0cb0e65c4d1550fae966bf2))
+* additional check for finite numbers in path calculation ([cd009ca](https://github.com/antonbobrov/vevet/commit/cd009ca8663d43600c8f84654083a9aaa92386b6))
+
+### Marquee
+
+* avoid infinite loop when removing marquee children from DOM ([a84810e](https://github.com/antonbobrov/vevet/commit/a84810e322284fabf0d6ba6a1e8700583d7d8d49))
+* improve nodes wrapping ([0e43620](https://github.com/antonbobrov/vevet/commit/0e43620d21a1cea1073624294379d43b91325751))
+
+### Snap
+
+* add `containerSize` & deprecate `domSize` ([10381d8](https://github.com/antonbobrov/vevet/commit/10381d85c2d71e71f648ee0df679e0e953aa8dcc))
+
 # [5.4.0](https://github.com/antonbobrov/vevet/compare/v5.3.0...v5.4.0) (2025-12-19)
 
 

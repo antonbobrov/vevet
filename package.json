@@ -1,6 +1,6 @@
 {
   "name": "vevet",
-  "version": "5.4.0",
+  "version": "5.5.0",
   "description": "Vevet is a JavaScript library for creative development that simplifies crafting rich interactions like split text animations, carousels, marquees, preloading, and more.",
   "scripts": {
     "storybook": "storybook dev -p 6006",
