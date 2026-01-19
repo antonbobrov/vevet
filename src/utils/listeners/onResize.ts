@@ -80,7 +80,6 @@ export function onResize({
 
   let timeout: NodeJS.Timeout | undefined;
   let resizeObserver: ResizeObserver | undefined;
-  let isFirstObserverCallback = true;
 
   let viewportCallback: (() => void) | undefined;
 
@@ -96,12 +95,6 @@ export function onResize({
   // Initialize ResizeObserver if element is provided
   if (element) {
     resizeObserver = new ResizeObserver(() => {
-      if (isFirstObserverCallback) {
-        isFirstObserverCallback = false;
-
-        return;
-      }
-
       debounceResize(core.props.resizeDebounce + resizeDebounce);
     });
 

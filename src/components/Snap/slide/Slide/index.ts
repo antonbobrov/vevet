@@ -191,8 +191,6 @@ export class SnapSlide {
         name: 'Snap Slide',
       });
     }
-
-    this.resize(false);
   }
 
   /** Detach the slide from the Snap class */
