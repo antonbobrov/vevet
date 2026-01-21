@@ -20,15 +20,15 @@ Fires when an element enters the viewport.
 
 ```ts
 const observer = new InView({ }, {
-  onIn: ({ element }) => console.log(element, 'entered viewport'),
+  onIn: ({ element, direction }) => console.log(element, 'entered viewport', direction),
 });
 ```
 
 or:
 
 ```ts
-const destruct = observer.on('in', ({ element }) => {
-  console.log(element, 'entered viewport');
+const destruct = observer.on('in', ({ element, direction }) => {
+  console.log(element, 'entered viewport', direction);
 });
 
 // Cancel the callback
@@ -41,15 +41,15 @@ Fires when an element leaves the viewport.
 
 ```ts
 const observer = new InView({ }, {
-  onOut: ({ element }) => console.log(element, 'left viewport'),
+  onOut: ({ element, direction }) => console.log(element, 'left viewport', direction),
 });
 ```
 
 or:
 
 ```ts
-const destruct = observer.on('out', ({ element }) => {
-  console.log(element, 'left viewport');
+const destruct = observer.on('out', ({ element, direction }) => {
+  console.log(element, 'left viewport', direction);
 });
 
 // Cancel the callback

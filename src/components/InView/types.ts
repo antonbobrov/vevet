@@ -51,13 +51,30 @@ export interface IInViewCallbacksMap extends IModuleCallbacksMap {
   /**
    * Fires when an element enters the viewport.
    */
-  in: { element: Element };
+  in: IInViewCallbackArg;
 
   /**
    * Fires when an element leaves the viewport.
    */
-  out: { element: Element };
+  out: IInViewCallbackArg;
 }
+
+/**
+ * Arguments passed to the InView callbacks.
+ */
+export interface IInViewCallbackArg {
+  element: Element;
+  direction: TInViewElementDirection;
+}
+
+/**
+ * Direction of an element entering or leaving the viewport.
+ */
+export type TInViewElementDirection =
+  | 'fromBottom'
+  | 'fromTop'
+  | 'fromLeft'
+  | 'fromRight';
 
 /**
  * Extended element interface for use with the InView module.

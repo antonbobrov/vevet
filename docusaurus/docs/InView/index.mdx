@@ -51,8 +51,8 @@ import { InView } from "vevet";
 
 const observer = new InView();
 
-observer.on('in', ({ element }) => {
-  console.log('do something with', element);
+observer.on('in', ({ element, direction }) => {
+  console.log('do something with', element, direction);
 });
 
 observer.addElement(

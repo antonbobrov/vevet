@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useRef } from 'react';
 import { InView } from '@/index';
 
-export const Component: FC = () => {
+export const Vertical: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -12,6 +12,7 @@ export const Component: FC = () => {
     const instance = new InView(
       {
         hasOut: true,
+        rootMargin: '0% 0% -15% 0%',
       },
       {
         onIn: ({ element }) => {

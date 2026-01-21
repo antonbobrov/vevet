@@ -1,13 +1,14 @@
-import type { StoryObj, Meta } from '@storybook/react';
-import { Component } from '.';
+import React from 'react';
+import type { Meta, StoryFn } from '@storybook/react';
+import { Vertical as VerticalComponent } from './Vertical';
+import { Horizontal as HorizontalComponent } from './Horizontal';
 
-type TComponent = typeof Component;
-
-const meta: Meta<TComponent> = {
+const meta: Meta = {
   title: 'Components/InView',
-  component: Component,
 };
 
 export default meta;
 
-export const Default: StoryObj<TComponent> = {};
+export const Vertical: StoryFn = () => <VerticalComponent />;
+
+export const Horizontal: StoryFn = () => <HorizontalComponent />;

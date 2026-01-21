@@ -5,6 +5,7 @@ import {
   IInViewElement,
   IInViewMutableProps,
   IInViewStaticProps,
+  TInViewElementDirection,
 } from './types';
 import { Module, TModuleOnCallbacksProps } from '@/base/Module';
 import { initVevet } from '@/global/initVevet';
@@ -134,7 +135,7 @@ export class InView<
     const rootMargin = isInitialStart ? '0% 0% 0% 0%' : props.rootMargin;
 
     this._observerIn = new IntersectionObserver(
-      (data) => this._handleIn(data),
+      (data) => this._handleIn(data, isInitialStart),
       { root: null, threshold: 0, rootMargin },
     );
 
@@ -153,7 +154,10 @@ export class InView<
   /**
    * Handles elements entering the viewport.
    */
-  protected _handleIn(data: IntersectionObserverEntry[]) {
+  protected _handleIn(
+    data: IntersectionObserverEntry[],
+    isInitialStart: boolean,
+  ) {
     data.forEach((entry) => {
       const element = entry.target as IInViewElement;
 
@@ -168,7 +172,7 @@ export class InView<
       }
 
       element.$vevetInViewTimeout = setTimeout(
-        () => this._handleInOut(element, true),
+        () => this._handleInOut(entry, true, isInitialStart),
         this._getElementDelay(element),
       );
 
@@ -201,23 +205,70 @@ export class InView<
         clearTimeout(element.$vevetInViewTimeout);
       }
 
-      element.$vevetInViewTimeout = setTimeout(() => {
-        this._handleInOut(element, false);
-      }, 0);
+      element.$vevetInViewTimeout = setTimeout(
+        () => this._handleInOut(entry, false),
+        0,
+      );
     });
   }
 
   /**
    * Toggles visibility classes and emits events for visibility changes.
    */
-  protected _handleInOut(element: IInViewElement, isInView: boolean) {
+  protected _handleInOut(
+    entry: IntersectionObserverEntry,
+    isInView: boolean,
+    isInitialStart = false,
+  ) {
+    const element = entry.target as IInViewElement;
+
     const className = element.getAttribute('data-in-view-class');
+    const direction = this._getElementDirection(
+      entry,
+      isInView,
+      isInitialStart,
+    );
 
     if (className) {
       cnToggle(element, className, isInView);
     }
 
-    this.callbacks.emit(isInView ? 'in' : 'out', { element });
+    this.callbacks.emit(isInView ? 'in' : 'out', { element, direction });
+  }
+
+  protected _getElementDirection(
+    entry: IntersectionObserverEntry,
+    isInView: boolean,
+    isInitialStart: boolean,
+  ) {
+    const app = initVevet();
+    const bounding = entry.boundingClientRect;
+
+    if (this.props.scrollDirection === 'horizontal') {
+      let direction: TInViewElementDirection = 'fromRight';
+
+      if ((isInView && !isInitialStart) || !isInView) {
+        if (bounding.left > app.width / 2) {
+          direction = 'fromRight';
+        } else if (bounding.right < app.width / 2) {
+          direction = 'fromLeft';
+        }
+      }
+
+      return direction;
+    }
+
+    let direction: TInViewElementDirection = 'fromBottom';
+
+    if ((isInView && !isInitialStart) || !isInView) {
+      if (bounding.top > app.height / 2) {
+        direction = 'fromBottom';
+      } else if (bounding.bottom < app.height / 2) {
+        direction = 'fromTop';
+      }
+    }
+
+    return direction;
   }
 
   /**
