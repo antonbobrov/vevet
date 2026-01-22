@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.5.1](https://github.com/antonbobrov/vevet/compare/v5.5.0...v5.5.1) (2026-01-22)
+
+
+### InView
+
+* add element direction detection ([a924c93](https://github.com/antonbobrov/vevet/commit/a924c93b1da4666643deb2d0828984b21ea2e7f4))
+
+### onResize
+
+* allow first callback ([e07be7a](https://github.com/antonbobrov/vevet/commit/e07be7a64fefd91617b385ec74e462eba1ce378c))
+
 # [5.5.0](https://github.com/antonbobrov/vevet/compare/v5.4.0...v5.5.0) (2026-01-12)
 
 
