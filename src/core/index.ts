@@ -42,7 +42,13 @@ export function Core(input: Partial<ICoreProps>): ICore {
     applyClassNames: props.applyClassNames,
   });
 
-  const viewport = createViewport({ prefix, props, isMobile, isInApp });
+  const viewport = createViewport({
+    prefix,
+    props,
+    isMobile,
+    isInApp,
+    browserName,
+  });
 
   // output
 

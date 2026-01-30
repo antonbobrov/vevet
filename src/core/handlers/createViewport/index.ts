@@ -10,9 +10,16 @@ interface IProps {
   props: ICoreProps;
   isMobile: boolean;
   isInApp: boolean;
+  browserName: string;
 }
 
-export function createViewport({ prefix, props, isMobile, isInApp }: IProps) {
+export function createViewport({
+  prefix,
+  props,
+  isMobile,
+  isInApp,
+  browserName,
+}: IProps) {
   // create styles
   let styles = doc.getElementById('vevet_css_preset');
   if (!styles) {
@@ -134,7 +141,7 @@ export function createViewport({ prefix, props, isMobile, isInApp }: IProps) {
     data.lowerDpr = !isMobile ? 1 : Math.min(data.dpr, 2);
 
     // for in-app browser, update svh only if width changed
-    if (isMobile && isInApp) {
+    if (isMobile && (isInApp || browserName.includes('fxios'))) {
       const rootHeight = html.clientHeight;
 
       if (prevWidth !== data.width || !data.sHeight) {
