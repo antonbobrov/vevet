@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.5.2](https://github.com/antonbobrov/vevet/compare/v5.5.1...v5.5.2) (2026-01-30)
+
+
+### ScrollProgress
+
+* fix initial update ([c6dc6c8](https://github.com/antonbobrov/vevet/commit/c6dc6c81590ea029aac4198ba9ec6e3ac5d845e6))
+
+### Viewport
+
+* update svh behavior for fxios ([770bc2f](https://github.com/antonbobrov/vevet/commit/770bc2f4f405f50b15d873a5a17bc62d684f69e9))
+
 ## [5.5.1](https://github.com/antonbobrov/vevet/compare/v5.5.0...v5.5.1) (2026-01-22)
 
 
