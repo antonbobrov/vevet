@@ -104,14 +104,28 @@ export class ScrollProgress<
    */
   protected _setupObserver() {
     if (!this.props.optimized) {
+      // Initial Update
+      this.update(true);
+
       return;
     }
 
     const { section } = this.props;
 
+    // Initial Update
+    const bounding = section.getBoundingClientRect();
+    this._isVisible = bounding.top < window.innerHeight || bounding.bottom > 0;
+    this.update(true);
+
+    // Observer Update
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.target === section) {
+          const isNowVisible = entry.isIntersecting;
+          if (isNowVisible === this._isVisible) {
+            return;
+          }
+
           this._isVisible = entry.isIntersecting;
           this.update();
         }
@@ -132,11 +146,7 @@ export class ScrollProgress<
     const listener = addEventListener(
       container,
       'scroll',
-      () => {
-        if (this._isVisible) {
-          this.update();
-        }
-      },
+      () => this.update(),
       { passive: false },
     );
 
@@ -145,7 +155,11 @@ export class ScrollProgress<
 
   /** Updates the section and root bounds, and emits an update callback. */
   @noopIfDestroyed
-  public update() {
+  public update(isForce = false) {
+    if (!this.isVisible && !isForce) {
+      return;
+    }
+
     const { section, props } = this;
     const container = props.root;
     const core = initVevet();
