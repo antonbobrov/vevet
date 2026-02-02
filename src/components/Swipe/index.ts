@@ -330,7 +330,7 @@ export class Swipe<
     return {
       x: x * ratio,
       y: y * ratio,
-      angle,
+      angle: angle * ratio,
     };
   }
 
