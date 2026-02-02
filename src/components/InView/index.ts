@@ -222,18 +222,48 @@ export class InView<
   ) {
     const element = entry.target as IInViewElement;
 
-    const className = element.getAttribute('data-in-view-class');
     const direction = this._getElementDirection(
       entry,
       isInView,
       isInitialStart,
     );
 
-    if (className) {
-      cnToggle(element, className, isInView);
-    }
+    this._toggleClassname(element, isInView, direction);
 
     this.callbacks.emit(isInView ? 'in' : 'out', { element, direction });
+  }
+
+  /** Toggles visibility classes */
+  protected _toggleClassname(
+    element: Element,
+    isInView: boolean,
+    direction: TInViewElementDirection,
+  ) {
+    const classNames = element.getAttribute('data-in-view-class');
+    if (!classNames) {
+      return;
+    }
+
+    const split = classNames.split('|');
+    const direct = split[0].trim();
+    const reverse = split[1]?.trim() || direct;
+
+    if (!direct) {
+      return;
+    }
+
+    if (isInView) {
+      const isReverse = direction === 'fromRight' || direction === 'fromTop';
+
+      const className = isReverse ? reverse.trim() : direct.trim();
+
+      cnToggle(element, className, isInView);
+
+      return;
+    }
+
+    cnToggle(element, direct, isInView);
+    cnToggle(element, reverse, isInView);
   }
 
   protected _getElementDirection(

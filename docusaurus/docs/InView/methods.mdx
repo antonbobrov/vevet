@@ -18,6 +18,8 @@ All **[Module methods](/docs/base/Module/#methods)** are available in this class
 
 Registers an element for visibility observation. If the element has a `data-in-view-class` attribute, the specified class will be applied upon entering the viewport.
 
+**Returns:** A cleanup function that removes the element from observation when called.
+
 :::note Dynamic Content
 If new elements are added to the DOM after initialization (e.g., via AJAX or React rendering),  
 they must be registered manually using `addElement()`.
@@ -26,10 +28,17 @@ they must be registered manually using `addElement()`.
 ```ts
 const observer = new InView();
 
-const destruct = observer.addElement(document.getElementById('element'));
+// Add a single element
+const stopObserving = observer.addElement(document.getElementById('element'));
 
-// Stop observing the element
-destruct();
+// Stop observing this specific element
+stopObserving();
+
+// Add multiple elements
+const elements = document.querySelectorAll('.observe-me');
+elements.forEach((el) => {
+  observer.addElement(el);
+});
 ```
 
 ### `removeElement`
@@ -39,28 +48,50 @@ Removes an element from observation, preventing further visibility tracking.
 ```ts
 const observer = new InView();
 
-observer.addElement(document.getElementById('element'));
-observer.removeElement(document.getElementById('element'));
+const element = document.getElementById('element');
+observer.addElement(element);
+
+// Later, remove it
+observer.removeElement(element);
 ```
 
 ### `updateProps`
 
-Dynamically updates instance properties.
+Dynamically updates mutable instance properties at runtime. Only mutable properties (like `enabled` and `rootMargin`) can be updated.
+
+**Parameters:**
+- `props` - An object containing the mutable properties to update
 
 ```ts
 const observer = new InView();
 
+// Update enabled state
 observer.updateProps({
   enabled: false,
+});
+
+// Update rootMargin
+observer.updateProps({
+  rootMargin: '0% 0% -15% 0%',
+});
+
+// Update multiple properties at once
+observer.updateProps({
+  enabled: true,
+  rootMargin: '0% 0% -10% 0%',
 });
 ```
 
 ### `destroy`
 
-Destroys the instance and removes all observers.
+Destroys the instance and removes all observers. This disconnects all `IntersectionObserver` instances and removes all registered elements. The instance cannot be used after destruction.
 
 ```ts
 const observer = new InView();
 
+observer.addElement(document.getElementById('element1'));
+observer.addElement(document.getElementById('element2'));
+
+// Clean up everything
 observer.destroy();
 ```

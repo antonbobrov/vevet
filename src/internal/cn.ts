@@ -3,11 +3,15 @@ export function cnAdd(element: Element, className: string) {
 }
 
 export function cnRemove(element: Element, className: string) {
-  element.classList.remove(className);
+  if (className) {
+    element.classList.remove(className);
+  }
 }
 
 export function cnToggle(element: Element, className: string, is: boolean) {
-  element.classList.toggle(className, is);
+  if (className) {
+    element.classList.toggle(className, is);
+  }
 }
 
 export function cnHas(element: Element, className: string) {

@@ -37,7 +37,7 @@ export const Vertical: FC = () => {
   return (
     <div ref={ref}>
       <div
-        data-in-view-class="viewed"
+        data-in-view-class="viewed|viewed-reverse"
         style={{
           marginTop: 10,
           width: '100%',
@@ -75,6 +75,160 @@ export const Vertical: FC = () => {
 
       <div
         className="test"
+        style={{
+          marginTop: 10,
+          width: '100%',
+          height: 100,
+          background: '#ccc',
+        }}
+      />
+
+      <div
+        style={{
+          marginTop: 10,
+          width: '100%',
+          height: 100,
+          background: '#ccc',
+        }}
+      />
+
+      <div
+        style={{
+          marginTop: 10,
+          width: '100%',
+          height: 100,
+          background: '#ccc',
+        }}
+      />
+
+      <div
+        style={{
+          marginTop: 10,
+          width: '100%',
+          height: 100,
+          background: '#ccc',
+        }}
+        data-in-view-class="viewed|vvvv"
+      />
+
+      <div
+        style={{
+          marginTop: 10,
+          width: '100%',
+          height: 100,
+          background: '#ccc',
+        }}
+      />
+
+      <div
+        style={{
+          marginTop: 10,
+          width: '100%',
+          height: 100,
+          background: '#ccc',
+        }}
+      />
+
+      <div
+        style={{
+          marginTop: 10,
+          width: '100%',
+          height: 100,
+          background: '#ccc',
+        }}
+      />
+
+      <div
+        style={{
+          marginTop: 10,
+          width: '100%',
+          height: 100,
+          background: '#ccc',
+        }}
+      />
+
+      <div
+        style={{
+          marginTop: 10,
+          width: '100%',
+          height: 100,
+          background: '#ccc',
+        }}
+      />
+
+      <div
+        style={{
+          marginTop: 10,
+          width: '100%',
+          height: 100,
+          background: '#ccc',
+        }}
+      />
+
+      <div
+        style={{
+          marginTop: 10,
+          width: '100%',
+          height: 100,
+          background: '#ccc',
+        }}
+      />
+
+      <div
+        style={{
+          marginTop: 10,
+          width: '100%',
+          height: 100,
+          background: '#ccc',
+        }}
+      />
+
+      <div
+        style={{
+          marginTop: 10,
+          width: '100%',
+          height: 100,
+          background: '#ccc',
+        }}
+      />
+
+      <div
+        style={{
+          marginTop: 10,
+          width: '100%',
+          height: 100,
+          background: '#ccc',
+        }}
+      />
+
+      <div
+        style={{
+          marginTop: 10,
+          width: '100%',
+          height: 100,
+          background: '#ccc',
+        }}
+      />
+
+      <div
+        style={{
+          marginTop: 10,
+          width: '100%',
+          height: 100,
+          background: '#ccc',
+        }}
+      />
+
+      <div
+        style={{
+          marginTop: 10,
+          width: '100%',
+          height: 100,
+          background: '#ccc',
+        }}
+      />
+
+      <div
         style={{
           marginTop: 10,
           width: '100%',

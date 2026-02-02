@@ -9,12 +9,16 @@ export const Horizontal: FC = () => {
       return undefined;
     }
 
-    document.documentElement.setAttribute('dir', 'rtl');
+    const isRtl = true;
+
+    if (isRtl) {
+      document.documentElement.setAttribute('dir', 'rtl');
+    }
 
     const instance = new InView(
       {
         hasOut: true,
-        rootMargin: '0% -15% 0% 0%',
+        rootMargin: isRtl ? '0% 0% 0% -15%' : '0% -15% 0% 0%',
         scrollDirection: 'horizontal',
       },
       {
@@ -59,7 +63,7 @@ export const Horizontal: FC = () => {
         }}
       >
         <div
-          data-in-view-class="viewed"
+          data-in-view-class="viewed|viewed-reverse"
           style={{
             width: 200,
             height: 200,
