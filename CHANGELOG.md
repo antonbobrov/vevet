@@ -1,5 +1,20 @@
 # Changelog
 
+# [5.6.0](https://github.com/antonbobrov/vevet/compare/v5.5.2...v5.6.0) (2026-02-02)
+
+
+### InView
+
+* `data-in-view-class` supports direction ([823358c](https://github.com/antonbobrov/vevet/commit/823358cf43513e4f697a5c8c69eb8eaf1339e5fb))
+
+### Snap
+
+* `swipeAxis` supports `angle` ([c4254a9](https://github.com/antonbobrov/vevet/commit/c4254a94f616ff19e50d37366141838744c3b7a1))
+
+### Swipe
+
+* `angle` supports `ratio` ([33633bc](https://github.com/antonbobrov/vevet/commit/33633bc77e1d8d3c90d169a380d78049091d2bca))
+
 ## [5.5.2](https://github.com/antonbobrov/vevet/compare/v5.5.1...v5.5.2) (2026-01-30)
 
 
