@@ -21,7 +21,7 @@ export interface ISnapSwipeProps {
    * Swipe axis
    * @default 'auto'
    */
-  swipeAxis?: 'x' | 'y' | 'auto';
+  swipeAxis?: 'x' | 'y' | 'angle' | 'auto';
 
   /**
    * If disabled, then slider will be animated only when you release the finger, it will not move while you hold your finger on it.

@@ -6,6 +6,7 @@ import { Carousel as CarouselComponent } from './Carousel';
 import { Fade as FadeComponent } from './Fade';
 import { Cards as CardsComponent } from './Cards';
 import { Panorama as PanoramaComponent } from './Panorama';
+import { Circular as CircularComponent } from './Circular';
 import { Glide as GlideComponent } from './Glide';
 import { CardsStack as CardsStackComponent } from './CardsStack';
 import { Spiral as SpiralComponent } from './Spiral';
@@ -36,6 +37,8 @@ export const Carousel: StoryFn = () => <CarouselComponent />;
 export const Cards: StoryFn = () => <CardsComponent />;
 
 export const Panorama: StoryFn = () => <PanoramaComponent />;
+
+export const Circular: StoryFn = () => <CircularComponent />;
 
 export const Glide: StoryFn = () => <GlideComponent />;
 

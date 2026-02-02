@@ -27,7 +27,8 @@ export class SnapSwipe extends SnapLogic {
       grabCursor: props.grabCursor,
       minTime: props.swipeMinTime,
       threshold: props.swipeThreshold,
-      axis: this.axis,
+      axis: this.axis === 'angle' ? null : this.axis,
+      relative: this.axis === 'angle',
       ratio: props.swipeSpeed,
       inertia: false,
       inertiaDuration: props.swipeInertiaDuration,
@@ -56,7 +57,8 @@ export class SnapSwipe extends SnapLogic {
           grabCursor: snap.props.grabCursor,
           minTime: snap.props.swipeMinTime,
           threshold: snap.props.swipeThreshold,
-          axis: this.axis,
+          axis: this.axis === 'angle' ? null : this.axis,
+          relative: this.axis === 'angle',
           ratio: props.swipeSpeed,
           inertiaDuration: snap.props.swipeInertiaDuration,
           inertiaRatio: snap.props.swipeInertiaRatio,
@@ -105,7 +107,7 @@ export class SnapSwipe extends SnapLogic {
   protected get diff() {
     const { diff } = this.swipe;
 
-    const initialDiff = this.axis === 'x' ? diff.x : diff.y;
+    const initialDiff = diff[this.axis];
 
     return initialDiff / Math.abs(this.snap.props.swipeSpeed);
   }
@@ -178,7 +180,7 @@ export class SnapSwipe extends SnapLogic {
 
   /** Handles swipe `move` event */
   protected _handleSwipeMove(coords: ISwipeCoords) {
-    const { snap, swipe } = this;
+    const { snap, swipe, axis } = this;
     const { props, track, callbacks } = snap;
     const { followSwipe: shouldFollow } = props;
 
@@ -187,7 +189,11 @@ export class SnapSwipe extends SnapLogic {
     }
 
     // Normalize swipe delta
-    const swipeDelta = this.axis === 'x' ? coords.step.x : coords.step.y;
+    let swipeDelta = coords.step[axis];
+    if (axis === 'angle') {
+      swipeDelta = (swipeDelta / 360) * snap.containerSize;
+    }
+
     const delta = swipeDelta * -1;
 
     // Update track target

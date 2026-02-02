@@ -421,7 +421,7 @@ snap.updateProps({
 ```
 
 ### `swipeAxis` {#props.swipeAxis}
-- **Type:** `'x' | 'y' | 'auto'`  
+- **Type:** `'x' | 'y' | 'angle' | 'auto'`  
 - **Default:** `'auto'`  
 - Swipe axis. If `auto`, the axis will be automatically detected depending on `direction`.
 
@@ -434,6 +434,10 @@ const snap = new Snap({
 // change value
 snap.updateProps({
   swipeAxis: 'x',
+});
+
+snap.updateProps({
+  swipeAxis: 'angle',
 });
 ```
 
