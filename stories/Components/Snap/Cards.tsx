@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
+
 import { clamp, inRange, Snap } from '@/index';
 
 // Inspired by: https://swiperjs.com/

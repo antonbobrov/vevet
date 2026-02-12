@@ -3,13 +3,15 @@ import {
   IModuleMutableProps,
   IModuleStaticProps,
 } from '@/base';
-import { SnapSlide } from './slide/Slide';
 import { TEasingType } from '@/utils/math';
-import { ISnapWheelProps } from './logic/Wheel/types';
-import { ISnapSwipeProps } from './logic/Swipe/types';
+
 import { ISwipeCoords } from '../Swipe';
 import { ITimelineProgressArg } from '../Timeline';
-import { ISnapSlideProps } from './slide/Slide/types';
+
+import { SnapSlide } from './logic/Slide';
+import { ISnapSlideProps } from './logic/Slide/types';
+import { ISnapSwipeProps } from './logic/Swipe/types';
+import { ISnapWheelProps } from './logic/Wheel/types';
 
 /** Static properties for the Snap component */
 export interface ISnapStaticProps extends IModuleStaticProps {
@@ -28,9 +30,7 @@ export interface ISnapStaticProps extends IModuleStaticProps {
 
 /** Mutable properties for the Snap component */
 export interface ISnapMutableProps
-  extends IModuleMutableProps,
-    ISnapWheelProps,
-    ISnapSwipeProps {
+  extends IModuleMutableProps, ISnapWheelProps, ISnapSwipeProps {
   /**
    * Slides instances. If `false`, all container's children will be considered as slides.
    * @default false

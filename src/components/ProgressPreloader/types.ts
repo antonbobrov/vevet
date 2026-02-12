@@ -55,8 +55,7 @@ export interface IProgressPreloaderStaticProps extends IPreloaderStaticProps {
 /**
  * Mutable properties for the progress preloader.
  */
-export interface IProgressPreloaderMutableProps
-  extends IPreloaderMutableProps {}
+export interface IProgressPreloaderMutableProps extends IPreloaderMutableProps {}
 
 /**
  * Callback events for the progress preloader.

@@ -1,5 +1,5 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
+import { themes as prismThemes } from 'prism-react-renderer';
+import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
@@ -11,7 +11,6 @@ const config: Config = {
   organizationName: 'antonbobrov',
   projectName: 'vevet',
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
 
   i18n: {
     defaultLocale: 'en',
@@ -29,7 +28,7 @@ const config: Config = {
         },
         sitemap: {},
         gtag: {
-          trackingID: 'G-KSMP6NQ3RZ'
+          trackingID: 'G-KSMP6NQ3RZ',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -37,7 +36,7 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
-  
+
   themeConfig: {
     image: 'img/docusaurus-social-card.jpg',
 
@@ -57,13 +56,13 @@ const config: Config = {
           href: '/v5/',
           label: 'Typedoc (v5)',
           position: 'left',
-          target: "_blank",
+          target: '_blank',
         },
         {
           href: '/v4/',
           label: 'Legacy (v4)',
           position: 'left',
-          target: "_blank",
+          target: '_blank',
         },
         {
           href: 'https://github.com/antonbobrov/vevet',
@@ -77,7 +76,7 @@ const config: Config = {
       theme: prismThemes.dracula,
       darkTheme: prismThemes.dracula,
     },
-    
+
     algolia: {
       appId: '38KHSXH1BV',
       apiKey: '97f484a607220fbe1ecef8d25e8f36f7',

@@ -1,4 +1,23 @@
+import { Module, TModuleOnCallbacksProps } from '@/base/Module';
+import { initVevet } from '@/global/initVevet';
+import { cnAdd, cnRemove, cnToggle } from '@/internal/cn';
+import { body, doc } from '@/internal/env';
+import { isFiniteNumber } from '@/internal/isFiniteNumber';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { TRequiredProps } from '@/internal/requiredProps';
+import { getTextDirection } from '@/internal/textDirection';
+import { toPixels } from '@/utils';
+import { addEventListener } from '@/utils/listeners';
+import { clamp, lerp } from '@/utils/math';
+
+import { Raf } from '../Raf';
+
+import { LERP_APPROXIMATION } from './constants';
+import { CursorHoverElement } from './HoverElement';
+import { ICursorHoverElementProps } from './HoverElement/types';
+import { CursorPath } from './Path';
+import { MUTABLE_PROPS, STATIC_PROPS } from './props';
+import { createCursorStyles } from './styles';
 import {
   ICursorCallbacksMap,
   ICursorFullCoords,
@@ -7,25 +26,13 @@ import {
   ICursorTargetCoords,
   ICursorType,
 } from './types';
-import { Module, TModuleOnCallbacksProps } from '@/base/Module';
-import { Raf } from '../Raf';
-import { addEventListener } from '@/utils/listeners';
-import { initVevet } from '@/global/initVevet';
-import { clamp, lerp } from '@/utils/math';
-import { createCursorStyles } from './styles';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { getTextDirection } from '@/internal/textDirection';
-import { cnAdd, cnRemove, cnToggle } from '@/internal/cn';
-import { body, doc } from '@/internal/env';
-import { CursorPath } from './Path';
-import { CursorHoverElement } from './HoverElement';
-import { ICursorHoverElementProps } from './HoverElement/types';
-import { LERP_APPROXIMATION } from './constants';
-import { isNumber } from '@/internal/isNumber';
-import { toPixels } from '@/utils';
 
 export * from './types';
 export type { ICursorHoverElementProps };
+
+type TC = ICursorCallbacksMap;
+type TS = ICursorStaticProps;
+type TM = ICursorMutableProps;
 
 /**
  * A customizable custom cursor component with smooth animations and hover interactions.
@@ -35,70 +42,53 @@ export type { ICursorHoverElementProps };
  *
  * @group Components
  */
-export class Cursor<
-  C extends ICursorCallbacksMap = ICursorCallbacksMap,
-  S extends ICursorStaticProps = ICursorStaticProps,
-  M extends ICursorMutableProps = ICursorMutableProps,
-> extends Module<C, S, M> {
+export class Cursor extends Module<TC, TS, TM> {
   /** Get default static properties */
-  public _getStatic(): TRequiredProps<S> {
-    return {
-      ...super._getStatic(),
-      container: window,
-      hideNative: false,
-      behavior: 'default',
-      transformModifier: ({ x, y }) => `translate(${x}px, ${y}px)`,
-    } as TRequiredProps<S>;
+  public _getStatic(): TRequiredProps<TS> {
+    return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
   /** Get default mutable properties */
-  public _getMutable(): TRequiredProps<M> {
-    return {
-      ...super._getMutable(),
-      enabled: true,
-      width: 50,
-      height: 50,
-      lerp: 0.2,
-      autoStop: true,
-    } as TRequiredProps<M>;
+  public _getMutable(): TRequiredProps<TM> {
+    return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 
   /** The outer element of the custom cursor */
-  protected _outer!: HTMLElement;
+  private _outer?: HTMLElement;
 
   /** The inner element of the custom cursor. */
-  protected _inner!: HTMLElement;
+  private _inner?: HTMLElement;
 
   /** Attached hover elements */
-  protected _hoverElements: CursorHoverElement[] = [];
+  private _elements: CursorHoverElement[] = [];
 
   /** Active hovered element */
-  protected _activeHoverElements: CursorHoverElement[] = [];
+  private _activeElements: CursorHoverElement[] = [];
 
   /** Request animation frame handler */
-  protected _raf!: Raf;
+  private _raf?: Raf;
 
   /** The current coordinates */
-  protected _coords: ICursorFullCoords;
+  private _coords: ICursorFullCoords;
 
   /** Target coordinates of the cursor. Element dimensions are not considered here (in getter - yes). */
-  protected _rawTarget: ICursorTargetCoords;
+  private _rawTarget: ICursorTargetCoords;
 
   /** Defines if the cursor has been moved after initialization */
-  protected _isFirstMove = true;
+  private _isFirstMove = true;
 
   /** Cursor types */
-  protected _types: ICursorType[];
+  private _types: ICursorType[];
 
   /** Active cursor types */
-  protected _activeTypes: string[];
+  private _activeTypes: string[];
 
   /** Cursor Path Instance */
-  protected _path: CursorPath;
+  private _path: CursorPath;
 
   constructor(
-    props?: S & M,
-    onCallbacks?: TModuleOnCallbacksProps<C, Cursor<C, S, M>>,
+    props?: TS & TM,
+    onCallbacks?: TModuleOnCallbacksProps<TC, Cursor>,
   ) {
     super(props, onCallbacks as any);
 
@@ -125,29 +115,12 @@ export class Cursor<
     createCursorStyles(this.prefix);
 
     // Setup
+    this._setClassNames();
     this._createElements();
     this._setEvents();
 
     // enable by default
     this._toggle(isEnabled);
-  }
-
-  /** Cursor initial width */
-  get initialWidth() {
-    return toPixels(this.props.width);
-  }
-
-  /** Cursor initial width */
-  get initialHeight() {
-    return toPixels(this.props.height);
-  }
-
-  /**
-   * The current coordinates (x, y, width, height).
-   * These are updated during cursor movement.
-   */
-  get coords() {
-    return this._coords;
   }
 
   /**
@@ -176,7 +149,7 @@ export class Cursor<
    * This is the visual element that represents the cursor on screen.
    */
   get outer() {
-    return this._outer;
+    return this._outer!;
   }
 
   /**
@@ -184,7 +157,25 @@ export class Cursor<
    * This element is nested inside the outer element and can provide additional styling.
    */
   get inner() {
-    return this._inner;
+    return this._inner!;
+  }
+
+  /** Cursor initial width */
+  get initialWidth() {
+    return toPixels(this.props.width);
+  }
+
+  /** Cursor initial width */
+  get initialHeight() {
+    return toPixels(this.props.height);
+  }
+
+  /**
+   * The current coordinates (x, y, width, height).
+   * These are updated during cursor movement.
+   */
+  get coords() {
+    return this._coords;
   }
 
   /**
@@ -192,7 +183,7 @@ export class Cursor<
    * Stores information about the element that the cursor is currently interacting with.
    */
   get hoveredElement(): CursorHoverElement | undefined {
-    const activeElements = this._activeHoverElements;
+    const activeElements = this._activeElements;
 
     return activeElements[activeElements.length - 1];
   }
@@ -229,39 +220,54 @@ export class Cursor<
   }
 
   /** Check if the cursor has a path */
-  protected get hasPath() {
+  private get hasPath() {
     return this.props.behavior === 'path';
   }
 
-  /** Creates the custom cursor and appends it to the DOM. */
-  protected _createElements() {
-    const { container, domContainer } = this;
-    const cn = this._cn.bind(this);
-    const { style } = domContainer;
+  /** Handles property mutations */
+  protected _handleProps() {
+    super._handleProps();
+
+    this._toggle(this.props.enabled);
+  }
+
+  /** Sets class names */
+  private _setClassNames() {
+    const { domContainer } = this;
 
     // Hide native cursor
     if (this.props.hideNative) {
-      style.cursor = 'none';
+      domContainer.style.cursor = 'none';
 
-      this._addTempClassName(domContainer, cn('-hide-default'));
+      this._addTempClassName(domContainer, this._cn('-hide-default'));
     }
 
     // Set class names
-    this._addTempClassName(domContainer, cn('-container'));
+    this._addTempClassName(domContainer, this._cn('-container'));
 
     // Set container position
     if (domContainer !== body) {
-      style.position = 'relative';
+      domContainer.style.position = 'relative';
     }
+
+    // Reset styles
+    this.onDestroy(() => {
+      domContainer.style.cursor = '';
+    });
+  }
+
+  /** Creates the custom cursor and appends it to the DOM. */
+  private _createElements() {
+    const { container, domContainer } = this;
+    const isWindow = container instanceof Window;
+
+    const cn = this._cn.bind(this);
 
     // Create outer element
     const outer = doc.createElement('div');
     domContainer.append(outer);
     cnAdd(outer, cn(''));
-    cnAdd(
-      outer,
-      cn(container instanceof Window ? '-in-window' : '-in-element'),
-    );
+    cnAdd(outer, cn(isWindow ? '-in-window' : '-in-element'));
     cnAdd(outer, cn('-disabled'));
 
     // set direction
@@ -281,15 +287,13 @@ export class Cursor<
 
     // Destroy the cursor
     this.onDestroy(() => {
-      style.cursor = '';
-
       inner.remove();
       outer.remove();
     });
   }
 
   /** Sets up the various event listeners for the cursor, such as mouse movements and clicks. */
-  protected _setEvents() {
+  private _setEvents() {
     const { domContainer } = this;
 
     this._raf = new Raf({ enabled: false });
@@ -332,7 +336,7 @@ export class Cursor<
     );
 
     this.onDestroy(() => {
-      this._raf.destroy();
+      this._raf?.destroy();
 
       mouseenter();
       mouseleave();
@@ -343,25 +347,18 @@ export class Cursor<
     });
   }
 
-  /** Handles property mutations */
-  protected _handleProps() {
-    super._handleProps();
-
-    this._toggle(this.props.enabled);
-  }
-
   /** Enables cursor animation. */
-  protected _toggle(enabled: boolean) {
+  private _toggle(enabled: boolean) {
     const className = this._cn('-disabled');
 
     cnToggle(this.outer, className, !enabled);
     cnToggle(this.inner, className, !enabled);
 
-    this._raf.updateProps({ enabled });
+    this._raf?.updateProps({ enabled });
   }
 
   /** Handles mouse enter events. */
-  protected _handleMouseEnter(evt: MouseEvent) {
+  private _handleMouseEnter(evt: MouseEvent) {
     if (!this.props.enabled) {
       return;
     }
@@ -380,12 +377,12 @@ export class Cursor<
   }
 
   /** Handles mouse leave events. */
-  protected _handleMouseLeave() {
+  private _handleMouseLeave() {
     cnRemove(this.outer, this._cn('-visible'));
   }
 
   /** Handles mouse move events. */
-  protected _handleMouseMove(evt: MouseEvent) {
+  private _handleMouseMove(evt: MouseEvent) {
     if (!this.props.enabled) {
       return;
     }
@@ -429,13 +426,11 @@ export class Cursor<
     cnAdd(this.outer, this._cn('-visible'));
 
     // Enable animation
-    if (this.props.enabled) {
-      this._raf.play();
-    }
+    this._raf?.play();
   }
 
   /** Handles mouse down events. */
-  protected _handleMouseDown(evt: MouseEvent) {
+  private _handleMouseDown(evt: MouseEvent) {
     const className = this._cn('-click');
 
     if (evt.which === 1) {
@@ -445,7 +440,7 @@ export class Cursor<
   }
 
   /** Handles mouse up events. */
-  protected _handleMouseUp() {
+  private _handleMouseUp() {
     const className = this._cn('-click');
 
     cnRemove(this.outer, className);
@@ -453,7 +448,7 @@ export class Cursor<
   }
 
   /** Handles window blur events. */
-  protected _handleWindowBlur() {
+  private _handleWindowBlur() {
     this._handleMouseUp();
   }
 
@@ -469,10 +464,10 @@ export class Cursor<
       (data) => this._handleElementLeave(data),
     );
 
-    this._hoverElements.push(element);
+    this._elements.push(element);
 
     const destroy = () => {
-      this._hoverElements = this._hoverElements.filter((i) => i !== element);
+      this._elements = this._elements.filter((i) => i !== element);
       element.destroy();
     };
 
@@ -482,8 +477,12 @@ export class Cursor<
   }
 
   /** Handle element mouse enter event */
-  protected _handleElementEnter(data: CursorHoverElement) {
-    this._activeHoverElements.push(data);
+  private _handleElementEnter(data: CursorHoverElement) {
+    if (!this.props.enabled) {
+      return;
+    }
+
+    this._activeElements.push(data);
 
     if (data.type) {
       this._toggleType(data.type, true);
@@ -491,16 +490,12 @@ export class Cursor<
 
     this.callbacks.emit('hoverEnter', data);
 
-    if (this.props.enabled) {
-      this._raf.play();
-    }
+    this._raf?.play();
   }
 
   /** Handle element mouse leave event */
-  protected _handleElementLeave(data: CursorHoverElement) {
-    this._activeHoverElements = this._activeHoverElements.filter(
-      (i) => i !== data,
-    );
+  private _handleElementLeave(data: CursorHoverElement) {
+    this._activeElements = this._activeElements.filter((i) => i !== data);
 
     if (data.type) {
       this._toggleType(data.type, false);
@@ -509,7 +504,7 @@ export class Cursor<
     this.callbacks.emit('hoverLeave', data);
 
     if (this.props.enabled) {
-      this._raf.play();
+      this._raf?.play();
     }
   }
 
@@ -519,12 +514,11 @@ export class Cursor<
   @noopIfDestroyed
   public attachCursor({ element, type }: ICursorType) {
     this._types.push({ element, type });
-
-    this._inner.append(element);
+    this._inner?.append(element);
   }
 
   /** Enable or disable a cursor type */
-  protected _toggleType(type: string, isEnabled: boolean) {
+  private _toggleType(type: string, isEnabled: boolean) {
     const targetType = this._types.find((item) => item.type === type);
 
     if (isEnabled) {
@@ -555,7 +549,7 @@ export class Cursor<
    * Checks if all coordinates are interpolated.
    * @returns {boolean} True if all coordinates are interpolated, false otherwise.
    */
-  protected get isInterpolated() {
+  private get isInterpolated() {
     const { coords, targetCoords, props } = this;
 
     const isWidthDone = coords.width === targetCoords.width;
@@ -563,7 +557,7 @@ export class Cursor<
     const isAngleDone = coords.angle === targetCoords.angle;
     const isVelocityDone = coords.velocity === targetCoords.velocity;
 
-    const isElementsDone = !this._hoverElements.find(
+    const isElementsDone = !this._elements.find(
       (element) => !element.isInterpolated,
     );
 
@@ -588,7 +582,7 @@ export class Cursor<
     this._renderElements();
 
     if (this.props.autoStop && this.isInterpolated) {
-      this._raf.pause();
+      this._raf?.pause();
     }
 
     // Launch render events
@@ -596,7 +590,7 @@ export class Cursor<
   }
 
   /** Recalculates current coordinates. */
-  protected _calculate() {
+  private _calculate() {
     const { targetCoords: target, _coords: coords } = this;
     const lerpFactor = this._getLerpFactor();
 
@@ -625,18 +619,18 @@ export class Cursor<
   }
 
   /** Gets the interpolation factor. */
-  protected _getLerpFactor(input = this.props.lerp) {
-    if (!isNumber(input)) {
+  private _getLerpFactor(input = this.props.lerp) {
+    if (!isFiniteNumber(input)) {
       return 1;
     }
 
     const lerpFactor = clamp(input, 0, 1);
 
-    return this._raf.lerpFactor(lerpFactor);
+    return this._raf!.lerpFactor(lerpFactor);
   }
 
   /** Performs linear interpolation. */
-  protected _lerp(current: number, target: number) {
+  private _lerp(current: number, target: number) {
     const lerpFactor = this._getLerpFactor();
     const value = lerp(current, target, lerpFactor, LERP_APPROXIMATION);
 
@@ -644,7 +638,7 @@ export class Cursor<
   }
 
   /** Renders the cursor elements. */
-  protected _renderElements() {
+  private _renderElements() {
     const { container, domContainer, outer, props, coords } = this;
     const { width, height } = coords;
     let { x, y } = coords;
@@ -662,8 +656,8 @@ export class Cursor<
     style.transform = props.transformModifier({ ...coords, x, y });
 
     // Render element
-    this._hoverElements.forEach((element) =>
-      element.render(this._getLerpFactor(element.stickyLerp)),
+    this._elements.forEach((element) =>
+      element.render(this._getLerpFactor.bind(this)),
     );
   }
 }

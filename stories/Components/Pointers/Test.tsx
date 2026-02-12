@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
+
 import { Pointers } from '@/index';
 
 export const Test: FC = () => {

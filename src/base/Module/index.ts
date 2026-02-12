@@ -1,15 +1,17 @@
+import { initVevet } from '@/global/initVevet';
+import { cnAdd, cnHas, cnRemove } from '@/internal/cn';
+import { mergeWithNoUndefined } from '@/internal/mergeWithNoUndefined';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { TRequiredProps } from '@/internal/requiredProps';
+
 import { Callbacks, ICallbacksSettings, TCallbacksAction } from '../Callbacks';
+
 import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
   TModuleOnCallbacksProps,
 } from './types';
-import { mergeWithNoUndefined } from '@/internal/mergeWithNoUndefined';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { cnAdd, cnHas, cnRemove } from '@/internal/cn';
-import { initVevet } from '@/global/initVevet';
 
 // todo: jsdoc
 
@@ -27,16 +29,16 @@ export class Module<
 > {
   /** Get default static props */
   public _getStatic(): TRequiredProps<StaticProps> {
-    return { __staticProp: null } as TRequiredProps<StaticProps>;
+    return { __staticProp: true } as TRequiredProps<StaticProps>;
   }
 
   /** Set default mutable props */
   public _getMutable(): TRequiredProps<MutableProps> {
-    return { __mutableProp: null } as TRequiredProps<MutableProps>;
+    return { __mutableProp: true } as TRequiredProps<MutableProps>;
   }
 
   /** Current properties */
-  protected _props: TRequiredProps<MutableProps & StaticProps>;
+  private _props: TRequiredProps<MutableProps & StaticProps>;
 
   /**
    * Current properties. Do not mutate these directly, use {@linkcode updateProps} instead.
@@ -56,7 +58,7 @@ export class Module<
   }
 
   /** Tracks whether the module has been destroyed */
-  protected _isDestroyed = false;
+  private _isDestroyed = false;
 
   /**
    * Checks if the module has been destroyed.
@@ -66,7 +68,7 @@ export class Module<
   }
 
   /** Callbacks instance */
-  protected _callbacks: Callbacks<CallbacksMap, this>;
+  private _callbacks: Callbacks<CallbacksMap, this>;
 
   /**
    * Retrieves the module's callbacks instance.
@@ -76,7 +78,7 @@ export class Module<
   }
 
   /** Stores actions that need to be executed when the module is destroyed */
-  protected _destroyable: (() => void)[] = [];
+  private _destroyable: (() => void)[] = [];
 
   /**
    * Creates a new instance of the Module class.

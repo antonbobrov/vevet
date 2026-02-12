@@ -1,16 +1,22 @@
+import { Module, TModuleOnCallbacksProps } from '@/base';
+import { initVevet } from '@/global/initVevet';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { TRequiredProps } from '@/internal/requiredProps';
+import { addEventListener, clampScope } from '@/utils';
+
+import { MUTABLE_PROPS, STATIC_PROPS } from './props';
 import {
   IScrollProgressBounds,
   IScrollProgressCallbacksMap,
   IScrollProgressMutableProps,
   IScrollProgressStaticProps,
 } from './types';
-import { Module, TModuleOnCallbacksProps } from '@/base';
-import { TRequiredProps } from '@/internal/requiredProps';
-import { initVevet } from '@/global/initVevet';
-import { addEventListener, clampScope } from '@/utils';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 
 export * from './types';
+
+type TC = IScrollProgressCallbacksMap;
+type TS = IScrollProgressStaticProps;
+type TM = IScrollProgressMutableProps;
 
 /**
  * `ScrollProgress` is a component that tracks the scroll progress of a specified section element.
@@ -21,24 +27,45 @@ export * from './types';
  *
  * @group Components
  */
-export class ScrollProgress<
-  C extends IScrollProgressCallbacksMap = IScrollProgressCallbacksMap,
-  S extends IScrollProgressStaticProps = IScrollProgressStaticProps,
-  M extends IScrollProgressMutableProps = IScrollProgressMutableProps,
-> extends Module<C, S, M> {
+export class ScrollProgress extends Module<TC, TS, TM> {
   /** Retrieves the default static properties. */
-  public _getStatic(): TRequiredProps<S> {
-    return {
-      ...super._getStatic(),
-      root: null,
-      optimized: true,
-      useSvh: false,
-    } as TRequiredProps<S>;
+  public _getStatic(): TRequiredProps<TS> {
+    return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
   /** Retrieves the default mutable properties. */
-  public _getMutable(): TRequiredProps<M> {
-    return { ...super._getMutable() } as TRequiredProps<M>;
+  public _getMutable(): TRequiredProps<TM> {
+    return { ...super._getMutable(), ...MUTABLE_PROPS };
+  }
+
+  /** Indicates whether the section is currently visible within the viewport or root element. */
+  private _isVisible = false;
+
+  /** The bounds of the root element used for scroll calculations. */
+  private _rootBounds: IScrollProgressBounds = {
+    top: 0,
+    left: 0,
+    width: 1,
+    height: 1,
+  };
+
+  /** The bounds of the section element relative to the root element. */
+  private _sectionBounds: IScrollProgressBounds = {
+    top: 0,
+    left: 0,
+    width: 1,
+    height: 1,
+  };
+
+  constructor(
+    props?: TS & TM,
+    onCallbacks?: TModuleOnCallbacksProps<TC, ScrollProgress>,
+  ) {
+    super(props, onCallbacks as any);
+
+    this._isVisible = !this.props.optimized;
+
+    this._setup();
   }
 
   /**
@@ -49,20 +76,9 @@ export class ScrollProgress<
   }
 
   /** Indicates whether the section is currently visible within the viewport or root element. */
-  protected _isVisible = false;
-
-  /** Indicates whether the section is currently visible within the viewport or root element. */
   get isVisible() {
     return this._isVisible;
   }
-
-  /** The bounds of the root element used for scroll calculations. */
-  protected _rootBounds: IScrollProgressBounds = {
-    top: 0,
-    left: 0,
-    width: 1,
-    height: 1,
-  };
 
   /** The bounds of the root element used for scroll calculations. */
   get rootBounds() {
@@ -70,31 +86,12 @@ export class ScrollProgress<
   }
 
   /** The bounds of the section element relative to the root element. */
-  protected _sectionBounds: IScrollProgressBounds = {
-    top: 0,
-    left: 0,
-    width: 1,
-    height: 1,
-  };
-
-  /** The bounds of the section element relative to the root element. */
   get sectionBounds() {
     return this._sectionBounds;
   }
 
-  constructor(
-    props?: S & M,
-    onCallbacks?: TModuleOnCallbacksProps<C, ScrollProgress<C, S, M>>,
-  ) {
-    super(props, onCallbacks as any);
-
-    this._isVisible = !this.props.optimized;
-
-    this._setup();
-  }
-
   /** Sets up events */
-  protected _setup() {
+  private _setup() {
     this._setupObserver();
     this._setupScroll();
   }
@@ -102,7 +99,7 @@ export class ScrollProgress<
   /**
    * Sets up an `IntersectionObserver` to track the visibility of the section.
    */
-  protected _setupObserver() {
+  private _setupObserver() {
     if (!this.props.optimized) {
       // Initial Update
       this.update(true);
@@ -140,7 +137,7 @@ export class ScrollProgress<
   /**
    * Sets up a scroll event listener to track and update progress.
    */
-  protected _setupScroll() {
+  private _setupScroll() {
     const container = this.props.root || window;
 
     const listener = addEventListener(

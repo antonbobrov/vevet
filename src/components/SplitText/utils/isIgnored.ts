@@ -1,4 +1,5 @@
 import { isString } from '@/internal/isString';
+
 import { ISplitTextStaticProps } from '../types';
 
 export function isIgnored(

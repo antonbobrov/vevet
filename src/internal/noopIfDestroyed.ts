@@ -1,6 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable consistent-return */
-/* eslint-disable no-param-reassign */
 
 export function noopIfDestroyed(
   target: any,

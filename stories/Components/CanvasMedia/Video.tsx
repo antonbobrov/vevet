@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
+
 import { CanvasMedia, ICanvasMediaMutableProps } from '@/index';
 
 export const Video: FC = () => {

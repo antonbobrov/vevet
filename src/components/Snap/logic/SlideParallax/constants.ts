@@ -1,4 +1,5 @@
 import { clamp } from '@/utils';
+
 import { parallaxAttrPrefix } from './globals';
 import { ISnapSlideParallaxGroup } from './types';
 

@@ -1,4 +1,5 @@
 import React, { FC, useEffect } from 'react';
+
 import { Scrollbar } from '@/components';
 
 export const InWindow: FC = () => {

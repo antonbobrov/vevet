@@ -1,16 +1,18 @@
+import { Module, TModuleOnCallbacksProps } from '@/base/Module';
+import { initVevet } from '@/global/initVevet';
+import { doc } from '@/internal/env';
+import { isNumber } from '@/internal/isNumber';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { TRequiredProps } from '@/internal/requiredProps';
 import { onResize } from '@/utils/listeners/onResize';
-import { Module, TModuleOnCallbacksProps } from '@/base/Module';
+
+import { MUTABLE_PROPS, STATIC_PROPS } from './props';
 import {
   ICanvasCallbacksMap,
   ICanvasMutableProps,
   ICanvasStaticProps,
   TCanvasRender,
 } from './types';
-import { initVevet } from '@/global/initVevet';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { isNumber } from '@/internal/isNumber';
-import { doc } from '@/internal/env';
 
 export * from './types';
 
@@ -28,81 +30,28 @@ export class Canvas<
 > extends Module<C, S, M> {
   /** Get default static properties */
   public _getStatic(): TRequiredProps<S> {
-    return {
-      ...super._getStatic(),
-      container: null,
-      append: true,
-      resizeOnInit: true,
-      resizeOnRuntime: false,
-      viewportTarget: 'any',
-      resizeDebounce: 0,
-    } as TRequiredProps<S>;
+    return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
   /** Get default mutable properties */
   public _getMutable(): TRequiredProps<M> {
-    return {
-      ...super._getMutable(),
-      width: 'auto',
-      height: 'auto',
-      dpr: 'auto',
-    } as TRequiredProps<M>;
+    return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 
   /** The canvas element created for rendering */
-  protected _canvas: HTMLCanvasElement;
-
-  /** The canvas element instance. */
-  get canvas() {
-    return this._canvas;
-  }
+  private _canvas: HTMLCanvasElement;
 
   /** The 2D rendering context. */
-  protected _ctx: CanvasRenderingContext2D;
-
-  /** Returns the 2D rendering context */
-  get ctx() {
-    return this._ctx;
-  }
+  private _ctx: CanvasRenderingContext2D;
 
   /** The current width of the canvas, considering the device pixel ratio (DPR) */
-  protected _width: number;
-
-  /** Canvas width (DPR applied). */
-  get width() {
-    return this._width;
-  }
-
-  /** Width without DPR scaling. */
-  get offsetWidth() {
-    return this.width / this.dpr;
-  }
+  private _width = 0;
 
   /** The current height of the canvas, considering the device pixel ratio (DPR) */
-  protected _height: number;
-
-  /** Canvas height (DPR applied). */
-  get height() {
-    return this._height;
-  }
-
-  /** Height without DPR scaling. */
-  get offsetHeight() {
-    return this.height / this.dpr;
-  }
+  private _height = 0;
 
   /** The current device pixel ratio (DPR) */
-  protected _dpr: number;
-
-  /** Current device pixel ratio. */
-  get dpr() {
-    return this._dpr;
-  }
-
-  /** Checks if the canvas is ready to render. */
-  get canRender() {
-    return this.width > 0 && this.height > 0;
-  }
+  private _dpr = 1;
 
   /**
    * Constructor for the Ctx2D class.
@@ -113,19 +62,7 @@ export class Canvas<
   ) {
     super(props, onCallbacks as any);
 
-    const {
-      append: shouldAppend,
-      container,
-      resizeOnInit: hasResizeOnInit,
-      resizeOnRuntime: hasRuntimeResize,
-      viewportTarget,
-      resizeDebounce,
-    } = this.props;
-
-    // Set default values
-    this._width = 0;
-    this._height = 0;
-    this._dpr = 1;
+    const { container } = this.props;
 
     // Create canvas element
     this._canvas = doc.createElement('canvas');
@@ -139,31 +76,55 @@ export class Canvas<
     style.height = '100%';
 
     // Append canvas to container if required
-    if (shouldAppend && container instanceof HTMLElement) {
+    if (this.props.append && container instanceof HTMLElement) {
       container.append(this._canvas);
-
-      this.onDestroy(() => this.canvas.remove());
     }
 
     // Create 2D context
     this._ctx = this._canvas.getContext('2d')!;
 
-    // Set resize events
-    if (hasResizeOnInit) {
-      this.resize();
-    }
+    // Set events
+    this._setEvents();
+  }
 
-    if (hasRuntimeResize) {
-      const resizeHandler = onResize({
-        callback: () => this.resize(),
-        element: this.props.container,
-        viewportTarget,
-        resizeDebounce,
-        name: this.name,
-      });
+  /** The canvas element instance. */
+  get canvas() {
+    return this._canvas;
+  }
 
-      this.onDestroy(() => resizeHandler.remove());
-    }
+  /** Returns the 2D rendering context */
+  get ctx() {
+    return this._ctx;
+  }
+
+  /** Canvas width (DPR applied). */
+  get width() {
+    return this._width;
+  }
+
+  /** Width without DPR scaling. */
+  get offsetWidth() {
+    return this.width / this.dpr;
+  }
+
+  /** Canvas height (DPR applied). */
+  get height() {
+    return this._height;
+  }
+
+  /** Height without DPR scaling. */
+  get offsetHeight() {
+    return this.height / this.dpr;
+  }
+
+  /** Current device pixel ratio. */
+  get dpr() {
+    return this._dpr;
+  }
+
+  /** Checks if the canvas is ready to render. */
+  get canRender() {
+    return this.width > 0 && this.height > 0;
   }
 
   /** Handle property mutations */
@@ -171,6 +132,33 @@ export class Canvas<
     super._handleProps();
 
     this.resize();
+  }
+
+  /** Set events */
+  protected _setEvents() {
+    const { props } = this;
+    const { viewportTarget, resizeDebounce } = props;
+
+    // Set resize events
+    if (props.resizeOnInit) {
+      this.resize();
+    }
+
+    // Runtime resize
+
+    if (!props.resizeOnRuntime) {
+      return;
+    }
+
+    const resizeHandler = onResize({
+      callback: () => this.resize(),
+      element: this.props.container,
+      viewportTarget,
+      resizeDebounce,
+      name: this.name,
+    });
+
+    this.onDestroy(() => resizeHandler.remove());
   }
 
   /** Triggers a canvas resize based on container or viewport dimensions. */
@@ -233,5 +221,12 @@ export class Canvas<
       offsetHeight: this.offsetHeight,
       canvas: this.canvas,
     });
+  }
+
+  /** Destroys the canvas. */
+  protected _destroy() {
+    super._destroy();
+
+    this.canvas.remove();
   }
 }

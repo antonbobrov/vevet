@@ -3,6 +3,7 @@ import {
   IModuleMutableProps,
   IModuleStaticProps,
 } from '@/base';
+
 import { ISwipeCoords } from '../Swipe';
 
 export interface IScrollbarStaticProps extends IModuleStaticProps {
@@ -51,7 +52,7 @@ export interface IScrollbarStaticProps extends IModuleStaticProps {
   /**
    * Debounce time (in milliseconds) for handling resize events.
    * Helps improve performance by limiting the frequency of resize calculations.
-   * @default 10
+   * @default 50
    */
   resizeDebounce?: number;
 }

@@ -1,4 +1,5 @@
 import { easing as easingProgress } from 'easing-progress';
+
 import { initVevet } from '@/global/initVevet';
 
 export {

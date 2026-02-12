@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
+
 import { Swipe } from '@/index';
 
 export const Circle: FC = () => {

@@ -1,9 +1,8 @@
-import type {ReactNode} from 'react';
+import type { ReactNode } from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import Heading from '@theme/Heading';
 
 import styles from './index.module.css';
 
@@ -13,19 +12,18 @@ function HomepageHeader() {
   return (
     <header className={styles.mainScreen}>
       <h1 className={styles.title}>vevet.js</h1>
-      
+
       <p className={styles.subtitle}>{siteConfig.tagline}</p>
 
       <div className={styles.buttons}>
-        <Link
-          className={styles.button}
-          to="/docs/intro">
+        <Link className={styles.button} to="/docs/intro">
           Documentation
         </Link>
-        
+
         <Link
           className={clsx(styles.button, styles.button_outline)}
-          to="https://codepen.io/collection/RPNmJz">
+          to="https://codepen.io/collection/RPNmJz"
+        >
           Demos
         </Link>
       </div>
@@ -34,7 +32,7 @@ function HomepageHeader() {
 }
 
 export default function Home(): ReactNode {
-  const {siteConfig} = useDocusaurusContext();
+  const { siteConfig } = useDocusaurusContext();
   return (
     <Layout
       title={`JavaScript library for creative development`}

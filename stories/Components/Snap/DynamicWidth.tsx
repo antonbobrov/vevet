@@ -1,6 +1,5 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+
 import { clamp, lerp, Snap, Timeline, vevet } from '@/index';
 
 export const DynamicWidth: FC = () => {
@@ -55,7 +54,7 @@ export const DynamicWidth: FC = () => {
       const isExpanding = element.classList.contains('active');
 
       const fromWidth = (element.offsetWidth / vevet.width) * 100;
-      const startTrack = snap.track.current;
+      const startTrack = snap.current;
 
       const tm = new Timeline(
         {
@@ -70,15 +69,15 @@ export const DynamicWidth: FC = () => {
 
             if (timelineIndex.current === index) {
               if (isExpanding) {
-                snap.track.set(
+                snap.set(
                   lerp(
                     startTrack,
-                    clamp(slide.staticCoord, snap.track.min, snap.track.max),
+                    clamp(slide.staticCoord, snap.min, snap.max),
                     eased,
                   ),
                 );
               } else {
-                snap.track.clampTarget();
+                snap.clampTarget();
               }
             }
           },

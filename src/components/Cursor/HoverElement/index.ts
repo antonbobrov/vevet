@@ -1,46 +1,58 @@
+import { isFiniteNumber } from '@/internal/isFiniteNumber';
 import { isNumber } from '@/internal/isNumber';
+import { isString } from '@/internal/isString';
+import { addEventListener, clamp, lerp, toPixels } from '@/utils';
+
+import { LERP_APPROXIMATION } from '../constants';
+
 import {
   ICursorHoverElementProps,
   TCursorHoverElementStickyAmplitude,
+  TCursorHoverElementStickyParallax,
 } from './types';
-import { addEventListener, clamp, lerp, toPixels } from '@/utils';
-import { LERP_APPROXIMATION } from '../constants';
-import { isString } from '@/internal/isString';
 
 export class CursorHoverElement {
-  protected _debounce: NodeJS.Timeout | null = null;
+  private _debounce: NodeJS.Timeout | null = null;
 
-  protected _mouseEnter: () => void;
+  private _mouseEnter: () => void;
 
-  protected _mouseLeave: () => void;
+  private _mouseLeave: () => void;
 
-  protected _mouseMove: () => void;
+  private _mouseMove: () => void;
 
-  protected _isHovered = false;
+  private _isHovered = false;
 
-  protected _parallaxX = { current: 0, target: 0 };
+  private _parallaxX: TCursorHoverElementStickyParallax = {
+    current: 0,
+    target: 0,
+    prevTarget: null,
+  };
 
-  protected _parallaxY = { current: 0, target: 0 };
+  private _parallaxY: TCursorHoverElementStickyParallax = {
+    current: 0,
+    target: 0,
+    prevTarget: null,
+  };
 
   constructor(
-    protected _data: ICursorHoverElementProps,
-    protected _onEnter: (element: CursorHoverElement) => void,
-    protected _onLeave: (element: CursorHoverElement) => void,
+    private _data: ICursorHoverElementProps,
+    private _onEnter: (element: CursorHoverElement) => void,
+    private _onLeave: (element: CursorHoverElement) => void,
   ) {
-    const { element } = this;
+    const { emitter } = this;
 
-    if (element.matches(':hover')) {
+    if (emitter.matches(':hover')) {
       this._handleElementEnter();
     }
 
-    this._mouseEnter = addEventListener(element, 'mouseenter', () => {
+    this._mouseEnter = addEventListener(emitter, 'mouseenter', () => {
       this._debounce = setTimeout(
         () => this._handleElementEnter(),
         _data.hoverDebounce ?? 16,
       );
     });
 
-    this._mouseLeave = addEventListener(element, 'mouseleave', () => {
+    this._mouseLeave = addEventListener(emitter, 'mouseleave', () => {
       if (this._debounce) {
         clearTimeout(this._debounce);
       }
@@ -48,13 +60,17 @@ export class CursorHoverElement {
       this._handleElementLeave();
     });
 
-    this._mouseMove = addEventListener(element, 'mousemove', (evt) => {
+    this._mouseMove = addEventListener(emitter, 'mousemove', (evt) => {
       this._handleElementMove(evt);
     });
   }
 
   get element() {
     return this._data.element;
+  }
+
+  get emitter() {
+    return this._data.emitter ?? this._data.element;
   }
 
   get type() {
@@ -101,14 +117,12 @@ export class CursorHoverElement {
     return this._data.stickyLerp ?? undefined;
   }
 
-  /** X value for sticky parallax */
-  get stickyX() {
-    return this._parallaxX.current;
+  get stickyFriction() {
+    return this._data.stickyFriction ?? 0;
   }
 
-  /** Y value for sticky parallax */
-  get stickyY() {
-    return this._parallaxY.current;
+  get hasStickyFriction() {
+    return isFiniteNumber(this.stickyFriction) && this.stickyFriction > 0;
   }
 
   /** Get element dimensions */
@@ -146,6 +160,7 @@ export class CursorHoverElement {
   /** Destroy all events */
   public destroy() {
     this._mouseEnter();
+    this._mouseMove();
     this._mouseLeave();
 
     if (this._debounce) {
@@ -154,28 +169,32 @@ export class CursorHoverElement {
   }
 
   /** Handle element enter */
-  protected _handleElementEnter() {
+  private _handleElementEnter() {
     this._isHovered = true;
 
     this._onEnter(this);
   }
 
   /** Handle element leave */
-  protected _handleElementLeave() {
+  private _handleElementLeave() {
     this._isHovered = false;
+
     this._parallaxX.target = 0;
+    this._parallaxX.prevTarget = null;
+
     this._parallaxY.target = 0;
+    this._parallaxY.prevTarget = null;
 
     this._onLeave(this);
   }
 
   /** Handle element move */
-  protected _handleElementMove(evt: MouseEvent) {
+  private _handleElementMove(evt: MouseEvent) {
     if (!this.sticky || !this._isHovered) {
       return;
     }
 
-    const { element } = this;
+    const { element, _parallaxX: parallaxX, _parallaxY: parallaxY } = this;
     const { clientX, clientY } = evt;
 
     const bounding = element.getBoundingClientRect();
@@ -201,12 +220,34 @@ export class CursorHoverElement {
     const maxX = amp.x === 'auto' ? width : Math.abs(amp.x);
     const maxY = amp.y === 'auto' ? height : Math.abs(amp.y);
 
-    this._parallaxX.target = clamp(distanceX, -maxX, maxX);
-    this._parallaxY.target = clamp(distanceY, -maxY, maxY);
+    const parallaxXTarget = clamp(distanceX, -maxX, maxX);
+    const parallaxYTarget = clamp(distanceY, -maxY, maxY);
+
+    if (parallaxX.prevTarget === null) {
+      parallaxX.prevTarget = parallaxXTarget;
+    }
+
+    if (parallaxY.prevTarget === null) {
+      parallaxY.prevTarget = parallaxYTarget;
+    }
+
+    if (this.hasStickyFriction) {
+      const parallaxXDelta = parallaxXTarget - parallaxX.prevTarget;
+      const parallaxYDelta = parallaxYTarget - parallaxY.prevTarget;
+
+      parallaxX.target += parallaxXDelta;
+      parallaxY.target += parallaxYDelta;
+    } else {
+      parallaxX.target = parallaxXTarget;
+      parallaxY.target = parallaxYTarget;
+    }
+
+    parallaxX.prevTarget = parallaxXTarget;
+    parallaxY.prevTarget = parallaxYTarget;
   }
 
   /** Get sticky amplitude for both axis */
-  protected _getStickyAmplitude() {
+  private _getStickyAmplitude() {
     const { stickyAmplitude } = this._data;
 
     let x: 'auto' | number = 'auto';
@@ -233,9 +274,7 @@ export class CursorHoverElement {
   }
 
   /** Get sticky amplitude for one axis */
-  protected _getStickyAmplitudeAxis(
-    value?: TCursorHoverElementStickyAmplitude,
-  ) {
+  private _getStickyAmplitudeAxis(value?: TCursorHoverElementStickyAmplitude) {
     if (isNumber(value)) {
       return value;
     }
@@ -256,13 +295,38 @@ export class CursorHoverElement {
   }
 
   /** Render the element */
-  public render(lerpFactor: number) {
+  public render(getLerp: (source?: number) => number) {
     const { _parallaxX: parallaxX, _parallaxY: parallaxY } = this;
+
     const element = this.element as HTMLElement;
 
     if (!this.sticky || this.isInterpolated) {
       return;
     }
+
+    // Friction
+
+    if (this.hasStickyFriction) {
+      const frictionLerp = getLerp(this.stickyFriction);
+
+      parallaxX.target = lerp(
+        parallaxX.target,
+        0,
+        frictionLerp,
+        LERP_APPROXIMATION,
+      );
+
+      parallaxY.target = lerp(
+        parallaxY.target,
+        0,
+        frictionLerp,
+        LERP_APPROXIMATION,
+      );
+    }
+
+    // Magnet
+
+    const lerpFactor = getLerp(this.stickyLerp);
 
     parallaxX.current = lerp(
       parallaxX.current,

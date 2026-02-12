@@ -1,4 +1,5 @@
 import React, { FC, useEffect } from 'react';
+
 import { ScrollProgress } from '@/index';
 
 interface IProps {

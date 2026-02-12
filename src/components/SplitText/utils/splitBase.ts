@@ -1,5 +1,7 @@
 import { doc } from '@/internal/env';
+
 import { ISplitTextLetterMeta, ISplitTextStaticProps } from '../types';
+
 import { wrapLetters } from './wrapLetters';
 import { wrapWords } from './wrapWords';
 

@@ -1,4 +1,5 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
+
 import { IRafMutableProps, Raf } from '@/index';
 
 interface IProps extends Pick<IRafMutableProps, 'fps'> {}

@@ -1,12 +1,15 @@
 import split from 'lodash.split';
+
+import { cnAdd } from '@/internal/cn';
+import { doc } from '@/internal/env';
+
 import {
   ISplitTextLetterMeta,
   ISplitTextStaticProps,
   ISplitTextWordMeta,
 } from '../types';
+
 import { isIgnored } from './isIgnored';
-import { cnAdd } from '@/internal/cn';
-import { doc } from '@/internal/env';
 
 interface IProps {
   wordsMeta: ISplitTextWordMeta[];

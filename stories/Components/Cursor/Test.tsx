@@ -1,11 +1,13 @@
 import React, { FC, useEffect, useRef } from 'react';
+
 import { Cursor } from '@/index';
 
 export const Test: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
   const refWithSize = useRef<HTMLButtonElement>(null);
-  const refWithSnap = useRef<HTMLButtonElement>(null);
   const refWithType = useRef<HTMLButtonElement>(null);
+  const refWithSnap = useRef<HTMLButtonElement>(null);
+  const refWithNegativeSticky = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!ref.current) {
@@ -71,6 +73,16 @@ export const Test: FC = () => {
       });
     }
 
+    if (refWithNegativeSticky.current) {
+      instance.attachHover({
+        element: refWithNegativeSticky.current,
+        emitter: refWithNegativeSticky.current.parentElement,
+        sticky: true,
+        stickyLerp: 0.2,
+        stickyFriction: 0.2,
+      });
+    }
+
     return () => instance.destroy();
   }, []);
 
@@ -109,10 +121,28 @@ export const Test: FC = () => {
         <button
           ref={refWithSnap}
           type="button"
-          style={{ margin: 200, height: 100 }}
+          style={{ display: 'block', margin: 'auto', height: 100 }}
         >
           Snap on hover
         </button>
+
+        <div
+          style={{
+            margin: 'auto',
+            width: 'max-content',
+            padding: 50,
+            textAlign: 'center',
+            background: '#eee',
+          }}
+        >
+          <button
+            ref={refWithNegativeSticky}
+            type="button"
+            style={{ height: 100 }}
+          >
+            Sticky & Friction
+          </button>
+        </div>
       </div>
     </div>
   );

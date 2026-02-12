@@ -1,5 +1,24 @@
 import { Module, TModuleOnCallbacksProps } from '@/base';
-import { Timeline } from '../Timeline';
+import { isString } from '@/internal/isString';
+import { isUndefined } from '@/internal/isUndefined';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { TRequiredProps } from '@/internal/requiredProps';
+import {
+  IOnResize,
+  onResize,
+  loop,
+  damp,
+  toPixels,
+  closest,
+  inRange,
+} from '@/utils';
+
+import { SnapKeyboard } from './logic/Keyboard';
+import { SnapSlide } from './logic/Slide';
+import { SnapSwipe } from './logic/Swipe';
+import { SnapTrack } from './logic/Track';
+import { SnapWheel } from './logic/Wheel';
+import { MUTABLE_PROPS, STATIC_PROPS } from './props';
 import {
   ISnapCallbacksMap,
   ISnapMagnet,
@@ -9,32 +28,13 @@ import {
   ISnapToSlideArg,
   ISnapTransitionArg,
 } from './types';
-import { TRequiredProps } from '@/internal/requiredProps';
-import {
-  IOnResize,
-  onResize,
-  scoped,
-  loop,
-  EaseOutCubic,
-  damp,
-  lerp,
-  toPixels,
-  closest,
-  clamp,
-} from '@/utils';
-import { SnapSlide } from './slide/Slide';
-import { SnapWheel } from './logic/Wheel';
-import { SnapSwipe } from './logic/Swipe';
-import { SnapTrack } from './logic/Track';
-import { SnapKeyboard } from './logic/Keyboard';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { isUndefined } from '@/internal/isUndefined';
-import { isNumber } from '@/internal/isNumber';
-import { isString } from '@/internal/isString';
-import { initVevet } from '@/global/initVevet';
 
 export * from './types';
-export * from './slide/Slide';
+export * from './logic/Slide';
+
+type TC = ISnapCallbacksMap;
+type TS = ISnapStaticProps;
+type TM = ISnapMutableProps;
 
 /**
  * Snap/Carousel handler.
@@ -46,100 +46,49 @@ export * from './slide/Slide';
  *
  * @group Components
  */
-export class Snap<
-  C extends ISnapCallbacksMap = ISnapCallbacksMap,
-  S extends ISnapStaticProps = ISnapStaticProps,
-  M extends ISnapMutableProps = ISnapMutableProps,
-> extends Module<C, S, M> {
-  /** Retrieves the default static properties. */
-  public _getStatic(): TRequiredProps<S> {
-    return {
-      ...super._getStatic(),
-      eventsEmitter: null,
-      activeIndex: 0,
-    } as TRequiredProps<S>;
+export class Snap extends Module<TC, TS, TM> {
+  /**
+   * Returns the default static properties.
+   */
+  public _getStatic(): TRequiredProps<TS> {
+    return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
-  /** Retrieves the default mutable properties. */
-  public _getMutable(): TRequiredProps<M> {
-    return {
-      ...super._getMutable(),
-      slides: false,
-      containerSize: 'auto',
-      slidesToScroll: 1,
-      direction: 'horizontal',
-      centered: false,
-      loop: false,
-      gap: 0,
-      lerp: initVevet().mobile ? 1 : 0.2,
-      freemode: false,
-      rewind: false,
-      stickOnResize: true,
-      friction: 0,
-      edgeFriction: 0.85,
-      duration: 500,
-      easing: EaseOutCubic,
-      swipe: true,
-      grabCursor: false,
-      swipeSpeed: 1,
-      swipeAxis: 'auto',
-      followSwipe: true,
-      shortSwipes: true,
-      shortSwipesDuration: 300,
-      shortSwipesThreshold: 30,
-      swipeFriction: false,
-      swipeThreshold: 5,
-      swipeMinTime: 0,
-      swipeInertiaDuration: (distance) => clamp(distance, 500, 2000),
-      swipeInertiaRatio: 0.5,
-      wheel: false,
-      wheelSpeed: 1,
-      wheelAxis: 'auto',
-      followWheel: true,
-      wheelThrottle: 'auto',
-      stickOnWheelEnd: true,
-      stickOnWheelEndThreshold: 30,
-      slideSize: 'auto',
-    } as TRequiredProps<M>;
+  /**
+   * Returns the default mutable properties.
+   */
+  public _getMutable(): TRequiredProps<TM> {
+    return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
-
-  /** Wheel events */
-  protected _wheel: SnapWheel;
 
   /** Swipe events */
-  protected _swipe: SnapSwipe;
+  private _swipe: SnapSwipe;
 
   /** Snap Track */
-  protected _track: SnapTrack;
-
-  /** Snap keyboard */
-  protected _keyboard: SnapKeyboard;
+  private _track: SnapTrack;
 
   /** Container size */
-  protected _containerSize = 0;
+  private _containerSize = 0;
 
   /** All slides */
-  protected _slides: SnapSlide[] = [];
+  private _slides: SnapSlide[] = [];
 
   /** Scrollable slides (which size is larger than the container) */
-  protected _scrollableSlides: SnapSlide[] = [];
-
-  /** Timeline for smooth transitions */
-  protected _timeline?: Timeline;
+  private _scrollableSlides: SnapSlide[] = [];
 
   /** Resize handler */
-  protected _resizeHandler: IOnResize;
+  private _resizer: IOnResize;
 
   /** Active slide index */
-  protected _activeIndex: number;
+  private _activeIndex: number;
 
-  /** Target slide index */
-  protected _targetIndex?: number;
+  /**
+   * Target slide index.
+   * For internal use only
+   */
+  public $_targetIndex?: number;
 
-  constructor(
-    props: S & M,
-    onCallbacks?: TModuleOnCallbacksProps<C, Snap<C, S, M>>,
-  ) {
+  constructor(props: TS & TM, onCallbacks?: TModuleOnCallbacksProps<TC, Snap>) {
     super(props, onCallbacks as any);
 
     const { container, activeIndex } = this.props;
@@ -148,7 +97,7 @@ export class Snap<
     this._activeIndex = activeIndex;
 
     // add resize event
-    this._resizeHandler = onResize({
+    this._resizer = onResize({
       element: container,
       viewportTarget: 'width',
       callback: () => this._handleResize(),
@@ -156,13 +105,13 @@ export class Snap<
     });
 
     // initial resize
-    this._resizeHandler.debounceResize();
+    this._resizer.debounceResize();
 
     // fetch slides
     this._fetchSlides();
 
     // add wheel listener
-    this._wheel = new SnapWheel(this as any);
+    new SnapWheel(this as any);
 
     // add swipe
     this._swipe = new SnapSwipe(this as any);
@@ -171,7 +120,7 @@ export class Snap<
     this._track = new SnapTrack(this as any);
 
     // add keyboard
-    this._keyboard = new SnapKeyboard(this as any);
+    new SnapKeyboard(this as any);
   }
 
   /** Handles properties change */
@@ -179,60 +128,11 @@ export class Snap<
     // attach slides
     this._fetchSlides();
 
-    // resize instantly
-    this._resizeHandler.resize();
+    // resize immediately
+    this._resizer.resize();
 
     // update props
     super._handleProps();
-  }
-
-  /** Update slides list and attach them */
-  protected _fetchSlides() {
-    this._slides.forEach((slide) => slide.detach());
-
-    const children = this.props.slides
-      ? this.props.slides
-      : Array.from(this.props.container.children);
-
-    this._slides = children.map((item) => {
-      if (item instanceof SnapSlide) {
-        return item;
-      }
-
-      return new SnapSlide(item as any);
-    });
-
-    this._slides.forEach((slide, index) => slide.attach(this as any, index));
-  }
-
-  /** Request resize (handled with debounce timeout) */
-  @noopIfDestroyed
-  public resize(isManual = true) {
-    if (isManual) {
-      this._resizeHandler.resize();
-    } else {
-      this._resizeHandler.debounceResize();
-    }
-  }
-
-  /** Resize the scene and reflow */
-  protected _handleResize() {
-    const { direction, container } = this.props;
-
-    // cancel sticky behavior
-    this.cancelTransition();
-
-    // update container size
-    this._containerSize =
-      direction === 'horizontal'
-        ? container.offsetWidth
-        : container.offsetHeight;
-
-    // reflow
-    this._reflow();
-
-    // emit callbacks
-    this.callbacks.emit('resize', undefined);
   }
 
   /** Get container */
@@ -293,14 +193,9 @@ export class Snap<
     return this.props.direction === 'horizontal' ? 'x' : 'y';
   }
 
-  /** Snap track */
-  get track() {
-    return this._track;
-  }
-
   /** If transition in progress */
   get isTransitioning() {
-    return !!this._timeline;
+    return this._track.isTransitioning;
   }
 
   /** If swipe in progress */
@@ -308,11 +203,154 @@ export class Snap<
     return !!this._swipe.isSwiping;
   }
 
+  /** Gets the interpolation influence */
+  get influence() {
+    return this._track.influence;
+  }
+
+  /** Gets the current track value. */
+  get current() {
+    return this._track.current;
+  }
+
+  /** Gets the target track value. */
+  get target() {
+    return this._track.target;
+  }
+
+  /** Detect if can loop */
+  get canLoop() {
+    return this._track.canLoop;
+  }
+
+  /** Get looped current value */
+  get loopedCurrent() {
+    return this._track.loopedCurrent;
+  }
+
+  /** Get loop count */
+  get loopCount() {
+    return this._track.loopCount;
+  }
+
+  /** Sets track to current & target value instantly */
+  public set(value: number) {
+    this._track.set(value);
+  }
+
+  /** Loop a coordinate if can loop */
+  public loopCoord(coord: number) {
+    return this._track.loopCoord(coord);
+  }
+
+  /** Get minimum track value */
+  get min() {
+    return this._track.min;
+  }
+
+  /** Get maximum track value */
+  get max() {
+    return this._track.max;
+  }
+
+  /** Get track progress. From 0 to 1 if not loop. From -Infinity to Infinity if loop */
+  get progress() {
+    return this.current / this.max;
+  }
+
+  /** If the start has been reached */
+  get isStart() {
+    return this._track.isStart;
+  }
+
+  /** If the end has been reached */
+  get isEnd() {
+    return this._track.isEnd;
+  }
+
+  /** Clamp target value between min and max values */
+  public clampTarget() {
+    this._track.clampTarget();
+  }
+
+  /** Iterate track target value */
+  public iterateTarget(delta: number) {
+    this._track.iterateTarget(delta);
+  }
+
+  /** Cancel slide transition */
+  public cancelTransition() {
+    this._track.cancelTransition();
+  }
+
+  /** Check if the active slide is larger than the container and is being scrolled */
+  get isSlideScrolling() {
+    const { containerSize } = this;
+
+    return this.scrollableSlides.some(({ size, coord }) =>
+      inRange(coord, containerSize - size, 0),
+    );
+  }
+
+  /** Get first slide size */
+  get firstSlideSize() {
+    return this.slides[0].size;
+  }
+
+  /** Update slides list and attach them */
+  private _fetchSlides() {
+    const { props } = this;
+
+    this._slides.forEach((slide) => slide.$_detach());
+
+    const children = props.slides
+      ? props.slides
+      : Array.from(props.container.children);
+
+    this._slides = children.map((item) => {
+      if (item instanceof SnapSlide) {
+        return item;
+      }
+
+      return new SnapSlide(item as any);
+    });
+
+    this._slides.forEach((slide, index) => slide.$_attach(this as any, index));
+  }
+
+  /** Request resize (handled with debounce timeout) */
+  @noopIfDestroyed
+  public resize(isManual = true) {
+    if (isManual) {
+      this._resizer.resize();
+    } else {
+      this._resizer.debounceResize();
+    }
+  }
+
+  /** Resize the scene and reflow */
+  private _handleResize() {
+    const { container } = this.props;
+
+    // cancel sticky behavior
+    this._track.cancelTransition();
+
+    // update container size
+    this._containerSize =
+      this.axis === 'x' ? container.offsetWidth : container.offsetHeight;
+
+    // reflow
+    this._reflow();
+
+    // emit callbacks
+    this.callbacks.emit('resize', undefined);
+  }
+
   /** Reflow: update static values of slides */
-  protected _reflow() {
+  private _reflow() {
     const { slides, props } = this;
 
-    if (slides.length === 0) {
+    if (this.isEmpty) {
       return;
     }
 
@@ -333,8 +371,8 @@ export class Snap<
     // Reset to active slide
     const slide = slides.find(({ index }) => index === this.activeIndex);
     if (props.stickOnResize && slide) {
-      this.track.clampTarget();
-      this.track.set(slide.magnets[0]);
+      this._track.clampTarget();
+      this._track.set(slide.magnets[0]);
     }
 
     // Emit callbacks
@@ -351,11 +389,11 @@ export class Snap<
       return;
     }
 
-    const { _swipe: swipe, track, props } = this;
+    const { _swipe: swipe, _track: track, props } = this;
 
     // Update values
     this._updateSlidesCoords();
-    this._updateSlidesProgress();
+    this._updateSlideProgress();
 
     // Get magnet after slide coordinates are updated
     const { magnet } = this;
@@ -364,11 +402,11 @@ export class Snap<
     if (
       magnet &&
       magnet.slide.index !== this._activeIndex &&
-      (isUndefined(this._targetIndex) ||
-        magnet.slide.index === this._targetIndex)
+      (isUndefined(this.$_targetIndex) ||
+        magnet.slide.index === this.$_targetIndex)
     ) {
       this._activeIndex = magnet.slide.index;
-      this._targetIndex = undefined;
+      this.$_targetIndex = undefined;
       this.callbacks.emit('activeSlide', this.activeSlide);
     }
 
@@ -382,10 +420,10 @@ export class Snap<
       hasFriction &&
       frameDuration > 0 &&
       props.friction >= 0 &&
-      !track.isSlideScrolling &&
+      !this.isSlideScrolling &&
       !props.freemode
     ) {
-      track.$_target = damp(
+      track.target = damp(
         track.target,
         track.current + magnet.diff,
         props.friction * props.lerp,
@@ -402,75 +440,28 @@ export class Snap<
   }
 
   /** Update slides values */
-  protected _updateSlidesCoords() {
-    const { slides, track } = this;
-    const { centered: isCentered } = this.props;
+  private _updateSlidesCoords() {
+    const { slides, props, containerSize, firstSlideSize } = this;
 
-    const offset = isCentered
-      ? this.containerSize / 2 - this.firstSlideSize / 2
-      : 0;
+    const offset = props.centered ? containerSize / 2 - firstSlideSize / 2 : 0;
 
-    slides.forEach((slide) => {
-      const { staticCoord, size } = slide;
-
-      if (!track.canLoop) {
-        slide.$_setCoord(staticCoord + offset - track.current);
-
-        return;
-      }
-
-      if (isCentered) {
-        slide.$_setCoord(
-          loop(
-            staticCoord + offset - track.current,
-            -track.max / 2 + offset,
-            track.max / 2 + offset,
-          ),
-        );
-
-        return;
-      }
-
-      slide.$_setCoord(
-        loop(staticCoord - track.current, -size, track.max - size),
-      );
-    });
-  }
-
-  /** Get first slide size */
-  get firstSlideSize() {
-    return this.slides[0].size;
+    slides.forEach((slide) => slide.$_updateCoords(offset));
   }
 
   /** Update slides progress */
-  protected _updateSlidesProgress() {
-    const { slides, containerSize } = this;
-
-    slides.forEach((slide) => {
-      const { coord, size } = slide;
-
-      if (this.props.centered) {
-        const center = containerSize / 2 - size / 2;
-        slide.$_setProgress(scoped(coord, center, center - size));
-
-        return;
-      }
-
-      slide.$_setProgress(scoped(coord, 0, -size));
-    });
+  private _updateSlideProgress() {
+    this.slides.forEach((slide) => slide.$_updateProgress());
   }
 
   /** Get nearest magnet */
-  protected get magnet(): ISnapMagnet | undefined {
-    const current = this.track.loopedCurrent;
+  private get magnet(): ISnapMagnet | undefined {
+    const current = this._track.loopedCurrent;
 
     return this.getNearestMagnet(current);
   }
 
   /** Get nearest magnet to the current position */
   public getNearestMagnet(coord: number): ISnapMagnet | undefined {
-    // todo: search only in nearby slides
-
     const magnets = this.slides.flatMap((slide) =>
       slide.magnets.map((magnet) => ({ slide, magnet, index: slide.index })),
     );
@@ -486,87 +477,21 @@ export class Snap<
     return { ...closestMagnet, diff: closestMagnet.magnet - coord };
   }
 
-  /** Cancel sticky behavior */
-  public cancelTransition() {
-    this._timeline?.destroy();
-    this._timeline = undefined;
-  }
-
   /** Stick to the nearest magnet */
-  @noopIfDestroyed
   public stick() {
-    const { magnet } = this;
+    const { magnet, isSlideScrolling } = this;
 
-    if (this.track.isSlideScrolling || !magnet) {
+    if (isSlideScrolling || !magnet) {
       return;
     }
 
-    this.toCoord(this.track.current + magnet.diff);
+    this.toCoord(this._track.current + magnet.diff);
   }
 
   /** Go to a definite coordinate */
+  @noopIfDestroyed
   public toCoord(coordinate: number, options?: ISnapTransitionArg) {
-    if (this.isEmpty || this.isDestroyed) {
-      return false;
-    }
-
-    this.cancelTransition();
-
-    const { track, props, callbacks } = this;
-
-    const start = track.current;
-    const end = coordinate;
-    const diff = Math.abs(end - start);
-
-    const durationProp = options?.duration ?? props.duration;
-
-    let duration = isNumber(durationProp) ? durationProp : durationProp(diff);
-    if (diff === 0) {
-      duration = 0;
-    }
-
-    const easing = options?.easing ?? props.easing;
-
-    const tm = new Timeline({ duration, easing });
-
-    this._timeline = tm;
-
-    tm.on('start', () => {
-      callbacks.emit('timelineStart', undefined);
-      options?.onStart?.();
-    });
-
-    tm.on('update', (data) => {
-      track.$_current = lerp(start, end, data.eased);
-      track.$_target = track.current;
-      track.$_influence = track.influence * (1 - data.progress);
-
-      if (data.progress === 1) {
-        this._targetIndex = undefined;
-      }
-
-      this.render();
-
-      callbacks.emit('timelineUpdate', data);
-      options?.onUpdate?.(data);
-    });
-
-    tm.on('end', () => {
-      tm.destroy();
-
-      callbacks.emit('timelineEnd', undefined);
-      options?.onEnd?.();
-
-      this._timeline = undefined;
-    });
-
-    tm.on('destroy', () => {
-      this._targetIndex = undefined;
-    });
-
-    tm.play();
-
-    return true;
+    return this._track.toCoord(coordinate, options);
   }
 
   /** Go to a slide by index */
@@ -574,7 +499,7 @@ export class Snap<
     targetIndex: number,
     { direction = null, ...options }: ISnapToSlideArg = {},
   ) {
-    const { isEmpty, activeIndex, slides, track, props } = this;
+    const { isEmpty, activeIndex, slides, _track: track, props } = this;
     const { current, max, loopCount } = track;
 
     if (isEmpty || this.isDestroyed) {
@@ -591,7 +516,7 @@ export class Snap<
       return false;
     }
 
-    this._targetIndex = index;
+    this.$_targetIndex = index;
     const slideMagnets = slides[index].magnets;
     let targetStaticMagnet = slideMagnets[0];
 
@@ -641,13 +566,14 @@ export class Snap<
     ...options
   }: ISnapNexPrevArg = {}) {
     const { props, slides, activeIndex } = this;
+    const { length } = slides;
 
-    let index = loop(activeIndex + skip, 0, slides.length);
+    let index = loop(activeIndex + skip, 0, length);
 
     if (!props.loop) {
       index = props.rewind
-        ? loop(activeIndex + skip, 0, slides.length)
-        : Math.min(activeIndex + skip, slides.length - 1);
+        ? loop(activeIndex + skip, 0, length)
+        : Math.min(activeIndex + skip, length - 1);
     }
 
     return this.toSlide(index, { ...options, direction: 'next' });
@@ -677,10 +603,8 @@ export class Snap<
   protected _destroy() {
     super._destroy();
 
-    this._resizeHandler.remove();
+    this._resizer.remove();
 
-    this.cancelTransition();
-
-    this._slides.forEach((slide) => slide.detach());
+    this._slides.forEach((slide) => slide.$_detach());
   }
 }

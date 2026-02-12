@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
+
 import { Snap, SnapSlide } from '@/index';
 
 let i = 0;

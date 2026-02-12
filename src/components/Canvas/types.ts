@@ -1,9 +1,9 @@
-import { IViewportCallbacksMap } from '@/core/exported';
 import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
 } from '@/base/Module';
+import { IViewportCallbacksMap } from '@/core/exported';
 
 /**
  * Static properties for canvas configuration.

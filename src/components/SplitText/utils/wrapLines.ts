@@ -1,7 +1,9 @@
 import { cnAdd } from '@/internal/cn';
-import { ISplitTextLineMeta, ISplitTextWordMeta } from '../types';
-import { getTextAalignment } from './getTextAalignment';
 import { doc } from '@/internal/env';
+
+import { ISplitTextLineMeta, ISplitTextWordMeta } from '../types';
+
+import { getTextAlignment } from './getTextAlignment';
 
 interface IProps {
   container: HTMLElement;
@@ -54,7 +56,7 @@ export function wrapLines({
   lineWrapperClassName,
   tagName,
 }: IProps) {
-  const direction = getTextAalignment(container);
+  const direction = getTextAlignment(container);
 
   const linesMeta: ILine[] = [];
   let lineIndex = -1;
@@ -152,7 +154,6 @@ export function wrapLines({
     let isSuccess = true;
 
     hiddenBr.forEach((br) => {
-      // eslint-disable-next-line no-param-reassign
       br.style.display = '';
     });
 

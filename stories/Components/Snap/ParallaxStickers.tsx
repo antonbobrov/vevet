@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useRef } from 'react';
-import { Snap } from '@/index';
 
-// todo: codepen demo
+import { Snap } from '@/index';
 
 export const ParallaxStickers: FC = () => {
   const ref = useRef<HTMLDivElement>(null);

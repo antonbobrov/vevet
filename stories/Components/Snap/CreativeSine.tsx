@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
+
 import { clamp, lerp, Snap } from '@/index';
 
 export const CreativeSine: FC = () => {

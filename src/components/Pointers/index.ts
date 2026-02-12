@@ -1,16 +1,22 @@
 import { Module, TModuleOnCallbacksProps } from '@/base';
+import { body } from '@/internal/env';
+import { TRequiredProps } from '@/internal/requiredProps';
+import { addEventListener, clamp } from '@/utils';
+
+import { MUTABLE_PROPS, STATIC_PROPS } from './props';
+import { styles } from './styles';
 import {
   IPointersCallbacksMap,
   IPointersItem,
   IPointersMutableProps,
   IPointersStaticProps,
 } from './types';
-import { TRequiredProps } from '@/internal/requiredProps';
-import { addEventListener, clamp } from '@/utils';
-import { styles } from './styles';
-import { body } from '@/internal/env';
 
 export * from './types';
+
+type TC = IPointersCallbacksMap;
+type TS = IPointersStaticProps;
+type TM = IPointersMutableProps;
 
 /**
  * Manages pointer events, including tracking multiple pointers,
@@ -23,50 +29,49 @@ export * from './types';
  *
  * @group Components
  */
-export class Pointers<
-  C extends IPointersCallbacksMap = IPointersCallbacksMap,
-  S extends IPointersStaticProps = IPointersStaticProps,
-  M extends IPointersMutableProps = IPointersMutableProps,
-> extends Module<C, S, M> {
+export class Pointers extends Module<TC, TS, TM> {
   /**
    * Returns the default static properties.
    */
-  public _getStatic(): TRequiredProps<S> {
-    return {
-      ...super._getStatic(),
-      buttons: [0],
-      relative: false,
-      minPointers: 1,
-      maxPointers: 5,
-      disableUserSelect: true,
-    } as TRequiredProps<S>;
+  public _getStatic(): TRequiredProps<TS> {
+    return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
   /**
    * Returns the default mutable properties.
    */
-  public _getMutable(): TRequiredProps<M> {
-    return {
-      ...super._getMutable(),
-      enabled: true,
-    } as TRequiredProps<M>;
+  public _getMutable(): TRequiredProps<TM> {
+    return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 
   /**
    * Stores active event listeners for runtime interactions.
    */
-  protected _listeners: (() => void)[] = [];
+  private _listeners: (() => void)[] = [];
 
   /** Indicates whether the `start` event has been triggered. */
-  protected _isStarted = false;
+  private _isStarted = false;
+
+  /** Map of active pointers. */
+  private _pointersMap: Map<number, IPointersItem>;
+
+  constructor(
+    props?: TS & TM,
+    onCallbacks?: TModuleOnCallbacksProps<TC, Pointers>,
+  ) {
+    super(props, onCallbacks as any);
+
+    // Defaults
+    this._pointersMap = new Map();
+
+    // Setup base events
+    this._setBaseEvents();
+  }
 
   /** Indicates whether the `start` event has been triggered. */
   get isStarted() {
     return this._isStarted;
   }
-
-  /** Map of active pointers. */
-  protected _pointersMap: Map<number, IPointersItem>;
 
   /** Returns the map of active pointers. */
   get pointersMap() {
@@ -88,23 +93,10 @@ export class Pointers<
     return clamp(this.props.maxPointers, this.props.minPointers, Infinity);
   }
 
-  constructor(
-    props?: S & M,
-    onCallbacks?: TModuleOnCallbacksProps<C, Pointers<C, S, M>>,
-  ) {
-    super(props, onCallbacks as any);
-
-    // Defaults
-    this._pointersMap = new Map();
-
-    // Setup base events
-    this._setBaseEvents();
-  }
-
   /**
    * Attaches base event listeners to the container.
    */
-  protected _setBaseEvents() {
+  private _setBaseEvents() {
     const { container } = this;
 
     const pointerdown = addEventListener(container, 'pointerdown', (event) =>
@@ -151,7 +143,7 @@ export class Pointers<
   /**
    * Attaches runtime event listeners for active pointer interactions.
    */
-  protected _setRuntimeEvents() {
+  private _setRuntimeEvents() {
     const listeners = this._listeners;
 
     if (listeners.length > 0) {
@@ -188,7 +180,7 @@ export class Pointers<
    * Handles pointer down events (`pointerdown`).
    * Adds a new pointer if conditions are met and triggers the `pointerdown` callback.
    */
-  protected _handlePointerDown(event: PointerEvent) {
+  private _handlePointerDown(event: PointerEvent) {
     const { props } = this;
     const { x, y } = this._decodeCoords(event);
 
@@ -223,7 +215,6 @@ export class Pointers<
     // update indices
     let index = 0;
     this.pointersMap.forEach((currentPointer) => {
-      // eslint-disable-next-line no-param-reassign
       currentPointer.index = index;
       index += 1;
     });
@@ -250,7 +241,7 @@ export class Pointers<
    * Handles pointer movement (`pointermove`).
    * Updates pointer positions and triggers the `pointermove` callback.
    */
-  protected _handlePointerMove(event: PointerEvent) {
+  private _handlePointerMove(event: PointerEvent) {
     const pointer = this.pointersMap.get(event.pointerId);
     if (!pointer) {
       return;
@@ -283,7 +274,7 @@ export class Pointers<
    * Removes the pointer and triggers the `pointerup` callback.
    * If no active pointers remain, fires the `end` callback.
    */
-  protected _handlePointerUp(event: PointerEvent) {
+  private _handlePointerUp(event: PointerEvent) {
     // check if pointer exists
     const pointer = this.pointersMap.get(event.pointerId);
     if (!pointer) {
@@ -312,7 +303,7 @@ export class Pointers<
    * Handles event cancellations (`pointercancel`, `blur`).
    * Triggers the `end` callback and cleans up all pointers.
    */
-  protected _handleCancel() {
+  private _handleCancel() {
     this.callbacks.emit('end', undefined);
 
     // Trigger callbacks for all pointers
@@ -326,7 +317,7 @@ export class Pointers<
   /**
    * Prevents text selection during pointer interactions.
    */
-  protected _resetSelection() {
+  private _resetSelection() {
     window.getSelection()?.empty();
     window.getSelection()?.removeAllRanges();
   }
@@ -334,7 +325,7 @@ export class Pointers<
   /**
    * Returns pointer coordinates relative to the container.
    */
-  protected _decodeCoords(event: PointerEvent) {
+  private _decodeCoords(event: PointerEvent) {
     const { container, props } = this;
 
     if (!props.relative) {
@@ -352,7 +343,7 @@ export class Pointers<
   /**
    * Cleans up event listeners, pointers, and injected styles.
    */
-  protected _cleanup() {
+  private _cleanup() {
     this._listeners.forEach((listener) => listener());
     this._listeners = [];
     this._isStarted = false;

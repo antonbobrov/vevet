@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
+
 import { Snap } from '@/index';
 
 export const Test: FC = () => {
@@ -7,7 +8,7 @@ export const Test: FC = () => {
   const [isStart, setIsStart] = useState(true);
   const [isEnd, setIsEnd] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [snap, setSnap] = useState<Snap>();
+  const [carousel, setCarousel] = useState<Snap>();
 
   useEffect(() => {
     if (!ref.current) {
@@ -31,11 +32,11 @@ export const Test: FC = () => {
       },
       {
         onActiveSlide: (slide) => setActiveIndex(slide.index),
-        onUpdate: (data, { slides, track }) => {
-          setIsStart(track.isStart);
-          setIsEnd(track.isEnd);
+        onUpdate: (data, snap) => {
+          setIsStart(snap.isStart);
+          setIsEnd(snap.isEnd);
 
-          slides.forEach(({ element, coord, progress }, index) => {
+          snap.slides.forEach(({ element, coord, progress }, index) => {
             element!.style.transform = `translateX(${coord}px)`;
 
             const info = infos[index];
@@ -45,7 +46,7 @@ export const Test: FC = () => {
       },
     );
 
-    setSnap(instance);
+    setCarousel(instance);
 
     return () => instance.destroy();
   }, []);
@@ -112,11 +113,11 @@ export const Test: FC = () => {
         ))}
       </div>
 
-      <button type="button" onClick={() => snap?.prev()}>
+      <button type="button" onClick={() => carousel?.prev()}>
         Prev
       </button>
 
-      <button type="button" onClick={() => snap?.next()}>
+      <button type="button" onClick={() => carousel?.next()}>
         Next
       </button>
 
@@ -124,25 +125,29 @@ export const Test: FC = () => {
 
       <br />
 
-      <button type="button" disabled={isStart} onClick={() => snap?.toSlide(0)}>
+      <button
+        type="button"
+        disabled={isStart}
+        onClick={() => carousel?.toSlide(0)}
+      >
         Start
       </button>
 
-      {snap?.slides.map((slide, index) => (
+      {carousel?.slides.map((slide) => (
         <button
-          key={slide.id}
+          key={slide.index}
           type="button"
-          disabled={activeIndex === index}
-          onClick={() => snap?.toSlide(index)}
+          disabled={activeIndex === slide.index}
+          onClick={() => carousel?.toSlide(slide.index)}
         >
-          {index}
+          {slide.index}
         </button>
       ))}
 
       <button
         type="button"
         disabled={isEnd}
-        onClick={() => snap?.toSlide(snap.slides.length - 1)}
+        onClick={() => carousel?.toSlide(carousel.slides.length - 1)}
       >
         End
       </button>

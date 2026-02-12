@@ -1,7 +1,9 @@
 import { cnAdd } from '@/internal/cn';
-import { ISplitTextStaticProps, ISplitTextWordMeta } from '../types';
-import { isIgnored } from './isIgnored';
 import { doc } from '@/internal/env';
+
+import { ISplitTextStaticProps, ISplitTextWordMeta } from '../types';
+
+import { isIgnored } from './isIgnored';
 
 type TBaseProps = Pick<
   ISplitTextStaticProps,
@@ -53,7 +55,6 @@ export function wrapWords({
           return;
         }
 
-        // eslint-disable-next-line no-param-reassign
         node.style.display = 'inline-block';
       }
 

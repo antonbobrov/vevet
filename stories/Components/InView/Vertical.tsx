@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
+
 import { InView } from '@/index';
 
 export const Vertical: FC = () => {

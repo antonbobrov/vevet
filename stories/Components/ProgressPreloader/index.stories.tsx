@@ -1,5 +1,6 @@
-import type { StoryObj, Meta } from '@storybook/react';
 import { Component } from '.';
+
+import type { StoryObj, Meta } from '@storybook/react';
 
 type TComponent = typeof Component;
 

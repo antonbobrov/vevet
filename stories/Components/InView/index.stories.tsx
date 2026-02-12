@@ -1,7 +1,9 @@
 import React from 'react';
-import type { Meta, StoryFn } from '@storybook/react';
-import { Vertical as VerticalComponent } from './Vertical';
+
 import { Horizontal as HorizontalComponent } from './Horizontal';
+import { Vertical as VerticalComponent } from './Vertical';
+
+import type { Meta, StoryFn } from '@storybook/react';
 
 const meta: Meta = {
   title: 'Components/InView',

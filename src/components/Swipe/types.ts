@@ -4,7 +4,10 @@ import {
   IModuleStaticProps,
 } from '@/base';
 import { TEasingType } from '@/utils/math/easing';
+
 import { IPointersCallbacksMap } from '../Pointers';
+
+import { ISwipeCoords, ISwipeMatrix, ISwipeVec2 } from './global';
 
 export interface ISwipeStaticProps extends IModuleStaticProps {
   /** Event listener container. */
@@ -160,7 +163,8 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
 }
 
 export interface ISwipeCallbacksMap
-  extends IModuleCallbacksMap,
+  extends
+    IModuleCallbacksMap,
     Pick<IPointersCallbacksMap, 'pointerdown' | 'pointermove' | 'pointerup'> {
   /** Swipe start event. */
   start: ISwipeCoords;
@@ -214,39 +218,9 @@ export interface ISwipeCallbacksMap
   inertiaCancel: undefined;
 }
 
-export interface ISwipeVec2 {
-  x: number;
-  y: number;
-}
-
 export interface ISwipeCanMoveArg {
   type: 'touch' | 'mouse';
   matrix: ISwipeMatrix;
   start: ISwipeVec2;
   diff: ISwipeVec2;
-}
-
-export interface ISwipeMatrix extends ISwipeVec2 {
-  angle: number;
-}
-
-export interface ISwipeVelocity extends ISwipeMatrix {
-  timestamp: number;
-}
-
-export interface ISwipeCoords {
-  /** Event timestamp. */
-  timestamp: number;
-  /** Start position. */
-  start: ISwipeMatrix;
-  /** Previous position. */
-  prev: ISwipeMatrix;
-  /** Current position. */
-  current: ISwipeMatrix;
-  /** Movement offset from start. */
-  diff: ISwipeMatrix;
-  /** Movement offset from previous position. */
-  step: ISwipeMatrix;
-  /** Total accumulated movement. */
-  accum: ISwipeVec2;
 }

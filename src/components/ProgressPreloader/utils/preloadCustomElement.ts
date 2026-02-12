@@ -1,4 +1,5 @@
 import { clamp } from '@/utils/math';
+
 import { IProgressPreloaderResource } from '../types';
 
 /**

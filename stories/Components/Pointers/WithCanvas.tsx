@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
+
 import { Canvas, Pointers } from '@/index';
 
 export const WithCanvas: FC = () => {

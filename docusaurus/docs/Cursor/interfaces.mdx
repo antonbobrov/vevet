@@ -59,6 +59,14 @@ interface ICursorHoverElementProps {
   /** Hoverable DOM element */
   element: Element;
 
+  /**
+   * Hover events emitter.
+   * If not provided, the element itself will be used.
+   * Useful when the visual element and the hover area are different nodes.
+   * @default null
+   */
+  emitter?: Element | null;
+
   /** Cursor type to activate on hover */
   type?: string;
 
@@ -101,6 +109,15 @@ interface ICursorHoverElementProps {
    * @default false
    */
   sticky?: boolean;
+
+  /**
+   * Friction factor for smooth sticky animation.
+   * When greater than `0`, the element is smoothly attracted back
+   * to its original position while still reacting to pointer movement.
+   * The higher the value, the stronger the pull-back effect.
+   * @default 0
+   */
+  stickyFriction?: number;
 
   /**
    * Linear interpolation factor for smooth sticky animation.

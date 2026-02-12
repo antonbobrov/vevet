@@ -1,26 +1,28 @@
 /* eslint-disable no-underscore-dangle */
 import { initVevet } from '@/global/initVevet';
-import { TResponsiveProps, TResponsiveRule, TResponsiveSource } from './types';
-import { Module } from '../Module';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+
+import { Module } from '../Module';
+
+import { TResponsiveProps, TResponsiveRule, TResponsiveSource } from './types';
 
 export * from './types';
 
 export class Responsive<T extends TResponsiveSource> {
   /** Tracks whether the instance has been destroyed */
-  protected _isDestroyed = false;
+  private _isDestroyed = false;
 
   /** Destroyable actions */
-  protected _destructors: (() => void)[] = [];
+  private _destructors: (() => void)[] = [];
 
   /** Previously active breakpoints */
-  protected _prevBreakpoints = '[]';
+  private _prevBreakpoints = '[]';
 
   /** Initial props */
-  protected _initProps!: TResponsiveProps<T>;
+  private _initProps!: TResponsiveProps<T>;
 
   /** Current props */
-  protected _props: TResponsiveProps<T>;
+  private _props: TResponsiveProps<T>;
 
   /** Current props */
   get props() {
@@ -28,9 +30,9 @@ export class Responsive<T extends TResponsiveSource> {
   }
 
   constructor(
-    protected _source: T,
-    protected _rules: TResponsiveRule<T>[],
-    protected _onChange?: (props: TResponsiveProps<T>) => void,
+    private _source: T,
+    private _rules: TResponsiveRule<T>[],
+    private _onChange?: (props: TResponsiveProps<T>) => void,
   ) {
     const source = _source;
 
@@ -76,7 +78,7 @@ export class Responsive<T extends TResponsiveSource> {
   }
 
   /** Set initial props */
-  protected _fetchInitProps() {
+  private _fetchInitProps() {
     const source = this._source;
 
     if (source instanceof Module) {
@@ -95,7 +97,7 @@ export class Responsive<T extends TResponsiveSource> {
   }
 
   /** Get active rules */
-  protected _getActiveRules() {
+  private _getActiveRules() {
     const app = initVevet();
 
     const rules = this._rules.filter(({ at }) => {
@@ -138,7 +140,7 @@ export class Responsive<T extends TResponsiveSource> {
   }
 
   /** Get responsive props */
-  protected _getResponsiveProps() {
+  private _getResponsiveProps() {
     const rules = this._getActiveRules();
     let newProps = {};
 
@@ -150,7 +152,7 @@ export class Responsive<T extends TResponsiveSource> {
   }
 
   /** Update properties */
-  protected _handleUpdate() {
+  private _handleUpdate() {
     const activeRules = this._getActiveRules();
     const activeBreakpoints = activeRules.map(({ at }) => at);
     const json = JSON.stringify(activeBreakpoints);

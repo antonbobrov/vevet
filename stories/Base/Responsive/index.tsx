@@ -1,4 +1,5 @@
 import React, { FC, useEffect } from 'react';
+
 import { Responsive } from '@/index';
 
 export const Component: FC = () => {

@@ -1,9 +1,15 @@
-import { TRequiredProps } from '@/internal/requiredProps';
 import { Module, TModuleOnCallbacksProps } from '@/base/Module';
-import { IRafCallbacksMap, IRafMutableProps, IRafStaticProps } from './types';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { TRequiredProps } from '@/internal/requiredProps';
+
+import { MUTABLE_PROPS, STATIC_PROPS } from './props';
+import { IRafCallbacksMap, IRafMutableProps, IRafStaticProps } from './types';
 
 export * from './types';
+
+type TC = IRafCallbacksMap;
+type TS = IRafStaticProps;
+type TM = IRafMutableProps;
 
 /**
  * Manages an animation frame loop with configurable FPS and playback controls.
@@ -12,81 +18,39 @@ export * from './types';
  *
  * @group Components
  */
-export class Raf<
-  C extends IRafCallbacksMap = IRafCallbacksMap,
-  S extends IRafStaticProps = IRafStaticProps,
-  M extends IRafMutableProps = IRafMutableProps,
-> extends Module<C, S, M> {
+export class Raf extends Module<TC, TS, TM> {
   /** Get default static properties */
-  public _getStatic(): TRequiredProps<S> {
-    return { ...super._getStatic() } as TRequiredProps<S>;
+  public _getStatic(): TRequiredProps<TS> {
+    return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
   /** Get default mutable properties */
-  public _getMutable(): TRequiredProps<M> {
-    return {
-      ...super._getMutable(),
-      fps: 'auto',
-      enabled: false,
-      fpsRecalcFrames: 10,
-    } as TRequiredProps<M>;
+  public _getMutable(): TRequiredProps<TM> {
+    return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 
   /** Indicates if the animation frame is currently running */
-  protected _isPlaying = false;
-
-  /** Playback state of the animation frame */
-  get isPlaying() {
-    return this._isPlaying;
-  }
+  private _isPlaying = false;
 
   /** Active requestAnimationFrame ID, or `null` if not running */
-  protected _raf: number | null = null;
+  private _raf: number | null = null;
 
   /** Timestamp of the last frame */
-  protected _lastTimestamp: null | number = null;
+  private _lastTimestamp: null | number = null;
 
   /** Timestamp of the current frame */
-  protected _timestamp: null | number = null;
-
-  /** Timestamp of the current frame */
-  get timestamp() {
-    return this._timestamp ?? 0;
-  }
+  private _timestamp: null | number = null;
 
   /** Current frame index */
-  protected _index = 0;
-
-  /** Current frame index */
-  get index() {
-    return this._index;
-  }
+  private _index = 0;
 
   /** Real-time FPS */
-  protected _fps = 60;
-
-  /** Real-time FPS */
-  get fps() {
-    return this._fps;
-  }
+  private _fps = 60;
 
   /** Duration of the last frame in ms */
-  protected _duration = 0;
+  private _duration = 0;
 
-  /** Duration of the last frame in ms */
-  get duration() {
-    return this._duration;
-  }
-
-  /** Scaling coefficient based on a 60 FPS target */
-  get fpsFactor() {
-    return 60 / this.fps;
-  }
-
-  constructor(
-    props?: S & M,
-    onCallbacks?: TModuleOnCallbacksProps<C, Raf<C, S, M>>,
-  ) {
+  constructor(props?: TS & TM, onCallbacks?: TModuleOnCallbacksProps<TC, Raf>) {
     super(props, onCallbacks as any);
 
     // Initialize FPS
@@ -96,6 +60,36 @@ export class Raf<
     if (this.props.enabled) {
       this._play();
     }
+  }
+
+  /** Playback state of the animation frame */
+  get isPlaying() {
+    return this._isPlaying;
+  }
+
+  /** Timestamp of the current frame */
+  get timestamp() {
+    return this._timestamp ?? 0;
+  }
+
+  /** Current frame index */
+  get index() {
+    return this._index;
+  }
+
+  /** Real-time FPS */
+  get fps() {
+    return this._fps;
+  }
+
+  /** Duration of the last frame in ms */
+  get duration() {
+    return this._duration;
+  }
+
+  /** Scaling coefficient based on a 60 FPS target */
+  get fpsFactor() {
+    return 60 / this.fps;
   }
 
   /** Handle property mutations */
@@ -118,11 +112,11 @@ export class Raf<
       return;
     }
 
-    this.updateProps({ enabled: true } as M);
+    this.updateProps({ enabled: true } as TM);
   }
 
   /** Internal method to start the loop */
-  protected _play() {
+  private _play() {
     if (this.isPlaying) {
       return;
     }
@@ -142,11 +136,11 @@ export class Raf<
       return;
     }
 
-    this.updateProps({ enabled: false } as M);
+    this.updateProps({ enabled: false } as TM);
   }
 
   /** Internal method to pause the loop */
-  protected _pause() {
+  private _pause() {
     if (!this.isPlaying) {
       return;
     }
@@ -163,7 +157,7 @@ export class Raf<
   }
 
   /** Animation loop handler, calculates FPS, and triggers callbacks */
-  protected _animate() {
+  private _animate() {
     if (!this._isPlaying) {
       return;
     }
@@ -202,7 +196,7 @@ export class Raf<
   }
 
   /** Compute real-time FPS from frame durations */
-  protected _computeFPS() {
+  private _computeFPS() {
     const { duration, index, props } = this;
 
     if (

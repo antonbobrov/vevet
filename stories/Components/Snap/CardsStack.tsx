@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
+
 import { clamp, Snap } from '@/index';
 
 // Inspired by: https://cards-stack-slider.uiinitiative.com/

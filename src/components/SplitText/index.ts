@@ -1,6 +1,10 @@
+import { Module, TModuleOnCallbacksProps } from '@/base';
+import { initVevet } from '@/global/initVevet';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { TRequiredProps } from '@/internal/requiredProps';
 import { onResize } from '@/utils/listeners/onResize';
-import { splitBase } from './utils/splitBase';
-import { wrapLines } from './utils/wrapLines';
+
+import { MUTABLE_PROPS, GET_STATIC_PROPS } from './props';
 import {
   ISplitTextCallbacksMap,
   ISplitTextLetterMeta,
@@ -9,13 +13,15 @@ import {
   ISplitTextStaticProps,
   ISplitTextWordMeta,
 } from './types';
-import { Module, TModuleOnCallbacksProps } from '@/base';
-import { TRequiredProps } from '@/internal/requiredProps';
-import { initVevet } from '@/global/initVevet';
 import { saveInitialNodes } from './utils/saveInitialNodes';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { splitBase } from './utils/splitBase';
+import { wrapLines } from './utils/wrapLines';
 
 export * from './types';
+
+type TC = ISplitTextCallbacksMap;
+type TS = ISplitTextStaticProps;
+type TM = ISplitTextMutableProps;
 
 /**
  * `SplitText` splits text within a container into individual lines, words, and letters.
@@ -32,40 +38,75 @@ export * from './types';
  *
  * @group Components
  */
-export class SplitText<
-  C extends ISplitTextCallbacksMap = ISplitTextCallbacksMap,
-  S extends ISplitTextStaticProps = ISplitTextStaticProps,
-  M extends ISplitTextMutableProps = ISplitTextMutableProps,
-> extends Module<C, S, M> {
-  /**
-   * Retrieves the default static properties.
-   */
-  public _getStatic(): TRequiredProps<S> {
-    return {
-      ...super._getStatic(),
-      letters: false,
-      lines: false,
-      linesWrapper: false,
-      letterTag: 'span',
-      wordTag: 'span',
-      lineTag: 'span',
-      letterClass: this._cn('__letter'),
-      wordClass: this._cn('__word'),
-      lineClass: this._cn('__line'),
-      lineWrapperClass: this._cn('__line-wrapper'),
-      resizeDebounce: 0,
-      ignore: null,
-      prepareText: (text) => text,
-      wordDelimiter: String.fromCharCode(32),
-      wordDelimiterOutput: null,
-    } as TRequiredProps<S>;
+export class SplitText extends Module<TC, TS, TM> {
+  /** Get default static properties. */
+  public _getStatic(): TRequiredProps<TS> {
+    return { ...super._getStatic(), ...GET_STATIC_PROPS(this.prefix) };
+  }
+
+  /** Get default mutable properties. */
+  public _getMutable(): TRequiredProps<TM> {
+    return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 
   /**
-   * Retrieves the default mutable properties.
+   * Saved initial HTML nodes of the container.
    */
-  public _getMutable(): TRequiredProps<M> {
-    return { ...super._getMutable() } as TRequiredProps<M>;
+  private _initials: ReturnType<typeof saveInitialNodes>;
+
+  /**
+   * Tracks whether the text is already split into base elements: words and letters.
+   */
+  private _hasSplitBase = false;
+
+  /**
+   * List of letters metadata.
+   */
+  private _lettersMeta: ISplitTextLetterMeta[] = [];
+
+  /**
+   * List of words metadata.
+   */
+  private _wordsMeta: ISplitTextWordMeta[] = [];
+
+  /**
+   * List of lines metadata.
+   */
+  private _linesMeta: ISplitTextLineMeta[] = [];
+
+  /**
+   * Utility for wrapping words into line containers.
+   */
+  private _lineSplitWrapper?: ReturnType<typeof wrapLines>;
+
+  /**
+   * Initializes the SplitText instance and saves the initial state.
+   */
+  constructor(
+    props?: TS & TM,
+    onCallbacks?: TModuleOnCallbacksProps<TC, SplitText>,
+  ) {
+    super(props, onCallbacks as any);
+
+    const { container } = this.props;
+    const { style } = container;
+
+    // Add styles
+    style.fontKerning = 'none';
+    style.display = 'block';
+
+    // A11Y
+    container.setAttribute('aria-label', container.textContent || '');
+    container.translate = false;
+
+    // Add classes
+    this._addTempClassName(container, this._cn(''));
+
+    // Save initial nodes
+    this._initials = saveInitialNodes(container);
+
+    // Set events
+    this._setEvents();
   }
 
   /**
@@ -74,21 +115,6 @@ export class SplitText<
   get prefix() {
     return `${initVevet().prefix}split-text`;
   }
-
-  /**
-   * Saved initial HTML nodes of the container.
-   */
-  protected _savedNodes: ReturnType<typeof saveInitialNodes>;
-
-  /**
-   * Tracks whether the text is already split into base elements: words and letters.
-   */
-  protected _isBaseSplit = false;
-
-  /**
-   * List of letters metadata.
-   */
-  protected _lettersMeta: ISplitTextLetterMeta[] = [];
 
   /**
    * Retrieves an array of letters metadata.
@@ -105,11 +131,6 @@ export class SplitText<
   }
 
   /**
-   * List of words metadata.
-   */
-  protected _wordsMeta: ISplitTextWordMeta[] = [];
-
-  /**
    * Retrieves an array of words metadata.
    */
   get wordsMeta() {
@@ -122,11 +143,6 @@ export class SplitText<
   get words() {
     return this._wordsMeta.map((word) => word.element);
   }
-
-  /**
-   * List of lines metadata.
-   */
-  protected _linesMeta: ISplitTextLineMeta[] = [];
 
   /**
    * Retrieves an array of lines metadata.
@@ -143,39 +159,9 @@ export class SplitText<
   }
 
   /**
-   * Utility for wrapping words into line containers.
-   */
-  protected _lineSplitWrapper?: ReturnType<typeof wrapLines>;
-
-  /**
-   * Initializes the SplitText instance and saves the initial state.
-   */
-  constructor(
-    props?: S & M,
-    onCallbacks?: TModuleOnCallbacksProps<C, SplitText<C, S, M>>,
-  ) {
-    super(props, onCallbacks as any);
-
-    const { container } = this.props;
-    const { style } = container;
-
-    style.fontKerning = 'none';
-    style.display = 'block';
-    container.setAttribute('aria-label', container.textContent || '');
-
-    this._addTempClassName(container, this._cn(''));
-
-    container.translate = false;
-
-    this._savedNodes = saveInitialNodes(container);
-
-    this._setup();
-  }
-
-  /**
    * Sets up event listeners and handles initial splitting.
    */
-  protected _setup() {
+  private _setEvents() {
     const { container, resizeDebounce } = this.props;
 
     if (!this.props.lines) {
@@ -216,8 +202,8 @@ export class SplitText<
   /**
    * Splits text into base elements: letters and words.
    */
-  protected _splitBase() {
-    if (this._isBaseSplit) {
+  private _splitBase() {
+    if (this._hasSplitBase) {
       return;
     }
 
@@ -233,7 +219,7 @@ export class SplitText<
       wordDelimiterOutput,
     } = this.props;
 
-    this._isBaseSplit = true;
+    this._hasSplitBase = true;
 
     const { wordsMeta, lettersMeta } = splitBase({
       container,
@@ -255,7 +241,7 @@ export class SplitText<
   /**
    * Wraps words into line containers.
    */
-  protected _splitLines() {
+  private _splitLines() {
     const { wordsMeta } = this;
     const { container, lineTag, lineClass, lineWrapperClass } = this.props;
 
@@ -286,13 +272,13 @@ export class SplitText<
     super._destroy();
 
     if (!this._lineSplitWrapper) {
-      this._savedNodes.restore();
+      this._initials.restore();
     } else {
       const isSuccessfulDestroy = this._lineSplitWrapper.destroy();
       this._lineSplitWrapper = undefined;
 
       if (isSuccessfulDestroy) {
-        this._savedNodes.restore();
+        this._initials.restore();
       }
     }
   }

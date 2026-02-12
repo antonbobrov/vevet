@@ -1,6 +1,8 @@
 import React from 'react';
-import type { Meta, StoryFn } from '@storybook/react';
+
 import { Basic } from '.';
+
+import type { Meta, StoryFn } from '@storybook/react';
 
 const meta: Meta = {
   title: 'Components/Timeline',

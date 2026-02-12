@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
+
 import { Snap } from '@/index';
 
 export const SlickGap: FC = () => {

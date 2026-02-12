@@ -1,24 +1,31 @@
+import { TModuleOnCallbacksProps } from '@/base';
+import { initVevet } from '@/global/initVevet';
+import { cnHas } from '@/internal/cn';
+import { doc } from '@/internal/env';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { TRequiredProps } from '@/internal/requiredProps';
-import { Timeline } from '../Timeline';
 import { clamp, lerp } from '@/utils/math';
-import { preloadImage } from './utils/preloadImage';
-import { preloadVideo } from './utils/preloadVideo';
-import { preloadCustomElement } from './utils/preloadCustomElement';
+
+import { Preloader } from '../Preloader';
+import { Raf } from '../Raf';
+import { Timeline } from '../Timeline';
+
+import { MUTABLE_PROPS, STATIC_PROPS } from './props';
 import {
   IProgressPreloaderCallbacksMap,
   IProgressPreloaderResource,
   IProgressPreloaderMutableProps,
   IProgressPreloaderStaticProps,
 } from './types';
-import { Preloader } from '../Preloader';
-import { Raf } from '../Raf';
-import { initVevet } from '@/global/initVevet';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { cnHas } from '@/internal/cn';
-import { doc } from '@/internal/env';
-import { TModuleOnCallbacksProps } from '@/base';
+import { preloadCustomElement } from './utils/preloadCustomElement';
+import { preloadImage } from './utils/preloadImage';
+import { preloadVideo } from './utils/preloadVideo';
 
 export * from './types';
+
+type TC = IProgressPreloaderCallbacksMap;
+type TS = IProgressPreloaderStaticProps;
+type TM = IProgressPreloaderMutableProps;
 
 const PAGE_RESOURCE = `vevet-page-${Math.random()}`;
 
@@ -30,40 +37,59 @@ const PAGE_RESOURCE = `vevet-page-${Math.random()}`;
  *
  * @group Components
  */
-export class ProgressPreloader<
-  C extends IProgressPreloaderCallbacksMap = IProgressPreloaderCallbacksMap,
-  S extends IProgressPreloaderStaticProps = IProgressPreloaderStaticProps,
-  M extends IProgressPreloaderMutableProps = IProgressPreloaderMutableProps,
-> extends Preloader<C, S, M> {
+export class ProgressPreloader extends Preloader<TC, TS, TM> {
   /**
    * Retrieves the default static properties.
    */
-  public _getStatic(): TRequiredProps<S> {
-    return {
-      ...super._getStatic(),
-      resourceContainer: null,
-      preloadImages: true,
-      preloadVideos: false,
-      customSelector: '.js-preload',
-      ignoreClassName: 'js-preload-ignore',
-      lerp: 0.1,
-      endDuration: 500,
-    } as TRequiredProps<S>;
+  public _getStatic(): TRequiredProps<TS> {
+    return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
   /**
    * Retrieves the default mutable properties.
    */
-  public _getMutable(): TRequiredProps<M> {
-    return { ...super._getMutable() } as TRequiredProps<M>;
+  public _getMutable(): TRequiredProps<TM> {
+    return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 
   /**
    * List of custom resources to preload based on selectors.
    */
-  protected _resources: IProgressPreloaderResource[] = [
+  private _resources: IProgressPreloaderResource[] = [
     { id: PAGE_RESOURCE, weight: 1, loaded: 0 },
   ];
+
+  /**
+   * Current interpolated progress value for smooth transitions.
+   */
+  private _progress = 0;
+
+  /** Animation frame instance for managing smooth progress updates. */
+  private _raf: Raf;
+
+  constructor(
+    props?: TS & TM,
+    onCallbacks?: TModuleOnCallbacksProps<TC, ProgressPreloader>,
+  ) {
+    super(props, onCallbacks as any);
+
+    // Initialize animation frame if interpolation is enabled
+    this._raf = new Raf({ enabled: true });
+    this._raf.on('frame', () => this._handleUpdate());
+
+    // Start preloading resources
+    this._fetchImages();
+    this._fetchVideos();
+    this._fetchResources();
+
+    // Handle resources on page load
+    initVevet().onLoad(() => this.resolveResource(PAGE_RESOURCE));
+  }
+
+  /** Container source for preloader resources. */
+  get resourceContainer() {
+    return this.props.resourceContainer ?? doc;
+  }
 
   /**
    * The list of custom resources to preload.
@@ -94,11 +120,6 @@ export class ProgressPreloader<
   }
 
   /**
-   * Current interpolated progress value for smooth transitions.
-   */
-  protected _progress = 0;
-
-  /**
    * Gets the current progress value.
    */
   get progress() {
@@ -108,47 +129,12 @@ export class ProgressPreloader<
   /**
    * Linear interpolation factor
    */
-  protected get lerpEase() {
+  private get lerpEase() {
     return clamp(Math.abs(this.props.lerp));
   }
 
-  /** Animation frame instance for managing smooth progress updates. */
-  protected _raf: Raf;
-
-  constructor(
-    props?: S & M,
-    onCallbacks?: TModuleOnCallbacksProps<C, ProgressPreloader<C, S, M>>,
-  ) {
-    super(props, onCallbacks as any);
-
-    // Initialize animation frame if interpolation is enabled
-    this._raf = new Raf({ enabled: true });
-    this._raf.on('frame', ({ lerpFactor }) => {
-      const newProgress = lerp(
-        this._progress,
-        this.loadProgress,
-        lerpFactor(this.lerpEase),
-      );
-
-      this._handleUpdate(newProgress);
-    });
-
-    // Start preloading resources
-    this._fetchImages();
-    this._fetchVideos();
-    this._fetchResources();
-
-    // Handle resources on page load
-    initVevet().onLoad(() => this.resolveResource(PAGE_RESOURCE));
-  }
-
-  /** Container source for preloader resources. */
-  get resourceContainer() {
-    return this.props.resourceContainer ?? doc;
-  }
-
   /** Preload images */
-  protected _fetchImages() {
+  private _fetchImages() {
     if (!this.props.preloadImages) {
       return;
     }
@@ -174,7 +160,7 @@ export class ProgressPreloader<
   }
 
   /** Preload videos */
-  protected _fetchVideos() {
+  private _fetchVideos() {
     if (!this.props.preloadVideos) {
       return;
     }
@@ -198,7 +184,7 @@ export class ProgressPreloader<
   }
 
   /** Preload custom resources */
-  protected _fetchResources() {
+  private _fetchResources() {
     let list = Array.from(
       this.resourceContainer.querySelectorAll(this.props.customSelector),
     );
@@ -262,7 +248,10 @@ export class ProgressPreloader<
    * Handles updates to the preloader's progress, triggering events and animations as needed.
    * @param newProgress - The updated progress value.
    */
-  protected _handleUpdate(newProgress: number) {
+  private _handleUpdate() {
+    const ease = this._raf.lerpFactor(this.lerpEase);
+    const newProgress = lerp(this._progress, this.loadProgress, ease);
+
     this._progress = newProgress;
 
     this.callbacks.emit('progress', undefined);
@@ -274,7 +263,6 @@ export class ProgressPreloader<
     this._raf?.destroy();
 
     const startProgress = this.progress;
-
     if (startProgress >= 1) {
       return;
     }

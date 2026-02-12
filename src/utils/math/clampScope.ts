@@ -1,5 +1,5 @@
-import { scoped } from './scoped';
 import { clamp as clampFunc } from './clamp';
+import { scoped } from './scoped';
 
 /**
  * Maps a value to a relative range and clamps the result within another range.

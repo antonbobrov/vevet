@@ -1,16 +1,24 @@
 import { getPos } from 'get-image-pos';
+
+import { TModuleOnCallbacksProps } from '@/base';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { TRequiredProps } from '@/internal/requiredProps';
+import { addEventListener } from '@/utils';
+
+import { Canvas, ICanvasRenderArg } from '../Canvas';
+
+import { MUTABLE_PROPS, STATIC_PROPS } from './props';
 import {
   ICanvasMediaCallbacksMap,
   ICanvasMediaMutableProps,
   ICanvasMediaStaticProps,
 } from './types';
-import { Canvas, ICanvasRenderArg } from '../Canvas';
-import { addEventListener } from '@/utils';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { TModuleOnCallbacksProps } from '@/base';
 
 export * from './types';
+
+type TC = ICanvasMediaCallbacksMap;
+type TS = ICanvasMediaStaticProps;
+type TM = ICanvasMediaMutableProps;
 
 /**
  * The `CanvasMedia` class allows pre-rendering of media (such as images or video) onto a canvas.
@@ -20,30 +28,20 @@ export * from './types';
  *
  * @group Components
  */
-export class CanvasMedia<
-  C extends ICanvasMediaCallbacksMap = ICanvasMediaCallbacksMap,
-  S extends ICanvasMediaStaticProps = ICanvasMediaStaticProps,
-  M extends ICanvasMediaMutableProps = ICanvasMediaMutableProps,
-> extends Canvas<C, S, M> {
+export class CanvasMedia extends Canvas<TC, TS, TM> {
   /** Get default static properties */
-  public _getStatic(): TRequiredProps<S> {
-    return {
-      ...super._getStatic(),
-      autoRenderVideo: true,
-    } as TRequiredProps<S>;
+  public _getStatic(): TRequiredProps<TS> {
+    return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
   /** Get default mutable properties */
-  public _getMutable(): TRequiredProps<M> {
-    return {
-      ...super._getMutable(),
-      rule: 'cover',
-    } as TRequiredProps<M>;
+  public _getMutable(): TRequiredProps<TM> {
+    return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 
   constructor(
-    props?: S & M,
-    onCallbacks?: TModuleOnCallbacksProps<C, CanvasMedia<C, S, M>>,
+    props?: TS & TM,
+    onCallbacks?: TModuleOnCallbacksProps<TC, CanvasMedia>,
   ) {
     super(props, onCallbacks as any);
 
@@ -51,12 +49,12 @@ export class CanvasMedia<
   }
 
   /** Checks if the media element has the `requestVideoFrameCallback` method */
-  protected get hasRequestVideoFrameCallback() {
+  private get hasRequestVideoFrameCallback() {
     return 'requestVideoFrameCallback' in this.props.media;
   }
 
   /** Add media events */
-  protected _setMediaEvents() {
+  private _setMediaEvents() {
     const { autoRenderVideo: hasVideoAutoRender, media } = this.props;
 
     if (!hasVideoAutoRender || !(media instanceof HTMLVideoElement)) {
@@ -87,7 +85,7 @@ export class CanvasMedia<
   }
 
   /** Auto rendering for videos */
-  protected _requestVideoFrame() {
+  private _requestVideoFrame() {
     if (this.isDestroyed) {
       return;
     }
@@ -110,7 +108,7 @@ export class CanvasMedia<
   /**
    * Prerenders the media onto the canvas using the specified positioning rule.
    */
-  protected _prerender({ width, height, ctx }: ICanvasRenderArg) {
+  private _prerender({ width, height, ctx }: ICanvasRenderArg) {
     const { media, rule } = this.props;
 
     // Determine the media source and its dimensions

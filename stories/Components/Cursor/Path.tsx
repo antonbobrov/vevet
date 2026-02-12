@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
+
 import { Cursor } from '@/index';
 
 export const Path: FC = () => {

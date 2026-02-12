@@ -1,4 +1,5 @@
 import React, { FC, useEffect } from 'react';
+
 import { Callbacks } from '@/index';
 
 interface ICallbacks {

@@ -1,6 +1,7 @@
 import { addEventListener } from '@/utils';
-import { SnapLogic } from '../SnapLogic';
+
 import { Snap } from '../..';
+import { SnapLogic } from '../SnapLogic';
 
 export class SnapKeyboard extends SnapLogic {
   constructor(snap: Snap) {
@@ -12,7 +13,7 @@ export class SnapKeyboard extends SnapLogic {
   }
 
   /** Handle scroll lock */
-  protected _handleScroll() {
+  private _handleScroll() {
     this.snap.container.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }
 }

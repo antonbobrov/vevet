@@ -1,5 +1,6 @@
+import path from 'path';
+
 import type { StorybookConfig } from '@storybook/react-vite';
-import path from "path";
 
 const config: StorybookConfig = {
   stories: ['../**/*.stories.@(js|jsx|mjs|ts|tsx)'],
@@ -21,12 +22,12 @@ const config: StorybookConfig = {
 
     config.server = config.server || {};
     config.server.watch = config.server.watch || {};
-    console.log(config.server.watch.ignored)
+
     config.server.watch.ignored = [
       '**/node_modules/**',
       path.resolve(__dirname, '../docusaurus/**'),
     ];
-    
+
     return config;
   },
 };

@@ -1,21 +1,32 @@
+import { Module, TModuleOnCallbacksProps } from '@/base/Module';
+import { initVevet } from '@/global/initVevet';
+import { isFiniteNumber } from '@/internal/isFiniteNumber';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { TRequiredProps } from '@/internal/requiredProps';
-import { loop } from '@/utils/math';
+import { getTextDirection } from '@/internal/textDirection';
+import { toPixels } from '@/utils';
 import { onResize, addEventListener } from '@/utils/listeners';
+import { loop } from '@/utils/math';
+
+import { Raf } from '../Raf';
+
+import { MarqueeNodes } from './Nodes';
+import { MUTABLE_PROPS, STATIC_PROPS } from './props';
+import {
+  appleMarqueeContainerStyles,
+  removeMarqueeContainerStyles,
+} from './styles';
 import {
   IMarqueeCallbacksMap,
   IMarqueeMutableProps,
   IMarqueeStaticProps,
 } from './types';
-import { Module, TModuleOnCallbacksProps } from '@/base/Module';
-import { Raf } from '../Raf';
-import { initVevet } from '@/global/initVevet';
-import { toPixels } from '@/utils';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { getTextDirection } from '@/internal/textDirection';
-import { doc } from '@/internal/env';
-import { isFiniteNumber } from '@/internal/isFiniteNumber';
 
 export * from './types';
+
+type TC = IMarqueeCallbacksMap;
+type TS = IMarqueeStaticProps;
+type TM = IMarqueeMutableProps;
 
 /**
  * A custom marquee component that smoothly scrolls its child elements.
@@ -27,50 +38,74 @@ export * from './types';
  *
  * @group Components
  */
-export class Marquee<
-  C extends IMarqueeCallbacksMap = IMarqueeCallbacksMap,
-  S extends IMarqueeStaticProps = IMarqueeStaticProps,
-  M extends IMarqueeMutableProps = IMarqueeMutableProps,
-> extends Module<C, S, M> {
+export class Marquee extends Module<TC, TS, TM> {
   /** Get default static properties. */
-  public _getStatic(): TRequiredProps<S> {
-    return {
-      ...super._getStatic(),
-      resizeDebounce: 0,
-      hasWillChange: true,
-      cloneNodes: true,
-      direction: 'horizontal',
-    } as TRequiredProps<S>;
+  public _getStatic(): TRequiredProps<TS> {
+    return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
   /** Get default mutable properties. */
-  public _getMutable(): TRequiredProps<M> {
-    return {
-      ...super._getMutable(),
-      speed: 1,
-      gap: 0,
-      enabled: true,
-      pauseOnHover: false,
-      centered: false,
-      adjustSpeed: true,
-      pauseOnOut: true,
-    } as TRequiredProps<M>;
+  public _getMutable(): TRequiredProps<TM> {
+    return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 
   /** Current container size (width or height depending on direction) */
-  protected _containerSize = 0;
-
-  /** Initial child nodes of the container */
-  protected _initialNodes: ChildNode[] = [];
-
-  /** Array of marquee element nodes */
-  protected _elements: HTMLElement[] = [];
+  private _containerSize = 0;
 
   /** Array of sizes of each child element */
-  protected _sizes: number[] = [];
+  private _sizes: number[] = [];
 
   /** Total size of all elements in the marquee */
-  protected _totalSize = 0;
+  private _totalSize = 0;
+
+  /** Last setup handler for teardown */
+  private _lastSetup?: () => void;
+
+  /** The current marquee coordinate. */
+  private _coord = 0;
+
+  /** Raf instance */
+  private _raf: Raf;
+
+  /** Detects if the container is RTL */
+  private _isRtl = false;
+
+  /** Nodes manager */
+  private _nodes: MarqueeNodes;
+
+  constructor(
+    props?: TS & TM,
+    onCallbacks?: TModuleOnCallbacksProps<TC, Marquee>,
+  ) {
+    super(props, onCallbacks as any);
+
+    const { container, direction } = this.props;
+    const { isVertical } = this;
+
+    if (!container) {
+      throw new Error('Marquee container is not defined');
+    }
+
+    // Update direction
+    const isRtl =
+      getTextDirection(container) === 'rtl' && direction === 'horizontal';
+    this._isRtl = isRtl;
+
+    // Apply base styles to the container
+    appleMarqueeContainerStyles({ container, isVertical, isRtl });
+
+    // Create nodes manager
+    this._nodes = new MarqueeNodes(this);
+
+    // Setup elements in the marquee
+    this._setup();
+
+    // Create animation frame
+    this._raf = new Raf({ enabled: this.props.enabled, fpsRecalcFrames: 1 });
+
+    // Set events
+    this._setEvents();
+  }
 
   /** Total size of all elements in the marquee (width or height depending on direction) */
   get totalSize() {
@@ -84,12 +119,6 @@ export class Marquee<
   get totalWidth() {
     return this.totalSize;
   }
-
-  /** Last setup handler for teardown */
-  protected _lastSetup?: () => void;
-
-  /** The current marquee coordinate. */
-  protected _coord = 0;
 
   /** The current marquee coordinate. */
   get coord() {
@@ -118,79 +147,9 @@ export class Marquee<
     return this.props.direction === 'vertical';
   }
 
-  /** Raf instance */
-  protected _raf: Raf;
-
-  /** Intersection observer */
-  protected _intersection?: IntersectionObserver;
-
-  /** Detects if the container is RTL */
-  protected _isRtl = false;
-
-  constructor(
-    props?: S & M,
-    onCallbacks?: TModuleOnCallbacksProps<C, Marquee<C, S, M>>,
-  ) {
-    super(props, onCallbacks as any);
-
-    const { container, direction } = this.props;
-    const { isVertical } = this;
-
-    if (!container) {
-      throw new Error('Marquee container is not defined');
-    }
-
-    // Update direction
-    this._isRtl =
-      getTextDirection(container) === 'rtl' && direction === 'horizontal';
-
-    // Apply base styles to the container
-    const { style } = container;
-    style.position = 'relative';
-    style.display = 'flex';
-    style.flexDirection = isVertical ? 'column' : 'row';
-    style.alignItems = 'center';
-    style.justifyContent = this._isRtl ? 'flex-end' : 'flex-start';
-    style.overflow = 'hidden';
-    if (isVertical) {
-      style.height = '100%';
-    } else {
-      style.width = '100%';
-    }
-
-    // Setup elements in the marquee
-    this._setup();
-
-    // Create animation frame
-    this._raf = new Raf({ enabled: this.props.enabled, fpsRecalcFrames: 1 });
-    this._raf.on('frame', () => {
-      const factor = this.props.adjustSpeed ? this._raf.fpsFactor : 1;
-      const speed = toPixels(this.props.speed);
-      this._render(speed * factor);
-    });
-
-    // Pause on hover
-    const mouseenter = addEventListener(container, 'mouseenter', () => {
-      if (this.props.pauseOnHover) {
-        this._raf.pause();
-      }
-    });
-    this.onDestroy(() => mouseenter());
-
-    // Resume on mouse leave
-    const mouseleave = addEventListener(container, 'mouseleave', () => {
-      if (this.props.enabled) {
-        this._raf.play();
-      }
-    });
-    this.onDestroy(() => mouseleave());
-
-    // Intersection observer
-    this._intersection = new IntersectionObserver(
-      this._handleIntersection.bind(this),
-      { root: null },
-    );
-    this._intersection.observe(container);
+  /** Marquee gap */
+  private get gap() {
+    return Math.max(toPixels(this.props.gap), 0);
   }
 
   /** Handles property changes  */
@@ -208,8 +167,49 @@ export class Marquee<
     this.render(0);
   }
 
+  /** Set marquee events */
+  protected _setEvents() {
+    const { props } = this;
+    const { container } = props;
+
+    this._raf.on('frame', () => {
+      const factor = props.adjustSpeed ? this._raf.fpsFactor : 1;
+      const speed = toPixels(props.speed);
+
+      this._render(speed * factor);
+    });
+
+    // Pause on hover
+    const mouseenter = addEventListener(container, 'mouseenter', () => {
+      if (this.props.pauseOnHover) {
+        this._raf.pause();
+      }
+    });
+
+    // Resume on mouse leave
+    const mouseleave = addEventListener(container, 'mouseleave', () => {
+      if (this.props.enabled) {
+        this._raf.play();
+      }
+    });
+
+    // Intersection observer
+    const intersection = new IntersectionObserver(
+      this._handleIntersection.bind(this),
+      { root: null },
+    );
+    intersection.observe(container);
+
+    this.onDestroy(() => {
+      mouseenter();
+      mouseleave();
+
+      intersection.disconnect();
+    });
+  }
+
   /** Initializes the marquee setup, including resizing and cloning elements */
-  protected _setup() {
+  private _setup() {
     this._lastSetup?.();
 
     if (this.isDestroyed) {
@@ -218,19 +218,10 @@ export class Marquee<
 
     const { container, resizeDebounce } = this.props;
 
-    // Save initial child nodes
-    this._initialNodes = [...Array.from(container.childNodes)];
-
-    // Wrap text node if necessary
-    this._wrapTextNodes();
-
-    // Store element references
-    this._elements = Array.from(container.children) as any;
-
-    // Add necessary styles to elements
-    this._elements.forEach((element, index) =>
-      this._applyNodeStyles(element, index !== 0),
-    );
+    // Process nodes
+    this._nodes.save();
+    this._nodes.wrap();
+    this._nodes.applyStyles();
 
     // initial resize
     this.resize();
@@ -241,7 +232,7 @@ export class Marquee<
     // Handle resizing
     const resizeHandler = onResize({
       callback: () => this.resize(),
-      element: [container, ...this._elements],
+      element: [container, ...this._nodes.elements],
       viewportTarget: 'width',
       resizeDebounce,
       name: this.name,
@@ -254,53 +245,6 @@ export class Marquee<
     };
   }
 
-  /**
-   * Wraps the first text node in the container in a span if no other elements exist.
-   */
-  protected _wrapTextNodes() {
-    const { container } = this.props;
-
-    const nodes = this._initialNodes;
-
-    nodes.forEach((node) => {
-      if (node.nodeType === 3) {
-        const wrapper = doc.createElement('span');
-        const { style } = wrapper;
-        style.position = 'relative';
-        style.display = 'block';
-        style.width = 'max-content';
-        style.whiteSpace = 'nowrap';
-
-        container.insertBefore(wrapper, node);
-        wrapper.appendChild(node);
-      }
-    });
-  }
-
-  /**
-   * Adds necessary styles to a given element.
-   */
-  protected _applyNodeStyles(element: HTMLElement, isAbsolute: boolean) {
-    const el = element;
-    const { style } = el;
-
-    style.position = isAbsolute ? 'absolute' : 'relative';
-    style.top = isAbsolute && !this.isVertical ? '50%' : '0';
-    style.left = isAbsolute && this.isVertical ? '50%' : '0';
-    style.willChange = this.props.hasWillChange ? 'transform' : '';
-    style.flexShrink = '0';
-    if (this.isVertical) {
-      style.height = style.height || 'max-content';
-    } else {
-      style.width = style.width || 'max-content';
-    }
-  }
-
-  /** Marquee gap */
-  protected get gap() {
-    return Math.max(toPixels(this.props.gap), 0);
-  }
-
   /** Resizes the marquee, recalculating element positions and cloning if necessary. */
   @noopIfDestroyed
   public resize() {
@@ -308,38 +252,27 @@ export class Marquee<
     const { container } = props;
 
     // Update container width
-    this._containerSize = isVertical
+    const containerSize = isVertical
       ? container.offsetHeight
       : container.offsetWidth;
+    this._containerSize = containerSize;
 
     // Update element sizes
-    this._sizes = this._elements.map(
-      (element) =>
-        (isVertical ? element.offsetHeight : element.offsetWidth) + gap,
+    this._sizes = this._nodes.elements.map(
+      (el) => (isVertical ? el.offsetHeight : el.offsetWidth) + gap,
     );
     this._totalSize = this._sizes.reduce((a, b) => a + b, 0);
 
     // Determine how many times to duplicate elements
     const maxSize = Math.max(...this._sizes);
-    const copyQuantity = Math.ceil(
-      (this._containerSize + maxSize) / this._totalSize,
-    );
+    const copyTimes = Math.ceil((containerSize + maxSize) / this._totalSize);
 
     // update total size
-    this._totalSize = Math.max(this._totalSize, this._containerSize + maxSize);
+    this._totalSize = Math.max(this._totalSize, containerSize + maxSize);
 
     // Clone elements if necessary
-    if (props.cloneNodes && isFiniteNumber(copyQuantity) && copyQuantity > 1) {
-      for (let i = 1; i < copyQuantity; i += 1) {
-        this._elements.forEach((element) => {
-          const copy = element.cloneNode(true) as HTMLElement;
-          this._applyNodeStyles(copy, true);
-          container.appendChild(copy);
-        });
-      }
-
-      // Update element references after cloning
-      this._elements = Array.from(container.children) as any;
+    if (props.cloneNodes && isFiniteNumber(copyTimes) && copyTimes > 1) {
+      this._nodes.cloneAll(copyTimes - 1);
       this.resize();
     }
 
@@ -359,16 +292,24 @@ export class Marquee<
   /**
    * Renders the marquee, calculating element positions based on the provided speed.
    */
-  protected _render(stepProp = this.props.speed) {
+  private _render(stepProp = this.props.speed) {
     if (this.isDestroyed) {
       return;
     }
 
     const { isVertical, props, gap } = this;
-    const step = this._isRtl ? -stepProp : stepProp;
+    const { elements } = this._nodes;
+
+    // Calculate step
+    const rawStep = this._isRtl ? -stepProp : stepProp;
+    const step = toPixels(rawStep);
+
+    if (!isFiniteNumber(step)) {
+      return;
+    }
 
     // Update animation time
-    this._coord -= toPixels(step);
+    this._coord -= step;
 
     // Calculate current position of the elements
     const centerCoord = this._containerSize * 0.5 + this._sizes[0] / 2 - gap;
@@ -376,8 +317,8 @@ export class Marquee<
 
     // Update each element's position
     let prevStaticCoord = 0;
-    for (let index = 0; index < this._elements.length; index += 1) {
-      const element = this._elements[index];
+    for (let index = 0; index < elements.length; index += 1) {
+      const element = elements[index];
       const elementSize = this._sizes[index];
       const { style } = element;
 
@@ -403,10 +344,8 @@ export class Marquee<
     this.callbacks.emit('render', undefined);
   }
 
-  /**
-   * Handle intersection observer
-   */
-  protected _handleIntersection(entries: IntersectionObserverEntry[]) {
+  /** Handle intersection observer */
+  private _handleIntersection(entries: IntersectionObserverEntry[]) {
     if (!this.props.pauseOnOut) {
       return;
     }
@@ -427,7 +366,6 @@ export class Marquee<
     super._destroy();
 
     this._raf.destroy();
-    this._intersection?.disconnect();
 
     this._lastSetup?.();
 
@@ -437,29 +375,9 @@ export class Marquee<
     }
 
     // Restore the initial nodes
-    this._initialNodes.forEach((node) => container.appendChild(node));
-
-    // Restore elements style
-    this._elements.forEach((element) => {
-      const { style } = element;
-      style.position = '';
-      style.top = '';
-      style.left = '';
-      style.flexShrink = '';
-      style.width = '';
-      style.transform = '';
-      style.willChange = '';
-    });
+    this._nodes.destroy();
 
     // Restore container style
-    const containerStyle = container.style;
-    containerStyle.position = '';
-    containerStyle.display = '';
-    containerStyle.flexDirection = '';
-    containerStyle.alignItems = '';
-    containerStyle.justifyContent = '';
-    containerStyle.overflow = '';
-    containerStyle.height = '';
-    containerStyle.width = '';
+    removeMarqueeContainerStyles(container);
   }
 }

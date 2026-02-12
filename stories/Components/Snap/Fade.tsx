@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
+
 import { clamp, Snap } from '@/index';
 
 export const Fade: FC = () => {

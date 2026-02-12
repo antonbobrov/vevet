@@ -50,12 +50,16 @@ const cursor = new Cursor();
 
 const remove = cursor.attachHover({
   element: document.getElementById('hover-element'), // hoverable element
+  // optional: separate event emitter, different from visual element
+  emitter: document.getElementById('hover-area'),
   type: 'some_type',
   snap: true,
   width: 'auto',
   height: 'auto',
   padding: 10,
   sticky: true,
+  // make sticky element smoothly return to origin
+  stickyFriction: 0.2,
 });
 
 // Remove interaction

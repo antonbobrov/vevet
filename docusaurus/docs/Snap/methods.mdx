@@ -156,17 +156,17 @@ const snap = new Snap({ container });
 snap.cancelTransition();
 ```
 
-### `track.clampTarget`
+### `clampTarget`
 
 Clamp the target value between the minimum and maximum track values.
 
 ```ts
 const snap = new Snap({ container });
 
-snap.track.clampTarget();
+snap.clampTarget();
 ```
 
-### `track.loopCoord`
+### `loopCoord`
 
 Wrap a coordinate between the minimum and maximum track values and return a normalized looped value.   
 **See [loop utilities](/docs/utils/#loop).**
@@ -174,15 +174,15 @@ Wrap a coordinate between the minimum and maximum track values and return a norm
 ```ts
 const snap = new Snap({ container });
 
-// when track.min=0 & track.max=1100
-snap.track.loopCoord(0); // => 0
-snap.track.loopCoord(1100); // => 0
-snap.track.loopCoord(1101); // => 1
-snap.track.loopCoord(-1101); // => 1099
-snap.track.loopCoord(5000); // => 600
+// when min=0 & max=1100
+snap.loopCoord(0); // => 0
+snap.loopCoord(1100); // => 0
+snap.loopCoord(1101); // => 1
+snap.loopCoord(-1101); // => 1099
+snap.loopCoord(5000); // => 600
 ```
 
-### `track.set`
+### `set`
 
 Instantly set the current and target track values without starting an animation.  
 After manually updating the values, you must call `.render()`.
@@ -190,7 +190,7 @@ After manually updating the values, you must call `.render()`.
 ```ts
 const snap = new Snap({ container });
 
-snap.track.set(1350);
+snap.set(1350);
 
 snap.render();
 ```

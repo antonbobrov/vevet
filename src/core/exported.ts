@@ -1,7 +1,7 @@
-import { ICoreProps } from './types';
 import { ICore } from './global';
-import { presetCssVars } from './scripts/presetCssVars';
 import { IViewportCallbacksMap } from './handlers/createViewport/types';
+import { presetCssVars } from './scripts/presetCssVars';
+import { ICoreProps } from './types';
 
 export { presetCssVars };
 

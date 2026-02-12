@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
+
 import { inRange, lerp, Snap } from '@/index';
 
 export const Stack3D: FC = () => {

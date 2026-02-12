@@ -1,16 +1,22 @@
-import { TRequiredProps } from '@/internal/requiredProps';
 import { Module, TModuleOnCallbacksProps } from '@/base/Module';
+import { isFiniteNumber } from '@/internal/isFiniteNumber';
+import { isUndefined } from '@/internal/isUndefined';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { TRequiredProps } from '@/internal/requiredProps';
 import { clamp, easing } from '@/utils/math';
+
+import { MUTABLE_PROPS, STATIC_PROPS } from './props';
 import {
   ITimelineCallbacksMap,
   ITimelineMutableProps,
   ITimelineStaticProps,
 } from './types';
-import { initVevet } from '@/global/initVevet';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { isUndefined } from '@/internal/isUndefined';
 
 export * from './types';
+
+type TC = ITimelineCallbacksMap;
+type TS = ITimelineStaticProps;
+type TM = ITimelineMutableProps;
 
 /**
  * A timeline class for managing animations with easing and precise progress control.
@@ -20,27 +26,49 @@ export * from './types';
  *
  * @group Components
  */
-export class Timeline<
-  C extends ITimelineCallbacksMap = ITimelineCallbacksMap,
-  S extends ITimelineStaticProps = ITimelineStaticProps,
-  M extends ITimelineMutableProps = ITimelineMutableProps,
-> extends Module<C, S, M> {
+export class Timeline extends Module<TC, TS, TM> {
   /** Get default static properties. */
-  public _getStatic(): TRequiredProps<S> {
-    return { ...super._getStatic() } as TRequiredProps<S>;
+  public _getStatic(): TRequiredProps<TS> {
+    return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
   /** Get default mutable properties. */
-  public _getMutable(): TRequiredProps<M> {
-    return {
-      ...super._getMutable(),
-      easing: initVevet().props.easing,
-      duration: 1000,
-    } as TRequiredProps<M>;
+  public _getMutable(): TRequiredProps<TM> {
+    return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 
   /** Current linear progress of the timeline (0 to 1). */
-  protected _progress: number;
+  private _progress: number;
+
+  /** Current eased progress of the timeline (after applying easing function). */
+  private _eased: number;
+
+  /** Stores the ID of the current animation frame request. */
+  private _raf?: number;
+
+  /** Stores the timestamp of the last frame update. */
+  private _time: number;
+
+  /** Indicates whether the timeline is currently reversed. */
+  private _isReversed: boolean;
+
+  /** Indicates whether the timeline is paused. */
+  private _isPaused: boolean;
+
+  constructor(
+    props?: TS & TM,
+    onCallbacks?: TModuleOnCallbacksProps<TC, Timeline>,
+  ) {
+    super(props, onCallbacks as any);
+
+    // Initialize default values
+    this._progress = 0;
+    this._eased = 0;
+    this._raf = undefined;
+    this._time = 0;
+    this._isReversed = false;
+    this._isPaused = false;
+  }
 
   /**
    * Get or set the linear progress of the timeline.
@@ -56,21 +84,12 @@ export class Timeline<
     this._onUpdate();
   }
 
-  /** Current eased progress of the timeline (after applying easing function). */
-  protected _eased: number;
-
   /**
    * Get the eased progress of the timeline, derived from the easing function.
    */
   get eased() {
     return this._eased;
   }
-
-  /** Stores the ID of the current animation frame request. */
-  protected _raf?: number;
-
-  /** Stores the timestamp of the last frame update. */
-  protected _time: number;
 
   /**
    * Whether the timeline is currently playing.
@@ -79,18 +98,12 @@ export class Timeline<
     return !isUndefined(this._raf);
   }
 
-  /** Indicates whether the timeline is currently reversed. */
-  protected _isReversed: boolean;
-
   /**
    * Whether the timeline is reversed (progress decreases over time).
    */
   get isReversed() {
     return this._isReversed;
   }
-
-  /** Indicates whether the timeline is paused. */
-  protected _isPaused: boolean;
 
   /**
    * Whether the timeline is paused.
@@ -105,26 +118,11 @@ export class Timeline<
   get duration() {
     const source = this.props.duration;
 
-    if (Number.isNaN(source) || !Number.isFinite(source) || source < 0) {
+    if (!isFiniteNumber(source) || source < 0) {
       return 0;
     }
 
     return this.props.duration;
-  }
-
-  constructor(
-    props?: S & M,
-    onCallbacks?: TModuleOnCallbacksProps<C, Timeline<C, S, M>>,
-  ) {
-    super(props, onCallbacks as any);
-
-    // Initialize default values
-    this._progress = 0;
-    this._eased = 0;
-    this._raf = undefined;
-    this._time = 0;
-    this._isReversed = false;
-    this._isPaused = false;
   }
 
   /**
@@ -191,7 +189,7 @@ export class Timeline<
   /**
    * Animate the timeline, updating progress based on elapsed time.
    */
-  protected _animate() {
+  private _animate() {
     if (this.isPaused) {
       return;
     }
@@ -231,7 +229,7 @@ export class Timeline<
   /**
    * Handle progress updates and trigger callbacks.
    */
-  protected _onUpdate() {
+  private _onUpdate() {
     this._eased = easing(this._progress, this.props.easing);
 
     this.callbacks.emit('update', {

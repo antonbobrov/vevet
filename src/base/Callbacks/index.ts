@@ -1,4 +1,7 @@
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { safeAction } from '@/internal/safeAction';
 import { uid } from '@/utils/common';
+
 import {
   ICallback,
   ICallbacksSettings,
@@ -6,8 +9,6 @@ import {
   TCallbacksAction,
   ICallbacksProps,
 } from './types';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { safeAction } from '@/internal/safeAction';
 
 export * from './types';
 
@@ -16,11 +17,8 @@ export * from './types';
  *
  * @group Base
  */
-export class Callbacks<
-  Types extends ICallbacksMap = ICallbacksMap,
-  Ctx extends any = any,
-> {
-  constructor(protected _props: ICallbacksProps<Ctx> = {}) {}
+export class Callbacks<Types extends ICallbacksMap = ICallbacksMap, Ctx = any> {
+  constructor(private _props: ICallbacksProps<Ctx> = {}) {}
 
   /** Whether the instance has been destroyed. */
   private _isDestroyed = false;

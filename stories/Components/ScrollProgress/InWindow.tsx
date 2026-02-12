@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+
 import { Inner } from './Inner';
 
 interface IProps {

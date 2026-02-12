@@ -96,13 +96,13 @@ const instance = new Scrollbar({
 
 ### `resizeDebounce` {#props.resizeDebounce}
 - **Type:** `number`  
-- **Default:** `0`  
+- **Default:** `50`  
 - Debounce delay in milliseconds for resize event handling.  
 - Helps improve performance by limiting frequency of resize calculations.
 
 ```js
 const instance = new Scrollbar({
-  resizeDebounce: 0
+  resizeDebounce: 50
 });
 ```
 

@@ -1,24 +1,27 @@
+import { isFiniteNumber } from '@/internal/isFiniteNumber';
 import { lerp } from '@/utils';
+
+import { LERP_APPROXIMATION } from '../constants';
+
 import { svgQuadraticCurvePath } from './svgQuadraticCurvePath';
 import { ICursorPathPoint, ICursorPathVec2 } from './types';
-import { LERP_APPROXIMATION } from '../constants';
-import { isFiniteNumber } from '@/internal/isFiniteNumber';
 
 export class CursorPath {
   /** Cursor SVG Path Points */
-  protected _points: ICursorPathPoint[] = [];
+  private _points: ICursorPathPoint[] = [];
 
   /** Cursor SVG Path */
-  protected _path: SVGPathElement;
+  private _path: SVGPathElement;
 
   /** Cursor SVG Path Line */
-  protected _line = { current: 0, target: 0 };
+  private _line = { current: 0, target: 0 };
 
+  /** Cursor SVG Path */
   get path() {
     return this._path;
   }
 
-  constructor(protected _isEnabled: boolean) {
+  constructor(private _isEnabled: boolean) {
     this._path = document.createElementNS(
       'http://www.w3.org/2000/svg',
       'path',

@@ -1,11 +1,11 @@
 import React, { FC, ReactNode, useEffect, useRef } from 'react';
+
 import { ISplitTextStaticProps, SplitText } from '@/index';
 
-interface IProps
-  extends Pick<
-    ISplitTextStaticProps,
-    'letters' | 'lines' | 'linesWrapper' | 'ignore'
-  > {
+interface IProps extends Pick<
+  ISplitTextStaticProps,
+  'letters' | 'lines' | 'linesWrapper' | 'ignore'
+> {
   text?: string;
   children?: ReactNode;
 }

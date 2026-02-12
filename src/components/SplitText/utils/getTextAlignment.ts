@@ -1,4 +1,4 @@
-export function getTextAalignment(node: HTMLElement) {
+export function getTextAlignment(node: HTMLElement) {
   const { direction, textAlign } = getComputedStyle(node);
 
   if (textAlign === 'center') {

@@ -1,8 +1,9 @@
 import { Callbacks } from '@/base/Callbacks';
-import { IPageLoadCallbacksMap } from './types';
-import { addEventListener } from '@/utils/listeners';
 import { cnAdd, cnRemove } from '@/internal/cn';
 import { doc, html } from '@/internal/env';
+import { addEventListener } from '@/utils/listeners';
+
+import { IPageLoadCallbacksMap } from './types';
 
 interface IProps {
   prefix: string;

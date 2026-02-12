@@ -1,13 +1,16 @@
 import { detect } from 'detect-browser';
-import isMobileJs from 'ismobilejs';
 import InAppSpy from 'inapp-spy';
-import manifest from '../manifest.json';
-import { createPageLoad } from './handlers/createPageLoad';
-import { ICoreProps } from './types';
-import { createViewport } from './handlers/createViewport';
-import { ICore } from './global';
+import isMobileJs from 'ismobilejs';
+
 import { cnAdd, cnToggle } from '@/internal/cn';
 import { body, doc, html } from '@/internal/env';
+
+import manifest from '../manifest.json';
+
+import { ICore } from './global';
+import { createPageLoad } from './handlers/createPageLoad';
+import { createViewport } from './handlers/createViewport';
+import { ICoreProps } from './types';
 
 export function Core(input: Partial<ICoreProps>): ICore {
   // set default properties

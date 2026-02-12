@@ -1,7 +1,9 @@
-import type { Meta, StoryFn } from '@storybook/react';
 import React from 'react';
+
 import { Test as TestComponent } from './Test';
 import { WithCanvas as WithCanvasComponent } from './WithCanvas';
+
+import type { Meta, StoryFn } from '@storybook/react';
 
 const meta: Meta = {
   title: 'Components/Pointers',

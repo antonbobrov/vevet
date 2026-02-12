@@ -5,6 +5,12 @@ export interface ICursorHoverElementProps {
   /** Hoverable DOM element */
   element: Element;
 
+  /**
+   * Hover events emitter. If not provided, the element itself will be used
+   * @default null
+   */
+  emitter?: Element | null;
+
   /** Cursor type to activate on hover */
   type?: string;
 
@@ -55,6 +61,15 @@ export interface ICursorHoverElementProps {
   stickyLerp?: number;
 
   /**
+   * Friction factor for smooth sticky animation.
+   * Friction is applied during hover and will tend the element to its original position.
+   * The higher value the more resistance is applied.
+   *
+   * @default 0
+   */
+  stickyFriction?: number;
+
+  /**
    * Sticky animation amplitude.
    * Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.
    * @default 'auto'
@@ -72,4 +87,10 @@ export type TCursorHoverElementStickyAmplitude =
 export type TCursorHoverElementStickyAmplitudeObject = {
   x: TCursorHoverElementStickyAmplitude;
   y: TCursorHoverElementStickyAmplitude;
+};
+
+export type TCursorHoverElementStickyParallax = {
+  current: number;
+  target: number;
+  prevTarget: null | number;
 };

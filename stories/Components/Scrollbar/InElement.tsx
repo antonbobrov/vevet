@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
+
 import { Scrollbar } from '@/components';
 
 export const InElement: FC = () => {

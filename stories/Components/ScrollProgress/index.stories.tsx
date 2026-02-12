@@ -1,7 +1,9 @@
-import type { Meta, StoryFn } from '@storybook/react';
 import React from 'react';
-import { InWindow } from './InWindow';
+
 import { InElement } from './InElement';
+import { InWindow } from './InWindow';
+
+import type { Meta, StoryFn } from '@storybook/react';
 
 const meta: Meta = {
   title: 'Components/ScrollProgress',

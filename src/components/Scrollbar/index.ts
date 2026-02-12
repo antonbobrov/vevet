@@ -1,20 +1,27 @@
-import { TRequiredProps } from '@/internal/requiredProps';
 import { Module, TModuleOnCallbacksProps } from '@/base';
+import { initVevet } from '@/global/initVevet';
+import { cnAdd, cnHas, cnRemove, cnToggle } from '@/internal/cn';
+import { body, doc, html } from '@/internal/env';
+import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { TRequiredProps } from '@/internal/requiredProps';
+import { getTextDirection } from '@/internal/textDirection';
+import { addEventListener, clamp, onResize, toPixels } from '@/utils';
+
+import { ISwipeCoords, Swipe } from '../Swipe';
+
+import { MUTABLE_PROPS, STATIC_PROPS } from './props';
+import { createScrollbarStyles } from './styles';
 import {
   IScrollbarCallbacksMap,
   IScrollbarMutableProps,
   IScrollbarStaticProps,
 } from './types';
-import { initVevet } from '@/global/initVevet';
-import { addEventListener, clamp, onResize, toPixels } from '@/utils';
-import { createScrollbarStyles } from './styles';
-import { ISwipeCoords, Swipe } from '../Swipe';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { getTextDirection } from '@/internal/textDirection';
-import { cnAdd, cnHas, cnRemove, cnToggle } from '@/internal/cn';
-import { body, doc, html } from '@/internal/env';
 
 export * from './types';
+
+type TC = IScrollbarCallbacksMap;
+type TS = IScrollbarStaticProps;
+type TM = IScrollbarMutableProps;
 
 /**
  * A custom scrollbar component. Supports both `window` and `HTMLElement` containers.
@@ -23,99 +30,50 @@ export * from './types';
  *
  * @group Components
  */
-export class Scrollbar<
-  C extends IScrollbarCallbacksMap = IScrollbarCallbacksMap,
-  S extends IScrollbarStaticProps = IScrollbarStaticProps,
-  M extends IScrollbarMutableProps = IScrollbarMutableProps,
-> extends Module<C, S, M> {
-  /** Get default static properties. */
-  public _getStatic(): TRequiredProps<S> {
-    return {
-      ...super._getStatic(),
-      container: window,
-      parent: false,
-      class: false,
-      axis: 'y',
-      draggable: true,
-      autoHide: true,
-      resizeDebounce: 10,
-    } as TRequiredProps<S>;
+export class Scrollbar extends Module<TC, TS, TM> {
+  /** Get default static properties */
+  public _getStatic(): TRequiredProps<TS> {
+    return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
-  /** Get default mutable properties. */
-  public _getMutable(): TRequiredProps<M> {
-    return {
-      ...super._getMutable(),
-      minSize: 50,
-      autoSize: true,
-    } as TRequiredProps<M>;
-  }
-
-  get prefix() {
-    return `${initVevet().prefix}scrollbar`;
-  }
-
-  /**
-   * The element to which the scrollbar is applied.
-   */
-  get container() {
-    return this._props.container;
+  /** Get default mutable properties */
+  public _getMutable(): TRequiredProps<TM> {
+    return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 
   /**
    * Scrollbar outer element.
    */
-  protected _outer!: HTMLElement;
-
-  /**
-   * Scrollbar outer element
-   */
-  get outer() {
-    return this._outer;
-  }
+  private _outer!: HTMLElement;
 
   /**
    * Scrollbar track element (the container of the thumb).
    */
-  protected _track!: HTMLElement;
-
-  /**
-   * Scrollbar track element (the container of the thumb).
-   */
-  get track() {
-    return this._track;
-  }
+  private _track!: HTMLElement;
 
   /**
    * Scrollbar thumb element (draggable handle).
    */
-  protected _thumb!: HTMLElement;
-
-  /**
-   * Scrollbar thumb element (draggable handle).
-   */
-  get thumb() {
-    return this._thumb;
-  }
+  private _thumb!: HTMLElement;
 
   /** Save scroll value on swipe start */
-  protected _valueOnSwipeStart = 0;
-
-  /** Timeout for scroll action */
-  protected _addInActionTimeout?: NodeJS.Timeout;
-
-  /** Timeout for scroll action */
-  protected _removeInActionTimeout?: NodeJS.Timeout;
+  private _valueOnSwipeStart = 0;
 
   /** Previous scroll value */
-  protected _prevScrollValue = 0;
+  private _prevScrollValue = 0;
+
+  /** Timeout for scroll action */
+  private _addInActionTimeout?: NodeJS.Timeout;
+
+  /** Timeout for scroll action */
+  private _removeInActionTimeout?: NodeJS.Timeout;
 
   /** Detects if the container is RTL */
-  protected _isRtl = false;
+  private _isRtl = false;
 
   constructor(
-    props?: S & M,
-    onCallbacks?: TModuleOnCallbacksProps<C, Scrollbar<C, S, M>>,
+    props?: TS & TM,
+    onCallbacks?: TModuleOnCallbacksProps<TC, Scrollbar>,
   ) {
     super(props, onCallbacks as any);
 
@@ -137,11 +95,36 @@ export class Scrollbar<
     cnAdd(this.outer, this._cn('_inited'));
   }
 
-  /** Handles property mutations */
-  protected _handleProps() {
-    super._handleProps();
+  get prefix() {
+    return `${initVevet().prefix}scrollbar`;
+  }
 
-    this.resize();
+  /**
+   * Scrollbar outer element
+   */
+  get outer() {
+    return this._outer;
+  }
+
+  /**
+   * The element to which the scrollbar is applied.
+   */
+  get container() {
+    return this.props.container;
+  }
+
+  /**
+   * Scrollbar track element (the container of the thumb).
+   */
+  get track() {
+    return this._track;
+  }
+
+  /**
+   * Scrollbar thumb element (draggable handle).
+   */
+  get thumb() {
+    return this._thumb;
   }
 
   /** Scroll axis */
@@ -216,14 +199,19 @@ export class Scrollbar<
       : this._thumb.offsetHeight;
   }
 
-  /** Create elements */
-  protected _create() {
-    const { parent, scrollElement } = this;
+  /** Handles property mutations */
+  protected _handleProps() {
+    super._handleProps();
 
+    this.resize();
+  }
+
+  /** Create elements */
+  private _create() {
     const isInWindow = this.container instanceof Window;
 
     this._outer = this._createOuter();
-    parent.appendChild(this._outer);
+    this.parent.appendChild(this._outer);
 
     this._track = this._createTrack();
     this._outer.appendChild(this._track);
@@ -236,14 +224,14 @@ export class Scrollbar<
       this._addTempClassName(html, this._cn('-scrollable'));
       this._addTempClassName(body, this._cn('-scrollable'));
     } else {
-      this._addTempClassName(scrollElement, this._cn('-scrollable'));
+      this._addTempClassName(this.scrollElement, this._cn('-scrollable'));
     }
 
     this.onDestroy(() => this._outer.remove());
   }
 
   /** Create outer element */
-  protected _createOuter() {
+  private _createOuter() {
     const cn = this._cn.bind(this);
 
     const { props, axis } = this;
@@ -268,7 +256,7 @@ export class Scrollbar<
   }
 
   /** Create track element */
-  protected _createTrack() {
+  private _createTrack() {
     const cn = this._cn.bind(this);
 
     const { axis } = this;
@@ -281,7 +269,7 @@ export class Scrollbar<
   }
 
   /** Create thumb element */
-  protected _createThumb() {
+  private _createThumb() {
     const cn = this._cn.bind(this);
 
     const element = doc.createElement('div');
@@ -292,7 +280,7 @@ export class Scrollbar<
   }
 
   /** Set resize events */
-  protected _setResize() {
+  private _setResize() {
     const createResizeHandler = () => {
       const children = Array.from(this.scrollElement.children);
 
@@ -322,21 +310,19 @@ export class Scrollbar<
   }
 
   /** Set scroll events */
-  protected _setOnscroll() {
+  private _setOnscroll() {
     const handler = addEventListener(
       this.container,
       'scroll',
       () => this._onScroll(),
-      {
-        passive: true,
-      },
+      { passive: true },
     );
 
     this.onDestroy(() => handler());
   }
 
   /** Set swipe events */
-  protected _setSwipe() {
+  private _setSwipe() {
     if (!this.props.draggable) {
       return;
     }
@@ -418,7 +404,7 @@ export class Scrollbar<
   }
 
   /** Render the scrollbar. */
-  protected _render() {
+  private _render() {
     const { scrollValue, scrollableSize, axis, thumbSize, trackSize } = this;
     let scrollProgress = clamp(Math.abs(scrollValue) / scrollableSize);
 
@@ -437,7 +423,7 @@ export class Scrollbar<
   }
 
   /** Handle scroll update */
-  protected _onScroll() {
+  private _onScroll() {
     const { scrollValue, outer } = this;
     const inActionClass = this._cn('_in-action');
 
@@ -465,7 +451,7 @@ export class Scrollbar<
   }
 
   /** Handle swipe move */
-  protected _onSwipeMove({ diff }: ISwipeCoords) {
+  private _onSwipeMove({ diff }: ISwipeCoords) {
     const { scrollElement, axis, trackSize, thumbSize, scrollableSize } = this;
 
     const diffCoord = axis === 'x' ? diff.x : diff.y;

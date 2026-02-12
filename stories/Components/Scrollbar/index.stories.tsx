@@ -1,7 +1,9 @@
-import type { Meta, StoryFn } from '@storybook/react';
 import React from 'react';
-import { InWindow as InWindowComponent } from './InWindow';
+
 import { InElement as InElementComponent } from './InElement';
+import { InWindow as InWindowComponent } from './InWindow';
+
+import type { Meta, StoryFn } from '@storybook/react';
 
 const meta: Meta = {
   title: 'Components/Scrollbar',

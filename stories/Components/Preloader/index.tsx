@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
+
 import { IPreloaderStaticProps, Preloader } from '@/index';
 
 interface IProps extends Pick<IPreloaderStaticProps, 'hide'> {}

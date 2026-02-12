@@ -1,9 +1,10 @@
-import { IViewport, TViewportCallbacks } from './types';
 import { Callbacks } from '@/base/Callbacks';
 import { ICoreProps } from '@/core/types';
 import { cnToggle } from '@/internal/cn';
 import { body, doc, html } from '@/internal/env';
 import { addEventListener } from '@/utils/listeners';
+
+import { IViewport, TViewportCallbacks } from './types';
 
 interface IProps {
   prefix: string;

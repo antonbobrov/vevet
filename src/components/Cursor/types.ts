@@ -3,6 +3,7 @@ import {
   IModuleMutableProps,
   IModuleStaticProps,
 } from '@/base/Module';
+
 import { CursorHoverElement } from './HoverElement';
 
 export interface ICursorStaticProps extends IModuleStaticProps {

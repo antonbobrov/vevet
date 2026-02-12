@@ -1,24 +1,27 @@
 import { Module, TModuleOnCallbacksProps } from '@/base';
+import { initVevet } from '@/global/initVevet';
 import { TRequiredProps } from '@/internal/requiredProps';
+import { addEventListener } from '@/utils';
+
+import { Pointers } from '../Pointers';
+
+import { SwipeCoords } from './Coords';
+import { ISwipeMatrix, ISwipeVec2 } from './global';
+import { SwipeInertia } from './Inertia';
+import { MUTABLE_PROPS, STATIC_PROPS } from './props';
+import { SwipeStyles } from './Styles';
 import {
   ISwipeCallbacksMap,
-  ISwipeVec2,
-  ISwipeMatrix,
-  ISwipeCoords,
   ISwipeMutableProps,
   ISwipeStaticProps,
-  ISwipeVelocity,
 } from './types';
-import { Pointers } from '../Pointers';
-import { addEventListener, clamp, EaseOutCubic } from '@/utils';
-import { initVevet } from '@/global/initVevet';
-import { Timeline } from '../Timeline';
-import { cursorStyles } from './styles';
-import { body } from '@/internal/env';
 
 export * from './types';
+export * from './global';
 
-const VELOCITIES_COUNT = 4;
+type TC = ISwipeCallbacksMap;
+type TS = ISwipeStaticProps;
+type TM = ISwipeMutableProps;
 
 /**
  * Manages swipe interactions:
@@ -34,123 +37,56 @@ const VELOCITIES_COUNT = 4;
  *
  * @group Components
  */
-export class Swipe<
-  C extends ISwipeCallbacksMap = ISwipeCallbacksMap,
-  S extends ISwipeStaticProps = ISwipeStaticProps,
-  M extends ISwipeMutableProps = ISwipeMutableProps,
-> extends Module<C, S, M> {
+export class Swipe extends Module<TC, TS, TM> {
   /**
    * Returns default static properties.
    */
-  public _getStatic(): TRequiredProps<S> {
-    return {
-      ...super._getStatic(),
-      thumb: null,
-      buttons: [0],
-      pointers: 1,
-      disableUserSelect: true,
-    } as TRequiredProps<S>;
+  public _getStatic(): TRequiredProps<TS> {
+    return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
   /**
    * Returns default mutable properties.
    */
-  public _getMutable(): TRequiredProps<M> {
-    return {
-      ...super._getMutable(),
-      enabled: true,
-      relative: false,
-      axis: null,
-      ratio: 1,
-      grabCursor: false,
-      willAbort: () => false,
-      threshold: 5,
-      minTime: 0,
-      directionThreshold: 50,
-      preventEdgeSwipe: true,
-      edgeSwipeThreshold: 20,
-      preventTouchMove: true,
-      requireCtrlKey: false,
-      inertia: false,
-      inertiaDuration: (distance) => clamp(distance, 500, 2000),
-      inertiaEasing: EaseOutCubic,
-      velocityModifier: false,
-      distanceModifier: false,
-      inertiaRatio: 1,
-      inertiaDistanceThreshold: 50,
-    } as TRequiredProps<M>;
+  public _getMutable(): TRequiredProps<TM> {
+    return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 
-  /** Pointer event manager */
-  protected _pointers: Pointers;
-
-  /** If swiping has started */
-  protected _isSwiping = false;
-
-  /** If swiping has been aborted */
-  protected _isAborted = false;
-
-  /** Indicates if a swipe is active */
-  get isSwiping() {
-    return this._isSwiping;
-  }
-
-  /** Initial swipe coordinates (internal use) */
-  protected _startCoord: ISwipeVec2 | undefined;
-
-  /** Swipe start time */
-  protected _startTime: number | undefined;
-
-  /** Swipe tracking data */
-  protected _coords: ISwipeCoords;
-
-  /** Returns current swipe coordinates */
-  get coords() {
-    return this._coords;
-  }
-
-  /** Event target element */
-  get container() {
-    return this.props.container;
-  }
-
-  /** Velocity tracking */
-  protected _velocities: ISwipeVelocity[];
+  /** Swipe coords */
+  private _coords: SwipeCoords;
 
   /** Inertia animation */
-  protected _inertia?: Timeline;
+  private _inertia: SwipeInertia;
 
-  /** Indicates if inertia is active */
-  get hasInertia() {
-    return !!this._inertia;
-  }
+  /** Styles manager */
+  private _styles: SwipeStyles;
 
-  /** Cursor styles */
-  protected _cursorStyles: HTMLStyleElement;
+  /** Pointer event manager */
+  private _pointers: Pointers;
+
+  /** If swiping has started */
+  private _isSwiping = false;
+
+  /** If swiping has been aborted */
+  private _isAborted = false;
+
+  /** Swipe start time */
+  private _startTime: number | undefined;
+
+  /** Initial swipe coordinates (internal use) */
+  private _startCoord: ISwipeVec2 | undefined;
 
   constructor(
-    props?: S & M,
-    onCallbacks?: TModuleOnCallbacksProps<C, Swipe<C, S, M>>,
+    props?: TS & TM,
+    onCallbacks?: TModuleOnCallbacksProps<TC, Swipe>,
   ) {
     super(props, onCallbacks as any);
 
     const { container, thumb, buttons, pointers } = this.props;
-    const { callbacks } = this;
 
-    // set default data
-    this._coords = {
-      timestamp: 0,
-      start: { x: 0, y: 0, angle: 0 },
-      prev: { x: 0, y: 0, angle: 0 },
-      current: { x: 0, y: 0, angle: 0 },
-      diff: { x: 0, y: 0, angle: 0 },
-      step: { x: 0, y: 0, angle: 0 },
-      accum: { x: 0, y: 0 },
-    };
-
-    this._velocities = [];
-
-    this._cursorStyles = cursorStyles?.cloneNode(true) as HTMLStyleElement;
+    this._coords = new SwipeCoords(this as any);
+    this._inertia = new SwipeInertia(this as any);
+    this._styles = new SwipeStyles(this as any);
 
     // create pointers
     this._pointers = new Pointers({
@@ -162,17 +98,55 @@ export class Swipe<
       disableUserSelect: this.props.disableUserSelect,
     });
 
-    // add pointer events
+    // Set Events
+    this._setEvents();
+  }
+
+  /** Returns current swipe coordinates */
+  get coords() {
+    return this._coords.coords;
+  }
+
+  /** Event target element */
+  get container() {
+    return this.props.container;
+  }
+
+  /** Indicates if inertia is active */
+  get hasInertia() {
+    return this._inertia.has;
+  }
+
+  /** Indicates if a swipe is active */
+  get isSwiping() {
+    return this._isSwiping;
+  }
+
+  /** Handles property updates */
+  protected _handleProps() {
+    super._handleProps();
+
+    this._pointers.updateProps({ enabled: this.props.enabled });
+
+    this._styles.setInline();
+  }
+
+  /** Sets event listeners */
+  private _setEvents() {
+    const { callbacks } = this;
+    const { container } = this.props;
+
     this._pointers.on('start', () => this._handlePointersStart());
+
     this._pointers.on('pointerdown', (data) =>
       callbacks.emit('pointerdown', data),
     );
+
     this._pointers.on('pointermove', (data) =>
       callbacks.emit('pointermove', data),
     );
-    this._pointers.on('pointerup', (data) => callbacks.emit('pointerup', data));
 
-    // add listeners
+    this._pointers.on('pointerup', (data) => callbacks.emit('pointerup', data));
 
     const touchstart = addEventListener(
       container,
@@ -182,40 +156,10 @@ export class Swipe<
     );
 
     this.onDestroy(() => touchstart());
-
-    // apply styles
-    this._setInlineStyles();
-  }
-
-  /** Handles property updates */
-  protected _handleProps() {
-    super._handleProps();
-
-    this._pointers.updateProps({ enabled: this.props.enabled });
-
-    this._setInlineStyles();
-  }
-
-  /** Applies touch-action and cursor styles */
-  protected _setInlineStyles() {
-    const { container, axis } = this.props;
-    const { style } = container;
-
-    const cursor = this.props.grabCursor ? 'grab' : '';
-
-    let touchAction = 'none';
-    if (axis === 'x') {
-      touchAction = 'pan-y';
-    } else if (axis === 'y') {
-      touchAction = 'pan-x';
-    }
-
-    style.cursor = cursor;
-    style.touchAction = touchAction;
   }
 
   /** Handles `touchstart` events */
-  protected _handleTouchStart(event: TouchEvent) {
+  private _handleTouchStart(event: TouchEvent) {
     if (!this.props.enabled) {
       return;
     }
@@ -226,18 +170,19 @@ export class Swipe<
   }
 
   /** Prevents edge swipes if enabled */
-  protected _preventEdgeSwipe(event: TouchEvent) {
-    if (!this.props.preventEdgeSwipe) {
+  private _preventEdgeSwipe(event: TouchEvent) {
+    const { props } = this;
+
+    if (!props.preventEdgeSwipe) {
       return;
     }
 
-    const threshold = this.props.edgeSwipeThreshold;
+    const threshold = props.edgeSwipeThreshold;
     const x = event.targetTouches[0].pageX;
 
-    if (
-      event.cancelable &&
-      (x <= threshold || x >= initVevet().width - threshold)
-    ) {
+    const shouldPrevent = x <= threshold || x >= initVevet().width - threshold;
+
+    if (event.cancelable && shouldPrevent) {
       event.preventDefault();
 
       this.callbacks.emit('preventEdgeSwipe', undefined);
@@ -245,8 +190,7 @@ export class Swipe<
   }
 
   /** Handles swipe start and tracking */
-  protected _handlePointersStart() {
-    // track touchmove
+  private _handlePointersStart() {
     const touchmove = addEventListener(
       window,
       'touchmove',
@@ -254,22 +198,20 @@ export class Swipe<
       { passive: false },
     );
 
-    // track movement of the first pointer only
     const mousemove = addEventListener(
       window,
       'mousemove',
       this._handleMouseMove.bind(this),
     );
 
-    // track end of pointers
     const end = this._pointers.on('end', () => {
       this._handleEnd();
+
       end();
       touchmove();
       mousemove();
     });
 
-    // destroy
     this.onDestroy(() => {
       end();
       touchmove();
@@ -278,208 +220,156 @@ export class Swipe<
   }
 
   /** Handles `touchmove` event */
-  protected _handleTouchMove(event: TouchEvent) {
+  private _handleTouchMove(event: TouchEvent) {
     this.callbacks.emit('touchmove', event);
 
     if (this._isSwiping && this.props.preventTouchMove && event.cancelable) {
       event.preventDefault();
     }
 
-    this._handleMove(this._decodeCoords(event), 'touch');
+    this._handleMove(event, 'touch');
   }
 
   /** Handles `mousemove` event */
-  protected _handleMouseMove(event: MouseEvent) {
+  private _handleMouseMove(event: MouseEvent) {
     if (this.props.requireCtrlKey && !event.ctrlKey) {
       return;
     }
 
     this.callbacks.emit('mousemove', event);
 
-    this._handleMove(this._decodeCoords(event), 'mouse');
-  }
-
-  /** Parses pointer coordinates relative to the container */
-  protected _decodeCoords(event: MouseEvent | TouchEvent): ISwipeMatrix {
-    const { props } = this;
-    const { container, ratio } = props;
-
-    const clientX =
-      'touches' in event ? event.touches[0].clientX : event.clientX;
-    const clientY =
-      'touches' in event ? event.touches[0].clientY : event.clientY;
-
-    let x = clientX;
-    let y = clientY;
-
-    let centerX = initVevet().width / 2;
-    let centerY = initVevet().height / 2;
-
-    if (props.relative) {
-      const bounding = container.getBoundingClientRect();
-
-      x = clientX - bounding.left;
-      y = clientY - bounding.top;
-      centerX = bounding.left + bounding.width / 2;
-      centerY = bounding.top + bounding.height / 2;
-    }
-
-    const angleRad = Math.atan2(clientY - centerY, clientX - centerX);
-    const angle = (angleRad * 180) / Math.PI;
-
-    return {
-      x: x * ratio,
-      y: y * ratio,
-      angle: angle * ratio,
-    };
+    this._handleMove(event, 'mouse');
   }
 
   /** Handles move events */
-  protected _handleMove(matrix: ISwipeMatrix, type: 'touch' | 'mouse') {
+  private _handleMove(event: MouseEvent | TouchEvent, type: 'touch' | 'mouse') {
     const data = this._coords;
+    const matrix = data.decode(event);
 
     if (this._isAborted) {
       return;
     }
 
+    // Save start coordinates
     if (!this._startCoord) {
       this._startCoord = { ...matrix };
     }
 
+    // Update start time
     if (!this._startTime) {
       this._startTime = +Date.now();
     }
 
     // check if can start
-    if (!this._isSwiping) {
-      const { threshold, ratio, minTime, axis, willAbort } = this.props;
-      const speed = Math.abs(ratio);
-
-      const diff = {
-        x: matrix.x - this._startCoord.x,
-        y: matrix.y - this._startCoord.y,
-      };
-
-      // check threshold
-      const dist = Math.sqrt((diff.x / speed) ** 2 + (diff.y / speed) ** 2);
-      if (dist < threshold) {
-        return;
-      }
-
-      // check time
-      if (+new Date() - this._startTime < minTime) {
-        return;
-      }
-
-      // check axis
-      if (axis) {
-        const rawAngle =
-          (Math.atan2(Math.abs(diff.y), Math.abs(diff.x)) * 180) / Math.PI;
-
-        const normalizedAngle = axis === 'x' ? rawAngle : 90 - rawAngle;
-
-        if (normalizedAngle > 45) {
-          this._reset();
-          this._isAborted = true;
-
-          this.callbacks.emit('abort', undefined);
-
-          return;
-        }
-      }
-
-      // check if should abort
-      if (willAbort({ type, matrix, start: this._startCoord, diff })) {
-        this._reset();
-        this._isAborted = true;
-
-        this.callbacks.emit('abort', undefined);
-
-        return;
-      }
+    if (!this._isSwiping && !this._canStart(matrix, type)) {
+      return;
     }
 
     // start
     if (!this._isSwiping) {
-      this.cancelInertia();
+      this._inertia.cancel();
 
       this._isSwiping = true;
       this._startCoord = { ...matrix };
 
-      data.timestamp = performance.now();
-      data.start = { ...this._startCoord, angle: matrix.angle };
-      data.prev = { ...this._startCoord, angle: matrix.angle };
-      data.current = { ...this._startCoord, angle: matrix.angle };
-      data.diff = { x: 0, y: 0, angle: 0 };
-      data.step = { x: 0, y: 0, angle: 0 };
-      data.accum = { x: 0, y: 0 };
+      data.setStart(matrix);
 
-      // emit callbacks
-      this.callbacks.emit('start', this._coords);
+      this.callbacks.emit('start', this.coords);
 
-      // apply cursor
-      if (this.props.grabCursor && this._cursorStyles) {
-        body.append(this._cursorStyles);
-      }
+      this._styles.append();
     }
 
     // move
     this._move(matrix);
   }
 
-  /** Handles move events */
-  protected _move({ x, y, angle }: ISwipeMatrix) {
-    const coords = this._coords;
+  /** Checks if swipe can start */
+  private _canStart(matrix: ISwipeMatrix, type: 'touch' | 'mouse') {
+    const startCoord = this._startCoord;
+    const startTime = this._startTime;
 
-    // prepare data
-    const start = { ...coords.start };
-    const prev = { ...coords.current };
-    const current = { x, y, angle };
-
-    // update coords
-
-    coords.timestamp = performance.now();
-    coords.prev = prev;
-    coords.current = current;
-
-    let angleDelta = coords.current.angle - coords.prev.angle;
-    if (angleDelta > 180) {
-      angleDelta -= 360;
-    } else if (angleDelta < -180) {
-      angleDelta += 360;
+    if (!startCoord || !startTime) {
+      return false;
     }
 
-    coords.step = {
-      x: current.x - prev.x,
-      y: current.y - prev.y,
-      angle: angleDelta,
+    const { threshold, ratio, minTime, axis, willAbort } = this.props;
+    const speed = Math.abs(ratio);
+
+    const diff = {
+      x: matrix.x - startCoord.x,
+      y: matrix.y - startCoord.y,
     };
 
-    coords.diff = {
-      x: current.x - start.x,
-      y: current.y - start.y,
-      angle: coords.diff.angle + coords.step.angle,
-    };
+    // check threshold
+    const distX = diff.x / speed;
+    const distY = diff.y / speed;
+    const dist = Math.sqrt(distX ** 2 + distY ** 2);
 
-    coords.accum = {
-      x: coords.accum.x + Math.abs(coords.step.x),
-      y: coords.accum.y + Math.abs(coords.step.y),
-    };
+    if (dist < threshold) {
+      return false;
+    }
 
-    // update velocity
-    if (!this.hasInertia) {
-      this._velocities.push({ ...coords.current, timestamp: coords.timestamp });
-      if (this._velocities.length > VELOCITIES_COUNT) {
-        this._velocities.shift();
+    // check time
+    if (+new Date() - startTime < minTime) {
+      return false;
+    }
+
+    // check axis
+    if (axis) {
+      const rawAngle =
+        (Math.atan2(Math.abs(diff.y), Math.abs(diff.x)) * 180) / Math.PI;
+
+      const normalizedAngle = axis === 'x' ? rawAngle : 90 - rawAngle;
+
+      if (normalizedAngle > 45) {
+        this._reset();
+        this._isAborted = true;
+
+        this.callbacks.emit('abort', undefined);
+
+        return false;
       }
     }
 
+    // Check if should abort
+    const shouldAbort = willAbort({
+      type,
+      matrix,
+      start: startCoord,
+      diff,
+    });
+
+    if (shouldAbort) {
+      this._reset();
+      this._isAborted = true;
+
+      this.callbacks.emit('abort', undefined);
+
+      return false;
+    }
+
+    return true;
+  }
+
+  /** Handles move events */
+  private _move(matrix: ISwipeMatrix) {
+    const coords = this._coords;
+
+    // Update coords
+    coords.update(matrix);
+
+    // Update velocity
+    this._inertia.addVelocity({
+      ...coords.current,
+      timestamp: coords.timestamp,
+    });
+
     // trigger callbacks
-    this.callbacks.emit('move', this._coords);
+    this.callbacks.emit('move', this.coords);
   }
 
   /** Handles swipe end */
-  protected _handleEnd() {
+  private _handleEnd() {
     // reset
     this._startTime = undefined;
     this._isAborted = false;
@@ -492,8 +382,8 @@ export class Swipe<
     // reset
     this._reset();
 
-    // reset cursor
-    this._cursorStyles.remove();
+    // reset styles
+    this._styles.remove();
 
     // calculate direction
     const { x: diffX, y: diffY } = this._coords.diff;
@@ -520,163 +410,39 @@ export class Swipe<
     }
 
     // end callback
-    this.callbacks.emit('end', this._coords);
+    this.callbacks.emit('end', this.coords);
 
     // modifiy last velocity time
-    if (this._velocities.length > 0) {
-      this._velocities[this._velocities.length - 1].timestamp =
-        performance.now();
-    }
+    this._inertia.updateLastTimestamp();
 
     // end with inertia
     if (this.props.inertia) {
-      this._endWithInertia();
+      this._releaseInertia();
     }
   }
 
   /** Reset swipe states */
-  protected _reset() {
+  private _reset() {
     this._startCoord = undefined;
     this._isSwiping = false;
   }
 
-  /** Returns current velocity */
-  protected get velocity(): ISwipeMatrix {
-    const samples = this._velocities;
-
-    if (samples.length < 2) {
-      return { x: 0, y: 0, angle: 0 };
-    }
-
-    let totalWeight = 0;
-    let wvx = 0;
-    let wvy = 0;
-    let wva = 0;
-
-    for (let i = 1; i < samples.length; i += 1) {
-      const current = samples[i];
-      const previous = samples[i - 1];
-
-      const deltaX = current.x - previous.x;
-      const deltaY = current.y - previous.y;
-
-      let angleDiff = current.angle - previous.angle;
-      if (angleDiff > 180) angleDiff -= 360;
-      if (angleDiff < -180) angleDiff += 360;
-
-      const deltatTime = Math.max(current.timestamp - previous.timestamp, 1);
-
-      const sx = (deltaX / deltatTime) * 1000;
-      const sy = (deltaY / deltatTime) * 1000;
-      const sa = (angleDiff / deltatTime) * 1000;
-
-      const weight = 1 / Math.exp(-deltatTime * 0.1);
-      wvx += sx * weight;
-      wvy += sy * weight;
-      wva += sa * weight;
-      totalWeight += weight;
-    }
-
-    if (totalWeight > 0) {
-      return {
-        x: wvx / totalWeight,
-        y: wvy / totalWeight,
-        angle: wva / totalWeight,
-      };
-    }
-
-    return { x: 0, y: 0, angle: 0 };
-  }
-
   /** Apply inertia-based movement */
-  protected _endWithInertia() {
-    const {
-      inertiaDuration,
-      inertiaEasing,
-      velocityModifier,
-      inertiaRatio,
-      inertiaDistanceThreshold,
-    } = this.props;
-
-    const sourceVelocity = {
-      x: this.velocity.x * inertiaRatio,
-      y: this.velocity.y * inertiaRatio,
-      angle: this.velocity.angle * inertiaRatio,
-    };
-
-    const velocity = velocityModifier
-      ? velocityModifier(sourceVelocity)
-      : sourceVelocity;
-
-    const { x: velocityX, y: velocityY, angle: velocityA } = velocity;
-    const distance = Math.sqrt(velocityX ** 2 + velocityY ** 2);
-
-    // Check if we have sufficient velocity
-    if (distance < inertiaDistanceThreshold) {
-      this.callbacks.emit('inertiaFail', undefined);
-
-      return;
-    }
-
-    // Calculate animation duration
-    const duration = inertiaDuration(distance);
-
-    // Check if the animation duration is positive
-    if (Number.isNaN(duration) || !Number.isFinite(duration) || duration <= 0) {
-      this.callbacks.emit('inertiaFail', undefined);
-
-      return;
-    }
-
-    // Calculate the start and add matrices
+  private _releaseInertia() {
     const startMatrix = { ...this.coords.current };
-    const addMatrix = { x: 0, y: 0, angle: 0 };
 
-    // Start the inertia animation
-    this._inertia = new Timeline({ duration, easing: inertiaEasing });
-
-    this._inertia.on('start', () => {
-      this.callbacks.emit('inertiaStart', undefined);
-    });
-
-    this._inertia.on('update', ({ eased }) => {
-      addMatrix.x = velocityX * eased;
-      addMatrix.y = velocityY * eased;
-      addMatrix.angle = velocityA * eased;
-
-      // Apply the calculated position
+    this._inertia.release((addMatrix) => {
       this._move({
         x: startMatrix.x + addMatrix.x,
         y: startMatrix.y + addMatrix.y,
         angle: startMatrix.angle + addMatrix.angle,
       });
-
-      this.callbacks.emit('inertia', undefined);
     });
-
-    this._inertia.on('end', () => {
-      this.cancelInertia();
-
-      this.callbacks.emit('inertiaEnd', undefined);
-    });
-
-    setTimeout(() => {
-      this._inertia?.play();
-    }, 0);
   }
 
-  /** Destroy inertia animation */
+  /** Cancel inertia */
   public cancelInertia() {
-    if (!this._inertia) {
-      return;
-    }
-
-    if (this._inertia.progress < 1) {
-      this.callbacks.emit('inertiaCancel', undefined);
-    }
-
-    this._inertia?.destroy();
-    this._inertia = undefined;
+    this._inertia.cancel();
   }
 
   /** Start coordinate */
@@ -716,7 +482,7 @@ export class Swipe<
     super._destroy();
 
     this._pointers.destroy();
-    this._inertia?.destroy();
-    this._cursorStyles.remove();
+    this._inertia.destroy();
+    this._styles.remove();
   }
 }

@@ -1,22 +1,24 @@
+import { clamp } from '@/utils';
+
+import { Snap, SnapSlide } from '../..';
+
 import { parallaxAttributes, parallaxGroups, parallaxTypes } from './constants';
 import { parallaxAttrPrefix } from './globals';
 import { ISnapSlideParallaxItem, ISnapSlideParallaxType } from './types';
-import { Snap, SnapSlide } from '../..';
-import { clamp } from '@/utils';
 
 export class SnapSlideParallax {
-  protected _observer: MutationObserver;
+  private _observer: MutationObserver;
 
-  protected _types: ISnapSlideParallaxType[] = [];
+  private _types: ISnapSlideParallaxType[] = [];
 
-  protected _items: ISnapSlideParallaxItem[] = [];
+  private _items: ISnapSlideParallaxItem[] = [];
 
-  protected _debounceInit: NodeJS.Timeout | null = null;
+  private _debounceInit: NodeJS.Timeout | null = null;
 
   constructor(
-    protected _snap: Snap,
-    protected _slide: SnapSlide,
-    protected _element: HTMLElement,
+    private _snap: Snap,
+    private _slide: SnapSlide,
+    private _element: HTMLElement,
   ) {
     this._initDebounce();
 
@@ -32,7 +34,7 @@ export class SnapSlideParallax {
   }
 
   /** Initialize parallax with debounce */
-  protected _initDebounce() {
+  private _initDebounce() {
     if (this._debounceInit) {
       clearTimeout(this._debounceInit);
     }
@@ -41,14 +43,14 @@ export class SnapSlideParallax {
   }
 
   /** Initialize parallax */
-  protected _init() {
+  private _init() {
     this._updateItems();
 
     this.render();
   }
 
   /** Update parallax items */
-  protected _updateItems() {
+  private _updateItems() {
     const element = this._element;
 
     const defaultScope = this._getScope(
@@ -62,6 +64,7 @@ export class SnapSlideParallax {
     this._items = this._types.map(
       ({ n, p, u: defaultUnit, isAbs: isAbsProp, modifier }) => {
         const group = parallaxGroups.find(
+          // eslint-disable-next-line @typescript-eslint/no-extra-non-null-assertion
           ({ types }) => types.find((type) => type.n === n)!!,
         );
 
@@ -93,7 +96,7 @@ export class SnapSlideParallax {
           n,
           p,
           u: unit,
-          group: group?.name!,
+          group: group?.name ?? '',
           modifier,
           scope,
           progress: 0,
@@ -111,12 +114,12 @@ export class SnapSlideParallax {
   }
 
   /** Get parallax attribute */
-  protected _getAttr(element: HTMLElement, name: string) {
+  private _getAttr(element: HTMLElement, name: string) {
     return element.getAttribute(name) ?? '';
   }
 
   /** Get parallax float attribute */
-  protected _getFloatAttr(
+  private _getFloatAttr(
     element: HTMLElement,
     name: string,
     defaultValue: number,
@@ -127,7 +130,7 @@ export class SnapSlideParallax {
   }
 
   /** Get parallax scope */
-  protected _getScope(
+  private _getScope(
     element: HTMLElement,
     name: string,
     defaultValue: number[],
@@ -171,11 +174,11 @@ export class SnapSlideParallax {
       let progress = clamp(globalProgress, ...item.scope);
 
       if (Math.abs(item.influence) > 0) {
-        progress *= Math.abs(snap.track.influence) * item.influence;
+        progress *= Math.abs(snap.influence) * item.influence;
       }
 
       if (item.isDirectional) {
-        progress = Math.abs(progress) * Math.sign(snap.track.influence);
+        progress = Math.abs(progress) * Math.sign(snap.influence);
       }
 
       if (item.isAbs) {

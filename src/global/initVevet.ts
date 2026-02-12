@@ -14,6 +14,10 @@ declare global {
  * @group Utils
  */
 export function initVevet() {
+  if (!isBrowser) {
+    return undefined as unknown as ICore;
+  }
+
   if (window.vevet5) {
     return window.vevet5;
   }

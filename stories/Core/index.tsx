@@ -1,6 +1,8 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { pickObjectProps } from './pickObjectProps';
+
 import { vevet } from '@/index';
+
+import { pickObjectProps } from './pickObjectProps';
 
 export const Component: FC = () => {
   const [features, setFeatures] =

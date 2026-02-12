@@ -1,15 +1,49 @@
-import { clamp, IOnResize, onResize, toPixels, uid } from '@/utils';
-import { ISnapSlideProps } from './types';
+import { clamp, IOnResize, loop, onResize, scoped, toPixels } from '@/utils';
+
+import { Snap } from '../..';
 import { SnapSlideParallax } from '../SlideParallax';
 import { parallaxAttributes } from '../SlideParallax/constants';
-import { Snap } from '../..';
+
+import { ISnapSlideProps } from './types';
 
 export class SnapSlide {
+  /** Snap component */
+  private _snap?: Snap;
+
+  /** Slide props */
+  private _props: Required<ISnapSlideProps>;
+
+  /** Slide index */
+  private _index: number;
+
+  /** Slide parallax elements */
+  private _parallax?: SnapSlideParallax[];
+
+  /** Events on slide resize */
+  private _resizer?: IOnResize;
+
+  /** Size of the element */
+  private _domSize: undefined | number;
+
+  /** Current coordinate */
+  private _coord = 0;
+
+  /** If the slide is appended */
+  private _isAppended = false;
+
+  /** If the slide is visible */
+  private _isVisible = false;
+
+  /** Static coordinate (as if the slide was never moved) */
+  private _staticCoord = 0;
+
+  /** Current progress of slide movement: from -1 to 1 */
+  private _progress = 0;
+
   constructor(
-    protected _element: HTMLElement | null,
+    private _element: HTMLElement | null,
     initProps: ISnapSlideProps = {},
   ) {
-    this._id = uid('snap-slide');
     this._index = 0;
     this._parallax = [];
 
@@ -23,8 +57,18 @@ export class SnapSlide {
     } as Required<ISnapSlideProps>;
 
     if (this.props.virtual && (!initProps.size || initProps.size === 'auto')) {
-      throw new Error('Virtual slide must have a size');
+      throw new Error('Virtual slide must have a defined size');
     }
+  }
+
+  /** Snap component */
+  private get snap() {
+    return this._snap;
+  }
+
+  /** Slide properties */
+  private get props() {
+    return this._props;
   }
 
   /** Slide element */
@@ -32,75 +76,14 @@ export class SnapSlide {
     return this._element;
   }
 
-  /** Slide props */
-  protected _props: Required<ISnapSlideProps>;
-
-  /** Slide properties */
-  get props() {
-    return this._props;
-  }
-
-  /** Slide id */
-  protected _id;
-
-  /** Slide id */
-  get id() {
-    return this._id;
-  }
-
-  /** Slide index */
-  protected _index: number;
-
   /** Slide index */
   get index() {
     return this._index;
   }
 
-  /** Snap component */
-  protected _snap?: Snap;
-
-  /** Snap component */
-  protected get snap() {
-    return this._snap;
-  }
-
-  /** Slide parallax elements */
-  protected _parallax?: SnapSlideParallax[];
-
-  /** Events on slide resize */
-  protected _onResize?: IOnResize;
-
-  /** Size of the element */
-  protected _domSize: undefined | number;
-
-  /** Current coordinate */
-  protected _coord = 0;
-
-  /** If the slide is appended */
-  protected _isAppended = false;
-
-  /** If the slide is visible */
-  protected _isVisible = false;
-
-  /** Static coordinate (as if the slide was never moved) */
-  protected _staticCoord = 0;
-
-  /** Current progress of slide movement: from -1 to 1 */
-  protected _progress = 0;
-
   /** Current coordinate */
   get coord() {
     return this._coord;
-  }
-
-  /** Current coordinate. Do not update it manually! */
-  public $_setCoord(value: number) {
-    this._coord = value;
-
-    this._isVisible =
-      this.size > 0 &&
-      this.coord > -this.size &&
-      this.coord < (this.snap?.containerSize ?? 0);
   }
 
   /** Static coordinate (as if the slide was never moved) */
@@ -108,23 +91,13 @@ export class SnapSlide {
     return this._staticCoord;
   }
 
-  /** Static coordinate (as if the slide was never moved). Do not update it manually! Alignment: start */
-  public $_setStaticCoord(value: number) {
-    this._staticCoord = value;
-  }
-
   /** Current progress of slide movement: from -1 to 1 */
   get progress() {
     return this._progress;
   }
 
-  /** Current progress of slide movement: from -1 to 1. Do not update it manually! */
-  public $_setProgress(value: number) {
-    this._progress = value;
-  }
-
   /** Size property */
-  get sizeProp() {
+  private get sizeProp() {
     return this.props.size ?? this.snap?.props.slideSize ?? 'auto';
   }
 
@@ -162,19 +135,20 @@ export class SnapSlide {
 
     // Update DOM size
     if (element) {
-      const { direction } = snap.props;
-
       this._domSize =
-        direction === 'horizontal' ? element.offsetWidth : element.offsetHeight;
+        snap.axis === 'x' ? element.offsetWidth : element.offsetHeight;
     }
 
     // Re-flow
     snap.resize(isManual);
   }
 
-  /** Attach the slide to the Snap class */
-  public attach(snap: Snap, index: number) {
-    this.detach();
+  /**
+   * Attach the slide to the Snap class.
+   * For internal use only
+   */
+  public $_attach(snap: Snap, index: number) {
+    this.$_detach();
 
     this._snap = snap;
     this._index = index;
@@ -184,7 +158,7 @@ export class SnapSlide {
     );
 
     if (this.element && this.sizeProp === 'auto') {
-      this._onResize = onResize({
+      this._resizer = onResize({
         element: this.element,
         viewportTarget: 'width',
         callback: () => this.resize(false),
@@ -193,14 +167,28 @@ export class SnapSlide {
     }
   }
 
-  /** Detach the slide from the Snap class */
-  public detach() {
+  /**
+   * Detach the slide from the Snap class.
+   * For internal use only
+   */
+  public $_detach() {
     this._snap = undefined;
-    this._onResize?.remove();
+    this._resizer?.remove();
     this._parallax?.forEach((parallax) => parallax.destroy());
   }
 
-  /** Render the slide */
+  /**
+   * Static coordinate (as if the slide was never moved).
+   * For internal use only
+   */
+  public $_setStaticCoord(value: number) {
+    this._staticCoord = value;
+  }
+
+  /**
+   * Render the slide.
+   * For internal use only
+   */
   public $_render() {
     this._toggleAppend();
 
@@ -208,7 +196,7 @@ export class SnapSlide {
   }
 
   /** Get list of parallax nodes */
-  protected _getParallaxNodes() {
+  private _getParallaxNodes() {
     const { element } = this;
     if (!element) {
       return [];
@@ -221,7 +209,7 @@ export class SnapSlide {
   }
 
   /** Toggle slide append/remove */
-  protected _toggleAppend() {
+  private _toggleAppend() {
     if (!this.props.virtual || !this.element || !this.snap) {
       return;
     }
@@ -239,22 +227,22 @@ export class SnapSlide {
   }
 
   /** Get magnets with static coordinates but dynamic alignment */
-  get magnets() {
+  public get magnets() {
     if (!this.snap) {
       return [];
     }
 
     const { snap, staticCoord, size, index } = this;
-    const { containerSize, track, firstSlideSize } = snap;
+    const { containerSize } = snap;
 
     let points: number[] = [];
 
     if (index === 0 && snap.props.loop) {
-      points.push(track.max);
+      points.push(snap.max);
     }
 
     if (snap.props.centered) {
-      const point = staticCoord + size / 2 - firstSlideSize / 2;
+      const point = staticCoord + size / 2 - snap.firstSlideSize / 2;
 
       if (size > containerSize) {
         points.push(point);
@@ -271,10 +259,78 @@ export class SnapSlide {
       }
     }
 
-    if (!track.canLoop && !snap.props.centered) {
-      points = points.map((point) => clamp(point, 0, track.max));
+    if (!snap.canLoop && !snap.props.centered) {
+      points = points.map((point) => clamp(point, 0, snap.max));
     }
 
     return points;
+  }
+
+  /**
+   * Update slide progress.
+   * For internal use only
+   */
+  public $_updateProgress() {
+    const { snap } = this;
+
+    if (!snap) {
+      return;
+    }
+
+    const { coord, size } = this;
+    const { props, containerSize } = snap;
+
+    if (props.centered) {
+      const center = containerSize / 2 - size / 2;
+      this._progress = scoped(coord, center, center - size);
+
+      return;
+    }
+
+    this._progress = scoped(coord, 0, -size);
+  }
+
+  /**
+   * Update slide values.
+   * For internal use only
+   */
+  public $_updateCoords(offset: number) {
+    const { snap } = this;
+    if (!snap) {
+      return;
+    }
+
+    const { staticCoord, size } = this;
+    const { centered: isCentered } = snap.props;
+
+    if (!snap.canLoop) {
+      this._setCoord(staticCoord + offset - snap.current);
+
+      return;
+    }
+
+    if (isCentered) {
+      this._setCoord(
+        loop(
+          staticCoord + offset - snap.current,
+          -snap.max / 2 + offset,
+          snap.max / 2 + offset,
+        ),
+      );
+
+      return;
+    }
+
+    this._setCoord(loop(staticCoord - snap.current, -size, snap.max - size));
+  }
+
+  /** Set slide coordinate */
+  private _setCoord(value: number) {
+    this._coord = value;
+
+    this._isVisible =
+      this.size > 0 &&
+      this.coord > -this.size &&
+      this.coord < (this.snap?.containerSize ?? 0);
   }
 }

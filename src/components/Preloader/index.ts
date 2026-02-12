@@ -1,13 +1,16 @@
+import { Module, TModuleOnCallbacksProps } from '@/base/Module';
+import { initVevet } from '@/global/initVevet';
+import { isNumber } from '@/internal/isNumber';
 import { TRequiredProps } from '@/internal/requiredProps';
+
+import { Timeline } from '../Timeline';
+
+import { MUTABLE_PROPS, STATIC_PROPS } from './props';
 import {
   IPreloaderCallbacksMap,
   IPreloaderMutableProps,
   IPreloaderStaticProps,
 } from './types';
-import { Module, TModuleOnCallbacksProps } from '@/base/Module';
-import { Timeline } from '../Timeline';
-import { initVevet } from '@/global/initVevet';
-import { isNumber } from '@/internal/isNumber';
 
 export * from './types';
 
@@ -28,34 +31,24 @@ export class Preloader<
    * Retrieves the default static properties.
    */
   public _getStatic(): TRequiredProps<S> {
-    return {
-      ...super._getStatic(),
-      hide: 250,
-    } as TRequiredProps<S>;
+    return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
   /**
    * Retrieves the default mutable properties.
    */
   public _getMutable(): TRequiredProps<M> {
-    return { ...super._getMutable() } as TRequiredProps<M>;
+    return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 
   /** Indicates if the preloader is in the process of being hidden. */
-  protected _shouldHide = false;
+  private _shouldHide = false;
 
   /** Indicates if the preloader has already been hidden. */
-  protected _isHidden = false;
+  private _isHidden = false;
 
   /** Indicates if the page is fully loaded. */
-  protected _isLoaded = false;
-
-  /**
-   * Returns whether the preloader is currently hidden.
-   */
-  get isHidden() {
-    return this._isHidden;
-  }
+  private _isLoaded = false;
 
   constructor(
     props?: S & M,
@@ -72,6 +65,13 @@ export class Preloader<
   }
 
   /**
+   * Returns whether the preloader is currently hidden.
+   */
+  get isHidden() {
+    return this._isHidden;
+  }
+
+  /**
    * Handles the page load event, triggering when the page is fully loaded.
    */
   protected _onLoaded(callback: () => void) {
@@ -81,7 +81,7 @@ export class Preloader<
   /**
    * Handles the logic that occurs after the page is fully loaded.
    */
-  protected _handleLoaded() {
+  private _handleLoaded() {
     if (this.isDestroyed) {
       return;
     }
@@ -132,7 +132,7 @@ export class Preloader<
   /**
    * Executes the hiding animation for the preloader container.
    */
-  protected _hideContainer(onHidden: () => void, duration: number) {
+  private _hideContainer(onHidden: () => void, duration: number) {
     const { container } = this.props;
 
     if (!container) {
@@ -158,7 +158,7 @@ export class Preloader<
   /**
    * Handles actions when the preloader is fully hidden.
    */
-  protected _onHidden() {
+  private _onHidden() {
     this._isHidden = true;
     this.callbacks.emit('hidden', undefined);
   }

@@ -1,11 +1,11 @@
 import { ICallbacksMap, TCallbacksAction } from '../Callbacks';
 
 export interface IModuleStaticProps {
-  __staticProp?: null;
+  __staticProp?: true;
 }
 
 export interface IModuleMutableProps {
-  __mutableProp?: null;
+  __mutableProp?: true;
 }
 
 export interface IModuleCallbacksMap extends ICallbacksMap {

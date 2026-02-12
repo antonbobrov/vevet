@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
+
 import { clamp, Swipe, vevet } from '@/index';
 
 export const Large: FC = () => {

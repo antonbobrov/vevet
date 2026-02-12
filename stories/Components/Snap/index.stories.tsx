@@ -1,24 +1,26 @@
-import type { Meta, StoryFn } from '@storybook/react';
 import React from 'react';
-import { Test as TestComponent } from './Test';
-import { Rtl as RtlComponent } from './Rtl';
-import { Carousel as CarouselComponent } from './Carousel';
-import { Fade as FadeComponent } from './Fade';
+
 import { Cards as CardsComponent } from './Cards';
-import { Panorama as PanoramaComponent } from './Panorama';
-import { Circular as CircularComponent } from './Circular';
-import { Glide as GlideComponent } from './Glide';
 import { CardsStack as CardsStackComponent } from './CardsStack';
-import { Spiral as SpiralComponent } from './Spiral';
-import { SlickGap as SlickGapComponent } from './SlickGap';
-import { Virtual as VirtualComponent } from './Virtual';
-import { DynamicWidth as DynamicWidthComponent } from './DynamicWidth';
+import { Carousel as CarouselComponent } from './Carousel';
+import { Circular as CircularComponent } from './Circular';
 import { CreativeScale as CreativeScaleComponent } from './CreativeScale';
 import { CreativeSine as CreativeSineComponent } from './CreativeSine';
-import { Stack3D as Stack3DComponent } from './Stack3D';
+import { DynamicWidth as DynamicWidthComponent } from './DynamicWidth';
+import { Fade as FadeComponent } from './Fade';
+import { Glide as GlideComponent } from './Glide';
 import { InfluenceParallaxGap as InfluenceParallaxGapComponent } from './InfluenceParallaxGap';
 import { InfluenceParallaxSkew as InfluenceParallaxSkewComponent } from './InfluenceParallaxSkew';
+import { Panorama as PanoramaComponent } from './Panorama';
 import { ParallaxStickers as ParallaxStickersComponent } from './ParallaxStickers';
+import { Rtl as RtlComponent } from './Rtl';
+import { SlickGap as SlickGapComponent } from './SlickGap';
+import { Spiral as SpiralComponent } from './Spiral';
+import { Stack3D as Stack3DComponent } from './Stack3D';
+import { Test as TestComponent } from './Test';
+import { Virtual as VirtualComponent } from './Virtual';
+
+import type { Meta, StoryFn } from '@storybook/react';
 
 const meta: Meta = {
   title: 'Components/Snap',

@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
+
 import { Canvas, TCanvasRender } from '@/index';
 
 export const Component: FC = () => {
