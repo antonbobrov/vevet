@@ -1,5 +1,24 @@
 # Changelog
 
+# [5.7.0](https://github.com/antonbobrov/vevet/compare/v5.6.0...v5.7.0) (2026-02-13)
+
+
+### Snap
+
+* move track inside main class ([f0f27c1](https://github.com/antonbobrov/vevet/commit/f0f27c166dc084ac70fb2790f7f525fabfba71f0))
+
+### Cursor
+
+* add `emitter` and `stickyFriction` to `ICursorHoverElementProps` ([f0f27c1](https://github.com/antonbobrov/vevet/commit/f0f27c166dc084ac70fb2790f7f525fabfba71f0))
+
+### Scrollbar
+
+* changed `resizeDebounce` default value to `50` ([f0f27c1](https://github.com/antonbobrov/vevet/commit/f0f27c166dc084ac70fb2790f7f525fabfba71f0))
+
+### Marquee
+
+* fix empty strings wrapping ([f0f27c1](https://github.com/antonbobrov/vevet/commit/f0f27c166dc084ac70fb2790f7f525fabfba71f0))
+
 # [5.6.0](https://github.com/antonbobrov/vevet/compare/v5.5.2...v5.6.0) (2026-02-02)
 
 
