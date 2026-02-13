@@ -15,7 +15,7 @@
   "plugins": {
     "@release-it/conventional-changelog": {
       "infile": "CHANGELOG.md",
-      "preset": "eslint"
+      "preset": { "name": "eslint" }
     },
     "@release-it/bumper": {
       "out": ["src/manifest.json"]
