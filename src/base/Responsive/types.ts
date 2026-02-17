@@ -12,9 +12,6 @@ export type TResponsiveQuery =
   | 'phone'
   | 'mobile'
   | 'non_mobile'
-  | 'lg'
-  | 'md'
-  | 'sm'
   | 'landscape'
   | 'portrait'
   | (string & {});
