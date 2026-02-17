@@ -43,7 +43,7 @@ While hovering the element, the cursor can:
 
 - change size,
 - snap to the element center,
-- apply sticky behavior,
+- apply sticky behavior (with configurable amplitude and friction),
 - switch cursor type.
 
 Returns a **cleanup function** that removes all listeners and bindings.
@@ -63,8 +63,12 @@ const remove = cursor.attachHover({
   height: 'auto',
   padding: 10,
   sticky: true,
+  // smoothness of sticky follow (defaults to cursor lerp)
+  stickyLerp: 0.15,
   // make sticky element smoothly return to origin
   stickyFriction: 0.2,
+  // sticky movement range; supports number, 'auto', or { x, y } with CSS units
+  stickyAmplitude: { x: '2rem', y: 'auto' },
 });
 
 // Remove interaction
