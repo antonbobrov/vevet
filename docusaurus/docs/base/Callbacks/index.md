@@ -1,3 +1,12 @@
+---
+description: Callbacks class — event listeners with one-or-multi-time execution, protection and delays. Vevet.js base.
+keywords:
+  - vevet callbacks
+  - base callbacks
+  - event listeners
+  - Module
+---
+
 # Callbacks
 
 **Callbacks** class manages event listeners with support for one-time execution, protection, and delays.

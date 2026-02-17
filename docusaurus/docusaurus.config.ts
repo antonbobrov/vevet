@@ -40,6 +40,19 @@ const config: Config = {
   themeConfig: {
     image: 'img/docusaurus-social-card.jpg',
 
+    metadata: [
+      {
+        name: 'description',
+        content:
+          'Vevet.js — flexible JavaScript library for creative web development. Timeline, scroll, split text, preloaders, canvas and more.',
+      },
+      {
+        name: 'keywords',
+        content:
+          'vevet, vevet.js, javascript library, creative web development, animation, timeline, scroll, split text, preloader, canvas, marquee, swipe',
+      },
+    ],
+
     navbar: {
       logo: {
         alt: 'vevet.js logo',

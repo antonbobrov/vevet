@@ -1,5 +1,12 @@
 ---
 sidebar_position: 4
+description: Vevet.js CSS variables — --vw, --vh, --svh, --scrollbar-width for viewport units and layout.
+keywords:
+  - vevet css variables
+  - viewport units
+  - --vw --vh
+  - scrollbar width
+  - layout shift
 ---
 
 # CSS Variables

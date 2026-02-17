@@ -1,3 +1,11 @@
+---
+description: Module — base class for Vevet.js components.
+keywords:
+  - vevet module
+  - base module
+  - abstract class
+---
+
 # Module
 
 ## In Progress

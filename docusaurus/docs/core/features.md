@@ -1,5 +1,12 @@
 ---
 sidebar_position: 1
+description: Vevet.js features — device detection, application states, viewport changes, NPM usage and configuration.
+keywords:
+  - vevet features
+  - device detection
+  - viewport
+  - application state
+  - vevet props
 ---
 
 # Features

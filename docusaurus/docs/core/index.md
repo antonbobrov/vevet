@@ -1,5 +1,12 @@
 ---
 sidebar_position: -900
+description: Vevet.js Core — viewport detection, browser and OS detection, custom callbacks for page load and viewport changes.
+keywords:
+  - vevet core
+  - viewport detection
+  - browser detection
+  - page load
+  - viewport
 ---
 
 # Core

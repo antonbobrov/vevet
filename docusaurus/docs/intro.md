@@ -1,5 +1,14 @@
 ---
 sidebar_position: -1000
+description: Introduction to Vevet.js — a flexible JavaScript library for creative web development. Installation, core, components, and utils overview.
+keywords:
+  - vevet
+  - vevet.js
+  - javascript library
+  - creative web development
+  - installation
+  - npm
+  - cdn
 ---
 
 # Vevet.js

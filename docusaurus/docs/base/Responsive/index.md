@@ -1,3 +1,11 @@
+---
+description: Responsive — Vevet.js responsive utilities.
+keywords:
+  - vevet responsive
+  - base responsive
+  - breakpoints
+---
+
 # Responsive
 
 ## In Progress
