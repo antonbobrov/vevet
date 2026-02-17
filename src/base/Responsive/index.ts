@@ -101,7 +101,7 @@ export class Responsive<T extends TResponsiveSource> {
     const app = initVevet();
 
     const rules = this._rules.filter(({ at }) => {
-      if (at === 'tablet ' && app.tablet) {
+      if (at === 'tablet' && app.tablet) {
         return true;
       }
 
