@@ -14,13 +14,11 @@ sidebar_position: 4
 ## Layout Shift Issue
 
 :::caution
-These variables are dynamically set when the JavaScript code loads and the library initializes.   
+These variables are dynamically set when the JavaScript code loads and the library initializes.  
 However, this process may cause noticeable layout shifts.  
 To prevent this, it is recommended to calculate these values manually on the first render.  
 Vevet provides a built-in solution for this:
 :::
-
-
 
 ### HTML Script
 
@@ -45,7 +43,16 @@ Vevet provides a built-in solution for this:
     var sh = doc.clientHeight;
     var scrollbarWidth = window.innerWidth - doc.clientWidth;
 
-    styles.innerHTML = 'html { --vw: ' + w / 100 + 'px; --vh: ' + h / 100 + 'px; --svh: ' + sh / 100 + 'px; --scrollbar-width: ' + scrollbarWidth + 'px; }';
+    styles.innerHTML =
+      'html { --vw: ' +
+      w / 100 +
+      'px; --vh: ' +
+      h / 100 +
+      'px; --svh: ' +
+      sh / 100 +
+      'px; --scrollbar-width: ' +
+      scrollbarWidth +
+      'px; }';
   };
 
   window.addEventListener('resize', presetVevetCss);
@@ -57,8 +64,6 @@ Vevet provides a built-in solution for this:
   presetVevetCss();
 </script>
 ```
-
-
 
 ### Next.js
 

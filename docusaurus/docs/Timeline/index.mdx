@@ -6,20 +6,18 @@ toc_max_heading_level: 6
 
 # Timeline
 
-A simple timeline class for managing animations with easing and precise progress control. 
+A simple timeline class for managing animations with easing and precise progress control.
 
 It provides methods for playing, reversing, pausing, and resetting the timeline.
 
-
-
 ## Basic Demo
 
-<iframe 
+<iframe
   height="600"
   style={{
-    width: '100%'
-  }} 
-  scrolling="no" 
+    width: '100%',
+  }}
+  scrolling="no"
   title="Vevet Demo"
   src="https://codepen.io/anton-bobrov/embed/jEENKjV?default-tab=result"
   frameborder="no"
@@ -27,22 +25,23 @@ It provides methods for playing, reversing, pausing, and resetting the timeline.
   allowtransparency="true"
   allowfullscreen="true"
 >
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/jEENKjV">Vevet Demo</a> by Anton Bobrov.
+  See the Pen{' '}
+  <a href="https://codepen.io/anton-bobrov/pen/jEENKjV">Vevet Demo</a> by Anton
+  Bobrov.
 </iframe>
-
-
 
 ## Initialization
 
 :::caution
+
 - `Timeline` does not work with DOM elements or styles — **it performs time and easing calculations only.**
 - Animation is **disabled by default.** You must explicitly call `.play()` to start it.
 - `Timeline` does **not run automatically** on creation, even if callbacks are provided.
 - The timeline operates in the range **0 → 1**, regardless of duration.
-:::
+  :::
 
 ```js
-import { Timeline } from "vevet";
+import { Timeline } from 'vevet';
 
 const tm = new Timeline(
   { duration: 350, easing: [0.25, 0.1, 0.25, 1] },
@@ -50,7 +49,7 @@ const tm = new Timeline(
     onUpdate: ({ eased }) => {
       // your animation here
     },
-  }
+  },
 );
 
 tm.play();

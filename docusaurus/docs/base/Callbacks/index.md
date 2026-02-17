@@ -22,19 +22,31 @@ const removeSimpleCallback = callbacks.on('init', () => {
 });
 
 // Register a protected callback (cannot be removed manually)
-const protectedCallback = callbacks.on('init', () => {
-  console.log('protected callback');
-}, { protected: true });
+const protectedCallback = callbacks.on(
+  'init',
+  () => {
+    console.log('protected callback');
+  },
+  { protected: true },
+);
 
 // Register a one-time callback
-const removeOnceCallback = callbacks.on('init', () => {
-  console.log('one-time callback');
-}, { once: true });
+const removeOnceCallback = callbacks.on(
+  'init',
+  () => {
+    console.log('one-time callback');
+  },
+  { once: true },
+);
 
 // Register a delayed callback (executes after 1000ms)
-const removeDelayedCallback = callbacks.on('init', () => {
-  console.log('delayed callback');
-}, { timeout: 1000 });
+const removeDelayedCallback = callbacks.on(
+  'init',
+  () => {
+    console.log('delayed callback');
+  },
+  { timeout: 1000 },
+);
 
 // Emit the "init" callbacks
 callbacks.emit('init', undefined);

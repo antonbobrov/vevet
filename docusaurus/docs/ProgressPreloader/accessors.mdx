@@ -24,7 +24,7 @@ Custom resources may have a `data-loaded` attribute which represents their loade
 
 ```js
 const preloader = new ProgressPreloader({
-  container: document.getElementById("container"),
+  container: document.getElementById('container'),
 });
 
 preloader.loadedWeight; // loaded weight
@@ -39,7 +39,7 @@ This value is **never interpolated** and updates immediately whenever a resource
 
 ```js
 const preloader = new ProgressPreloader({
-  container: document.getElementById("container"),
+  container: document.getElementById('container'),
 });
 
 preloader.loadProgress; // rigid progress
@@ -55,7 +55,7 @@ The smoothness of the progress update depends on `lerp` props.
 
 ```js
 const preloader = new ProgressPreloader({
-  container: document.getElementById("container"),
+  container: document.getElementById('container'),
 });
 
 preloader.progress; // smooth progress
@@ -80,7 +80,7 @@ interface IProgressPreloaderResource {
 
 ```js
 const preloader = new ProgressPreloader({
-  container: document.getElementById("container"),
+  container: document.getElementById('container'),
 });
 
 preloader.resources; // list of resources
@@ -95,7 +95,7 @@ Returns the total weight of all resources to preload.
 
 ```js
 const preloader = new ProgressPreloader({
-  container: document.getElementById("container"),
+  container: document.getElementById('container'),
 });
 
 preloader.totalWeight; // total resources weight

@@ -15,16 +15,14 @@ Manages swipe interactions:
 - Does not apply transforms — only provides computed coordinates
 - Does not store state after swipe ends (movement always resets)
 
-
-
 ## Basic Demo
 
-<iframe 
+<iframe
   height="400"
   style={{
-    width: '100%'
-  }} 
-  scrolling="no" 
+    width: '100%',
+  }}
+  scrolling="no"
   title="Vevet Demo"
   src="https://codepen.io/anton-bobrov/embed/bNNbKyV?default-tab=result"
   frameborder="no"
@@ -32,57 +30,56 @@ Manages swipe interactions:
   allowtransparency="true"
   allowfullscreen="true"
 >
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/bNNbKyV">Vevet Demo</a> by Anton Bobrov.
+  See the Pen{' '}
+  <a href="https://codepen.io/anton-bobrov/pen/bNNbKyV">Vevet Demo</a> by Anton
+  Bobrov.
 </iframe>
-
-
 
 ## More demos
 
 To explore more demos, click [here](./demos).
 
-
-
 ## Initialization
 
 :::caution
+
 - `Swipe` does not transform elements — it only computes movement values.
 - `Swipe` does not persist any state after swipe completion (all coordinates reset).
 - Inertia is optional and triggers only if the calculated distance exceeds the threshold.
-:::
+  :::
 
 ```js
-import { Swipe } from "vevet";
+import { Swipe } from 'vevet';
 
 const swipe = new Swipe(
   {
-    container: document.getElementById("container"),
-    grabCursor: true
+    container: document.getElementById('container'),
+    grabCursor: true,
   },
   {
     onMove: ({ diff }, { container }) => {
       container.style.transform = `translate(${diff.x}px, ${diff.y}px)`;
     },
     onEnd: (data, { container }) => {
-      container.style.transform = "none";
-    }
-  }
+      container.style.transform = 'none';
+    },
+  },
 );
 ```
 
 Detect direction:
 
 ```js
-swipe.on("toLeft", () => console.log("swipe to left"));
+swipe.on('toLeft', () => console.log('swipe to left'));
 ```
 
 Add inertia:
 
 ```js
-import { Swipe } from "vevet";
+import { Swipe } from 'vevet';
 
 const swipe = new Swipe({
-  container: document.getElementById("container"),
+  container: document.getElementById('container'),
   inertia: true,
 });
 ```

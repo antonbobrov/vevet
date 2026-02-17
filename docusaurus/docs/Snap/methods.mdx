@@ -93,10 +93,9 @@ snap.toSlide(2, {
   onEnd: () => console.log('end'),
 });
 
-
 // define animation direction (loop mode only)
 snap.toSlide(2, {
-  direction: "prev"
+  direction: 'prev',
 });
 ```
 
@@ -168,7 +167,7 @@ snap.clampTarget();
 
 ### `loopCoord`
 
-Wrap a coordinate between the minimum and maximum track values and return a normalized looped value.   
+Wrap a coordinate between the minimum and maximum track values and return a normalized looped value.  
 **See [loop utilities](/docs/utils/#loop).**
 
 ```ts

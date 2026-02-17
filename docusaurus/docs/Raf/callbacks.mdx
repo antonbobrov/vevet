@@ -19,9 +19,12 @@ All **[Module callbacks](/docs/base/Module/#callbacks)** are available in this c
 Triggered when the animation starts.
 
 ```ts
-const raf = new Raf({ }, {
-  onPlay: () => console.log('play'),
-});
+const raf = new Raf(
+  {},
+  {
+    onPlay: () => console.log('play'),
+  },
+);
 ```
 
 or:
@@ -38,9 +41,12 @@ destruct();
 Triggered when the animation is paused.
 
 ```ts
-const raf = new Raf({ }, {
-  onPause: () => console.log('pause'),
-});
+const raf = new Raf(
+  {},
+  {
+    onPause: () => console.log('pause'),
+  },
+);
 ```
 
 or:
@@ -57,9 +63,12 @@ destruct();
 Triggered when the play/pause state toggles.
 
 ```ts
-const raf = new Raf({ }, {
-  onToggle: () => console.log('toggle'),
-});
+const raf = new Raf(
+  {},
+  {
+    onToggle: () => console.log('toggle'),
+  },
+);
 ```
 
 or:
@@ -76,13 +85,16 @@ destruct();
 Triggered on every animation frame.
 
 ```ts
-const raf = new Raf({ }, {
-  onFrame: ({ fps, fpsFactor, duration }) => {
-    console.log('current FPS', fps);
-    console.log('scaling coefficient based on a 60 FPS target', fpsFactor);
-    console.log('duration of the last frame in ms', duration);
-  }
-});
+const raf = new Raf(
+  {},
+  {
+    onFrame: ({ fps, fpsFactor, duration }) => {
+      console.log('current FPS', fps);
+      console.log('scaling coefficient based on a 60 FPS target', fpsFactor);
+      console.log('duration of the last frame in ms', duration);
+    },
+  },
+);
 ```
 
 or:

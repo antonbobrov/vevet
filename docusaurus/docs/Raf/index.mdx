@@ -12,16 +12,14 @@ toc_max_heading_level: 6
 - Measures real-time FPS and frame duration
 - Includes tools for frame-rate–independent animations (damping)
 
-
-
 ## Basic Demo
 
-<iframe 
+<iframe
   height="500"
   style={{
-    width: '100%'
-  }} 
-  scrolling="no" 
+    width: '100%',
+  }}
+  scrolling="no"
   title="Vevet Demo"
   src="https://codepen.io/anton-bobrov/embed/EaaYREw?default-tab=result"
   frameborder="no"
@@ -29,23 +27,21 @@ toc_max_heading_level: 6
   allowtransparency="true"
   allowfullscreen="true"
 >
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/EaaYREw">Vevet Demo</a> by Anton Bobrov.
+  See the Pen{' '}
+  <a href="https://codepen.io/anton-bobrov/pen/EaaYREw">Vevet Demo</a> by Anton
+  Bobrov.
 </iframe>
-
-
 
 ## More demos
 
 To explore more demos, click [here](./demos).
-
-
 
 ## Initialization
 
 Raf is easy to initialize:
 
 ```js
-import { Raf } from "vevet";
+import { Raf } from 'vevet';
 
 const raf = new Raf({ enabled: true });
 
@@ -57,37 +53,40 @@ raf.on('frame', () => {
 Disabled by default:
 
 ```js
-import { Raf } from "vevet";
+import { Raf } from 'vevet';
 
 const raf = new Raf({
-  enabled: false
+  enabled: false,
 });
 ```
 
 Predefined FPS or adaptive FPS:
 
 ```js
-import { Raf } from "vevet";
+import { Raf } from 'vevet';
 
 const raf = new Raf({
   enabled: true,
-  fps: "auto" // or fps: [number]
+  fps: 'auto', // or fps: [number]
 });
 ```
 
 Get real-time FPS:
 
 ```js
-import { Raf } from "vevet";
+import { Raf } from 'vevet';
 
-const raf = new Raf({
-  enabled: true,
-  fps: 30
-}, {
-  onFrame: ({ fps }) => {
-    console.log(fps);
-  }
-});
+const raf = new Raf(
+  {
+    enabled: true,
+    fps: 30,
+  },
+  {
+    onFrame: ({ fps }) => {
+      console.log(fps);
+    },
+  },
+);
 ```
 
 Damping (used for consistent animations across 60Hz, 120Hz, and others, **see [demo](demos#damping)**):

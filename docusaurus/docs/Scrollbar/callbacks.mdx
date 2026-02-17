@@ -19,9 +19,12 @@ All **[Module callbacks](/docs/base/Module/#callbacks)** are available in this c
 Triggered when the scrollbar updates its position.
 
 ```ts
-const instance = new Scrollbar({ }, {
-  onUpdate: () => console.log('update'),
-});
+const instance = new Scrollbar(
+  {},
+  {
+    onUpdate: () => console.log('update'),
+  },
+);
 ```
 
 or:
@@ -38,9 +41,12 @@ destruct();
 Triggered when the scrollbar resizes.
 
 ```ts
-const instance = new Scrollbar({ }, {
-  onResize: () => console.log('resize'),
-});
+const instance = new Scrollbar(
+  {},
+  {
+    onResize: () => console.log('resize'),
+  },
+);
 ```
 
 or:
@@ -57,9 +63,12 @@ destruct();
 Triggered when the scrollbar is shown.
 
 ```ts
-const instance = new Scrollbar({ }, {
-  onShow: () => console.log('show'),
-});
+const instance = new Scrollbar(
+  {},
+  {
+    onShow: () => console.log('show'),
+  },
+);
 ```
 
 or:
@@ -76,9 +85,12 @@ destruct();
 Triggered when the scrollbar is hidden.
 
 ```ts
-const instance = new Scrollbar({ }, {
-  onHide: () => console.log('hide'),
-});
+const instance = new Scrollbar(
+  {},
+  {
+    onHide: () => console.log('hide'),
+  },
+);
 ```
 
 or:
@@ -95,9 +107,12 @@ destruct();
 Triggered when swipe starts.
 
 ```ts
-const instance = new Scrollbar({ }, {
-  onSwipeStart: (coords) => console.log(coords),
-});
+const instance = new Scrollbar(
+  {},
+  {
+    onSwipeStart: (coords) => console.log(coords),
+  },
+);
 ```
 
 or:
@@ -114,9 +129,12 @@ destruct();
 Triggered during swipe movement.
 
 ```ts
-const instance = new Scrollbar({ }, {
-  onSwipe: (coords) => console.log(coords),
-});
+const instance = new Scrollbar(
+  {},
+  {
+    onSwipe: (coords) => console.log(coords),
+  },
+);
 ```
 
 or:
@@ -133,9 +151,12 @@ destruct();
 Triggered when swipe ends.
 
 ```ts
-const instance = new Scrollbar({ }, {
-  onSwipeEnd: (coords) => console.log(coords),
-});
+const instance = new Scrollbar(
+  {},
+  {
+    onSwipeEnd: (coords) => console.log(coords),
+  },
+);
 ```
 
 or:

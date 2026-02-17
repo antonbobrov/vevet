@@ -6,20 +6,18 @@ toc_max_heading_level: 6
 
 # InView
 
-InView is a visibility detection utility that leverages the `IntersectionObserver API` to monitor when elements enter or leave the viewport. 
+InView is a visibility detection utility that leverages the `IntersectionObserver API` to monitor when elements enter or leave the viewport.
 
 It provides customizable options for triggering events, delaying visibility changes, and dynamically adding CSS classes to elements based on their visibility state and scrolling direction. InView automatically detects the direction from which elements enter or leave the viewport, enabling directional animations and interactions.
 
-
-
 ## Basic Demo
 
-<iframe 
+<iframe
   height="600"
   style={{
-    width: '100%'
-  }} 
-  scrolling="no" 
+    width: '100%',
+  }}
+  scrolling="no"
   title="Vevet Demo"
   src="https://codepen.io/anton-bobrov/embed/EaaYRmX?default-tab=result"
   frameborder="no"
@@ -27,16 +25,14 @@ It provides customizable options for triggering events, delaying visibility chan
   allowtransparency="true"
   allowfullscreen="true"
 >
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/EaaYRmX">Vevet Demo</a> by Anton Bobrov.
+  See the Pen{' '}
+  <a href="https://codepen.io/anton-bobrov/pen/EaaYRmX">Vevet Demo</a> by Anton
+  Bobrov.
 </iframe>
-
-
 
 ## More demos
 
 To explore more demos, click [here](./demos).
-
-
 
 ## Initialization
 
@@ -47,7 +43,7 @@ InView is easy to initialize:
 ```
 
 ```js
-import { InView } from "vevet";
+import { InView } from 'vevet';
 
 const observer = new InView();
 
@@ -58,7 +54,7 @@ observer.on('in', ({ element, direction }) => {
 
 // addElement returns a cleanup function
 const stopObserving = observer.addElement(
-  document.getElementById('observable-element')
+  document.getElementById('observable-element'),
 );
 
 // Later, you can stop observing this specific element
@@ -72,11 +68,13 @@ InView can automatically add and remove CSS classes based on element visibility.
 To enable this behavior, use the `data-in-view-class` attribute:
 
 **Simple class (same animation for all directions):**
+
 ```html
 <h1 data-in-view-class="fadeIn">Animated Element</h1>
 ```
 
 **Directional classes (different animations based on scroll direction):**
+
 ```html
 <!-- Vertical scrolling: fadeInUp when from bottom, fadeInDown when from top -->
 <h1 data-in-view-class="fadeInUp|fadeInDown">Directional InView</h1>
@@ -86,6 +84,7 @@ To enable this behavior, use the `data-in-view-class` attribute:
 ```
 
 The syntax is `direct|reverse`, where:
+
 - **direct** is applied when the element enters from the default direction (bottom for vertical, right for horizontal)
 - **reverse** is applied when entering from the opposite direction (top for vertical, left for horizontal)
 
@@ -99,11 +98,13 @@ This allows creating fully CSS-driven scroll animations without JavaScript trans
 ### Managing Elements
 
 **Stop observing a specific element:**
+
 ```js
 observer.removeElement(yourElement);
 ```
 
 **Destroy the InView instance:**
+
 ```js
 observer.destroy();
 ```
@@ -113,13 +114,12 @@ InView cannot detect visibility of elements with `display: none` or zero height/
 Ensure the element has a measurable size before adding it to the observer.
 :::
 
-
-
 ## Direction Detection
 
 InView automatically detects the direction from which elements enter or leave the viewport. This information is available in callbacks and can be used to create directional animations.
 
 The direction values are:
+
 - **`fromBottom`** - Element enters/leaves from below (vertical scrolling)
 - **`fromTop`** - Element enters/leaves from above (vertical scrolling)
 - **`fromLeft`** - Element enters/leaves from the left (horizontal scrolling)

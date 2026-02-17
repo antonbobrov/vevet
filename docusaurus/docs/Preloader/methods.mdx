@@ -23,7 +23,7 @@ See **[demo](demos#custom-hiding-logic)**
 
 ```ts
 const preloader = new Preloader({
-  container: document.getElementById("container")
+  container: document.getElementById('container'),
 });
 
 preloader.hide(500); // hide preloader within 500ms
@@ -51,7 +51,7 @@ Registers a callback for when the preloader is fully hidden.
 
 ```ts
 const preloader = new Preloader({
-  container: document.getElementById("container")
+  container: document.getElementById('container'),
 });
 
 const cancelCallback = preloader.onHidden(() => console.log('hidden'));
@@ -64,7 +64,7 @@ Registers a callback for when the preloader starts hiding.
 
 ```ts
 const preloader = new Preloader({
-  container: document.getElementById("container")
+  container: document.getElementById('container'),
 });
 
 const cancelCallback = preloader.onHide(() => console.log('hide'));
@@ -77,7 +77,7 @@ Destroys the instance and cleans up resources.
 
 ```ts
 const preloader = new Preloader({
-  container: document.getElementById("container")
+  container: document.getElementById('container'),
 });
 
 preloader.destroy();

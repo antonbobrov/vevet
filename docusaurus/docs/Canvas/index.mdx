@@ -6,18 +6,16 @@ toc_max_heading_level: 6
 
 # Canvas
 
-The **Canvas** class simplifies working with an HTML5 Canvas element and its 2D rendering context. 
-
-
+The **Canvas** class simplifies working with an HTML5 Canvas element and its 2D rendering context.
 
 ## Basic Demo
 
-<iframe 
+<iframe
   height="450"
   style={{
-    width: '100%'
-  }} 
-  scrolling="no" 
+    width: '100%',
+  }}
+  scrolling="no"
   title="Vevet Demo"
   src="https://codepen.io/anton-bobrov/embed/bNNbKXE?default-tab=result"
   frameborder="no"
@@ -25,21 +23,20 @@ The **Canvas** class simplifies working with an HTML5 Canvas element and its 2D 
   allowtransparency="true"
   allowfullscreen="true"
 >
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/bNNbKXE">Vevet Demo</a> by Anton Bobrov.
+  See the Pen{' '}
+  <a href="https://codepen.io/anton-bobrov/pen/bNNbKXE">Vevet Demo</a> by Anton
+  Bobrov.
 </iframe>
-
-
 
 ## Overview
 
 This class provides a streamlined approach to handling a canvas by:
+
 - Automatically creating the `<canvas>` element.
 - Managing resizing based on viewport or container size.
 - Offering access to useful properties like `width`, `height`, `dpr`, and `context`.
 - Supporting both automatic and manual resizing.
 - Implementing conditional rendering to prevent errors when the canvas is invisible or has zero size.
-
-
 
 ## Initialization
 
@@ -74,12 +71,12 @@ Render your content:
 ```js
 const render = ({ ctx, width, height }) => {
   ctx.beginPath();
-  ctx.fillStyle = "#f8f9ff";
+  ctx.fillStyle = '#f8f9ff';
   ctx.fillRect(0, 0, width, height);
   ctx.closePath();
 
   ctx.beginPath();
-  ctx.fillStyle = "#0D6EFD";
+  ctx.fillStyle = '#0D6EFD';
   ctx.fillRect(10, 10, 50, 50);
   ctx.closePath();
 };
@@ -88,7 +85,7 @@ const render = ({ ctx, width, height }) => {
 instance.render(render);
 
 // render on each resize
-instance.on("resize", () => instance.render(render));
+instance.on('resize', () => instance.render(render));
 ```
 
 Destroy the canvas
@@ -96,8 +93,6 @@ Destroy the canvas
 ```js
 instance.destroy();
 ```
-
-
 
 ## Best Practices
 

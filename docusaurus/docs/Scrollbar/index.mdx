@@ -10,16 +10,14 @@ A customizable scrollbar component for both window and HTMLElement containers.
 
 Provides scroll tracking, drag support, auto-sizing, and built-in styling.
 
-
-
 ## Basic Demo
 
-<iframe 
+<iframe
   height="400"
   style={{
-    width: '100%'
-  }} 
-  scrolling="no" 
+    width: '100%',
+  }}
+  scrolling="no"
   title="Vevet Demo"
   src="https://codepen.io/anton-bobrov/embed/XJJrYYa?default-tab=result"
   frameborder="no"
@@ -27,18 +25,17 @@ Provides scroll tracking, drag support, auto-sizing, and built-in styling.
   allowtransparency="true"
   allowfullscreen="true"
 >
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/XJJrYYa">Vevet Demo</a> by Anton Bobrov.
+  See the Pen{' '}
+  <a href="https://codepen.io/anton-bobrov/pen/XJJrYYa">Vevet Demo</a> by Anton
+  Bobrov.
 </iframe>
-
-
 
 ## More demos
 
 To explore more demos, click [here](./demos).
 
-
-
 ## Features
+
 - Supports both window-level and nested scrolling
 - Draggable scrollbar thumb
 - Configurable size and minimum thumb size
@@ -51,7 +48,6 @@ To explore more demos, click [here](./demos).
 To prevent layout shifts, native scrollbars should be hidden via CSS:
 
 ```css
-
 .your_container {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -64,9 +60,8 @@ To prevent layout shifts, native scrollbars should be hidden via CSS:
   }
 }
 ```
+
 :::
-
-
 
 ## Initialization
 
@@ -79,7 +74,7 @@ Create separate instances for horizontal and vertical scrolling.
 Basic usage:
 
 ```js
-import { Scrollbar } from "vevet";
+import { Scrollbar } from 'vevet';
 
 const y = new Scrollbar();
 

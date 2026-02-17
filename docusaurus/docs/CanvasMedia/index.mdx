@@ -10,16 +10,14 @@ toc_max_heading_level: 6
 It does not replace video or image playback, but prepares rasterized content
 for performant reuse in animations, effects, and transitions.
 
-
-
 ## Basic Demo
 
-<iframe 
+<iframe
   height="500"
   style={{
-    width: '100%'
-  }} 
-  scrolling="no" 
+    width: '100%',
+  }}
+  scrolling="no"
   title="Vevet Demo"
   src="https://codepen.io/anton-bobrov/embed/vEEBroM?default-tab=result"
   frameborder="no"
@@ -27,24 +25,25 @@ for performant reuse in animations, effects, and transitions.
   allowtransparency="true"
   allowfullscreen="true"
 >
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/vEEBroM">Vevet Demo</a> by Anton Bobrov.
+  See the Pen{' '}
+  <a href="https://codepen.io/anton-bobrov/pen/vEEBroM">Vevet Demo</a> by Anton
+  Bobrov.
 </iframe>
-
-
 
 ## Initialization
 
 :::caution
+
 - The provided `media` **must be fully loaded** before initialization.
 - `CanvasMedia` does not handle media loading internally.
-:::
+  :::
 
 Create a CanvasMedia instance and prerender an image inside it:
 
 ```js
 const instance = new CanvasMedia({
-  container: document.getElementById("container"),
-  media: document.querySelector("img"),
+  container: document.getElementById('container'),
+  media: document.querySelector('img'),
   append: false,
 });
 ```
@@ -53,8 +52,8 @@ Or video:
 
 ```js
 const instance = new CanvasMedia({
-  container: document.getElementById("container"),
-  media: document.querySelector("video"),
+  container: document.getElementById('container'),
+  media: document.querySelector('video'),
   append: true,
 });
 ```
@@ -62,8 +61,8 @@ const instance = new CanvasMedia({
 Handle when your resource is rendered:
 
 ```js
-instance.on("render", () => {
-  console.log("do something with your canvas", instance.canvas);
+instance.on('render', () => {
+  console.log('do something with your canvas', instance.canvas);
 });
 ```
 
@@ -72,8 +71,6 @@ Destroy the canvas:
 ```js
 instance.destroy();
 ```
-
-
 
 ## Best Practices
 

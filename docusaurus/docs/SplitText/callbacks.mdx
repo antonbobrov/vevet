@@ -19,11 +19,14 @@ All **[Module callbacks](/docs/base/Module/#callbacks)** are available in this c
 Called before the text is split.
 
 ```ts
-const text = new SplitText({
-  container
-}, {
-  onBeforeSplit: () => console.log('before split'),
-});
+const text = new SplitText(
+  {
+    container,
+  },
+  {
+    onBeforeSplit: () => console.log('before split'),
+  },
+);
 ```
 
 or:
@@ -40,11 +43,14 @@ destruct();
 Called after the text has been split.
 
 ```ts
-const text = new SplitText({
-  container
-}, {
-  onSplit: () => console.log('split'),
-});
+const text = new SplitText(
+  {
+    container,
+  },
+  {
+    onSplit: () => console.log('split'),
+  },
+);
 ```
 
 or:

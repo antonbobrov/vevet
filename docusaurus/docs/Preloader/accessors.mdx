@@ -20,12 +20,13 @@ Type: `boolean`
 
 Returns whether the preloader is currently hidden.  
 This becomes `true` only after:
-- the page is fully loaded, and  
+
+- the page is fully loaded, and
 - the hiding animation (automatic or manual) is completed.
 
 ```js
 const preloader = new Preloader({
-  container: document.getElementById("container")
+  container: document.getElementById('container'),
 });
 
 preloader.isHidden; // detect final hidden state

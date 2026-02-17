@@ -19,9 +19,12 @@ All **[Module callbacks](/docs/base/Module/#callbacks)** are available in this c
 Triggered when the timeline starts.
 
 ```ts
-const tm = new Timeline({ }, {
-  onStart: () => console.log('start'),
-});
+const tm = new Timeline(
+  {},
+  {
+    onStart: () => console.log('start'),
+  },
+);
 ```
 
 or:
@@ -38,16 +41,20 @@ destruct();
 Triggered on every timeline update.
 
 Provides both:
+
 - `progress` — linear progress (`0 → 1`)
-- `eased` — progress with easing applied  
+- `eased` — progress with easing applied
 
 ```ts
-const tm = new Timeline({ }, {
-  onUpdate: ({ progress, eased }) => {
-    // progress — linear
-    // eased — eased value
-  }
-});
+const tm = new Timeline(
+  {},
+  {
+    onUpdate: ({ progress, eased }) => {
+      // progress — linear
+      // eased — eased value
+    },
+  },
+);
 ```
 
 or:
@@ -62,6 +69,7 @@ destruct();
 ```
 
 This allows you to:
+
 - use `progress` for logic,
 - use `eased` for animation interpolation.
 
@@ -70,9 +78,12 @@ This allows you to:
 Triggered when the timeline completes.
 
 ```ts
-const tm = new Timeline({ }, {
-  onEnd: () => console.log('end'),
-});
+const tm = new Timeline(
+  {},
+  {
+    onEnd: () => console.log('end'),
+  },
+);
 ```
 
 or:

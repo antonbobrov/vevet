@@ -7,20 +7,19 @@ toc_max_heading_level: 6
 # ProgressPreloader
 
 Page preloader for **tracking and displaying** the loading progress of resources (images, videos, custom elements).
+
 - Takes images and videos into account
 - Supports virtual resources
 - Calculates smooth loading progress for better animations.
 
-
-
 ## Basic Demo
 
-<iframe 
+<iframe
   height="600"
   style={{
-    width: '100%'
-  }} 
-  scrolling="no" 
+    width: '100%',
+  }}
+  scrolling="no"
   title="Vevet Demo"
   src="https://codepen.io/anton-bobrov/embed/VYYZdQG?default-tab=result"
   frameborder="no"
@@ -28,23 +27,20 @@ Page preloader for **tracking and displaying** the loading progress of resources
   allowtransparency="true"
   allowfullscreen="true"
 >
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/VYYZdQG">Vevet Demo</a> by Anton Bobrov.
+  See the Pen{' '}
+  <a href="https://codepen.io/anton-bobrov/pen/VYYZdQG">Vevet Demo</a> by Anton
+  Bobrov.
 </iframe>
-
-
 
 ## More demos
 
 To explore more demos, click [here](./demos).
 
-
-
 ## Features
+
 - Smooth progress calculation based on observed loading state.
 - Custom resource weight.
 - Virtual resources for manual or async progress control.
-
-
 
 ## Initialization
 
@@ -75,12 +71,12 @@ The module does not provide styling for the container.
 ```
 
 ```js
-import { ProgressPreloader } from "vevet";
+import { ProgressPreloader } from 'vevet';
 
 const preloader = new ProgressPreloader(
   {
-    container: document.getElementById("preloader"),
-    hide: 700
+    container: document.getElementById('preloader'),
+    hide: 700,
   },
   {
     onProgress: () => {
@@ -89,8 +85,8 @@ const preloader = new ProgressPreloader(
       const html = `${percent.toFixed(0)}%`;
 
       progressElement.innerHTML = html;
-    }
-  }
+    },
+  },
 );
 ```
 
@@ -115,8 +111,6 @@ Destroy the preloader:
 ```js
 preloader.destroy();
 ```
-
-
 
 ## Best Practices
 

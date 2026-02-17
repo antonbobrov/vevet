@@ -14,168 +14,176 @@ import Head from '@docusaurus/Head';
 
 Static properties are set during initialization and cannot be modified later.
 
-### `container` {#props.container}  
+### `container` {#props.container}
+
 - **Type:** `HTMLElement | SVGElement`
 - Event listener container.
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container")
+  container: document.getElementById('container'),
 });
 ```
 
-### `thumb` {#props.thumb}  
+### `thumb` {#props.thumb}
+
 - **Type:** `HTMLElement | SVGElement | null`
-- **Default:** `null`  
+- **Default:** `null`
 - An element that triggers swipe start.  
   Movement is still calculated relative to the container — `thumb` only defines where a user can grab.
 - **See [demo](demos#lever-rotation)**
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
-  thumb: document.getElementById("thumb")
+  container: document.getElementById('container'),
+  thumb: document.getElementById('thumb'),
 });
 ```
 
-### `buttons` {#props.buttons}  
-- **Type:** `number[]`  
-- **Default:** `[0]`  
-- Determines which mouse buttons trigger events.  
-  - 0: Main button pressed, usually the left button or the un-initialized state  
-  - 1: Auxiliary button pressed, usually the wheel button or the middle button (if present)  
-  - 2: Secondary button pressed, usually the right button  
-  - 3: Fourth button, typically the Browser Back button  
-  - 4: Fifth button, typically the Browser Forward button  
+### `buttons` {#props.buttons}
+
+- **Type:** `number[]`
+- **Default:** `[0]`
+- Determines which mouse buttons trigger events.
+  - 0: Main button pressed, usually the left button or the un-initialized state
+  - 1: Auxiliary button pressed, usually the wheel button or the middle button (if present)
+  - 2: Secondary button pressed, usually the right button
+  - 3: Fourth button, typically the Browser Back button
+  - 4: Fifth button, typically the Browser Forward button
 - See [MouseEvent.button](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button).
 - **See [demo](demos#right-click-drag)**
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
+  container: document.getElementById('container'),
   buttons: [0], // left button click
   buttons: [2], // right button click
   buttons: [0, 2], // both buttons click
 });
 ```
 
-### `pointers` {#props.pointers}  
-- **Type:** `number`  
-- **Default:** `1`  
+### `pointers` {#props.pointers}
+
+- **Type:** `number`
+- **Default:** `1`
 - Required pointer count to activate swiping.  
   Useful for touch gestures such as two-finger.  
   If fewer pointers are present, swipe will not start.
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
+  container: document.getElementById('container'),
   pointers: 2, // means that swipe will start only with two fingers
 });
 ```
-
-
 
 ## Mutable Props
 
 Mutable properties can be updated at runtime using `.updateProps()`.
 
 ### `enabled` {#props.enabled}
-- **Type:** `boolean`  
-- **Default:** `true`  
+
+- **Type:** `boolean`
+- **Default:** `true`
 - Enables or disables swipe events.
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
-  enabled: false
+  container: document.getElementById('container'),
+  enabled: false,
 });
 
 // change value
 observer.updateProps({
-  enabled: true
+  enabled: true,
 });
 ```
 
 ### `relative` {#props.relative}
-- **Type:** `boolean`  
-- **Default:** `false`  
-- Calculates coordinates relative to the container rather than the page. 
+
+- **Type:** `boolean`
+- **Default:** `false`
+- Calculates coordinates relative to the container rather than the page.
 - **See [demo](demos#rotation-swipe)**
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
-  relative: true
+  container: document.getElementById('container'),
+  relative: true,
 });
 
 // change value
 observer.updateProps({
-  relative: false
+  relative: false,
 });
 ```
 
 ### `axis` {#props.axis}
-- **Type:** `null | 'x' | 'y'`  
-- **Default:** `null`  
+
+- **Type:** `null | 'x' | 'y'`
+- **Default:** `null`
 - Primary swiping axis.
 - **See [demo](demos#basic-demo)**
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
-  axis: "x"
+  container: document.getElementById('container'),
+  axis: 'x',
 });
 
 // change value
 observer.updateProps({
-  axis: "y"
+  axis: 'y',
 });
 ```
 
 ### `ratio` {#props.ratio}
-- **Type:** `number`  
-- **Default:** `1`  
+
+- **Type:** `number`
+- **Default:** `1`
 - Swipe move ratio (speed multiplier).
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
-  ratio: 1
+  container: document.getElementById('container'),
+  ratio: 1,
 });
 
 // change value
 observer.updateProps({
-  ratio: 2
+  ratio: 2,
 });
 ```
 
 ### `grabCursor` {#props.grabCursor}
-- **Type:** `boolean`  
-- **Default:** `false`  
+
+- **Type:** `boolean`
+- **Default:** `false`
 - Shows "grab" and "grabbing" cursors during interaction.
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
-  grabCursor: true
+  container: document.getElementById('container'),
+  grabCursor: true,
 });
 
 // change value
 observer.updateProps({
-  grabCursor: false
+  grabCursor: false,
 });
 ```
 
 ### `willAbort` {#props.willAbort}
-- **Type:** `(props: ISwipeCanMoveArg) => boolean`  
-- **Default:** `() => false`  
+
+- **Type:** `(props: ISwipeCanMoveArg) => boolean`
+- **Default:** `() => false`
 - Runs before swipe starts and determines whether the gesture should be blocked.  
   Allows disabling swipe in specific UI states or when gesture conditions are not met.
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
-  willAbort: () => false
+  container: document.getElementById('container'),
+  willAbort: () => false,
 });
 
 // change value
@@ -185,219 +193,232 @@ observer.updateProps({
 ```
 
 ### `threshold` {#props.threshold}
-- **Type:** `number`  
-- **Default:** `5`  
+
+- **Type:** `number`
+- **Default:** `5`
 - Minimum swipe distance (px) to trigger swipe start.
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
-  threshold: 5
+  container: document.getElementById('container'),
+  threshold: 5,
 });
 
 // change value
 observer.updateProps({
-  threshold: 3
+  threshold: 3,
 });
 ```
 
 ### `minTime` {#props.minTime}
-- **Type:** `number`  
-- **Default:** `0`  
+
+- **Type:** `number`
+- **Default:** `0`
 - Minimum duration (ms) to trigger swipe move.
 - Means that user click the container, waits some time, and only then swipe is available.
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
-  minTime: 0
+  container: document.getElementById('container'),
+  minTime: 0,
 });
 
 // change value
 observer.updateProps({
-  minTime: 0
+  minTime: 0,
 });
 ```
 
 ### `directionThreshold` {#props.directionThreshold}
-- **Type:** `number`  
-- **Default:** `50`  
+
+- **Type:** `number`
+- **Default:** `50`
 - Minimum swipe distance (px) for directional callbacks.
 - Swipe supports direction detection (toTop, toBottom, toLeft, toRight).
 - To trigger a directional callback a user must swipe a certain amount of pixels - `directionThreshold`.
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
-  directionThreshold: 50
+  container: document.getElementById('container'),
+  directionThreshold: 50,
 });
 
 // change value
 observer.updateProps({
-  directionThreshold: 10
+  directionThreshold: 10,
 });
 ```
 
 ### `preventEdgeSwipe` {#props.preventEdgeSwipe}
-- **Type:** `boolean`  
-- **Default:** `true`  
+
+- **Type:** `boolean`
+- **Default:** `true`
 - Prevents edge swiping (iOS swipe-back gesture).
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
-  preventEdgeSwipe: true
+  container: document.getElementById('container'),
+  preventEdgeSwipe: true,
 });
 
 // change value
 observer.updateProps({
-  preventEdgeSwipe: false
+  preventEdgeSwipe: false,
 });
 ```
 
 ### `edgeSwipeThreshold` {#props.edgeSwipeThreshold}
-- **Type:** `number`  
-- **Default:** `20`  
+
+- **Type:** `number`
+- **Default:** `20`
 - Edge swipe threshold (px) from the left/right edge.
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
-  edgeSwipeThreshold: 20
+  container: document.getElementById('container'),
+  edgeSwipeThreshold: 20,
 });
 
 // change value
 observer.updateProps({
-  edgeSwipeThreshold: 25
+  edgeSwipeThreshold: 25,
 });
 ```
 
 ### `preventTouchMove` {#props.preventTouchMove}
-- **Type:** `boolean`  
+
+- **Type:** `boolean`
 - **Default:** `true`
 - Prevents `touchmove` from scrolling the page while swiping.  
   Recommended to keep enabled for horizontal/vertical drags inside scrollable layouts.
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
-  preventTouchMove: true
+  container: document.getElementById('container'),
+  preventTouchMove: true,
 });
 
 // change value
 observer.updateProps({
-  preventTouchMove: false
+  preventTouchMove: false,
 });
 ```
 
 ### `requireCtrlKey` {#props.requireCtrlKey}
-- **Type:** `boolean`  
-- **Default:** `false`  
+
+- **Type:** `boolean`
+- **Default:** `false`
 - Requires Ctrl key for swipe (mouse only).
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
-  requireCtrlKey: true
+  container: document.getElementById('container'),
+  requireCtrlKey: true,
 });
 
 // change value
 observer.updateProps({
-  requireCtrlKey: false
+  requireCtrlKey: false,
 });
 ```
 
 ### `inertia` {#props.inertia}
-- **Type:** `boolean`  
-- **Default:** `false`  
+
+- **Type:** `boolean`
+- **Default:** `false`
 - Enables inertia animation.
 - **See [demo](demos#drag-inertia)**
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
-  inertia: true
+  container: document.getElementById('container'),
+  inertia: true,
 });
 
 // change value
 observer.updateProps({
-  inertia: false
+  inertia: false,
 });
 ```
 
 ### `inertiaDuration` {#props.inertiaDuration}
-- **Type:** `(distance: number) => number`  
-- **Default:** `(distance) => clamp(distance, 500, 2000)`  
+
+- **Type:** `(distance: number) => number`
+- **Default:** `(distance) => clamp(distance, 500, 2000)`
 - Inertia duration.
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
-  inertiaDuration: (distance) => clamp(distance, 500, 2000)
+  container: document.getElementById('container'),
+  inertiaDuration: (distance) => clamp(distance, 500, 2000),
 });
 
 // change value
 observer.updateProps({
-  inertiaDuration: 500
+  inertiaDuration: 500,
 });
 ```
 
 ### `inertiaEasing` {#props.inertiaEasing}
-- **Type:** `TEasingType`  
-- **Default:** `EaseOutCubic`  
-- Easing function for inertia.  
+
+- **Type:** `TEasingType`
+- **Default:** `EaseOutCubic`
+- Easing function for inertia.
 - See **[easing types](/docs/utils#easing-types)** for more information.
 - **See [demo](demos#drag-inertia-bounce)**
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
-  inertiaEasing: EaseOutCubic
+  container: document.getElementById('container'),
+  inertiaEasing: EaseOutCubic,
 });
 
 // change value
 observer.updateProps({
-  inertiaEasing: EaseOutBack
+  inertiaEasing: EaseOutBack,
 });
 ```
 
 ### `velocityModifier` {#props.velocityModifier}
-- **Type:** `false` | `((velocity: ISwipeMatrix) => ISwipeMatrix)`  
-- **Default:** `false`  
+
+- **Type:** `false` | `((velocity: ISwipeMatrix) => ISwipeMatrix)`
+- **Default:** `false`
 - Final velocity modifier. Accepts and returns additional movement.
 - **See [demo](demos#drag-inertia)**
 
 ### `inertiaRatio` {#props.inertiaRatio}
-- **Type:** `number`  
-- **Default:** `1`  
+
+- **Type:** `number`
+- **Default:** `1`
 - Inertia strength.
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
-  inertiaRatio: 1
+  container: document.getElementById('container'),
+  inertiaRatio: 1,
 });
 
 // change value
 observer.updateProps({
-  inertiaRatio: 2
+  inertiaRatio: 2,
 });
 ```
 
 ### `inertiaDistanceThreshold` {#props.inertiaDistanceThreshold}
-- **Type:** `number`  
-- **Default:** `50`  
+
+- **Type:** `number`
+- **Default:** `50`
 - Minimum computed movement required to trigger inertia.  
   If movement is smaller than this value, inertia will not play.
 
 ```js
 const observer = new Swipe({
-  container: document.getElementById("container"),
-  inertiaDistanceThreshold: 50
+  container: document.getElementById('container'),
+  inertiaDistanceThreshold: 50,
 });
 
 // change value
 observer.updateProps({
-  inertiaDistanceThreshold: 30
+  inertiaDistanceThreshold: 30,
 });
 ```

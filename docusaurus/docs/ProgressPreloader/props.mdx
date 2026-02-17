@@ -19,20 +19,22 @@ All **[Preloader's props](/docs/Preloader/props)** are available in this class.
 Static properties are set during initialization and cannot be modified later.
 
 ### `resourceContainer` {#props.resourceContainer}
-- **Type:** `HTMLElement` | `null`  
-- **Default:** `null`  
+
+- **Type:** `HTMLElement` | `null`
+- **Default:** `null`
 - Container source for preloader resources.
 
 ```js
 const preloader = new ProgressPreloader({
-  container: document.getElementById("container"),
-  resourceContainer: document.getElementById("resource-container"),
+  container: document.getElementById('container'),
+  resourceContainer: document.getElementById('resource-container'),
 });
 ```
 
 ### `preloadImages` {#props.preloadImages}
-- **Type:** `boolean`  
-- **Default:** `true`  
+
+- **Type:** `boolean`
+- **Default:** `true`
 - Enables automatic **tracking** of image loading.
 - Ignores lazy images.
 - Does not initiate network requests or load resources manually.
@@ -40,28 +42,30 @@ const preloader = new ProgressPreloader({
 
 ```js
 const preloader = new ProgressPreloader({
-  container: document.getElementById("container"),
+  container: document.getElementById('container'),
   preloadImages: true,
 });
 ```
 
 ### `preloadVideos` {#props.preloadVideos}
-- **Type:** `boolean`  
-- **Default:** `false`  
+
+- **Type:** `boolean`
+- **Default:** `false`
 - Enables automatic **tracking** of video loading progress.
 - Does not force video loading — only observes existing load state.
 
 ```js
 const preloader = new ProgressPreloader({
-  container: document.getElementById("container"),
+  container: document.getElementById('container'),
   preloadVideos: false,
 });
 ```
 
 ### `customSelector` {#props.customSelector}
-- **Type:** `string`  
-- **Default:** `'.js-preload'`  
-- Selector for virtual resources to preload.  
+
+- **Type:** `string`
+- **Default:** `'.js-preload'`
+- Selector for virtual resources to preload.
 - Elements should have `data-weight` and `data-loaded` attributes.  
   Preloader observes `data-loaded` changes and recalculates progress accordingly.  
   The actual loading logic must be handled externally.
@@ -70,7 +74,7 @@ const preloader = new ProgressPreloader({
 
 ```js
 const preloader = new ProgressPreloader({
-  container: document.getElementById("container"),
+  container: document.getElementById('container'),
   customSelector: '.js-preload',
 });
 ```
@@ -80,13 +84,14 @@ const preloader = new ProgressPreloader({
 ```
 
 ### `ignoreClassName` {#props.ignoreClassName}
-- **Type:** `string`  
-- **Default:** `'js-preload-ignore'`  
+
+- **Type:** `string`
+- **Default:** `'js-preload-ignore'`
 - Class name for elements to exclude from preloading.
 
 ```js
 const preloader = new ProgressPreloader({
-  container: document.getElementById("container"),
+  container: document.getElementById('container'),
   ignoreClassName: 'js-preload-ignore',
 });
 ```
@@ -97,30 +102,32 @@ const preloader = new ProgressPreloader({
 ```
 
 ### `lerp` {#props.lerp}
-- **Type:** `number`  
-- **Default:** `0.1`  
+
+- **Type:** `number`
+- **Default:** `0.1`
 - Controls how smoothly the visible progress value ([progress](accessors#progress)) interpolates toward the real loading progress ([loadProgress](accessors#loadprogress)).
-- Lower values → slower, smoother animation.  
+- Lower values → slower, smoother animation.
 - `1` disables interpolation and makes `progress` equal to `loadProgress` every frame.
 - This affects only **visual animation**, not the real loading state.
 
 ```js
 const preloader = new ProgressPreloader({
-  container: document.getElementById("container"),
+  container: document.getElementById('container'),
   lerp: 0.1, // smooth progress animation
   lerp: 1, // instant progress change
 });
 ```
 
 ### `endDuration` {#props.endDuration}
-- **Type:** `number`  
-- **Default:** `500`  
+
+- **Type:** `number`
+- **Default:** `500`
 - Duration (in ms) for a forced completion animation when all resources are loaded but the current interpolated [progress](accessors#progress) is still below `1`.  
   This creates a smooth "finish animation" even if the last resources load instantly
 
 ```js
 const preloader = new ProgressPreloader({
-  container: document.getElementById("container"),
-  endDuration: 500
+  container: document.getElementById('container'),
+  endDuration: 500,
 });
 ```

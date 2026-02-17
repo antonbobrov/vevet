@@ -15,37 +15,39 @@ import Head from '@docusaurus/Head';
 Mutable properties can be updated at runtime using `.updateProps()`.
 
 ### `fps` {#props.fps}
-- **Type:** `'auto' | number`  
-- **Default:** `'auto'`  
-- Frames per second (FPS) for the animation.  
-- `'auto'` dynamically adapts to real device refresh rate (60Hz / 90Hz / 120Hz / 144Hz / 240Hz).  
+
+- **Type:** `'auto' | number`
+- **Default:** `'auto'`
+- Frames per second (FPS) for the animation.
+- `'auto'` dynamically adapts to real device refresh rate (60Hz / 90Hz / 120Hz / 144Hz / 240Hz).
 - Throttling to a manual value (e.g. `30`) reduces CPU/GPU load.
 - **See [demo](demos#fps-throttling)**
 
 ```js
 const raf = new Raf({
-  fps: "auto"
+  fps: 'auto',
 });
 
 // change value
 raf.updateProps({
-  fps: 30
+  fps: 30,
 });
 ```
 
 ### `enabled` {#props.enabled}
-- **Type:** `boolean`  
-- **Default:** `false`  
+
+- **Type:** `boolean`
+- **Default:** `false`
 - Enables or disables the Raf animation loop.
 - **See [demo](demos#info)**
 
 ```js
 const raf = new Raf({
-  enabled: false
+  enabled: false,
 });
 
 // change value
 raf.updateProps({
-  enabled: true
+  enabled: true,
 });
 ```

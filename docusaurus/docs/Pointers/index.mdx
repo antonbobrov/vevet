@@ -8,16 +8,14 @@ toc_max_heading_level: 6
 
 Manages pointer events, including tracking multiple pointers, and emitting callbacks for pointer interactions.
 
-
-
 ## Basic Demo
 
-<iframe 
+<iframe
   height="600"
   style={{
-    width: '100%'
-  }} 
-  scrolling="no" 
+    width: '100%',
+  }}
+  scrolling="no"
   title="Vevet Demo"
   src="https://codepen.io/anton-bobrov/embed/OPNdJzd?default-tab=result"
   frameborder="no"
@@ -25,18 +23,16 @@ Manages pointer events, including tracking multiple pointers, and emitting callb
   allowtransparency="true"
   allowfullscreen="true"
 >
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/OPNdJzd">Vevet Demo</a> by Anton Bobrov.
+  See the Pen{' '}
+  <a href="https://codepen.io/anton-bobrov/pen/OPNdJzd">Vevet Demo</a> by Anton
+  Bobrov.
 </iframe>
-
-
 
 ## Callbacks
 
 :::note
 All **[Module callbacks](/docs/base/Module/#callbacks)** are available in this class.
 :::
-
-
 
 ## Initialization
 
@@ -62,9 +58,9 @@ If `touch-action` is missing, the browser may block pointer events such as `poin
 ```
 
 ```js
-import { Pointers } from "vevet";
+import { Pointers } from 'vevet';
 
-const container = document.getElementById("container");
+const container = document.getElementById('container');
 
 const pointers = new Pointers(
   {
@@ -73,19 +69,17 @@ const pointers = new Pointers(
   },
   {
     onPointermove: ({ pointer }) => {
-      console.log(pointer.current.x, pointer.current.y)
+      console.log(pointer.current.x, pointer.current.y);
     },
-  }
+  },
 );
 ```
 
-Destroy the pointers instance: 
+Destroy the pointers instance:
 
 ```js
 pointers.destroy();
 ```
-
-
 
 ## Best Practices
 

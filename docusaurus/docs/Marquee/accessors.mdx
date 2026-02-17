@@ -23,7 +23,7 @@ Total size of all elements in the marquee.
 ```js
 const marquee = new Marquee({ container });
 
-marquee.totalSize // returns scrollable size of marquee
+marquee.totalSize; // returns scrollable size of marquee
 ```
 
 ### `coord`
@@ -41,6 +41,6 @@ During `resize()`, the coordinate may be normalized to ensure correct looping.
 ```js
 const marquee = new Marquee({ container });
 
-marquee.coord // returns current marquee coordinate
+marquee.coord; // returns current marquee coordinate
 marquee.coord = 0; // reset to initial position
 ```

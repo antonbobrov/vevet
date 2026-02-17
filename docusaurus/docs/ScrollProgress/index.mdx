@@ -12,8 +12,6 @@ todo: examples
 
 This component can be used for creating scroll-based animations such as parallax effects.
 
-
-
 ## Props
 
 ### Static Props
@@ -21,28 +19,30 @@ This component can be used for creating scroll-based animations such as parallax
 Static properties are set during initialization and cannot be modified later.
 
 #### `section` {#props.section}
-- **Type:** `Element`  
+
+- **Type:** `Element`
 - The element whose scroll progress is tracked.
 
 #### `root` {#props.root}
-- **Type:** `Element | null`  
-- **Default:** `null`  
-- The root element used as a reference for scroll progress calculation.  
-- Usually the scroll container.  
+
+- **Type:** `Element | null`
+- **Default:** `null`
+- The root element used as a reference for scroll progress calculation.
+- Usually the scroll container.
 - If `null`, the viewport is used as the reference.
 
 #### `optimized` {#props.optimized}
-- **Type:** `boolean`  
-- **Default:** `true`  
-- If `true`, progress calculations occur only while the section is within the viewport or root element.  
+
+- **Type:** `boolean`
+- **Default:** `true`
+- If `true`, progress calculations occur only while the section is within the viewport or root element.
 - Improves performance by avoiding unnecessary calculations.
 
 #### `useSvh` {#props.useSvh}
-- **Type:** `boolean`  
-- **Default:** `false`  
+
+- **Type:** `boolean`
+- **Default:** `false`
 - If `true`, scroll progress is calculated based on the small viewport height (`svh` CSS unit) instead of the current viewport height (`vh` CSS unit).
-
-
 
 ## Accessors
 
@@ -98,8 +98,6 @@ Type: `{ height: number; left: number; top: number; width: number }`
 
 The bounds of the section element relative to the root element.
 
-
-
 ## Methods
 
 :::note
@@ -113,16 +111,17 @@ Calculates the section scroll progress relative to the root element.
 The function takes the top or left corner of the section as the reference point.
 
 **Parameters**
-  - `topThreshold: number`
+
+- `topThreshold: number`
   Top threshold of the section position.
 
-  - `rightThreshold: number`
+- `rightThreshold: number`
   Right threshold of the section position.
 
-  - `bottomThreshold: number`
+- `bottomThreshold: number`
   Bottom threshold of the section position.
 
-  - `leftThreshold: number`
+- `leftThreshold: number`
   Left threshold of the section position.
 
 ```ts
@@ -139,8 +138,6 @@ Updates the section and root bounds, and emits an update callback.
 ```ts
 instance.update();
 ```
-
-
 
 ## Callbacks
 

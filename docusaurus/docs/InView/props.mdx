@@ -15,8 +15,9 @@ import Head from '@docusaurus/Head';
 Static properties are set during initialization and cannot be modified later.
 
 ### `hasOut` {#props.hasOut}
-- **Type:** `boolean`  
-- **Default:** `true`  
+
+- **Type:** `boolean`
+- **Default:** `true`
 - Determines whether elements leaving the viewport should trigger an `out` event.
 - Set to `false` for one-time triggers to improve performance and reduce callback spam.
 - **See [demo](demos#in-out-animation)**
@@ -24,18 +25,19 @@ Static properties are set during initialization and cannot be modified later.
 ```js
 // Enable out events (default)
 const observer = new InView({
-  hasOut: true
+  hasOut: true,
 });
 
 // Disable out events for one-time triggers
 const observer = new InView({
-  hasOut: false
+  hasOut: false,
 });
 ```
 
 ### `maxInitialDelay` {#props.maxInitialDelay}
-- **Type:** `number`  
-- **Default:** `1000`  
+
+- **Type:** `number`
+- **Default:** `1000`
 - Sets the maximum delay (in milliseconds) for initial element visibility detection on page load.
 - The delay is calculated based on the element's position relative to the viewport, creating a staggered animation effect.
 - Elements closer to the viewport have shorter delays, while elements further away have longer delays (up to `maxInitialDelay`).
@@ -45,23 +47,24 @@ const observer = new InView({
 ```js
 // Stagger animations over 1 second (default)
 const observer = new InView({
-  maxInitialDelay: 1000
+  maxInitialDelay: 1000,
 });
 
 // Longer stagger effect
 const observer = new InView({
-  maxInitialDelay: 2000
+  maxInitialDelay: 2000,
 });
 
 // No initial delay
 const observer = new InView({
-  maxInitialDelay: 0
+  maxInitialDelay: 0,
 });
 ```
 
 ### `scrollDirection` {#props.scrollDirection}
-- **Type:** `'horizontal' | 'vertical'`  
-- **Default:** `'vertical'`  
+
+- **Type:** `'horizontal' | 'vertical'`
+- **Default:** `'vertical'`
 - Defines the primary scrolling axis used for delay calculations and direction detection.
 - Use `'horizontal'` for horizontal scrolling pages or carousels.
 - Direction values will be `'fromLeft'`/`'fromRight'` for horizontal, `'fromTop'`/`'fromBottom'` for vertical.
@@ -70,24 +73,23 @@ const observer = new InView({
 ```js
 // Vertical scrolling (default)
 const observer = new InView({
-  scrollDirection: 'vertical'
+  scrollDirection: 'vertical',
 });
 
 // Horizontal scrolling
 const observer = new InView({
-  scrollDirection: 'horizontal'
+  scrollDirection: 'horizontal',
 });
 ```
-
-
 
 ## Mutable Props
 
 Mutable properties can be updated at runtime using `.updateProps()`.
 
 ### `enabled` {#props.enabled}
-- **Type:** `boolean`  
-- **Default:** `true`  
+
+- **Type:** `boolean`
+- **Default:** `true`
 - Enables or disables the `IntersectionObserver` instance.
 - When disabled, no visibility events are triggered, but elements remain registered.
 - Useful for temporarily pausing observation without removing elements.
@@ -95,23 +97,24 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 
 ```js
 const observer = new InView({
-  enabled: false // Start disabled
+  enabled: false, // Start disabled
 });
 
 // Enable later
 observer.updateProps({
-  enabled: true
+  enabled: true,
 });
 
 // Disable temporarily
 observer.updateProps({
-  enabled: false
+  enabled: false,
 });
 ```
 
 ### `rootMargin` {#props.rootMargin}
-- **Type:** `string`  
-- **Default:** `'0% 0% -5% 0%'`  
+
+- **Type:** `string`
+- **Default:** `'0% 0% -5% 0%'`
 - Specifies the root margin offsets for the `IntersectionObserver`, allowing fine-tuned visibility detection.
 - The format is `'top right bottom left'` (same as CSS margin).
 - Negative values shrink the detection area, positive values expand it.
@@ -121,21 +124,21 @@ observer.updateProps({
 ```js
 // Default: trigger when 5% visible from bottom
 const observer = new InView({
-  rootMargin: '0% 0% -5% 0%'
+  rootMargin: '0% 0% -5% 0%',
 });
 
 // Trigger earlier (when 20% visible)
 observer.updateProps({
-  rootMargin: '0% 0% -20% 0%'
+  rootMargin: '0% 0% -20% 0%',
 });
 
 // Trigger later (only when fully visible)
 observer.updateProps({
-  rootMargin: '0% 0% 0% 0%'
+  rootMargin: '0% 0% 0% 0%',
 });
 
 // Trigger before element enters viewport
 observer.updateProps({
-  rootMargin: '0% 0% 10% 0%'
+  rootMargin: '0% 0% 10% 0%',
 });
 ```

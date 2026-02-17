@@ -19,59 +19,60 @@ All **[Canvas props](/docs/Canvas/props)** are available in this class.
 Static properties are set during initialization and cannot be modified later.
 
 ### `media` {#props.media}
-- **Type:**  
-  - `Canvas`  
-  - `HTMLImageElement`  
-  - `SVGImageElement`  
-  - `HTMLVideoElement`  
-  - `HTMLCanvasElement`  
+
+- **Type:**
+  - `Canvas`
+  - `HTMLImageElement`
+  - `SVGImageElement`
+  - `HTMLVideoElement`
+  - `HTMLCanvasElement`
 - The media element to be rendered. Accepts a Canvas instance or common media elements like images and videos.
 
 ```js
 const canvas = new CanvasMedia({
-  media: document.querySelector("img")
+  media: document.querySelector('img'),
 });
 ```
 
 ### `autoRenderVideo` {#props.autoRenderVideo}
-- **Type:** `boolean`  
-- **Default:** `true`  
+
+- **Type:** `boolean`
+- **Default:** `true`
 - If enabled, video frames are continuously re-rendered to the canvas.  
   Disable this option if you render manually or need to optimize performance.
 
 ```js
 const canvas = new CanvasMedia({
-  media: document.querySelector("video"),
+  media: document.querySelector('video'),
   autoRenderVideo: false,
 });
 ```
-
-
 
 ## Mutable Props
 
 Mutable properties can be changed at runtime via [.updateProps](#updateprops)
 
 ### `rule` {#props.rule}
-- **Type:**  
-  - `cover`  
-  - `contain`  
-  - `top-left`  
-  - `top-right`  
-  - `bottom-left`  
-  - `bottom-right`  
-  - `center`  
-- **Default:** `'cover'`  
+
+- **Type:**
+  - `cover`
+  - `contain`
+  - `top-left`
+  - `top-right`
+  - `bottom-left`
+  - `bottom-right`
+  - `center`
+- **Default:** `'cover'`
 - Defines how the media element is positioned within the canvas.
 
 ```js
 const canvas = new CanvasMedia({
-  media: document.querySelector("video"),
-  rule: "contain",
+  media: document.querySelector('video'),
+  rule: 'contain',
 });
 
 // change value
 canvas.updateProps({
-  rule: "bottom-right",
+  rule: 'bottom-right',
 });
 ```

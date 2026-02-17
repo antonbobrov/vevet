@@ -15,24 +15,26 @@ import Head from '@docusaurus/Head';
 Mutable properties can be updated at runtime using `.updateProps()`.
 
 ### `duration` {#props.duration}
-- **Type:** `number`  
-- **Default:** `1000`  
+
+- **Type:** `number`
+- **Default:** `1000`
 - Timeline duration in milliseconds. Only positive values are accepted.
 
 ```js
 const tm = new Timeline({
-  duration: 1000
+  duration: 1000,
 });
 
 // change value
 tm.updateProps({
-  duration: 500
+  duration: 500,
 });
 ```
 
 ### `easing` {#props.easing}
-- **Type:** `TEasingType`  
-- **Default:** `inherited from core settings` - [see settings](/docs/core/customization#modifying-settings). 
+
+- **Type:** `TEasingType`
+- **Default:** `inherited from core settings` - [see settings](/docs/core/customization#modifying-settings).
 - Easing function for timeline progression.  
   Accepts standard easing types or an array of bezier values.  
   Use `false` for linear progress.  
@@ -45,6 +47,6 @@ const tm = new Timeline({
 
 // change value
 tm.updateProps({
-  easing: EaseInOutCubic
+  easing: EaseInOutCubic,
 });
 ```

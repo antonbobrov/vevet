@@ -10,7 +10,7 @@ import Head from '@docusaurus/Head';
   <title>Snap Parallax | vevet.js</title>
 </Head>
 
-Snap does not modify element styles by default, but it provides a set of optional parallax utilities for DOM elements.  
+Snap does not modify element styles by default, but it provides a set of optional parallax utilities for DOM elements.
 
 Parallax effects are enabled using `data-` attributes.
 
@@ -18,16 +18,14 @@ Parallax effects are enabled using `data-` attributes.
 Do not apply parallax directly to the slide element. Use inner wrappers instead.
 :::
 
-
-
 ## Demos
 
-<iframe 
+<iframe
   height="500"
   style={{
-    width: '100%'
-  }} 
-  scrolling="no" 
+    width: '100%',
+  }}
+  scrolling="no"
   title="Vevet Demo"
   src="https://codepen.io/anton-bobrov/embed/gbrqRjZ?default-tab=result"
   frameborder="no"
@@ -35,15 +33,17 @@ Do not apply parallax directly to the slide element. Use inner wrappers instead.
   allowtransparency="true"
   allowfullscreen="true"
 >
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/gbrqRjZ">Vevet Demo</a> by Anton Bobrov.
+  See the Pen{' '}
+  <a href="https://codepen.io/anton-bobrov/pen/gbrqRjZ">Vevet Demo</a> by Anton
+  Bobrov.
 </iframe>
 
-<iframe 
+<iframe
   height="500"
   style={{
-    width: '100%'
-  }} 
-  scrolling="no" 
+    width: '100%',
+  }}
+  scrolling="no"
   title="Vevet Demo"
   src="https://codepen.io/anton-bobrov/embed/gbrqRXB?default-tab=result"
   frameborder="no"
@@ -51,10 +51,10 @@ Do not apply parallax directly to the slide element. Use inner wrappers instead.
   allowtransparency="true"
   allowfullscreen="true"
 >
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/gbrqRXB">Vevet Demo</a> by Anton Bobrov.
+  See the Pen{' '}
+  <a href="https://codepen.io/anton-bobrov/pen/gbrqRXB">Vevet Demo</a> by Anton
+  Bobrov.
 </iframe>
-
-
 
 ## Parallax Effects
 
@@ -78,8 +78,6 @@ Each parallax attribute maps directly to a corresponding CSS transform (or opaci
 
 All effect attributes accept numbers or any supported CSS unit.
 
-
-
 ## Parallax Timeline (scope)
 
 By default, parallax values are applied while the slide transition progress is between `-1` and `1`.
@@ -87,6 +85,7 @@ By default, parallax values are applied while the slide transition progress is b
 You can inspect slide progress in **[this demo](/docs/Snap/basic-demos#progress)**.
 
 To change the active range, use the `data-snap-parallax-scope` attribute:
+
 - numeric range like `data-snap-parallax-scope="-2, 2"`
 - infinite range like `data-snap-parallax-scope="none"` or `data-snap-parallax-scope="-Infinity, Infinity"`
 - constant range like `data-snap-parallax-scope="const"` `data-snap-parallax-scope="1,1"`; should be used with `data-snap-parallax-[effect]-influence`
@@ -116,8 +115,6 @@ The scope applies to all parallax effects inside a slide unless overridden per e
 </div>
 ```
 
-
-
 ## Parallax Strength (influence)
 
 Use `data-snap-parallax-[effect]-influence` to apply the effect only during dragging or wheeling.
@@ -126,18 +123,16 @@ The parallax value will smoothly increase or decrease based on interaction inten
 
 ```html
 <div class="slide">
-  <div 
-    class="wrap" 
-    data-snap-parallax-skew="-200" 
-    data-snap-parallax-skew-scope="1,1" 
+  <div
+    class="wrap"
+    data-snap-parallax-skew="-200"
+    data-snap-parallax-skew-scope="1,1"
     data-snap-parallax-skew-influence
   >
     Slide Info
   </div>
 </div>
 ```
-
-
 
 ## Positive Values
 
@@ -157,11 +152,9 @@ This is useful for properties like `scale()` where negative values are undesirab
 </div>
 ```
 
-
-
 ## Clamping (min-max)
 
-data-snap-parallax-[effect]-min` and `data-snap-parallax-[effect]-max` clamp the **final computed parallax value**, preventing it from going below or above the defined bounds:
+data-snap-parallax-[effect]-min`and`data-snap-parallax-[effect]-max` clamp the **final computed parallax value**, preventing it from going below or above the defined bounds:
 
 ```html
 <div class="slide">
@@ -178,8 +171,6 @@ data-snap-parallax-[effect]-min` and `data-snap-parallax-[effect]-max` clamp the
   </div>
 </div>
 ```
-
-
 
 ## Value Offset
 
@@ -201,18 +192,16 @@ This might be useful for reverse animations.
 </div>
 ```
 
-
-
 ## Direction
 
 `data-snap-parallax-[effect]-directional` adjusts the value’s sign automatically based on the scroll direction.
 
 ```html
 <div class="slide">
-  <div 
-    class="wrap" 
-    data-snap-parallax-skew="-200" 
-    data-snap-parallax-skew-scope="1,1" 
+  <div
+    class="wrap"
+    data-snap-parallax-skew="-200"
+    data-snap-parallax-skew-scope="1,1"
     data-snap-parallax-skew-influence
     data-snap-parallax-skew-directional
   >
@@ -220,8 +209,6 @@ This might be useful for reverse animations.
   </div>
 </div>
 ```
-
-
 
 ## Parallax example
 

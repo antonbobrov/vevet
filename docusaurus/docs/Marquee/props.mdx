@@ -15,42 +15,46 @@ import Head from '@docusaurus/Head';
 Static properties are set during initialization and cannot be modified later.
 
 ### `container` {#props.container}
-- **Type:** `HTMLElement`  
+
+- **Type:** `HTMLElement`
 - The container element that holds the marquee content.
 - **See [demo](demos#simple-demo)**
 
 ```js
 const marquee = new Marquee({
-  container: document.getElementById("marquee")
+  container: document.getElementById('marquee'),
 });
 ```
 
 ### `resizeDebounce` {#props.resizeDebounce}
-- **Type:** `number`  
-- **Default:** `0`  
+
+- **Type:** `number`
+- **Default:** `0`
 - The debounce delay for the resize event in milliseconds.
 
 ```js
 const marquee = new Marquee({
-  resizeDebounce: 100
+  resizeDebounce: 100,
 });
 ```
 
 ### `hasWillChange` {#props.hasWillChange}
-- **Type:** `boolean`  
-- **Default:** `true`  
+
+- **Type:** `boolean`
+- **Default:** `true`
 - Determines whether to apply the `will-change` CSS property to the marquee elements to optimize rendering. Setting this to `true` may improve performance.
 
 ```js
 const marquee = new Marquee({
-  hasWillChange: true
+  hasWillChange: true,
 });
 ```
 
 ### `cloneNodes` {#props.cloneNodes}
-- **Type:** `boolean`  
-- **Default:** `true`  
-- Indicates whether to clone the marquee nodes. 
+
+- **Type:** `boolean`
+- **Default:** `true`
+- Indicates whether to clone the marquee nodes.
 - Cloned nodes are recreated dynamically on every resize() call, if the content is not long enough to form a seamless loop.
 - In most cases clones are created during the initial setup, but on resize they may be recalculated and replaced.
 - All cloned nodes are fully removed when the instance is destroyed using `.destroy()`
@@ -58,19 +62,20 @@ const marquee = new Marquee({
 
 ```js
 const marquee = new Marquee({
-  cloneNodes: true
+  cloneNodes: true,
 });
 ```
 
 ### `direction` {#props.direction}
+
 - **Type:** `'horizontal' | 'vertical'`
-- **Default:** `'horizontal'`  
+- **Default:** `'horizontal'`
 - Indicates the direction of the marquee animation.
 - **See [demo](demos#vertical-marquee)**
 
 ```js
 const marquee = new Marquee({
-  direction: 'horizontal'
+  direction: 'horizontal',
 });
 ```
 
@@ -79,42 +84,45 @@ const marquee = new Marquee({
 Mutable properties can be updated at runtime using `.updateProps()`.
 
 ### `speed` {#props.speed}
-- **Type:** `number | string`  
-- **Default:** `1`  
+
+- **Type:** `number | string`
+- **Default:** `1`
 - The speed of the marquee animation. Supports CSS units like `px`, `rem`, `vw`, `vh`, `svh`. Negative speed reverses marquee animation.
 - **See [demo](demos#reverse-marquee)**
 
 ```js
 const marquee = new Marquee({
-  speed: 2
+  speed: 2,
 });
 
 // change value
 marquee.updateProps({
-  speed: '-1vw'
+  speed: '-1vw',
 });
 ```
 
 ### `gap` {#props.gap}
-- **Type:** `number | string`  
-- **Default:** `0`  
+
+- **Type:** `number | string`
+- **Default:** `0`
 - The gap between the marquee elements. Supports CSS units like `px`, `rem`, `vw`, `vh`, `svh`.
 - **See [demo](demos#with-css-units)**
 
 ```js
 const marquee = new Marquee({
-  gap: '1vw'
+  gap: '1vw',
 });
 
 // change value
 marquee.updateProps({
-  gap: 10
+  gap: 10,
 });
 ```
 
 ### `enabled` {#props.enabled}
-- **Type:** `boolean`  
-- **Default:** `true`  
+
+- **Type:** `boolean`
+- **Default:** `true`
 - Enables or disables the marquee animation.
 - When `enabled: false`, the internal requestAnimationFrame loop is paused, so the marquee stops updating.
 - While disabled, the marquee keeps its current coord value — animation resumes from the same position.
@@ -128,13 +136,14 @@ const marquee = new Marquee({
 
 // change value
 marquee.updateProps({
-  enabled: true
+  enabled: true,
 });
 ```
 
 ### `pauseOnHover` {#props.pauseOnHover}
-- **Type:** `boolean`  
-- **Default:** `false`  
+
+- **Type:** `boolean`
+- **Default:** `false`
 - Pauses the marquee when the mouse hovers over it.
 - **See [demo](demos#pause-on-hover)**
 
@@ -145,13 +154,14 @@ const marquee = new Marquee({
 
 // change value
 marquee.updateProps({
-  pauseOnHover: false
+  pauseOnHover: false,
 });
 ```
 
 ### `centered` {#props.centered}
-- **Type:** `boolean`  
-- **Default:** `false`  
+
+- **Type:** `boolean`
+- **Default:** `false`
 - Centers the marquee content within the container.
 
 ```js
@@ -161,13 +171,14 @@ const marquee = new Marquee({
 
 // change value
 marquee.updateProps({
-  centered: true
+  centered: true,
 });
 ```
 
 ### `adjustSpeed` {#props.adjustSpeed}
-- **Type:** `boolean`  
-- **Default:** `true`  
+
+- **Type:** `boolean`
+- **Default:** `true`
 - When needed, uses a dynamic FPS factor to adjust the speed of the marquee for consistent animation across different screens with unique frame rates.
 - **See [demo](demos#with-speed-adjustment)**
 
@@ -178,13 +189,14 @@ const marquee = new Marquee({
 
 // change value
 marquee.updateProps({
-  adjustSpeed: false
+  adjustSpeed: false,
 });
 ```
 
 ### `pauseOnOut` {#props.pauseOnOut}
-- **Type:** `boolean`  
-- **Default:** `true`  
+
+- **Type:** `boolean`
+- **Default:** `true`
 - Pauses the marquee when the mouse leaves the viewport.
 
 ```js
@@ -194,6 +206,6 @@ const marquee = new Marquee({
 
 // change value
 marquee.updateProps({
-  pauseOnOut: true
+  pauseOnOut: true,
 });
 ```

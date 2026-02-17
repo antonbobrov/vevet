@@ -6,15 +6,11 @@ sidebar_position: -900
 
 **Vevet.js** provides essential utilities for detecting and responding to the user’s environment.
 
-
-
 ## Features
 
 - **Viewport Detection** – Get detailed information about the user's viewport.
 - **Browser & OS Detection** – Identify the user's browser and operating system.
 - **Custom Callbacks** – Trigger actions on page load or viewport changes.
-
-
 
 ## Installation
 
@@ -45,13 +41,11 @@ https://cdn.jsdelivr.net/npm/vevet@5/lib/cdn/vevet.iife.min.js
 </script>
 ```
 
-
-
 ## Features
 
 Learn more in the **[Features Documentation](./features)**.
 
-## CSS Variables 
+## CSS Variables
 
 Vevet provides key CSS variables:
 

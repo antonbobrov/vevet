@@ -4,8 +4,6 @@ sidebar_position: -1000
 
 # Vevet.js
 
-
-
 ## Introduction
 
 Vevet.js is a flexible client-side JavaScript library for creative web development. Build stunning interactive experiences with&nbsp;a&nbsp;comprehensive toolkit of components and utilities.
@@ -17,14 +15,10 @@ The library consists of:
 
 - **[components](/docs/Marquee)**  
   A collection of abstract and functional modules such as loaders, scroll tools, split text, carousels, and more.
-  
 - **[base](/docs/base/Callbacks)**  
   Basic abstract classes.
-  
 - **[utils](/docs/utils)**  
   Lightweight internal utilities.
-
-
 
 ## Installation
 

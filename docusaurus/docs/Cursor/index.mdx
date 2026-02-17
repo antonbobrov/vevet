@@ -11,16 +11,14 @@ A customizable smooth cursor component with hover interactions.
 The cursor is rendered independently from the native pointer and smoothly interpolates
 its position, size, and appearance based on user input and hovered elements.
 
-
-
 ## Basic Demo
 
-<iframe 
+<iframe
   height="600"
   style={{
-    width: '100%'
-  }} 
-  scrolling="no" 
+    width: '100%',
+  }}
+  scrolling="no"
   title="Vevet Demo"
   src="https://codepen.io/anton-bobrov/embed/vEEBNWN?default-tab=result"
   frameborder="no"
@@ -28,15 +26,14 @@ its position, size, and appearance based on user input and hovered elements.
   allowtransparency="true"
   allowfullscreen="true"
 >
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/vEEBNWN">Vevet Demo</a> by Anton Bobrov.
+  See the Pen{' '}
+  <a href="https://codepen.io/anton-bobrov/pen/vEEBNWN">Vevet Demo</a> by Anton
+  Bobrov.
 </iframe>
-
-
 
 ## More demos
 
 To explore more demos, click [here](./demos).
-
 
 ## Advantages
 
@@ -47,27 +44,26 @@ To explore more demos, click [here](./demos).
 - Click recognition
 - Optional native cursor hiding
 
-
-
 ## Initialization
 
 Initialize the cursor:
 
 :::note
+
 - The cursor starts rendering automatically when `enabled: true`.
 - The native cursor is **not hidden by default** — use `hideNative: true` if needed.
 - Cursor visuals are created internally; styling should be applied via `.inner` or `.outer`.
-:::
+  :::
 
 ```js
-import { Cursor } from "vevet";
+import { Cursor } from 'vevet';
 
 const cursor = new Cursor({
   container: window,
   width: 60,
   height: 60,
   lerp: 0.1,
-  behavior: "default",
+  behavior: 'default',
 });
 ```
 
@@ -120,8 +116,6 @@ Destroy the cursor:
 ```js
 cursor.destroy();
 ```
-
-
 
 ## Best Practices
 

@@ -9,16 +9,14 @@ toc_max_heading_level: 6
 Snap is a flexible, low-level carousel handler focused on precise control over movement, snapping, and interaction logic.  
 It **does not impose layout or styling**, making it suitable for fully custom carousels and experimental UI patterns.
 
-
-
 ## Showcase
 
-<iframe 
+<iframe
   height="500"
   style={{
-    width: '100%'
-  }} 
-  scrolling="no" 
+    width: '100%',
+  }}
+  scrolling="no"
   title="Vevet Demo"
   src="https://codepen.io/anton-bobrov/embed/RNNjdxK?default-tab=result"
   frameborder="no"
@@ -26,15 +24,17 @@ It **does not impose layout or styling**, making it suitable for fully custom ca
   allowtransparency="true"
   allowfullscreen="true"
 >
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/RNNjdxK">Vevet Demo</a> by Anton Bobrov.
+  See the Pen{' '}
+  <a href="https://codepen.io/anton-bobrov/pen/RNNjdxK">Vevet Demo</a> by Anton
+  Bobrov.
 </iframe>
 
-<iframe 
+<iframe
   height="500"
   style={{
-    width: '100%'
-  }} 
-  scrolling="no" 
+    width: '100%',
+  }}
+  scrolling="no"
   title="Vevet Demo"
   src="https://codepen.io/anton-bobrov/embed/OPMzdaX?default-tab=result"
   frameborder="no"
@@ -42,15 +42,17 @@ It **does not impose layout or styling**, making it suitable for fully custom ca
   allowtransparency="true"
   allowfullscreen="true"
 >
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/OPMzdaX">Vevet Demo</a> by Anton Bobrov.
+  See the Pen{' '}
+  <a href="https://codepen.io/anton-bobrov/pen/OPMzdaX">Vevet Demo</a> by Anton
+  Bobrov.
 </iframe>
 
-<iframe 
+<iframe
   height="500"
   style={{
-    width: '100%'
-  }} 
-  scrolling="no" 
+    width: '100%',
+  }}
+  scrolling="no"
   title="Vevet Demo"
   src="https://codepen.io/anton-bobrov/embed/jEqdQZg?default-tab=result"
   frameborder="no"
@@ -58,16 +60,14 @@ It **does not impose layout or styling**, making it suitable for fully custom ca
   allowtransparency="true"
   allowfullscreen="true"
 >
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/jEqdQZg">Vevet Demo</a> by Anton Bobrov.
+  See the Pen{' '}
+  <a href="https://codepen.io/anton-bobrov/pen/jEqdQZg">Vevet Demo</a> by Anton
+  Bobrov.
 </iframe>
-
-
 
 ## More demos
 
 To explore more demos, click [here](./basic-demos).
-
-
 
 ## Advantages
 
@@ -81,8 +81,6 @@ To explore more demos, click [here](./basic-demos).
 - Built-in parallax utilities
 - Designed for highly customized layouts
 - and more...
-
-
 
 ## Initialization
 
@@ -123,16 +121,16 @@ Basic usage:
 ```
 
 ```js
-import { Snap } from "vevet";
+import { Snap } from 'vevet';
 
-const container = document.getElementById("carousel");
+const container = document.getElementById('carousel');
 
 const carousel = new Snap({
   container,
-  gap: 20
+  gap: 20,
 });
 
-carousel.on("update", () => {
+carousel.on('update', () => {
   carousel.slides.forEach(({ element, coord, isVisible }) => {
     element.style.transform = `translate(${coord}px, 0)`;
   });
