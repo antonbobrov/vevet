@@ -102,7 +102,7 @@ export class SnapSwipe extends SnapLogic {
       threshold: props.swipeThreshold,
       axis: this.axis === 'angle' ? null : this.axis,
       relative: this.axis === 'angle',
-      ratio: props.swipeSpeed,
+      ratio: this.axis === 'angle' ? 1 : props.swipeSpeed,
       inertiaDuration: props.swipeInertiaDuration,
       inertiaRatio: props.swipeInertiaRatio,
     };

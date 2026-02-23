@@ -12,7 +12,7 @@ export interface ISnapSwipeProps {
   grabCursor?: boolean;
 
   /**
-   * Speed factor for swipe movements
+   * Speed factor for swipe movements. Does not work when `swipeAxis="angle"`.
    * @default 1
    */
   swipeSpeed?: number;
