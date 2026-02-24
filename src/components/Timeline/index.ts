@@ -56,7 +56,7 @@ export class Timeline extends Module<TC, TS, TM> {
   private _isPaused: boolean;
 
   constructor(
-    props?: TS & TM,
+    props?: TS & TM & TModuleOnCallbacksProps<TC, Timeline>,
     onCallbacks?: TModuleOnCallbacksProps<TC, Timeline>,
   ) {
     super(props, onCallbacks as any);

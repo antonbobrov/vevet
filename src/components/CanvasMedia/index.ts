@@ -40,10 +40,10 @@ export class CanvasMedia extends Canvas<TC, TS, TM> {
   }
 
   constructor(
-    props?: TS & TM,
+    props?: TS & TM & TModuleOnCallbacksProps<TC, CanvasMedia>,
     onCallbacks?: TModuleOnCallbacksProps<TC, CanvasMedia>,
   ) {
-    super(props, onCallbacks as any);
+    super(props as any, onCallbacks as any);
 
     this._setMediaEvents();
   }

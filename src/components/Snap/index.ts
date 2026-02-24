@@ -89,7 +89,10 @@ export class Snap extends Module<TC, TS, TM> {
    */
   public $_targetIndex?: number;
 
-  constructor(props: TS & TM, onCallbacks?: TModuleOnCallbacksProps<TC, Snap>) {
+  constructor(
+    props: TS & TM & TModuleOnCallbacksProps<TC, Snap>,
+    onCallbacks?: TModuleOnCallbacksProps<TC, Snap>,
+  ) {
     super(props, onCallbacks as any);
 
     const { container, activeIndex } = this.props;

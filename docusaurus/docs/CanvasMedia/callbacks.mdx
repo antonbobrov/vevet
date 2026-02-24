@@ -23,15 +23,11 @@ All **[Canvas callbacks](/docs/Canvas/callbacks)** are available in this class.
 Fires when the canvas is rendered.
 
 ```ts
-const canvas = new CanvasMedia(
-  {
-    container: document.getElementById('container'),
-    media: document.querySelector('img'),
-  },
-  {
-    onRender: () => console.log('render'),
-  },
-);
+const canvas = new CanvasMedia({
+  container: document.getElementById('container'),
+  media: document.querySelector('img'),
+  onRender: () => console.log('render'),
+});
 ```
 
 or:

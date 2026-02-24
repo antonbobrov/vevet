@@ -10,25 +10,21 @@ export const ParallaxStickers: FC = () => {
       return undefined;
     }
 
-    const instance = new Snap(
-      {
-        container: ref.current,
-        centered: true,
-        loop: true,
-        gap: 20,
-        lerp: 0.2,
-        freemode: 'sticky',
-        swipeSpeed: 0.02,
+    const instance = new Snap({
+      container: ref.current,
+      centered: true,
+      loop: true,
+      gap: 20,
+      lerp: 0.2,
+      freemode: 'sticky',
+      swipeSpeed: 0.02,
+      onUpdate: (data, { slides }) => {
+        slides.forEach(({ element, coord, progress }) => {
+          element!.style.transform = `translateX(${coord}px)`;
+          element!.style.zIndex = `${-Math.floor(progress)}`;
+        });
       },
-      {
-        onUpdate: (data, { slides }) => {
-          slides.forEach(({ element, coord, progress }) => {
-            element!.style.transform = `translateX(${coord}px)`;
-            element!.style.zIndex = `${-Math.floor(progress)}`;
-          });
-        },
-      },
-    );
+    });
 
     return () => instance.destroy();
   }, []);

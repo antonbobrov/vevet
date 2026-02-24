@@ -50,7 +50,10 @@ export class Raf extends Module<TC, TS, TM> {
   /** Duration of the last frame in ms */
   private _duration = 0;
 
-  constructor(props?: TS & TM, onCallbacks?: TModuleOnCallbacksProps<TC, Raf>) {
+  constructor(
+    props?: TS & TM & TModuleOnCallbacksProps<TC, Raf>,
+    onCallbacks?: TModuleOnCallbacksProps<TC, Raf>,
+  ) {
     super(props, onCallbacks as any);
 
     // Initialize FPS

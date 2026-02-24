@@ -15,35 +15,31 @@ export const Ball: FC = () => {
     let xDir = 1;
     let yDir = 1;
 
-    const instance = new Swipe(
-      {
-        container: ref.current,
-        inertia: true,
-        grabCursor: true,
+    const instance = new Swipe({
+      container: ref.current,
+      inertia: true,
+      grabCursor: true,
+      onStart: () => {
+        xDir = 1;
+        yDir = 1;
       },
-      {
-        onStart: () => {
-          xDir = 1;
-          yDir = 1;
-        },
-        onMove: ({ step }) => {
-          if (instance.hasInertia) {
-            if (x >= vevet.width / 2 || x <= -vevet.width / 2) {
-              xDir *= -1;
-            }
-
-            if (y >= vevet.height / 2 || y <= -vevet.height / 2) {
-              yDir *= -1;
-            }
+      onMove: ({ step }) => {
+        if (instance.hasInertia) {
+          if (x >= vevet.width / 2 || x <= -vevet.width / 2) {
+            xDir *= -1;
           }
 
-          x = clamp(x + step.x * xDir, -vevet.width / 2, vevet.width / 2);
-          y = clamp(y + step.y * yDir, -vevet.height / 2, vevet.height / 2);
+          if (y >= vevet.height / 2 || y <= -vevet.height / 2) {
+            yDir *= -1;
+          }
+        }
 
-          instance.container.style.transform = `translate(${x}px, ${y}px)`;
-        },
+        x = clamp(x + step.x * xDir, -vevet.width / 2, vevet.width / 2);
+        y = clamp(y + step.y * yDir, -vevet.height / 2, vevet.height / 2);
+
+        instance.container.style.transform = `translate(${x}px, ${y}px)`;
       },
-    );
+    });
 
     return () => instance.destroy();
   }, []);

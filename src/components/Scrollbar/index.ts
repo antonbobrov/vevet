@@ -72,7 +72,7 @@ export class Scrollbar extends Module<TC, TS, TM> {
   private _isRtl = false;
 
   constructor(
-    props?: TS & TM,
+    props?: TS & TM & TModuleOnCallbacksProps<TC, Scrollbar>,
     onCallbacks?: TModuleOnCallbacksProps<TC, Scrollbar>,
   ) {
     super(props, onCallbacks as any);

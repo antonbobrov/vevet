@@ -10,28 +10,24 @@ export const Direction: FC = () => {
       return undefined;
     }
 
-    const instance = new Swipe(
-      {
-        container: ref.current,
+    const instance = new Swipe({
+      container: ref.current,
+      onStart: () => {
+        instance.container.innerHTML = 'start';
       },
-      {
-        onStart: () => {
-          instance.container.innerHTML = 'start';
-        },
-        onToLeft: () => {
-          instance.container.innerHTML = 'to left';
-        },
-        onToRight: () => {
-          instance.container.innerHTML = 'to right';
-        },
-        onToTop: () => {
-          instance.container.innerHTML = 'to top';
-        },
-        onToBottom: () => {
-          instance.container.innerHTML = 'to bottom';
-        },
+      onToLeft: () => {
+        instance.container.innerHTML = 'to left';
       },
-    );
+      onToRight: () => {
+        instance.container.innerHTML = 'to right';
+      },
+      onToTop: () => {
+        instance.container.innerHTML = 'to top';
+      },
+      onToBottom: () => {
+        instance.container.innerHTML = 'to bottom';
+      },
+    });
 
     return () => instance.destroy();
   }, []);

@@ -87,7 +87,7 @@ export class Cursor extends Module<TC, TS, TM> {
   private _path: CursorPath;
 
   constructor(
-    props?: TS & TM,
+    props?: TS & TM & TModuleOnCallbacksProps<TC, Cursor>,
     onCallbacks?: TModuleOnCallbacksProps<TC, Cursor>,
   ) {
     super(props, onCallbacks as any);

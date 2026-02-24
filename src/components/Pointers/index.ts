@@ -56,7 +56,7 @@ export class Pointers extends Module<TC, TS, TM> {
   private _pointersMap: Map<number, IPointersItem>;
 
   constructor(
-    props?: TS & TM,
+    props?: TS & TM & TModuleOnCallbacksProps<TC, Pointers>,
     onCallbacks?: TModuleOnCallbacksProps<TC, Pointers>,
   ) {
     super(props, onCallbacks as any);

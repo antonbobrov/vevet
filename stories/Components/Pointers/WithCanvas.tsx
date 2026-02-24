@@ -22,31 +22,27 @@ export const WithCanvas: FC = () => {
       dpr: 1,
     });
 
-    const fingers = new Pointers(
-      {
-        container,
-        relative: true,
-      },
-      {
-        onPointermove: ({ pointer }) => {
-          const color = colors[pointer.index] || 'white';
+    const fingers = new Pointers({
+      container,
+      relative: true,
+      onPointermove: ({ pointer }) => {
+        const color = colors[pointer.index] || 'white';
 
-          ctx2d.render(({ ctx, dpr }) => {
-            ctx.beginPath();
-            ctx.quadraticCurveTo(
-              pointer.prev.x,
-              pointer.prev.y,
-              pointer.current.x,
-              pointer.current.y,
-            );
-            ctx.lineWidth = 3 * dpr;
-            ctx.strokeStyle = color;
-            ctx.stroke();
-            ctx.closePath();
-          });
-        },
+        ctx2d.render(({ ctx, dpr }) => {
+          ctx.beginPath();
+          ctx.quadraticCurveTo(
+            pointer.prev.x,
+            pointer.prev.y,
+            pointer.current.x,
+            pointer.current.y,
+          );
+          ctx.lineWidth = 3 * dpr;
+          ctx.strokeStyle = color;
+          ctx.stroke();
+          ctx.closePath();
+        });
       },
-    );
+    });
 
     return () => {
       fingers.destroy();

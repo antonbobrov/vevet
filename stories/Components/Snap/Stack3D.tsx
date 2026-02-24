@@ -10,52 +10,48 @@ export const Stack3D: FC = () => {
       return undefined;
     }
 
-    const instance = new Snap(
-      {
-        container: ref.current,
-        direction: 'vertical',
-        wheel: true,
-        wheelAxis: 'y',
+    const instance = new Snap({
+      container: ref.current,
+      direction: 'vertical',
+      wheel: true,
+      wheelAxis: 'y',
+      onUpdate: (data, { slides }) => {
+        const ampX = 0.2;
+        const ampY = 0.6;
+        const ampZ = 0.5;
+        const rotateYAmp = -35;
+
+        slides.forEach(({ element, progress, size }) => {
+          let opacity = 0;
+          let y = 0;
+          let x = 0;
+          let z = 0;
+          let rotateX = 0;
+          let rotateZ = 0;
+          let brightness = 1;
+          let skew = 0;
+
+          if (inRange(progress, 0, 1)) {
+            const sine = Math.sin(Math.PI * progress);
+            y = sine * size * ampY * -1;
+            x = sine * size * ampX * -1;
+            z = progress * size * ampZ * -1;
+            rotateX = progress * 180;
+            rotateZ = sine * rotateYAmp;
+            opacity = 1;
+            brightness = lerp(1, 0.25, progress);
+            skew = lerp(0, 10, sine);
+          } else if (inRange(progress, -1, 0)) {
+            z = progress * size * ampZ;
+            opacity = 1;
+          }
+
+          element!.style.opacity = `${opacity}`;
+          element!.style.transform = `translate3d(${x}px, ${y}px, ${z}px) rotateX(${rotateX}deg) rotateZ(${rotateZ}deg) skew(${skew}deg)`;
+          element!.style.filter = `brightness(${brightness})`;
+        });
       },
-      {
-        onUpdate: (data, { slides }) => {
-          const ampX = 0.2;
-          const ampY = 0.6;
-          const ampZ = 0.5;
-          const rotateYAmp = -35;
-
-          slides.forEach(({ element, progress, size }) => {
-            let opacity = 0;
-            let y = 0;
-            let x = 0;
-            let z = 0;
-            let rotateX = 0;
-            let rotateZ = 0;
-            let brightness = 1;
-            let skew = 0;
-
-            if (inRange(progress, 0, 1)) {
-              const sine = Math.sin(Math.PI * progress);
-              y = sine * size * ampY * -1;
-              x = sine * size * ampX * -1;
-              z = progress * size * ampZ * -1;
-              rotateX = progress * 180;
-              rotateZ = sine * rotateYAmp;
-              opacity = 1;
-              brightness = lerp(1, 0.25, progress);
-              skew = lerp(0, 10, sine);
-            } else if (inRange(progress, -1, 0)) {
-              z = progress * size * ampZ;
-              opacity = 1;
-            }
-
-            element!.style.opacity = `${opacity}`;
-            element!.style.transform = `translate3d(${x}px, ${y}px, ${z}px) rotateX(${rotateX}deg) rotateZ(${rotateZ}deg) skew(${skew}deg)`;
-            element!.style.filter = `brightness(${brightness})`;
-          });
-        },
-      },
-    );
+    });
 
     return () => instance.destroy();
   }, []);

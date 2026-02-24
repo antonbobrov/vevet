@@ -13,26 +13,22 @@ export const DynamicWidth: FC = () => {
       return undefined;
     }
 
-    const instance = new Snap(
-      {
-        container: ref.current,
-        direction: 'horizontal',
-        gap: '1vw',
-        wheel: true,
-        wheelAxis: 'y',
-        freemode: true,
-        stickOnResize: false,
-        edgeFriction: 1,
-        grabCursor: true,
+    const instance = new Snap({
+      container: ref.current,
+      direction: 'horizontal',
+      gap: '1vw',
+      wheel: true,
+      wheelAxis: 'y',
+      freemode: true,
+      stickOnResize: false,
+      edgeFriction: 1,
+      grabCursor: true,
+      onUpdate: (data, { slides }) => {
+        slides.forEach(({ element, coord }) => {
+          element!.style.transform = `translateX(${coord}px)`;
+        });
       },
-      {
-        onUpdate: (data, { slides }) => {
-          slides.forEach(({ element, coord }) => {
-            element!.style.transform = `translateX(${coord}px)`;
-          });
-        },
-      },
-    );
+    });
 
     setSnap(instance);
 

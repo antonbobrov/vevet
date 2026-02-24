@@ -77,7 +77,7 @@ export class Swipe extends Module<TC, TS, TM> {
   private _startCoord: ISwipeVec2 | undefined;
 
   constructor(
-    props?: TS & TM,
+    props?: TS & TM & TModuleOnCallbacksProps<TC, Swipe>,
     onCallbacks?: TModuleOnCallbacksProps<TC, Swipe>,
   ) {
     super(props, onCallbacks as any);

@@ -24,14 +24,10 @@ All **[Module callbacks](/docs/base/Module/#callbacks)** are available in this c
 Swipe start event. See [ISwipeCoords](interfaces#iswipecoords).
 
 ```ts
-const observer = new Swipe(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onStart: (coords) => console.log(coords),
-  },
-);
+const observer = new Swipe({
+  container: document.getElementById('container'),
+  onStart: (coords) => console.log(coords),
+});
 ```
 
 or:
@@ -48,14 +44,10 @@ destruct();
 Swipe move event. See [ISwipeCoords](interfaces#iswipecoords).
 
 ```ts
-const observer = new Swipe(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onMove: (coords) => console.log(coords),
-  },
-);
+const observer = new Swipe({
+  container: document.getElementById('container'),
+  onMove: (coords) => console.log(coords),
+});
 ```
 
 or:
@@ -72,14 +64,10 @@ destruct();
 Swipe end event. See [ISwipeCoords](interfaces#iswipecoords).
 
 ```ts
-const observer = new Swipe(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onEnd: (coords) => console.log(coords),
-  },
-);
+const observer = new Swipe({
+  container: document.getElementById('container'),
+  onEnd: (coords) => console.log(coords),
+});
 ```
 
 or:
@@ -96,14 +84,10 @@ destruct();
 Swipe from bottom to top.
 
 ```ts
-const observer = new Swipe(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onToTop: () => console.log('from bottom to top'),
-  },
-);
+const observer = new Swipe({
+  container: document.getElementById('container'),
+  onToTop: () => console.log('from bottom to top'),
+});
 ```
 
 or:
@@ -120,14 +104,10 @@ destruct();
 Swipe from top to bottom.
 
 ```ts
-const observer = new Swipe(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onToBottom: () => console.log('from top to bottom'),
-  },
-);
+const observer = new Swipe({
+  container: document.getElementById('container'),
+  onToBottom: () => console.log('from top to bottom'),
+});
 ```
 
 or:
@@ -146,14 +126,10 @@ destruct();
 Swipe from left to right.
 
 ```ts
-const observer = new Swipe(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onToRight: () => console.log('from left to right'),
-  },
-);
+const observer = new Swipe({
+  container: document.getElementById('container'),
+  onToRight: () => console.log('from left to right'),
+});
 ```
 
 or:
@@ -172,14 +148,10 @@ destruct();
 Swipe from right to left.
 
 ```ts
-const observer = new Swipe(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onToLeft: () => console.log('from right to left'),
-  },
-);
+const observer = new Swipe({
+  container: document.getElementById('container'),
+  onToLeft: () => console.log('from right to left'),
+});
 ```
 
 or:
@@ -196,14 +168,10 @@ destruct();
 Triggered on `touchstart` listener. Triggered before any action related to this event is processed.
 
 ```ts
-const observer = new Swipe(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onTouchstart: (event) => console.log(event),
-  },
-);
+const observer = new Swipe({
+  container: document.getElementById('container'),
+  onTouchstart: (event) => console.log(event),
+});
 ```
 
 or:
@@ -220,14 +188,10 @@ destruct();
 Triggered on `touchmove` listener. Triggered before any action related to this event is processed.
 
 ```ts
-const observer = new Swipe(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onTouchmove: (event) => console.log(event),
-  },
-);
+const observer = new Swipe({
+  container: document.getElementById('container'),
+  onTouchmove: (event) => console.log(event),
+});
 ```
 
 or:
@@ -244,14 +208,10 @@ destruct();
 Triggered on `mousemove` listener. Triggered before any action related to this event is processed.
 
 ```ts
-const observer = new Swipe(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onMousemove: (event) => console.log(event),
-  },
-);
+const observer = new Swipe({
+  container: document.getElementById('container'),
+  onMousemove: (event) => console.log(event),
+});
 ```
 
 or:
@@ -268,14 +228,10 @@ destruct();
 Triggered on `pointerdown` listener.
 
 ```ts
-const observer = new Swipe(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onPointerdown: ({ event, pointer }) => console.log(event, pointer),
-  },
-);
+const observer = new Swipe({
+  container: document.getElementById('container'),
+  onPointerdown: ({ event, pointer }) => console.log(event, pointer),
+});
 ```
 
 or:
@@ -294,14 +250,10 @@ destruct();
 Triggered on `pointermove` listener.
 
 ```ts
-const observer = new Swipe(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onPointermove: ({ event, pointer }) => console.log(event, pointer),
-  },
-);
+const observer = new Swipe({
+  container: document.getElementById('container'),
+  onPointermove: ({ event, pointer }) => console.log(event, pointer),
+});
 ```
 
 or:
@@ -320,14 +272,10 @@ destruct();
 Triggered on `pointerup` listener.
 
 ```ts
-const observer = new Swipe(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onPointerup: ({ pointer }) => console.log(pointer),
-  },
-);
+const observer = new Swipe({
+  container: document.getElementById('container'),
+  onPointerup: ({ pointer }) => console.log(pointer),
+});
 ```
 
 or:
@@ -346,14 +294,10 @@ destruct();
 Triggered when swipe is aborted.
 
 ```ts
-const observer = new Swipe(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onAbort: () => console.log('swipe aborted'),
-  },
-);
+const observer = new Swipe({
+  container: document.getElementById('container'),
+  onAbort: () => console.log('swipe aborted'),
+});
 ```
 
 or:
@@ -370,14 +314,10 @@ destruct();
 Triggered on edge swipe preventing.
 
 ```ts
-const observer = new Swipe(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onPreventEdgeSwipe: () => console.log('edge swipe prevented'),
-  },
-);
+const observer = new Swipe({
+  container: document.getElementById('container'),
+  onPreventEdgeSwipe: () => console.log('edge swipe prevented'),
+});
 ```
 
 or:
@@ -396,14 +336,10 @@ destruct();
 Triggered on inertia start.
 
 ```ts
-const observer = new Swipe(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onInertiaStart: () => console.log('inertia start'),
-  },
-);
+const observer = new Swipe({
+  container: document.getElementById('container'),
+  onInertiaStart: () => console.log('inertia start'),
+});
 ```
 
 or:
@@ -422,14 +358,10 @@ destruct();
 Triggered on inertia progress.
 
 ```ts
-const observer = new Swipe(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onInertia: () => console.log('inertia in progress'),
-  },
-);
+const observer = new Swipe({
+  container: document.getElementById('container'),
+  onInertia: () => console.log('inertia in progress'),
+});
 ```
 
 or:
@@ -448,14 +380,10 @@ destruct();
 Triggered on inertia end.
 
 ```ts
-const observer = new Swipe(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onInertiaEnd: () => console.log('inertia end'),
-  },
-);
+const observer = new Swipe({
+  container: document.getElementById('container'),
+  onInertiaEnd: () => console.log('inertia end'),
+});
 ```
 
 or:
@@ -472,14 +400,10 @@ destruct();
 Triggered when inertia fails to start because of lack of momentum.
 
 ```ts
-const observer = new Swipe(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onInertiaFail: () => console.log('inertia fail'),
-  },
-);
+const observer = new Swipe({
+  container: document.getElementById('container'),
+  onInertiaFail: () => console.log('inertia fail'),
+});
 ```
 
 or:
@@ -496,14 +420,10 @@ destruct();
 Triggered when inertia is canceled.
 
 ```ts
-const observer = new Swipe(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onInertiaCancel: () => console.log('inertia cancel'),
-  },
-);
+const observer = new Swipe({
+  container: document.getElementById('container'),
+  onInertiaCancel: () => console.log('inertia cancel'),
+});
 ```
 
 or:

@@ -9,27 +9,23 @@ export const Basic: FC = () => {
   const [timeline, setTimeline] = useState<Timeline>();
 
   useEffect(() => {
-    const instance = new Timeline(
-      {
-        duration: 1000,
-        easing: EaseInOutCubic,
-      },
-      {
-        onUpdate: ({ progress, eased }) => {
-          if (inputRef.current) {
-            inputRef.current.value = `${progress}`;
-          }
+    const instance = new Timeline({
+      duration: 1000,
+      easing: EaseInOutCubic,
+      onUpdate: ({ progress, eased }) => {
+        if (inputRef.current) {
+          inputRef.current.value = `${progress}`;
+        }
 
-          if (thumbRef.current) {
-            thumbRef.current.style.left = `${eased * 100}%`;
-          }
-        },
-        onStart: () => {
-          console.log('start');
-        },
-        onEnd: () => console.log('end'),
+        if (thumbRef.current) {
+          thumbRef.current.style.left = `${eased * 100}%`;
+        }
       },
-    );
+      onStart: () => {
+        console.log('start');
+      },
+      onEnd: () => console.log('end'),
+    });
 
     setTimeline(instance);
 

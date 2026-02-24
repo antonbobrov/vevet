@@ -10,24 +10,20 @@ export const Vertical: FC = () => {
       return undefined;
     }
 
-    const instance = new InView(
-      {
-        hasOut: true,
-        rootMargin: '0% 0% -15% 0%',
+    const instance = new InView({
+      hasOut: true,
+      rootMargin: '0% 0% -15% 0%',
+      onIn: ({ element }) => {
+        if (element instanceof HTMLElement) {
+          element.style.background = '#f00';
+        }
       },
-      {
-        onIn: ({ element }) => {
-          if (element instanceof HTMLElement) {
-            element.style.background = '#f00';
-          }
-        },
-        onOut: ({ element }) => {
-          if (element instanceof HTMLElement) {
-            element.style.background = '#000';
-          }
-        },
+      onOut: ({ element }) => {
+        if (element instanceof HTMLElement) {
+          element.style.background = '#000';
+        }
       },
-    );
+    });
 
     const elements = ref.current.querySelectorAll('*');
     elements.forEach((element) => instance.addElement(element));

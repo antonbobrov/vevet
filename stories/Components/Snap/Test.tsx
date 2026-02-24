@@ -19,32 +19,28 @@ export const Test: FC = () => {
       document.querySelectorAll<HTMLElement>('.js-slide-info'),
     );
 
-    const instance = new Snap(
-      {
-        container: ref.current,
-        direction: 'horizontal',
-        wheel: true,
-        wheelAxis: 'y',
-        centered: false,
-        loop: false,
-        gap: 20,
-        grabCursor: true,
-      },
-      {
-        onActiveSlide: (slide) => setActiveIndex(slide.index),
-        onUpdate: (data, snap) => {
-          setIsStart(snap.isStart);
-          setIsEnd(snap.isEnd);
+    const instance = new Snap({
+      container: ref.current,
+      direction: 'horizontal',
+      wheel: true,
+      wheelAxis: 'y',
+      centered: false,
+      loop: false,
+      gap: 20,
+      grabCursor: true,
+      onActiveSlide: (slide) => setActiveIndex(slide.index),
+      onUpdate: (data, snap) => {
+        setIsStart(snap.isStart);
+        setIsEnd(snap.isEnd);
 
-          snap.slides.forEach(({ element, coord, progress }, index) => {
-            element!.style.transform = `translateX(${coord}px)`;
+        snap.slides.forEach(({ element, coord, progress }, index) => {
+          element!.style.transform = `translateX(${coord}px)`;
 
-            const info = infos[index];
-            info.innerHTML = `${index} / ${progress.toFixed(2)} / ${Math.round(coord)}`;
-          });
-        },
+          const info = infos[index];
+          info.innerHTML = `${index} / ${progress.toFixed(2)} / ${Math.round(coord)}`;
+        });
       },
-    );
+    });
 
     setCarousel(instance);
 

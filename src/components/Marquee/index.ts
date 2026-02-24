@@ -74,7 +74,7 @@ export class Marquee extends Module<TC, TS, TM> {
   private _nodes: MarqueeNodes;
 
   constructor(
-    props?: TS & TM,
+    props?: TS & TM & TModuleOnCallbacksProps<TC, Marquee>,
     onCallbacks?: TModuleOnCallbacksProps<TC, Marquee>,
   ) {
     super(props, onCallbacks as any);

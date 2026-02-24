@@ -10,35 +10,31 @@ export const Circular: FC = () => {
       return undefined;
     }
 
-    const instance = new Snap(
-      {
-        container: ref.current,
-        direction: 'horizontal',
-        wheel: true,
-        swipeAxis: 'angle',
-        wheelAxis: 'y',
-        loop: true,
-        freemode: true,
+    const instance = new Snap({
+      container: ref.current,
+      direction: 'horizontal',
+      wheel: true,
+      swipeAxis: 'angle',
+      wheelAxis: 'y',
+      loop: true,
+      freemode: true,
+      onUpdate: (data, { containerSize, slides }) => {
+        const radius = containerSize / 2;
+        const p2 = Math.PI * 2;
+        const offset = Math.PI * -0.5;
+
+        slides.forEach((slide) => {
+          const element = slide.element!;
+          const progress = -slide.progress / slides.length;
+
+          const x = Math.cos(p2 * progress + offset) * radius;
+          const y = Math.sin(p2 * progress + offset) * radius;
+          const rotation = p2 * progress;
+
+          element.style.transform = `translateX(${x}px) translateY(${y}px) rotate(${rotation}rad)`;
+        });
       },
-      {
-        onUpdate: (data, { containerSize, slides }) => {
-          const radius = containerSize / 2;
-          const p2 = Math.PI * 2;
-          const offset = Math.PI * -0.5;
-
-          slides.forEach((slide) => {
-            const element = slide.element!;
-            const progress = -slide.progress / slides.length;
-
-            const x = Math.cos(p2 * progress + offset) * radius;
-            const y = Math.sin(p2 * progress + offset) * radius;
-            const rotation = p2 * progress;
-
-            element.style.transform = `translateX(${x}px) translateY(${y}px) rotate(${rotation}rad)`;
-          });
-        },
-      },
-    );
+    });
 
     return () => instance.destroy();
   }, []);

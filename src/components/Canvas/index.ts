@@ -57,7 +57,7 @@ export class Canvas<
    * Constructor for the Ctx2D class.
    */
   constructor(
-    props?: S & M,
+    props?: S & M & TModuleOnCallbacksProps<C, Canvas<C, S, M>>,
     onCallbacks?: TModuleOnCallbacksProps<C, Canvas<C, S, M>>,
   ) {
     super(props, onCallbacks as any);

@@ -10,25 +10,21 @@ export const Glide: FC = () => {
       return undefined;
     }
 
-    const instance = new Snap(
-      {
-        container: ref.current,
-        direction: 'horizontal',
-        edgeFriction: 1,
-        wheel: true,
-        wheelAxis: 'y',
-      },
-      {
-        onUpdate: (data, { slides }) => {
-          slides.forEach(({ element, progress, coord, size }) => {
-            const parallax = clamp(progress, 0, 1);
-            const x = coord + parallax * (size / 2);
+    const instance = new Snap({
+      container: ref.current,
+      direction: 'horizontal',
+      edgeFriction: 1,
+      wheel: true,
+      wheelAxis: 'y',
+      onUpdate: (data, { slides }) => {
+        slides.forEach(({ element, progress, coord, size }) => {
+          const parallax = clamp(progress, 0, 1);
+          const x = coord + parallax * (size / 2);
 
-            element!.style.transform = `translateX(${x}px)`;
-          });
-        },
+          element!.style.transform = `translateX(${x}px)`;
+        });
       },
-    );
+    });
 
     return () => instance.destroy();
   }, []);

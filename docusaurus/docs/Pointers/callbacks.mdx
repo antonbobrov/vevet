@@ -23,14 +23,10 @@ All **[Module callbacks](/docs/base/Module/#callbacks)** are available in this c
 Fired when the required number of pointers is reached.
 
 ```ts
-const pointers = new Pointers(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onStart: () => console.log('start'),
-  },
-);
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+  onStart: () => console.log('start'),
+});
 ```
 
 or:
@@ -47,14 +43,10 @@ destruct();
 Fired when a pointer is added.
 
 ```ts
-const pointers = new Pointers(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onPointerdown: ({ event, pointer }) => console.log('pointerdown'),
-  },
-);
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+  onPointerdown: ({ event, pointer }) => console.log('pointerdown'),
+});
 ```
 
 or:
@@ -73,14 +65,10 @@ destruct();
 Fired when a pointer moves.
 
 ```ts
-const pointers = new Pointers(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onPointermove: ({ event, pointer }) => console.log('pointermove'),
-  },
-);
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+  onPointermove: ({ event, pointer }) => console.log('pointermove'),
+});
 ```
 
 or:
@@ -99,14 +87,10 @@ destruct();
 Fired when a pointer is removed.
 
 ```ts
-const pointers = new Pointers(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onPointerup: ({ pointer }) => console.log('pointerup'),
-  },
-);
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+  onPointerup: ({ pointer }) => console.log('pointerup'),
+});
 ```
 
 or:
@@ -125,14 +109,10 @@ destruct();
 Fired when pointer events are canceled.
 
 ```ts
-const pointers = new Pointers(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onEnd: () => console.log('end'),
-  },
-);
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+  onEnd: () => console.log('end'),
+});
 ```
 
 or:
