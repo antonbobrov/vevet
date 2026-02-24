@@ -108,6 +108,16 @@ Indicates whether a transition animation is currently in progress.
 snap.isTransitioning; // true or false
 ```
 
+### `hasInteria`
+
+Type: `boolean`
+
+Indicates whether a swipe inertia animation is currently active (the carousel is still moving after the user released input).
+
+```js
+snap.hasInteria; // true or false
+```
+
 ### `scrollableSlides`
 
 Type: [SnapSlide](./slide)[]
@@ -243,6 +253,16 @@ Can be positive or negative depending on scroll direction.
 
 ```js
 snap.influence; // number
+```
+
+### `isInterpolating`
+
+Type: `boolean`
+
+Indicates whether the track is currently being interpolated (the current value is still easing toward the target value).
+
+```js
+snap.isInterpolating; // true or false
 ```
 
 ### `isSlideScrolling`

@@ -204,7 +204,17 @@ export class Snap extends Module<TC, TS, TM> {
 
   /** If swipe in progress */
   get isSwiping() {
-    return !!this._swipe.isSwiping;
+    return this._swipe.isSwiping;
+  }
+
+  /** If swipe has inertia */
+  get hasInteria() {
+    return this._swipe.hasIntertia;
+  }
+
+  /** If track values are interpolating */
+  get isInterpolating() {
+    return Math.abs(this._track.target - this._track.current) > 0.0001;
   }
 
   /** Gets the interpolation influence */

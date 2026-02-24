@@ -50,6 +50,11 @@ export class SnapSwipe extends SnapLogic {
     return this.swipe.isSwiping;
   }
 
+  /** Check if swipe has inertia */
+  get hasIntertia() {
+    return this.swipe.hasInertia;
+  }
+
   /** Snap track */
   private get track() {
     // @ts-ignore

@@ -344,6 +344,7 @@ export class SnapTrack extends SnapLogic {
 
       if (data.progress === 1) {
         snap.$_targetIndex = undefined;
+        this._timeline = undefined;
       }
 
       snap.render();
@@ -357,8 +358,6 @@ export class SnapTrack extends SnapLogic {
 
       callbacks.emit('timelineEnd', undefined);
       options?.onEnd?.();
-
-      this._timeline = undefined;
     });
 
     tm.on('destroy', () => {
