@@ -64,7 +64,7 @@ export class InView extends Module<TC, TS, TM> {
    * Initializes the `InView` module.
    */
   constructor(
-    props?: TS & TM,
+    props?: TS & TM & TModuleOnCallbacksProps<TC, InView>,
     onCallbacks?: TModuleOnCallbacksProps<TC, InView>,
   ) {
     super(props, onCallbacks as any);

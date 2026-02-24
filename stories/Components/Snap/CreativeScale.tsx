@@ -10,29 +10,23 @@ export const CreativeScale: FC = () => {
       return undefined;
     }
 
-    const instance = new Snap(
-      {
-        container: ref.current,
-        direction: 'horizontal',
-        wheelAxis: 'y',
-        centered: true,
-        loop: true,
-        lerp: 0.05,
-        duration: 1000,
-      },
-      {
-        onUpdate: (data, { slides }) => {
-          slides.forEach(({ element, coord, progress }) => {
-            const scaleFactor = 3.5;
-            const scale = clamp(
-              (scaleFactor - Math.abs(progress)) / scaleFactor,
-            );
+    const instance = new Snap({
+      container: ref.current,
+      direction: 'horizontal',
+      wheelAxis: 'y',
+      centered: true,
+      loop: true,
+      lerp: 0.05,
+      duration: 1000,
+      onUpdate: (data, { slides }) => {
+        slides.forEach(({ element, coord, progress }) => {
+          const scaleFactor = 3.5;
+          const scale = clamp((scaleFactor - Math.abs(progress)) / scaleFactor);
 
-            element!.style.transform = `translateX(${coord}px) translateY(-50%) scale(${scale})`;
-          });
-        },
+          element!.style.transform = `translateX(${coord}px) translateY(-50%) scale(${scale})`;
+        });
       },
-    );
+    });
 
     return () => instance.destroy();
   }, []);

@@ -85,7 +85,7 @@ export class Module<
    */
   constructor(
     props?: StaticProps & MutableProps,
-    onCallbacks?: TModuleOnCallbacksProps<
+    onCallbacksProp?: TModuleOnCallbacksProps<
       CallbacksMap,
       Module<CallbacksMap, StaticProps, MutableProps>
     >,
@@ -102,9 +102,16 @@ export class Module<
 
     // Initialize callbacks
 
+    const onCallbacks = {
+      ...props,
+      ...onCallbacksProp,
+    };
+
     if (onCallbacks) {
-      const callbacksProps = Object.keys(onCallbacks).filter((key) =>
-        key.startsWith('on'),
+      const callbacksProps = Object.keys(onCallbacks).filter(
+        (key) =>
+          key.startsWith('on') &&
+          typeof onCallbacks[key as keyof typeof onCallbacks] === 'function',
       );
 
       callbacksProps.forEach((key) => {

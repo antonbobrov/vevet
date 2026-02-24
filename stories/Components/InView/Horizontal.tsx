@@ -16,25 +16,21 @@ export const Horizontal: FC = () => {
       document.documentElement.setAttribute('dir', 'rtl');
     }
 
-    const instance = new InView(
-      {
-        hasOut: true,
-        rootMargin: isRtl ? '0% 0% 0% -15%' : '0% -15% 0% 0%',
-        scrollDirection: 'horizontal',
+    const instance = new InView({
+      hasOut: true,
+      rootMargin: isRtl ? '0% 0% 0% -15%' : '0% -15% 0% 0%',
+      scrollDirection: 'horizontal',
+      onIn: ({ element }) => {
+        if (element instanceof HTMLElement) {
+          element.style.background = '#f00';
+        }
       },
-      {
-        onIn: ({ element }) => {
-          if (element instanceof HTMLElement) {
-            element.style.background = '#f00';
-          }
-        },
-        onOut: ({ element }) => {
-          if (element instanceof HTMLElement) {
-            element.style.background = '#000';
-          }
-        },
+      onOut: ({ element }) => {
+        if (element instanceof HTMLElement) {
+          element.style.background = '#000';
+        }
       },
-    );
+    });
 
     const elements = ref.current.querySelectorAll('*');
     elements.forEach((element) => instance.addElement(element));

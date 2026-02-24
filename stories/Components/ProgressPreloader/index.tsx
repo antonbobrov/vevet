@@ -17,18 +17,14 @@ export const Component: FC = () => {
       return undefined;
     }
 
-    const instance = new ProgressPreloader(
-      {
-        container: ref.current,
-        resourceContainer: resourceContainerRef.current,
-        preloadImages: true,
-        preloadVideos: true,
-      },
-      {
-        onProgress: () => setProgress(instance.progress),
-        onResource: (res) => console.log('resource', res),
-      },
-    );
+    const instance = new ProgressPreloader({
+      container: ref.current,
+      resourceContainer: resourceContainerRef.current,
+      preloadImages: true,
+      preloadVideos: true,
+      onProgress: (data, { progress }) => setProgress(progress),
+      onResource: (res) => console.log('resource', res),
+    });
 
     setPreloader(instance);
 

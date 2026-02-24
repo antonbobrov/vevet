@@ -83,7 +83,7 @@ export class SplitText extends Module<TC, TS, TM> {
    * Initializes the SplitText instance and saves the initial state.
    */
   constructor(
-    props?: TS & TM,
+    props?: TS & TM & TModuleOnCallbacksProps<TC, SplitText>,
     onCallbacks?: TModuleOnCallbacksProps<TC, SplitText>,
   ) {
     super(props, onCallbacks as any);

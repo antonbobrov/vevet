@@ -68,10 +68,10 @@ export class ProgressPreloader extends Preloader<TC, TS, TM> {
   private _raf: Raf;
 
   constructor(
-    props?: TS & TM,
+    props?: TS & TM & TModuleOnCallbacksProps<TC, ProgressPreloader>,
     onCallbacks?: TModuleOnCallbacksProps<TC, ProgressPreloader>,
   ) {
-    super(props, onCallbacks as any);
+    super(props as any, onCallbacks as any);
 
     // Initialize animation frame if interpolation is enabled
     this._raf = new Raf({ enabled: true });

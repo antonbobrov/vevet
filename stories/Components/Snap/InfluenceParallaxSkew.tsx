@@ -10,24 +10,20 @@ export const InfluenceParallaxSkew: FC = () => {
       return undefined;
     }
 
-    const instance = new Snap(
-      {
-        container: ref.current,
-        centered: true,
-        loop: true,
-        shortSwipes: false,
-        gap: 20,
-        lerp: 0.2,
-        freemode: true,
+    const instance = new Snap({
+      container: ref.current,
+      centered: true,
+      loop: true,
+      shortSwipes: false,
+      gap: 20,
+      lerp: 0.2,
+      freemode: true,
+      onUpdate: (data, { slides }) => {
+        slides.forEach(({ element, coord }) => {
+          element!.style.transform = `translateX(${coord}px)`;
+        });
       },
-      {
-        onUpdate: (data, { slides }) => {
-          slides.forEach(({ element, coord }) => {
-            element!.style.transform = `translateX(${coord}px)`;
-          });
-        },
-      },
-    );
+    });
 
     return () => instance.destroy();
   }, []);

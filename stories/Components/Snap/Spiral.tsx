@@ -10,28 +10,24 @@ export const Spiral: FC = () => {
       return undefined;
     }
 
-    const instance = new Snap(
-      {
-        container: ref.current,
-        direction: 'vertical',
-        wheel: true,
-        swipeAxis: 'x',
-        centered: true,
-        loop: false,
-        gap: 0,
-      },
-      {
-        onUpdate: (data, { slides }) => {
-          slides.forEach(({ element, coord, progress }) => {
-            const scale = 1.15 - clamp(Math.abs(progress) * 0.5);
+    const instance = new Snap({
+      container: ref.current,
+      direction: 'vertical',
+      wheel: true,
+      swipeAxis: 'x',
+      centered: true,
+      loop: false,
+      gap: 0,
+      onUpdate: (data, { slides }) => {
+        slides.forEach(({ element, coord, progress }) => {
+          const scale = 1.15 - clamp(Math.abs(progress) * 0.5);
 
-            const rotateX = progress * -45;
+          const rotateX = progress * -45;
 
-            element!.style.transform = `translate3d(0, ${coord}px, 0) rotateY(${rotateX}deg) scale(${scale})`;
-          });
-        },
+          element!.style.transform = `translate3d(0, ${coord}px, 0) rotateY(${rotateX}deg) scale(${scale})`;
+        });
       },
-    );
+    });
 
     return () => instance.destroy();
   }, []);

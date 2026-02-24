@@ -23,14 +23,10 @@ All **[Module callbacks](/docs/base/Module/#callbacks)** are available in this c
 Called during marquee rendering.
 
 ```ts
-const marquee = new Marquee(
-  {
-    container,
-  },
-  {
-    onRender: () => console.log('render'),
-  },
-);
+const marquee = new Marquee({
+  container,
+  onRender: () => console.log('render'),
+});
 ```
 
 or:
@@ -47,14 +43,10 @@ destruct();
 Called when the marquee is resized.
 
 ```ts
-const marquee = new Marquee(
-  {
-    container,
-  },
-  {
-    onResize: () => console.log('resize'),
-  },
-);
+const marquee = new Marquee({
+  container,
+  onResize: () => console.log('resize'),
+});
 ```
 
 or:

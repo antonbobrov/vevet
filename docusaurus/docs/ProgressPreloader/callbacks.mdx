@@ -23,14 +23,10 @@ All **[Preloader's callbacks](/docs/Preloader/callbacks)** are available in this
 Fired when the preloader's progress updates.
 
 ```ts
-const preloader = new ProgressPreloader(
-  {
-    container: document.getElementById('container'),
-  },
-  {
-    onProgress: () => console.log(preloader.progress),
-  },
-);
+const preloader = new ProgressPreloader({
+  container: document.getElementById('container'),
+  onProgress: () => console.log(preloader.progress),
+});
 ```
 
 or:
@@ -50,16 +46,12 @@ Fired whenever a resource updates its loaded weight —
 both DOM-based (`data-loaded` changes) and virtual resources.
 
 ```ts
-const preloader = new ProgressPreloader(
-  {
-    container: document.getElementById('container'),
+const preloader = new ProgressPreloader({
+  container: document.getElementById('container'),
+  onResource: ({ id, weight, loaded }) => {
+    console.log(id, `loaded ${loaded} / ${weight}`);
   },
-  {
-    onResource: ({ id, weight, loaded }) => {
-      console.log(id, `loaded ${loaded} / ${weight}`);
-    },
-  },
-);
+});
 ```
 
 or:

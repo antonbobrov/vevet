@@ -23,12 +23,9 @@ All **[Module callbacks](/docs/base/Module/#callbacks)** are available in this c
 Fires when the canvas is resized.
 
 ```ts
-const canvas = new Canvas(
-  {},
-  {
-    onResize: () => console.log('resize'),
-  },
-);
+const canvas = new Canvas({
+  onResize: () => console.log('resize'),
+});
 ```
 
 or:

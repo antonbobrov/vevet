@@ -29,12 +29,9 @@ Useful for:
 - custom visual effects.
 
 ```ts
-const cursor = new Cursor(
-  {},
-  {
-    onRender: () => console.log('render'),
-  },
-);
+const cursor = new Cursor({
+  onRender: () => console.log('render'),
+});
 ```
 
 or:
@@ -51,12 +48,9 @@ destruct();
 Triggered when an attached element is hovered.
 
 ```ts
-const cursor = new Cursor(
-  {},
-  {
-    onHoverEnter: (data) => console.log(data),
-  },
-);
+const cursor = new Cursor({
+  onHoverEnter: (data) => console.log(data),
+});
 ```
 
 or:
@@ -73,12 +67,9 @@ destruct();
 Triggered when an attached element is no longer hovered.
 
 ```ts
-const cursor = new Cursor(
-  {},
-  {
-    onHoverLeave: (data) => console.log(data),
-  },
-);
+const cursor = new Cursor({
+  onHoverLeave: (data) => console.log(data),
+});
 ```
 
 or:
@@ -95,12 +86,9 @@ destruct();
 Triggered when a cursor type is visible.
 
 ```ts
-const cursor = new Cursor(
-  {},
-  {
-    onTypeShow: (data) => console.log(data),
-  },
-);
+const cursor = new Cursor({
+  onTypeShow: (data) => console.log(data),
+});
 ```
 
 or:
@@ -117,12 +105,9 @@ destruct();
 Triggered when a cursor type becomes invisible.
 
 ```ts
-const cursor = new Cursor(
-  {},
-  {
-    onTypeHide: (data) => console.log(data),
-  },
-);
+const cursor = new Cursor({
+  onTypeHide: (data) => console.log(data),
+});
 ```
 
 or:
@@ -139,12 +124,9 @@ destruct();
 Triggered when no cursor type is applied.
 
 ```ts
-const cursor = new Cursor(
-  {},
-  {
-    onNoType: (data) => console.log(data),
-  },
-);
+const cursor = new Cursor({
+  onNoType: (data) => console.log(data),
+});
 ```
 
 or:

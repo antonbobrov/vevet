@@ -28,21 +28,18 @@ Fires when an element enters the viewport. The callback receives the element and
 - `direction` - The direction from which the element entered: `'fromBottom'`, `'fromTop'`, `'fromLeft'`, or `'fromRight'`
 
 ```ts
-const observer = new InView(
-  {},
-  {
-    onIn: ({ element, direction }) => {
-      console.log(element, 'entered viewport from', direction);
+const observer = new InView({
+  onIn: ({ element, direction }) => {
+    console.log(element, 'entered viewport from', direction);
 
-      // Use direction for conditional logic
-      if (direction === 'fromBottom') {
-        // Animate from bottom
-      } else if (direction === 'fromTop') {
-        // Animate from top
-      }
-    },
+    // Use direction for conditional logic
+    if (direction === 'fromBottom') {
+      // Animate from bottom
+    } else if (direction === 'fromTop') {
+      // Animate from top
+    }
   },
-);
+});
 ```
 
 or using the event listener pattern:
@@ -70,14 +67,11 @@ The `out` callback only fires if `hasOut: true` (default). Set `hasOut: false` t
 :::
 
 ```ts
-const observer = new InView(
-  {},
-  {
-    onOut: ({ element, direction }) => {
-      console.log(element, 'left viewport from', direction);
-    },
+const observer = new InView({
+  onOut: ({ element, direction }) => {
+    console.log(element, 'left viewport from', direction);
   },
-);
+});
 ```
 
 or using the event listener pattern:

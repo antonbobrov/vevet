@@ -25,14 +25,10 @@ Triggered when the active slide changes.
 The callback receives the active slide instance. See **[SnapSlide](./slide)**.
 
 ```ts
-const snap = new Snap(
-  {
-    container,
-  },
-  {
-    onActiveSlide: (slide) => console.log(slide.index),
-  },
-);
+const snap = new Snap({
+  container,
+  onActiveSlide: (slide) => console.log(slide.index),
+});
 ```
 
 or:
@@ -49,14 +45,10 @@ destruct();
 Triggered when the requestAnimationFrame loop is paused.
 
 ```ts
-const snap = new Snap(
-  {
-    container,
-  },
-  {
-    onRafPause: () => console.log('pause'),
-  },
-);
+const snap = new Snap({
+  container,
+  onRafPause: () => console.log('pause'),
+});
 ```
 
 or:
@@ -73,14 +65,10 @@ destruct();
 Triggered when the requestAnimationFrame loop resumes.
 
 ```ts
-const snap = new Snap(
-  {
-    container,
-  },
-  {
-    onRafPlay: () => console.log('play'),
-  },
-);
+const snap = new Snap({
+  container,
+  onRafPlay: () => console.log('play'),
+});
 ```
 
 or:
@@ -97,14 +85,10 @@ destruct();
 Triggered when the carousel recalculates slides, sizes, or magnets.
 
 ```ts
-const snap = new Snap(
-  {
-    container,
-  },
-  {
-    onReflow: () => console.log('reflow'),
-  },
-);
+const snap = new Snap({
+  container,
+  onReflow: () => console.log('reflow'),
+});
 ```
 
 or:
@@ -121,14 +105,10 @@ destruct();
 Triggered when the carousel is resized.
 
 ```ts
-const snap = new Snap(
-  {
-    container,
-  },
-  {
-    onResize: () => console.log('resize'),
-  },
-);
+const snap = new Snap({
+  container,
+  onResize: () => console.log('resize'),
+});
 ```
 
 or:
@@ -145,14 +125,10 @@ destruct();
 Triggered during swipe movement.
 
 ```ts
-const snap = new Snap(
-  {
-    container,
-  },
-  {
-    onSwipe: (coord) => console.log(coord),
-  },
-);
+const snap = new Snap({
+  container,
+  onSwipe: (coord) => console.log(coord),
+});
 ```
 
 or:
@@ -169,14 +145,10 @@ destruct();
 Triggered when a swipe starts.
 
 ```ts
-const snap = new Snap(
-  {
-    container,
-  },
-  {
-    onSwipeStart: (coord) => console.log(coord),
-  },
-);
+const snap = new Snap({
+  container,
+  onSwipeStart: (coord) => console.log(coord),
+});
 ```
 
 or:
@@ -193,14 +165,10 @@ destruct();
 Triggered when a swipe ends.
 
 ```ts
-const snap = new Snap(
-  {
-    container,
-  },
-  {
-    onSwipeEnd: (coord) => console.log(coord),
-  },
-);
+const snap = new Snap({
+  container,
+  onSwipeEnd: (coord) => console.log(coord),
+});
 ```
 
 or:
@@ -217,14 +185,10 @@ destruct();
 Triggered on timeline animation start.
 
 ```ts
-const snap = new Snap(
-  {
-    container,
-  },
-  {
-    onTimelineStart: () => console.log('start'),
-  },
-);
+const snap = new Snap({
+  container,
+  onTimelineStart: () => console.log('start'),
+});
 ```
 
 or:
@@ -241,14 +205,10 @@ destruct();
 Triggered on timeline animation progress update.
 
 ```ts
-const snap = new Snap(
-  {
-    container,
-  },
-  {
-    onTimelineUpdate: ({ progress, eased }) => console.log(progress, eased),
-  },
-);
+const snap = new Snap({
+  container,
+  onTimelineUpdate: ({ progress, eased }) => console.log(progress, eased),
+});
 ```
 
 or:
@@ -267,14 +227,10 @@ destruct();
 Triggered when a timeline animation ends.
 
 ```ts
-const snap = new Snap(
-  {
-    container,
-  },
-  {
-    onTimelineEnd: () => console.log('end'),
-  },
-);
+const snap = new Snap({
+  container,
+  onTimelineEnd: () => console.log('end'),
+});
 ```
 
 or:
@@ -291,14 +247,10 @@ destruct();
 Triggered on every carousel coordinate update.
 
 ```ts
-const snap = new Snap(
-  {
-    container,
-  },
-  {
-    onUpdate: () => console.log('update'),
-  },
-);
+const snap = new Snap({
+  container,
+  onUpdate: () => console.log('update'),
+});
 ```
 
 or:
@@ -315,14 +267,10 @@ destruct();
 Triggered on mouse wheel input.
 
 ```ts
-const snap = new Snap(
-  {
-    container,
-  },
-  {
-    onWheel: (evt) => console.log(evt),
-  },
-);
+const snap = new Snap({
+  container,
+  onWheel: (evt) => console.log(evt),
+});
 ```
 
 or:
@@ -339,14 +287,10 @@ destruct();
 Triggered when wheel input starts.
 
 ```ts
-const snap = new Snap(
-  {
-    container,
-  },
-  {
-    onWheelStart: () => console.log('start'),
-  },
-);
+const snap = new Snap({
+  container,
+  onWheelStart: () => console.log('start'),
+});
 ```
 
 or:
@@ -363,14 +307,10 @@ destruct();
 Triggered when wheel input ends.
 
 ```ts
-const snap = new Snap(
-  {
-    container,
-  },
-  {
-    onWheelEnd: () => console.log('end'),
-  },
-);
+const snap = new Snap({
+  container,
+  onWheelEnd: () => console.log('end'),
+});
 ```
 
 or:
@@ -387,14 +327,10 @@ destruct();
 Triggered when swipe inertia starts.
 
 ```ts
-const snap = new Snap(
-  {
-    container,
-  },
-  {
-    onSwipeInertiaStart: () => console.log('start'),
-  },
-);
+const snap = new Snap({
+  container,
+  onSwipeInertiaStart: () => console.log('start'),
+});
 ```
 
 or:
@@ -411,14 +347,10 @@ destruct();
 Triggered when swipe inertia ends.
 
 ```ts
-const snap = new Snap(
-  {
-    container,
-  },
-  {
-    onSwipeInertiaEnd: () => console.log('end'),
-  },
-);
+const snap = new Snap({
+  container,
+  onSwipeInertiaEnd: () => console.log('end'),
+});
 ```
 
 or:
@@ -435,14 +367,10 @@ destruct();
 Triggered when swipe inertia is canceled.
 
 ```ts
-const snap = new Snap(
-  {
-    container,
-  },
-  {
-    onSwipeInertiaCancel: () => console.log('cancel'),
-  },
-);
+const snap = new Snap({
+  container,
+  onSwipeInertiaCancel: () => console.log('cancel'),
+});
 ```
 
 or:
@@ -459,14 +387,10 @@ destruct();
 Triggered when swipe inertia fails to start.
 
 ```ts
-const snap = new Snap(
-  {
-    container,
-  },
-  {
-    onSwipeInertiaFail: () => console.log('fail'),
-  },
-);
+const snap = new Snap({
+  container,
+  onSwipeInertiaFail: () => console.log('fail'),
+});
 ```
 
 or:

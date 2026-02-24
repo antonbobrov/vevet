@@ -51,7 +51,7 @@ export class Preloader<
   private _isLoaded = false;
 
   constructor(
-    props?: S & M,
+    props?: S & M & TModuleOnCallbacksProps<C, Preloader<C, S, M>>,
     onCallbacks?: TModuleOnCallbacksProps<C, Preloader<C, S, M>>,
   ) {
     super(props, onCallbacks as any);

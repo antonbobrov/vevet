@@ -12,33 +12,26 @@ export const Inner: FC<IProps> = ({ direction, root }) => {
     const sections = document.querySelectorAll('.js-section');
 
     const sectionHandlers = Array.from(sections).map((section) => {
-      const handler = new ScrollProgress(
-        {
-          section,
-          root,
-        },
-        {
-          onUpdate: () => {
-            const inProgress =
-              direction === 'x' ? handler.inProgress.x : handler.inProgress.y;
-            const moveProgress =
-              direction === 'x'
-                ? handler.moveProgress.x
-                : handler.moveProgress.y;
-            const outProgress =
-              direction === 'x' ? handler.outProgress.x : handler.outProgress.y;
-            const progress =
-              direction === 'x' ? handler.progress.x : handler.progress.y;
+      const handler = new ScrollProgress({
+        section,
+        root,
+        onUpdate: (data, ctx) => {
+          const inProgress =
+            direction === 'x' ? ctx.inProgress.x : ctx.inProgress.y;
+          const moveProgress =
+            direction === 'x' ? ctx.moveProgress.x : ctx.moveProgress.y;
+          const outProgress =
+            direction === 'x' ? ctx.outProgress.x : ctx.outProgress.y;
+          const progress = direction === 'x' ? ctx.progress.x : ctx.progress.y;
 
-            section.innerHTML = `
+          section.innerHTML = `
               <p>in: ${inProgress.toFixed(2)}</p>
               <p>move: ${moveProgress.toFixed(2)}</p>
               <p>out: ${outProgress.toFixed(2)}</p>
               <p>global: ${progress.toFixed(2)}</p>
             `;
-          },
         },
-      );
+      });
 
       return handler;
     });

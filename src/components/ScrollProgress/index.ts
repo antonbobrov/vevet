@@ -58,7 +58,7 @@ export class ScrollProgress extends Module<TC, TS, TM> {
   };
 
   constructor(
-    props?: TS & TM,
+    props?: TS & TM & TModuleOnCallbacksProps<TC, ScrollProgress>,
     onCallbacks?: TModuleOnCallbacksProps<TC, ScrollProgress>,
   ) {
     super(props, onCallbacks as any);
