@@ -13,6 +13,7 @@ import {
   inRange,
 } from '@/utils';
 
+import { SnapInterval } from './logic/Interval';
 import { SnapKeyboard } from './logic/Keyboard';
 import { SnapSlide } from './logic/Slide';
 import { SnapSwipe } from './logic/Swipe';
@@ -121,6 +122,9 @@ export class Snap extends Module<TC, TS, TM> {
 
     // add keyboard
     new SnapKeyboard(this as any);
+
+    // add interval
+    new SnapInterval(this as any);
   }
 
   /** Handles properties change */

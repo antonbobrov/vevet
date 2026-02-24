@@ -51,4 +51,6 @@ export const MUTABLE_PROPS: TRequiredProps<ISnapMutableProps> = {
   stickOnWheelEnd: true,
   stickOnWheelEndThreshold: 30,
   slideSize: 'auto',
+  interval: null as any,
+  intervalDirection: 'next',
 };

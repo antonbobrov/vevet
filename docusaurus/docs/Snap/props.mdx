@@ -764,3 +764,40 @@ snap.updateProps({
   stickOnWheelEndThreshold: 100,
 });
 ```
+
+### `interval` {#props.interval}
+
+- **Type:** `number | null`
+- **Default:** `null`
+- Interval between automatic slide changes in milliseconds. If `null`, the interval is disabled.
+
+```js
+const snap = new Snap({
+  container: document.getElementById('container'),
+  interval: 3000, // change slide every 3 seconds
+});
+
+// change value
+snap.updateProps({
+  interval: 5000,
+});
+```
+
+### `intervalDirection` {#props.intervalDirection}
+
+- **Type:** `'next' | 'prev'`
+- **Default:** `'next'`
+- Direction of automatic slide changes when `interval` is enabled.
+
+```js
+const snap = new Snap({
+  container: document.getElementById('container'),
+  interval: 3000,
+  intervalDirection: 'next',
+});
+
+// change value
+snap.updateProps({
+  intervalDirection: 'prev',
+});
+```
