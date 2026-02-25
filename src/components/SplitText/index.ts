@@ -88,7 +88,7 @@ export class SplitText extends Module<TC, TS, TM> {
   ) {
     super(props, onCallbacks as any);
 
-    const { container } = this.props;
+    const { container, ariaLabel } = this.props;
     const { style } = container;
 
     // Add styles
@@ -96,7 +96,14 @@ export class SplitText extends Module<TC, TS, TM> {
     style.display = 'block';
 
     // A11Y
-    container.setAttribute('aria-label', container.textContent || '');
+    if (ariaLabel) {
+      container.setAttribute(
+        'aria-label',
+        typeof ariaLabel === 'string' ? ariaLabel : container.textContent || '',
+      );
+    }
+
+    // Disable translate
     container.translate = false;
 
     // Add classes

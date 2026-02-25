@@ -7,6 +7,7 @@ export const GET_STATIC_PROPS = (
 ): TRequiredProps<ISplitTextStaticProps> => ({
   __staticProp: true,
   container: null as any,
+  ariaLabel: true,
   letters: false,
   lines: false,
   linesWrapper: false,

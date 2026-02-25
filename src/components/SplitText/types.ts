@@ -12,6 +12,12 @@ export interface ISplitTextStaticProps extends IModuleStaticProps {
   container: HTMLElement;
 
   /**
+   * Allow aria-label. `false` prevents adding aria-label attributes to container. String value overrides the default aria-label.
+   * @default true
+   */
+  ariaLabel?: boolean | string;
+
+  /**
    * Specifies whether the text should be split into individual letters.
    * @default false
    */

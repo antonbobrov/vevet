@@ -33,6 +33,22 @@ const text = new SplitText({
 });
 ```
 
+### `ariaLabel` {#props.ariaLabel}
+
+- **Type:** `boolean | string`
+- **Default:** `true`
+- Controls whether an accessible label is added to the container.
+  - When `true`, the current container text is used as the `aria-label` to keep the text readable for assistive technologies after splitting.
+  - When `false`, no `aria-label` attribute is added.
+  - When a `string` is provided, that value is used as the `aria-label`.
+
+```js
+const text = new SplitText({
+  container: document.getElementById('split-text'),
+  ariaLabel: 'Animated quote',
+});
+```
+
 ### `letters` {#props.letters}
 
 - **Type:** `boolean`
