@@ -1,5 +1,30 @@
 # Changelog
 
+# [5.8.0](https://github.com/antonbobrov/vevet/compare/v5.7.0...v5.8.0) (2026-02-25)
+
+
+### All
+
+* allow callbacks inside props ([76e1de4](https://github.com/antonbobrov/vevet/commit/76e1de4bd313305d07a3b108957d073b39e08385))
+
+### Responsive
+
+* fix typo ([b6dc580](https://github.com/antonbobrov/vevet/commit/b6dc5809f625d21cc15d0965bf0527e68a7416d4))
+
+### Snap
+
+* add `hasIntertia` & `isInterpolating` ([af43975](https://github.com/antonbobrov/vevet/commit/af43975b37abc3327ba38bed68a13a194ea65556))
+* add `interval` and `intervalDirection` ([b5a8589](https://github.com/antonbobrov/vevet/commit/b5a85893ccc12e718db302827d85030c2e901a21))
+* disable `swipeSpeed` when `swipeAxis="angle"` ([8900c5d](https://github.com/antonbobrov/vevet/commit/8900c5dfc2eb5d75ef54f1ab9dcb144e3ec570d9))
+
+### SplitText
+
+* add `ariaLabel` ([2591b79](https://github.com/antonbobrov/vevet/commit/2591b795c162e274a84cdfd54ef1b4005ca82949))
+
+### Viewport
+
+* better rem calculation ([b1af524](https://github.com/antonbobrov/vevet/commit/b1af524efd827ddd039c80263915ffb6b3632e99))
+
 # [5.7.0](https://github.com/antonbobrov/vevet/compare/v5.6.0...v5.7.0) (2026-02-13)
 
 
