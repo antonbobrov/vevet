@@ -2,6 +2,7 @@ import { Callbacks } from '@/base/Callbacks';
 import { ICoreProps } from '@/core/types';
 import { cnToggle } from '@/internal/cn';
 import { body, doc, html } from '@/internal/env';
+import { isFiniteNumber } from '@/internal/isFiniteNumber';
 import { addEventListener } from '@/utils/listeners';
 
 import { IViewport, TViewportCallbacks } from './types';
@@ -128,14 +129,20 @@ export function createViewport({
   function updateValues() {
     const { width: prevWidth } = data;
 
-    const rootStyles = getComputedStyle(html);
+    const vWidth = window.innerWidth;
+    const vHeight = window.innerHeight;
 
-    data.width = window.innerWidth;
-    data.height = window.innerHeight;
-    data.scrollbarWidth = window.innerWidth - html.clientWidth;
+    data.width = vWidth;
+    data.height = vHeight;
+    data.scrollbarWidth = vWidth - html.clientWidth;
     data.vw = data.width / 100;
     data.vh = data.height / 100;
-    data.rem = parseFloat(rootStyles.fontSize);
+
+    const rootStyles = getComputedStyle(html);
+    const fontSize = parseFloat(rootStyles.fontSize);
+
+    data.rem = isFiniteNumber(fontSize) ? fontSize : 16;
+
     data.landscape = data.width > data.height;
     data.portrait = data.width < data.height;
     data.dpr = window.devicePixelRatio;
