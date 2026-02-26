@@ -17,10 +17,10 @@ export class SwipeStyles {
   /** Applies touch-action and cursor styles */
   public setInline() {
     const { props } = this._ctx;
-    const { container, axis, grabCursor: hasGrabCursor } = props;
+    const { container, axis, enabled, grabCursor: hasGrabCursor } = props;
     const { style } = container;
 
-    const cursor = hasGrabCursor ? 'grab' : '';
+    const cursor = enabled && hasGrabCursor ? 'grab' : '';
 
     let touchAction = 'none';
     if (axis === 'x') {
