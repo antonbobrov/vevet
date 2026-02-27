@@ -21,6 +21,12 @@ export interface ICursorStaticProps extends IModuleStaticProps {
   hideNative?: boolean;
 
   /**
+   * Appends the custom cursor to the container. Use `false` if you need only cursor logic and interactions.
+   * @default true
+   */
+  append?: boolean;
+
+  /**
    * Cursor behavior
    * @default 'default'
    */

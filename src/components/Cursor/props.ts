@@ -7,6 +7,7 @@ export const STATIC_PROPS: TRequiredProps<ICursorStaticProps> = {
   __staticProp: true,
   container: isBrowser ? window : (null as any),
   hideNative: false,
+  append: true,
   behavior: 'default',
   transformModifier: ({ x, y }) => `translate(${x}px, ${y}px)`,
 };

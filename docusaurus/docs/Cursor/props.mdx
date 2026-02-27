@@ -44,6 +44,19 @@ const cursor = new Cursor({
 });
 ```
 
+### `append` {#props.append}
+
+- **Type:** `boolean`
+- **Default:** `true`
+- Appends the custom cursor element to the container.  
+  Use `false` if you need only cursor logic and interactions without the visual DOM element.
+
+```js
+const cursor = new Cursor({
+  append: false,
+});
+```
+
 ### `behavior` {#props.behavior}
 
 - **Type:** `"default"` | `"path"`

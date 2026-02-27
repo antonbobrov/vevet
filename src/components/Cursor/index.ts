@@ -258,17 +258,21 @@ export class Cursor extends Module<TC, TS, TM> {
 
   /** Creates the custom cursor and appends it to the DOM. */
   private _createElements() {
-    const { container, domContainer } = this;
+    const { container, domContainer, props } = this;
     const isWindow = container instanceof Window;
 
     const cn = this._cn.bind(this);
 
     // Create outer element
     const outer = doc.createElement('div');
-    domContainer.append(outer);
     cnAdd(outer, cn(''));
     cnAdd(outer, cn(isWindow ? '-in-window' : '-in-element'));
     cnAdd(outer, cn('-disabled'));
+
+    // Append the outer element to the DOM container
+    if (props.append) {
+      domContainer.append(outer);
+    }
 
     // set direction
     const direction = getTextDirection(outer);
