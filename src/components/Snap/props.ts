@@ -22,7 +22,7 @@ export const MUTABLE_PROPS: TRequiredProps<ISnapMutableProps> = {
   centered: false,
   loop: false,
   gap: 0,
-  lerp: initVevet()?.mobile ? 1 : 0.2,
+  lerp: initVevet()?.mobile ? 1 : 0.3,
   freemode: false,
   rewind: false,
   stickOnResize: true,

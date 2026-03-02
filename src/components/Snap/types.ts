@@ -78,7 +78,7 @@ export interface ISnapMutableProps
 
   /**
    * Linear interpolation factor for smooth coordinates updates.
-   * @default `vevet.mobile ? 1 : 0.2`
+   * @default `vevet.mobile ? 1 : 0.3`
    */
   lerp?: number;
 
