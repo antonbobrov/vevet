@@ -16,6 +16,7 @@ import {
   IScrollbarMutableProps,
   IScrollbarStaticProps,
 } from './types';
+import { isSnap } from './utils/isSnap';
 
 export * from './types';
 
@@ -78,7 +79,7 @@ export class Scrollbar extends Module<TC, TS, TM> {
     super(props, onCallbacks as any);
 
     // detect features
-    this._isRtl = getTextDirection(this.parent) === 'rtl';
+    this._isRtl = getTextDirection(this.parent) === 'rtl' && this.axis === 'x';
 
     // No need to remove styles on destroy
     createScrollbarStyles(this.prefix);
@@ -139,7 +140,19 @@ export class Scrollbar extends Module<TC, TS, TM> {
   get parent() {
     const { parent, container } = this.props;
 
-    return parent || (container instanceof Window ? body : container);
+    if (parent) {
+      return parent;
+    }
+
+    if (container instanceof Window) {
+      return body;
+    }
+
+    if (isSnap(container)) {
+      return container.container;
+    }
+
+    return container;
   }
 
   /**
@@ -156,6 +169,10 @@ export class Scrollbar extends Module<TC, TS, TM> {
   get scrollSize() {
     const { scrollElement } = this;
 
+    if (isSnap(scrollElement)) {
+      return scrollElement.max - scrollElement.min;
+    }
+
     return this.axis === 'x'
       ? scrollElement.scrollWidth
       : scrollElement.scrollHeight;
@@ -167,6 +184,10 @@ export class Scrollbar extends Module<TC, TS, TM> {
   get scrollableSize() {
     const { scrollElement } = this;
 
+    if (isSnap(scrollElement)) {
+      return scrollElement.max - scrollElement.min;
+    }
+
     return this.axis === 'x'
       ? this.scrollSize - scrollElement.clientWidth
       : this.scrollSize - scrollElement.clientHeight;
@@ -177,6 +198,10 @@ export class Scrollbar extends Module<TC, TS, TM> {
    */
   get scrollValue() {
     const { axis } = this;
+
+    if (isSnap(this.container)) {
+      return this.container.loopedCurrent;
+    }
 
     if (this.container instanceof Window) {
       return axis === 'x' ? window.scrollX : window.scrollY;
@@ -209,6 +234,7 @@ export class Scrollbar extends Module<TC, TS, TM> {
   /** Create elements */
   private _create() {
     const isInWindow = this.container instanceof Window;
+    const { scrollElement } = this;
 
     this._outer = this._createOuter();
     this.parent.appendChild(this._outer);
@@ -223,8 +249,8 @@ export class Scrollbar extends Module<TC, TS, TM> {
     if (isInWindow) {
       this._addTempClassName(html, this._cn('-scrollable'));
       this._addTempClassName(body, this._cn('-scrollable'));
-    } else {
-      this._addTempClassName(this.scrollElement, this._cn('-scrollable'));
+    } else if (scrollElement instanceof HTMLElement) {
+      this._addTempClassName(scrollElement, this._cn('-scrollable'));
     }
 
     this.onDestroy(() => this._outer.remove());
@@ -237,6 +263,7 @@ export class Scrollbar extends Module<TC, TS, TM> {
     const { props, axis } = this;
 
     const element = doc.createElement('div');
+    element.setAttribute('data-scrollbar', 'true');
     cnAdd(element, cn(''));
     cnAdd(element, cn(`_${axis}`));
 
@@ -281,11 +308,25 @@ export class Scrollbar extends Module<TC, TS, TM> {
 
   /** Set resize events */
   private _setResize() {
+    const { scrollElement } = this;
+
+    // Snap
+
+    if (isSnap(scrollElement)) {
+      const destruct = scrollElement.on('resize', () => this.resize());
+
+      this.onDestroy(() => destruct());
+
+      return;
+    }
+
+    // DOM
+
     const createResizeHandler = () => {
-      const children = Array.from(this.scrollElement.children);
+      const children = Array.from(scrollElement.children);
 
       return onResize({
-        element: [this.track, this.parent, this.scrollElement, ...children],
+        element: [this.track, this.parent, scrollElement, ...children],
         viewportTarget: 'width',
         resizeDebounce: this.props.resizeDebounce,
         callback: () => this.resize(),
@@ -301,7 +342,7 @@ export class Scrollbar extends Module<TC, TS, TM> {
       resizeHandler.debounceResize();
     });
 
-    childrenObserver.observe(this.scrollElement, { childList: true });
+    childrenObserver.observe(scrollElement, { childList: true });
 
     this.onDestroy(() => {
       resizeHandler.remove();
@@ -311,8 +352,17 @@ export class Scrollbar extends Module<TC, TS, TM> {
 
   /** Set scroll events */
   private _setOnscroll() {
+    const { container } = this;
+
+    if (isSnap(container)) {
+      const destruct = container.on('update', () => this._onScroll());
+      this.onDestroy(() => destruct());
+
+      return;
+    }
+
     const handler = addEventListener(
-      this.container,
+      container,
       'scroll',
       () => this._onScroll(),
       { passive: true },
@@ -329,31 +379,49 @@ export class Scrollbar extends Module<TC, TS, TM> {
 
     const swipe = new Swipe({ container: this.thumb, grabCursor: true });
 
-    swipe.on('start', (coords) => {
-      this._valueOnSwipeStart = this.scrollValue;
-      this.callbacks.emit('swipeStart', coords);
-    });
-
-    swipe.on('move', (coords) => {
-      this._onSwipeMove(coords);
-      this.callbacks.emit('swipe', coords);
-    });
-
-    swipe.on('end', (coords) => {
-      this.callbacks.emit('swipeEnd', coords);
-    });
-
-    swipe.on('touchmove', (event) => {
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-    });
-
-    swipe.on('mousemove', (event) => {
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-    });
+    swipe.on('start', (coord) => this._handleSwipeStart(coord));
+    swipe.on('move', (coord) => this._handleSwipeMove(coord));
+    swipe.on('end', (coord) => this._handleSwipeEnd(coord));
+    swipe.on('touchmove', (event) => this._handleSwipeTouchMove(event));
+    swipe.on('mousemove', (event) => this._handleSwipeMouseMove(event));
 
     this.onDestroy(() => swipe.destroy());
+  }
+
+  /** Handles swipe start */
+  private _handleSwipeStart(coords: ISwipeCoords) {
+    const { container } = this;
+
+    if (isSnap(container)) {
+      this._valueOnSwipeStart = container.target;
+    } else {
+      this._valueOnSwipeStart = this.scrollValue;
+    }
+
+    this.callbacks.emit('swipeStart', coords);
+  }
+
+  /** Handle swipe move */
+  private _handleSwipeMove(coords: ISwipeCoords) {
+    this._onSwipeMove(coords);
+    this.callbacks.emit('swipe', coords);
+  }
+
+  /** Handle swipe end */
+  private _handleSwipeEnd(coords: ISwipeCoords) {
+    this.callbacks.emit('swipeEnd', coords);
+  }
+
+  /** Handle swipe touchmove */
+  private _handleSwipeTouchMove(event: TouchEvent) {
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+  }
+
+  /** Handle swipe mousemove */
+  private _handleSwipeMouseMove(event: MouseEvent) {
+    event.stopPropagation();
+    event.stopImmediatePropagation();
   }
 
   /** Resize the scrollbar. */
@@ -406,9 +474,12 @@ export class Scrollbar extends Module<TC, TS, TM> {
   /** Render the scrollbar. */
   private _render() {
     const { scrollValue, scrollableSize, axis, thumbSize, trackSize } = this;
-    let scrollProgress = clamp(Math.abs(scrollValue) / scrollableSize);
+    const isRtl = this._isRtl;
 
-    if (this._isRtl && axis === 'x') {
+    const normalizedScrollValue = isRtl ? Math.abs(scrollValue) : scrollValue;
+    let scrollProgress = clamp(normalizedScrollValue / scrollableSize);
+
+    if (isRtl) {
       scrollProgress = 1 - scrollProgress;
     }
 
@@ -451,18 +522,36 @@ export class Scrollbar extends Module<TC, TS, TM> {
   }
 
   /** Handle swipe move */
-  private _onSwipeMove({ diff }: ISwipeCoords) {
+  private _onSwipeMove(data: ISwipeCoords) {
     const { scrollElement, axis, trackSize, thumbSize, scrollableSize } = this;
 
-    const diffCoord = axis === 'x' ? diff.x : diff.y;
-    const iterator = (diffCoord / (trackSize - thumbSize)) * scrollableSize;
-    const target = this._valueOnSwipeStart + iterator;
+    const valueOnStart = this._valueOnSwipeStart;
+    const diff = axis === 'x' ? data.diff.x : data.diff.y;
+    let iterator = (diff / (trackSize - thumbSize)) * scrollableSize;
 
-    scrollElement.scrollTo({
-      top: axis === 'y' ? target : undefined,
-      left: axis === 'x' ? target : undefined,
-      behavior: 'instant',
-    });
+    if (isSnap(scrollElement)) {
+      iterator = this._isRtl ? -iterator : iterator;
+
+      const { min, max } = scrollElement;
+      const trackLength = scrollElement.max - scrollElement.min;
+      const loopCount = scrollElement.props.loop ? scrollElement.loopCount : 0;
+
+      const target = clamp(
+        valueOnStart + iterator,
+        min + trackLength * loopCount,
+        max + trackLength * loopCount,
+      );
+
+      scrollElement.setTarget(target);
+    } else {
+      const target = valueOnStart + iterator;
+
+      scrollElement.scrollTo({
+        top: axis === 'y' ? target : undefined,
+        left: axis === 'x' ? target : undefined,
+        behavior: 'instant',
+      });
+    }
   }
 
   /**

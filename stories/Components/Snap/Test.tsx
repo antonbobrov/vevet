@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 
-import { Snap } from '@/index';
+import { Responsive, Scrollbar, Snap } from '@/index';
 
 export const Test: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -42,9 +42,26 @@ export const Test: FC = () => {
       },
     });
 
+    new Responsive(instance, [
+      { at: '@media (max-width: 600px)', props: { gap: 10 } },
+    ]);
+
+    instance.on('idle', () => {
+      console.log('idle');
+    });
+
+    const scrollbar = new Scrollbar({
+      container: instance,
+      axis: 'x',
+      autoHide: false,
+    });
+
     setCarousel(instance);
 
-    return () => instance.destroy();
+    return () => {
+      instance.destroy();
+      scrollbar.destroy();
+    };
   }, []);
 
   return (

@@ -6,13 +6,15 @@ import {
 
 import { ISwipeCoords } from '../Swipe';
 
+import type { Snap } from '../Snap';
+
 export interface IScrollbarStaticProps extends IModuleStaticProps {
   /**
    * The element to which the scrollbar is applied.
    * Can be either the `window` or a specific HTML element.
    * @default window
    */
-  container?: Window | HTMLElement;
+  container?: Window | HTMLElement | Snap;
 
   /**
    * The parent element where the scrollbar should be appended.
