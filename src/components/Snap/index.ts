@@ -140,7 +140,7 @@ export class Snap extends Module<TC, TS, TM> {
   /** Handles properties change */
   protected _handleProps(props: Partial<TM>) {
     // attach slides
-    this._fetchSlides();
+    this._fetchSlides(); // todo: optimize on props update
 
     // resize immediately
     this._resizer.resize();
@@ -305,6 +305,11 @@ export class Snap extends Module<TC, TS, TM> {
     this._track.iterateTarget(delta);
   }
 
+  /** Set track target value */
+  public setTarget(value: number) {
+    this._track.setTarget(value);
+  }
+
   /** Cancel slide transition */
   public cancelTransition() {
     this._track.cancelTransition();
@@ -335,9 +340,20 @@ export class Snap extends Module<TC, TS, TM> {
 
     this._slides.forEach((slide) => slide.$_detach());
 
-    const children = props.slides
+    const rawChildren = props.slides
       ? props.slides
       : Array.from(props.container.children);
+
+    const children = rawChildren.filter((slide) => {
+      if (
+        slide instanceof HTMLElement &&
+        slide.hasAttribute('data-scrollbar')
+      ) {
+        return false;
+      }
+
+      return true;
+    });
 
     this._slides = children.map((item) => {
       if (item instanceof SnapSlide) {

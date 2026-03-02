@@ -201,6 +201,13 @@ export class SnapTrack extends SnapLogic {
     this.awake();
   }
 
+  /** Set track target value */
+  public setTarget(value: number) {
+    this.target = value;
+
+    this.awake();
+  }
+
   /** Clamp target value between min and max values */
   public clampTarget() {
     if (!this.canLoop) {

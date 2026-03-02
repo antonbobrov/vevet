@@ -197,3 +197,14 @@ snap.set(1350);
 
 snap.render();
 ```
+
+### `setTarget`
+
+Set only the **target** track value without instantly updating the current value.
+
+```ts
+const snap = new Snap({ container });
+
+// move towards coordinate 1350
+snap.setTarget(1350);
+```
