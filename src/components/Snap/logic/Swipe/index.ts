@@ -188,7 +188,8 @@ export class SnapSwipe extends SnapLogic {
     // Normalize swipe delta
     let swipeDelta = coords.step[axis];
     if (axis === 'angle') {
-      swipeDelta = (swipeDelta / 360) * snap.containerSize;
+      const trackLength = snap.max - snap.min;
+      swipeDelta = trackLength * (swipeDelta / 360);
     }
 
     const delta = swipeDelta * -1;
