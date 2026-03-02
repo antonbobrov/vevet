@@ -169,10 +169,11 @@ export class Marquee extends Module<TC, TS, TM> {
 
   /** Set marquee events */
   protected _setEvents() {
-    const { props } = this;
-    const { container } = props;
+    const { container } = this.props;
 
     this._raf.on('frame', () => {
+      const { props } = this;
+
       const factor = props.adjustSpeed ? this._raf.fpsFactor : 1;
       const speed = toPixels(props.speed);
 
