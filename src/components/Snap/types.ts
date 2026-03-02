@@ -209,6 +209,9 @@ export interface ISnapCallbacksMap extends IModuleCallbacksMap {
 
   /** Fired on inertia fail */
   swipeInertiaFail: undefined;
+
+  /** Fired on idle */
+  idle: undefined;
 }
 
 export type TSnapDuration = number | ((distance: number) => number);

@@ -237,6 +237,8 @@ export class SnapSwipe extends SnapLogic {
       } else {
         snap.stick();
       }
+    } else {
+      this.snap.render();
     }
 
     this.snap.callbacks.emit('swipeInertiaFail', undefined);

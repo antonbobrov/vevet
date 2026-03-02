@@ -262,6 +262,26 @@ const destruct = snap.on('update', () => console.log('update'));
 destruct();
 ```
 
+### `idle`
+
+Triggered when the carousel becomes idle — not swiping, interpolating, or transitioning.
+
+```ts
+const snap = new Snap({
+  container,
+  onIdle: () => console.log('idle'),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('idle', () => console.log('idle'));
+
+// Cancel the callback
+destruct();
+```
+
 ### `wheel`
 
 Triggered on mouse wheel input.

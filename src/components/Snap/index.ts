@@ -13,6 +13,7 @@ import {
   inRange,
 } from '@/utils';
 
+import { SnapIdle } from './logic/Idle';
 import { SnapInterval } from './logic/Interval';
 import { SnapKeyboard } from './logic/Keyboard';
 import { SnapSlide } from './logic/Slide';
@@ -67,6 +68,9 @@ export class Snap extends Module<TC, TS, TM> {
 
   /** Snap Track */
   private _track: SnapTrack;
+
+  /** Snap Idle Logic */
+  private _idle: SnapIdle;
 
   /** Container size */
   private _containerSize = 0;
@@ -128,6 +132,9 @@ export class Snap extends Module<TC, TS, TM> {
 
     // add interval
     new SnapInterval(this as any);
+
+    // add idle logic
+    this._idle = new SnapIdle(this as any);
   }
 
   /** Handles properties change */
@@ -315,6 +322,11 @@ export class Snap extends Module<TC, TS, TM> {
   /** Get first slide size */
   get firstSlideSize() {
     return this.slides[0].size;
+  }
+
+  /** If the scene is idle: not swiping, not interpolating, not transitioning */
+  get isIdle() {
+    return this._idle.isIdle;
   }
 
   /** Update slides list and attach them */
