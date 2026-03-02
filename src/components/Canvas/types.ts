@@ -72,7 +72,9 @@ export interface ICanvasMutableProps extends IModuleMutableProps {
 /**
  * Event callbacks for canvas operations.
  */
-export interface ICanvasCallbacksMap extends IModuleCallbacksMap {
+export interface ICanvasCallbacksMap<
+  TM = ICanvasMutableProps,
+> extends IModuleCallbacksMap<TM> {
   /**
    * Fires when the canvas is resized.
    */

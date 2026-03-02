@@ -30,7 +30,7 @@ export interface IRafMutableProps extends IModuleMutableProps {
 }
 
 /** Callbacks for Raf module events */
-export interface IRafCallbacksMap extends IModuleCallbacksMap {
+export interface IRafCallbacksMap extends IModuleCallbacksMap<IRafMutableProps> {
   /** Triggered when the animation starts */
   play: undefined;
 

@@ -92,8 +92,8 @@ export class InView extends Module<TC, TS, TM> {
   /**
    * Handles property mutations and updates observation events accordingly.
    */
-  protected _handleProps() {
-    super._handleProps();
+  protected _handleProps(props: TM) {
+    super._handleProps(props);
 
     this._setup();
   }

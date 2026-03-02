@@ -152,7 +152,7 @@ export interface ISnapMutableProps
 }
 
 /** Callbacks map for the Snap component */
-export interface ISnapCallbacksMap extends IModuleCallbacksMap {
+export interface ISnapCallbacksMap extends IModuleCallbacksMap<ISnapMutableProps> {
   /** Fired on resize */
   resize: undefined;
 

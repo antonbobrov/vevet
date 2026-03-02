@@ -78,7 +78,7 @@ export interface ICursorMutableProps extends IModuleMutableProps {
 /**
  * Callback types for the custom cursor component.
  */
-export interface ICursorCallbacksMap extends IModuleCallbacksMap {
+export interface ICursorCallbacksMap extends IModuleCallbacksMap<ICursorMutableProps> {
   /**
    * Triggered on each render to update the cursor's position.
    */

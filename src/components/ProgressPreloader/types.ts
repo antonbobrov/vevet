@@ -60,7 +60,7 @@ export interface IProgressPreloaderMutableProps extends IPreloaderMutableProps {
 /**
  * Callback events for the progress preloader.
  */
-export interface IProgressPreloaderCallbacksMap extends IPreloaderCallbacksMap {
+export interface IProgressPreloaderCallbacksMap extends IPreloaderCallbacksMap<IProgressPreloaderMutableProps> {
   /**
    * Fired when the preloader's progress updates.
    */

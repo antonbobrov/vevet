@@ -47,7 +47,7 @@ export interface IInViewMutableProps extends IModuleMutableProps {
 /**
  * Callbacks available in the InView module.
  */
-export interface IInViewCallbacksMap extends IModuleCallbacksMap {
+export interface IInViewCallbacksMap extends IModuleCallbacksMap<IInViewMutableProps> {
   /**
    * Fires when an element enters the viewport.
    */

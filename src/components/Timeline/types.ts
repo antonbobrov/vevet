@@ -22,7 +22,7 @@ export interface ITimelineMutableProps extends IModuleMutableProps {
   easing?: TEasingType;
 }
 
-export interface ITimelineCallbacksMap extends IModuleCallbacksMap {
+export interface ITimelineCallbacksMap extends IModuleCallbacksMap<ITimelineMutableProps> {
   /**
    * Triggered when the timeline starts.
    */

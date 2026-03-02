@@ -60,7 +60,7 @@ export interface IPointersMutableProps extends IModuleMutableProps {
   enabled?: boolean;
 }
 
-export interface IPointersCallbacksMap extends IModuleCallbacksMap {
+export interface IPointersCallbacksMap extends IModuleCallbacksMap<IPointersMutableProps> {
   /**
    * Fired when the required number of pointers is reached.
    */

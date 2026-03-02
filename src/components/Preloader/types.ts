@@ -31,7 +31,9 @@ export interface IPreloaderMutableProps extends IModuleMutableProps {}
 /**
  * Callbacks map for the Preloader module.
  */
-export interface IPreloaderCallbacksMap extends IModuleCallbacksMap {
+export interface IPreloaderCallbacksMap<
+  TM = IPreloaderMutableProps,
+> extends IModuleCallbacksMap<TM> {
   /**
    * Triggered when the page is fully loaded.
    */

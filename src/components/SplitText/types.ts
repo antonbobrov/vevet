@@ -124,7 +124,7 @@ export interface ISplitTextStaticProps extends IModuleStaticProps {
 export interface ISplitTextMutableProps extends IModuleMutableProps {}
 
 /** Callbacks map for the SplitText module */
-export interface ISplitTextCallbacksMap extends IModuleCallbacksMap {
+export interface ISplitTextCallbacksMap extends IModuleCallbacksMap<IModuleMutableProps> {
   /**
    * Called before the text is split.
    */

@@ -90,7 +90,7 @@ export interface IMarqueeMutableProps extends IModuleMutableProps {
 /**
  * Marquee callbacks
  */
-export interface IMarqueeCallbacksMap extends IModuleCallbacksMap {
+export interface IMarqueeCallbacksMap extends IModuleCallbacksMap<IMarqueeMutableProps> {
   /**
    * Called during marquee rendering.
    */

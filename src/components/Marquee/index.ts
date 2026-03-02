@@ -153,8 +153,8 @@ export class Marquee extends Module<TC, TS, TM> {
   }
 
   /** Handles property changes  */
-  protected _handleProps() {
-    super._handleProps();
+  protected _handleProps(props: Partial<TM>) {
+    super._handleProps(props);
 
     if (this.props.enabled) {
       this._raf.play();

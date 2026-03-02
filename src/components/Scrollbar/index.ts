@@ -200,8 +200,8 @@ export class Scrollbar extends Module<TC, TS, TM> {
   }
 
   /** Handles property mutations */
-  protected _handleProps() {
-    super._handleProps();
+  protected _handleProps(props: Partial<TM>) {
+    super._handleProps(props);
 
     this.resize();
   }

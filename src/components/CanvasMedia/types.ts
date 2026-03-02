@@ -48,7 +48,7 @@ export interface ICanvasMediaMutableProps extends ICanvasMutableProps {
 /**
  * Extended callbacks map for the CanvasMedia class.
  */
-export interface ICanvasMediaCallbacksMap extends ICanvasCallbacksMap {
+export interface ICanvasMediaCallbacksMap extends ICanvasCallbacksMap<ICanvasMediaMutableProps> {
   /**
    * Fires after the media element has been rendered onto the canvas.
    */

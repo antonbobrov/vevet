@@ -8,7 +8,9 @@ export interface IModuleMutableProps {
   __mutableProp?: true;
 }
 
-export interface IModuleCallbacksMap extends ICallbacksMap {
+export interface IModuleCallbacksMap<
+  TM = Record<string, any>,
+> extends ICallbacksMap {
   /**
    * Triggered when the module is destroyed.
    */
@@ -16,8 +18,9 @@ export interface IModuleCallbacksMap extends ICallbacksMap {
 
   /**
    * Triggered when the module's properties are updated.
+   * Receives the diff (changed keys and new values) as the first argument.
    */
-  props: undefined;
+  props: Partial<TM>;
 }
 
 export type TModuleOnCallbacksProps<T, Ctx> = Partial<{

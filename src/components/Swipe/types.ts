@@ -164,7 +164,7 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
 
 export interface ISwipeCallbacksMap
   extends
-    IModuleCallbacksMap,
+    IModuleCallbacksMap<ISwipeMutableProps>,
     Pick<IPointersCallbacksMap, 'pointerdown' | 'pointermove' | 'pointerup'> {
   /** Swipe start event. */
   start: ISwipeCoords;

@@ -128,8 +128,8 @@ export class Canvas<
   }
 
   /** Handle property mutations */
-  protected _handleProps() {
-    super._handleProps();
+  protected _handleProps(props: Partial<M>) {
+    super._handleProps(props);
 
     this.resize();
   }

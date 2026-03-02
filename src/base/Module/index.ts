@@ -128,19 +128,36 @@ export class Module<
   /**
    * Method that is called when the module's properties mutate. In most cases, used to handle callbacks.
    */
-  protected _handleProps() {
-    this.callbacks.emit('props', undefined);
+  protected _handleProps(diff: Partial<MutableProps>) {
+    this.callbacks.emit('props', diff);
   }
 
   /** Change module's mutable properties */
   @noopIfDestroyed
   public updateProps(props: Partial<MutableProps>) {
+    const prevProps = { ...this._props };
+    const keys = Object.keys(this.props) as (keyof MutableProps)[];
+
     this._props = {
       ...this._props,
       ...props,
     };
 
-    this._handleProps();
+    const diff: Partial<MutableProps> = {};
+
+    // todo
+    keys.forEach((key) => {
+      // @ts-ignore
+      const prevValue = prevProps[key];
+      // @ts-ignore
+      const newValue = this._props[key];
+
+      if (prevValue !== newValue) {
+        diff[key] = newValue;
+      }
+    });
+
+    this._handleProps(diff);
   }
 
   /**

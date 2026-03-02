@@ -37,7 +37,7 @@ export interface IScrollProgressStaticProps extends IModuleStaticProps {
 export interface IScrollProgressMutableProps extends IModuleMutableProps {}
 
 /** Callbacks for ScrollProgress module events */
-export interface IScrollProgressCallbacksMap extends IModuleCallbacksMap {
+export interface IScrollProgressCallbacksMap extends IModuleCallbacksMap<IScrollProgressMutableProps> {
   /**
    * Triggered on each scroll progress update.
    */

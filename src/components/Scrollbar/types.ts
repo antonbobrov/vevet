@@ -72,7 +72,7 @@ export interface IScrollbarMutableProps extends IModuleMutableProps {
   autoSize?: boolean;
 }
 
-export interface IScrollbarCallbacksMap extends IModuleCallbacksMap {
+export interface IScrollbarCallbacksMap extends IModuleCallbacksMap<IScrollbarMutableProps> {
   /**
    * Triggered when the scrollbar updates its position.
    */
