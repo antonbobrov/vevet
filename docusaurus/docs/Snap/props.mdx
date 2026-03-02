@@ -307,7 +307,7 @@ snap.updateProps({
 ### `edgeFriction` {#props.edgeFriction}
 
 - **Type:** `number`
-- **Default:** `0.85`
+- **Default:** `0.7`
 - Maximum friction between the final slide and the maximum translation value. Also swipe bouncing.  
   The value must be `0 to 1`. The higher value the more resistance is applied.  
   **See [demo](basic-demos#edge-friction)**
@@ -315,7 +315,7 @@ snap.updateProps({
 ```js
 const snap = new Snap({
   container: document.getElementById('container'),
-  edgeFriction: 0.85,
+  edgeFriction: 0.7,
 });
 
 // change value

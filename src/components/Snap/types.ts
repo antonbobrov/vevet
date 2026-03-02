@@ -112,7 +112,7 @@ export interface ISnapMutableProps
   /**
    * Maximum friction between the final slide and the maximum translation value.
    * From 0 to 1. The higher value the more resistance is applied.
-   * @default 0.85
+   * @default 0.7
    */
   edgeFriction?: number;
 
