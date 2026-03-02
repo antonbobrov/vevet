@@ -5,6 +5,7 @@ import { toPixels } from '@/utils';
 import { clamp, lerp, loop, scoped } from '@/utils/math';
 
 import { ISnapTransitionArg, Snap } from '../..';
+import { LERP_APPROXIMATION } from '../../props';
 import { SnapLogic } from '../SnapLogic';
 
 export class SnapTrack extends SnapLogic {
@@ -284,17 +285,22 @@ export class SnapTrack extends SnapLogic {
       lerpFactor += additionalFactor * fastProgress;
     }
 
-    this.current = lerp(this.current, target, lerpFactor, 0.000001);
+    this.current = lerp(this.current, target, lerpFactor, LERP_APPROXIMATION);
 
     // Interpolate influence
 
-    influence.target = lerp(influence.target, 0, lerpFactor, 0.000001);
+    influence.target = lerp(
+      influence.target,
+      0,
+      lerpFactor,
+      LERP_APPROXIMATION,
+    );
 
     influence.current = lerp(
       influence.current,
       influence.target,
       lerpFactor,
-      0.000001,
+      LERP_APPROXIMATION,
     );
   }
 

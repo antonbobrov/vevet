@@ -19,7 +19,7 @@ import { SnapSlide } from './logic/Slide';
 import { SnapSwipe } from './logic/Swipe';
 import { SnapTrack } from './logic/Track';
 import { SnapWheel } from './logic/Wheel';
-import { MUTABLE_PROPS, STATIC_PROPS } from './props';
+import { LERP_APPROXIMATION, MUTABLE_PROPS, STATIC_PROPS } from './props';
 import {
   ISnapCallbacksMap,
   ISnapMagnet,
@@ -217,7 +217,10 @@ export class Snap extends Module<TC, TS, TM> {
 
   /** If track values are interpolating */
   get isInterpolating() {
-    return Math.abs(this._track.target - this._track.current) > 0.0001;
+    const track = this._track;
+    const diff = Math.abs(track.target - track.current);
+
+    return diff > LERP_APPROXIMATION;
   }
 
   /** Gets the interpolation influence */

@@ -54,3 +54,5 @@ export const MUTABLE_PROPS: TRequiredProps<ISnapMutableProps> = {
   interval: null as any,
   intervalDirection: 'next',
 };
+
+export const LERP_APPROXIMATION = 0.000001;
