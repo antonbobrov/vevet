@@ -140,7 +140,9 @@ export class Snap extends Module<TC, TS, TM> {
   /** Handles properties change */
   protected _handleProps(props: Partial<TM>) {
     // attach slides
-    this._fetchSlides(); // todo: optimize on props update
+    if ('slides' in props) {
+      this._fetchSlides();
+    }
 
     // resize immediately
     this._resizer.resize();
