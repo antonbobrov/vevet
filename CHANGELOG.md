@@ -1,5 +1,38 @@
 # Changelog
 
+# [5.9.0](https://github.com/antonbobrov/vevet/compare/v5.8.0...v5.9.0) (2026-04-02)
+
+
+### All
+
+* detect props difference on  `updateProps` ([01cc685](https://github.com/antonbobrov/vevet/commit/01cc6858400be38d977eb214814b14f2e125c5fa))
+
+### Cursor
+
+* add `append` ([2fcd1c6](https://github.com/antonbobrov/vevet/commit/2fcd1c617a056f7ca88094186095f0b51e05d1a7))
+
+### Marquee
+
+* fix speed update ([578bdf6](https://github.com/antonbobrov/vevet/commit/578bdf63841fcdb7046722add1a13726552fc1be))
+
+### Scrollbar
+
+* support for `Snap` carousel added ([7661bae](https://github.com/antonbobrov/vevet/commit/7661bae6965eafd78020a4ef8c41e7c2439e9ae4))
+
+### Snap
+
+* add `isIdle` accessor & `idle` callback ([9e3b6de](https://github.com/antonbobrov/vevet/commit/9e3b6de34c80d443deb5f9c8820d95d4e96684bb))
+* add `setTarget` ([c354125](https://github.com/antonbobrov/vevet/commit/c354125e6e60940467c9ac57bbfd4266ac2f439b))
+* edgeFriction defaults to 0.7 ([aeb3a89](https://github.com/antonbobrov/vevet/commit/aeb3a8967bf029804e252d31bcb8a6d5e96a9803))
+* fetch slides when slides prop is changed only ([c06dde1](https://github.com/antonbobrov/vevet/commit/c06dde13d5816f48a4def847ba3a17b55a721f83))
+* fix speed for angular motion ([684379f](https://github.com/antonbobrov/vevet/commit/684379f7804180a2e48ba188af5f0c4f3f842cae))
+* non-mobile `lerp` defaults to `0.3` ([1147995](https://github.com/antonbobrov/vevet/commit/1147995bc0f7f9fc51f0bcf58013f1ec2f9ccfa8))
+* update lerp logic ([ecf5a11](https://github.com/antonbobrov/vevet/commit/ecf5a11001b0399dd8ca05b9521eb8e95a7c7513))
+
+### Swipe
+
+* allow `grabCursor` when `enabled` ([b55ac25](https://github.com/antonbobrov/vevet/commit/b55ac256b032f4e768c7d88c90cc3d0460304e16))
+
 # [5.8.0](https://github.com/antonbobrov/vevet/compare/v5.7.0...v5.8.0) (2026-02-25)
 
 
