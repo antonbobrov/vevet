@@ -126,7 +126,7 @@ export class CursorHoverElement {
   }
 
   /** Get element dimensions */
-  public getDimensions() {
+  public $getDimensions() {
     let x: number | undefined;
     let y: number | undefined;
     let width: number | undefined;
@@ -158,7 +158,7 @@ export class CursorHoverElement {
   }
 
   /** Destroy all events */
-  public destroy() {
+  public $destroy() {
     this._mouseEnter();
     this._mouseMove();
     this._mouseLeave();
@@ -295,7 +295,7 @@ export class CursorHoverElement {
   }
 
   /** Render the element */
-  public render(getLerp: (source?: number) => number) {
+  public $render(getLerp: (source?: number) => number) {
     const { _parallaxX: parallaxX, _parallaxY: parallaxY } = this;
 
     const element = this.element as HTMLElement;

@@ -199,7 +199,7 @@ export class Cursor extends Module<TC, TS, TM> {
     let padding = 0;
 
     if (hoveredElement) {
-      const dimensions = hoveredElement.getDimensions();
+      const dimensions = hoveredElement.$getDimensions();
 
       width = dimensions.width ?? initialWidth;
       height = dimensions.height ?? initialHeight;
@@ -472,7 +472,7 @@ export class Cursor extends Module<TC, TS, TM> {
 
     const destroy = () => {
       this._elements = this._elements.filter((i) => i !== element);
-      element.destroy();
+      element.$destroy();
     };
 
     this.onDestroy(() => destroy());
@@ -661,7 +661,7 @@ export class Cursor extends Module<TC, TS, TM> {
 
     // Render element
     this._elements.forEach((element) =>
-      element.render(this._getLerpFactor.bind(this)),
+      element.$render(this._getLerpFactor.bind(this)),
     );
   }
 }
