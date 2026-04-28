@@ -2,6 +2,7 @@ import { Module, TModuleOnCallbacksProps } from '@/base/Module';
 import { initVevet } from '@/global/initVevet';
 import { cnAdd, cnRemove, cnToggle } from '@/internal/cn';
 import { body, doc } from '@/internal/env';
+import { isEqual } from '@/internal/isEqual';
 import { isFiniteNumber } from '@/internal/isFiniteNumber';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { TRequiredProps } from '@/internal/requiredProps';
@@ -72,7 +73,7 @@ export class Cursor extends Module<TC, TS, TM> {
   private _coords: ICursorFullCoords;
 
   /** Target coordinates of the cursor. Element dimensions are not considered here (in getter - yes). */
-  private _rawTarget: ICursorTargetCoords;
+  private _target: ICursorTargetCoords;
 
   /** Defines if the cursor has been moved after initialization */
   private _isFirstMove = true;
@@ -93,18 +94,22 @@ export class Cursor extends Module<TC, TS, TM> {
     super(props, onCallbacks as any);
 
     const { enabled: isEnabled } = this.props;
-    const { initialWidth, initialHeight } = this;
+    const { initialWidth: width, initialHeight: height } = this;
 
-    // Set default variables
+    // Set default coords
     this._coords = {
       x: 0,
       y: 0,
-      width: initialWidth,
-      height: initialHeight,
+      width,
+      height,
       angle: 0,
       velocity: 0,
+      impulseX: 0,
+      impulseY: 0,
     };
-    this._rawTarget = { ...this._coords };
+
+    // Set default values
+    this._target = { ...this._coords };
     this._types = [];
     this._activeTypes = [];
 
@@ -173,6 +178,7 @@ export class Cursor extends Module<TC, TS, TM> {
   /**
    * The current coordinates (x, y, width, height).
    * These are updated during cursor movement.
+   * The coordinates are calculated relatively to the window.
    */
   get coords() {
     return this._coords;
@@ -191,8 +197,8 @@ export class Cursor extends Module<TC, TS, TM> {
   /** Target coordinates of the cursor (without smooth interpolation). */
   get targetCoords(): ICursorFullCoords {
     const { hoveredElement, initialWidth, initialHeight } = this;
-    let { x, y } = this._rawTarget;
-    const { angle, velocity } = this._rawTarget;
+
+    let { x, y } = this._target;
 
     let width = initialWidth;
     let height = initialHeight;
@@ -211,7 +217,7 @@ export class Cursor extends Module<TC, TS, TM> {
     width += padding * 2;
     height += padding * 2;
 
-    return { x, y, width, height, angle, velocity };
+    return { ...this._target, x, y, width, height };
   }
 
   /** Returns an SVG path element which represents the cursor movement */
@@ -368,10 +374,11 @@ export class Cursor extends Module<TC, TS, TM> {
     }
 
     const { clientX: x, clientY: y } = evt;
-    const target = this._rawTarget;
+    const { _target: target, _coords: coords } = this;
 
-    this._coords.x = x;
-    this._coords.y = y;
+    coords.x = x;
+    coords.y = y;
+
     target.x = x;
     target.y = y;
 
@@ -392,33 +399,35 @@ export class Cursor extends Module<TC, TS, TM> {
     }
 
     const { clientX: x, clientY: y } = evt;
-    const target = this._rawTarget;
-    const { x: prevX, y: prevY } = target;
+    const { _target: target, _coords: coords, props } = this;
 
     // Calculate angle
-    const deltaX = prevX - this._coords.x;
-    const deltaY = prevY - this._coords.y;
-    const prevAngle = target.angle;
-    const rawAngle = (Math.atan2(deltaY, deltaX) * 180) / Math.PI;
-    const targetAngle =
-      prevAngle + ((((rawAngle - prevAngle) % 360) + 540) % 360) - 180;
+    const deltaX = x - target.x;
+    const deltaY = y - target.y;
 
-    // Calculate velocity
-    const velocity =
-      Math.min(Math.sqrt(deltaX ** 2 + deltaY ** 2) * 2, 150) / 150;
+    // Velocity threshold
+    const vThreshold = props.velocityThreshold;
+
+    // Calculate velocity delta
+    const velocityDelta =
+      (Math.sqrt(deltaX ** 2 + deltaY ** 2) * 2) / vThreshold;
+    const impulseX = clamp(deltaX / vThreshold, -1, 1);
+    const impulseY = clamp(deltaY / vThreshold, -1, 1);
 
     // Update target coordinates
     target.x = x;
     target.y = y;
-    target.angle = targetAngle;
-    target.velocity = velocity;
+    target.velocity = clamp(target.velocity + velocityDelta);
+    target.impulseX = clamp(target.impulseX + impulseX, -1, 1);
+    target.impulseY = clamp(target.impulseY + impulseY, -1, 1);
 
     // Update interpolated coords if first move
     if (this._isFirstMove) {
-      this._coords.x = target.x;
-      this._coords.y = target.y;
-      this._coords.angle = target.angle;
-      this._coords.velocity = target.velocity;
+      coords.x = x;
+      coords.y = y;
+      coords.velocity = target.velocity;
+      coords.impulseX = target.impulseX;
+      coords.impulseY = target.impulseY;
 
       this._isFirstMove = false;
     }
@@ -453,7 +462,10 @@ export class Cursor extends Module<TC, TS, TM> {
 
   /** Handles window blur events. */
   private _handleWindowBlur() {
-    this._handleMouseUp();
+    const className = this._cn('-click');
+
+    cnRemove(this.outer, className);
+    cnRemove(this.inner, className);
   }
 
   /**
@@ -556,10 +568,14 @@ export class Cursor extends Module<TC, TS, TM> {
   private get isInterpolated() {
     const { coords, targetCoords, props } = this;
 
-    const isWidthDone = coords.width === targetCoords.width;
-    const isHeightDone = coords.height === targetCoords.height;
-    const isAngleDone = coords.angle === targetCoords.angle;
-    const isVelocityDone = coords.velocity === targetCoords.velocity;
+    const isInterpolated = isEqual([
+      [coords.width, targetCoords.width],
+      [coords.height, targetCoords.height],
+      [coords.angle, targetCoords.angle],
+      [coords.velocity, targetCoords.velocity],
+      [coords.impulseX, targetCoords.impulseX],
+      [coords.impulseY, targetCoords.impulseY],
+    ]);
 
     const isElementsDone = !this._elements.find(
       (element) => !element.isInterpolated,
@@ -570,10 +586,7 @@ export class Cursor extends Module<TC, TS, TM> {
       coords.x === targetCoords.x && coords.y === targetCoords.y;
 
     return (
-      isWidthDone &&
-      isHeightDone &&
-      isAngleDone &&
-      isVelocityDone &&
+      isInterpolated &&
       isElementsDone &&
       (props.behavior === 'path' ? isPathDone : isCoordsDone)
     );
@@ -595,35 +608,61 @@ export class Cursor extends Module<TC, TS, TM> {
 
   /** Recalculates current coordinates. */
   private _calculate() {
-    const { targetCoords: target, _coords: coords } = this;
-    const lerpFactor = this._getLerpFactor();
+    const { targetCoords, _coords: current, _target: raw, props } = this;
+
+    const lerpFactor = this._getLerpFactor(props.lerp);
 
     this._path.lerp(lerpFactor);
     this._path.minimize();
 
+    const prevX = current.x;
+    const prevY = current.y;
+    const prevAngle = current.angle;
+
     try {
       if (this.hasPath) {
         const pathCoord = this._path.coord;
-        coords.x = pathCoord.x;
-        coords.y = pathCoord.y;
+        current.x = pathCoord.x;
+        current.y = pathCoord.y;
       } else {
         throw new Error('No path');
       }
     } catch {
-      coords.x = this._lerp(coords.x, target.x);
-      coords.y = this._lerp(coords.y, target.y);
+      current.x = this._lerp(current.x, targetCoords.x);
+      current.y = this._lerp(current.y, targetCoords.y);
     }
 
-    coords.width = this._lerp(coords.width, target.width);
-    coords.height = this._lerp(coords.height, target.height);
-    coords.angle = this._lerp(coords.angle, target.angle);
+    current.width = this._lerp(current.width, targetCoords.width);
+    current.height = this._lerp(current.height, targetCoords.height);
 
-    this._rawTarget.velocity = this._lerp(this._rawTarget.velocity, 0);
-    coords.velocity = this._lerp(coords.velocity, this._rawTarget.velocity);
+    raw.velocity = this._lerp(raw.velocity, 0);
+    current.velocity = this._lerp(current.velocity, raw.velocity);
+
+    raw.impulseX = this._lerp(raw.impulseX, 0);
+    current.impulseX = this._lerp(current.impulseX, raw.impulseX);
+
+    raw.impulseY = this._lerp(raw.impulseY, 0);
+    current.impulseY = this._lerp(current.impulseY, raw.impulseY);
+
+    const deltaX = current.x - prevX;
+    const deltaY = current.y - prevY;
+
+    let targetAngle = prevAngle;
+
+    if (deltaX * deltaX + deltaY * deltaY > 0.001) {
+      const rawAngle = (Math.atan2(deltaY, deltaX) * 180) / Math.PI;
+      targetAngle =
+        prevAngle + ((((rawAngle - prevAngle) % 360) + 540) % 360) - 180;
+    }
+
+    raw.angle = targetAngle;
+
+    const angleLerp = props.lerp * props.angleLerpMultiplier;
+    current.angle = this._lerp(prevAngle, targetAngle, angleLerp);
   }
 
   /** Gets the interpolation factor. */
-  private _getLerpFactor(input = this.props.lerp) {
+  private _getLerpFactor(input: number) {
     if (!isFiniteNumber(input)) {
       return 1;
     }
@@ -634,9 +673,9 @@ export class Cursor extends Module<TC, TS, TM> {
   }
 
   /** Performs linear interpolation. */
-  private _lerp(current: number, target: number) {
-    const lerpFactor = this._getLerpFactor();
-    const value = lerp(current, target, lerpFactor, LERP_APPROXIMATION);
+  private _lerp(current: number, target: number, rawFactor = this.props.lerp) {
+    const factor = this._getLerpFactor(rawFactor);
+    const value = lerp(current, target, factor, LERP_APPROXIMATION);
 
     return value;
   }
@@ -661,7 +700,9 @@ export class Cursor extends Module<TC, TS, TM> {
 
     // Render element
     this._elements.forEach((element) =>
-      element.$render(this._getLerpFactor.bind(this)),
+      element.$render((factor) =>
+        this._getLerpFactor(factor ?? this.props.lerp),
+      ),
     );
   }
 }
