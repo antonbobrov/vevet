@@ -1,3 +1,5 @@
+import { clamp } from './clamp';
+
 /**
  * Performs linear interpolation (LERP) between a current value and a target value using an easing factor.
  *
@@ -28,7 +30,7 @@ export function lerp(
   factor: number,
   approximation = 0,
 ): number {
-  const value = current + (target - current) * factor;
+  const value = current + (target - current) * clamp(factor, 0, 1);
   const difference = Math.abs(target - value);
 
   if (difference <= approximation) {
