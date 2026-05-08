@@ -33,7 +33,14 @@ export function Core(input: Partial<ICoreProps>): ICore {
   const osName = (browserData?.os || '')?.split(' ')[0].toLowerCase();
   const browserName = (browserData?.name || '').toLowerCase();
 
-  const isMobile = device.phone || device.tablet;
+  const isMobileByUserAgent = device.phone || device.tablet;
+  let isMobile = isMobileByUserAgent;
+
+  if (!isMobile) {
+    if (!window.matchMedia('(pointer: fine)').matches) {
+      isMobile = true;
+    }
+  }
 
   const { isInApp, appName } = InAppSpy();
   const inAppBrowser = isInApp ? (appName || 'unknown').toLowerCase() : false;
