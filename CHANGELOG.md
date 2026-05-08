@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.9.1](https://github.com/antonbobrov/vevet/compare/v5.9.0...v5.9.1) (2026-05-08)
+
+
+### Core
+
+* better mobile device recognition ([14ef385](https://github.com/antonbobrov/vevet/commit/14ef38540eeb88ad125873f356a2e74c5c952d89))
+
 # [5.9.0](https://github.com/antonbobrov/vevet/compare/v5.8.0...v5.9.0) (2026-04-02)
 
 
