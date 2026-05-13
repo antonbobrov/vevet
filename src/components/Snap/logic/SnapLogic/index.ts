@@ -14,6 +14,11 @@ export class SnapLogic {
   }
 
   /** Snap component */
+  protected get props() {
+    return this.snap.props;
+  }
+
+  /** Snap component */
   protected addDestructor(callback: () => void) {
     this._destructors.push(callback);
   }

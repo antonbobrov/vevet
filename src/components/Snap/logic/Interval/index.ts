@@ -12,25 +12,19 @@ export class SnapInterval extends SnapLogic {
 
     snap.on('update', () => this._handleUpdate(), { protected: true });
 
-    this.addDestructor(() => {
-      this._clearInterval();
-    });
+    this.addDestructor(() => this._clearInterval());
   }
 
   private get allowInterval() {
     const { snap } = this;
 
-    if (
-      snap.isSwiping ||
-      snap.hasInteria ||
-      snap.isTransitioning ||
-      snap.isInterpolating ||
-      !isFiniteNumber(snap.props.interval)
-    ) {
-      return false;
-    }
-
-    return true;
+    return (
+      !snap.isSwiping &&
+      !snap.hasInteria &&
+      !snap.isTransitioning &&
+      !snap.isInterpolating &&
+      isFiniteNumber(snap.props.interval)
+    );
   }
 
   /** Handle Snap update */

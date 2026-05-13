@@ -19,20 +19,19 @@ export class SnapIdle extends SnapLogic {
   get isIdle() {
     const { snap } = this;
 
-    if (snap.isSwiping || snap.isInterpolating || snap.isTransitioning) {
-      return false;
-    }
-
-    return true;
+    return (
+      !snap.isSwiping &&
+      !snap.hasInteria &&
+      !snap.isInterpolating &&
+      !snap.isTransitioning
+    );
   }
 
   /** Handle Snap update */
   private _handleUpdate() {
     this._clear();
 
-    this._timeout = setTimeout(() => {
-      this._handleTimeout();
-    }, 10);
+    this._timeout = setTimeout(() => this._handleTimeout(), 10);
   }
 
   /** Handle timeout action */
