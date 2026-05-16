@@ -1,13 +1,20 @@
+import { TEasingType } from 'easing-progress';
+
 import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
 } from '@/base';
-import { TEasingType } from '@/utils/math/easing';
 
 import { IPointersCallbacksMap } from '../Pointers';
 
-import { ISwipeCoords, ISwipeMatrix, ISwipeVec2 } from './global';
+import {
+  ISwipeCoords,
+  ISwipeBounds,
+  ISwipeState,
+  ISwipeVec2,
+  ISwipeVec3,
+} from './global';
 
 export interface ISwipeStaticProps extends IModuleStaticProps {
   /** Event listener container. */
@@ -126,28 +133,22 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
   requireCtrlKey?: boolean;
 
   /**
-   * Enables inertia animation.
+   * Enables smooth inertia.
    * @default false
    */
   inertia?: boolean;
 
   /**
-   * Inertia duration.
-   * @default `(distance) => clamp(distance, 500, 2000)`
+   * Inertia decay per frame. The higher the value, the faster the inertia will end.
+   * @default 0.025
    */
-  inertiaDuration?: (distance: number) => number;
+  inertiaDecay?: number;
 
   /**
-   * Easing function for inertia.
-   * @default EaseOutCubic
+   * Easing factor for inertia bounce back into bounds (per frame, FPS-independent).
+   * @default 0.1
    */
-  inertiaEasing?: TEasingType;
-
-  /**
-   * Final velocity modifier.
-   * @default false
-   */
-  velocityModifier?: false | ((velocity: ISwipeMatrix) => ISwipeMatrix);
+  inertiaBounceEase?: number;
 
   /**
    * Inertia strength.
@@ -156,8 +157,59 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
   inertiaRatio?: number;
 
   /**
-   * Minimum calculated distance to trigger inertia.
-   * @default 50
+   * Minimum pointer speed to start inertia.
+   * @default 1
+   */
+  inertiaThreshold?: number;
+
+  /**
+   * Max release velocity per axis (coordinate units / ms for x/y, degrees / ms for angle).
+   * Falsy axis value clamps that axis to `0` (no inertia on the axis).
+   * @default { x: 7, y: 7, angle: 3 }
+   */
+  maxVelocity?: ISwipeVec3;
+
+  /**
+   * Duration of the bounce-back timeline when inertia is off and `diff` is out of bounds.
+   * @default 250
+   */
+  bounceDuration?: number;
+
+  /**
+   * Returns movement bounds for the current phase on swipe and inertia start.
+   *
+   * Re-fetch on each call if layout changes.
+   * @default null
+   */
+  getDiffBounds?: null | (() => ISwipeBounds | null);
+
+  /**
+   * Rubber-band overflow past bounds (px or degrees, same units as the axis).
+   * @default () => 50
+   */
+  getBoundsOverflow?: () => number;
+
+  /**
+   * The prop is deprecated and is not used anymore.
+   * @deprecated
+   */
+  inertiaDuration?: (distance: number) => number;
+
+  /**
+   * The prop is deprecated and is not used anymore.
+   * @deprecated
+   */
+  inertiaEasing?: TEasingType;
+
+  /**
+   * The prop is deprecated and is not used anymore. Use `maxVelocity` instead.
+   * @deprecated
+   */
+  velocityModifier?: false | ((velocity: ISwipeVec3) => ISwipeVec3);
+
+  /**
+   * The prop is deprecated and is not used anymore. Use `inertiaThreshold` instead.
+   * @deprecated
    */
   inertiaDistanceThreshold?: number;
 }
@@ -220,7 +272,7 @@ export interface ISwipeCallbacksMap
 
 export interface ISwipeCanMoveArg {
   type: 'touch' | 'mouse';
-  matrix: ISwipeMatrix;
+  state: ISwipeState;
   start: ISwipeVec2;
   diff: ISwipeVec2;
 }

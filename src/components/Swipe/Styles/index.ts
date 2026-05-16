@@ -17,8 +17,10 @@ export class SwipeStyles {
   /** Applies touch-action and cursor styles */
   public setInline() {
     const { props } = this._ctx;
-    const { container, axis, enabled, grabCursor: hasGrabCursor } = props;
-    const { style } = container;
+    const target = props.thumb || props.container;
+
+    const { axis, enabled, grabCursor: hasGrabCursor } = props;
+    const { style } = target;
 
     const cursor = enabled && hasGrabCursor ? 'grab' : '';
 

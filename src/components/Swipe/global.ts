@@ -3,27 +3,36 @@ export interface ISwipeVec2 {
   y: number;
 }
 
-export interface ISwipeMatrix extends ISwipeVec2 {
+export interface ISwipeVec3 extends ISwipeVec2 {
   angle: number;
 }
 
-export interface ISwipeCoords {
-  /** Event timestamp. */
-  timestamp: number;
-  /** Start position. */
-  start: ISwipeMatrix;
-  /** Previous position. */
-  prev: ISwipeMatrix;
-  /** Current position. */
-  current: ISwipeMatrix;
-  /** Movement offset from start. */
-  diff: ISwipeMatrix;
-  /** Movement offset from previous position. */
-  step: ISwipeMatrix;
-  /** Total accumulated movement. */
-  accum: ISwipeVec2;
+/** @deprecated */
+export interface ISwipeMatrix extends ISwipeVec3 {}
+
+export interface ISwipeState extends ISwipeVec3 {
+  time: number;
 }
 
-export interface ISwipeVelocity extends ISwipeMatrix {
-  timestamp: number;
+export interface ISwipeCoords {
+  /** Start position. */
+  start: ISwipeState;
+  /** Previous position. */
+  prev: ISwipeState;
+  /** Current position. */
+  current: ISwipeState;
+  /** Movement offset from start. */
+  diff: ISwipeState;
+  /** Movement offset from previous position. */
+  step: ISwipeState;
+  /** Absolute path length since swipe start (`|step|` per axis). */
+  accum: ISwipeVec3;
+  /** Applied movement since instance init (after rubber, same space as `step`). */
+  total: ISwipeVec3;
+}
+
+export interface ISwipeBounds {
+  x?: number[];
+  y?: number[];
+  angle?: number[];
 }

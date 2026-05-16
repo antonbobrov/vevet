@@ -12,6 +12,7 @@ export const Ball: FC = () => {
 
     let x = 0;
     let y = 0;
+
     let xDir = 1;
     let yDir = 1;
 

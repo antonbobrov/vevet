@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef } from 'react';
 
 import { Swipe } from '@/index';
 
-export const Circle: FC = () => {
+export const Lever: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
   const rotateRef = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
@@ -12,15 +12,19 @@ export const Circle: FC = () => {
       return undefined;
     }
 
+    const min = -45;
+    const max = 45;
     let angle = 0;
 
     const instance = new Swipe({
       container: ref.current,
       thumb: thumbRef.current,
       inertia: true,
-      onMove: ({ step }) => {
-        angle += step.angle;
-
+      relative: true,
+      grabCursor: true,
+      getDiffBounds: () => ({ angle: [max - angle, min - angle] }),
+      onMove: ({ total }) => {
+        angle = total.angle;
         rotateRef.current!.style.transform = `rotate(${angle}deg)`;
       },
     });

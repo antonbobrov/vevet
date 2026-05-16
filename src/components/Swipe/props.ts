@@ -1,7 +1,4 @@
-import { EaseOutCubic } from 'easing-progress';
-
 import { TRequiredProps } from '@/internal/requiredProps';
-import { clamp } from '@/utils';
 
 import { ISwipeMutableProps, ISwipeStaticProps } from './types';
 
@@ -30,9 +27,20 @@ export const MUTABLE_PROPS: TRequiredProps<ISwipeMutableProps> = {
   preventTouchMove: true,
   requireCtrlKey: false,
   inertia: false,
-  inertiaDuration: (distance) => clamp(distance, 500, 2000),
-  inertiaEasing: EaseOutCubic,
-  velocityModifier: false,
+  inertiaDecay: 0.025,
+  inertiaBounceEase: 0.1,
   inertiaRatio: 1,
-  inertiaDistanceThreshold: 50,
+  inertiaThreshold: 1,
+  maxVelocity: { x: 7, y: 7, angle: 3 },
+  bounceDuration: 250,
+  getDiffBounds: null as any,
+  getBoundsOverflow: () => 50,
+  inertiaDuration: null as any,
+  inertiaEasing: null as any,
+  velocityModifier: null as any,
+  inertiaDistanceThreshold: 1,
 };
+
+export const LERP_APPROX = 0.01;
+
+export const LERP_THRESHOLD = 0.01;
