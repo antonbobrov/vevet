@@ -17,7 +17,7 @@ export const Circular: FC = () => {
       swipeAxis: 'angle',
       wheelAxis: 'y',
       loop: true,
-      freemode: true,
+      freemode: 'sticky',
       onUpdate: (data, { containerSize, slides }) => {
         const radius = containerSize / 2;
         const p2 = Math.PI * 2;

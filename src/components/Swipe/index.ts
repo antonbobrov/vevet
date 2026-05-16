@@ -3,10 +3,11 @@ import { initVevet } from '@/global/initVevet';
 import { TRequiredProps } from '@/internal/requiredProps';
 import { addEventListener } from '@/utils';
 
-import { Pointers } from '../Pointers';
+import { IPointersItem, Pointers } from '../Pointers';
+import { Timeline } from '../Timeline';
 
 import { SwipeCoords } from './Coords';
-import { ISwipeMatrix, ISwipeVec2 } from './global';
+import { ISwipeState, ISwipeVec2 } from './global';
 import { SwipeInertia } from './Inertia';
 import { MUTABLE_PROPS, STATIC_PROPS } from './props';
 import { SwipeStyles } from './Styles';
@@ -27,11 +28,12 @@ type TM = ISwipeMutableProps;
  * Manages swipe interactions:
  * - Tracks movement and detects direction
  * - Emits events on start, move, and end
- * - Supports inertia-based movement
+ * - Supports exponential and timeline inertia (`inertiaType`)
+ * - Optional diff bounds with rubber-band overflow and bounce-back
  *
  * Notes:
  * - Does not transform elements, only computes coordinates.
- * - Does not persist state after swipe completion.
+ * - Per-gesture offsets are in `diff`; use `total` for cumulative movement since init.
  *
  * [Documentation](https://vevetjs.com/docs/Swipe)
  *
@@ -57,6 +59,9 @@ export class Swipe extends Module<TC, TS, TM> {
 
   /** Inertia animation */
   private _inertia: SwipeInertia;
+
+  /** Bounce animation */
+  private _bounceTm?: Timeline;
 
   /** Styles manager */
   private _styles: SwipeStyles;
@@ -117,6 +122,11 @@ export class Swipe extends Module<TC, TS, TM> {
     return this._inertia.has;
   }
 
+  /** Indicates if bounce animation is active */
+  get hasBounce() {
+    return !!this._bounceTm;
+  }
+
   /** Indicates if a swipe is active */
   get isSwiping() {
     return this._isSwiping;
@@ -129,6 +139,14 @@ export class Swipe extends Module<TC, TS, TM> {
     this._pointers.updateProps({ enabled: this.props.enabled });
 
     this._styles.setInline();
+
+    if (!this.props.inertia || !this.props.enabled) {
+      this.cancelInertia();
+    }
+
+    if (!this.props.enabled) {
+      this.cancelBounce();
+    }
   }
 
   /** Sets event listeners */
@@ -138,9 +156,7 @@ export class Swipe extends Module<TC, TS, TM> {
 
     this._pointers.on('start', () => this._handlePointersStart());
 
-    this._pointers.on('pointerdown', (data) =>
-      callbacks.emit('pointerdown', data),
-    );
+    this._pointers.on('pointerdown', this._handlePointerDown.bind(this));
 
     this._pointers.on('pointermove', (data) =>
       callbacks.emit('pointermove', data),
@@ -159,14 +175,26 @@ export class Swipe extends Module<TC, TS, TM> {
   }
 
   /** Handles `touchstart` events */
+  private _handlePointerDown(data: {
+    event: PointerEvent;
+    pointer: IPointersItem;
+  }) {
+    if (!this.props.enabled) {
+      return;
+    }
+
+    this.callbacks.emit('pointerdown', data);
+  }
+
+  /** Handles `touchstart` events */
   private _handleTouchStart(event: TouchEvent) {
     if (!this.props.enabled) {
       return;
     }
 
-    this.callbacks.emit('touchstart', event);
-
     this._preventEdgeSwipe(event);
+
+    this.callbacks.emit('touchstart', event);
   }
 
   /** Prevents edge swipes if enabled */
@@ -244,7 +272,7 @@ export class Swipe extends Module<TC, TS, TM> {
   /** Handles move events */
   private _handleMove(event: MouseEvent | TouchEvent, type: 'touch' | 'mouse') {
     const data = this._coords;
-    const matrix = data.decode(event);
+    const state = data.decode(event);
 
     if (this._isAborted) {
       return;
@@ -252,7 +280,7 @@ export class Swipe extends Module<TC, TS, TM> {
 
     // Save start coordinates
     if (!this._startCoord) {
-      this._startCoord = { ...matrix };
+      this._startCoord = { ...state };
     }
 
     // Update start time
@@ -261,18 +289,19 @@ export class Swipe extends Module<TC, TS, TM> {
     }
 
     // check if can start
-    if (!this._isSwiping && !this._canStart(matrix, type)) {
+    if (!this._isSwiping && !this._canStart(state, type)) {
       return;
     }
 
     // start
     if (!this._isSwiping) {
-      this._inertia.cancel();
+      this.cancelInertia();
+      this.cancelBounce();
 
       this._isSwiping = true;
-      this._startCoord = { ...matrix };
+      this._startCoord = { ...state };
 
-      data.setStart(matrix);
+      data.setStart(state);
 
       this.callbacks.emit('start', this.coords);
 
@@ -280,15 +309,14 @@ export class Swipe extends Module<TC, TS, TM> {
     }
 
     // move
-    this._move(matrix);
+    this._move(state);
   }
 
   /** Checks if swipe can start */
-  private _canStart(matrix: ISwipeMatrix, type: 'touch' | 'mouse') {
-    const startCoord = this._startCoord;
-    const startTime = this._startTime;
+  private _canStart(state: ISwipeState, type: 'touch' | 'mouse') {
+    const { _startCoord: startCoord, _startTime: startTime } = this;
 
-    if (!startCoord || !startTime) {
+    if (!startCoord || !startTime || this.hasBounce) {
       return false;
     }
 
@@ -296,8 +324,8 @@ export class Swipe extends Module<TC, TS, TM> {
     const speed = Math.abs(ratio);
 
     const diff = {
-      x: matrix.x - startCoord.x,
-      y: matrix.y - startCoord.y,
+      x: state.x - startCoord.x,
+      y: state.y - startCoord.y,
     };
 
     // check threshold
@@ -334,7 +362,7 @@ export class Swipe extends Module<TC, TS, TM> {
     // Check if should abort
     const shouldAbort = willAbort({
       type,
-      matrix,
+      state,
       start: startCoord,
       diff,
     });
@@ -352,17 +380,11 @@ export class Swipe extends Module<TC, TS, TM> {
   }
 
   /** Handles move events */
-  private _move(matrix: ISwipeMatrix) {
+  private _move(state: ISwipeState) {
     const coords = this._coords;
 
     // Update coords
-    coords.update(matrix);
-
-    // Update velocity
-    this._inertia.addVelocity({
-      ...coords.current,
-      timestamp: coords.timestamp,
-    });
+    coords.update(state);
 
     // trigger callbacks
     this.callbacks.emit('move', this.coords);
@@ -412,12 +434,16 @@ export class Swipe extends Module<TC, TS, TM> {
     // end callback
     this.callbacks.emit('end', this.coords);
 
-    // modifiy last velocity time
-    this._inertia.updateLastTimestamp();
+    // end with inertia or bounce
 
-    // end with inertia
+    let hasInertia = false;
+
     if (this.props.inertia) {
-      this._releaseInertia();
+      hasInertia = this._releaseInertia();
+    }
+
+    if (!hasInertia) {
+      this._releaseBounce();
     }
   }
 
@@ -429,20 +455,97 @@ export class Swipe extends Module<TC, TS, TM> {
 
   /** Apply inertia-based movement */
   private _releaseInertia() {
-    const startMatrix = { ...this.coords.current };
+    const { coords } = this;
 
-    this._inertia.release((addMatrix) => {
+    const startState = { ...coords.current };
+
+    return this._inertia.release(
+      () => this._coords.resetTempAngle(),
+      (addState) => {
+        this._move({
+          x: startState.x + addState.x,
+          y: startState.y + addState.y,
+          angle: startState.angle + addState.angle,
+          time: performance.now(),
+        });
+      },
+    );
+  }
+
+  /** Apply bounce overflow animation */
+  private _releaseBounce(): boolean {
+    const { diff, _coords: coords, props } = this;
+    const { bounds } = coords;
+
+    if (!bounds || !props.releaseBounce()) {
+      return false;
+    }
+
+    const xBoundMin = Math.min(...(bounds?.x ?? [-Infinity]));
+    const xBoundMax = Math.max(...(bounds?.x ?? [Infinity]));
+    const yBoundMin = Math.min(...(bounds?.y ?? [-Infinity]));
+    const yBoundMax = Math.max(...(bounds?.y ?? [Infinity]));
+    const aBoundMin = Math.min(...(bounds?.angle ?? [-Infinity]));
+    const aBoundMax = Math.max(...(bounds?.angle ?? [Infinity]));
+
+    let xDiff = 0;
+    let yDiff = 0;
+    let aDiff = 0;
+
+    if (diff.x < xBoundMin) {
+      xDiff = xBoundMin - diff.x;
+    } else if (diff.x > xBoundMax) {
+      xDiff = xBoundMax - diff.x;
+    }
+
+    if (diff.y < yBoundMin) {
+      yDiff = yBoundMin - diff.y;
+    } else if (diff.y > yBoundMax) {
+      yDiff = yBoundMax - diff.y;
+    }
+
+    if (diff.angle < aBoundMin) {
+      aDiff = aBoundMin - diff.angle;
+    } else if (diff.angle > aBoundMax) {
+      aDiff = aBoundMax - diff.angle;
+    }
+
+    if (xDiff === 0 && yDiff === 0 && aDiff === 0) {
+      return false;
+    }
+
+    const startState = { ...this.coords.current };
+
+    const tm = new Timeline({ duration: props.bounceDuration });
+    this._bounceTm = tm;
+
+    this._coords.resetTempAngle();
+
+    tm.on('update', ({ eased }) => {
       this._move({
-        x: startMatrix.x + addMatrix.x,
-        y: startMatrix.y + addMatrix.y,
-        angle: startMatrix.angle + addMatrix.angle,
+        x: startState.x + xDiff * eased,
+        y: startState.y + yDiff * eased,
+        angle: startState.angle + aDiff * eased,
+        time: performance.now(),
       });
     });
+
+    tm.on('end', this.cancelBounce.bind(this));
+
+    tm.play();
+
+    return true;
   }
 
   /** Cancel inertia */
   public cancelInertia() {
     this._inertia.cancel();
+  }
+
+  /** Cancel bounce */
+  public cancelBounce() {
+    this._bounceTm?.destroy();
+    this._bounceTm = undefined;
   }
 
   /** Start coordinate */
@@ -475,11 +578,18 @@ export class Swipe extends Module<TC, TS, TM> {
     return this._coords.accum;
   }
 
+  /** Total movement */
+  get total() {
+    return this._coords.total;
+  }
+
   /**
    * Destroys the component
    */
   protected _destroy() {
     super._destroy();
+
+    this.cancelBounce();
 
     this._pointers.destroy();
     this._inertia.destroy();

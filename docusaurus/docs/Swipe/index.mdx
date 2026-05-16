@@ -2,7 +2,7 @@
 sidebar_position: 800
 toc_min_heading_level: 2
 toc_max_heading_level: 6
-description: Swipe — Vevet.js component for swipe interactions, pointer tracking, direction detection, inertia and rotation.
+description: Swipe — Vevet.js component for swipe interactions, pointer tracking, direction detection, inertia, bounds and rotation.
 keywords:
   - vevet swipe
   - swipe gestures
@@ -17,10 +17,11 @@ Manages swipe interactions:
 
 - Tracks pointer movement and detects direction
 - Emits events on start, move, and end
-- Supports inertia-based movement with easing
+- Two inertia modes: exponential (per-frame decay) and timeline (eased animation)
+- Optional movement bounds with rubber-band overflow and bounce-back
 - Calculates rotation
 - Does not apply transforms — only provides computed coordinates
-- Does not store state after swipe ends (movement always resets)
+- Does not store swipe state after gesture ends (`diff` resets; use `total` for persistent offset)
 
 ## Basic Demo
 
@@ -51,8 +52,12 @@ To explore more demos, click [here](./demos).
 :::caution
 
 - `Swipe` does not transform elements — it only computes movement values.
-- `Swipe` does not persist any state after swipe completion (all coordinates reset).
-- Inertia is optional and triggers only if the calculated distance exceeds the threshold.
+- Per-gesture offsets live in `diff`; persistent applied movement is in `total` (see [accessors](./accessors#total)).
+- Inertia is optional. [`inertiaThreshold`](./props#props.inertiathreshold): for `timeline` — linear speed only; for `exponential` — linear or angular.
+- [`inertiaType`](./props#props.inertiatype) selects exponential (default) or timeline inertia; timeline uses [`inertiaDuration`](./props#props.inertiaduration) and [`inertiaEasing`](./props#props.inertiaeasing).
+- [`bakeBounds`](./props#props.bakebounds) + [`overflow`](./props#props.overflow) enable rubber-band while dragging; exponential inertia can bounce inside baked bounds.
+- Without inertia, [`releaseBounce`](./props#props.releasebounce) can snap `diff` back over [`bounceDuration`](./props#props.bounceduration).
+- Timeline inertia clamps amplitudes to [`bakeBounds`](./props#props.bakebounds) by default, or uses [`velocityModifier`](./props#props.velocitymodifier) instead; exponential uses [`maxVelocity`](./props#props.maxvelocity).
   :::
 
 ```js
@@ -80,7 +85,7 @@ Detect direction:
 swipe.on('toLeft', () => console.log('swipe to left'));
 ```
 
-Add inertia:
+Add exponential inertia (default):
 
 ```js
 import { Swipe } from 'vevet';
@@ -88,6 +93,53 @@ import { Swipe } from 'vevet';
 const swipe = new Swipe({
   container: document.getElementById('container'),
   inertia: true,
+  inertiaType: 'exponential',
+});
+```
+
+Timeline inertia (easing-based animation, optional amplitude clamp):
+
+```js
+import { EaseOutCubic } from 'easing-progress';
+import { Swipe, clamp } from 'vevet';
+
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  inertia: true,
+  inertiaType: 'timeline',
+  inertiaDuration: (distance) => clamp(distance, 500, 2000),
+  inertiaEasing: EaseOutCubic,
+  velocityModifier: (amp) => ({ ...amp, x: clamp(amp.x, -400, 400) }),
+});
+```
+
+Constrain movement inside a parent and apply transforms from `total`:
+
+```js
+const thumb = document.getElementById('thumb');
+const wrapper = document.getElementById('wrapper');
+
+const swipe = new Swipe({
+  container: thumb,
+  inertia: true,
+  bakeBounds: () => {
+    const thumbBound = thumb.getBoundingClientRect();
+    const wrapperBound = wrapper.getBoundingClientRect();
+
+    return {
+      x: [
+        wrapperBound.left - thumbBound.left,
+        wrapperBound.right - thumbBound.right,
+      ],
+      y: [
+        wrapperBound.top - thumbBound.top,
+        wrapperBound.bottom - thumbBound.bottom,
+      ],
+    };
+  },
+  onMove: ({ total }) => {
+    thumb.style.transform = `translate(${total.x}px, ${total.y}px)`;
+  },
 });
 ```
 

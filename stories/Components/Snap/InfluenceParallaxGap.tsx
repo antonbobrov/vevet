@@ -16,7 +16,7 @@ export const InfluenceParallaxGap: FC = () => {
       loop: true,
       shortSwipes: false,
       gap: 5,
-      lerp: 0.2,
+      // lerp: 0.2,
       freemode: true,
       onUpdate: (data, { slides }) => {
         slides.forEach(({ element, coord }) => {

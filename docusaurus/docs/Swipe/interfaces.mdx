@@ -24,35 +24,42 @@ interface ISwipeVec2 {
 }
 ```
 
+## ISwipeVec3
+
+```ts
+interface ISwipeVec3 extends ISwipeVec2 {
+  angle: number;
+}
+```
+
+## ISwipeState
+
+```ts
+interface ISwipeState extends ISwipeVec3 {
+  time: number;
+}
+```
+
+## ISwipeBounds
+
+```ts
+interface ISwipeBounds {
+  x?: number[];
+  y?: number[];
+  angle?: number[];
+}
+```
+
+Each axis is a `[min, max]` pair in the same units as `diff` (px for `x`/`y`, degrees for `angle`).
+
 ## ISwipeCanMoveArg
 
 ```ts
 interface ISwipeCanMoveArg {
   type: 'touch' | 'mouse';
-  matrix: ISwipeMatrix;
+  state: ISwipeState;
   start: ISwipeVec2;
   diff: ISwipeVec2;
-}
-```
-
-## ISwipeMatrix
-
-```ts
-interface ISwipeMatrix {
-  x: number; // pixels
-  y: number; // pixels
-  angle: number; // degrees
-}
-```
-
-## ISwipeVelocity
-
-```ts
-interface ISwipeVelocity {
-  x: number; // pixels
-  y: number; // pixels
-  angle: number; // degrees
-  timestamp: number;
 }
 ```
 
@@ -60,19 +67,19 @@ interface ISwipeVelocity {
 
 ```ts
 interface ISwipeCoords {
-  /** Event timestamp. */
-  timestamp: number;
   /** Start position. */
-  start: ISwipeMatrix;
+  start: ISwipeState;
   /** Previous position. */
-  prev: ISwipeMatrix;
+  prev: ISwipeState;
   /** Current position. */
-  current: ISwipeMatrix;
+  current: ISwipeState;
   /** Movement offset from start. */
-  diff: ISwipeMatrix;
+  diff: ISwipeState;
   /** Movement offset from previous position. */
-  step: ISwipeMatrix;
-  /** Total accumulated movement. */
-  accum: ISwipeVec2;
+  step: ISwipeState;
+  /** Absolute path length since swipe start (`|step|` per axis). */
+  accum: ISwipeVec3;
+  /** Applied movement since instance init (after rubber). */
+  total: ISwipeVec3;
 }
 ```

@@ -2,7 +2,9 @@ import React, { FC, useEffect, useRef } from 'react';
 
 import { clamp, Swipe, vevet } from '@/index';
 
-export const Ball: FC = () => {
+import { TSwipeStoryProps } from './types';
+
+export const Ball: FC<TSwipeStoryProps> = ({ inertiaType = 'exponential' }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -12,12 +14,14 @@ export const Ball: FC = () => {
 
     let x = 0;
     let y = 0;
+
     let xDir = 1;
     let yDir = 1;
 
     const instance = new Swipe({
       container: ref.current,
       inertia: true,
+      inertiaType,
       grabCursor: true,
       onStart: () => {
         xDir = 1;
@@ -42,7 +46,7 @@ export const Ball: FC = () => {
     });
 
     return () => instance.destroy();
-  }, []);
+  }, [inertiaType]);
 
   return (
     <>

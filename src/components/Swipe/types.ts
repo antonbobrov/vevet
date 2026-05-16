@@ -1,13 +1,20 @@
+import { TEasingType } from 'easing-progress';
+
 import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
 } from '@/base';
-import { TEasingType } from '@/utils/math/easing';
 
 import { IPointersCallbacksMap } from '../Pointers';
 
-import { ISwipeCoords, ISwipeMatrix, ISwipeVec2 } from './global';
+import {
+  ISwipeCoords,
+  ISwipeBounds,
+  ISwipeState,
+  ISwipeVec2,
+  ISwipeVec3,
+} from './global';
 
 export interface ISwipeStaticProps extends IModuleStaticProps {
   /** Event listener container. */
@@ -126,28 +133,44 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
   requireCtrlKey?: boolean;
 
   /**
-   * Enables inertia animation.
+   * Duration of the bounce-back timeline when inertia is off and `diff` is out of bounds.
+   * @default 250
+   */
+  bounceDuration?: number;
+
+  /**
+   * Rubber-band overflow past bounds (px or degrees, same units as the axis).
+   * @default () => 50
+   */
+  overflow?: () => number;
+
+  /**
+   * Enables smooth inertia.
    * @default false
    */
   inertia?: boolean;
 
   /**
-   * Inertia duration.
-   * @default `(distance) => clamp(distance, 500, 2000)`
+   * Inertia animation mode.
+   * - `exponential` — per-frame velocity decay (default)
+   * - `timeline` — eased timeline driven by release speed
+   * @default 'exponential'
    */
-  inertiaDuration?: (distance: number) => number;
+  inertiaType?: 'exponential' | 'timeline';
 
   /**
-   * Easing function for inertia.
-   * @default EaseOutCubic
+   * Inertia decay per frame. The higher the value, the faster the inertia will end.
+   * Applicable for exponential-based inertia only.
+   * @default 0.025
    */
-  inertiaEasing?: TEasingType;
+  inertiaDecay?: number;
 
   /**
-   * Final velocity modifier.
-   * @default false
+   * Easing factor for inertia bounce back into bounds (per frame, FPS-independent).
+   * Applicable for exponential-based inertia only.
+   * @default 0.1
    */
-  velocityModifier?: false | ((velocity: ISwipeMatrix) => ISwipeMatrix);
+  inertiaBounceEase?: number;
 
   /**
    * Inertia strength.
@@ -156,8 +179,53 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
   inertiaRatio?: number;
 
   /**
-   * Minimum calculated distance to trigger inertia.
-   * @default 50
+   * Minimum pointer speed to start inertia.
+   * @default 1
+   */
+  inertiaThreshold?: number;
+
+  /**
+   * Max release velocity per axis (coordinate units / ms for x/y, degrees / ms for angle).
+   * Falsy axis value clamps that axis to `0` (no inertia on the axis).
+   * Applicable for exponential-based inertia only.
+   * @default { x: 7, y: 7, angle: 3 }
+   */
+  maxVelocity?: ISwipeVec3;
+
+  /**
+   * Returns movement bounds for `diff` (rubber-band, exponential inertia bounce,
+   * timeline amplitude clamp when `velocityModifier` is not set).
+   * @default null
+   */
+  bakeBounds?: null | (() => ISwipeBounds | null);
+
+  /**
+   * Allow bounce back animation when released position is out of bounds.
+   * @default () => true
+   */
+  releaseBounce?: () => boolean;
+
+  /**
+   * Inertia duration. Applicable for timeline-based inertia only.
+   * @default `(distance) => clamp(distance, 500, 2000)`
+   */
+  inertiaDuration?: (distance: number) => number;
+
+  /**
+   * Easing function for inertia. Applicable for timeline-based inertia only.
+   * @default EaseOutCubic
+   */
+  inertiaEasing?: TEasingType;
+
+  /**
+   * Velocity modifier. Used to define distance bounds of timeline-based inertia (bakeBounds will be ignored).
+   * @default false
+   */
+  velocityModifier?: false | ((velocity: ISwipeVec3) => ISwipeVec3);
+
+  /**
+   * The prop is deprecated and is not used anymore. Use `inertiaThreshold` instead.
+   * @deprecated
    */
   inertiaDistanceThreshold?: number;
 }
@@ -220,7 +288,7 @@ export interface ISwipeCallbacksMap
 
 export interface ISwipeCanMoveArg {
   type: 'touch' | 'mouse';
-  matrix: ISwipeMatrix;
+  state: ISwipeState;
   start: ISwipeVec2;
   diff: ISwipeVec2;
 }

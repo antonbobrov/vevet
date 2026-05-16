@@ -42,7 +42,7 @@ export const MUTABLE_PROPS: TRequiredProps<ISnapMutableProps> = {
   swipeThreshold: 5,
   swipeMinTime: 0,
   swipeInertiaDuration: (distance) => clamp(distance, 500, 2000),
-  swipeInertiaRatio: 0.5,
+  swipeInertiaRatio: 1,
   wheel: false,
   wheelSpeed: 1,
   wheelAxis: 'auto',

@@ -1,31 +1,54 @@
 import React from 'react';
 
 import { Ball as BallComponent } from './Ball';
-import { Circle as CircleComponent } from './Circle';
+import { Bounds as BoundsComponent } from './Bounds';
 import { Direction as DirectionComponent } from './Direction';
-import { Drag as DragComponent } from './Drag';
-import { Large as LargeComponent } from './Large';
+import { Lever as LeverComponent } from './Lever';
 import { Rotation as RotationComponent } from './Rotation';
+import { Scroll as ScrollComponent } from './Scroll';
 import { Test as TestComponent } from './Test';
+import { TSwipeStoryProps } from './types';
 
 import type { Meta, StoryFn } from '@storybook/react';
 
-const meta: Meta = {
+type StoryArgs = TSwipeStoryProps;
+
+const meta: Meta<StoryArgs> = {
   title: 'Components/Swipe',
+  argTypes: {
+    inertiaType: {
+      control: 'radio',
+      options: ['exponential', 'timeline'],
+      description: 'Inertia mode (stories with `inertia: true` only)',
+    },
+  },
+  args: {
+    inertiaType: 'exponential',
+  },
 };
 
 export default meta;
 
-export const Test: StoryFn = () => <TestComponent />;
+export const Test: StoryFn<StoryArgs> = () => <TestComponent />;
 
-export const Direction: StoryFn = () => <DirectionComponent />;
+export const Direction: StoryFn<StoryArgs> = () => <DirectionComponent />;
 
-export const Drag: StoryFn = () => <DragComponent />;
+export const Bounds: StoryFn<StoryArgs> = (args) => (
+  <BoundsComponent inertiaType={args.inertiaType} />
+);
 
-export const Ball: StoryFn = () => <BallComponent />;
+export const Ball: StoryFn<StoryArgs> = (args) => (
+  <BallComponent inertiaType={args.inertiaType} />
+);
 
-export const Rotation: StoryFn = () => <RotationComponent />;
+export const Rotation: StoryFn<StoryArgs> = (args) => (
+  <RotationComponent inertiaType={args.inertiaType} />
+);
 
-export const Circle: StoryFn = () => <CircleComponent />;
+export const Lever: StoryFn<StoryArgs> = (args) => (
+  <LeverComponent inertiaType={args.inertiaType} />
+);
 
-export const Large: StoryFn = () => <LargeComponent />;
+export const Scroll: StoryFn<StoryArgs> = (args) => (
+  <ScrollComponent inertiaType={args.inertiaType} />
+);

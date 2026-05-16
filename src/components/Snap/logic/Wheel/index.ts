@@ -121,7 +121,7 @@ export class SnapWheel extends SnapLogic {
     track.cancelTransition();
 
     // Update track target
-    track.iterateTarget(delta * snap.props.wheelSpeed);
+    track.updateTarget(track.target + delta * snap.props.wheelSpeed);
     track.clampTarget();
   }
 
@@ -174,7 +174,7 @@ export class SnapWheel extends SnapLogic {
         if (shouldFollow) {
           snap.cancelTransition();
 
-          track.iterateTarget(direction);
+          track.updateTarget(track.target + direction);
           track.clampTarget();
 
           if (!isTouchPad) {

@@ -1,36 +1,41 @@
 import { initVevet } from '@/global/initVevet';
 
-import { ISwipeCoords, ISwipeMatrix, ISwipeVec2 } from '../global';
+import { ISwipeCoords } from '../global';
 
-import type { Swipe } from '..';
+import type { ISwipeBounds, ISwipeState, ISwipeVec3, Swipe } from '..';
+
+const START_VEC3 = { x: 0, y: 0, angle: 0 };
+const START_STATE = { ...START_VEC3, time: 0 };
 
 export class SwipeCoords {
   constructor(private _ctx: Swipe) {}
 
-  /** Event timestamp. */
-  private _timestamp = 0;
-
   /** Start position. */
-  private _start: ISwipeMatrix = { x: 0, y: 0, angle: 0 };
+  private _start: ISwipeState = { ...START_STATE };
 
   /** Previous position. */
-  private _prev: ISwipeMatrix = { x: 0, y: 0, angle: 0 };
+  private _prev: ISwipeState = { ...START_STATE };
 
   /** Current position. */
-  private _current: ISwipeMatrix = { x: 0, y: 0, angle: 0 };
+  private _current: ISwipeState = { ...START_STATE };
 
   /** Movement offset from start. */
-  private _diff: ISwipeMatrix = { x: 0, y: 0, angle: 0 };
+  private _diff: ISwipeState = { ...START_STATE };
 
   /** Movement offset from previous position. */
-  private _step: ISwipeMatrix = { x: 0, y: 0, angle: 0 };
+  private _step: ISwipeState = { ...START_STATE };
 
-  /** Total accumulated movement. */
-  private _accum: ISwipeVec2 = { x: 0, y: 0 };
+  /** Total accumulated movement since swipe start. */
+  private _accum: ISwipeVec3 = { ...START_VEC3 };
 
-  get timestamp() {
-    return this._timestamp;
-  }
+  /** Accumulated movement since class initialization. */
+  private _total: ISwipeVec3 = { ...START_VEC3 };
+
+  /** Temporary angle data */
+  private _tempAngle = { raw: 0, unwrapped: 0 };
+
+  /** Cached bounds from `diffBounds` (on swipe start). */
+  private _bounds?: ISwipeBounds | null;
 
   get start() {
     return this._start;
@@ -56,14 +61,22 @@ export class SwipeCoords {
     return this._accum;
   }
 
-  get coords(): ISwipeCoords {
-    const { timestamp, start, prev, current, diff, step, accum } = this;
+  get total() {
+    return this._total;
+  }
 
-    return { timestamp, start, prev, current, diff, step, accum };
+  get bounds() {
+    return this._bounds;
+  }
+
+  get coords(): ISwipeCoords {
+    const { start, prev, current, diff, step, accum, total } = this;
+
+    return { start, prev, current, diff, step, accum, total };
   }
 
   /** Parses pointer coordinates relative to the container */
-  public decode(event: MouseEvent | TouchEvent): ISwipeMatrix {
+  public decode(event: MouseEvent | TouchEvent): ISwipeState {
     const vevet = initVevet();
     const { props, container } = this._ctx;
     const { ratio } = props;
@@ -94,54 +107,128 @@ export class SwipeCoords {
     return {
       x: x * ratio,
       y: y * ratio,
-      angle: angle * ratio,
+      angle,
+      time: performance.now(),
     };
   }
 
-  public setStart(matrix: ISwipeMatrix) {
-    this._timestamp = performance.now();
-    this._start = { ...matrix };
-    this._prev = { ...matrix };
-    this._current = { ...matrix };
-    this._diff = { x: 0, y: 0, angle: 0 };
-    this._step = { x: 0, y: 0, angle: 0 };
-    this._accum = { x: 0, y: 0 };
+  public setStart(state: ISwipeState) {
+    const { props } = this._ctx;
+
+    this._tempAngle = { raw: state.angle, unwrapped: state.angle };
+
+    this._start = { ...state };
+    this._prev = { ...state };
+    this._current = { ...state };
+    this._diff = { ...START_VEC3, time: 0 };
+    this._step = { ...START_VEC3, time: 0 };
+    this._accum = { ...START_VEC3 };
+
+    this._bounds = props.bakeBounds && props.bakeBounds();
   }
 
-  public update({ x, y, angle }: ISwipeMatrix) {
-    // prepare data
-    const start = { ...this.start };
-    const prev = { ...this.current };
-    const current = { x, y, angle };
+  public resetTempAngle() {
+    this._tempAngle.raw = this._current.angle;
+    this._tempAngle.unwrapped = this._current.angle;
+  }
 
-    // update coords
+  public update({ x, y, angle, time }: ISwipeState) {
+    const { start, bounds } = this;
 
-    this._timestamp = performance.now();
-    this._prev = prev;
-    this._current = current;
+    // Save
+    this._prev = { ...this.current };
+    this._current = { x, y, angle, time };
+    const { _current: current, _prev: prev } = this;
 
-    let angleDelta = this._current.angle - this._prev.angle;
-    if (angleDelta > 180) {
-      angleDelta -= 360;
-    } else if (angleDelta < -180) {
-      angleDelta += 360;
+    // Update angle
+    this._updateTempAngle(angle);
+    current.angle = this._tempAngle.unwrapped;
+
+    // Apply rubber
+
+    if (bounds) {
+      current.x = this._applyRubber(current.x, start.x, bounds.x);
+      current.y = this._applyRubber(current.y, start.y, bounds.y);
+      current.angle = this._applyRubber(
+        current.angle,
+        start.angle,
+        bounds.angle,
+      );
     }
+
+    // Update coords
 
     this._step = {
       x: current.x - prev.x,
       y: current.y - prev.y,
-      angle: angleDelta,
+      angle: current.angle - prev.angle,
+      time: current.time - prev.time,
     };
 
     this._diff = {
       x: current.x - start.x,
       y: current.y - start.y,
       angle: this._diff.angle + this._step.angle,
+      time: current.time - start.time,
     };
 
     this._accum = {
       x: this._accum.x + Math.abs(this._step.x),
       y: this._accum.y + Math.abs(this._step.y),
+      angle: this._accum.angle + Math.abs(this._step.angle),
     };
+
+    this._total = {
+      x: this._total.x + this._step.x,
+      y: this._total.y + this._step.y,
+      angle: this._total.angle + this._step.angle,
+    };
+  }
+
+  /** Unwrap raw atan2 angle and accumulate into _angle */
+  private _updateTempAngle(rawAngle: number) {
+    const halfTurn = 180;
+
+    let angleDelta = rawAngle - this._tempAngle.raw;
+    if (angleDelta > halfTurn) {
+      angleDelta -= halfTurn * 2;
+    } else if (angleDelta < -halfTurn) {
+      angleDelta += halfTurn * 2;
+    }
+
+    this._tempAngle.unwrapped += angleDelta;
+    this._tempAngle.raw = rawAngle;
+  }
+
+  /** Apply rubber to coordinates */
+  private _applyRubber(value: number, origin: number, bounds?: number[]) {
+    const { _ctx: ctx } = this;
+    const overflow = Math.abs(ctx.props.overflow());
+
+    if (ctx.hasInertia || ctx.hasBounce || !bounds) {
+      return value;
+    }
+
+    const diff = value - origin;
+    const max = Math.max(...bounds);
+    const min = Math.min(...bounds);
+
+    const rubberScale = 100;
+
+    if (diff > max) {
+      const over = diff - max;
+      const rubber = overflow * (1 - Math.exp(-over / rubberScale));
+
+      return origin + max + rubber;
+    }
+
+    if (diff < min) {
+      const over = diff - min;
+      const rubber = -overflow * (1 - Math.exp(over / rubberScale));
+
+      return origin + min + rubber;
+    }
+
+    return value;
   }
 }

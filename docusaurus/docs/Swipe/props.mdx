@@ -25,7 +25,7 @@ Static properties are set during initialization and cannot be modified later.
 - Event listener container.
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
 });
 ```
@@ -39,7 +39,7 @@ const observer = new Swipe({
 - **See [demo](demos#lever-rotation)**
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   thumb: document.getElementById('thumb'),
 });
@@ -59,7 +59,7 @@ const observer = new Swipe({
 - **See [demo](demos#right-click-drag)**
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   buttons: [0], // left button click
   buttons: [2], // right button click
@@ -76,9 +76,22 @@ const observer = new Swipe({
   If fewer pointers are present, swipe will not start.
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   pointers: 2, // means that swipe will start only with two fingers
+});
+```
+
+### `disableUserSelect` {#props.disableuserselect}
+
+- **Type:** `boolean`
+- **Default:** `true`
+- Disables text selection while dragging (passed to the internal `Pointers` instance).
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  disableUserSelect: true,
 });
 ```
 
@@ -97,13 +110,13 @@ To apply different values by viewport or device, use **[Responsive](/docs/base/R
 - Enables or disables swipe events.
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   enabled: false,
 });
 
 // change value
-observer.updateProps({
+swipe.updateProps({
   enabled: true,
 });
 ```
@@ -116,13 +129,13 @@ observer.updateProps({
 - **See [demo](demos#rotation-swipe)**
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   relative: true,
 });
 
 // change value
-observer.updateProps({
+swipe.updateProps({
   relative: false,
 });
 ```
@@ -135,13 +148,13 @@ observer.updateProps({
 - **See [demo](demos#basic-demo)**
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   axis: 'x',
 });
 
 // change value
-observer.updateProps({
+swipe.updateProps({
   axis: 'y',
 });
 ```
@@ -153,13 +166,13 @@ observer.updateProps({
 - Swipe move ratio (speed multiplier).
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   ratio: 1,
 });
 
 // change value
-observer.updateProps({
+swipe.updateProps({
   ratio: 2,
 });
 ```
@@ -171,13 +184,13 @@ observer.updateProps({
 - Shows "grab" and "grabbing" cursors during interaction.
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   grabCursor: true,
 });
 
 // change value
-observer.updateProps({
+swipe.updateProps({
   grabCursor: false,
 });
 ```
@@ -190,13 +203,13 @@ observer.updateProps({
   Allows disabling swipe in specific UI states or when gesture conditions are not met.
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   willAbort: () => false,
 });
 
 // change value
-observer.updateProps({
+swipe.updateProps({
   willAbort: ({ diff }) => diff.x > 5, // will prevent too fast swipe
 });
 ```
@@ -208,13 +221,13 @@ observer.updateProps({
 - Minimum swipe distance (px) to trigger swipe start.
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   threshold: 5,
 });
 
 // change value
-observer.updateProps({
+swipe.updateProps({
   threshold: 3,
 });
 ```
@@ -227,13 +240,13 @@ observer.updateProps({
 - Means that user click the container, waits some time, and only then swipe is available.
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   minTime: 0,
 });
 
 // change value
-observer.updateProps({
+swipe.updateProps({
   minTime: 0,
 });
 ```
@@ -247,13 +260,13 @@ observer.updateProps({
 - To trigger a directional callback a user must swipe a certain amount of pixels - `directionThreshold`.
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   directionThreshold: 50,
 });
 
 // change value
-observer.updateProps({
+swipe.updateProps({
   directionThreshold: 10,
 });
 ```
@@ -265,13 +278,13 @@ observer.updateProps({
 - Prevents edge swiping (iOS swipe-back gesture).
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   preventEdgeSwipe: true,
 });
 
 // change value
-observer.updateProps({
+swipe.updateProps({
   preventEdgeSwipe: false,
 });
 ```
@@ -283,13 +296,13 @@ observer.updateProps({
 - Edge swipe threshold (px) from the left/right edge.
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   edgeSwipeThreshold: 20,
 });
 
 // change value
-observer.updateProps({
+swipe.updateProps({
   edgeSwipeThreshold: 25,
 });
 ```
@@ -302,13 +315,13 @@ observer.updateProps({
   Recommended to keep enabled for horizontal/vertical drags inside scrollable layouts.
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   preventTouchMove: true,
 });
 
 // change value
-observer.updateProps({
+swipe.updateProps({
   preventTouchMove: false,
 });
 ```
@@ -320,14 +333,90 @@ observer.updateProps({
 - Requires Ctrl key for swipe (mouse only).
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   requireCtrlKey: true,
 });
 
 // change value
-observer.updateProps({
+swipe.updateProps({
   requireCtrlKey: false,
+});
+```
+
+### `overflow` {#props.overflow}
+
+- **Type:** `() => number`
+- **Default:** `() => 50`
+- Rubber-band overflow past [`bakeBounds`](#props.bakebounds) during drag and exponential inertia bounce (px or degrees, same units as the axis).
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  overflow: () => 50,
+});
+
+// change value
+swipe.updateProps({
+  overflow: () => 20,
+});
+```
+
+### `bakeBounds` {#props.bakebounds}
+
+- **Type:** `null | (() => ISwipeBounds | null)`
+- **Default:** `null`
+- Returns `[min, max]` per axis for `diff` (offset from swipe start). Cached on swipe start; re-fetched on inertia start.
+- **Drag:** rubber-band via [`overflow`](#props.overflow).
+- **Exponential inertia:** per-frame bounce inside bounds.
+- **Timeline inertia:** amplitudes are clamped to baked bounds when [`velocityModifier`](#props.velocitymodifier) is not set.
+- **See [index example](/docs/Swipe/#initialization)**
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  bakeBounds: () => ({
+    x: [-100, 100],
+    y: [-50, 50],
+    angle: [-45, 45],
+  }),
+});
+```
+
+### `releaseBounce` {#props.releasebounce}
+
+- **Type:** `() => boolean`
+- **Default:** `() => true`
+- When inertia does not run (or fails), enables bounce-back animation if `diff` is outside [`bakeBounds`](#props.bakebounds).  
+  Return `false` to skip snap-back (e.g. during another transition).
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  releaseBounce: () => true,
+});
+
+// change value
+swipe.updateProps({
+  releaseBounce: () => false,
+});
+```
+
+### `bounceDuration` {#props.bounceDuration}
+
+- **Type:** `number`
+- **Default:** `250`
+- Duration (ms) of the release bounce-back timeline when [`releaseBounce`](#props.releasebounce) allows it and `diff` is out of bounds.
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  bounceDuration: 250,
+});
+
+// change value
+swipe.updateProps({
+  bounceDuration: 400,
 });
 ```
 
@@ -335,18 +424,154 @@ observer.updateProps({
 
 - **Type:** `boolean`
 - **Default:** `false`
-- Enables inertia animation.
+- Enables inertia after pointer release. Mode is controlled by [`inertiaType`](#props.inertiatype).
 - **See [demo](demos#drag-inertia)**
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   inertia: true,
 });
 
 // change value
-observer.updateProps({
+swipe.updateProps({
   inertia: false,
+});
+```
+
+### `inertiaType` {#props.inertiatype}
+
+- **Type:** `'exponential' | 'timeline'`
+- **Default:** `'exponential'`
+- Inertia animation mode:
+  - **`exponential`** — per-frame velocity decay; optional [`bakeBounds`](#props.bakebounds) bounce ([`inertiaDecay`](#props.inertiadecay), [`inertiaBounceEase`](#props.inertiabounceease), [`maxVelocity`](#props.maxvelocity))
+  - **`timeline`** — eased timeline from release speed ([`inertiaDuration`](#props.inertiaduration), [`inertiaEasing`](#props.inertiaeasing)); [`bakeBounds`](#props.bakebounds) or [`velocityModifier`](#props.velocitymodifier) limit displacement
+- **See [demo](demos#drag-inertia-bounce)** (timeline)
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  inertia: true,
+  inertiaType: 'exponential',
+});
+
+// change value
+swipe.updateProps({
+  inertiaType: 'timeline',
+});
+```
+
+### `inertiaRatio` {#props.inertiaratio}
+
+- **Type:** `number`
+- **Default:** `1`
+- Inertia strength multiplier applied to release velocity (both modes).
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  inertiaRatio: 1,
+});
+
+// change value
+swipe.updateProps({
+  inertiaRatio: 2,
+});
+```
+
+### `inertiaThreshold` {#props.inertiathreshold}
+
+- **Type:** `number`
+- **Default:** `1`
+- Minimum pointer speed to start inertia (px/s for linear, deg/s for angular).
+- **`timeline`:** linear speed only.
+- **`exponential`:** linear **or** angular speed must meet the threshold.
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  inertiaThreshold: 1,
+});
+
+// change value
+swipe.updateProps({
+  inertiaThreshold: 5,
+});
+```
+
+### `inertiaDecay` {#props.inertiaDecay}
+
+- **Type:** `number`
+- **Default:** `0.025`
+- Inertia decay per frame. Higher values stop inertia sooner.  
+  Applicable for exponential-based inertia only.
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  inertiaDecay: 0.025,
+});
+
+// change value
+swipe.updateProps({
+  inertiaDecay: 0.05,
+});
+```
+
+### `inertiaBounceEase` {#props.inertiaBounceEase}
+
+- **Type:** `number`
+- **Default:** `0.1`
+- Easing factor for inertia bounce back into bounds (per frame, FPS-independent).  
+  Applicable for exponential-based inertia only.
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  inertiaBounceEase: 0.1,
+});
+
+// change value
+swipe.updateProps({
+  inertiaBounceEase: 0.2,
+});
+```
+
+### `velocityModifier` {#props.velocitymodifier}
+
+- **Type:** `false | ((amplitude: ISwipeVec3) => ISwipeVec3)`
+- **Default:** `false`
+- Modifies timeline inertia **displacement amplitudes** (px for `x`/`y`, degrees for `angle`) after release speed is converted to px/s / deg/s.  
+  When set, replaces the default [`bakeBounds`](#props.bakebounds) clamp on timeline release.  
+  Use for custom limits (e.g. carousel track). Applicable when [`inertiaType`](#props.inertiatype) is `'timeline'` only.
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  inertiaType: 'timeline',
+  velocityModifier: (amp) => ({
+    ...amp,
+    x: clamp(amp.x, -slideMin, slideMax),
+  }),
+});
+```
+
+### `maxVelocity` {#props.maxVelocity}
+
+- **Type:** **[ISwipeVec3](interfaces#iswipevec3)**
+- **Default:** `{ x: 7, y: 7, angle: 3 }`
+- Max release velocity per axis (coordinate units / ms for `x`/`y`, degrees / ms for `angle`) applied on release before inertia starts.  
+  A falsy axis value clamps that axis to `0` (no inertia on the axis).
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  maxVelocity: { x: 7, y: 7, angle: 3 },
+});
+
+// change value
+swipe.updateProps({
+  maxVelocity: { x: 10, y: 10, angle: 0 },
 });
 ```
 
@@ -354,16 +579,17 @@ observer.updateProps({
 
 - **Type:** `(distance: number) => number`
 - **Default:** `(distance) => clamp(distance, 500, 2000)`
-- Inertia duration.
+- Inertia animation duration (ms). `distance` is linear release speed in px/s.  
+  Applicable when [`inertiaType`](#props.inertiatype) is `'timeline'`.
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   inertiaDuration: (distance) => clamp(distance, 500, 2000),
 });
 
 // change value
-observer.updateProps({
+swipe.updateProps({
   inertiaDuration: 500,
 });
 ```
@@ -372,62 +598,19 @@ observer.updateProps({
 
 - **Type:** `TEasingType`
 - **Default:** `EaseOutCubic`
-- Easing function for inertia.
-- See **[easing types](/docs/utils#easing-types)** for more information.
+- Easing function for timeline inertia progress (`0` → `1`).
+- See **[easing types](/docs/utils#easing-types)** for more information.  
+  Applicable when [`inertiaType`](#props.inertiatype) is `'timeline'`.
 - **See [demo](demos#drag-inertia-bounce)**
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   inertiaEasing: EaseOutCubic,
 });
 
 // change value
-observer.updateProps({
+swipe.updateProps({
   inertiaEasing: EaseOutBack,
-});
-```
-
-### `velocityModifier` {#props.velocityModifier}
-
-- **Type:** `false` | `((velocity: ISwipeMatrix) => ISwipeMatrix)`
-- **Default:** `false`
-- Final velocity modifier. Accepts and returns additional movement.
-- **See [demo](demos#drag-inertia)**
-
-### `inertiaRatio` {#props.inertiaRatio}
-
-- **Type:** `number`
-- **Default:** `1`
-- Inertia strength.
-
-```js
-const observer = new Swipe({
-  container: document.getElementById('container'),
-  inertiaRatio: 1,
-});
-
-// change value
-observer.updateProps({
-  inertiaRatio: 2,
-});
-```
-
-### `inertiaDistanceThreshold` {#props.inertiaDistanceThreshold}
-
-- **Type:** `number`
-- **Default:** `50`
-- Minimum computed movement required to trigger inertia.  
-  If movement is smaller than this value, inertia will not play.
-
-```js
-const observer = new Swipe({
-  container: document.getElementById('container'),
-  inertiaDistanceThreshold: 50,
-});
-
-// change value
-observer.updateProps({
-  inertiaDistanceThreshold: 30,
 });
 ```

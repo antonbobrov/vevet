@@ -20,14 +20,26 @@ All **[Module methods](/docs/base/Module/#methods)** are available in this class
 
 ### `cancelInertia`
 
-Destroys the inertia animation.
+Stops the inertia animation.
 
 ```ts
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
 });
 
-observer.cancelInertia();
+swipe.cancelInertia();
+```
+
+### `cancelBounce`
+
+Stops the bounce-back timeline (out-of-bounds snap when inertia is off).
+
+```ts
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+});
+
+swipe.cancelBounce();
 ```
 
 ### `destroy`
@@ -35,9 +47,9 @@ observer.cancelInertia();
 Destroys the instance and cleans up resources.
 
 ```ts
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
 });
 
-observer.destroy();
+swipe.destroy();
 ```

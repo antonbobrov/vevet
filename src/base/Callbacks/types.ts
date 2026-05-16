@@ -1,6 +1,3 @@
-/**
- * todo
- */
 export interface ICallbacksProps<Ctx> {
   ctx?: Ctx;
 }

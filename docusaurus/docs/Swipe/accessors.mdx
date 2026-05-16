@@ -20,17 +20,16 @@ All **[Module accessors](/docs/base/Module/#accessors)** are available in this c
 
 ### `accum`
 
-Type: **[ISwipeVec2](interfaces#iswipevec2)**
+Type: **[ISwipeVec3](interfaces#iswipevec3)**
 
-Accumulated movement.
-
-Returns the current swipe coordinates.
+Absolute path length since swipe start (`|step|` per axis).
 
 ```js
 const instance = new Swipe();
 
 instance.accum.x;
 instance.accum.y;
+instance.accum.angle;
 ```
 
 ### `container`
@@ -57,7 +56,7 @@ instance.coords; // returns all coordinates data
 
 ### `current`
 
-Type: **[ISwipeMatrix](interfaces#iswipematrix)**
+Type: **[ISwipeState](interfaces#iswipestate)**
 
 Current coordinate.
 
@@ -71,7 +70,7 @@ instance.current.angle;
 
 ### `diff`
 
-Type: **[ISwipeMatrix](interfaces#iswipematrix)**
+Type: **[ISwipeState](interfaces#iswipestate)**
 
 Difference between start and current coordinates.
 
@@ -81,6 +80,18 @@ const instance = new Swipe();
 instance.diff.x;
 instance.diff.y;
 instance.diff.angle;
+```
+
+### `hasBounce`
+
+Type: `boolean`
+
+Indicates if release bounce-back animation is active ([`releaseBounce`](/docs/Swipe/props#props.releasebounce), `diff` out of [`bakeBounds`](/docs/Swipe/props#props.bakebounds)).
+
+```js
+const instance = new Swipe();
+
+instance.hasBounce; // true or false
 ```
 
 ### `hasInertia`
@@ -109,7 +120,7 @@ instance.isSwiping; // true or false
 
 ### `prev`
 
-Type: **[ISwipeMatrix](interfaces#iswipematrix)**
+Type: **[ISwipeState](interfaces#iswipestate)**
 
 Previous coordinate.
 
@@ -123,7 +134,7 @@ instance.prev.angle;
 
 ### `start`
 
-Type: **[ISwipeMatrix](interfaces#iswipematrix)**
+Type: **[ISwipeState](interfaces#iswipestate)**
 
 Start coordinate.
 
@@ -137,7 +148,7 @@ instance.start.angle;
 
 ### `step`
 
-Type: **[ISwipeMatrix](interfaces#iswipematrix)**
+Type: **[ISwipeState](interfaces#iswipestate)**
 
 Difference between current and previous coordinates.
 
@@ -147,4 +158,18 @@ const instance = new Swipe();
 instance.step.x;
 instance.step.y;
 instance.step.angle;
+```
+
+### `total`
+
+Type: **[ISwipeVec3](interfaces#iswipevec3)**
+
+Applied movement since instance initialization (after rubber-band). Use this for persistent transforms.
+
+```js
+const instance = new Swipe();
+
+instance.total.x;
+instance.total.y;
+instance.total.angle;
 ```

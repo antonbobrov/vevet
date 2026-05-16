@@ -304,12 +304,12 @@ export class Snap extends Module<TC, TS, TM> {
 
   /** Iterate track target value */
   public iterateTarget(delta: number) {
-    this._track.iterateTarget(delta);
+    this._track.updateTarget(this._track.target + delta);
   }
 
   /** Set track target value */
   public setTarget(value: number) {
-    this._track.setTarget(value);
+    this._track.updateTarget(value);
   }
 
   /** Cancel slide transition */
@@ -357,6 +357,10 @@ export class Snap extends Module<TC, TS, TM> {
       return true;
     });
 
+    if (!children.length) {
+      throw new Error('No slides found');
+    }
+
     this._slides = children.map((item) => {
       if (item instanceof SnapSlide) {
         return item;
@@ -400,10 +404,6 @@ export class Snap extends Module<TC, TS, TM> {
   private _reflow() {
     const { slides, props } = this;
 
-    if (this.isEmpty) {
-      return;
-    }
-
     // Reset scrollable slides
     this._scrollableSlides = [];
 
@@ -435,10 +435,6 @@ export class Snap extends Module<TC, TS, TM> {
   /** Render slides */
   @noopIfDestroyed
   public render(frameDuration = 0) {
-    if (this.isEmpty) {
-      return;
-    }
-
     const { _swipe: swipe, _track: track, props } = this;
 
     // Update values
@@ -549,10 +545,10 @@ export class Snap extends Module<TC, TS, TM> {
     targetIndex: number,
     { direction = null, ...options }: ISnapToSlideArg = {},
   ) {
-    const { isEmpty, activeIndex, slides, _track: track, props } = this;
+    const { activeIndex, slides, _track: track, props } = this;
     const { current, max, loopCount } = track;
 
-    if (isEmpty || this.isDestroyed) {
+    if (this.isDestroyed) {
       return false;
     }
 

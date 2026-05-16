@@ -2,7 +2,11 @@ import React, { FC, useEffect, useRef } from 'react';
 
 import { Swipe } from '@/index';
 
-export const Circle: FC = () => {
+import { TSwipeStoryProps } from './types';
+
+export const Lever: FC<TSwipeStoryProps> = ({
+  inertiaType = 'exponential',
+}) => {
   const ref = useRef<HTMLDivElement>(null);
   const rotateRef = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
@@ -12,21 +16,26 @@ export const Circle: FC = () => {
       return undefined;
     }
 
+    const min = -45;
+    const max = 45;
     let angle = 0;
 
     const instance = new Swipe({
       container: ref.current,
       thumb: thumbRef.current,
       inertia: true,
-      onMove: ({ step }) => {
-        angle += step.angle;
-
+      inertiaType,
+      relative: true,
+      grabCursor: true,
+      bakeBounds: () => ({ angle: [max - angle, min - angle] }),
+      onMove: ({ total }) => {
+        angle = total.angle;
         rotateRef.current!.style.transform = `rotate(${angle}deg)`;
       },
     });
 
     return () => instance.destroy();
-  }, []);
+  }, [inertiaType]);
 
   return (
     <>

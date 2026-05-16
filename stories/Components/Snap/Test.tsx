@@ -27,6 +27,7 @@ export const Test: FC = () => {
       centered: false,
       loop: false,
       gap: 20,
+      followWheel: false,
       grabCursor: true,
       onActiveSlide: (slide) => setActiveIndex(slide.index),
       onUpdate: (data, snap) => {
