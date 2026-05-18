@@ -37,6 +37,9 @@ export class Module<
     return { __mutableProp: true } as TRequiredProps<MutableProps>;
   }
 
+  /** Test props */
+  public __testProps() {}
+
   /** Current properties */
   private _props: TRequiredProps<MutableProps & StaticProps>;
 
@@ -100,6 +103,8 @@ export class Module<
       { ...props },
     ) as TRequiredProps<MutableProps & StaticProps>;
 
+    this.__testProps();
+
     // Initialize callbacks
 
     const onCallbacks = {
@@ -129,6 +134,8 @@ export class Module<
    * Method that is called when the module's properties mutate. In most cases, used to handle callbacks.
    */
   protected _handleProps(diff: Partial<MutableProps>) {
+    this.__testProps();
+
     this.callbacks.emit('props', diff);
   }
 

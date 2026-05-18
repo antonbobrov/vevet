@@ -6,7 +6,7 @@ import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { TRequiredProps } from '@/internal/requiredProps';
 import { onResize } from '@/utils/listeners/onResize';
 
-import { MUTABLE_PROPS, STATIC_PROPS } from './props';
+import { MUTABLE_PROPS, STATIC_PROPS, TEST_PROPS } from './props';
 import {
   ICanvasCallbacksMap,
   ICanvasMutableProps,
@@ -36,6 +36,11 @@ export class Canvas<
   /** Get default mutable properties */
   public _getMutable(): TRequiredProps<M> {
     return { ...super._getMutable(), ...MUTABLE_PROPS };
+  }
+
+  /** Test props */
+  public __testProps() {
+    TEST_PROPS.test(this, this.props);
   }
 
   /** The canvas element created for rendering */

@@ -7,7 +7,7 @@ import { addEventListener } from '@/utils';
 
 import { Canvas, ICanvasRenderArg } from '../Canvas';
 
-import { MUTABLE_PROPS, STATIC_PROPS } from './props';
+import { MUTABLE_PROPS, STATIC_PROPS, TEST_PROPS } from './props';
 import {
   ICanvasMediaCallbacksMap,
   ICanvasMediaMutableProps,
@@ -37,6 +37,11 @@ export class CanvasMedia extends Canvas<TC, TS, TM> {
   /** Get default mutable properties */
   public _getMutable(): TRequiredProps<TM> {
     return { ...super._getMutable(), ...MUTABLE_PROPS };
+  }
+
+  /** Test props */
+  public __testProps() {
+    TEST_PROPS.test(this, this.props);
   }
 
   constructor(

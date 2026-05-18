@@ -16,7 +16,7 @@ import { LERP_APPROXIMATION } from './constants';
 import { CursorHoverElement } from './HoverElement';
 import { ICursorHoverElementProps } from './HoverElement/types';
 import { CursorPath } from './Path';
-import { MUTABLE_PROPS, STATIC_PROPS } from './props';
+import { MUTABLE_PROPS, STATIC_PROPS, TEST_PROPS } from './props';
 import { createCursorStyles } from './styles';
 import {
   ICursorCallbacksMap,
@@ -51,6 +51,11 @@ export class Cursor extends Module<TC, TS, TM> {
   /** Get default mutable properties */
   public _getMutable(): TRequiredProps<TM> {
     return { ...super._getMutable(), ...MUTABLE_PROPS };
+  }
+
+  /** Test props */
+  public __testProps() {
+    TEST_PROPS.test(this, this.props);
   }
 
   /** The outer element of the custom cursor */
