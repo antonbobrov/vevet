@@ -42,7 +42,7 @@ export const MUTABLE_PROPS: TRequiredProps<ISwipeMutableProps> = {
   releaseBounce: () => true,
   inertiaDuration: (distance) => clamp(distance, 500, 2000),
   inertiaEasing: EaseOutCubic,
-  velocityModifier: null as any,
+  velocityModifier: false,
   inertiaDistanceThreshold: 1,
 };
 

@@ -302,11 +302,15 @@ export class SnapSwipe extends SnapLogic {
 
     // Scrolling slides
 
-    if (!freemode && snap.isSlideScrolling) {
+    if (snap.isSlideScrolling) {
       return {
         ...defaults,
         [this.axis]: [snap.containerSize - slideSize - slideCoord, -slideCoord],
       };
+    }
+
+    if (track.canLoop) {
+      return null;
     }
 
     return { ...defaults };
