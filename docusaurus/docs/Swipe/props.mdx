@@ -150,7 +150,8 @@ observer.updateProps({
 
 - **Type:** `number`
 - **Default:** `1`
-- Swipe move ratio (speed multiplier).
+- Scales movement on **x**, **y**, and **angle** after swipe starts.  
+  Swipe activation still uses raw pointer distance, so [`threshold`](#props.threshold) is not affected by `ratio`.
 
 ```js
 const observer = new Swipe({
@@ -168,7 +169,7 @@ observer.updateProps({
 
 - **Type:** `boolean`
 - **Default:** `false`
-- Shows "grab" and "grabbing" cursors during interaction.
+- Shows "grab" and "grabbing" cursors on `thumb` (if set) or `container` during interaction.
 
 ```js
 const observer = new Swipe({
@@ -331,103 +332,221 @@ observer.updateProps({
 });
 ```
 
+### `bounceDuration` {#props.bounceDuration}
+
+- **Type:** `number`
+- **Default:** `250`
+- Duration (ms) of bounce-back when movement exceeds `bounds`, release inertia does not run, and [`canBounce`](#props.canBounce) allows it.
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  bounds: () => ({ x: [0, 300] }),
+  bounceDuration: 250,
+});
+```
+
+### `overflow` {#props.overflow}
+
+- **Type:** `() => number`
+- **Default:** `() => 50`
+- Rubber-band distance past `bounds` (px for x/y, degrees for `angle`).
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  bounds: () => ({ y: [0, 500] }),
+  overflow: () => 80,
+});
+```
+
+### `bounds` {#props.bounds}
+
+- **Type:** `null | (() => ISwipeAxes | null)`
+- **Default:** `null`
+- Movement limits per axis. Unset axis is unbounded. Values are normalized to `[min, max]`.
+- Use [`movement`](accessors#movement) in callbacks for transforms.
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('wrapper'),
+  relative: true,
+  bounds: () => ({ x: [0, 300], y: [0, 300] }),
+  onMove: ({ movement }) => {
+    thumb.style.transform = `translate(${movement.x}px, ${movement.y}px)`;
+  },
+});
+```
+
+### `snap` {#props.snap}
+
+- **Type:** `null | (() => ISwipeAxes | null)`
+- **Default:** `null`
+- Snap targets per axis in movement space.
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  relative: true,
+  snap: () => ({ angle: [0, 90, 180] }),
+  snapRadius: 15,
+});
+```
+
+### `canBounce` {#props.canBounce}
+
+- **Type:** `() => boolean`
+- **Default:** `() => true`
+- When it returns `false`, overflow bounce-back on release is skipped (inertia may still run).
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  bounds: () => ({ x: [0, 300] }),
+  canBounce: () => false,
+});
+
+// change value
+swipe.updateProps({
+  canBounce: () => true,
+});
+```
+
+### `snapRadius` {#props.snapRadius}
+
+- **Type:** `number | null`
+- **Default:** `null`
+- Max distance to a snap target (same units as the axis). Falsy = no radius limit.
+
+```js
+const swipe = new Swipe({
+  snap: () => ({ angle: [0, 90, 180] }),
+  snapRadius: 10,
+});
+```
+
 ### `inertia` {#props.inertia}
 
 - **Type:** `boolean`
 - **Default:** `false`
-- Enables inertia animation.
+- Enables RAF-based release inertia after swipe end.
 - **See [demo](demos#drag-inertia)**
 
 ```js
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   inertia: true,
 });
-
-// change value
-observer.updateProps({
-  inertia: false,
-});
 ```
 
-### `inertiaDuration` {#props.inertiaDuration}
+### `inertiaDecay` {#props.inertiaDecay}
 
-- **Type:** `(distance: number) => number`
-- **Default:** `(distance) => clamp(distance, 500, 2000)`
-- Inertia duration.
+- **Type:** `number`
+- **Default:** `0.05`
+- Velocity decay per frame during inertia (higher = stops sooner).
 
 ```js
-const observer = new Swipe({
-  container: document.getElementById('container'),
-  inertiaDuration: (distance) => clamp(distance, 500, 2000),
-});
-
-// change value
-observer.updateProps({
-  inertiaDuration: 500,
+const swipe = new Swipe({
+  inertia: true,
+  inertiaDecay: 0.05,
 });
 ```
 
-### `inertiaEasing` {#props.inertiaEasing}
+### `inertiaBounceEase` {#props.inertiaBounceEase}
 
-- **Type:** `TEasingType`
-- **Default:** `EaseOutCubic`
-- Easing function for inertia.
-- See **[easing types](/docs/utils#easing-types)** for more information.
-- **See [demo](demos#drag-inertia-bounce)**
+- **Type:** `number`
+- **Default:** `0.3`
+- Easing factor for pulling inertia back inside `bounds` (per frame, FPS-independent).
 
 ```js
-const observer = new Swipe({
-  container: document.getElementById('container'),
-  inertiaEasing: EaseOutCubic,
-});
-
-// change value
-observer.updateProps({
-  inertiaEasing: EaseOutBack,
+const swipe = new Swipe({
+  inertia: true,
+  bounds: () => ({ x: [0, 400] }),
+  inertiaBounceEase: 0.3,
 });
 ```
-
-### `velocityModifier` {#props.velocityModifier}
-
-- **Type:** `false` | `((velocity: ISwipeMatrix) => ISwipeMatrix)`
-- **Default:** `false`
-- Final velocity modifier. Accepts and returns additional movement.
-- **See [demo](demos#drag-inertia)**
 
 ### `inertiaRatio` {#props.inertiaRatio}
 
 - **Type:** `number`
 - **Default:** `1`
-- Inertia strength.
+- Extra multiplier for release velocity. Effective scale is [`ratio`](#props.ratio) `× inertiaRatio`.
 
 ```js
-const observer = new Swipe({
-  container: document.getElementById('container'),
-  inertiaRatio: 1,
-});
-
-// change value
-observer.updateProps({
-  inertiaRatio: 2,
+const swipe = new Swipe({
+  inertia: true,
+  inertiaRatio: 1.5,
 });
 ```
+
+### `inertiaDistanceModifier` {#props.inertiaDistanceModifier}
+
+- **Type:** `null | ((distance: ISwipeVec3) => ISwipeVec3 | null)`
+- **Default:** `null`
+- Called once before release inertia starts with predicted inertia distance (`x`/`y` in px, `angle` in degrees).  
+  Return a vector to override the total inertia travel, or `null` to keep the default decay-based inertia.
+
+```js
+const swipe = new Swipe({
+  inertia: true,
+  inertiaDistanceModifier: (distance) => ({
+    x: Math.round(distance.x / 100) * 100,
+    y: distance.y,
+    angle: 0,
+  }),
+});
+```
+
+### `inertiaThreshold` {#props.inertiaThreshold}
+
+- **Type:** `number`
+- **Default:** `1`
+- Minimum release speed to start inertia (px/s for x/y, deg/s for `angle`).  
+  Triggers `inertiaFail` when both linear and angular speed are below this value.
+
+```js
+const swipe = new Swipe({
+  inertia: true,
+  inertiaThreshold: 1,
+});
+```
+
+### `maxVelocity` {#props.maxVelocity}
+
+- **Type:** [`ISwipeVec3`](interfaces#iswipevec3)
+- **Default:** `{ x: 7, y: 7, angle: 3 }`
+- Max release velocity per axis (coord/ms for x/y, deg/ms for `angle`).  
+  Falsy axis value disables inertia on that axis.
+
+```js
+const swipe = new Swipe({
+  inertia: true,
+  maxVelocity: { x: 10, y: 10, angle: 5 },
+});
+```
+
+## Deprecated inertia props {#deprecated-inertia-props}
+
+:::caution
+Timelined inertia (`inertiaDuration`, `inertiaEasing`) and `velocityModifier` are **no longer applied**. Use RAF inertia props above (`inertiaDecay`, `inertiaBounceEase`, `inertiaThreshold`, `maxVelocity`).
+:::
+
+### `inertiaDuration` {#props.inertiaDuration}
+
+- **Type:** `(distance: number) => number`
+- **Status:** deprecated — not used
+
+### `inertiaEasing` {#props.inertiaEasing}
+
+- **Type:** `TEasingType`
+- **Status:** deprecated — not used
+
+### `velocityModifier` {#props.velocityModifier}
+
+- **Type:** `false | ((velocity: ISwipeState) => ISwipeState)`
+- **Status:** deprecated — not used
 
 ### `inertiaDistanceThreshold` {#props.inertiaDistanceThreshold}
 
 - **Type:** `number`
-- **Default:** `50`
-- Minimum computed movement required to trigger inertia.  
-  If movement is smaller than this value, inertia will not play.
-
-```js
-const observer = new Swipe({
-  container: document.getElementById('container'),
-  inertiaDistanceThreshold: 50,
-});
-
-// change value
-observer.updateProps({
-  inertiaDistanceThreshold: 30,
-});
-```
+- **Status:** deprecated — use [`inertiaThreshold`](#props.inertiaThreshold) instead (fallback if set)

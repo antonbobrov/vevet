@@ -11,15 +11,16 @@ export const Rotation: FC = () => {
       return undefined;
     }
 
-    let angle = 0;
-
     const instance = new Swipe({
       container: ref.current,
       inertia: true,
-      onMove: ({ step }) => {
-        angle += step.angle;
-
-        rotateRef.current!.style.transform = `rotate(${angle}deg)`;
+      relative: true,
+      maxVelocity: { x: 7, y: 7, angle: 3 },
+      overflow: () => 10,
+      bounds: () => ({ angle: [-360, 360] }),
+      ratio: 0.5,
+      onMove: ({ movement }) => {
+        rotateRef.current!.style.transform = `rotate(${movement.angle}deg)`;
       },
     });
 

@@ -18,16 +18,57 @@ import Head from '@docusaurus/Head';
 All **[Module methods](/docs/base/Module/#methods)** are available in this class.
 :::
 
-### `cancelInertia`
+### `calculateBounds`
 
-Destroys the inertia animation.
+Re-reads [`bounds`](props#props.bounds) and caches normalized `[min, max]` per axis. Called automatically when a swipe ends; call manually when limits change outside a gesture.
 
 ```ts
-const observer = new Swipe({
-  container: document.getElementById('container'),
+const swipe = new Swipe({
+  container: document.getElementById('wrapper'),
+  bounds: () => ({ x: [0, getMaxX()] }),
 });
 
-observer.cancelInertia();
+swipe.calculateBounds();
+```
+
+### `setMovement`
+
+Sets programmatic displacement in movement space. Reapplies rubber and snap, emits `move`, and cancels overflow bounce.
+
+```ts
+const swipe = new Swipe({
+  container: document.getElementById('wrapper'),
+  bounds: () => ({ x: [0, 300], y: [0, 300] }),
+});
+
+swipe.setMovement({ x: 100, y: 50 });
+swipe.setMovement({ angle: 45 });
+```
+
+### `cancelInertia`
+
+Stops release inertia animation.
+
+```ts
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  inertia: true,
+});
+
+swipe.cancelInertia();
+```
+
+### `cancelBounce`
+
+Stops overflow bounce-back timeline.
+
+```ts
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  bounds: () => ({ x: [0, 200] }),
+});
+
+swipe.cancelBounce();
 ```
 
 ### `destroy`
@@ -35,9 +76,9 @@ observer.cancelInertia();
 Destroys the instance and cleans up resources.
 
 ```ts
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
 });
 
-observer.destroy();
+swipe.destroy();
 ```
