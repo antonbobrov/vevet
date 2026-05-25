@@ -12,7 +12,7 @@ export interface ISnapSwipeProps {
   grabCursor?: boolean;
 
   /**
-   * Speed factor for swipe movements. Does not work when `swipeAxis="angle"`.
+   * Speed factor for swipe movements.
    * @default 1
    */
   swipeSpeed?: number;
@@ -67,14 +67,13 @@ export interface ISnapSwipeProps {
   swipeMinTime?: number;
 
   /**
-   * Inertia duration.
-   * @default `(distance) => clamp(distance, 500, 2000)`
+   * @deprecated
    */
   swipeInertiaDuration?: (distance: number) => number;
 
   /**
    * Inertia strength.
-   * @default 0.5
+   * @default 1
    */
   swipeInertiaRatio?: number;
 }

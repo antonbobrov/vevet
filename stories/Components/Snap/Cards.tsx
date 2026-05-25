@@ -27,8 +27,6 @@ export const Cards: FC = () => {
         const baseZ = -100;
         const maxVisible = 6;
 
-        console.log(startIndex);
-
         slides.forEach(({ element, index, progress }) => {
           let x = -baseX * progress;
           let rotate = progress * -baseRotation;

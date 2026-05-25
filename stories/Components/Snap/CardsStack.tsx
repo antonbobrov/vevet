@@ -21,6 +21,7 @@ export const CardsStack: FC = () => {
       loop: true,
       gap: 20,
       wheel: true,
+      freemode: 'sticky',
       wheelAxis: 'y',
       onUpdate: (data, { slides }) => {
         slides.forEach(({ element, size, progress }) => {

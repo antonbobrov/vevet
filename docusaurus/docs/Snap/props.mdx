@@ -436,7 +436,7 @@ snap.updateProps({
 
 - **Type:** `number`
 - **Default:** `1`
-- Speed factor for swipe movements. Does not work when `swipeAxis="angle"`.  
+- Speed factor for swipe movements.
   **See [demo](basic-demos#reverse-swipe)**
 
 ```js
@@ -605,31 +605,19 @@ snap.updateProps({
 ### `swipeInertiaDuration` {#props.swipeInertiaDuration}
 
 - **Type:** `(distance: number) => number`
-- **Default:** `(distance) => clamp(distance, 500, 2000)`
-- Inertia duration.
-
-```js
-const snap = new Snap({
-  container: document.getElementById('container'),
-  swipeInertiaDuration: (distance) => clamp(distance, 500, 2000),
-});
-
-// inertia duration is equal to the distance
-snap.updateProps({
-  swipeInertiaDuration: (distance) => distance,
-});
-```
+- **Default:** `null`
+- **Status:** deprecated — release inertia is now RAF-based and this prop is no longer applied.
 
 ### `swipeInertiaRatio` {#props.swipeInertiaRatio}
 
 - **Type:** `number`
-- **Default:** `0.5`
+- **Default:** `1`
 - Inertia strength.
 
 ```js
 const snap = new Snap({
   container: document.getElementById('container'),
-  swipeInertiaRatio: 0.3,
+  swipeInertiaRatio: 1,
 });
 
 // change value

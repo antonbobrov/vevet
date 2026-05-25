@@ -21,7 +21,6 @@ export const DynamicWidth: FC = () => {
       wheelAxis: 'y',
       freemode: true,
       stickOnResize: false,
-      edgeFriction: 1,
       grabCursor: true,
       onUpdate: (data, { slides }) => {
         slides.forEach(({ element, coord }) => {
@@ -53,9 +52,7 @@ export const DynamicWidth: FC = () => {
       const startTrack = snap.current;
 
       const tm = new Timeline(
-        {
-          duration: 500,
-        },
+        { duration: 500 },
         {
           onUpdate: ({ eased }) => {
             const toWidth = isExpanding ? 45 : 20;

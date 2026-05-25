@@ -1,30 +1,27 @@
+import { SnapSlide } from '@/components/Snap';
 import { clamp } from '@/utils';
 
-import { Snap, SnapSlide } from '../..';
-
-import { parallaxAttributes, parallaxGroups, parallaxTypes } from './constants';
-import { parallaxAttrPrefix } from './globals';
-import { ISnapSlideParallaxItem, ISnapSlideParallaxType } from './types';
+import { PARALLAX_GROUPS, PARALLAX_TYPES } from './constants';
+import { ISnapSlideParallaxItem } from './types';
+import { getAttr, getFloatAttr, isParallaxAttr } from './utils';
 
 export class SnapSlideParallax {
   private _observer: MutationObserver;
-
-  private _types: ISnapSlideParallaxType[] = [];
 
   private _items: ISnapSlideParallaxItem[] = [];
 
   private _debounceInit: NodeJS.Timeout | null = null;
 
   constructor(
-    private _snap: Snap,
     private _slide: SnapSlide,
     private _element: HTMLElement,
+    private _getInfluence: () => number,
   ) {
     this._initDebounce();
 
     this._observer = new MutationObserver((mutations) => {
       mutations.forEach(({ attributeName }) => {
-        if (attributeName && parallaxAttributes.includes(attributeName)) {
+        if (attributeName && isParallaxAttr(attributeName)) {
           this._initDebounce();
         }
       });
@@ -44,59 +41,57 @@ export class SnapSlideParallax {
 
   /** Initialize parallax */
   private _init() {
-    this._updateItems();
+    this._fetchItems();
 
     this.render();
   }
 
-  /** Update parallax items */
-  private _updateItems() {
+  /** Fetch parallax items */
+  private _fetchItems() {
     const element = this._element;
 
-    const defaultScope = this._getScope(
-      this._element,
-      `${parallaxAttrPrefix}scope`,
-      [-1, 1],
+    const defaultScope = this._getScope(this._element, `scope`, [-1, 1]);
+
+    const types = PARALLAX_TYPES.filter(({ attr }) =>
+      element.hasAttribute(attr),
     );
 
-    this._types = parallaxTypes.filter(({ n }) => element.hasAttribute(n));
-
-    this._items = this._types.map(
-      ({ n, p, u: defaultUnit, isAbs: isAbsProp, modifier }) => {
-        const group = parallaxGroups.find(
-          // eslint-disable-next-line @typescript-eslint/no-extra-non-null-assertion
-          ({ types }) => types.find((type) => type.n === n)!!,
+    this._items = types.map(
+      ({ attr, prop, unit: defaultUnit, isAbs: isAbsProp, modifier }) => {
+        const group = PARALLAX_GROUPS.find(({ types }) =>
+          types.find((type) => type.attr === attr),
         );
 
-        const scopeAttr = `${n}-scope`;
+        const scopeAttr = `${attr}-scope`;
+
         const scope = element.hasAttribute(scopeAttr)
           ? this._getScope(element, scopeAttr, [-1, 1])
           : defaultScope;
 
-        const attrValue = this._getAttr(element, n);
+        const attrValue = getAttr(element, attr);
         const unit = attrValue.replace(/[-\d.]+/g, '') || defaultUnit;
-        const target = this._getFloatAttr(element, n, 0);
+        const target = getFloatAttr(element, attr, 0);
 
-        const offset = this._getFloatAttr(element, `${n}-offset`, 0);
-        const min = this._getFloatAttr(element, `${n}-min`, -Infinity);
-        const max = this._getFloatAttr(element, `${n}-max`, Infinity);
+        const offset = getFloatAttr(element, `${attr}-offset`, 0);
+        const min = getFloatAttr(element, `${attr}-min`, -Infinity);
+        const max = getFloatAttr(element, `${attr}-max`, Infinity);
 
-        const influenceAttr = `${n}-influence`;
+        const influenceAttr = `${attr}-influence`;
         const influence = element.hasAttribute(influenceAttr)
-          ? this._getFloatAttr(element, `${n}-influence`, 1)
+          ? getFloatAttr(element, `${attr}-influence`, 1)
           : 0;
 
-        const directionalAttr = `${n}-directional`;
+        const directionalAttr = `${attr}-directional`;
         const isDirectional = element.hasAttribute(directionalAttr);
 
-        const absAttr = `${n}-abs`;
+        const absAttr = `${attr}-abs`;
         const isAbs = isAbsProp || element.hasAttribute(absAttr);
 
         return {
-          n,
-          p,
-          u: unit,
-          group: group?.name ?? '',
+          attr,
+          prop,
+          unit,
+          group: group?.prop ?? '',
           modifier,
           scope,
           progress: 0,
@@ -108,41 +103,25 @@ export class SnapSlideParallax {
           influence,
           isDirectional,
           isAbs,
-        };
+        } satisfies ISnapSlideParallaxItem;
       },
     );
-  }
-
-  /** Get parallax attribute */
-  private _getAttr(element: HTMLElement, name: string) {
-    return element.getAttribute(name) ?? '';
-  }
-
-  /** Get parallax float attribute */
-  private _getFloatAttr(
-    element: HTMLElement,
-    name: string,
-    defaultValue: number,
-  ) {
-    const float = parseFloat(this._getAttr(element, name));
-
-    return Number.isNaN(float) ? defaultValue : float;
   }
 
   /** Get parallax scope */
   private _getScope(
     element: HTMLElement,
-    name: string,
+    suffix: string,
     defaultValue: number[],
   ) {
-    const attrValue = this._getAttr(element, name);
-    const attrStringValue = attrValue.trim().toLowerCase();
+    const attrValue = getAttr(element, suffix);
+    const stringValue = attrValue.toLowerCase();
 
-    if (attrStringValue === 'none') {
+    if (stringValue === 'none') {
       return [-Infinity, Infinity];
     }
 
-    if (attrStringValue === 'const') {
+    if (stringValue === 'const') {
       return [1, 1];
     }
 
@@ -159,12 +138,8 @@ export class SnapSlideParallax {
 
   /** Render parallax */
   public render() {
-    const {
-      _snap: snap,
-      _element: element,
-      _items: items,
-      _slide: slide,
-    } = this;
+    const { _element: element, _items: items, _slide: slide } = this;
+    const influence = this._getInfluence();
 
     const globalProgress = slide.progress;
 
@@ -174,11 +149,11 @@ export class SnapSlideParallax {
       let progress = clamp(globalProgress, ...item.scope);
 
       if (Math.abs(item.influence) > 0) {
-        progress *= Math.abs(snap.influence) * item.influence;
+        progress *= Math.abs(influence) * item.influence;
       }
 
       if (item.isDirectional) {
-        progress = Math.abs(progress) * Math.sign(snap.influence);
+        progress = Math.abs(progress) * Math.sign(influence);
       }
 
       if (item.isAbs) {
@@ -195,20 +170,20 @@ export class SnapSlideParallax {
       item.value = clamp(item.value, item.min, item.max);
     });
 
-    parallaxGroups.forEach(({ name: groupName }) => {
-      const groupItems = items.filter((item) => item.group === groupName);
+    PARALLAX_GROUPS.forEach(({ prop: groupProp }) => {
+      const groupItems = items.filter((item) => item.group === groupProp);
 
-      const styles = groupItems.map(({ value, p, u }) => {
-        if (groupName === 'opacity') {
+      const styles = groupItems.map(({ value, prop, unit }) => {
+        if (groupProp === 'opacity') {
           return `${value}`;
         }
 
-        return `${p}(${value}${u})`;
+        return `${prop}(${value}${unit})`;
       });
 
       const styleString = styles.join(' ');
 
-      element.style[groupName as any] = styleString;
+      element.style[groupProp as any] = styleString;
     });
   }
 

@@ -2,8 +2,8 @@ import { initVevet } from '@/global/initVevet';
 import { isNumber } from '@/internal/isNumber';
 import { addEventListener, clamp, normalizeWheel } from '@/utils';
 
+import { SnapLogic } from '..';
 import { Snap } from '../..';
-import { SnapLogic } from '../SnapLogic';
 
 const deltasCount = 6;
 
@@ -20,10 +20,10 @@ export class SnapWheel extends SnapLogic {
   /** Last time wheel event was fired */
   private _lastWheelTime = 0;
 
-  constructor(snap: Snap) {
-    super(snap);
+  constructor(ctx: Snap) {
+    super(ctx);
 
-    const listener = addEventListener(snap.eventsEmitter, 'wheel', (event) =>
+    const listener = addEventListener(this.eventsEmitter, 'wheel', (event) =>
       this._handleWheel(event),
     );
 
@@ -36,13 +36,6 @@ export class SnapWheel extends SnapLogic {
     });
   }
 
-  /** Snap track */
-  private get track() {
-    // @ts-ignore
-    // eslint-disable-next-line no-underscore-dangle
-    return this.snap._track;
-  }
-
   /** Get absolute deltas */
   private get absDeltas() {
     return this._deltas.map((d) => Math.abs(d));
@@ -52,7 +45,7 @@ export class SnapWheel extends SnapLogic {
    * Handles wheel events
    */
   private _handleWheel(event: WheelEvent) {
-    const { props, axis } = this.snap;
+    const { props, snapAxis } = this;
 
     if (!props.wheel) {
       return;
@@ -62,7 +55,7 @@ export class SnapWheel extends SnapLogic {
 
     // Get delta
     const wheelData = normalizeWheel(event);
-    const wheelAxis = props.wheelAxis === 'auto' ? axis : props.wheelAxis;
+    const wheelAxis = props.wheelAxis === 'auto' ? snapAxis : props.wheelAxis;
     const delta = wheelAxis === 'x' ? wheelData.pixelX : wheelData.pixelY;
 
     // Start
@@ -88,7 +81,7 @@ export class SnapWheel extends SnapLogic {
 
     this._hasStarted = true;
 
-    this.snap.callbacks.emit('wheelStart', undefined);
+    this.callbacks.emit('wheelStart', undefined);
   }
 
   /** Handle wheel move */
@@ -97,39 +90,35 @@ export class SnapWheel extends SnapLogic {
       return;
     }
 
-    const { props, callbacks } = this.snap;
-
     // Save delta
     this._addDelta(delta);
 
-    // Move callback
-    callbacks.emit('wheel', event);
-
     // Handle wheel logic
-    if (props.followWheel) {
+    if (this.props.followWheel) {
       this._handleFollow(delta);
     } else {
       this._handleNoFollow(delta);
     }
+
+    // Move callback
+    this.callbacks.emit('wheel', event);
   }
 
   /** Handle `followWheel=true` */
   private _handleFollow(delta: number) {
-    const { snap, track } = this;
+    const { track, props } = this;
 
     // Cancel snap transition
     track.cancelTransition();
 
     // Update track target
-    track.iterateTarget(delta * snap.props.wheelSpeed);
+    track.updateTarget(track.target + delta * props.wheelSpeed);
     track.clampTarget();
   }
 
   /** Handle `followWheel=false` */
   private _handleNoFollow(deltaProp: number) {
-    // vars
-    const { snap, track, isTouchPad, isGainingDelta } = this;
-    const { props, activeSlide } = snap;
+    const { track, isTouchPad, isGainingDelta, props, activeSlide } = this;
     const delta = deltaProp * props.wheelSpeed;
 
     // Detect wheel throttling
@@ -143,14 +132,14 @@ export class SnapWheel extends SnapLogic {
     let isThrottled = true;
 
     if (!shouldFollow) {
-      if (snap.isSlideScrolling) {
+      if (this.isSlideScrolling) {
         if (activeSlide.coord === 0) {
           if (delta > 0) {
             shouldFollow = true;
           }
         } else if (
           activeSlide.coord ===
-          snap.containerSize - activeSlide.size
+          this.containerSize - activeSlide.size
         ) {
           if (delta < 0) {
             shouldFollow = true;
@@ -172,16 +161,16 @@ export class SnapWheel extends SnapLogic {
         const direction = Math.sign(delta);
 
         if (shouldFollow) {
-          snap.cancelTransition();
+          track.cancelTransition();
 
-          track.iterateTarget(direction);
+          track.updateTarget(track.target + direction);
           track.clampTarget();
 
           if (!isTouchPad) {
             track.current = track.target;
           }
         } else if (direction === 1) {
-          if (!props.loop && snap.activeIndex === snap.slides.length - 1) {
+          if (!props.loop && this.activeIndex === this.slides.length - 1) {
             if (!props.rewind) {
               return;
             }
@@ -189,9 +178,9 @@ export class SnapWheel extends SnapLogic {
 
           this._lastWheelTime = +new Date();
 
-          snap.next();
+          this.next();
         } else {
-          if (!props.loop && snap.activeIndex === 0) {
+          if (!props.loop && this.activeIndex === 0) {
             if (!props.rewind) {
               return;
             }
@@ -199,7 +188,7 @@ export class SnapWheel extends SnapLogic {
 
           this._lastWheelTime = +new Date();
 
-          snap.prev();
+          this.prev();
         }
       }
 
@@ -209,7 +198,7 @@ export class SnapWheel extends SnapLogic {
     // Follow wheel
 
     if (shouldFollow) {
-      snap.cancelTransition();
+      track.cancelTransition();
 
       const deltaWithSpeed = delta;
 
@@ -231,8 +220,9 @@ export class SnapWheel extends SnapLogic {
 
   /** Detect if wheel should be throttled */
   private _detectNoFollowThrottle() {
-    const { isTouchPad, snap } = this;
-    const { wheelThrottle } = snap.props;
+    const { isTouchPad, scrollableSlides, isTransitioning } = this;
+    const { wheelThrottle } = this.props;
+
     const timeDiff = +new Date() - this._lastWheelTime;
 
     // NUMBER
@@ -244,14 +234,14 @@ export class SnapWheel extends SnapLogic {
     // AUTO
 
     if (isTouchPad) {
-      return snap.isTransitioning;
+      return isTransitioning;
     }
 
-    const visibleScrollableSlides = snap.scrollableSlides.filter(
+    const visibleScrollableSlides = scrollableSlides.filter(
       (slide) => slide.isVisible,
     );
 
-    if (visibleScrollableSlides.length && snap.isTransitioning) {
+    if (visibleScrollableSlides.length && isTransitioning) {
       return true;
     }
 
@@ -268,8 +258,7 @@ export class SnapWheel extends SnapLogic {
       return;
     }
 
-    const { snap } = this;
-    const { props, activeSlide } = snap;
+    const { props, activeSlide, isSlideScrolling, isTransitioning } = this;
 
     const lastThreeDeltas = this._deltas.slice(-3).reduce((a, b) => a + b, 0);
 
@@ -289,26 +278,26 @@ export class SnapWheel extends SnapLogic {
 
         if (
           activeSlide.progress > slideThreshold &&
-          !snap.isSlideScrolling &&
+          !isSlideScrolling &&
           lastThreeDeltas > 0
         ) {
-          snap.next();
+          this.next();
         } else if (
           activeSlide.progress < -slideThreshold &&
-          !snap.isSlideScrolling &&
+          !isSlideScrolling &&
           lastThreeDeltas < 0
         ) {
-          snap.prev();
+          this.prev();
         } else {
-          snap.stick();
+          this.stick();
         }
-      } else if (!props.followWheel && !snap.isTransitioning) {
+      } else if (!props.followWheel && !isTransitioning) {
         // Stick if something goes wrong when followWheel is disabled
-        snap.stick();
+        this.stick();
       }
     }
 
-    snap.callbacks.emit('wheelEnd', undefined);
+    this.callbacks.emit('wheelEnd', undefined);
   }
 
   /** Save delta */

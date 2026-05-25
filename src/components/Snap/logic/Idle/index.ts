@@ -1,29 +1,27 @@
+import { SnapLogic } from '..';
 import { Snap } from '../..';
-import { SnapLogic } from '../SnapLogic';
 
 export class SnapIdle extends SnapLogic {
   /** Debounce timeout reference */
   private _timeout?: NodeJS.Timeout;
 
-  constructor(snap: Snap) {
-    super(snap);
+  constructor(ctx: Snap) {
+    super(ctx);
 
-    snap.on('update', () => this._handleUpdate(), { protected: true });
-
-    this.addDestructor(() => {
-      this._clear();
+    this.callbacks.on('update', () => this._handleUpdate(), {
+      protected: true,
     });
+
+    this.addDestructor(() => this._clear());
   }
 
   /** Check if idle */
   get isIdle() {
-    const { snap } = this;
-
     return (
-      !snap.isSwiping &&
-      !snap.hasInteria &&
-      !snap.isInterpolating &&
-      !snap.isTransitioning
+      !this.isSwiping &&
+      !this.hasInertia &&
+      !this.isInterpolating &&
+      !this.isTransitioning
     );
   }
 
@@ -36,10 +34,8 @@ export class SnapIdle extends SnapLogic {
 
   /** Handle timeout action */
   private _handleTimeout() {
-    const { snap } = this;
-
     if (this.isIdle) {
-      snap.callbacks.emit('idle', undefined);
+      this.callbacks.emit('idle', undefined);
     }
   }
 

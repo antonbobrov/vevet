@@ -16,8 +16,8 @@ export const Circular: FC = () => {
       wheel: true,
       swipeAxis: 'angle',
       wheelAxis: 'y',
-      loop: true,
       freemode: true,
+      swipeSpeed: -1,
       onUpdate: (data, { containerSize, slides }) => {
         const radius = containerSize / 2;
         const p2 = Math.PI * 2;
@@ -25,7 +25,7 @@ export const Circular: FC = () => {
 
         slides.forEach((slide) => {
           const element = slide.element!;
-          const progress = -slide.progress / slides.length;
+          const progress = slide.progress / slides.length;
 
           const x = Math.cos(p2 * progress + offset) * radius;
           const y = Math.sin(p2 * progress + offset) * radius;

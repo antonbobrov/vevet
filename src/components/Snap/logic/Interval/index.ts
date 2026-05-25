@@ -1,36 +1,38 @@
 import { isFiniteNumber } from '@/internal/isFiniteNumber';
 
+import { SnapLogic } from '..';
 import { Snap } from '../..';
-import { SnapLogic } from '../SnapLogic';
 
 export class SnapInterval extends SnapLogic {
   /** Interval reference */
   private _interval?: NodeJS.Timeout;
 
-  constructor(snap: Snap) {
-    super(snap);
+  constructor(
+    ctx: Snap,
+    private _onPrev: () => void,
+    private _onNext: () => void,
+  ) {
+    super(ctx);
 
-    snap.on('update', () => this._handleUpdate(), { protected: true });
+    this.callbacks.on('update', () => this._handleUpdate(), {
+      protected: true,
+    });
 
     this.addDestructor(() => this._clearInterval());
   }
 
   private get allowInterval() {
-    const { snap } = this;
-
     return (
-      !snap.isSwiping &&
-      !snap.hasInteria &&
-      !snap.isTransitioning &&
-      !snap.isInterpolating &&
-      isFiniteNumber(snap.props.interval)
+      !this.isSwiping &&
+      !this.hasInertia &&
+      !this.isTransitioning &&
+      !this.isInterpolating &&
+      isFiniteNumber(this.props.interval)
     );
   }
 
   /** Handle Snap update */
   private _handleUpdate() {
-    const { snap } = this;
-
     if (!this.allowInterval) {
       this._clearInterval();
 
@@ -38,20 +40,19 @@ export class SnapInterval extends SnapLogic {
     }
 
     if (!this._interval) {
-      this._interval = setInterval(() => {
-        this._handleInterval();
-      }, snap.props.interval);
+      this._interval = setInterval(
+        () => this._handleInterval(),
+        this.props.interval,
+      );
     }
   }
 
   /** Handle interval action */
   private _handleInterval() {
-    const { snap } = this;
-
-    if (snap.props.intervalDirection === 'prev') {
-      snap.prev();
+    if (this.props.intervalDirection === 'prev') {
+      this._onPrev();
     } else {
-      snap.next();
+      this._onNext();
     }
   }
 

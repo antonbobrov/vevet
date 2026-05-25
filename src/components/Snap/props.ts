@@ -2,7 +2,6 @@ import { EaseOutCubic } from 'easing-progress';
 
 import { initVevet } from '@/global/initVevet';
 import { TRequiredProps } from '@/internal/requiredProps';
-import { clamp } from '@/utils';
 
 import { ISnapMutableProps, ISnapStaticProps } from './types';
 
@@ -41,8 +40,8 @@ export const MUTABLE_PROPS: TRequiredProps<ISnapMutableProps> = {
   swipeFriction: false,
   swipeThreshold: 5,
   swipeMinTime: 0,
-  swipeInertiaDuration: (distance) => clamp(distance, 500, 2000),
-  swipeInertiaRatio: 0.5,
+  swipeInertiaDuration: null as any,
+  swipeInertiaRatio: 1,
   wheel: false,
   wheelSpeed: 1,
   wheelAxis: 'auto',

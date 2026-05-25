@@ -92,7 +92,8 @@ snap.firstSlideSize; // number
 
 Type: `boolean`
 
-Indicates whether there are no slides to animate.
+Indicates whether there are no slides to animate.  
+Snap requires at least one slide during initialization and throws when no slides are found.
 
 ```js
 snap.isEmpty; // true or false
@@ -108,14 +109,14 @@ Indicates whether a transition animation is currently in progress.
 snap.isTransitioning; // true or false
 ```
 
-### `hasInteria`
+### `hasInertia`
 
 Type: `boolean`
 
 Indicates whether a swipe inertia animation is currently active (the carousel is still moving after the user released input).
 
 ```js
-snap.hasInteria; // true or false
+snap.hasInertia; // true or false
 ```
 
 ### `scrollableSlides`

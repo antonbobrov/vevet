@@ -2,24 +2,23 @@ import { Raf } from '@/components/Raf';
 import { Timeline } from '@/components/Timeline';
 import { isNumber } from '@/internal/isNumber';
 import { toPixels } from '@/utils';
-import { clamp, lerp, loop, scoped } from '@/utils/math';
+import { clamp, lerp, loop } from '@/utils/math';
 
-import { ISnapTransitionArg, Snap } from '../..';
-import { LERP_APPROXIMATION } from '../../props';
-import { SnapLogic } from '../SnapLogic';
+import { Snap } from '..';
+import { ISnapTransitionArg, SnapSlide } from '../..';
+import { LERP_APPROXIMATION } from '../props';
 
-export class SnapTrack extends SnapLogic {
+import { IProps } from './types';
+
+export class SnapTrack {
   /** The animation frame */
   private _raf: Raf;
 
   /** The animationtimeline */
-  private _timeline?: Timeline;
+  private _tm?: Timeline;
 
   /** Interpolation influence */
-  private _influence = {
-    current: 0,
-    target: 0,
-  };
+  private _influence = { current: 0, target: 0 };
 
   /** The current track value */
   private _current = 0;
@@ -27,36 +26,36 @@ export class SnapTrack extends SnapLogic {
   /** The target track value */
   private _target = 0;
 
-  constructor(snap: Snap) {
-    super(snap);
+  /** Target slide index */
+  private _targetIndex?: number;
 
+  /** Whether the track is destroyed */
+  private _isDestroyed = false;
+
+  constructor(
+    private props: typeof Snap.prototype.props,
+    private _slides: () => SnapSlide[],
+    private ctx: IProps,
+  ) {
     // Create the animation frame
     this._raf = new Raf();
     this._raf.on('frame', () => this._handleRaf());
-    this._raf.on('play', () => snap.callbacks.emit('rafPlay', undefined));
-    this._raf.on('pause', () => snap.callbacks.emit('rafPause', undefined));
-
-    // Destroy raf
-    this.addDestructor(() => this._raf.destroy());
-
-    // Destroy timeline
-    this.addDestructor(() => this.cancelTransition());
+    this._raf.on('play', () => ctx.onRafPlay?.());
+    this._raf.on('pause', () => ctx.onRafPause?.());
   }
 
-  /** Whether the track is interpolated */
-  private get isInterpolated() {
-    return this.current === this.target && this._influence.current === 0;
+  private get slides() {
+    return this._slides();
+  }
+
+  /** Gets the target slide index */
+  get targetIndex() {
+    return this._targetIndex;
   }
 
   /** Gets the interpolation influence */
   get influence() {
     return this._influence.current;
-  }
-
-  /** Sets the interpolation influence */
-  set influence(value: number) {
-    this._influence.current = value;
-    this._influence.target = value;
   }
 
   /** Gets the current track value. */
@@ -76,7 +75,7 @@ export class SnapTrack extends SnapLogic {
 
   /** Sets the target track value */
   set target(value: number) {
-    const { containerSize } = this.snap;
+    const containerSize = this.ctx.containerSize();
     const diff = value - this._target;
 
     this._target = value;
@@ -87,9 +86,9 @@ export class SnapTrack extends SnapLogic {
 
   /** Detect if can loop */
   get canLoop() {
-    const { snap } = this;
+    const { props, slides } = this;
 
-    return snap.props.loop && snap.slides.length > 1;
+    return props.loop && slides.length > 1;
   }
 
   /** Get looped current value */
@@ -99,11 +98,10 @@ export class SnapTrack extends SnapLogic {
 
   /** Get track offset */
   get offset() {
-    const { snap } = this;
+    const containerSize = this.ctx.containerSize();
+    const firstSlideSize = this.ctx.firstSlideSize();
 
-    return snap.props.centered
-      ? snap.containerSize / 2 - snap.firstSlideSize / 2
-      : 0;
+    return this.props.centered ? containerSize / 2 - firstSlideSize / 2 : 0;
   }
 
   /** Get loop count */
@@ -113,35 +111,23 @@ export class SnapTrack extends SnapLogic {
 
   /** If transition in progress */
   get isTransitioning() {
-    return !!this._timeline;
-  }
-
-  /** Set a value to current & target value instantly */
-  public set(value: number) {
-    this.current = value;
-    this.target = value;
-    this._influence.current = 0;
-    this._influence.target = 0;
-  }
-
-  /** Loop a coordinate if can loop */
-  public loopCoord(coord: number) {
-    return this.canLoop ? loop(coord, this.min, this.max) : coord;
+    return !!this._tm;
   }
 
   /** Get minimum track value */
   get min() {
-    const { snap } = this;
+    const containerSize = this.ctx.containerSize();
+    const { props, slides } = this;
 
-    if (this.canLoop || snap.isEmpty) {
+    if (this.canLoop) {
       return 0;
     }
 
-    if (snap.props.centered) {
-      const firstSlide = snap.slides[0];
+    if (props.centered) {
+      const firstSlide = slides[0];
 
-      if (firstSlide.size > snap.containerSize) {
-        return snap.containerSize / 2 - firstSlide.size / 2;
+      if (firstSlide.size > containerSize) {
+        return containerSize / 2 - firstSlide.size / 2;
       }
     }
 
@@ -150,12 +136,8 @@ export class SnapTrack extends SnapLogic {
 
   /** Get maximum track value */
   get max() {
-    const { containerSize, slides, isEmpty, props } = this.snap;
-    const { canLoop } = this;
-
-    if (isEmpty) {
-      return 0;
-    }
+    const containerSize = this.ctx.containerSize();
+    const { slides, canLoop, props } = this;
 
     const firstSlide = slides[0];
     const lastSlide = slides[slides.length - 1];
@@ -189,20 +171,57 @@ export class SnapTrack extends SnapLogic {
     return this.current / this.max;
   }
 
+  /** If the start has been reached */
+  get isStart() {
+    if (this.props.loop) {
+      return false;
+    }
+
+    return Math.floor(this.target) <= Math.floor(this.min);
+  }
+
+  /** If the end has been reached */
+  get isEnd() {
+    if (this.props.loop) {
+      return false;
+    }
+
+    return Math.floor(this.target) >= Math.floor(this.max);
+  }
+
+  /** Whether the track is interpolated */
+  private get isInterpolated() {
+    return this.current === this.target && this._influence.current === 0;
+  }
+
+  /** Handle RAF update, interpolate track values */
+  private _handleRaf() {
+    const { isTransitioning, props, _raf: raf } = this;
+
+    if (isTransitioning) {
+      return;
+    }
+
+    // Interpolate track value
+    const ease = raf.lerpFactor(props.lerp);
+    this._lerp(ease);
+
+    // Stop raf if target reached
+    if (this.isInterpolated) {
+      raf.pause();
+    }
+
+    // Render the scene
+    this.ctx.onRender(raf.duration);
+  }
+
   /** Awake requestAnimationFrame */
   public awake() {
     this._raf.play();
   }
 
-  /** Iterate track target value */
-  public iterateTarget(delta: number) {
-    this.target += delta;
-
-    this.awake();
-  }
-
   /** Set track target value */
-  public setTarget(value: number) {
+  public updateTarget(value: number) {
     this.target = value;
 
     this.awake();
@@ -217,69 +236,24 @@ export class SnapTrack extends SnapLogic {
     this.awake();
   }
 
-  /** If the start has been reached */
-  get isStart() {
-    if (this.snap.props.loop) {
-      return false;
-    }
-
-    return Math.floor(this.target) <= Math.floor(this.min);
+  /** Set a value to current & target value instantly */
+  public set(value: number) {
+    this.current = value;
+    this.target = value;
+    this._influence.current = 0;
+    this._influence.target = 0;
   }
 
-  /** If the end has been reached */
-  get isEnd() {
-    if (this.snap.props.loop) {
-      return false;
-    }
-
-    return Math.floor(this.target) >= Math.floor(this.max);
-  }
-
-  /** Handle RAF update, interpolate track values */
-  private _handleRaf() {
-    const { snap } = this;
-
-    if (snap.isTransitioning) {
-      return;
-    }
-
-    // Interpolate track value
-    const ease = this._raf.lerpFactor(snap.props.lerp);
-    this.lerp(ease);
-
-    // Stop raf if target reached
-    if (this.isInterpolated) {
-      this._raf.pause();
-    }
-
-    // Render the scene
-    snap.render(this._raf.duration);
+  /** Loop a coordinate if can loop */
+  public loopCoord(coord: number) {
+    return this.canLoop ? loop(coord, this.min, this.max) : coord;
   }
 
   /** Interpolate the current track value */
-  public lerp(initialFactor: number) {
-    const { snap, min, max } = this;
-    let { target } = this;
+  private _lerp(initialFactor: number) {
+    const { target, _influence: influence } = this;
 
     let lerpFactor = initialFactor;
-    const influence = this._influence;
-
-    // Edge space & resistance
-
-    if (!snap.props.loop) {
-      const { containerSize } = snap;
-      const edgeSpace = (1 - snap.props.edgeFriction) * containerSize;
-
-      if (target < min) {
-        const edgeProgress = 1 - scoped(target, -containerSize, min);
-        target = min - edgeProgress * edgeSpace;
-      } else if (target > max) {
-        const edgeProgress = scoped(target, max, max + containerSize);
-        target = max + edgeProgress * edgeSpace;
-      }
-
-      target = clamp(target, min - edgeSpace, max + edgeSpace);
-    }
 
     // Interpolate current value
 
@@ -311,20 +285,13 @@ export class SnapTrack extends SnapLogic {
     );
   }
 
-  /** Cancel sticky behavior */
-  public cancelTransition() {
-    this._timeline?.destroy();
-    this._timeline = undefined;
-  }
-
   /** Go to a definite coordinate */
   public toCoord(coordinate: number, options?: ISnapTransitionArg) {
-    const { snap } = this;
-    const { props, callbacks } = snap;
-
-    if (snap.isEmpty || snap.isDestroyed) {
+    if (this._isDestroyed) {
       return false;
     }
+
+    const { props, ctx } = this;
 
     this.cancelTransition();
 
@@ -332,7 +299,7 @@ export class SnapTrack extends SnapLogic {
     const end = coordinate;
     const diff = Math.abs(end - start);
 
-    const durationProp = options?.duration ?? snap.props.duration;
+    const durationProp = options?.duration ?? props.duration;
 
     let duration = isNumber(durationProp) ? durationProp : durationProp(diff);
     if (diff === 0) {
@@ -343,42 +310,62 @@ export class SnapTrack extends SnapLogic {
 
     const tm = new Timeline({ duration, easing });
 
-    this._timeline = tm;
+    this._tm = tm;
 
     tm.on('start', () => {
-      callbacks.emit('timelineStart', undefined);
+      ctx.onTimelineStart();
       options?.onStart?.();
     });
 
     tm.on('update', (data) => {
       this.current = lerp(start, end, data.eased);
       this.target = this.current;
-      this.influence *= 1 - data.progress;
+
+      this._influence.current = this._influence.current * (1 - data.progress);
+      this._influence.target = this._influence.current;
 
       if (data.progress === 1) {
-        snap.$_targetIndex = undefined;
-        this._timeline = undefined;
+        this.setTargetIndex(undefined);
+        this._tm = undefined;
       }
 
-      snap.render();
-
-      callbacks.emit('timelineUpdate', data);
+      ctx.onTimelineUpdate(data);
+      ctx.onRender();
       options?.onUpdate?.(data);
     });
 
     tm.on('end', () => {
       tm.destroy();
 
-      callbacks.emit('timelineEnd', undefined);
+      ctx.onTimelineEnd();
       options?.onEnd?.();
     });
 
     tm.on('destroy', () => {
-      snap.$_targetIndex = undefined;
+      this.setTargetIndex(undefined);
     });
 
     tm.play();
 
     return true;
+  }
+
+  /** Set target index */
+  public setTargetIndex(value: number | undefined) {
+    this._targetIndex = value;
+  }
+
+  /** Cancel sticky behavior */
+  public cancelTransition() {
+    this._tm?.destroy();
+    this._tm = undefined;
+  }
+
+  /** Destroy the instance */
+  public destroy() {
+    this._isDestroyed = true;
+
+    this._raf.destroy();
+    this.cancelTransition();
   }
 }
