@@ -15,7 +15,7 @@ export class SnapSlideParallax {
   constructor(
     private _slide: SnapSlide,
     private _element: HTMLElement,
-    private _getInfluence: () => number,
+    private _getImpulse: () => number,
   ) {
     this._initDebounce();
 
@@ -76,9 +76,15 @@ export class SnapSlideParallax {
         const min = getFloatAttr(element, `${attr}-min`, -Infinity);
         const max = getFloatAttr(element, `${attr}-max`, Infinity);
 
+        const impulseAttr = `${attr}-impulse`;
+        const impulse = element.hasAttribute(impulseAttr)
+          ? getFloatAttr(element, impulseAttr, 1)
+          : 0;
+
+        // legacy influence
         const influenceAttr = `${attr}-influence`;
         const influence = element.hasAttribute(influenceAttr)
-          ? getFloatAttr(element, `${attr}-influence`, 1)
+          ? getFloatAttr(element, influenceAttr, 1)
           : 0;
 
         const directionalAttr = `${attr}-directional`;
@@ -100,7 +106,7 @@ export class SnapSlideParallax {
           offset,
           min,
           max,
-          influence,
+          impulse: impulse || influence,
           isDirectional,
           isAbs,
         } satisfies ISnapSlideParallaxItem;
@@ -139,7 +145,7 @@ export class SnapSlideParallax {
   /** Render parallax */
   public render() {
     const { _element: element, _items: items, _slide: slide } = this;
-    const influence = this._getInfluence();
+    const impulse = this._getImpulse();
 
     const globalProgress = slide.progress;
 
@@ -148,12 +154,12 @@ export class SnapSlideParallax {
     items.forEach((item) => {
       let progress = clamp(globalProgress, ...item.scope);
 
-      if (Math.abs(item.influence) > 0) {
-        progress *= Math.abs(influence) * item.influence;
+      if (Math.abs(item.impulse) > 0) {
+        progress *= Math.abs(impulse) * item.impulse;
       }
 
       if (item.isDirectional) {
-        progress = Math.abs(progress) * Math.sign(influence);
+        progress = Math.abs(progress) * Math.sign(impulse);
       }
 
       if (item.isAbs) {

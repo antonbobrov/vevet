@@ -5,8 +5,8 @@ import { CardsStack as CardsStackComponent } from './CardsStack';
 import { Carousel as CarouselComponent } from './Carousel';
 import { Circular as CircularComponent } from './Circular';
 import { DynamicWidth as DynamicWidthComponent } from './DynamicWidth';
-import { InfluenceParallaxGap as InfluenceParallaxGapComponent } from './InfluenceParallaxGap';
-import { InfluenceParallaxSkew as InfluenceParallaxSkewComponent } from './InfluenceParallaxSkew';
+import { ImpulseParallaxGap as ImpulseParallaxGapComponent } from './ImpulseParallaxGap';
+import { ImpulseParallaxSkew as ImpulseParallaxSkewComponent } from './ImpulseParallaxSkew';
 import { Panorama as PanoramaComponent } from './Panorama';
 import { Rtl as RtlComponent } from './Rtl';
 import { Test as TestComponent } from './Test';
@@ -122,12 +122,12 @@ export const CardsStack: StoryFn = () => <CardsStackComponent />;
 
 export const DynamicWidth: StoryFn = () => <DynamicWidthComponent />;
 
-export const InfluenceParallaxGap: StoryFn = () => (
-  <InfluenceParallaxGapComponent />
+export const ImpulseParallaxGap: StoryFn = () => (
+  <ImpulseParallaxGapComponent />
 );
 
-export const InfluenceParallaxSkew: StoryFn = () => (
-  <InfluenceParallaxSkewComponent />
+export const ImpulseParallaxSkew: StoryFn = () => (
+  <ImpulseParallaxSkewComponent />
 );
 
 export const Virtual: StoryFn = () => <VirtualComponent />;

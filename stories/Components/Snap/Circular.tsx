@@ -66,8 +66,6 @@ export const Circular: FC = () => {
             display: flex;
             justify-content: center;
             align-items: center;
-
-            background: #000;
           }
 
           .wrapper {
@@ -79,6 +77,8 @@ export const Circular: FC = () => {
 
             border-radius: 8px;
             overflow: hidden;
+            
+            background: #000;
           }
 
           .wrapper img {
@@ -110,13 +110,13 @@ export const Circular: FC = () => {
               className="wrapper"
               data-snap-parallax-scale="-5"
               data-snap-parallax-scale-min="0.755"
-              data-snap-parallax-scale-influence
+              data-snap-parallax-scale-impulse
               data-snap-parallax-scale-abs
               data-snap-parallax-scale-scope="1,1"
               data-snap-parallax-skew="-200"
               data-snap-parallax-skew-min="-30"
               data-snap-parallax-skew-max="30"
-              data-snap-parallax-skew-influence
+              data-snap-parallax-skew-impulse
               data-snap-parallax-skew-directional
               data-snap-parallax-skew-scope="1,1"
             >

@@ -265,9 +265,14 @@ export class Snap extends Module<TC, TS, TM> {
     return diff > LERP_APPROXIMATION;
   }
 
-  /** Gets the interpolation influence */
+  /** @deprecated */
   get influence() {
-    return this.track.influence;
+    return this.track.impulse;
+  }
+
+  /** Gets the interpolation impulse */
+  get impulse() {
+    return this.track.impulse;
   }
 
   /** Gets the current track value. */

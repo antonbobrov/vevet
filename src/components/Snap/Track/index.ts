@@ -18,8 +18,8 @@ export class SnapTrack {
   /** The animationtimeline */
   private _tm?: Timeline;
 
-  /** Interpolation influence */
-  private _influence = { current: 0, target: 0 };
+  /** Interpolation impulse */
+  private _impulse = { current: 0, target: 0 };
 
   /** The current track value */
   private _current = 0;
@@ -54,9 +54,9 @@ export class SnapTrack {
     return this._targetIndex;
   }
 
-  /** Gets the interpolation influence */
-  get influence() {
-    return this._influence.current;
+  /** Gets the interpolation impulse */
+  get impulse() {
+    return this._impulse.current;
   }
 
   /** Gets the current track value. */
@@ -81,10 +81,10 @@ export class SnapTrack {
 
     this._target = value;
 
-    this._influence.target += containerSize
+    this._impulse.target += containerSize
       ? onlyFinite(diff / containerSize)
       : 0;
-    this._influence.target = clamp(this._influence.target, -1, 1);
+    this._impulse.target = clamp(this._impulse.target, -1, 1);
   }
 
   /** Detect if can loop */
@@ -198,7 +198,7 @@ export class SnapTrack {
 
   /** Whether the track is interpolated */
   private get isInterpolated() {
-    return this.current === this.target && this._influence.current === 0;
+    return this.current === this.target && this._impulse.current === 0;
   }
 
   /** Handle RAF update, interpolate track values */
@@ -247,8 +247,8 @@ export class SnapTrack {
   public set(value: number) {
     this.current = value;
     this.target = value;
-    this._influence.current = 0;
-    this._influence.target = 0;
+    this._impulse.current = 0;
+    this._impulse.target = 0;
   }
 
   /** Loop a coordinate if can loop */
@@ -258,7 +258,7 @@ export class SnapTrack {
 
   /** Interpolate the current track value */
   private _lerp(initialFactor: number) {
-    const { target, _influence: influence } = this;
+    const { target, _impulse: impulse } = this;
 
     let lerpFactor = initialFactor;
 
@@ -275,18 +275,13 @@ export class SnapTrack {
 
     this.current = lerp(this.current, target, lerpFactor, LERP_APPROXIMATION);
 
-    // Interpolate influence
+    // Interpolate impulse
 
-    influence.target = lerp(
-      influence.target,
-      0,
-      lerpFactor,
-      LERP_APPROXIMATION,
-    );
+    impulse.target = lerp(impulse.target, 0, lerpFactor, LERP_APPROXIMATION);
 
-    influence.current = lerp(
-      influence.current,
-      influence.target,
+    impulse.current = lerp(
+      impulse.current,
+      impulse.target,
       lerpFactor,
       LERP_APPROXIMATION,
     );
@@ -328,8 +323,8 @@ export class SnapTrack {
       this.current = lerp(start, end, data.eased);
       this.target = this.current;
 
-      this._influence.current = this._influence.current * (1 - data.progress);
-      this._influence.target = this._influence.current;
+      this._impulse.current = this._impulse.current * (1 - data.progress);
+      this._impulse.target = this._impulse.current;
 
       if (data.progress === 1) {
         this.setTargetIndex(undefined);

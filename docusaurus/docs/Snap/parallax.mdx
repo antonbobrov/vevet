@@ -94,7 +94,7 @@ To change the active range, use the `data-snap-parallax-scope` attribute:
 
 - numeric range like `data-snap-parallax-scope="-2, 2"`
 - infinite range like `data-snap-parallax-scope="none"` or `data-snap-parallax-scope="-Infinity, Infinity"`
-- constant range like `data-snap-parallax-scope="const"` `data-snap-parallax-scope="1,1"`; should be used with `data-snap-parallax-[effect]-influence`
+- constant range like `data-snap-parallax-scope="const"` `data-snap-parallax-scope="1,1"`; should be used with `data-snap-parallax-[effect]-impulse`
 
 The scope applies to all parallax effects inside a slide unless overridden per effect via `data-snap-parallax-[effect]-scope`:
 
@@ -121,9 +121,9 @@ The scope applies to all parallax effects inside a slide unless overridden per e
 </div>
 ```
 
-## Parallax Strength (influence)
+## Parallax Strength (impulse)
 
-Use `data-snap-parallax-[effect]-influence` to apply the effect only during dragging or wheeling.
+Use `data-snap-parallax-[effect]-impulse` to apply the effect only during dragging or wheeling.
 
 The parallax value will smoothly increase or decrease based on interaction intensity, producing more "organic" motion.
 
@@ -133,7 +133,7 @@ The parallax value will smoothly increase or decrease based on interaction inten
     class="wrap"
     data-snap-parallax-skew="-200"
     data-snap-parallax-skew-scope="1,1"
-    data-snap-parallax-skew-influence
+    data-snap-parallax-skew-impulse
   >
     Slide Info
   </div>
@@ -171,7 +171,7 @@ data-snap-parallax-[effect]-min`and`data-snap-parallax-[effect]-max` clamp the *
     data-snap-parallax-scale-abs
     data-snap-parallax-scale-min="0.5"
     data-snap-parallax-scale-max="1"
-    data-snap-parallax-scale-influence="3"
+    data-snap-parallax-scale-impulse="3"
   >
     Slide Info
   </div>
@@ -208,7 +208,7 @@ This might be useful for reverse animations.
     class="wrap"
     data-snap-parallax-skew="-200"
     data-snap-parallax-skew-scope="1,1"
-    data-snap-parallax-skew-influence
+    data-snap-parallax-skew-impulse
     data-snap-parallax-skew-directional
   >
     Slide Info
@@ -226,7 +226,7 @@ This might be useful for reverse animations.
     class="wrap"
     data-snap-parallax-x="-50%"
     data-snap-parallax-x-scope="none"
-    data-snap-parallax-x-influence="3"
+    data-snap-parallax-x-impulse="3"
   >
     Slide Info
   </div>

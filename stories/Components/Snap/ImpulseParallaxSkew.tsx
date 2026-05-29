@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef } from 'react';
 
 import { Snap } from '@/index';
 
-export const InfluenceParallaxSkew: FC = () => {
+export const ImpulseParallaxSkew: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -93,7 +93,7 @@ export const InfluenceParallaxSkew: FC = () => {
               data-snap-parallax-skew-min="-40"
               data-snap-parallax-skew-max="40"
               data-snap-parallax-skew-scope="const"
-              data-snap-parallax-skew-influence="5"
+              data-snap-parallax-skew-impulse="5"
               data-snap-parallax-skew-directional
             >
               {index}

@@ -154,7 +154,7 @@ export class SnapSlide {
     this._index = index;
 
     this._parallax = this._getParallaxNodes().map(
-      (node) => new SnapSlideParallax(this, node, () => ctx.influence),
+      (node) => new SnapSlideParallax(this, node, () => ctx.impulse),
     );
 
     if (this.element && this.sizeProp === 'auto') {

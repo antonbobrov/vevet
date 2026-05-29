@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef } from 'react';
 
 import { Snap } from '@/index';
 
-export const InfluenceParallaxGap: FC = () => {
+export const ImpulseParallaxGap: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -91,7 +91,7 @@ export const InfluenceParallaxGap: FC = () => {
               style={{ backgroundColor: color }}
               data-snap-parallax-x="-50%"
               data-snap-parallax-x-scope="none"
-              data-snap-parallax-x-influence="3"
+              data-snap-parallax-x-impulse="3"
             >
               {index}
             </div>
