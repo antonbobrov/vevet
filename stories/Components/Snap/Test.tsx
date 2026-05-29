@@ -58,7 +58,6 @@ export const Test: FC<ITestProps> = ({ snapProps }) => {
       container.querySelectorAll<HTMLElement>('.js-slide-info'),
     );
 
-    // todo: check stick on scrollbar release
     const instance = new Snap({
       ...props,
       container,

@@ -106,6 +106,10 @@ export class SnapTrack {
 
   /** Get loop count */
   get loopCount() {
+    if (!this.canLoop) {
+      return 0;
+    }
+
     return Math.floor(this.current / this.max);
   }
 
