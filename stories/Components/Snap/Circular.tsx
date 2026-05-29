@@ -66,6 +66,8 @@ export const Circular: FC = () => {
             display: flex;
             justify-content: center;
             align-items: center;
+
+            background: #000;
           }
 
           .wrapper {

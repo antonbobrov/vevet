@@ -1,5 +1,6 @@
 import { SnapLogic } from '..';
 import { Snap } from '../..';
+import { IDLE_DEBOUNCE, WHEEL_DEBOUNCE } from '../../props';
 
 export class SnapIdle extends SnapLogic {
   /** Debounce timeout reference */
@@ -21,7 +22,8 @@ export class SnapIdle extends SnapLogic {
       !this.isSwiping &&
       !this.hasInertia &&
       !this.isInterpolating &&
-      !this.isTransitioning
+      !this.isTransitioning &&
+      !this.isWheeling
     );
   }
 
@@ -29,7 +31,9 @@ export class SnapIdle extends SnapLogic {
   private _handleUpdate() {
     this._clear();
 
-    this._timeout = setTimeout(() => this._handleTimeout(), 10);
+    const debounce = Math.max(IDLE_DEBOUNCE, WHEEL_DEBOUNCE) + 10;
+
+    this._timeout = setTimeout(() => this._handleTimeout(), debounce);
   }
 
   /** Handle timeout action */

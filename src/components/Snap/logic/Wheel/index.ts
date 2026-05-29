@@ -36,6 +36,10 @@ export class SnapWheel extends SnapLogic {
     });
   }
 
+  get isWheeling() {
+    return this._hasStarted;
+  }
+
   /** Get absolute deltas */
   private get absDeltas() {
     return this._deltas.map((d) => Math.abs(d));

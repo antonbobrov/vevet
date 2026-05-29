@@ -266,11 +266,21 @@ Indicates whether the track is currently being interpolated (the current value i
 snap.isInterpolating; // true or false
 ```
 
+### `isWheeling`
+
+Type: `boolean`
+
+Indicates whether wheel scroll interaction is currently in progress.
+
+```js
+snap.isWheeling; // true or false
+```
+
 ### `isIdle`
 
 Type: `boolean`
 
-Indicates whether the carousel is idle — not swiping, not interpolating, not transitioning.
+Indicates whether the carousel is idle — not swiping, not wheeling, not interpolating, not transitioning.
 
 ```js
 snap.isIdle; // true or false

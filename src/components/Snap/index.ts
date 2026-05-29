@@ -69,6 +69,9 @@ export class Snap extends Module<TC, TS, TM> {
   /** Swipe events */
   private _swipe: SnapSwipe;
 
+  /** Wheel events */
+  private _wheel: SnapWheel;
+
   /** Snap Idle Logic */
   private _idle: SnapIdle;
 
@@ -125,7 +128,7 @@ export class Snap extends Module<TC, TS, TM> {
     });
 
     // add wheel listener
-    new SnapWheel(this);
+    this._wheel = new SnapWheel(this);
 
     // add swipe
     this._swipe = new SnapSwipe(this);
@@ -234,6 +237,11 @@ export class Snap extends Module<TC, TS, TM> {
   /** If swipe in progress */
   get isSwiping() {
     return this._swipe.isSwiping;
+  }
+
+  /** If wheel events are active */
+  get isWheeling() {
+    return this._wheel.isWheeling;
   }
 
   /**

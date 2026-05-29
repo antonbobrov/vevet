@@ -26,6 +26,10 @@ export class SnapLogic {
     return this._snap.isSwiping;
   }
 
+  protected get isWheeling() {
+    return this._snap.isWheeling;
+  }
+
   protected get hasInertia() {
     return this._snap.hasInertia;
   }
