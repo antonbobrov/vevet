@@ -1,6 +1,7 @@
 import { Raf } from '@/components/Raf';
 import { Timeline } from '@/components/Timeline';
 import { isNumber } from '@/internal/isNumber';
+import { onlyFinite } from '@/internal/onlyFinite';
 import { toPixels } from '@/utils';
 import { clamp, lerp, loop } from '@/utils/math';
 
@@ -80,7 +81,9 @@ export class SnapTrack {
 
     this._target = value;
 
-    this._influence.target += containerSize ? diff / containerSize : 0;
+    this._influence.target += containerSize
+      ? onlyFinite(diff / containerSize)
+      : 0;
     this._influence.target = clamp(this._influence.target, -1, 1);
   }
 
@@ -110,7 +113,7 @@ export class SnapTrack {
       return 0;
     }
 
-    return Math.floor(this.current / this.max);
+    return Math.floor(onlyFinite(this.current / this.max));
   }
 
   /** If transition in progress */
@@ -172,7 +175,7 @@ export class SnapTrack {
 
   /** Get track progress. From 0 to 1 if not loop. From -Infinity to Infinity if loop */
   get progress() {
-    return this.current / this.max;
+    return onlyFinite(this.current / this.max);
   }
 
   /** If the start has been reached */

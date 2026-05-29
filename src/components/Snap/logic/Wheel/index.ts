@@ -1,5 +1,6 @@
 import { initVevet } from '@/global/initVevet';
 import { isNumber } from '@/internal/isNumber';
+import { onlyFinite } from '@/internal/onlyFinite';
 import { addEventListener, clamp, normalizeWheel } from '@/utils';
 
 import { SnapLogic } from '..';
@@ -277,8 +278,9 @@ export class SnapWheel extends SnapLogic {
       if (props.followWheel && props.stickOnWheelEnd) {
         // Classic stick when scrolling stops
 
-        const slideThreshold =
-          Math.abs(props.stickOnWheelEndThreshold) / activeSlide.size;
+        const slideThreshold = onlyFinite(
+          Math.abs(props.stickOnWheelEndThreshold) / activeSlide.size,
+        );
 
         if (
           activeSlide.progress > slideThreshold &&

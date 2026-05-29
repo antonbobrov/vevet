@@ -317,7 +317,7 @@ export class Snap extends Module<TC, TS, TM> {
 
   /** Get track progress. From 0 to 1 if not loop. From -Infinity to Infinity if loop */
   get progress() {
-    return this.current / this.max;
+    return this.track.progress;
   }
 
   /** If the start has been reached */
