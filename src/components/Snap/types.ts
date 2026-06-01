@@ -128,7 +128,7 @@ export interface ISnapMutableProps
 
   /**
    * Change slide duration
-   * @default 500
+   * @default 600
    */
   duration?: TSnapDuration;
 

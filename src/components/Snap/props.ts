@@ -28,7 +28,7 @@ export const MUTABLE_PROPS: TRequiredProps<ISnapMutableProps> = {
   stickOnResize: true,
   friction: 0,
   edgeFriction: 0.7,
-  duration: 500,
+  duration: 600,
   easing: EaseOutCubic,
   swipe: true,
   grabCursor: false,
