@@ -38,6 +38,16 @@ Returns the currently active slide instance.
 snap.activeSlide; // active slide instance
 ```
 
+### `align`
+
+Type: `'start' | 'center' | 'end'`
+
+Returns the resolved slide alignment. Reflects [`align`](./props#props.align) and the deprecated [`centered`](./props#props.centered) prop (`centered: true` → `'center'`).
+
+```js
+snap.align; // 'start' | 'center' | 'end'
+```
+
 ### `axis`
 
 Type: `"x" | "y"`

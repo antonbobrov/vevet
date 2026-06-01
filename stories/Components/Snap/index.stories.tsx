@@ -15,26 +15,31 @@ import { Virtual as VirtualComponent } from './Virtual';
 import type { TTestSnapProps } from './Test';
 import type { Meta, StoryFn } from '@storybook/react';
 
+type TAlign = NonNullable<TTestSnapProps['align']>;
+
 interface ITestStoryArgs {
-  centered: boolean;
+  align: TAlign;
   loop: boolean;
-  snapProps?: Omit<TTestSnapProps, 'centered' | 'loop'>;
+  snapProps?: Omit<TTestSnapProps, 'align' | 'loop'>;
 }
 
 type TTestStory = StoryFn<ITestStoryArgs>;
 type TTestStoryArgTypes = NonNullable<TTestStory['argTypes']>;
 
 const testArgTypes = {
-  centered: { control: 'boolean' },
+  align: {
+    control: 'select',
+    options: ['start', 'center', 'end'] satisfies TAlign[],
+  },
   loop: { control: 'boolean' },
   snapProps: { table: { disable: true } },
 } satisfies TTestStoryArgTypes;
 
-const renderTest: TTestStory = ({ centered, loop, snapProps }) => (
+const renderTest: TTestStory = ({ align, loop, snapProps }) => (
   <TestComponent
     snapProps={{
       ...snapProps,
-      centered,
+      align,
       loop,
     }}
   />
@@ -48,7 +53,7 @@ export default meta;
 
 export const Default: TTestStory = renderTest.bind({});
 Default.args = {
-  centered: false,
+  align: 'start',
   loop: false,
   snapProps: {},
 } satisfies ITestStoryArgs;
@@ -56,7 +61,7 @@ Default.argTypes = testArgTypes;
 
 export const FreemodeWheelNoFollow: TTestStory = renderTest.bind({});
 FreemodeWheelNoFollow.args = {
-  centered: false,
+  align: 'start',
   loop: false,
   snapProps: {
     freemode: true,
@@ -68,7 +73,7 @@ FreemodeWheelNoFollow.argTypes = testArgTypes;
 
 export const SwipeNoFollow: TTestStory = renderTest.bind({});
 SwipeNoFollow.args = {
-  centered: false,
+  align: 'start',
   loop: false,
   snapProps: {
     followSwipe: false,
@@ -78,7 +83,7 @@ SwipeNoFollow.argTypes = testArgTypes;
 
 export const Rewind: TTestStory = renderTest.bind({});
 Rewind.args = {
-  centered: false,
+  align: 'start',
   loop: false,
   snapProps: {
     followSwipe: false,
@@ -89,7 +94,7 @@ Rewind.argTypes = testArgTypes;
 
 export const FreemodeSticky: TTestStory = renderTest.bind({});
 FreemodeSticky.args = {
-  centered: false,
+  align: 'start',
   loop: false,
   snapProps: {
     freemode: 'sticky',
@@ -99,7 +104,7 @@ FreemodeSticky.argTypes = testArgTypes;
 
 export const Vertical: TTestStory = renderTest.bind({});
 Vertical.args = {
-  centered: false,
+  align: 'start',
   loop: false,
   snapProps: {
     direction: 'vertical',

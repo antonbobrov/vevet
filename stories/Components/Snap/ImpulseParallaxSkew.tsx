@@ -12,7 +12,7 @@ export const ImpulseParallaxSkew: FC = () => {
 
     const instance = new Snap({
       container: ref.current,
-      centered: true,
+      align: 'center',
       loop: true,
       shortSwipes: false,
       gap: 20,

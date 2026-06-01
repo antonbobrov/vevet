@@ -64,10 +64,15 @@ export interface ISnapMutableProps
   direction?: 'horizontal' | 'vertical';
 
   /**
-   * Centered slides
-   * @default false
+   * @deprecated Use `align` instead
    */
   centered?: boolean;
+
+  /**
+   * Slides alignment
+   * @default 'start'
+   */
+  align?: 'start' | 'center' | 'end';
 
   /**
    * Detects if need to loop the progress

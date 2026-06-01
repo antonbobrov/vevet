@@ -8,7 +8,7 @@ export type TTestSnapProps = Partial<Omit<ISnapMutableProps, 'slides'>>;
 const BASE_SNAP_PROPS: TTestSnapProps = {
   wheel: true,
   wheelAxis: 'y',
-  centered: false,
+  align: 'start',
   loop: false,
   freemode: false,
   gap: 20,

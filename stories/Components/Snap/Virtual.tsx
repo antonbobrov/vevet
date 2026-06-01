@@ -39,7 +39,7 @@ export const Virtual: FC = () => {
       wheel: true,
       wheelAxis: 'y',
       swipeAxis: 'x',
-      centered: true,
+      align: 'center',
       loop: true,
       gap: '5vw',
       onUpdate: (data, { slides }) => {

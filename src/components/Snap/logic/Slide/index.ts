@@ -34,7 +34,7 @@ export class SnapSlide {
   /** If the slide is visible */
   private _isVisible = false;
 
-  /** Static coordinate (as if the slide was never moved) */
+  /** Static coordinate without alignment (as if the slide was never moved) */
   private _staticCoord = 0;
 
   /** Current progress of slide movement: from -1 to 1 */
@@ -92,7 +92,7 @@ export class SnapSlide {
     return this._coord;
   }
 
-  /** Static coordinate (as if the slide was never moved) */
+  /** Static coordinate without alignment (as if the slide was never moved) */
   get staticCoord() {
     return this._staticCoord;
   }
@@ -232,7 +232,7 @@ export class SnapSlide {
     }
 
     const { ctx, staticCoord, size, index } = this;
-    const { containerSize } = ctx;
+    const { containerSize, align } = ctx;
 
     let points: number[] = [];
 
@@ -240,7 +240,7 @@ export class SnapSlide {
       points.push(ctx.max);
     }
 
-    if (ctx.props.centered) {
+    if (align === 'center') {
       const point = staticCoord + size / 2 - ctx.firstSlideSize / 2;
 
       if (size > containerSize) {
@@ -250,16 +250,24 @@ export class SnapSlide {
       } else {
         points.push(point);
       }
+    } else if (align === 'end') {
+      const point = staticCoord + size - ctx.firstSlideSize;
+
+      points.push(point);
+
+      if (size > containerSize) {
+        points.push(point + (containerSize - size));
+      }
     } else {
       points.push(staticCoord);
 
       if (size > containerSize) {
         points.push(staticCoord + (size - containerSize));
       }
-    }
 
-    if (!ctx.canLoop && !ctx.props.centered) {
-      points = points.map((point) => clamp(point, 0, ctx.max));
+      if (!ctx.canLoop) {
+        points = points.map((point) => clamp(point, 0, ctx.max));
+      }
     }
 
     return points;
@@ -277,11 +285,18 @@ export class SnapSlide {
     }
 
     const { coord, size } = this;
-    const { props, containerSize } = ctx;
+    const { containerSize, align } = ctx;
 
-    if (props.centered) {
+    if (align === 'center') {
       const center = containerSize / 2 - size / 2;
       this._progress = scoped(coord, center, center - size);
+
+      return;
+    }
+
+    if (align === 'end') {
+      const end = containerSize - size;
+      this._progress = scoped(coord, end, end - size);
 
       return;
     }
@@ -295,12 +310,13 @@ export class SnapSlide {
    */
   public $_updateCoords(offset: number) {
     const { ctx } = this;
+
     if (!ctx) {
       return;
     }
 
     const { staticCoord, size } = this;
-    const { centered: isCentered } = ctx.props;
+    const { align } = ctx;
 
     if (!ctx.canLoop) {
       this._setCoord(staticCoord + offset - ctx.current);
@@ -308,13 +324,21 @@ export class SnapSlide {
       return;
     }
 
-    if (isCentered) {
+    if (align === 'center') {
       this._setCoord(
         loop(
           staticCoord + offset - ctx.current,
           -ctx.max / 2 + offset,
           ctx.max / 2 + offset,
         ),
+      );
+
+      return;
+    }
+
+    if (align === 'end') {
+      this._setCoord(
+        loop(staticCoord + offset - ctx.current, -size, ctx.max - size),
       );
 
       return;
@@ -329,7 +353,7 @@ export class SnapSlide {
 
     this._isVisible =
       this.size > 0 &&
-      this.coord > -this.size &&
-      this.coord < (this.ctx?.containerSize ?? 0);
+      this._coord > -this.size &&
+      this._coord < (this.ctx?.containerSize ?? 0);
   }
 }

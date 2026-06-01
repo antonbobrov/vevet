@@ -16,7 +16,7 @@ export const Carousel: FC = () => {
       grabCursor: true,
       wheel: true,
       wheelAxis: 'y',
-      centered: true,
+      align: 'center',
       loop: true,
       shortSwipes: false,
       freemode: 'sticky',

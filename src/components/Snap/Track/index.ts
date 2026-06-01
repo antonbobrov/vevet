@@ -101,10 +101,19 @@ export class SnapTrack {
 
   /** Get track offset */
   get offset() {
-    const containerSize = this.ctx.containerSize();
-    const firstSlideSize = this.ctx.firstSlideSize();
+    const { ctx } = this;
 
-    return this.props.centered ? containerSize / 2 - firstSlideSize / 2 : 0;
+    const align = ctx.align();
+    const containerSize = ctx.containerSize();
+    const firstSlideSize = ctx.firstSlideSize();
+
+    if (align === 'center') {
+      return containerSize / 2 - firstSlideSize / 2;
+    } else if (align === 'end') {
+      return containerSize - firstSlideSize;
+    }
+
+    return 0;
   }
 
   /** Get loop count */
@@ -124,17 +133,22 @@ export class SnapTrack {
   /** Get minimum track value */
   get min() {
     const containerSize = this.ctx.containerSize();
-    const { props, slides } = this;
+    const align = this.ctx.align();
+    const firstSlide = this.slides[0];
 
     if (this.canLoop) {
       return 0;
     }
 
-    if (props.centered) {
-      const firstSlide = slides[0];
-
+    if (align === 'center') {
       if (firstSlide.size > containerSize) {
         return containerSize / 2 - firstSlide.size / 2;
+      }
+    }
+
+    if (align === 'end') {
+      if (firstSlide.size > containerSize) {
+        return containerSize - firstSlide.size;
       }
     }
 
@@ -144,6 +158,8 @@ export class SnapTrack {
   /** Get maximum track value */
   get max() {
     const containerSize = this.ctx.containerSize();
+    const align = this.ctx.align();
+
     const { slides, canLoop, props } = this;
 
     const firstSlide = slides[0];
@@ -158,7 +174,7 @@ export class SnapTrack {
       return max;
     }
 
-    if (props.centered) {
+    if (align === 'center') {
       max += containerSize / 2 - firstSlide.size / 2;
 
       if (lastSlide.size < containerSize) {
@@ -166,7 +182,11 @@ export class SnapTrack {
       }
     }
 
-    if (!props.centered) {
+    if (align === 'end') {
+      max += containerSize - firstSlide.size;
+    }
+
+    if (align === 'start') {
       max = Math.max(max, 0);
     }
 

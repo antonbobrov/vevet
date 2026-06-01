@@ -122,6 +122,7 @@ export class Snap extends Module<TC, TS, TM> {
       onRender: this.render.bind(this),
       containerSize: () => this.containerSize,
       firstSlideSize: () => this.firstSlideSize,
+      align: () => this.align,
       onTimelineStart: () => this.callbacks.emit('timelineStart', undefined),
       onTimelineUpdate: (data) => this.callbacks.emit('timelineUpdate', data),
       onTimelineEnd: () => this.callbacks.emit('timelineEnd', undefined),
@@ -335,6 +336,15 @@ export class Snap extends Module<TC, TS, TM> {
     return this.track.isEnd;
   }
 
+  /** Alignment */
+  get align() {
+    if (this.props.centered) {
+      return 'center';
+    }
+
+    return this.props.align;
+  }
+
   /** Clamp target value between min and max values */
   public clampTarget() {
     this.track.clampTarget();
@@ -525,11 +535,7 @@ export class Snap extends Module<TC, TS, TM> {
 
   /** Update slides values */
   private _updateSlidesCoords() {
-    const { slides, props, containerSize, firstSlideSize } = this;
-
-    const offset = props.centered ? containerSize / 2 - firstSlideSize / 2 : 0;
-
-    slides.forEach((slide) => slide.$_updateCoords(offset));
+    this.slides.forEach((slide) => slide.$_updateCoords(this.track.offset));
   }
 
   /** Update slides progress */
@@ -583,7 +589,7 @@ export class Snap extends Module<TC, TS, TM> {
     targetIndex: number,
     { direction = null, ...options }: ISnapToSlideArg = {},
   ) {
-    const { activeIndex, slides, track, props } = this;
+    const { activeIndex, slides, track, props, align } = this;
     const { current, max, loopCount } = track;
 
     if (this.isDestroyed) {
@@ -605,12 +611,17 @@ export class Snap extends Module<TC, TS, TM> {
     const slideMagnets = slides[index].magnets;
     let targetStaticMagnet = slideMagnets[0];
 
-    if (props.centered) {
+    if (align === 'center') {
       if (direction === 'prev') {
         targetStaticMagnet = slideMagnets[2] ?? slideMagnets[0];
       } else if (direction === 'next') {
         targetStaticMagnet = slideMagnets[1] ?? slideMagnets[0];
       }
+    } else if (align === 'end') {
+      targetStaticMagnet =
+        direction === 'next'
+          ? slideMagnets[slideMagnets.length - 1]
+          : targetStaticMagnet;
     } else {
       targetStaticMagnet =
         direction === 'prev'
