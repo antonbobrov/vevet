@@ -598,11 +598,9 @@ export class Snap extends Module<TC, TS, TM> {
 
     const index = loop(targetIndex, 0, this.slides.length);
 
-    // Stick if the same slide
+    // Return if the same slide
 
     if (index === activeIndex) {
-      this.stick();
-
       return false;
     }
 
