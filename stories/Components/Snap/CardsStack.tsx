@@ -17,7 +17,7 @@ export const CardsStack: FC = () => {
     const instance = new Snap({
       container: ref.current,
       direction: 'horizontal',
-      align: 'center',
+      origin: 'center',
       loop: true,
       gap: 20,
       wheel: true,

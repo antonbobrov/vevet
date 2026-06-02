@@ -103,13 +103,13 @@ export class SnapTrack {
   get offset() {
     const { ctx } = this;
 
-    const align = ctx.align();
+    const origin = ctx.origin();
     const containerSize = ctx.containerSize();
     const firstSlideSize = ctx.firstSlideSize();
 
-    if (align === 'center') {
+    if (origin === 'center') {
       return containerSize / 2 - firstSlideSize / 2;
-    } else if (align === 'end') {
+    } else if (origin === 'end') {
       return containerSize - firstSlideSize;
     }
 
@@ -133,20 +133,20 @@ export class SnapTrack {
   /** Get minimum track value */
   get min() {
     const containerSize = this.ctx.containerSize();
-    const align = this.ctx.align();
+    const origin = this.ctx.origin();
     const firstSlide = this.slides[0];
 
     if (this.canLoop) {
       return 0;
     }
 
-    if (align === 'center') {
+    if (origin === 'center') {
       if (firstSlide.size > containerSize) {
         return containerSize / 2 - firstSlide.size / 2;
       }
     }
 
-    if (align === 'end') {
+    if (origin === 'end') {
       if (firstSlide.size > containerSize) {
         return containerSize - firstSlide.size;
       }
@@ -158,7 +158,7 @@ export class SnapTrack {
   /** Get maximum track value */
   get max() {
     const containerSize = this.ctx.containerSize();
-    const align = this.ctx.align();
+    const origin = this.ctx.origin();
 
     const { slides, canLoop, props } = this;
 
@@ -174,7 +174,7 @@ export class SnapTrack {
       return max;
     }
 
-    if (align === 'center') {
+    if (origin === 'center') {
       max += containerSize / 2 - firstSlide.size / 2;
 
       if (lastSlide.size < containerSize) {
@@ -182,11 +182,11 @@ export class SnapTrack {
       }
     }
 
-    if (align === 'end') {
+    if (origin === 'end') {
       max += containerSize - firstSlide.size;
     }
 
-    if (align === 'start') {
+    if (origin === 'start') {
       max = Math.max(max, 0);
     }
 

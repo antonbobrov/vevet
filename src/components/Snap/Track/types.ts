@@ -6,7 +6,7 @@ export interface IProps {
   onRender: (duration?: number) => void;
   containerSize: () => number;
   firstSlideSize: () => number;
-  align: () => 'start' | 'center' | 'end';
+  origin: () => 'start' | 'center' | 'end';
   onTimelineStart: () => void;
   onTimelineUpdate: (data: ITimelineProgressArg) => void;
   onTimelineEnd: () => void;

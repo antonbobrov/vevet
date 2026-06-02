@@ -8,7 +8,7 @@ export type TTestSnapProps = Partial<Omit<ISnapMutableProps, 'slides'>>;
 const BASE_SNAP_PROPS: TTestSnapProps = {
   wheel: true,
   wheelAxis: 'y',
-  align: 'start',
+  origin: 'start',
   loop: false,
   freemode: false,
   gap: 20,
@@ -99,6 +99,10 @@ export const Test: FC<ITestProps> = ({ snapProps }) => {
       scrollbar.destroy();
     };
   }, [resolvedProps]);
+
+  useEffect(() => {
+    carousel?.toSlide(activeIndex);
+  }, [activeIndex]);
 
   return (
     <>
@@ -193,26 +197,26 @@ export const Test: FC<ITestProps> = ({ snapProps }) => {
       <button
         type="button"
         disabled={isStart}
-        onClick={() => carousel?.toSlide(0)}
+        onClick={() => setActiveIndex(0)}
       >
         Start
       </button>
 
-      {carousel?.slides.map((slide) => (
+      {SLIDES.map((slide, index) => (
         <button
-          key={slide.index}
+          key={index}
           type="button"
-          disabled={activeIndex === slide.index}
-          onClick={() => carousel?.toSlide(slide.index)}
+          disabled={activeIndex === index}
+          onClick={() => setActiveIndex(index)}
         >
-          {slide.index}
+          {index}
         </button>
       ))}
 
       <button
         type="button"
         disabled={isEnd}
-        onClick={() => carousel?.toSlide(carousel.slides.length - 1)}
+        onClick={() => setActiveIndex(SLIDES.length - 1)}
       >
         End
       </button>

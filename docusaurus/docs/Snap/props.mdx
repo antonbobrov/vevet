@@ -139,25 +139,25 @@ snap.updateProps({
 });
 ```
 
-### `align` {#props.align}
+### `origin` {#props.origin}
 
 - **Type:** `'start' | 'center' | 'end'`
 - **Default:** `'start'`
-- Aligns slides and snap magnets along the scroll axis:
+- Aligns slide mangets and snap them along the scroll axis:
   - `'start'` — leading edge of the slide at the leading edge of the container (default).
   - `'center'` — slide centered in the container.
   - `'end'` — trailing edge of the slide at the trailing edge of the container.
 
-  **See [demo](basic-demos#align)**
+  **See [demo](basic-demos#origin)**
 
 ```js
 const snap = new Snap({
   container: document.getElementById('container'),
-  align: 'center',
+  origin: 'center',
 });
 
 snap.updateProps({
-  align: 'end',
+  origin: 'end',
 });
 ```
 
@@ -165,12 +165,12 @@ snap.updateProps({
 
 - **Type:** `boolean`
 - **Default:** `false`
-- **Status:** deprecated — use [`align`](#props.align) instead (`centered: true` is equivalent to `align: 'center'`). If both are set, `centered` takes precedence.
+- **Status:** deprecated — use [`origin`](#props.origin) instead (`centered: true` is equivalent to `origin: 'center'`). If both are set, `centered` takes precedence.
 
 ```js
 const snap = new Snap({
   container: document.getElementById('container'),
-  align: 'center',
+  origin: 'center',
 });
 ```
 

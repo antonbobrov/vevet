@@ -232,7 +232,7 @@ export class SnapSlide {
     }
 
     const { ctx, staticCoord, size, index } = this;
-    const { containerSize, align } = ctx;
+    const { containerSize, origin } = ctx;
 
     let points: number[] = [];
 
@@ -240,7 +240,7 @@ export class SnapSlide {
       points.push(ctx.max);
     }
 
-    if (align === 'center') {
+    if (origin === 'center') {
       const point = staticCoord + size / 2 - ctx.firstSlideSize / 2;
 
       if (size > containerSize) {
@@ -250,7 +250,7 @@ export class SnapSlide {
       } else {
         points.push(point);
       }
-    } else if (align === 'end') {
+    } else if (origin === 'end') {
       const point = staticCoord + size - ctx.firstSlideSize;
 
       points.push(point);
@@ -285,16 +285,16 @@ export class SnapSlide {
     }
 
     const { coord, size } = this;
-    const { containerSize, align } = ctx;
+    const { containerSize, origin } = ctx;
 
-    if (align === 'center') {
+    if (origin === 'center') {
       const center = containerSize / 2 - size / 2;
       this._progress = scoped(coord, center, center - size);
 
       return;
     }
 
-    if (align === 'end') {
+    if (origin === 'end') {
       const end = containerSize - size;
       this._progress = scoped(coord, end, end - size);
 
@@ -316,7 +316,7 @@ export class SnapSlide {
     }
 
     const { staticCoord, size } = this;
-    const { align } = ctx;
+    const { origin } = ctx;
 
     if (!ctx.canLoop) {
       this._setCoord(staticCoord + offset - ctx.current);
@@ -324,7 +324,7 @@ export class SnapSlide {
       return;
     }
 
-    if (align === 'center') {
+    if (origin === 'center') {
       this._setCoord(
         loop(
           staticCoord + offset - ctx.current,
@@ -336,7 +336,7 @@ export class SnapSlide {
       return;
     }
 
-    if (align === 'end') {
+    if (origin === 'end') {
       this._setCoord(
         loop(staticCoord + offset - ctx.current, -size, ctx.max - size),
       );

@@ -17,7 +17,7 @@ export const Panorama: FC = () => {
       direction: 'horizontal',
       wheel: true,
       wheelAxis: 'y',
-      align: 'center',
+      origin: 'center',
       loop: true,
       gap: 10,
       freemode: true,

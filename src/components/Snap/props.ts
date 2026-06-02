@@ -19,7 +19,7 @@ export const MUTABLE_PROPS: TRequiredProps<ISnapMutableProps> = {
   slidesToScroll: 1,
   direction: 'horizontal',
   centered: false,
-  align: 'start',
+  origin: 'start',
   loop: false,
   gap: 0,
   lerp: initVevet()?.mobile ? 1 : 0.3,

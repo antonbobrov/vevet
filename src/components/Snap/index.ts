@@ -122,7 +122,7 @@ export class Snap extends Module<TC, TS, TM> {
       onRender: this.render.bind(this),
       containerSize: () => this.containerSize,
       firstSlideSize: () => this.firstSlideSize,
-      align: () => this.align,
+      origin: () => this.origin,
       onTimelineStart: () => this.callbacks.emit('timelineStart', undefined),
       onTimelineUpdate: (data) => this.callbacks.emit('timelineUpdate', data),
       onTimelineEnd: () => this.callbacks.emit('timelineEnd', undefined),
@@ -336,13 +336,13 @@ export class Snap extends Module<TC, TS, TM> {
     return this.track.isEnd;
   }
 
-  /** Alignment */
-  get align() {
+  /** Slige magnet origin */
+  get origin() {
     if (this.props.centered) {
       return 'center';
     }
 
-    return this.props.align;
+    return this.props.origin;
   }
 
   /** Clamp target value between min and max values */
@@ -589,7 +589,7 @@ export class Snap extends Module<TC, TS, TM> {
     targetIndex: number,
     { direction = null, ...options }: ISnapToSlideArg = {},
   ) {
-    const { activeIndex, slides, track, props, align } = this;
+    const { activeIndex, slides, track, props, origin } = this;
     const { current, max, loopCount } = track;
 
     if (this.isDestroyed) {
@@ -611,13 +611,13 @@ export class Snap extends Module<TC, TS, TM> {
     const slideMagnets = slides[index].magnets;
     let targetStaticMagnet = slideMagnets[0];
 
-    if (align === 'center') {
+    if (origin === 'center') {
       if (direction === 'prev') {
         targetStaticMagnet = slideMagnets[2] ?? slideMagnets[0];
       } else if (direction === 'next') {
         targetStaticMagnet = slideMagnets[1] ?? slideMagnets[0];
       }
-    } else if (align === 'end') {
+    } else if (origin === 'end') {
       targetStaticMagnet =
         direction === 'next'
           ? slideMagnets[slideMagnets.length - 1]

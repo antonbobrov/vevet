@@ -64,15 +64,15 @@ export interface ISnapMutableProps
   direction?: 'horizontal' | 'vertical';
 
   /**
-   * @deprecated Use `align` instead
+   * @deprecated Use `origin` instead
    */
   centered?: boolean;
 
   /**
-   * Slides alignment
+   * Slide magnet origin
    * @default 'start'
    */
-  align?: 'start' | 'center' | 'end';
+  origin?: 'start' | 'center' | 'end';
 
   /**
    * Detects if need to loop the progress
