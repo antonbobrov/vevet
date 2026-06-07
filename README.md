@@ -3,6 +3,7 @@
 The primary goal of Vevet is to simplify the creation of interactive components from scratch — be it text animations, carousels, or other interactive elements.
 
 ### [Documentation ↗](https://vevetjs.com/)
+
 ### [Changelog ↗](https://github.com/antonbobrov/vevet/blob/master/CHANGELOG.md)
 
 ## NPM Usage
@@ -62,3 +63,5 @@ https://cdn.jsdelivr.net/npm/vevet@5/lib/cdn/vevet.iife.min.js
 - **[Swipe](https://vevetjs.com/docs/Swipe/)** manages swipe interactions: tracks movement and detects direction, emits events on start, move, and end, supports inertia-based movement.
 
 - **[Timeline](https://vevetjs.com/docs/Timeline/)** is a simple timeline class for managing animations with easing and precise progress control.
+
+// todo: slides selector
