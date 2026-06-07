@@ -145,7 +145,6 @@ export class Module<
 
     const diff: Partial<MutableProps> = {};
 
-    // todo
     keys.forEach((key) => {
       // @ts-ignore
       const prevValue = prevProps[key];

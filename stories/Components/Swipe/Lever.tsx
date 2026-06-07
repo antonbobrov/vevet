@@ -22,7 +22,6 @@ export const Lever: FC = () => {
       onMove: ({ movement }) => {
         rotateRef.current!.style.transform = `rotate(${movement.angle}deg)`;
       },
-      // todo: realtime snap
       snap: () => ({ angle: [90, 10] }),
       snapRadius: 10,
     });
