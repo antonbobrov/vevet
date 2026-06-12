@@ -260,7 +260,7 @@ export class Swipe extends Module<TC, TS, TM> {
   /** Handles pointers end */
   private _handlePointersEnd() {
     if (!this._isSwiping) {
-      this._releaseBounce();
+      this.releaseBounce();
     }
   }
 
@@ -327,7 +327,6 @@ export class Swipe extends Module<TC, TS, TM> {
 
     // move
     this._move(state);
-    this._coords.calculateBounds();
   }
 
   /** Checks if swipe can start */
@@ -460,7 +459,7 @@ export class Swipe extends Module<TC, TS, TM> {
     }
 
     if (!hasInertia) {
-      this._releaseBounce();
+      this.releaseBounce();
     }
   }
 
@@ -480,7 +479,7 @@ export class Swipe extends Module<TC, TS, TM> {
   }
 
   /** Apply bounce overflow animation */
-  private _releaseBounce(targetDuration?: number) {
+  public releaseBounce(targetDuration?: number) {
     this.cancelBounce();
 
     const { exceeds } = this._coords;
@@ -570,6 +569,24 @@ export class Swipe extends Module<TC, TS, TM> {
     return this._coords.movement;
   }
 
+  /** Current scale modifier. */
+  get scale() {
+    return this._coords.scale;
+  }
+
+  /**
+   * Sets programmatic scale in movement space.
+   * Optionally zooms toward an origin point and emits `move`.
+   */
+  public setScale(value: number, origin: MouseEvent | TouchEvent | ISwipeVec2) {
+    this._coords.applyScale(value, origin);
+    this._move({ ...this.current, time: performance.now() });
+
+    if (!this._inertia.has) {
+      this.releaseBounce(0);
+    }
+  }
+
   /**
    * Sets programmatic displacement in movement space.
    * Reapplies rubber, snap, emits `move`, and cancels overflow bounce.
@@ -577,7 +594,7 @@ export class Swipe extends Module<TC, TS, TM> {
   public setMovement(value: Partial<ISwipeVec3>) {
     this._coords.movement = value;
     this._move({ ...this.current, time: performance.now() });
-    this._releaseBounce(0);
+    this.releaseBounce(0);
   }
 
   /**

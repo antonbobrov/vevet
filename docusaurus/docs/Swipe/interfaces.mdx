@@ -76,7 +76,7 @@ interface ISwipeAxes {
 Snapshot on swipe callbacks and accessors.
 
 **Pointer space:** `start`, `prev`, `current`, `diff`, `step`, `accum`.  
-**Movement space:** `movement`, `prevMovement` (after rubber and snap — use for transforms with `bounds`).
+**Movement space:** `movement`, `prevMovement`, `scale` (after rubber and snap — use for transforms with `bounds`).
 
 ```ts
 interface ISwipeCoords {
@@ -98,6 +98,8 @@ interface ISwipeCoords {
   movement: ISwipeVec3;
   /** Movement on the previous frame (movement space, after rubber and snap). */
   prevMovement: ISwipeVec3;
+  /** Current scale modifier (default `1`). */
+  scale: number;
 }
 ```
 

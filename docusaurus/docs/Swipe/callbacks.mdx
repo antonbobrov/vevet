@@ -41,12 +41,14 @@ destruct();
 
 ### `move`
 
-Swipe move event. Payload: [ISwipeCoords](interfaces#iswipecoords) (includes `movement` for bounded / snapped transforms).
+Swipe move event. Payload: [ISwipeCoords](interfaces#iswipecoords) (includes `movement`, `scale`, and `prevMovement` for bounded / snapped / zoomed transforms).
 
 ```ts
 const observer = new Swipe({
   container: document.getElementById('container'),
-  onMove: (coords) => console.log(coords),
+  onMove: ({ movement, scale }) => {
+    el.style.transform = `translate(${movement.x}px, ${movement.y}px) scale(${scale})`;
+  },
 });
 ```
 

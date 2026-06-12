@@ -22,12 +22,13 @@ All **[Module accessors](/docs/base/Module/#accessors)** are available in this c
 
 Type: **[ISwipeCoords](interfaces#iswipecoords)**
 
-Full snapshot: pointer fields plus movement-space fields (`movement`, `prevMovement`).
+Full snapshot: pointer fields plus movement-space fields (`movement`, `prevMovement`, `scale`).
 
 ```js
 const instance = new Swipe();
 
 instance.coords.movement.x;
+instance.coords.scale;
 instance.coords.diff.x;
 ```
 
@@ -52,12 +53,28 @@ Total displacement in **movement space** (rubber + snap). Use for transforms whe
 ```js
 const instance = new Swipe({
   bounds: () => ({ x: [0, 200] }),
-  onMove: ({ movement }) => {
-    el.style.transform = `translateX(${movement.x}px)`;
+  onMove: ({ movement, scale }) => {
+    el.style.transform = `translate(${movement.x}px, ${movement.y}px) scale(${scale})`;
   },
 });
 
 instance.movement.x;
+```
+
+### `scale`
+
+Type: `number`
+
+Current scale modifier in movement space. Default is `1`. Updated by [`setScale`](methods#setscale). Included in [`ISwipeCoords`](interfaces#iswipecoords) on callbacks.
+
+```js
+const instance = new Swipe({
+  onMove: ({ movement, scale }) => {
+    el.style.transform = `translate(${movement.x}px, ${movement.y}px) scale(${scale})`;
+  },
+});
+
+instance.scale;
 ```
 
 ### `start`

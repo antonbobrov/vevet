@@ -2,7 +2,7 @@ import { initVevet } from '@/global/initVevet';
 import { isFiniteNumber } from '@/internal/isFiniteNumber';
 import { closest } from '@/utils';
 
-import { ISwipeCoords } from '../global';
+import { ISwipeCoords, ISwipeVec2 } from '../global';
 
 import type { ISwipeAxes, ISwipeState, ISwipeVec3, Swipe } from '..';
 
@@ -56,6 +56,9 @@ export class SwipeCoords {
 
   /** Cached normalized bounds (refreshed on swipe start). */
   private _bounds: ISwipeAxes | null = null;
+
+  /** Current scale modifier. */
+  private _scale = 1;
 
   get timestamp() {
     return this._timestamp;
@@ -125,6 +128,11 @@ export class SwipeCoords {
     return this.ctx.props.overflow ? Math.abs(this.ctx.props.overflow()) : 0;
   }
 
+  /** Current scale modifier */
+  get scale() {
+    return this._scale;
+  }
+
   get coords(): ISwipeCoords {
     const {
       timestamp,
@@ -136,6 +144,7 @@ export class SwipeCoords {
       accum,
       movement,
       prevMovement,
+      scale,
     } = this;
 
     return {
@@ -148,6 +157,7 @@ export class SwipeCoords {
       accum,
       movement,
       prevMovement,
+      scale,
     };
   }
 
@@ -161,7 +171,7 @@ export class SwipeCoords {
    * Zero when inside limits; used for bounce-back.
    */
   get exceeds() {
-    const { bounds, _rawMovement: movement } = this;
+    const { _rawMovement: movement, bounds } = this;
 
     if (!bounds) {
       return null;
@@ -203,14 +213,23 @@ export class SwipeCoords {
   }
 
   /** Parses pointer coordinates relative to the container */
-  public decode(event: MouseEvent | TouchEvent): ISwipeState {
+  public decode(event: MouseEvent | TouchEvent | ISwipeVec2): ISwipeState {
     const vevet = initVevet();
     const { props, container } = this.ctx;
 
-    const clientX =
-      'touches' in event ? event.touches[0].clientX : event.clientX;
-    const clientY =
-      'touches' in event ? event.touches[0].clientY : event.clientY;
+    let clientX = 0;
+    let clientY = 0;
+
+    if ('touches' in event) {
+      clientX = event.touches[0].clientX;
+      clientY = event.touches[0].clientY;
+    } else if ('type' in event) {
+      clientX = event.clientX;
+      clientY = event.clientY;
+    } else {
+      clientX = event.x;
+      clientY = event.y;
+    }
 
     let x = clientX;
     let y = clientY;
@@ -238,6 +257,28 @@ export class SwipeCoords {
     };
   }
 
+  /** Apply scale and optionally zoom toward an origin in movement space. */
+  public applyScale(
+    value: number,
+    originProp?: MouseEvent | TouchEvent | ISwipeVec2,
+  ) {
+    if (this._scale === value) {
+      return;
+    }
+
+    if (originProp) {
+      const origin = this.decode(originProp);
+      const ratio = value / this._scale;
+
+      this.movement = {
+        x: origin.x - (origin.x - this._movement.x) * ratio,
+        y: origin.y - (origin.y - this._movement.y) * ratio,
+      };
+    }
+
+    this._scale = value;
+  }
+
   /** Set start coordinates */
   public setStart(state: ISwipeState) {
     this._tempAngle = { raw: state.angle, unwrapped: state.angle };
@@ -249,8 +290,6 @@ export class SwipeCoords {
     this._diff = { ...START_VEC3, time: 0 };
     this._step = { ...START_VEC3, time: 0 };
     this._accum = { ...START_VEC3 };
-
-    this.calculateBounds();
   }
 
   /** Sync temp angle */
@@ -261,8 +300,11 @@ export class SwipeCoords {
 
   /** Update coordinates */
   public update({ x, y, angle, time }: ISwipeState, applyRatio = true) {
-    const { start, ctx } = this;
+    // Update bounds
+    this.calculateBounds();
 
+    // Vars
+    const { start, ctx } = this;
     const stepRatio = applyRatio ? ctx.props.ratio : 1;
 
     // Save
@@ -361,7 +403,7 @@ export class SwipeCoords {
       return;
     }
 
-    const bounds = props.bounds();
+    const bounds = props.bounds(this.coords);
     const d = [-Infinity, Infinity];
 
     const x = bounds?.x

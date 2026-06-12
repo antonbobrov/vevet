@@ -362,10 +362,29 @@ const swipe = new Swipe({
 
 ### `bounds` {#props.bounds}
 
-- **Type:** `null | (() => ISwipeAxes | null)`
+- **Type:** `null | ((coords: ISwipeCoords) => ISwipeAxes | null)`
 - **Default:** `null`
 - Movement limits per axis. Unset axis is unbounded. Values are normalized to `[min, max]`.
-- Use [`movement`](accessors#movement) in callbacks for transforms.
+- The callback receives the full [`ISwipeCoords`](interfaces#iswipecoords) snapshot — use `coords.scale`, `coords.movement`, etc. when limits depend on zoom or layout.
+- Limits are re-read on every move update (including after [`setScale`](methods#setscale)).
+- Use [`movement`](accessors#movement) and [`scale`](accessors#scale) in callbacks for transforms.
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('wrapper'),
+  thumb: document.getElementById('thumb'),
+  relative: true,
+  bounds: ({ scale }) => ({
+    x: [0, wrapper.clientWidth - thumb.clientWidth * scale],
+    y: [0, wrapper.clientHeight - thumb.clientHeight * scale],
+  }),
+  onMove: ({ movement, scale }) => {
+    thumb.style.transform = `translate(${movement.x}px, ${movement.y}px) scale(${scale})`;
+  },
+});
+```
+
+Static limits (callback may ignore `coords`):
 
 ```js
 const swipe = new Swipe({

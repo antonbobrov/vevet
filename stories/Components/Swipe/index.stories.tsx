@@ -7,6 +7,7 @@ import { Lever as LeverComponent } from './Lever';
 import { Rotation as RotationComponent } from './Rotation';
 import { Scroll as ScrollComponent } from './Scroll';
 import { Test as TestComponent } from './Test';
+import { Viewer as ViewerComponent } from './Viewer';
 
 import type { Meta, StoryFn } from '@storybook/react';
 
@@ -29,3 +30,5 @@ export const Rotation: StoryFn = () => <RotationComponent />;
 export const Lever: StoryFn = () => <LeverComponent />;
 
 export const Scroll: StoryFn = () => <ScrollComponent />;
+
+export const Viewer: StoryFn = () => <ViewerComponent />;

@@ -154,6 +154,7 @@ export class SwipeInertia {
       _modifiedDistance: distance,
       _initialVelocity: initial,
     } = this;
+
     const frameMs = duration;
 
     // Delta
@@ -189,12 +190,14 @@ export class SwipeInertia {
 
     // Bounce within bounds
 
-    if (coords.bounds?.x) {
+    const { bounds } = coords;
+
+    if (bounds?.x) {
       const bx = this._applyAxisBounce(
         'x',
         rawMovement.x,
         velocity.x,
-        coords.bounds.x,
+        bounds.x,
         bounceEase,
       );
 
@@ -204,12 +207,12 @@ export class SwipeInertia {
       isBouncing = 'bounceFinished' in bx ? true : isBouncing;
     }
 
-    if (coords.bounds?.y) {
+    if (bounds?.y) {
       const by = this._applyAxisBounce(
         'y',
         rawMovement.y,
         velocity.y,
-        coords.bounds.y,
+        bounds.y,
         bounceEase,
       );
 
@@ -219,12 +222,12 @@ export class SwipeInertia {
       isBouncing = 'bounceFinished' in by ? true : isBouncing;
     }
 
-    if (coords.bounds?.angle) {
+    if (bounds?.angle) {
       const ba = this._applyAxisBounce(
         'angle',
         rawMovement.angle,
         velocity.angle,
-        coords.bounds.angle,
+        bounds.angle,
         bounceEase,
       );
 

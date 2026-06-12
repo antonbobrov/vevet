@@ -185,7 +185,7 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
    * Movement limits per axis. Unset axis is unbounded.
    * @default null
    */
-  bounds?: null | (() => ISwipeAxes | null);
+  bounds?: null | ((coords: ISwipeCoords) => ISwipeAxes | null);
 
   /**
    * Snap targets per axis in movement space.

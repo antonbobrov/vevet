@@ -42,6 +42,8 @@ export interface ISwipeCoords {
   movement: ISwipeVec3;
   /** Movement on the previous frame (movement space, after rubber and snap). */
   prevMovement: ISwipeVec3;
+  /** Current scaling modifier */
+  scale: number;
 }
 
 /**
