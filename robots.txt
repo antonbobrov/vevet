@@ -1,3 +1,41 @@
+# https://vevetjs.com — vevet.js documentation
+# LLM-friendly index: https://vevetjs.com/llms.txt
+
 User-agent: *
+Allow: /docs/
+Allow: /llms.txt
+Allow: /llms-full.txt
 Disallow: /v4
 Disallow: /v5
+
+User-agent: GPTBot
+Allow: /docs/
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: ChatGPT-User
+Allow: /docs/
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: Google-Extended
+Allow: /docs/
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: anthropic-ai
+Allow: /docs/
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: ClaudeBot
+Allow: /docs/
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: PerplexityBot
+Allow: /docs/
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+Sitemap: https://vevetjs.com/sitemap.xml

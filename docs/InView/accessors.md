@@ -1,0 +1,77 @@
+# Accessors
+
+<!-- -->
+
+note
+
+All **[Module accessors](https://vevetjs.com/docs/base/Module/.md#accessors)** are available in this class.
+
+### `elements`[​](#elements "Direct link to elements")
+
+Type: `Element[]`
+
+Returns a read-only array of all DOM elements currently being observed by this InView instance.
+
+```
+const observer = new InView();
+
+
+
+observer.addElement(document.getElementById('element1'));
+
+observer.addElement(document.getElementById('element2'));
+
+
+
+// Get all observed elements
+
+const observedElements = observer.elements;
+
+console.log(observedElements.length); // 2
+
+
+
+// Iterate over observed elements
+
+observer.elements.forEach((element) => {
+
+  console.log(element.id);
+
+});
+```
+
+### `isInitialStart`[​](#isinitialstart "Direct link to isinitialstart")
+
+Type: `boolean`
+
+Indicates whether the observation has started for the first time. This property is `true` during the initial page load before any elements have been observed, and becomes `false` after the first visibility check completes.
+
+This is useful for distinguishing between initial page load animations and subsequent scroll-triggered animations.
+
+```
+const observer = new InView();
+
+
+
+console.log(observer.isInitialStart); // true (on initial load)
+
+
+
+observer.on('in', ({ element, direction }) => {
+
+  if (observer.isInitialStart) {
+
+    // First time observing - apply initial animations
+
+    console.log('Initial page load animation');
+
+  } else {
+
+    // Subsequent scroll-triggered animations
+
+    console.log('Scroll-triggered animation');
+
+  }
+
+});
+```

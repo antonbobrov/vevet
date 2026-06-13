@@ -1,0 +1,189 @@
+# Props
+
+<!-- -->
+
+## Static Props[​](#static-props "Direct link to Static Props")
+
+Static properties are set during initialization and cannot be modified later.
+
+### `container`[​](#props.container "Direct link to props.container")
+
+* **Type:** `Window | HTMLElement`
+* **Default:** `window`
+* The element whose scroll position the scrollbar reflects.
+* For nested scroll areas, pass a custom `HTMLElement`.
+* **See [demo](https://vevetjs.com/docs/Scrollbar/demos.md#inner-scrollbar)**
+
+```
+// window
+
+const instance = new Scrollbar();
+
+
+
+// custom element
+
+const instance = new Scrollbar({
+
+  container: document.getElementById('container'),
+
+});
+```
+
+### `parent`[​](#props.parent "Direct link to props.parent")
+
+* **Type:** `false | HTMLElement`
+* **Default:** `false`
+* The parent element where the scrollbar should be appended.
+* If set to `false`, the scrollbar is appended directly to the `container`.
+* Use `parent` for correct behavior when the scrollbar is applied to an HTML element instead of Window.
+* **See [demo](https://vevetjs.com/docs/Scrollbar/demos.md#inner-scrollbar)**
+
+```
+const instance = new Scrollbar({
+
+  parent: document.getElementById('parent'),
+
+});
+```
+
+### `class`[​](#props.class "Direct link to props.class")
+
+* **Type:** `string | false`
+* **Default:** `false`
+* Additional CSS class applied to the scrollbar track.
+* If `false`, no extra class is applied.
+
+```
+const instance = new Scrollbar({
+
+  class: 'my-custom-scrollbar',
+
+});
+```
+
+### `axis`[​](#props.axis "Direct link to props.axis")
+
+* **Type:** `'x' | 'y'`
+
+* **Default:** `'y'`
+
+* Defines the scrolling axis:
+
+  <!-- -->
+
+  * `'x'` for horizontal scrolling
+  * `'y'` for vertical scrolling
+
+* **See [demo](https://vevetjs.com/docs/Scrollbar/demos.md#horizontal-scrollbar)**
+
+```
+const instance = new Scrollbar({
+
+  axis: 'x',
+
+});
+```
+
+### `draggable`[​](#props.draggable "Direct link to props.draggable")
+
+* **Type:** `boolean`
+* **Default:** `true`
+* Determines whether the scrollbar thumb is draggable.
+
+```
+const instance = new Scrollbar({
+
+  draggable: true,
+
+});
+```
+
+### `autoHide`[​](#props.autoHide "Direct link to props.autoHide")
+
+* **Type:** `boolean`
+* **Default:** `true`
+* Automatically hides the scrollbar when inactive.
+* **See [demo](https://vevetjs.com/docs/Scrollbar/demos.md#autohide)**
+
+```
+const instance = new Scrollbar({
+
+  autoHide: false,
+
+});
+```
+
+### `resizeDebounce`[​](#props.resizeDebounce "Direct link to props.resizeDebounce")
+
+* **Type:** `number`
+* **Default:** `50`
+* Debounce delay in milliseconds for resize event handling.
+* Helps improve performance by limiting frequency of resize calculations.
+
+```
+const instance = new Scrollbar({
+
+  resizeDebounce: 50,
+
+});
+```
+
+## Mutable Props[​](#mutable-props "Direct link to Mutable Props")
+
+Mutable properties can be updated at runtime using `.updateProps()`.
+
+Adaptive props
+
+To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/.md#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
+
+### `minSize`[​](#props.minSize "Direct link to props.minSize")
+
+* **Type:** `number | string`
+* **Default:** `50`
+* Minimum size of the scrollbar thumb.
+* Can be specified as a number (pixels) or as a CSS unit string (`px`, `rem`, `vw`, `vh`, `svh`).
+* **See [demo](https://vevetjs.com/docs/Scrollbar/demos.md#min-size)**
+
+```
+const instance = new Scrollbar({
+
+  minSize: 50,
+
+});
+
+
+
+// change value
+
+instance.updateProps({
+
+  minSize: '10rem',
+
+});
+```
+
+### `autoSize`[​](#props.autoSize "Direct link to props.autoSize")
+
+* **Type:** `boolean`
+* **Default:** `true`
+* Enables automatic adjustment of the scrollbar thumb size based on the content and container.
+* **See [demo](https://vevetjs.com/docs/Scrollbar/demos.md#no-auto-size)**
+
+```
+const instance = new Scrollbar({
+
+  autoSize: true,
+
+});
+
+
+
+// change value
+
+instance.updateProps({
+
+  autoSize: false,
+
+});
+```

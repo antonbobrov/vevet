@@ -1,0 +1,204 @@
+# vevet.js
+
+> vevet.js (npm: vevet) — client-side JavaScript library for creative web development. v5 · import { vevet, SplitText, Snap } from "vevet". All components extend Module. API: component sections below. Working examples: Demos pages (HTML/CSS/JS included). Full export: llms-full.txt.
+
+
+## docs
+
+
+### base
+
+- [Callbacks](https://vevetjs.com/docs/base/Callbacks.md): Callbacks class — event listeners with one-or-multi-time execution, protection and delays. Vevet.js base.
+- [Module](https://vevetjs.com/docs/base/Module.md): Module — base class for Vevet.js components. Props, callbacks, updateProps, onDestroy, destroy.
+- [Responsive](https://vevetjs.com/docs/base/Responsive.md): Responsive — apply different props by viewport and device. Breakpoints, rules, Module integration. Vevet.js base.
+
+### Canvas
+
+Canvas — Vevet.js class for HTML5 Canvas and 2D context. Simplifies canvas rendering and animation.
+
+- [Canvas](https://vevetjs.com/docs/Canvas.md): Canvas — Vevet.js class for HTML5 Canvas and 2D context. Simplifies canvas rendering and animation.
+- [Accessors](https://vevetjs.com/docs/Canvas/accessors.md): Canvas accessors — context, size getters. Vevet.js Canvas API reference.
+- [Callbacks](https://vevetjs.com/docs/Canvas/callbacks.md): Canvas callbacks — render and resize events. Vevet.js Canvas API reference.
+- [Methods](https://vevetjs.com/docs/Canvas/methods.md): Canvas methods — API reference. Vevet.js Canvas component.
+- [Props](https://vevetjs.com/docs/Canvas/props.md): Canvas props — configuration. Vevet.js Canvas API reference.
+
+### CanvasMedia
+
+CanvasMedia — Vevet.js pre-rendering of media into canvas layer for animations, effects and transitions.
+
+- [CanvasMedia](https://vevetjs.com/docs/CanvasMedia.md): CanvasMedia — Vevet.js pre-rendering of media into canvas layer for animations, effects and transitions.
+- [Accessors](https://vevetjs.com/docs/CanvasMedia/accessors.md): CanvasMedia accessors — state getters. Vevet.js CanvasMedia API reference.
+- [Callbacks](https://vevetjs.com/docs/CanvasMedia/callbacks.md): CanvasMedia callbacks — media events. Vevet.js CanvasMedia API reference.
+- [Methods](https://vevetjs.com/docs/CanvasMedia/methods.md): CanvasMedia methods — API reference. Vevet.js CanvasMedia component.
+- [Props](https://vevetjs.com/docs/CanvasMedia/props.md): CanvasMedia props — configuration. Vevet.js CanvasMedia API reference.
+
+### core
+
+Vevet.js Core — viewport detection, browser and OS detection, custom callbacks for page load and viewport changes.
+
+- [Core](https://vevetjs.com/docs/core.md): Vevet.js Core — viewport detection, browser and OS detection, custom callbacks for page load and viewport changes.
+- [CSS Variables](https://vevetjs.com/docs/core/css-vars.md): Vevet.js CSS variables — --vw, --vh, --svh, --scrollbar-width for viewport units and layout.
+- [Customization](https://vevetjs.com/docs/core/customization.md): Customize Vevet.js via window.VEVET_PROPS — override default settings before library initialization.
+- [Features](https://vevetjs.com/docs/core/features.md): Vevet.js features — device detection, application states, viewport changes, NPM usage and configuration.
+
+### Cursor
+
+Cursor — Vevet.js smooth custom cursor with hover interactions. Position, size and appearance interpolation.
+
+- [Cursor](https://vevetjs.com/docs/Cursor.md): Cursor — Vevet.js smooth custom cursor with hover interactions. Position, size and appearance interpolation.
+- [Accessors](https://vevetjs.com/docs/Cursor/accessors.md): Cursor accessors — position, state getters. Vevet.js Cursor API reference.
+- [Callbacks](https://vevetjs.com/docs/Cursor/callbacks.md): Cursor callbacks — hover and move events. Vevet.js Cursor API reference.
+- [Demos](https://vevetjs.com/docs/Cursor/demos.md): Cursor demos and examples. Vevet.js Cursor component.
+- [Interfaces](https://vevetjs.com/docs/Cursor/interfaces.md): Cursor interfaces — TypeScript types. Vevet.js Cursor API reference.
+- [Methods](https://vevetjs.com/docs/Cursor/methods.md): Cursor methods — API reference. Vevet.js Cursor component.
+- [Props](https://vevetjs.com/docs/Cursor/props.md): Cursor props — configuration. Vevet.js Cursor API reference.
+
+### intro
+
+Introduction to Vevet.js — a flexible JavaScript library for creative web development. Installation, core, components, and utils overview.
+
+- [Vevet.js](https://vevetjs.com/docs/intro.md): Introduction to Vevet.js — a flexible JavaScript library for creative web development. Installation, core, components, and utils overview.
+
+### InView
+
+InView — Vevet.js visibility detection with IntersectionObserver. Viewport enter/leave, direction, CSS classes and animations.
+
+- [InView](https://vevetjs.com/docs/InView.md): InView — Vevet.js visibility detection with IntersectionObserver. Viewport enter/leave, direction, CSS classes and animations.
+- [Accessors](https://vevetjs.com/docs/InView/accessors.md): InView accessors — visibility state getters. Vevet.js InView API reference.
+- [Callbacks](https://vevetjs.com/docs/InView/callbacks.md): InView callbacks — visibility and direction events. Vevet.js InView API reference.
+- [Demos](https://vevetjs.com/docs/InView/demos.md): InView demos and examples. Vevet.js InView component.
+- [Methods](https://vevetjs.com/docs/InView/methods.md): InView methods — API reference. Vevet.js InView component.
+- [Props](https://vevetjs.com/docs/InView/props.md): InView props — configuration. Vevet.js InView API reference.
+
+### Marquee
+
+Marquee — Vevet.js custom marquee component for smooth scrolling of child elements.
+
+- [Marquee](https://vevetjs.com/docs/Marquee.md): Marquee — Vevet.js custom marquee component for smooth scrolling of child elements.
+- [Accessors](https://vevetjs.com/docs/Marquee/accessors.md): Marquee accessors — state getters. Vevet.js Marquee API reference.
+- [Callbacks](https://vevetjs.com/docs/Marquee/callbacks.md): Marquee callbacks — scroll events. Vevet.js Marquee API reference.
+- [Demos](https://vevetjs.com/docs/Marquee/demos.md): Marquee demos and examples. Vevet.js Marquee component.
+- [Methods](https://vevetjs.com/docs/Marquee/methods.md): Marquee methods — API reference. Vevet.js Marquee component.
+- [Props](https://vevetjs.com/docs/Marquee/props.md): Marquee props — configuration. Vevet.js Marquee API reference.
+
+### Pointers
+
+Pointers — Vevet.js pointer events manager. Track multiple pointers, pan/pinch/rotate via move callback, type-aware props.
+
+- [Pointers](https://vevetjs.com/docs/Pointers.md): Pointers — Vevet.js pointer events manager. Track multiple pointers, pan/pinch/rotate via move callback, type-aware props.
+- [Accessors](https://vevetjs.com/docs/Pointers/accessors.md): Pointers accessors — state getters. Vevet.js Pointers API reference.
+- [Callbacks](https://vevetjs.com/docs/Pointers/callbacks.md): Pointers callbacks — pointer events. Vevet.js Pointers API reference.
+- [Interfaces](https://vevetjs.com/docs/Pointers/interfaces.md): Pointers interfaces — TypeScript types. Vevet.js Pointers API reference.
+- [Methods](https://vevetjs.com/docs/Pointers/methods.md): Pointers methods — API reference. Vevet.js Pointers component.
+- [Props](https://vevetjs.com/docs/Pointers/props.md): Pointers props — configuration. Vevet.js Pointers API reference.
+
+### Preloader
+
+Preloader — Vevet.js page preloader component for loading screen visibility and lifecycle.
+
+- [Preloader](https://vevetjs.com/docs/Preloader.md): Preloader — Vevet.js page preloader component for loading screen visibility and lifecycle.
+- [Accessors](https://vevetjs.com/docs/Preloader/accessors.md): Preloader accessors — state getters. Vevet.js Preloader API reference.
+- [Callbacks](https://vevetjs.com/docs/Preloader/callbacks.md): Preloader callbacks — lifecycle events. Vevet.js Preloader API reference.
+- [Demos](https://vevetjs.com/docs/Preloader/demos.md): Preloader demos and examples. Vevet.js Preloader component.
+- [Methods](https://vevetjs.com/docs/Preloader/methods.md): Preloader methods — API reference. Vevet.js Preloader component.
+- [Props](https://vevetjs.com/docs/Preloader/props.md): Preloader props — configuration. Vevet.js Preloader API reference.
+
+### ProgressPreloader
+
+ProgressPreloader — Vevet.js preloader for tracking and displaying loading progress of images, videos and custom resources.
+
+- [ProgressPreloader](https://vevetjs.com/docs/ProgressPreloader.md): ProgressPreloader — Vevet.js preloader for tracking and displaying loading progress of images, videos and custom resources.
+- [Accessors](https://vevetjs.com/docs/ProgressPreloader/accessors.md): ProgressPreloader accessors — progress getters. Vevet.js ProgressPreloader API reference.
+- [Callbacks](https://vevetjs.com/docs/ProgressPreloader/callbacks.md): ProgressPreloader callbacks — loading events. Vevet.js ProgressPreloader API reference.
+- [Demos](https://vevetjs.com/docs/ProgressPreloader/demos.md): ProgressPreloader demos and examples. Vevet.js ProgressPreloader.
+- [Methods](https://vevetjs.com/docs/ProgressPreloader/methods.md): ProgressPreloader methods — API reference. Vevet.js ProgressPreloader.
+- [Props](https://vevetjs.com/docs/ProgressPreloader/props.md): ProgressPreloader props — configuration. Vevet.js ProgressPreloader API reference.
+
+### Raf
+
+Raf — Vevet.js requestAnimationFrame loop with FPS throttling, play/pause, FPS measurement and frame-rate-independent animations.
+
+- [Raf](https://vevetjs.com/docs/Raf.md): Raf — Vevet.js requestAnimationFrame loop with FPS throttling, play/pause, FPS measurement and frame-rate-independent animations.
+- [Accessors](https://vevetjs.com/docs/Raf/accessors.md): Raf accessors — FPS, duration getters. Vevet.js Raf API reference.
+- [Callbacks](https://vevetjs.com/docs/Raf/callbacks.md): Raf callbacks — frame events. Vevet.js Raf API reference.
+- [Demos](https://vevetjs.com/docs/Raf/demos.md): Raf demos and examples. Vevet.js Raf animation loop.
+- [Methods](https://vevetjs.com/docs/Raf/methods.md): Raf methods — play, pause, API reference. Vevet.js Raf component.
+- [Props](https://vevetjs.com/docs/Raf/props.md): Raf props — FPS, throttle options. Vevet.js Raf API reference.
+
+### Scrollbar
+
+Scrollbar — Vevet.js customizable scrollbar for window or element. Scroll tracking, drag, auto-sizing and styling.
+
+- [Scrollbar](https://vevetjs.com/docs/Scrollbar.md): Scrollbar — Vevet.js customizable scrollbar for window or element. Scroll tracking, drag, auto-sizing and styling.
+- [Accessors](https://vevetjs.com/docs/Scrollbar/accessors.md): Scrollbar accessors — scroll position, progress getters. Vevet.js Scrollbar API reference.
+- [Callbacks](https://vevetjs.com/docs/Scrollbar/callbacks.md): Scrollbar callbacks — scroll events. Vevet.js Scrollbar API reference.
+- [Demos](https://vevetjs.com/docs/Scrollbar/demos.md): Scrollbar demos and examples. Vevet.js Scrollbar component.
+- [Methods](https://vevetjs.com/docs/Scrollbar/methods.md): Scrollbar methods — API reference. Vevet.js Scrollbar component.
+- [Props](https://vevetjs.com/docs/Scrollbar/props.md): Scrollbar props — configuration. Vevet.js Scrollbar API reference.
+
+### ScrollProgress
+
+ScrollProgress — Vevet.js component for tracking scroll progress of a section. Scroll-based and parallax animations.
+
+- [ScrollProgress](https://vevetjs.com/docs/ScrollProgress.md): ScrollProgress — Vevet.js component for tracking scroll progress of a section. Scroll-based and parallax animations.
+
+### Snap
+
+Snap — Vevet.js carousel handler with precise control over movement, snapping and interaction. Custom layout and styling.
+
+- [Snap](https://vevetjs.com/docs/Snap.md): Snap — Vevet.js carousel handler with precise control over movement, snapping and interaction. Custom layout and styling.
+- [Accessors](https://vevetjs.com/docs/Snap/accessors.md): Snap accessors — index, progress, state getters. Vevet.js Snap API reference.
+- [Advanced Demos](https://vevetjs.com/docs/Snap/advanced-demos.md): Snap advanced demos. Vevet.js Snap carousel.
+- [Basic Demos](https://vevetjs.com/docs/Snap/basic-demos.md): Snap basic demos and examples. Vevet.js Snap carousel.
+- [Callbacks](https://vevetjs.com/docs/Snap/callbacks.md): Snap callbacks — onActiveSlide, onSwipe and more. Vevet.js Snap API reference.
+- [Methods](https://vevetjs.com/docs/Snap/methods.md): Snap methods — API reference. Vevet.js Snap carousel.
+- [Parallax](https://vevetjs.com/docs/Snap/parallax.md): Snap Parallax — parallax effects with Snap. Vevet.js Snap API reference.
+- [Parallax Demos](https://vevetjs.com/docs/Snap/parallax-demos.md): Snap parallax demos. Vevet.js Snap carousel.
+- [Props](https://vevetjs.com/docs/Snap/props.md): Snap props — carousel configuration. Vevet.js Snap API reference.
+- [SnapSlide](https://vevetjs.com/docs/Snap/slide.md): SnapSlide — virtual slides in Snap. Vevet.js Snap carousel API reference.
+
+### SplitText
+
+SplitText — split text into lines, words and letters. Resize support, HTML and emoji handling. Vevet.js.
+
+- [SplitText](https://vevetjs.com/docs/SplitText.md): SplitText — split text into lines, words and letters. Resize support, HTML and emoji handling. Vevet.js.
+- [Accessors](https://vevetjs.com/docs/SplitText/accessors.md): SplitText accessors — lines, words, letters getters. Vevet.js SplitText API reference.
+- [Callbacks](https://vevetjs.com/docs/SplitText/callbacks.md): SplitText callbacks — event hooks. Vevet.js SplitText API reference.
+- [Demos](https://vevetjs.com/docs/SplitText/demos.md): SplitText demos and examples. Vevet.js SplitText component.
+- [Methods](https://vevetjs.com/docs/SplitText/methods.md): SplitText methods — split, destroy. Vevet.js SplitText API reference.
+- [Props](https://vevetjs.com/docs/SplitText/props.md): SplitText props — configuration options. Vevet.js SplitText API reference.
+
+### Swipe
+
+Swipe — Vevet.js component for swipe interactions, pointer tracking, direction detection, rotation, bounds, rubber-band, snap, scale and inertia.
+
+- [Swipe](https://vevetjs.com/docs/Swipe.md): Swipe — Vevet.js component for swipe interactions, pointer tracking, direction detection, rotation, bounds, rubber-band, snap, scale and inertia.
+- [Accessors](https://vevetjs.com/docs/Swipe/accessors.md): Swipe accessors — getters for coordinates and state. Vevet.js Swipe API reference.
+- [Callbacks](https://vevetjs.com/docs/Swipe/callbacks.md): Swipe callbacks — onStart, onMove, onEnd. Vevet.js Swipe API reference.
+- [Demos](https://vevetjs.com/docs/Swipe/demos.md): Swipe demos and examples. Vevet.js Swipe component.
+- [Interfaces](https://vevetjs.com/docs/Swipe/interfaces.md): Swipe interfaces — TypeScript types and interfaces. Vevet.js Swipe API reference.
+- [Methods](https://vevetjs.com/docs/Swipe/methods.md): Swipe methods — API reference. Vevet.js Swipe component.
+- [Props](https://vevetjs.com/docs/Swipe/props.md): Swipe props — configuration options for swipe component. Vevet.js Swipe API reference.
+
+### Timeline
+
+Timeline — Vevet.js class for managing animations with easing, play, reverse, pause, and progress control.
+
+- [Timeline](https://vevetjs.com/docs/Timeline.md): Timeline — Vevet.js class for managing animations with easing, play, reverse, pause, and progress control.
+- [Accessors](https://vevetjs.com/docs/Timeline/accessors.md): Timeline accessors — progress, duration, state getters. Vevet.js Timeline API reference.
+- [Callbacks](https://vevetjs.com/docs/Timeline/callbacks.md): Timeline callbacks — onStart, onUpdate, onEnd. Vevet.js Timeline API reference.
+- [Methods](https://vevetjs.com/docs/Timeline/methods.md): Timeline methods — play, reverse, pause, reset and more. Vevet.js Timeline API reference.
+- [Props](https://vevetjs.com/docs/Timeline/props.md): Timeline props — mutable and static properties. Vevet.js Timeline API reference.
+
+### utils
+
+Vevet.js utils — uid, closest, clamp and other lightweight utility functions. API reference.
+
+- [utils](https://vevetjs.com/docs/utils.md): Vevet.js utils — uid, closest, clamp and other lightweight utility functions. API reference.
+
+## Optional
+- [GitHub repository](https://github.com/antonbobrov/vevet): Source code, issues, changelog
+- [npm package](https://www.npmjs.com/package/vevet): Install via npm install vevet
+- [TypeDoc API reference (v5)](https://vevetjs.com/v5/): Generated TypeScript API docs
+- [Full documentation export](https://vevetjs.com/llms-full.txt): All docs and demo code as markdown in a single file
+- [AGENTS.md (for coding agents)](https://github.com/antonbobrov/vevet/blob/master/AGENTS.md): Repository guide for AI coding assistants
