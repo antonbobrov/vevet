@@ -46,32 +46,20 @@ const pointers = new Pointers({
 pointers.isStarted; // true or false
 ```
 
-### `maxPointers`
+### `move`
 
-Type: `number`
+Type: [`IPointersMove`](interfaces#ipointersmove) | `null`
 
-Returns the maximum number of pointers that can be tracked.
-
-```js
-const pointers = new Pointers({
-  container: document.getElementById('container'),
-});
-
-pointers.maxPointers; // maximum number of pointers
-```
-
-### `minPointers`
-
-Type: `number`
-
-Returns the minimum number of pointers required to trigger events.
+Latest aggregated gesture snapshot from the most recent [`move`](callbacks#move) update, or `null` before the first move after [`start`](#start) / after [`end`](#end).
 
 ```js
 const pointers = new Pointers({
   container: document.getElementById('container'),
+  minPointers: 2,
 });
 
-pointers.minPointers; // minimum number of pointers
+pointers.move?.center; // midpoint between pointers
+pointers.move?.scale; // pinch multiplier since gesture start
 ```
 
 ### `pointersMap`

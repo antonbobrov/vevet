@@ -38,6 +38,8 @@ Swipe exposes two related spaces in [`ISwipeCoords`](interfaces#iswipecoords):
 
 `movement` and `scale` are accumulated for the instance lifetime (not reset on each swipe). Per-gesture offsets live in `diff` and `step`.
 
+With [`pointers`](props#props.pointers) `> 1`, pointer-space coordinates follow the **center** between active pointers (via internal [`Pointers.move`](/docs/Pointers/accessors#move)), not the first touch only.
+
 ## Basic Demo
 
 <iframe
@@ -117,7 +119,7 @@ const swipe = new Swipe({
 swipe.setMovement({ x: 150, y: 150 });
 ```
 
-Image viewer with pan, zoom, and scale-aware bounds (movement space):
+Image viewer with pan, wheel zoom, and scale-aware bounds (movement space):
 
 ```js
 import { addEventListener, clamp, Swipe } from 'vevet';
@@ -170,6 +172,57 @@ addEventListener(thumb, 'dblclick', (event) => {
   swipe.setScale(next, event);
 });
 ```
+
+Two-finger pan (touch) + pinch zoom via a separate [`Pointers`](/docs/Pointers) instance:
+
+```js
+import { clamp, Pointers, Swipe } from 'vevet';
+
+const wrapper = document.getElementById('wrapper');
+const thumb = document.getElementById('thumb');
+
+const minScale = 1;
+const maxScale = 10;
+
+// Pan — one mouse pointer or two touch pointers
+const swipe = new Swipe({
+  container: wrapper,
+  relative: true,
+  inertia: true,
+  pointers: (type) => (type === 'mouse' ? 1 : 2),
+  bounds: ({ scale }) => ({
+    x: [0, wrapper.clientWidth - thumb.clientWidth * scale],
+    y: [0, wrapper.clientHeight - thumb.clientHeight * scale],
+  }),
+  onMove: ({ movement, scale }) => {
+    thumb.style.transform = `translate(${movement.x}px, ${movement.y}px) scale(${scale})`;
+  },
+});
+
+// Pinch — zoom toward the midpoint between fingers
+const pinch = new Pointers({
+  container: wrapper,
+  minPointers: 2,
+  maxPointers: 2,
+  relative: false, // client coords — matches Swipe.setScale origin decoding
+  onMove: ({ center, scale, prevScale }) => {
+    if (prevScale === scale) {
+      return;
+    }
+
+    swipe.setScale(
+      clamp(swipe.scale * (scale / prevScale), minScale, maxScale),
+      center,
+    );
+  },
+  onStart: () => swipe.updateProps({ inertia: false }),
+  onEnd: () => swipe.updateProps({ inertia: true }),
+});
+```
+
+:::tip Coordinate space for pinch origin
+Use a separate [`Pointers`](/docs/Pointers) instance with `relative: false` and pass `move.center` to [`setScale`](methods#setscale). Coordinates are client-based; Swipe converts them to container space when [`relative`](props#props.relative) is `true`.
+:::
 
 Detect direction:
 

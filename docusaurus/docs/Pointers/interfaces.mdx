@@ -24,6 +24,31 @@ type TPointersType = 'mouse' | 'touch';
 Used by type-aware props ([`buttons`](props#props.buttons), [`minPointers`](props#props.minPointers), [`maxPointers`](props#props.maxPointers)).  
 Resolved from [`PointerEvent.pointerType`](https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent/pointerType) on the first pointer of a gesture; unknown values fall back to `'mouse'`.
 
+## IPointersMove
+
+Aggregated gesture state passed to the [`move`](callbacks#move) callback and exposed via the [`move`](accessors#move) accessor.
+
+```ts
+interface IPointersMove {
+  center: IPointersVec2; // Average of current pointer positions (pan origin).
+  prevCenter: IPointersVec2; // Previous move center.
+  startCenter: IPointersVec2; // Center on the first move after start.
+  distance: number; // Average span between pointers (px).
+  prevDistance: number; // Span on the previous move.
+  startDistance: number; // Span on the first move after start.
+  scale: number; // distance / startDistance — pinch multiplier since start.
+  prevScale: number; // Previous scale value.
+  angle: number; // Cumulative rotation since start (deg, unwrapped).
+  prevAngle: number; // Previous angle value.
+}
+```
+
+**Pan delta:** `center.x - prevCenter.x`, `center.y - prevCenter.y`  
+**Pinch step:** `scale / prevScale` (multiplicative)  
+**Rotate delta:** `angle - prevAngle`
+
+`scale` and `angle` update only when at least two pointers are active.
+
 ## IPointersItem
 
 ```ts

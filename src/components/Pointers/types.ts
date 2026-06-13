@@ -79,6 +79,11 @@ export interface IPointersCallbacksMap extends IModuleCallbacksMap<IPointersMuta
   pointermove: { event: PointerEvent; pointer: IPointersItem };
 
   /**
+   * Fired once per microtask when any pointer moves after `start`.
+   */
+  move: IPointersMove;
+
+  /**
    * Fired when a pointer is removed.
    */
   pointerup: { pointer: IPointersItem };
@@ -94,6 +99,29 @@ export interface IPointersVec2 {
   x: number;
   /** Y-coordinate relative to the container. */
   y: number;
+}
+
+export interface IPointersMove {
+  /** Average of `current` positions. */
+  center: IPointersVec2;
+  /** Average of `prev` positions. */
+  prevCenter: IPointersVec2;
+  /** Center at the first `move` after `start`. */
+  startCenter: IPointersVec2;
+  /** Current span between pointers (px). */
+  distance: number;
+  /** Span on the previous `move`. */
+  prevDistance: number;
+  /** Span at the first `move` after `start`. */
+  startDistance: number;
+  /** Multiplier since gesture start: `distance / startDistance`. */
+  scale: number;
+  /** Previous multiplier since gesture start. */
+  prevScale: number;
+  /** Cumulative rotation since gesture start (deg). */
+  angle: number;
+  /** Previous cumulative rotation (deg). */
+  prevAngle: number;
 }
 
 export interface IPointersItem {

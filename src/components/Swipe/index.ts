@@ -115,6 +115,7 @@ export class Swipe extends Module<TC, TS, TM> {
       buttons,
       minPointers: pointers,
       maxPointers: pointers,
+      relative: false,
       enabled: this.props.enabled,
       disableUserSelect: this.props.disableUserSelect,
     });
@@ -273,7 +274,7 @@ export class Swipe extends Module<TC, TS, TM> {
       event.preventDefault();
     }
 
-    this._handleMove(event, 'touch');
+    this._handleMove('touch');
   }
 
   /** Handles `mousemove` event */
@@ -284,13 +285,17 @@ export class Swipe extends Module<TC, TS, TM> {
 
     this.callbacks.emit('mousemove', event);
 
-    this._handleMove(event, 'mouse');
+    this._handleMove('mouse');
   }
 
   /** Handles move events */
-  private _handleMove(event: MouseEvent | TouchEvent, type: 'touch' | 'mouse') {
+  private _handleMove(type: 'touch' | 'mouse') {
+    if (!this._pointers.move || !this.props.enabled) {
+      return;
+    }
+
     const data = this._coords;
-    const state = data.decode(event);
+    const state = data.decode(this._pointers.move.center);
 
     if (this._isAborted) {
       return;

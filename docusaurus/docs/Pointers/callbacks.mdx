@@ -84,6 +84,35 @@ const destruct = pointers.on('pointermove', ({ event, pointer }) =>
 destruct();
 ```
 
+### `move`
+
+Fired **once per microtask** when any pointer moves after [`start`](#start).  
+Coalesces multiple `pointermove` events in the same tick (typical on touch with two fingers).
+
+Provides aggregated gesture state: pan (`center`), pinch (`scale`), and rotate (`angle`).  
+See [`IPointersMove`](interfaces#ipointersmove).
+
+Low-level per-pointer updates remain on [`pointermove`](#pointermove).
+
+```ts
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+  minPointers: 2,
+  onMove: (data) => {
+    console.log(data.center, data.scale, data.angle);
+  },
+});
+```
+
+or:
+
+```ts
+const destruct = pointers.on('move', (data) => console.log(data));
+
+// Cancel the callback
+destruct();
+```
+
 ### `pointerup`
 
 Fired when a pointer is removed.
