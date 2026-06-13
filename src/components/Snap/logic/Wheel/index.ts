@@ -1,7 +1,7 @@
 import { initVevet } from '@/global/initVevet';
 import { isNumber } from '@/internal/isNumber';
 import { onlyFinite } from '@/internal/onlyFinite';
-import { addEventListener, clamp, normalizeWheel } from '@/utils';
+import { addEventListener, normalizeWheel } from '@/utils';
 
 import { SnapLogic } from '..';
 import { Snap } from '../..';
@@ -123,109 +123,46 @@ export class SnapWheel extends SnapLogic {
 
   /** Handle `followWheel=false` */
   private _handleNoFollow(deltaProp: number) {
-    const { track, isTouchPad, isGainingDelta, props, activeSlide } = this;
+    const { isTouchPad, isGainingDelta, props } = this;
     const delta = deltaProp * props.wheelSpeed;
 
-    // Detect wheel throttling
     if (this._detectNoFollowThrottle()) {
       return;
     }
 
-    // Detect if need to throttle or follow
+    if (
+      !isTouchPad ||
+      (isTouchPad && (isGainingDelta || this.absDeltas.length === 1))
+    ) {
+      const direction = Math.sign(delta);
 
-    let shouldFollow = false;
-    let isThrottled = true;
-
-    if (!shouldFollow) {
-      if (this.isSlideScrolling) {
-        if (activeSlide.coord === 0) {
-          if (delta > 0) {
-            shouldFollow = true;
+      if (direction === 1) {
+        if (!props.loop && this.activeIndex === this.slides.length - 1) {
+          if (!props.rewind) {
+            return;
           }
-        } else if (
-          activeSlide.coord ===
-          this.containerSize - activeSlide.size
-        ) {
-          if (delta < 0) {
-            shouldFollow = true;
-          }
-        } else {
-          shouldFollow = true;
-          isThrottled = false;
         }
-      }
-    }
 
-    // Throttle
+        this._lastWheelTime = +new Date();
 
-    if (isThrottled) {
-      if (
-        !isTouchPad ||
-        (isTouchPad && (isGainingDelta || this.absDeltas.length === 1))
-      ) {
-        const direction = Math.sign(delta);
-
-        if (shouldFollow) {
-          track.cancelTransition();
-
-          track.updateTarget(track.target + direction);
-          track.clampTarget();
-
-          if (!isTouchPad) {
-            track.current = track.target;
+        this.next();
+      } else {
+        if (!props.loop && this.activeIndex === 0) {
+          if (!props.rewind) {
+            return;
           }
-        } else if (direction === 1) {
-          if (!props.loop && this.activeIndex === this.slides.length - 1) {
-            if (!props.rewind) {
-              return;
-            }
-          }
-
-          this._lastWheelTime = +new Date();
-
-          this.next();
-        } else {
-          if (!props.loop && this.activeIndex === 0) {
-            if (!props.rewind) {
-              return;
-            }
-          }
-
-          this._lastWheelTime = +new Date();
-
-          this.prev();
         }
+
+        this._lastWheelTime = +new Date();
+
+        this.prev();
       }
-
-      return;
-    }
-
-    // Follow wheel
-
-    if (shouldFollow) {
-      track.cancelTransition();
-
-      const deltaWithSpeed = delta;
-
-      const start = Math.min(...activeSlide.magnets);
-      const end = Math.max(...activeSlide.magnets);
-
-      const loopedTarget = track.loopCoord(track.target);
-
-      const clampedLoopedTarget = clamp(
-        loopedTarget + deltaWithSpeed,
-        start,
-        end,
-      );
-
-      track.target = track.target + clampedLoopedTarget - loopedTarget;
-      track.clampTarget();
     }
   }
 
   /** Detect if wheel should be throttled */
   private _detectNoFollowThrottle() {
-    const { isTouchPad, scrollableSlides, isTransitioning } = this;
+    const { isTouchPad, isTransitioning } = this;
     const { wheelThrottle } = this.props;
 
     const timeDiff = +new Date() - this._lastWheelTime;
@@ -242,19 +179,11 @@ export class SnapWheel extends SnapLogic {
       return isTransitioning;
     }
 
-    const visibleScrollableSlides = scrollableSlides.filter(
-      (slide) => slide.isVisible,
-    );
-
-    if (visibleScrollableSlides.length && isTransitioning) {
-      return true;
-    }
-
     if (timeDiff < 500) {
       return true;
     }
 
-    return false;
+    return isTransitioning;
   }
 
   /** Handle wheel end */
