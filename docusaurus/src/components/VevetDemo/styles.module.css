@@ -1,0 +1,7 @@
+.root {
+  margin: 1rem 0 0;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--ifm-background-color);
+}

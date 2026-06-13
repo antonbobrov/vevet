@@ -89,6 +89,10 @@ code {
   padding-block: 0;
 }
 
+article section {
+  margin: 2rem 0;
+}
+
 .pagination-nav__link {
   padding: 1.5rem;
 }

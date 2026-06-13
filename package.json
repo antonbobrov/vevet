@@ -25,6 +25,7 @@
     "type": "git",
     "url": "git+https://github.com/antonbobrov/vevet.git"
   },
+  "homepage": "https://vevetjs.com/",
   "keywords": [
     "carousel",
     "slider",
@@ -63,7 +64,8 @@
   ],
   "files": [
     "lib",
-    "src"
+    "src",
+    "AGENTS.md"
   ],
   "author": "Anton Bobrov <anton.bobrov@hotmail.com>",
   "license": "MIT",

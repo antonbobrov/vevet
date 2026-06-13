@@ -10,71 +10,53 @@ keywords:
   - infinite scroll
 ---
 
+import VevetDemo from '@site/src/components/VevetDemo';
+
 # Marquee
 
 A custom marquee component that smoothly scrolls its child elements.
 
-
-
 ## Basic Demo
 
-<iframe 
-  height="500"
-  style={{
-    width: '100%'
-  }} 
-  scrolling="no" 
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/zxxOadw?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen <a href="https://codepen.io/anton-bobrov/pen/zxxOadw">Vevet Demo</a> by Anton Bobrov.
-</iframe>
-
-
+<VevetDemo id="zxxOadw" height={500} />
 
 ## More demos
 
 To explore more demos, click [here](./demos).
 
 ## Advantages
+
 - **Automatic Cloning of Child Nodes**  
-Seamlessly duplicates content to ensure a continuous marquee without visual gaps.
+  Seamlessly duplicates content to ensure a continuous marquee without visual gaps.
 
 - **Horizontal and Vertical Modes**  
-Works in both directions with the same API — no extra configuration needed.
+  Works in both directions with the same API — no extra configuration needed.
 
 - **Flexible Speed Control**  
-Supports dynamic speed updates and smooth runtime adjustments.
+  Supports dynamic speed updates and smooth runtime adjustments.
 
 - **Custom Speed & Gap With CSS Units**  
-Both speed and gap accept any CSS length unit (px, rem, vw, etc.), with gap supporting only zero or positive values.
+  Both speed and gap accept any CSS length unit (px, rem, vw, etc.), with gap supporting only zero or positive values.
 
 - **Playback Control API**  
-Programmatically play, pause, and restart the marquee.
+  Programmatically play, pause, and restart the marquee.
 
 - **Pause on Hover**  
-Optional hover-based pausing built in.
+  Optional hover-based pausing built in.
 
 - **Default Styling Included**  
-Ships with minimal required CSS (or inline styles), so the marquee works out-of-the-box without custom styling.
-
-
+  Ships with minimal required CSS (or inline styles), so the marquee works out-of-the-box without custom styling.
 
 ## Best Practices
 
 To ensure smooth and predictable marquee behavior:
+
 - Use either plain text or a group of elements as children — the component is optimized for both.
 - Child elements should preferably use inline-block or block display values for correct width calculation.
 - The gap property should always be 0 or a positive value. Negative values are not supported.
 - When using complex layouts inside the marquee, avoid margin collapsing and ensure elements have measurable width/height.
 - For vertical marquee, define an explicit container height.
 - Avoid using inline styles inside marquee children.
-
-
 
 ## Initialization
 
@@ -84,12 +66,11 @@ Marquee is easy to initialize:
 <div id="marquee">Breaking News🔥</div>
 ```
 
-
 ```js
-import { Marquee } from "vevet";
+import { Marquee } from 'vevet';
 
 const marquee = new Marquee({
-  container: document.getElementById("marquee")
+  container: document.getElementById('marquee'),
 });
 ```
 
@@ -97,7 +78,7 @@ Stop marquee:
 
 ```js
 marquee.updateProps({
-  enabled: false
+  enabled: false,
 });
 ```
 
@@ -105,7 +86,7 @@ Play marquee:
 
 ```js
 marquee.updateProps({
-  enabled: true
+  enabled: true,
 });
 ```
 

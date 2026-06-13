@@ -7,592 +7,213 @@ keywords:
   - carousel examples
 ---
 
+import VevetDemo from '@site/src/components/VevetDemo';
+
 # Basic Demos
 
 <Head>
   <title>Snap Basic Demos | vevet.js</title>
 </Head>
 
-## Carousel values
+<section>
+  ## Carousel values
+  <VevetDemo id="ByLxGNj" height={600} />
+</section>
 
-<iframe
-  height="600"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/ByLxGNj?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/ByLxGNj">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
-
+<section>
 ## Default active index
 
 `Vevet Snap` supports a default active index. Provide `activeIndex` (zero-based) when initializing to open the carousel at a specific slide:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/myVqdQK?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/myVqdQK">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="myVqdQK" height={500} />
+</section>
 
+<section>
 ## Variable Size
 
-`Snap` supports slides of varying sizes - they don’t need to be equal in width or height.
+`Snap` supports slides of varying sizes - they don't need to be equal in width or height.
 
 Some slides may be larger than their container. In this case, they can be smoothly scrolled:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/RNNjdxK?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/RNNjdxK">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="RNNjdxK" height={500} />
+</section>
 
+<section>
 ## Vertical
 
 `Snap` can operate in either horizontal or vertical orientation:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/ZYYaZmp?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/ZYYaZmp">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="ZYYaZmp" height={500} />
+</section>
 
-## Origin {#origin}
-
-<a id="centered" />
+<section>
+## Origin {/* #origin */}
 
 `Snap` slides can align to the **start**, **center**, or **end** of the container via [`origin`](./props#props.origin). The demo below uses centered slides (`origin: 'center'`):
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/PwwOgvv?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/PwwOgvv">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="PwwOgvv" height={500} />
+</section>
 
+<section>
 ## Loop
 
 Any `Snap` carousel can be infinite:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/zxxPQNR?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/zxxPQNR">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="zxxPQNR" height={500} />
+</section>
 
+<section>
 ## Gap
 
 `Snap` supports custom gaps between slides. The gap can be set in `px`, `rem`, `vw`, `vh` or `svh`:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/raxYLVE?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/raxYLVE">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="raxYLVE" height={500} />
+</section>
 
+<section>
 ## Grab cursor
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/myVqOoR?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/myVqOoR">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="myVqOoR" height={500} />
+</section>
 
+<section>
 ## Wheel
 
 `Snap` supports wheel control:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/EaaEYwX?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/EaaEYwX">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="EaaEYwX" height={500} />
+</section>
 
+<section>
 ## Free wheel
 
 The `Snap` wheel behavior may differ slightly. For example, after a swipe, the carousel snaps to the nearest magnet, but after a wheel scroll ends, it won't - that part is up to you:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/raxYLWB?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/raxYLWB">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="raxYLWB" height={500} />
+</section>
 
+<section>
 ## Wheel No-Follow Auto-Throttle
 
 Sometimes you may want to prevent scrolling through multiple slides at once — Vevet `Snap` provides automatic wheel throttling to handle that, which works well in most cases:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/jEWaryX?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/jEWaryX">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="jEWaryX" height={500} />
+</section>
 
+<section>
 ## Wheel No-Follow Numeric Throttle
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/GgZzmmr?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/GgZzmmr">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="GgZzmmr" height={500} />
+</section>
 
+<section>
 ## Hypersmooth
 
 One of the best features is track value interpolation, which allows you to make scrolling and swiping as smooth as you want - right out of the box:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/VYYrOow?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/VYYrOow">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="VYYrOow" height={500} />
+</section>
 
+<section>
 ## Freemode
 
 `Snap` freemode allows you to ignore magnets when swiping or wheel scrolling ends:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/bNNYPwo?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/bNNYPwo">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="bNNYPwo" height={500} />
+</section>
 
+<section>
 ## Sticky freemode
 
 `Snap` freemode also supports sticky mode. Users can scroll freely with inertia, but when their interaction ends, magnets take effect, snapping the carousel to the nearest slide:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/WbrXoVJ?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/WbrXoVJ">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="WbrXoVJ" height={500} />
+</section>
 
+<section>
 ## Rewind
 
 Enables wrap-around navigation: advancing from the last slide jumps to the first, and going back from the first jumps to the last:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/qEZgjRm?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/qEZgjRm">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="qEZgjRm" height={500} />
+</section>
 
+<section>
 ## Friction
 
-`Snap` supports friction for both wheel and swipe interactions. Friction adds resistance to the user’s scrolling, pulling slides toward their magnets:
+`Snap` supports friction for both wheel and swipe interactions. Friction adds resistance to the user's scrolling, pulling slides toward their magnets:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/YPwEZBg?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/YPwEZBg">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="YPwEZBg" height={500} />
+</section>
 
+<section>
 ## Edge Friction
 
-`Snap` supports edge friction, making swipe interactions feel more natural and engaging. Edge friction adds resistance when swiping near the carousel’s edges:
+`Snap` supports edge friction, making swipe interactions feel more natural and engaging. Edge friction adds resistance when swiping near the carousel's edges:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/QwyOped?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/QwyOped">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="QwyOped" height={500} />
+</section>
 
+<section>
 ## Interval
 
 `Snap` supports automatic slide change with custom intervals.
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/zxKxodd?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/zxKxodd">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="zxKxodd" height={500} />
+</section>
 
+<section>
 ## Bounce
 
 You can customize your animation - use any easing you like:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/emmVqwN?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/emmVqwN">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="emmVqwN" height={500} />
+</section>
 
+<section>
 ## Swipe No Follow
 
 By default, `Snap` follows the user's swipe interaction. This behavior can be disabled, causing slides to change only after the interaction ends:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/YPwEVzo?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/YPwEVzo">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="YPwEVzo" height={500} />
+</section>
 
+<section>
 ## Reverse Swipe
 
 Both wheel and swipe speeds can be customized:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/myyxbdL?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/myyxbdL">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="myyxbdL" height={500} />
+</section>
 
+<section>
 ## RTL Carousel
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/xbVMdVo?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/xbVMdVo">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="xbVMdVo" height={500} />
+</section>
 
+<section>
 ## Slides to Scroll
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/MYyLmbq?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/MYyLmbq">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="MYyLmbq" height={500} />
+</section>
 
+<section>
 ## Responsive Carousel
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/LENKmpN?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/LENKmpN">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="LENKmpN" height={500} />
+</section>
 
+<section>
 ## Progress
 
 `Snap` is a powerful solution for custom carousels. It allows you to track slide progress and animate them however you like:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/ByNdgGj?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/ByNdgGj">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="ByNdgGj" height={500} />
+</section>
 
+<section>
 ## Virtual
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/azONLzb?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/azONLzb">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="azONLzb" height={500} />
+</section>

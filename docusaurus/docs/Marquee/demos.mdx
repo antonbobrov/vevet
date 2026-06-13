@@ -6,6 +6,8 @@ keywords:
   - vevet marquee
 ---
 
+import VevetDemo from '@site/src/components/VevetDemo';
+
 import Head from '@docusaurus/Head';
 
 # Demos
@@ -14,246 +16,92 @@ import Head from '@docusaurus/Head';
   <title>Marquee Demos | vevet.js</title>
 </Head>
 
-## Simple Marquee
+<section>
+  ## Simple Marquee
 
 A simple Marquee with default settings:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/zxxOadw?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/zxxOadw">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+  <VevetDemo id="zxxOadw" height={500} />
+</section>
 
+<section>
 ## Vertical Marquee
 
 Vevet Marquee supports vertical mode:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/JoGLENV?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/JoGLENV">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="JoGLENV" height={500} />
+</section>
 
+<section>
 ## Pause on Hover
 
 A simple Marquee that pauses when it is being hovered:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/pvgWjRM?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/pvgWjRM">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="pvgWjRM" height={500} />
+</section>
 
+<section>
 ## Reverse Marquee
 
 A simple Marquee with reversed motion:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/EaaLbOp?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/EaaLbOp">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="EaaLbOp" height={500} />
+</section>
 
+<section>
 ## Controllable Marquee
 
 A marquee with controls:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/QwyqjzW?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/QwyqjzW">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="QwyqjzW" height={500} />
+</section>
 
+<section>
 ## With CSS units
 
 Marquee `gap` and `speed` may accept a string with CSS units like `px`, `rem`, `vw`, `vh`, `svh`:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/jEWGWqq?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/jEWGWqq">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="jEWGWqq" height={500} />
+</section>
 
+<section>
 ## With speed adjustment
 
 Marquee can adjust speed depending on the user's FPS rate. This feature is enabled by default. It helps make the marquee move the same way across displays with different update frequencies.
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/KwVXVNg?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/KwVXVNg">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="KwVXVNg" height={500} />
+</section>
 
+<section>
 ## Responsive Marquee
 
 Marquee, like any other component in Vevet, may be customized depending on the user's viewport sizes or their device type.
 
 In this demo, marquee speed and gap are dynamic - they change depending on responsive breakpoints:
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/bNEopqo?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/bNEopqo">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="bNEopqo" height={500} />
+</section>
 
+<section>
 ## Draggable Marquee
 
 By default, Marquee does not support swiping. But this can be solved with [Swipe](/docs/Swipe):
 
-<iframe
-  height="600"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/XJJrYeR?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/XJJrYeR">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="XJJrYeR" height={600} />
+</section>
 
+<section>
 ## Scrollable Marquee
 
 This is a combination of [Marquee](/docs/Marquee) and [ScrollProgress](/docs/ScrollProgress). With ScrollProgress, you can handle scrolling logic for your marquee element:
 
-<iframe
-  height="600"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/raaBKYy?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/raaBKYy">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="raaBKYy" height={600} />
+</section>
 
+<section>
 ## No clones
 
 By default, Marquee clones its nodes. This may be disabled if needed:
 
-<iframe
-  height="600"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/wBMpPve?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/wBMpPve">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="wBMpPve" height={600} />
+</section>

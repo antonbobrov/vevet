@@ -12,6 +12,95 @@ const config: Config = {
   projectName: 'vevet',
   onBrokenLinks: 'throw',
 
+  headTags: [
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'alternate',
+        type: 'text/markdown',
+        href: 'https://vevetjs.com/llms.txt',
+        title: 'LLM documentation index',
+      },
+    },
+    {
+      tagName: 'script',
+      attributes: { type: 'application/ld+json' },
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: 'vevet.js',
+        alternateName: ['vevet', 'Vevet.js'],
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'Web browser',
+        description:
+          'Flexible client-side JavaScript library for creative web development: split text, carousels, marquees, preloaders, canvas, custom cursor, scroll tools, and more.',
+        url: 'https://vevetjs.com/',
+        downloadUrl: 'https://www.npmjs.com/package/vevet',
+        softwareVersion: '5',
+        license: 'https://opensource.org/licenses/MIT',
+        author: {
+          '@type': 'Person',
+          name: 'Anton Bobrov',
+        },
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'USD',
+        },
+      }),
+    },
+  ],
+
+  plugins: [
+    [
+      '@signalwire/docusaurus-plugin-llms-txt',
+      {
+        siteTitle: 'vevet.js',
+        siteDescription:
+          'vevet.js (npm: vevet) — client-side JavaScript library for creative web development. v5 · import { vevet, SplitText, Snap } from "vevet". All components extend Module. API: component sections below. Working examples: Demos pages (HTML/CSS/JS included). Full export: llms-full.txt.',
+        depth: 2,
+        optionalLinks: [
+          {
+            title: 'GitHub repository',
+            url: 'https://github.com/antonbobrov/vevet',
+            description: 'Source code, issues, changelog',
+          },
+          {
+            title: 'npm package',
+            url: 'https://www.npmjs.com/package/vevet',
+            description: 'Install via npm install vevet',
+          },
+          {
+            title: 'TypeDoc API reference (v5)',
+            url: 'https://vevetjs.com/v5/',
+            description: 'Generated TypeScript API docs',
+          },
+          {
+            title: 'Full documentation export',
+            url: 'https://vevetjs.com/llms-full.txt',
+            description:
+              'All docs and demo code as markdown in a single file',
+          },
+          {
+            title: 'AGENTS.md (for coding agents)',
+            url: 'https://github.com/antonbobrov/vevet/blob/master/AGENTS.md',
+            description: 'Repository guide for AI coding assistants',
+          },
+        ],
+        content: {
+          enableMarkdownFiles: false,
+          enableLlmsFullTxt: true,
+          relativePaths: false,
+          includeDocs: true,
+          includeBlog: false,
+          includePages: false,
+          excludeRoutes: ['**/search**'],
+        },
+        includeOrder: ['docs/intro', 'docs/core/**', 'docs/base/**'],
+      },
+    ],
+  ],
+
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],

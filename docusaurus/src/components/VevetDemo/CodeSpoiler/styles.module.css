@@ -1,0 +1,27 @@
+.spoiler {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.summary {
+  cursor: pointer;
+  padding: 0.65rem 0.9rem;
+  font-weight: 600;
+  background: var(--ifm-color-emphasis-100);
+}
+
+.code {
+  max-height: 360px;
+  overflow: auto;
+}
+
+.codeBlock {
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.codeBlock :global(pre) {
+  margin: 0;
+}

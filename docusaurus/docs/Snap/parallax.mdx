@@ -8,6 +8,8 @@ keywords:
   - carousel parallax
 ---
 
+import VevetDemo from '@site/src/components/VevetDemo';
+
 import Head from '@docusaurus/Head';
 
 # Parallax
@@ -26,41 +28,19 @@ Do not apply parallax directly to the slide element. Use inner wrappers instead.
 
 ## Demos
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/gbrqRjZ?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/gbrqRjZ">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<section>
+### Skew Parallax
 
-<iframe
-  height="500"
-  style={{
-    width: '100%',
-  }}
-  scrolling="no"
-  title="Vevet Demo"
-  src="https://codepen.io/anton-bobrov/embed/gbrqRXB?default-tab=result"
-  frameborder="no"
-  loading="lazy"
-  allowtransparency="true"
-  allowfullscreen="true"
->
-  See the Pen{' '}
-  <a href="https://codepen.io/anton-bobrov/pen/gbrqRXB">Vevet Demo</a> by Anton
-  Bobrov.
-</iframe>
+<VevetDemo id="gbrqRjZ" height={500} />
+</section>
+
+<section>
+
+### Parallax Gap
+
+<VevetDemo id="gbrqRXB" height={500} />
+
+</section>
 
 ## Parallax Effects
 
