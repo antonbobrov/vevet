@@ -12,6 +12,7 @@ export const Test: FC = () => {
 
     const instance = new Swipe({
       container: ref.current,
+      axis: 'x',
       onMove: ({ diff }) => {
         instance.container.innerHTML = `${diff.x.toFixed(2)} ${diff.y.toFixed(2)}`;
       },
@@ -29,18 +30,14 @@ export const Test: FC = () => {
       <style>
         {`
           .container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
+            margin: 0 auto;
             width: 200px;
             height: 200px;
 
             display: flex;
             justify-content: center;
-            align-items: center;
-            
-            touch-action: pan-y;
+            align-items: center;          
             
             background: #000;
             color: #fff;

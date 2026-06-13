@@ -115,7 +115,6 @@ export const Test: FC<ITestProps> = ({ snapProps }) => {
             max-width: 80%;
             height: 300px;
             background: #000;
-            overflow: hidden;
           }
 
           .snap-test[data-direction='vertical'] {

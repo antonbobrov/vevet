@@ -34,14 +34,10 @@ export const Lever: FC = () => {
       <style>
         {`
           .container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
+            margin: 0 auto;
             width: 300px;
             height: 300px;
-
-            touch-action: none;
           }
 
           .thumb_container {

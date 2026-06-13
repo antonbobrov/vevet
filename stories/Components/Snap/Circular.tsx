@@ -47,10 +47,8 @@ export const Circular: FC = () => {
           .container {
             --size: min(50vh, 50vw);
 
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
+            margin: 0 auto;
             width: var(--size);
             height: var(--size);
           }

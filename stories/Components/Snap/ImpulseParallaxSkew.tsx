@@ -35,13 +35,10 @@ export const ImpulseParallaxSkew: FC = () => {
           .container {
             --size: min(30vw, 50vh);
 
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
+            margin: 0 auto;
             width: 100%;
             height: var(--size);
-            overflow: hidden;
 
             @media (orientation: portrait) {
               --size: min(30vh, 50vw);

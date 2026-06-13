@@ -68,10 +68,6 @@ export const Component: FC<IProps> = (props) => {
         Destroy
       </button>
 
-      <br />
-
-      <br />
-
       <div
         style={{ background: '#ccc', width, maxWidth: '100%', fontSize: 20 }}
       >

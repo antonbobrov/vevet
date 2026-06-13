@@ -18,6 +18,8 @@ export const Cards: FC = () => {
       direction: 'horizontal',
       wheel: true,
       wheelAxis: 'y',
+      freemode: 'sticky',
+      shortSwipes: false,
       onSwipeStart: (data, { activeIndex }) => {
         startIndex = activeIndex;
       },
@@ -61,10 +63,8 @@ export const Cards: FC = () => {
       <style>
         {`
           .container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
+            margin: 0 auto;
             width: 240px;
             height: 320px;
 

@@ -61,8 +61,6 @@ export const Test: FC = () => {
         }}
       />
 
-      <br />
-
       <p>Original media</p>
 
       <img

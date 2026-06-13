@@ -19,6 +19,7 @@ export const Rotation: FC = () => {
       overflow: () => 10,
       bounds: () => ({ angle: [-360, 360] }),
       ratio: 0.5,
+      inertiaRatio: 2,
       onMove: ({ movement }) => {
         rotateRef.current!.style.transform = `rotate(${movement.angle}deg)`;
       },
@@ -32,10 +33,8 @@ export const Rotation: FC = () => {
       <style>
         {`
           .container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
+            margin: 0 auto;
             width: 200px;
             height: 200px;
 

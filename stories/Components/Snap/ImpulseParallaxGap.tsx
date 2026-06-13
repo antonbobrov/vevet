@@ -14,9 +14,8 @@ export const ImpulseParallaxGap: FC = () => {
       container: ref.current,
       origin: 'center',
       loop: true,
-      shortSwipes: false,
       gap: 5,
-      // lerp: 0.2,
+      lerp: 0.2,
       freemode: true,
       onUpdate: (data, { slides }) => {
         slides.forEach(({ element, coord }) => {
@@ -35,13 +34,10 @@ export const ImpulseParallaxGap: FC = () => {
           .container {
             --size: min(30vw, 50vh);
 
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
+            margin: 0 auto;
             width: 100%;
             height: var(--size);
-            overflow: hidden;
 
             @media (orientation: portrait) {
               --size: min(30vh, 50vw);

@@ -1,16 +1,18 @@
 import React, { FC, useEffect, useRef } from 'react';
 
-import { Swipe } from '@/index';
+import { clamp, Pointers, Swipe } from '@/index';
 
 export const Bounds: FC = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
+  const scalableRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
     const thumb = thumbRef.current;
+    const scalable = scalableRef.current;
 
-    if (!wrapper || !thumb) {
+    if (!wrapper || !thumb || !scalable) {
       return undefined;
     }
 
@@ -20,6 +22,7 @@ export const Bounds: FC = () => {
       inertia: true,
       grabCursor: true,
       relative: true,
+      pointers: (type) => (type === 'mouse' ? 1 : 2),
       overflow: () => 50,
       bounds: () => ({ x: [0, 300], y: [0, 300] }),
       onInertia: () => console.log('inertia'),
@@ -32,9 +35,27 @@ export const Bounds: FC = () => {
       },
     });
 
+    let currentScale = 1;
+    let currentAngle = 0;
+
+    const pointers = new Pointers({
+      container: wrapper,
+      minPointers: 2,
+      maxPointers: 2,
+      onMove: ({ scale, prevScale, angle, prevAngle }) => {
+        currentScale = clamp(currentScale + (scale - prevScale), 1, 2);
+        currentAngle += angle - prevAngle;
+
+        scalable.style.transform = `scale(${currentScale}) rotate(${currentAngle}deg)`;
+      },
+    });
+
     instance.setMovement({ x: 150, y: 150 });
 
-    return () => instance.destroy();
+    return () => {
+      instance.destroy();
+      pointers.destroy();
+    };
   }, []);
 
   return (
@@ -42,26 +63,34 @@ export const Bounds: FC = () => {
       <style>
         {`
           .wrapper {
-            position: fixed;
-            z-index: 1;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
+            margin: 0 auto;
 
             width: 400px;
+            max-width: 100%;
             height: 400px;
 
             background: #ddd;
           }
 
           .thumb {
-            width: 100px;
-            height: 100px;
+            position: relative;
+            width: 150px;
+            height: 150px;
+          }
+
+          .scalable {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+
 
             display: flex;
             justify-content: center;
             align-items: center;
-            
+
             background: #0000009e;
             color: #fff;
           }
@@ -70,7 +99,9 @@ export const Bounds: FC = () => {
 
       <div ref={wrapperRef} className="wrapper">
         <div ref={thumbRef} className="thumb">
-          Drag Me
+          <div ref={scalableRef} className="scalable">
+            Drag Me
+          </div>
         </div>
       </div>
     </>

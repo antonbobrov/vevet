@@ -87,10 +87,8 @@ export const DynamicWidth: FC = () => {
       <style>
         {`
           .slider {
-            position: fixed;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
+            position: relative;
+            margin: 0 auto;
             width: 100%;
             height: 30vw;
           }

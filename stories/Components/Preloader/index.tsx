@@ -34,10 +34,10 @@ export const Component: FC<IProps> = ({ hide }) => {
       <div
         ref={ref}
         style={{
-          position: 'absolute',
+          position: 'fixed',
+          zIndex: 1,
           inset: 0,
           background: '#000',
-          zIndex: 1,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

@@ -9,10 +9,21 @@ import { Scroll as ScrollComponent } from './Scroll';
 import { Test as TestComponent } from './Test';
 import { Viewer as ViewerComponent } from './Viewer';
 
-import type { Meta, StoryFn } from '@storybook/react';
+import type { TViewerInteraction } from './Viewer';
+import type { Meta, StoryFn, StoryObj } from '@storybook/react';
 
-const meta: Meta = {
+type TViewerStory = StoryObj<typeof ViewerComponent>;
+
+const viewerArgTypes = {
+  interaction: {
+    control: 'select',
+    options: ['simple', 'pinch'] satisfies TViewerInteraction[],
+  },
+} satisfies NonNullable<TViewerStory['argTypes']>;
+
+const meta: Meta<typeof ViewerComponent> = {
   title: 'Components/Swipe',
+  component: ViewerComponent,
 };
 
 export default meta;
@@ -31,4 +42,9 @@ export const Lever: StoryFn = () => <LeverComponent />;
 
 export const Scroll: StoryFn = () => <ScrollComponent />;
 
-export const Viewer: StoryFn = () => <ViewerComponent />;
+export const Viewer: TViewerStory = {
+  args: {
+    interaction: 'simple',
+  },
+  argTypes: viewerArgTypes,
+};
