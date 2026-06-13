@@ -47,7 +47,7 @@ const observer = new Swipe({
 
 ### `buttons` {#props.buttons}
 
-- **Type:** `number[]`
+- **Type:** `number[] | ((type: TPointersType) => number[])`
 - **Default:** `[0]`
 - Determines which mouse buttons trigger events.
   - 0: Main button pressed, usually the left button or the un-initialized state
@@ -58,6 +58,8 @@ const observer = new Swipe({
 - See [MouseEvent.button](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button).
 - **See [demo](demos#right-click-drag)**
 
+Same shape as [`Pointers` `buttons`](/docs/Pointers/props#props.buttons).
+
 ```js
 const observer = new Swipe({
   container: document.getElementById('container'),
@@ -67,18 +69,41 @@ const observer = new Swipe({
 });
 ```
 
+Different rules for mouse and touch:
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  buttons: (type) => (type === 'touch' ? [0] : [2]),
+});
+```
+
 ### `pointers` {#props.pointers}
 
-- **Type:** `number`
+- **Type:** `number | ((type: TPointersType) => number)`
 - **Default:** `1`
 - Required pointer count to activate swiping.  
-  Useful for touch gestures such as two-finger.  
+  Useful for touch gestures such as two-finger pan.  
   If fewer pointers are present, swipe will not start.
+
+  Same shape as [`Pointers` `minPointers`](/docs/Pointers/props#props.minPointers).  
+  Swipe sets both `minPointers` and `maxPointers` on its internal [`Pointers`](/docs/Pointers) instance to this value.
+
+  During move, Swipe tracks the **center** between active pointers (from [`Pointers.move`](/docs/Pointers/accessors#move)), not the first touch only.
 
 ```js
 const observer = new Swipe({
   container: document.getElementById('container'),
-  pointers: 2, // means that swipe will start only with two fingers
+  pointers: 2, // swipe starts only with two fingers
+});
+```
+
+One finger on mouse, two on touch:
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  pointers: (type) => (type === 'mouse' ? 1 : 2),
 });
 ```
 
@@ -401,7 +426,17 @@ const swipe = new Swipe({
 
 - **Type:** `boolean`
 - **Default:** `true`
-- Enable bounds recalculation when inertia is active.
+- When `true`, [`bounds`](#props.bounds) are re-read on every move update while release inertia is active.  
+  Set to `false` when bounds are static during inertia (for example in [`Snap`](/docs/Snap)) to avoid extra layout work.
+
+```js
+const swipe = new Swipe({
+  container: document.getElementById('container'),
+  inertia: true,
+  bounds: () => ({ x: [0, 300] }),
+  recalculateBoundsOnInertia: false,
+});
+```
 
 ### `snap` {#props.snap}
 

@@ -4,6 +4,8 @@ import {
   IModuleStaticProps,
 } from '@/base';
 
+export type TPointersType = 'mouse' | 'touch';
+
 export interface IPointersStaticProps extends IModuleStaticProps {
   /**
    * The element that listens for pointer events.
@@ -31,19 +33,19 @@ export interface IPointersStaticProps extends IModuleStaticProps {
    *
    * @default [0]
    */
-  buttons?: number[];
+  buttons?: number[] | ((type: TPointersType) => number[]);
 
   /**
    * Minimum number of active pointers required to trigger the "start" callback.
    * @default 1
    */
-  minPointers?: number;
+  minPointers?: number | ((type: TPointersType) => number);
 
   /**
    * Maximum number of pointers that can be tracked simultaneously.
    * @default 5
    */
-  maxPointers?: number;
+  maxPointers?: number | ((type: TPointersType) => number);
 
   /**
    * Disable user selection on drag.

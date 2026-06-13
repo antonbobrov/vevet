@@ -1,5 +1,6 @@
 import { Module, TModuleOnCallbacksProps } from '@/base';
 import { body } from '@/internal/env';
+import { isNumber } from '@/internal/isNumber';
 import { TRequiredProps } from '@/internal/requiredProps';
 import { addEventListener, clamp } from '@/utils';
 
@@ -55,6 +56,9 @@ export class Pointers extends Module<TC, TS, TM> {
   /** Map of active pointers. */
   private _pointersMap: Map<number, IPointersItem>;
 
+  /** Save minPointers value */
+  private _saveMinPointers = 1;
+
   constructor(
     props?: TS & TM & TModuleOnCallbacksProps<TC, Pointers>,
     onCallbacks?: TModuleOnCallbacksProps<TC, Pointers>,
@@ -83,14 +87,44 @@ export class Pointers extends Module<TC, TS, TM> {
     return this.props.container;
   }
 
-  /** Returns the minimum number of pointers required to trigger events. */
-  get minPointers() {
-    return clamp(this.props.minPointers, 1, Infinity);
+  /** Get buttons */
+  private _getButtons(type: TPointersType) {
+    const { buttons } = this.props;
+
+    return Array.isArray(buttons) ? buttons : buttons(type);
   }
 
-  /** Returns the maximum number of pointers that can be tracked. */
-  get maxPointers() {
-    return clamp(this.props.maxPointers, this.props.minPointers, Infinity);
+  /** Get max pointers */
+  private _getMinPointers(type: TPointersType) {
+    const { minPointers } = this.props;
+
+    return clamp(
+      isNumber(minPointers) ? minPointers : minPointers(type),
+      1,
+      Infinity,
+    );
+  }
+
+  /** Get max pointers */
+  private _getMaxPointers(type: TPointersType) {
+    const { maxPointers } = this.props;
+
+    return clamp(
+      isNumber(maxPointers) ? maxPointers : maxPointers(type),
+      this._getMinPointers(type),
+      Infinity,
+    );
+  }
+
+  /** Normalize pointer event type */
+  private _getPointerType(event: PointerEvent) {
+    const types: TPointersType[] = ['mouse', 'touch'];
+
+    if (types.includes(event.pointerType as TPointersType)) {
+      return event.pointerType as TPointersType;
+    }
+
+    return 'mouse';
   }
 
   /**
@@ -114,7 +148,7 @@ export class Pointers extends Module<TC, TS, TM> {
       container,
       'mousedown',
       (event) => {
-        if (this.props.buttons.includes(1)) {
+        if (this._getButtons('mouse').includes(1)) {
           event.preventDefault();
         }
       },
@@ -125,7 +159,7 @@ export class Pointers extends Module<TC, TS, TM> {
       container,
       'contextmenu',
       (event) => {
-        if (this.props.buttons.includes(2)) {
+        if (this._getButtons('mouse').includes(2)) {
           event.preventDefault();
         }
       },
@@ -183,19 +217,27 @@ export class Pointers extends Module<TC, TS, TM> {
   private _handlePointerDown(event: PointerEvent) {
     const { props } = this;
     const { x, y } = this._decodeCoords(event);
+    const pointerType = this._getPointerType(event);
+
+    const buttons = this._getButtons(pointerType);
+
+    const minPointers = this._getMinPointers(pointerType);
+    this._saveMinPointers = minPointers;
+
+    const maxPointers = this._getMaxPointers(pointerType);
 
     if (!props.enabled) {
       return;
     }
 
     // check if button type is allowed
-    if (!props.buttons.includes(event.button)) {
+    if (!buttons.includes(event.button)) {
       return;
     }
 
     // Check if pointer already exists or no more pointers allowed
     const hasPointer = this.pointersMap.get(event.pointerId);
-    if (hasPointer || this.pointersMap.size >= this.maxPointers) {
+    if (hasPointer || this.pointersMap.size >= maxPointers) {
       return;
     }
 
@@ -220,7 +262,7 @@ export class Pointers extends Module<TC, TS, TM> {
     });
 
     // Start callback
-    if (this.pointersMap.size === this.minPointers) {
+    if (this.pointersMap.size === minPointers) {
       this._isStarted = true;
       this.callbacks.emit('start', undefined);
     }
@@ -277,6 +319,10 @@ export class Pointers extends Module<TC, TS, TM> {
   private _handlePointerUp(event: PointerEvent) {
     // check if pointer exists
     const pointer = this.pointersMap.get(event.pointerId);
+
+    // Get min-pointers
+    const minPointers = this._getMinPointers(this._getPointerType(event));
+
     if (!pointer) {
       return;
     }
@@ -288,7 +334,7 @@ export class Pointers extends Module<TC, TS, TM> {
     this.pointersMap.delete(event.pointerId);
 
     // end if no pointers left
-    if (this.pointersMap.size < this.minPointers && this._isStarted) {
+    if (this.pointersMap.size < minPointers && this._isStarted) {
       this._isStarted = false;
       this.callbacks.emit('end', undefined);
     }

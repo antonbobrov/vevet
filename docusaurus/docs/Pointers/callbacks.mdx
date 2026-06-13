@@ -42,6 +42,8 @@ destruct();
 
 Fired when a pointer is added.
 
+`event.pointerType` is `'mouse'` or `'touch'` (see [`TPointersType`](interfaces#tpointerstype)). Use it to branch logic or with type-aware props.
+
 ```ts
 const pointers = new Pointers({
   container: document.getElementById('container'),

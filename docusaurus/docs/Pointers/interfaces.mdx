@@ -15,6 +15,15 @@ import Head from '@docusaurus/Head';
   <title>Pointers Interfaces | vevet.js</title>
 </Head>
 
+## TPointersType
+
+```ts
+type TPointersType = 'mouse' | 'touch';
+```
+
+Used by type-aware props ([`buttons`](props#props.buttons), [`minPointers`](props#props.minPointers), [`maxPointers`](props#props.maxPointers)).  
+Resolved from [`PointerEvent.pointerType`](https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent/pointerType) on the first pointer of a gesture; unknown values fall back to `'mouse'`.
+
 ## IPointersItem
 
 ```ts

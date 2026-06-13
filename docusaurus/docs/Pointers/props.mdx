@@ -45,7 +45,7 @@ const pointers = new Pointers({
 
 ### `buttons` {#props.buttons}
 
-- **Type:** `number[]`
+- **Type:** `number[] | ((type: TPointersType) => number[])`
 - **Default:** `[0]`
 - Determines which mouse buttons trigger events.
   - 0: Main button pressed, usually the left button or the un-initialized state
@@ -56,6 +56,8 @@ const pointers = new Pointers({
 
   See [MouseEvent.button](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button).
 
+  `type` is resolved from the first [`pointerdown`](callbacks#pointerdown) [`PointerEvent.pointerType`](https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent/pointerType) (`'mouse'` or `'touch'`; unknown values fall back to `'mouse'`).
+
 ```js
 const pointers = new Pointers({
   container: document.getElementById('container'),
@@ -63,11 +65,20 @@ const pointers = new Pointers({
 });
 ```
 
+Different buttons for mouse and touch:
+
+```js
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+  buttons: (type) => (type === 'touch' ? [0] : [0, 2]),
+});
+```
+
 ### `minPointers` {#props.minPointers}
 
-- **Type:** `number`
+- **Type:** `number | ((type: TPointersType) => number)`
 - **Default:** `1`
-- Minimum number of active pointers (fingers) required to trigger the "start" callback.
+- Minimum number of active pointers (fingers) required to trigger the [`start`](callbacks#start) callback.
 
 ```js
 const pointers = new Pointers({
@@ -76,9 +87,18 @@ const pointers = new Pointers({
 });
 ```
 
+One finger on mouse, two on touch:
+
+```js
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+  minPointers: (type) => (type === 'mouse' ? 1 : 2),
+});
+```
+
 ### `maxPointers` {#props.maxPointers}
 
-- **Type:** `number`
+- **Type:** `number | ((type: TPointersType) => number)`
 - **Default:** `5`
 - Maximum number of pointers that can be tracked simultaneously.
 
@@ -86,6 +106,16 @@ const pointers = new Pointers({
 const pointers = new Pointers({
   container: document.getElementById('container'),
   maxPointers: 5,
+});
+```
+
+Pinch-only (exactly two fingers on touch):
+
+```js
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+  minPointers: 2,
+  maxPointers: 2,
 });
 ```
 

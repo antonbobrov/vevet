@@ -6,7 +6,7 @@ import {
   IModuleStaticProps,
 } from '@/base';
 
-import { IPointersCallbacksMap } from '../Pointers';
+import { IPointersCallbacksMap, IPointersStaticProps } from '../Pointers';
 
 import {
   ISwipeAxes,
@@ -38,13 +38,13 @@ export interface ISwipeStaticProps extends IModuleStaticProps {
    *
    * @default [0]
    */
-  buttons?: number[];
+  buttons?: IPointersStaticProps['buttons'];
 
   /**
    * Required pointer count to activate swiping.
    * @default 1
    */
-  pointers?: number;
+  pointers?: IPointersStaticProps['minPointers'];
 
   /**
    * Disable user selection on drag.
