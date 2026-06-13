@@ -131,7 +131,7 @@ export class SwipeInertia {
 
     const linearSpeed = Math.hypot(vx, vy) * 1000;
     const angularSpeed = Math.abs(va) * 1000;
-    const threshold = props.inertiaThreshold ?? props.inertiaDistanceThreshold;
+    const threshold = props.inertiaThreshold;
 
     return { dt, vx, vy, va, linearSpeed, angularSpeed, threshold };
   }
