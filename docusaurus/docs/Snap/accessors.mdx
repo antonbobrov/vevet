@@ -38,6 +38,16 @@ Returns the currently active slide instance.
 snap.activeSlide; // active slide instance
 ```
 
+### `origin`
+
+Type: `'start' | 'center' | 'end'`
+
+Returns the resolved slide magnets origin. Reflects [`origin`](./props#props.origin) and the deprecated [`centered`](./props#props.centered) prop (`centered: true` → `'center'`).
+
+```js
+snap.origin; // 'start' | 'center' | 'end'
+```
+
 ### `axis`
 
 Type: `"x" | "y"`
@@ -92,7 +102,8 @@ snap.firstSlideSize; // number
 
 Type: `boolean`
 
-Indicates whether there are no slides to animate.
+Indicates whether there are no slides to animate.  
+Snap requires at least one slide during initialization and throws when no slides are found.
 
 ```js
 snap.isEmpty; // true or false
@@ -108,14 +119,14 @@ Indicates whether a transition animation is currently in progress.
 snap.isTransitioning; // true or false
 ```
 
-### `hasInteria`
+### `hasInertia`
 
 Type: `boolean`
 
 Indicates whether a swipe inertia animation is currently active (the carousel is still moving after the user released input).
 
 ```js
-snap.hasInteria; // true or false
+snap.hasInertia; // true or false
 ```
 
 ### `scrollableSlides`
@@ -244,15 +255,15 @@ Indicates whether the end has been reached.
 snap.isEnd; // true or false
 ```
 
-### `influence`
+### `impulse`
 
 Type: `boolean`
 
-Returns the influence applied from the current value to the target, caused by swipe or wheel input.  
+Returns the impulse applied from the current value to the target, caused by swipe or wheel input.  
 Can be positive or negative depending on scroll direction.
 
 ```js
-snap.influence; // number
+snap.impulse; // number
 ```
 
 ### `isInterpolating`
@@ -265,11 +276,21 @@ Indicates whether the track is currently being interpolated (the current value i
 snap.isInterpolating; // true or false
 ```
 
+### `isWheeling`
+
+Type: `boolean`
+
+Indicates whether wheel scroll interaction is currently in progress.
+
+```js
+snap.isWheeling; // true or false
+```
+
 ### `isIdle`
 
 Type: `boolean`
 
-Indicates whether the carousel is idle — not swiping, not interpolating, not transitioning.
+Indicates whether the carousel is idle — not swiping, not wheeling, not interpolating, not transitioning.
 
 ```js
 snap.isIdle; // true or false

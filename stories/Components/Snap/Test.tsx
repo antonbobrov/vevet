@@ -1,8 +1,40 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Responsive, Scrollbar, Snap } from '@/index';
+import type { ISnapMutableProps } from '@/index';
 
-export const Test: FC = () => {
+export type TTestSnapProps = Partial<Omit<ISnapMutableProps, 'slides'>>;
+
+const BASE_SNAP_PROPS: TTestSnapProps = {
+  wheel: true,
+  wheelAxis: 'y',
+  origin: 'start',
+  loop: false,
+  freemode: false,
+  gap: 20,
+  grabCursor: true,
+};
+
+export interface ITestProps {
+  snapProps?: TTestSnapProps;
+}
+
+const SLIDES = [
+  { color: '#A8E6CF', size: 200 },
+  { color: '#DCEDC1', size: 600 },
+  { color: '#FFD3B6', size: 700 },
+  { color: '#FF8B94', size: 150 },
+  { color: '#f00', size: 600 },
+];
+
+function getSnapProps(snapProps?: TTestSnapProps) {
+  return {
+    ...BASE_SNAP_PROPS,
+    ...snapProps,
+  };
+}
+
+export const Test: FC<ITestProps> = ({ snapProps }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const [isStart, setIsStart] = useState(true);
@@ -10,34 +42,38 @@ export const Test: FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [carousel, setCarousel] = useState<Snap>();
 
+  const resolvedProps = useMemo(() => getSnapProps(snapProps), [snapProps]);
+  const isVertical = resolvedProps.direction === 'vertical';
+
   useEffect(() => {
     if (!ref.current) {
       return undefined;
     }
 
+    const container = ref.current;
+    const props = resolvedProps;
+    const axis = props.direction === 'vertical' ? 'y' : 'x';
+
     const infos = Array.from(
-      document.querySelectorAll<HTMLElement>('.js-slide-info'),
+      container.querySelectorAll<HTMLElement>('.js-slide-info'),
     );
 
     const instance = new Snap({
-      container: ref.current,
-      direction: 'horizontal',
-      wheel: true,
-      wheelAxis: 'y',
-      centered: false,
-      loop: false,
-      gap: 20,
-      grabCursor: true,
+      ...props,
+      container,
       onActiveSlide: (slide) => setActiveIndex(slide.index),
       onUpdate: (data, snap) => {
         setIsStart(snap.isStart);
         setIsEnd(snap.isEnd);
 
         snap.slides.forEach(({ element, coord, progress }, index) => {
-          element!.style.transform = `translateX(${coord}px)`;
+          element!.style.transform =
+            axis === 'x' ? `translateX(${coord}px)` : `translateY(${coord}px)`;
 
           const info = infos[index];
-          info.innerHTML = `${index} / ${progress.toFixed(2)} / ${Math.round(coord)}`;
+          info.innerHTML = `${index} / ${progress.toFixed(2)} / ${Math.round(
+            coord,
+          )}`;
         });
       },
     });
@@ -52,7 +88,7 @@ export const Test: FC = () => {
 
     const scrollbar = new Scrollbar({
       container: instance,
-      axis: 'x',
+      axis,
       autoHide: false,
     });
 
@@ -62,32 +98,31 @@ export const Test: FC = () => {
       instance.destroy();
       scrollbar.destroy();
     };
-  }, []);
+  }, [resolvedProps]);
+
+  useEffect(() => {
+    carousel?.toSlide(activeIndex);
+  }, [activeIndex]);
 
   return (
     <>
       <style>
         {`
-          .container {
+          .snap-test {
             position: relative;
             margin: 0 auto;
             width: 400px;
             max-width: 80%;
             height: 300px;
             background: #000;
+          }
 
-            &::after {
-              content: '';
-              position: absolute;
-              top: 0;
-              left: 50%;
-              width: 1px;
-              height: 100%;
-              background: red;
-            }
+          .snap-test[data-direction='vertical'] {
+            width: 300px;
+            height: 400px;
           }
             
-          .slide {
+          .snap-test__slide {
             position: absolute;
             top: 0;
             left: 0;
@@ -101,21 +136,41 @@ export const Test: FC = () => {
             opacity: 0.75;
             overflow: hidden;
           }
+
+          .snap-test[data-direction='vertical'] .snap-test__slide {
+            width: 300px;
+            height: 200px;
+          }
+
+          .snap-test__props {
+            margin: 16px auto;
+            width: 400px;
+            max-width: 80%;
+            white-space: pre-wrap;
+            font-size: 12px;
+          }
+
         `}
       </style>
 
-      <div ref={ref} className="container">
-        {[
-          { color: '#A8E6CF', size: 200 },
-          { color: '#DCEDC1', size: 180 },
-          { color: '#FFD3B6', size: 700 },
-          { color: '#FF8B94', size: 150 },
-          { color: '#f00', size: 600 },
-        ].map(({ color, size }, index) => (
+      <pre className="snap-test__props">
+        {JSON.stringify(resolvedProps, null, 2)}
+      </pre>
+
+      <div
+        ref={ref}
+        className="snap-test"
+        data-direction={isVertical ? 'vertical' : 'horizontal'}
+      >
+        {SLIDES.map(({ color, size }, index) => (
           <div
             key={color}
-            className="slide"
-            style={{ backgroundColor: color, width: size }}
+            className="snap-test__slide"
+            style={{
+              backgroundColor: color,
+              width: isVertical ? undefined : size,
+              height: isVertical ? size : undefined,
+            }}
           >
             <p className="js-slide-info">{index}</p>
 
@@ -141,26 +196,26 @@ export const Test: FC = () => {
       <button
         type="button"
         disabled={isStart}
-        onClick={() => carousel?.toSlide(0)}
+        onClick={() => setActiveIndex(0)}
       >
         Start
       </button>
 
-      {carousel?.slides.map((slide) => (
+      {SLIDES.map((slide, index) => (
         <button
-          key={slide.index}
+          key={index}
           type="button"
-          disabled={activeIndex === slide.index}
-          onClick={() => carousel?.toSlide(slide.index)}
+          disabled={activeIndex === index}
+          onClick={() => setActiveIndex(index)}
         >
-          {slide.index}
+          {index}
         </button>
       ))}
 
       <button
         type="button"
         disabled={isEnd}
-        onClick={() => carousel?.toSlide(carousel.slides.length - 1)}
+        onClick={() => setActiveIndex(SLIDES.length - 1)}
       >
         End
       </button>

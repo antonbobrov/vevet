@@ -1,13 +1,20 @@
+import { TEasingType } from 'easing-progress';
+
 import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
 } from '@/base';
-import { TEasingType } from '@/utils/math/easing';
 
-import { IPointersCallbacksMap } from '../Pointers';
+import { IPointersCallbacksMap, IPointersStaticProps } from '../Pointers';
 
-import { ISwipeCoords, ISwipeMatrix, ISwipeVec2 } from './global';
+import {
+  ISwipeAxes,
+  ISwipeCoords,
+  ISwipeState,
+  ISwipeVec2,
+  ISwipeVec3,
+} from './global';
 
 export interface ISwipeStaticProps extends IModuleStaticProps {
   /** Event listener container. */
@@ -31,13 +38,13 @@ export interface ISwipeStaticProps extends IModuleStaticProps {
    *
    * @default [0]
    */
-  buttons?: number[];
+  buttons?: IPointersStaticProps['buttons'];
 
   /**
    * Required pointer count to activate swiping.
    * @default 1
    */
-  pointers?: number;
+  pointers?: IPointersStaticProps['minPointers'];
 
   /**
    * Disable user selection on drag.
@@ -66,7 +73,7 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
   axis?: null | 'x' | 'y';
 
   /**
-   * Swipe move ratio (multiplier).
+   * Swipe movement scale.
    * @default 1
    */
   ratio?: number;
@@ -78,7 +85,7 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
   grabCursor?: boolean;
 
   /**
-   * Determines if swipe should be aborted.
+   * Returns `true` to abort before the swipe starts (after threshold / axis checks).
    * @default `() => false`
    */
   willAbort?: (props: ISwipeCanMoveArg) => boolean;
@@ -126,40 +133,111 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
   requireCtrlKey?: boolean;
 
   /**
-   * Enables inertia animation.
+   * Duration of the bounce-back timeline when movement exceeds `bounds` and inertia does not run.
+   * @default 250
+   */
+  bounceDuration?: number;
+
+  /**
+   * Rubber-band distance past `bounds` (px for x/y, degrees for `angle`).
+   * @default () => 50
+   */
+  overflow?: () => number;
+
+  /**
+   * Enables release inertia (RAF-based decay).
    * @default false
    */
   inertia?: boolean;
 
   /**
-   * Inertia duration.
-   * @default `(distance) => clamp(distance, 500, 2000)`
+   * Inertia velocity decay per frame (higher = stops sooner).
+   * @default 0.05
    */
-  inertiaDuration?: (distance: number) => number;
+  inertiaDecay?: number;
 
   /**
-   * Easing function for inertia.
-   * @default EaseOutCubic
+   * Easing factor for pulling inertia back inside `bounds` (per frame, FPS-independent).
+   * @default 0.3
    */
-  inertiaEasing?: TEasingType;
+  inertiaBounceEase?: number;
 
   /**
-   * Final velocity modifier.
-   * @default false
-   */
-  velocityModifier?: false | ((velocity: ISwipeMatrix) => ISwipeMatrix);
-
-  /**
-   * Inertia strength.
+   * Multiplier applied to release velocity.
    * @default 1
    */
   inertiaRatio?: number;
 
   /**
-   * Minimum calculated distance to trigger inertia.
-   * @default 50
+   * Minimum release speed to start inertia (px/s for x/y, deg/s for `angle`).
+   * @default 1
+   */
+  inertiaThreshold?: number;
+
+  /**
+   * Max release velocity per axis (coord/ms for x/y, deg/ms for `angle`).
+   * Falsy axis value disables inertia on that axis.
+   * @default { x: 7, y: 7, angle: 3 }
+   */
+  maxVelocity?: ISwipeVec3;
+
+  /**
+   * Movement limits per axis. Unset axis is unbounded.
+   * @default null
+   */
+  bounds?: null | ((coords: ISwipeCoords) => ISwipeAxes | null);
+
+  /**
+   * Enable bounds recalculation when inertia is active
+   * @default true
+   */
+  recalculateBoundsOnInertia?: boolean;
+
+  /**
+   * Snap targets per axis in movement space.
+   * @default null
+   */
+  snap?: null | (() => ISwipeAxes | null);
+
+  /**
+   * Determines whether the swipe is allowed to bounce back.
+   * @default () => true
+   */
+  canBounce?: () => boolean;
+
+  /**
+   * Max distance to a snap target (same units as the axis). Falsy = no radius limit.
+   * @default null
+   */
+  snapRadius?: number | null;
+
+  /**
+   * @deprecated Timelined inertia is not supported anymore.
+   */
+  inertiaDuration?: (distance: number) => number;
+
+  /**
+   * @deprecated Timelined inertia is not supported anymore.
+   */
+  inertiaEasing?: TEasingType;
+
+  /**
+   * @deprecated Timelined inertia is not supported anymore.
+   */
+  velocityModifier?: false | ((velocity: ISwipeState) => ISwipeState);
+
+  /**
+   * @deprecated Timelined inertia is not supported anymore.
    */
   inertiaDistanceThreshold?: number;
+
+  /**
+   * Inertia distance modifier. Called when inertia distance is predicted but not yet started.
+   * @default null
+   */
+  inertiaDistanceModifier?:
+    | null
+    | ((distance: ISwipeVec3) => ISwipeVec3 | null);
 }
 
 export interface ISwipeCallbacksMap
@@ -218,9 +296,14 @@ export interface ISwipeCallbacksMap
   inertiaCancel: undefined;
 }
 
+/** Arguments for {@link ISwipeMutableProps.willAbort}. */
 export interface ISwipeCanMoveArg {
+  /** Input device. */
   type: 'touch' | 'mouse';
-  matrix: ISwipeMatrix;
+  /** Current pointer sample. */
+  state: ISwipeState;
+  /** Pointer position when the gesture began. */
   start: ISwipeVec2;
+  /** Offset from `start` to `state` (pointer space). */
   diff: ISwipeVec2;
 }

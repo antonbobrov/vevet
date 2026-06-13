@@ -2,12 +2,14 @@
 sidebar_position: 1200
 toc_min_heading_level: 2
 toc_max_heading_level: 6
-description: Pointers — Vevet.js pointer events manager. Track multiple pointers and emit callbacks for pointer interactions.
+description: Pointers — Vevet.js pointer events manager. Track multiple pointers, pan/pinch/rotate via move callback, type-aware props.
 keywords:
   - vevet pointers
   - pointer events
   - touch mouse
   - multi-touch
+  - pinch zoom
+  - rotate gesture
 ---
 
 # Pointers
@@ -91,5 +93,37 @@ pointers.destroy();
 
 - Always set an appropriate `touch-action` on the container to ensure consistent pointermove behavior on mobile.
 - Use `relative: true` when working with draggable, scrollable, or transformed containers for stable coordinates.
-- To detect gestures such as pinch/zoom, rely on `pointersMap` and track distances between pointers.
+- For pan, pinch, and rotate, prefer the high-level [`move`](callbacks#move) callback instead of manual distance math on `pointersMap`.
+- Use [`pointerdown`](callbacks#pointerdown) `event.pointerType` (`'mouse'` | `'touch'`) or type-aware props when mouse and touch need different rules.
 - Destroy the instance when it's no longer needed to avoid memory leaks and stale event listeners.
+
+## Pinch & rotate
+
+Use `minPointers: 2` and the [`move`](callbacks#move) callback. It fires **once per microtask** after any pointer moves, with deduplicated pan / pinch / rotate metrics:
+
+```js
+import { clamp, Pointers } from 'vevet';
+
+const pointers = new Pointers({
+  container: document.getElementById('thumb'),
+  minPointers: 2,
+  maxPointers: 2,
+  relative: false,
+  onMove: ({ center, prevCenter, scale, prevScale, angle, prevAngle }) => {
+    // Pan — delta since previous move
+    x += center.x - prevCenter.x;
+    y += center.y - prevCenter.y;
+
+    // Pinch — multiplicative scale since previous move
+    currentScale = clamp(currentScale * (scale / prevScale), 0.5, 3);
+
+    // Rotate — delta since previous move (deg)
+    currentAngle += angle - prevAngle;
+
+    content.style.transform = `scale(${currentScale}) rotate(${currentAngle}deg)`;
+    thumb.style.transform = `translate(${x}px, ${y}px)`;
+  },
+});
+```
+
+See [`IPointersMove`](interfaces#ipointersmove) for the full payload.

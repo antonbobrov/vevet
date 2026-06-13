@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef } from 'react';
 
-import { Snap } from '@/index';
+import { Scrollbar, Snap } from '@/index';
 
 export const Rtl: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -26,7 +26,16 @@ export const Rtl: FC = () => {
       },
     });
 
-    return () => instance.destroy();
+    const scrollbar = new Scrollbar({
+      container: instance,
+      axis: 'x',
+      autoHide: false,
+    });
+
+    return () => {
+      instance.destroy();
+      scrollbar.destroy();
+    };
   }, []);
 
   return (

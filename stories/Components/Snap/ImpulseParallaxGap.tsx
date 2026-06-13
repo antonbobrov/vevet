@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef } from 'react';
 
 import { Snap } from '@/index';
 
-export const InfluenceParallaxGap: FC = () => {
+export const ImpulseParallaxGap: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -12,9 +12,8 @@ export const InfluenceParallaxGap: FC = () => {
 
     const instance = new Snap({
       container: ref.current,
-      centered: true,
+      origin: 'center',
       loop: true,
-      shortSwipes: false,
       gap: 5,
       lerp: 0.2,
       freemode: true,
@@ -35,13 +34,10 @@ export const InfluenceParallaxGap: FC = () => {
           .container {
             --size: min(30vw, 50vh);
 
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
+            margin: 0 auto;
             width: 100%;
             height: var(--size);
-            overflow: hidden;
 
             @media (orientation: portrait) {
               --size: min(30vh, 50vw);
@@ -91,7 +87,7 @@ export const InfluenceParallaxGap: FC = () => {
               style={{ backgroundColor: color }}
               data-snap-parallax-x="-50%"
               data-snap-parallax-x-scope="none"
-              data-snap-parallax-x-influence="3"
+              data-snap-parallax-x-impulse="3"
             >
               {index}
             </div>

@@ -2,7 +2,6 @@ import { EaseOutCubic } from 'easing-progress';
 
 import { initVevet } from '@/global/initVevet';
 import { TRequiredProps } from '@/internal/requiredProps';
-import { clamp } from '@/utils';
 
 import { ISnapMutableProps, ISnapStaticProps } from './types';
 
@@ -20,6 +19,7 @@ export const MUTABLE_PROPS: TRequiredProps<ISnapMutableProps> = {
   slidesToScroll: 1,
   direction: 'horizontal',
   centered: false,
+  origin: 'start',
   loop: false,
   gap: 0,
   lerp: initVevet()?.mobile ? 1 : 0.3,
@@ -28,7 +28,7 @@ export const MUTABLE_PROPS: TRequiredProps<ISnapMutableProps> = {
   stickOnResize: true,
   friction: 0,
   edgeFriction: 0.7,
-  duration: 500,
+  duration: 600,
   easing: EaseOutCubic,
   swipe: true,
   grabCursor: false,
@@ -41,8 +41,8 @@ export const MUTABLE_PROPS: TRequiredProps<ISnapMutableProps> = {
   swipeFriction: false,
   swipeThreshold: 5,
   swipeMinTime: 0,
-  swipeInertiaDuration: (distance) => clamp(distance, 500, 2000),
-  swipeInertiaRatio: 0.5,
+  swipeInertiaDuration: null as any,
+  swipeInertiaRatio: 1,
   wheel: false,
   wheelSpeed: 1,
   wheelAxis: 'auto',
@@ -56,3 +56,7 @@ export const MUTABLE_PROPS: TRequiredProps<ISnapMutableProps> = {
 };
 
 export const LERP_APPROXIMATION = 0.000001;
+
+export const WHEEL_DEBOUNCE = 200;
+
+export const IDLE_DEBOUNCE = 200;

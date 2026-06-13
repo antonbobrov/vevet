@@ -61,8 +61,6 @@ export const Video: FC = () => {
         }}
       />
 
-      <br />
-
       <p>Original media</p>
 
       <video

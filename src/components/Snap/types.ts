@@ -8,6 +8,7 @@ import { TEasingType } from '@/utils/math';
 import { ISwipeCoords } from '../Swipe';
 import { ITimelineProgressArg } from '../Timeline';
 
+import { ISnapIntervalProps } from './logic/Interval/types';
 import { SnapSlide } from './logic/Slide';
 import { ISnapSlideProps } from './logic/Slide/types';
 import { ISnapSwipeProps } from './logic/Swipe/types';
@@ -30,7 +31,11 @@ export interface ISnapStaticProps extends IModuleStaticProps {
 
 /** Mutable properties for the Snap component */
 export interface ISnapMutableProps
-  extends IModuleMutableProps, ISnapWheelProps, ISnapSwipeProps {
+  extends
+    IModuleMutableProps,
+    ISnapWheelProps,
+    ISnapSwipeProps,
+    ISnapIntervalProps {
   /**
    * Slides instances. If `false`, all container's children will be considered as slides.
    * @default false
@@ -59,10 +64,15 @@ export interface ISnapMutableProps
   direction?: 'horizontal' | 'vertical';
 
   /**
-   * Centered slides
-   * @default false
+   * @deprecated Use `origin` instead
    */
   centered?: boolean;
+
+  /**
+   * Slide magnet origin
+   * @default 'start'
+   */
+  origin?: 'start' | 'center' | 'end';
 
   /**
    * Detects if need to loop the progress
@@ -118,7 +128,7 @@ export interface ISnapMutableProps
 
   /**
    * Change slide duration
-   * @default 500
+   * @default 600
    */
   duration?: TSnapDuration;
 
@@ -137,18 +147,6 @@ export interface ISnapMutableProps
    * @default 'auto'
    */
   slideSize?: ISnapSlideProps['size'];
-
-  /**
-   * Interval between automatic slide changes in milliseconds. If `null`, the interval is disabled.
-   * @default null
-   */
-  interval?: number | null;
-
-  /**
-   * Direction of automatic slide changes. Can be either 'next' or 'prev'.
-   * @default 'next'
-   */
-  intervalDirection?: 'next' | 'prev';
 }
 
 /** Callbacks map for the Snap component */

@@ -1,4 +1,6 @@
-import { Snap, SnapSlide } from '../..';
+import { Snap } from '@/components/Snap';
+
+import { SnapSlide } from '..';
 
 export interface ISnapSlideParallaxProps {
   snap: Snap;
@@ -7,15 +9,15 @@ export interface ISnapSlideParallaxProps {
 }
 
 export interface ISnapSlideParallaxType {
-  n: string;
-  p: string;
-  u: string;
+  attr: string;
+  prop: string;
+  unit: string;
   isAbs?: boolean;
   modifier?: (value: number) => number;
 }
 
 export interface ISnapSlideParallaxGroup {
-  name: string;
+  prop: string;
   types: ISnapSlideParallaxType[];
 }
 
@@ -28,7 +30,7 @@ export interface ISnapSlideParallaxItem extends ISnapSlideParallaxType {
   offset: number;
   min: number;
   max: number;
-  influence: number;
+  impulse: number;
   isDirectional: boolean;
   isAbs: boolean;
 }

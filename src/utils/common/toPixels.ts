@@ -1,6 +1,7 @@
 import { initVevet } from '@/global/initVevet';
 import { isBrowser } from '@/internal/env';
 import { isNumber } from '@/internal/isNumber';
+import { onlyFinite } from '@/internal/onlyFinite';
 
 type TCache = Map<string | number, number>;
 
@@ -59,6 +60,8 @@ export function toPixels(value: string | number) {
   } else if (value.includes('px')) {
     finalValue = num;
   }
+
+  finalValue = onlyFinite(finalValue);
 
   window.vevet5_toPixelsCache.set(value, finalValue);
 

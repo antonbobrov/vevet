@@ -17,10 +17,11 @@ export const CardsStack: FC = () => {
     const instance = new Snap({
       container: ref.current,
       direction: 'horizontal',
-      centered: true,
+      origin: 'center',
       loop: true,
       gap: 20,
       wheel: true,
+      freemode: 'sticky',
       wheelAxis: 'y',
       onUpdate: (data, { slides }) => {
         slides.forEach(({ element, size, progress }) => {
@@ -48,10 +49,8 @@ export const CardsStack: FC = () => {
       <style>
         {`
           .container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
+            margin: 0 auto;
             width: 350px;
             height: 220px;
 

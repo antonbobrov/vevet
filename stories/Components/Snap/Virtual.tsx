@@ -39,9 +39,11 @@ export const Virtual: FC = () => {
       wheel: true,
       wheelAxis: 'y',
       swipeAxis: 'x',
-      centered: true,
+      origin: 'center',
       loop: true,
       gap: '5vw',
+      freemode: 'sticky',
+      shortSwipes: false,
       onUpdate: (data, { slides }) => {
         slides.forEach((slide) => {
           const { element, coord, isVisible } = slide;
@@ -67,11 +69,8 @@ export const Virtual: FC = () => {
       <style>
         {`
           .slider {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: relative;
+            height: 240px;
           }
             
           .slide {
@@ -84,7 +83,6 @@ export const Virtual: FC = () => {
             align-items: center;
             justify-content: center;
             border-radius: 16px;
-            overflow: hidden;
             background-color: #ccc;
           }
         `}

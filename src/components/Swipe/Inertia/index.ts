@@ -1,180 +1,353 @@
-import { Timeline } from '@/components/Timeline';
+import { Raf } from '@/components/Raf';
 import { isFiniteNumber } from '@/internal/isFiniteNumber';
+import { clamp, lerp } from '@/utils';
 
-import { ISwipeMatrix, ISwipeVelocity } from '../global';
+import { Swipe } from '..';
+import { SwipeCoords } from '../Coords';
+import { ISwipeState, ISwipeVec3 } from '../global';
 
-import type { Swipe } from '..';
+const IDLE_VEC3 = { x: 0, y: 0, angle: 0 };
+const IDLE_STATE = { ...IDLE_VEC3, time: 0 };
 
-const VELOCITIES_COUNT = 4;
+const LERP_APPROX = 0.01;
+const BELOW_THRESHOLD = 0.1;
+
+interface IProps {
+  props: typeof Swipe.prototype.props;
+  coords: SwipeCoords;
+  onStart: () => void;
+  onFail: () => void;
+  onCancel: () => void;
+  onEnd: () => void;
+}
 
 export class SwipeInertia {
-  constructor(private _ctx: Swipe) {}
+  constructor(private ctx: IProps) {}
 
-  /** Inertia animation */
-  private _timeline?: Timeline;
+  private _raf?: Raf;
 
-  /** Velocity tracking */
-  private _velocities: ISwipeVelocity[] = [];
+  private _velocity: ISwipeState = { ...IDLE_STATE };
 
-  /**
-   * Add new velocity sample
-   */
-  public addVelocity(velocity: ISwipeVelocity) {
-    if (this.has) {
-      return;
-    }
+  private _initialVelocity: ISwipeState = { ...IDLE_STATE };
 
-    this._velocities.push(velocity);
+  private _modifiedDistance?: ISwipeVec3 | null;
 
-    if (this._velocities.length > VELOCITIES_COUNT) {
-      this._velocities.shift();
-    }
-  }
+  private _saveRawMovement: ISwipeVec3 = { ...IDLE_VEC3 };
 
-  /** Update last timestamp */
-  public updateLastTimestamp() {
-    const velocities = this._velocities;
-    const { length } = velocities;
+  private _rawMovement: ISwipeVec3 = { ...IDLE_VEC3 };
 
-    if (length > 0) {
-      velocities[length - 1].timestamp = performance.now();
-    }
-  }
+  private _saveStep: ISwipeState = { ...IDLE_STATE };
 
-  /** Returns current velocity */
-  public get velocity(): ISwipeMatrix {
-    const samples = this._velocities;
+  private _saveCurrent: ISwipeState = { ...IDLE_STATE };
 
-    if (samples.length < 2) {
-      return { x: 0, y: 0, angle: 0 };
-    }
-
-    let totalWeight = 0;
-    let wvx = 0;
-    let wvy = 0;
-    let wva = 0;
-
-    for (let i = 1; i < samples.length; i += 1) {
-      const current = samples[i];
-      const previous = samples[i - 1];
-
-      const deltaX = current.x - previous.x;
-      const deltaY = current.y - previous.y;
-
-      let angleDiff = current.angle - previous.angle;
-      if (angleDiff > 180) angleDiff -= 360;
-      if (angleDiff < -180) angleDiff += 360;
-
-      const deltatTime = Math.max(current.timestamp - previous.timestamp, 1);
-
-      const sx = (deltaX / deltatTime) * 1000;
-      const sy = (deltaY / deltatTime) * 1000;
-      const sa = (angleDiff / deltatTime) * 1000;
-
-      const weight = 1 / Math.exp(-deltatTime * 0.1);
-      wvx += sx * weight;
-      wvy += sy * weight;
-      wva += sa * weight;
-      totalWeight += weight;
-    }
-
-    if (totalWeight > 0) {
-      return {
-        x: wvx / totalWeight,
-        y: wvy / totalWeight,
-        angle: wva / totalWeight,
-      };
-    }
-
-    return { x: 0, y: 0, angle: 0 };
-  }
+  private _onUpdate?: (state: ISwipeVec3) => void;
 
   /** Check if inertia is active */
   get has() {
-    return !!this._timeline;
+    return !!this._raf;
   }
 
   /** Apply inertia-based movement */
-  public release(onUpdate: (matrix: ISwipeMatrix) => void) {
-    const swipe = this._ctx;
-    const { props, callbacks } = swipe;
-    const { inertiaRatio: ratio, velocityModifier } = props;
+  public release(onUpdate: (state: ISwipeVec3) => void) {
+    const { ctx } = this;
+    const { props } = ctx;
 
-    const rawVelocity = this.velocity;
+    this._modifiedDistance = undefined;
+    this._saveCurrent = { ...ctx.coords.current };
+    this._saveStep = { ...ctx.coords.step };
+    this._saveRawMovement = { ...ctx.coords.rawMovement };
+    this._rawMovement = { ...ctx.coords.rawMovement };
 
-    const sourceVelocity = {
-      x: rawVelocity.x * ratio,
-      y: rawVelocity.y * ratio,
-      angle: rawVelocity.angle * ratio,
-    };
+    const data = this._calcVelocity();
 
-    const finalVelocity = velocityModifier
-      ? velocityModifier(sourceVelocity)
-      : sourceVelocity;
+    if (!data || !isFiniteNumber(data.dt) || data.dt <= 0) {
+      ctx.onFail();
 
-    const { x: velocityX, y: velocityY, angle: velocityA } = finalVelocity;
-    const distance = Math.sqrt(velocityX ** 2 + velocityY ** 2);
-
-    // Check if we have sufficient velocity
-    if (distance < props.inertiaDistanceThreshold) {
-      callbacks.emit('inertiaFail', undefined);
-
-      return;
+      return false;
     }
 
-    // Calculate animation duration
-    const duration = props.inertiaDuration(distance);
+    const { linearSpeed, angularSpeed, vx, vy, va, threshold } = data;
 
-    // Check if the animation duration is positive
-    if (!isFiniteNumber(duration) || duration <= 0) {
-      callbacks.emit('inertiaFail', undefined);
+    if (
+      !isFiniteNumber(linearSpeed) ||
+      !isFiniteNumber(angularSpeed) ||
+      (linearSpeed < threshold && angularSpeed < threshold)
+    ) {
+      ctx.onFail();
 
-      return;
+      return false;
     }
 
-    // Calculate the start and add matrices
-    const addMatrix = { x: 0, y: 0, angle: 0 };
+    this._onUpdate = onUpdate;
 
-    // Start the inertia animation
-    this._timeline = new Timeline({ duration, easing: props.inertiaEasing });
+    this._velocity = { x: vx, y: vy, angle: va, time: performance.now() };
+    this._initialVelocity = { ...this._velocity };
 
-    this._timeline.on('start', () => callbacks.emit('inertiaStart', undefined));
+    if (props.inertiaDistanceModifier) {
+      this._modifiedDistance = props.inertiaDistanceModifier({
+        x: this._predictDistance(vx, props.inertiaDecay),
+        y: this._predictDistance(vy, props.inertiaDecay),
+        angle: this._predictDistance(va, props.inertiaDecay),
+      });
+    }
 
-    this._timeline.on('update', ({ eased }) => {
-      addMatrix.x = velocityX * eased;
-      addMatrix.y = velocityY * eased;
-      addMatrix.angle = velocityA * eased;
-
-      onUpdate(addMatrix);
-
-      callbacks.emit('inertia', undefined);
+    this._raf = new Raf({
+      enabled: true,
+      onFrame: this._handleRaf.bind(this),
     });
 
-    this._timeline.on('end', () => {
-      this.cancel();
+    this.ctx.onStart();
 
-      callbacks.emit('inertiaEnd', undefined);
-    });
-
-    setTimeout(() => this._timeline?.play(), 0);
+    return true;
   }
 
-  /** Destroy inertia animation */
-  public cancel() {
-    if (!this._timeline) {
+  /** Calculate velocity */
+  private _calcVelocity() {
+    const { _saveCurrent: current, _saveStep: step } = this;
+    const { inertiaRatio, ratio, maxVelocity, ...props } = this.ctx.props;
+
+    if (!current || !step) {
+      return null;
+    }
+
+    const gap = performance.now() - current.time;
+    const dt = Math.max(step.time, gap, 1);
+
+    const iRatio = isFiniteNumber(inertiaRatio) ? inertiaRatio : 1;
+    const sRatio = isFiniteNumber(ratio) ? ratio : 1;
+    const finalRatio = sRatio * iRatio;
+
+    const maxVX = maxVelocity.x ? Math.abs(maxVelocity.x) : 0;
+    let vx = (step.x / dt) * finalRatio;
+    vx = clamp(vx, -maxVX, maxVX);
+
+    const maxVY = maxVelocity.y ? Math.abs(maxVelocity.y) : 0;
+    let vy = (step.y / dt) * finalRatio;
+    vy = clamp(vy, -maxVY, maxVY);
+
+    const maxVA = maxVelocity.angle ? Math.abs(maxVelocity.angle) : 0;
+    let va = (step.angle / dt) * finalRatio;
+    va = clamp(va, -maxVA, maxVA);
+
+    const linearSpeed = Math.hypot(vx, vy) * 1000;
+    const angularSpeed = Math.abs(va) * 1000;
+    const threshold = props.inertiaThreshold;
+
+    return { dt, vx, vy, va, linearSpeed, angularSpeed, threshold };
+  }
+
+  /** Handle RAF update */
+  private _handleRaf() {
+    if (!this._raf) {
       return;
     }
 
-    if (this._timeline.progress < 1) {
-      this._ctx.callbacks.emit('inertiaCancel', undefined);
+    const { _raf: raf } = this;
+    const duration = this._raf.duration;
+    const { coords, props } = this.ctx;
+
+    const {
+      _velocity: velocity,
+      _saveCurrent: startCurrent,
+      _saveRawMovement: startRawMovement,
+      _rawMovement: rawMovement,
+      _modifiedDistance: distance,
+      _initialVelocity: initial,
+    } = this;
+
+    const frameMs = duration;
+
+    // Delta
+    const dx = velocity.x * frameMs;
+    const dy = velocity.y * frameMs;
+    const dAngle = velocity.angle * frameMs;
+
+    // Friction
+    const frictionEase = raf.lerpFactor(props.inertiaDecay);
+    velocity.x = lerp(velocity.x, 0, frictionEase);
+    velocity.y = lerp(velocity.y, 0, frictionEase);
+    velocity.angle = lerp(velocity.angle, 0, frictionEase);
+
+    // Movement
+    if (distance) {
+      const xP = this._getVelocityProgress(velocity.x, initial.x);
+      const yP = this._getVelocityProgress(velocity.y, initial.y);
+      const aP = this._getVelocityProgress(velocity.angle, initial.angle);
+
+      rawMovement.x = startRawMovement.x + distance.x * xP;
+      rawMovement.y = startRawMovement.y + distance.y * yP;
+      rawMovement.angle = startRawMovement.angle + distance.angle * aP;
+    } else {
+      rawMovement.x += dx;
+      rawMovement.y += dy;
+      rawMovement.angle += dAngle;
     }
 
-    this._timeline?.destroy();
-    this._timeline = undefined;
+    // Bounce
+    let isBouncing = false;
+    const rawBounceEase = props.inertiaBounceEase;
+    const bounceEase = rawBounceEase >= 1 ? 1 : raf.lerpFactor(rawBounceEase);
+
+    // Bounce within bounds
+
+    const { bounds } = coords;
+
+    if (bounds?.x) {
+      const bx = this._applyAxisBounce(
+        'x',
+        rawMovement.x,
+        velocity.x,
+        bounds.x,
+        bounceEase,
+      );
+
+      rawMovement.x = bx.value;
+      velocity.x = bx.velocity;
+
+      isBouncing = 'bounceFinished' in bx ? true : isBouncing;
+    }
+
+    if (bounds?.y) {
+      const by = this._applyAxisBounce(
+        'y',
+        rawMovement.y,
+        velocity.y,
+        bounds.y,
+        bounceEase,
+      );
+
+      rawMovement.y = by.value;
+      velocity.y = by.velocity;
+
+      isBouncing = 'bounceFinished' in by ? true : isBouncing;
+    }
+
+    if (bounds?.angle) {
+      const ba = this._applyAxisBounce(
+        'angle',
+        rawMovement.angle,
+        velocity.angle,
+        bounds.angle,
+        bounceEase,
+      );
+
+      rawMovement.angle = ba.value;
+      velocity.angle = ba.velocity;
+
+      isBouncing = 'bounceFinished' in ba ? true : isBouncing;
+    }
+
+    // Callbacks
+
+    const totalX = rawMovement.x - startRawMovement.x;
+    const totalY = rawMovement.y - startRawMovement.y;
+    const totalA = rawMovement.angle - startRawMovement.angle;
+
+    const x = startCurrent.x + totalX;
+    const y = startCurrent.y + totalY;
+    const angle = startCurrent.angle + totalA;
+
+    this._onUpdate?.({ x, y, angle });
+
+    // Stop
+
+    const linearStep = Math.hypot(dx, dy);
+    const angularStep = Math.abs(dAngle);
+
+    let shouldStop =
+      linearStep < BELOW_THRESHOLD && angularStep < BELOW_THRESHOLD;
+
+    if (distance) {
+      shouldStop =
+        Math.abs(totalX - distance.x) < LERP_APPROX &&
+        Math.abs(totalY - distance.y) < LERP_APPROX &&
+        Math.abs(totalA - distance.angle) < LERP_APPROX;
+    }
+
+    if (!isBouncing && shouldStop) {
+      this.ctx.onEnd();
+      this._clear();
+    }
+  }
+
+  /** Calculate velocity progress */
+  private _getVelocityProgress(v: number, initial: number) {
+    if (Math.abs(initial) < BELOW_THRESHOLD) {
+      return 1;
+    }
+
+    const p = 1 - Math.abs(v / initial);
+
+    if (Math.abs(1 - p) < LERP_APPROX / 10) {
+      return 1;
+    }
+
+    return p;
+  }
+
+  private _predictDistance(
+    velocity: number,
+    decay: number,
+    frameMs = 1000 / 60,
+  ) {
+    const k = (decay * 60) / 1000;
+    const r = Math.exp(-k * frameMs);
+
+    return (velocity * frameMs) / (1 - r);
+  }
+
+  /** Apply exponential axis bounce overflow */
+  private _applyAxisBounce(
+    axis: 'x' | 'y' | 'angle',
+    value: number,
+    velocity: number,
+    bounds: number[],
+    ease: number,
+  ) {
+    if (!bounds.length) {
+      return { value, velocity };
+    }
+
+    const snappy = this.ctx.coords.snap[axis];
+
+    const lo = typeof snappy === 'number' ? snappy : Math.min(...bounds);
+    const hi = typeof snappy === 'number' ? snappy : Math.max(...bounds);
+
+    if (value < lo || value > hi) {
+      const target = clamp(value, lo, hi);
+
+      const val = lerp(value, target, ease, LERP_APPROX);
+      const vel = lerp(velocity, 0, ease, LERP_APPROX);
+
+      return {
+        value: val,
+        velocity: vel,
+        bounceFinished: val === target && vel === 0,
+      };
+    }
+
+    return { value, velocity };
+  }
+
+  /** Clear data and stop animation */
+  private _clear() {
+    this._raf?.destroy();
+    this._raf = undefined;
+
+    this._velocity = { ...IDLE_STATE };
+  }
+
+  /** Stop inertia animation */
+  public cancel() {
+    if (this._raf) {
+      this.ctx.onCancel();
+    }
+
+    this._clear();
   }
 
   /** Destroy instance */
   public destroy() {
-    this._timeline?.destroy();
+    this._clear();
   }
 }

@@ -17,10 +17,11 @@ export const Panorama: FC = () => {
       direction: 'horizontal',
       wheel: true,
       wheelAxis: 'y',
-      centered: true,
+      origin: 'center',
       loop: true,
       gap: 10,
-      freemode: true,
+      freemode: 'sticky',
+      shortSwipes: false,
       onUpdate: (data, { slides }) => {
         const depth = 200;
         const rotation = 20;
@@ -47,12 +48,7 @@ export const Panorama: FC = () => {
       <style>
         {`
           .container {
-            position: fixed;
-            top: 50%;
-            left: 0;
-            transform: translate(0, -50%);
-            width: 100%;
-
+            position: relative;
             transform-style: preserve-3d;
             perspective: 2000px;
           }

@@ -18,133 +18,155 @@ import Head from '@docusaurus/Head';
 All **[Module accessors](/docs/base/Module/#accessors)** are available in this class.
 :::
 
-### `accum`
+### `coords`
 
-Type: **[ISwipeVec2](interfaces#iswipevec2)**
+Type: **[ISwipeCoords](interfaces#iswipecoords)**
 
-Accumulated movement.
-
-Returns the current swipe coordinates.
+Full snapshot: pointer fields plus movement-space fields (`movement`, `prevMovement`, `scale`).
 
 ```js
 const instance = new Swipe();
 
-instance.accum.x;
-instance.accum.y;
+instance.coords.movement.x;
+instance.coords.scale;
+instance.coords.diff.x;
 ```
 
 ### `container`
 
 Type: `HTMLElement | SVGElement`
 
-Event target element.
+Coordinate reference element (`props.container`).
 
 ```js
 const instance = new Swipe();
 
-instance.container; // returns swipe container element
+instance.container;
 ```
 
-### `coords`
+### `movement`
 
-Type: **[ISwipeCoords](interfaces#iswipecoords)**
+Type: **[ISwipeVec3](interfaces#iswipevec3)**
+
+Total displacement in **movement space** (rubber + snap). Use for transforms when `bounds` / `snap` are enabled.
 
 ```js
-const instance = new Swipe();
+const instance = new Swipe({
+  bounds: () => ({ x: [0, 200] }),
+  onMove: ({ movement, scale }) => {
+    el.style.transform = `translate(${movement.x}px, ${movement.y}px) scale(${scale})`;
+  },
+});
 
-instance.coords; // returns all coordinates data
+instance.movement.x;
+```
+
+### `scale`
+
+Type: `number`
+
+Current scale modifier in movement space. Default is `1`. Updated by [`setScale`](methods#setscale). Included in [`ISwipeCoords`](interfaces#iswipecoords) on callbacks.
+
+```js
+const instance = new Swipe({
+  onMove: ({ movement, scale }) => {
+    el.style.transform = `translate(${movement.x}px, ${movement.y}px) scale(${scale})`;
+  },
+});
+
+instance.scale;
+```
+
+### `start`
+
+Type: **[ISwipeState](interfaces#iswipestate)**
+
+Pointer position at swipe start.
+
+```js
+instance.start.x;
+instance.start.time;
+```
+
+### `prev`
+
+Type: **[ISwipeState](interfaces#iswipestate)**
+
+Previous pointer position.
+
+```js
+instance.prev.x;
 ```
 
 ### `current`
 
-Type: **[ISwipeMatrix](interfaces#iswipematrix)**
+Type: **[ISwipeState](interfaces#iswipestate)**
 
-Current coordinate.
+Current pointer position.
 
 ```js
-const instance = new Swipe();
-
 instance.current.x;
-instance.current.y;
 instance.current.angle;
 ```
 
 ### `diff`
 
-Type: **[ISwipeMatrix](interfaces#iswipematrix)**
+Type: **[ISwipeState](interfaces#iswipestate)**
 
-Difference between start and current coordinates.
+Offset from swipe start to current pointer position (pointer space).
 
 ```js
-const instance = new Swipe();
-
 instance.diff.x;
-instance.diff.y;
 instance.diff.angle;
+```
+
+### `step`
+
+Type: **[ISwipeState](interfaces#iswipestate)**
+
+Offset from previous to current pointer position.
+
+```js
+instance.step.x;
+```
+
+### `accum`
+
+Type: **[ISwipeVec3](interfaces#iswipevec3)**
+
+Absolute path length since swipe start (`|step|` per axis).
+
+```js
+instance.accum.x;
+instance.accum.angle;
 ```
 
 ### `hasInertia`
 
 Type: `boolean`
 
-Indicates if inertia is active.
+Whether release inertia (RAF) is running.
 
 ```js
-const instance = new Swipe();
+instance.hasInertia;
+```
 
-instance.hasInertia; // true or false
+### `hasBounce`
+
+Type: `boolean`
+
+Whether overflow bounce-back timeline is running.
+
+```js
+instance.hasBounce;
 ```
 
 ### `isSwiping`
 
 Type: `boolean`
 
-Indicates if a swipe is active.
+Whether a swipe gesture is in progress.
 
 ```js
-const instance = new Swipe();
-
-instance.isSwiping; // true or false
-```
-
-### `prev`
-
-Type: **[ISwipeMatrix](interfaces#iswipematrix)**
-
-Previous coordinate.
-
-```js
-const instance = new Swipe();
-
-instance.prev.x;
-instance.prev.y;
-instance.prev.angle;
-```
-
-### `start`
-
-Type: **[ISwipeMatrix](interfaces#iswipematrix)**
-
-Start coordinate.
-
-```js
-const instance = new Swipe();
-
-instance.start.x;
-instance.start.y;
-instance.start.angle;
-```
-
-### `step`
-
-Type: **[ISwipeMatrix](interfaces#iswipematrix)**
-
-Difference between current and previous coordinates.
-
-```js
-const instance = new Swipe();
-
-instance.step.x;
-instance.step.y;
-instance.step.angle;
+instance.isSwiping;
 ```

@@ -139,22 +139,38 @@ snap.updateProps({
 });
 ```
 
-### `centered` {#props.centered}
+### `origin` {#props.origin}
 
-- **Type:** `boolean`
-- **Default:** `false`
-- Center all slides and their magnets.  
-  **See [demo](basic-demos#centered)**
+- **Type:** `'start' | 'center' | 'end'`
+- **Default:** `'start'`
+- Aligns slide mangets and snap them along the scroll axis:
+  - `'start'` — leading edge of the slide at the leading edge of the container (default).
+  - `'center'` — slide centered in the container.
+  - `'end'` — trailing edge of the slide at the trailing edge of the container.
+
+  **See [demo](basic-demos#origin)**
 
 ```js
 const snap = new Snap({
   container: document.getElementById('container'),
-  centered: true,
+  origin: 'center',
 });
 
-// change value
 snap.updateProps({
-  centered: false,
+  origin: 'end',
+});
+```
+
+### `centered` {#props.centered}
+
+- **Type:** `boolean`
+- **Default:** `false`
+- **Status:** deprecated — use [`origin`](#props.origin) instead (`centered: true` is equivalent to `origin: 'center'`). If both are set, `centered` takes precedence.
+
+```js
+const snap = new Snap({
+  container: document.getElementById('container'),
+  origin: 'center',
 });
 ```
 
@@ -330,14 +346,14 @@ snap.updateProps({
 ### `duration` {#props.duration}
 
 - **Type:** `number | ((distance: number) => number)`
-- **Default:** `500`
+- **Default:** `600`
 - Slide animation duration.  
   **See [demo](basic-demos#hypersmooth)**
 
 ```js
 const snap = new Snap({
   container: document.getElementById('container'),
-  duration: 500,
+  duration: 600,
 });
 
 // change value
@@ -436,7 +452,7 @@ snap.updateProps({
 
 - **Type:** `number`
 - **Default:** `1`
-- Speed factor for swipe movements. Does not work when `swipeAxis="angle"`.  
+- Speed factor for swipe movements.
   **See [demo](basic-demos#reverse-swipe)**
 
 ```js
@@ -605,31 +621,19 @@ snap.updateProps({
 ### `swipeInertiaDuration` {#props.swipeInertiaDuration}
 
 - **Type:** `(distance: number) => number`
-- **Default:** `(distance) => clamp(distance, 500, 2000)`
-- Inertia duration.
-
-```js
-const snap = new Snap({
-  container: document.getElementById('container'),
-  swipeInertiaDuration: (distance) => clamp(distance, 500, 2000),
-});
-
-// inertia duration is equal to the distance
-snap.updateProps({
-  swipeInertiaDuration: (distance) => distance,
-});
-```
+- **Default:** `null`
+- **Status:** deprecated — release inertia is now RAF-based and this prop is no longer applied.
 
 ### `swipeInertiaRatio` {#props.swipeInertiaRatio}
 
 - **Type:** `number`
-- **Default:** `0.5`
+- **Default:** `1`
 - Inertia strength.
 
 ```js
 const snap = new Snap({
   container: document.getElementById('container'),
-  swipeInertiaRatio: 0.3,
+  swipeInertiaRatio: 1,
 });
 
 // change value

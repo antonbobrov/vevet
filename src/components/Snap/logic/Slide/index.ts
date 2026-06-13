@@ -1,14 +1,14 @@
 import { clamp, IOnResize, loop, onResize, scoped, toPixels } from '@/utils';
 
 import { Snap } from '../..';
-import { SnapSlideParallax } from '../SlideParallax';
-import { parallaxAttributes } from '../SlideParallax/constants';
 
+import { SnapSlideParallax } from './Parallax';
+import { PARALLAX_ATTRIBUTES } from './Parallax/constants';
 import { ISnapSlideProps } from './types';
 
 export class SnapSlide {
   /** Snap component */
-  private _snap?: Snap;
+  private _ctx?: Snap;
 
   /** Slide props */
   private _props: Required<ISnapSlideProps>;
@@ -34,7 +34,7 @@ export class SnapSlide {
   /** If the slide is visible */
   private _isVisible = false;
 
-  /** Static coordinate (as if the slide was never moved) */
+  /** Static coordinate without alignment (as if the slide was never moved) */
   private _staticCoord = 0;
 
   /** Current progress of slide movement: from -1 to 1 */
@@ -49,6 +49,7 @@ export class SnapSlide {
 
     const defaultProps: ISnapSlideProps = {
       virtual: false,
+      size: null,
     };
 
     this._props = {
@@ -56,19 +57,24 @@ export class SnapSlide {
       ...initProps,
     } as Required<ISnapSlideProps>;
 
-    if (this.props.virtual && (!initProps.size || initProps.size === 'auto')) {
+    if (this._props.virtual && (!initProps.size || initProps.size === 'auto')) {
       throw new Error('Virtual slide must have a defined size');
     }
   }
 
   /** Snap component */
-  private get snap() {
-    return this._snap;
+  private get ctx() {
+    return this._ctx;
   }
 
   /** Slide properties */
   private get props() {
     return this._props;
+  }
+
+  /** Size property */
+  private get sizeProp() {
+    return this.props.size ?? this.ctx?.props.slideSize ?? 'auto';
   }
 
   /** Slide element */
@@ -86,7 +92,7 @@ export class SnapSlide {
     return this._coord;
   }
 
-  /** Static coordinate (as if the slide was never moved) */
+  /** Static coordinate without alignment (as if the slide was never moved) */
   get staticCoord() {
     return this._staticCoord;
   }
@@ -96,65 +102,59 @@ export class SnapSlide {
     return this._progress;
   }
 
-  /** Size property */
-  private get sizeProp() {
-    return this.props.size ?? this.snap?.props.slideSize ?? 'auto';
-  }
-
   /** Slide size in pixels */
   get size() {
-    const { snap, sizeProp } = this;
+    const { ctx, sizeProp } = this;
 
-    if (!snap) {
+    if (!ctx) {
       return 0;
     }
 
     if (sizeProp === 'stretch') {
-      return snap.containerSize;
+      return ctx.containerSize;
     }
 
     if (sizeProp === 'auto') {
-      return this._domSize ?? snap.containerSize;
+      return this._domSize ?? ctx.containerSize;
     }
 
     return toPixels(sizeProp);
   }
 
-  /** Check if the slide is visible */
+  /** Check if the slide is visible relative to the container */
   get isVisible() {
     return this._isVisible;
   }
 
   /** Resize the slide & trigger snap reflow */
   public resize(isManual = true) {
-    const { element, snap } = this;
+    const { element, ctx } = this;
 
-    if (!snap) {
+    if (!ctx) {
       return;
     }
 
-    // Update DOM size
     if (element) {
       this._domSize =
-        snap.axis === 'x' ? element.offsetWidth : element.offsetHeight;
+        ctx.axis === 'x' ? element.offsetWidth : element.offsetHeight;
     }
 
     // Re-flow
-    snap.resize(isManual);
+    ctx.resize(isManual);
   }
 
   /**
    * Attach the slide to the Snap class.
    * For internal use only
    */
-  public $_attach(snap: Snap, index: number) {
+  public $_attach(ctx: Snap, index: number) {
     this.$_detach();
 
-    this._snap = snap;
+    this._ctx = ctx;
     this._index = index;
 
     this._parallax = this._getParallaxNodes().map(
-      (node) => new SnapSlideParallax(snap, this, node),
+      (node) => new SnapSlideParallax(this, node, () => ctx.impulse),
     );
 
     if (this.element && this.sizeProp === 'auto') {
@@ -172,7 +172,7 @@ export class SnapSlide {
    * For internal use only
    */
   public $_detach() {
-    this._snap = undefined;
+    this._ctx = undefined;
     this._resizer?.remove();
     this._parallax?.forEach((parallax) => parallax.destroy());
   }
@@ -202,7 +202,7 @@ export class SnapSlide {
       return [];
     }
 
-    const selector = parallaxAttributes.map((attr) => `[${attr}]`).join(',');
+    const selector = PARALLAX_ATTRIBUTES.map((attr) => `[${attr}]`).join(',');
     const nodeList = element.querySelectorAll(selector);
 
     return Array.from(nodeList) as HTMLElement[];
@@ -210,39 +210,38 @@ export class SnapSlide {
 
   /** Toggle slide append/remove */
   private _toggleAppend() {
-    if (!this.props.virtual || !this.element || !this.snap) {
+    if (!this.props.virtual || !this.element || !this.ctx) {
       return;
     }
 
-    const { element } = this;
-    const { container } = this.snap;
+    const { element, ctx } = this;
 
     if (this.isVisible && !this._isAppended) {
       this._isAppended = true;
-      container.appendChild(element);
+      ctx.container.appendChild(element);
     } else if (!this.isVisible && this._isAppended) {
       this._isAppended = false;
-      container.removeChild(element);
+      ctx.container.removeChild(element);
     }
   }
 
   /** Get magnets with static coordinates but dynamic alignment */
   public get magnets() {
-    if (!this.snap) {
+    if (!this.ctx) {
       return [];
     }
 
-    const { snap, staticCoord, size, index } = this;
-    const { containerSize } = snap;
+    const { ctx, staticCoord, size, index } = this;
+    const { containerSize, origin } = ctx;
 
     let points: number[] = [];
 
-    if (index === 0 && snap.props.loop) {
-      points.push(snap.max);
+    if (index === 0 && ctx.props.loop) {
+      points.push(ctx.max);
     }
 
-    if (snap.props.centered) {
-      const point = staticCoord + size / 2 - snap.firstSlideSize / 2;
+    if (origin === 'center') {
+      const point = staticCoord + size / 2 - ctx.firstSlideSize / 2;
 
       if (size > containerSize) {
         points.push(point);
@@ -251,16 +250,24 @@ export class SnapSlide {
       } else {
         points.push(point);
       }
+    } else if (origin === 'end') {
+      const point = staticCoord + size - ctx.firstSlideSize;
+
+      points.push(point);
+
+      if (size > containerSize) {
+        points.push(point + (containerSize - size));
+      }
     } else {
       points.push(staticCoord);
 
       if (size > containerSize) {
         points.push(staticCoord + (size - containerSize));
       }
-    }
 
-    if (!snap.canLoop && !snap.props.centered) {
-      points = points.map((point) => clamp(point, 0, snap.max));
+      if (!ctx.canLoop) {
+        points = points.map((point) => clamp(point, 0, ctx.max));
+      }
     }
 
     return points;
@@ -271,18 +278,25 @@ export class SnapSlide {
    * For internal use only
    */
   public $_updateProgress() {
-    const { snap } = this;
+    const { ctx } = this;
 
-    if (!snap) {
+    if (!ctx) {
       return;
     }
 
     const { coord, size } = this;
-    const { props, containerSize } = snap;
+    const { containerSize, origin } = ctx;
 
-    if (props.centered) {
+    if (origin === 'center') {
       const center = containerSize / 2 - size / 2;
       this._progress = scoped(coord, center, center - size);
+
+      return;
+    }
+
+    if (origin === 'end') {
+      const end = containerSize - size;
+      this._progress = scoped(coord, end, end - size);
 
       return;
     }
@@ -295,33 +309,42 @@ export class SnapSlide {
    * For internal use only
    */
   public $_updateCoords(offset: number) {
-    const { snap } = this;
-    if (!snap) {
+    const { ctx } = this;
+
+    if (!ctx) {
       return;
     }
 
     const { staticCoord, size } = this;
-    const { centered: isCentered } = snap.props;
+    const { origin } = ctx;
 
-    if (!snap.canLoop) {
-      this._setCoord(staticCoord + offset - snap.current);
+    if (!ctx.canLoop) {
+      this._setCoord(staticCoord + offset - ctx.current);
 
       return;
     }
 
-    if (isCentered) {
+    if (origin === 'center') {
       this._setCoord(
         loop(
-          staticCoord + offset - snap.current,
-          -snap.max / 2 + offset,
-          snap.max / 2 + offset,
+          staticCoord + offset - ctx.current,
+          -ctx.max / 2 + offset,
+          ctx.max / 2 + offset,
         ),
       );
 
       return;
     }
 
-    this._setCoord(loop(staticCoord - snap.current, -size, snap.max - size));
+    if (origin === 'end') {
+      this._setCoord(
+        loop(staticCoord + offset - ctx.current, -size, ctx.max - size),
+      );
+
+      return;
+    }
+
+    this._setCoord(loop(staticCoord - ctx.current, -size, ctx.max - size));
   }
 
   /** Set slide coordinate */
@@ -330,7 +353,7 @@ export class SnapSlide {
 
     this._isVisible =
       this.size > 0 &&
-      this.coord > -this.size &&
-      this.coord < (this.snap?.containerSize ?? 0);
+      this._coord > -this.size &&
+      this._coord < (this.ctx?.containerSize ?? 0);
   }
 }

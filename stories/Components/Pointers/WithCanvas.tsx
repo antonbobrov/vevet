@@ -55,11 +55,11 @@ export const WithCanvas: FC = () => {
       <style>
         {`
           .container {
-            position: fixed;
-            top: 10%;
-            left: 10%;
-            width: 80%;
-            height: 80%;
+            position: relative;
+            width: 100%;
+            height: 80svh;
+            background-color: #000;
+            touch-action: none;
             background-color: #000;
             touch-action: none;
           }

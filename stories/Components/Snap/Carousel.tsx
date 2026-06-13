@@ -16,7 +16,7 @@ export const Carousel: FC = () => {
       grabCursor: true,
       wheel: true,
       wheelAxis: 'y',
-      centered: true,
+      origin: 'center',
       loop: true,
       shortSwipes: false,
       freemode: 'sticky',
@@ -38,20 +38,17 @@ export const Carousel: FC = () => {
       <style>
         {`
           .slider {
-            position: fixed;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
+            position: relative;
             width: 100%;
-            height: 360px;
+            height: 300px;
             perspective: 600px;
             transform-style: preserve-3d;
           }
             
           .slide {
             position: absolute;
-            width: 240px;
-            height: 360px;
+            width: 200px;
+            height: 300px;
             border-radius: 16px;
             overflow: hidden;
             box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.1);

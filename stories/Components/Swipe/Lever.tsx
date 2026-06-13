@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef } from 'react';
 
 import { Swipe } from '@/index';
 
-export const Circle: FC = () => {
+export const Lever: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
   const rotateRef = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
@@ -12,17 +12,18 @@ export const Circle: FC = () => {
       return undefined;
     }
 
-    let angle = 0;
-
     const instance = new Swipe({
       container: ref.current,
       thumb: thumbRef.current,
       inertia: true,
-      onMove: ({ step }) => {
-        angle += step.angle;
-
-        rotateRef.current!.style.transform = `rotate(${angle}deg)`;
+      relative: true,
+      grabCursor: true,
+      bounds: () => ({ angle: [-180, 180] }),
+      onMove: ({ movement }) => {
+        rotateRef.current!.style.transform = `rotate(${movement.angle}deg)`;
       },
+      snap: () => ({ angle: [90, 10] }),
+      snapRadius: 10,
     });
 
     return () => instance.destroy();
@@ -33,14 +34,10 @@ export const Circle: FC = () => {
       <style>
         {`
           .container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px;
-
-            touch-action: none;
+            position: relative;
+            margin: 0 auto;
+            width: 300px;
+            height: 300px;
           }
 
           .thumb_container {

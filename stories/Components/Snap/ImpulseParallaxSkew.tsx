@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef } from 'react';
 
 import { Snap } from '@/index';
 
-export const InfluenceParallaxSkew: FC = () => {
+export const ImpulseParallaxSkew: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ export const InfluenceParallaxSkew: FC = () => {
 
     const instance = new Snap({
       container: ref.current,
-      centered: true,
+      origin: 'center',
       loop: true,
       shortSwipes: false,
       gap: 20,
@@ -35,13 +35,10 @@ export const InfluenceParallaxSkew: FC = () => {
           .container {
             --size: min(30vw, 50vh);
 
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
+            margin: 0 auto;
             width: 100%;
             height: var(--size);
-            overflow: hidden;
 
             @media (orientation: portrait) {
               --size: min(30vh, 50vw);
@@ -93,7 +90,7 @@ export const InfluenceParallaxSkew: FC = () => {
               data-snap-parallax-skew-min="-40"
               data-snap-parallax-skew-max="40"
               data-snap-parallax-skew-scope="const"
-              data-snap-parallax-skew-influence="5"
+              data-snap-parallax-skew-impulse="5"
               data-snap-parallax-skew-directional
             >
               {index}

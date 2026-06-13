@@ -2,13 +2,17 @@
 sidebar_position: 800
 toc_min_heading_level: 2
 toc_max_heading_level: 6
-description: Swipe — Vevet.js component for swipe interactions, pointer tracking, direction detection, inertia and rotation.
+description: Swipe — Vevet.js component for swipe interactions, pointer tracking, direction detection, rotation, bounds, rubber-band, snap, scale and inertia.
 keywords:
   - vevet swipe
   - swipe gestures
   - touch events
   - pointer movement
   - inertia
+  - bounds
+  - snap
+  - scale
+  - zoom
 ---
 
 # Swipe
@@ -17,10 +21,24 @@ Manages swipe interactions:
 
 - Tracks pointer movement and detects direction
 - Emits events on start, move, and end
-- Supports inertia-based movement with easing
-- Calculates rotation
+- Supports RAF-based release inertia with optional bounds bounce
+- Optional movement `bounds`, rubber-band `overflow`, and `snap` targets
+- Optional programmatic [`scale`](accessors#scale) with zoom-to-point via [`setScale`](methods#setScale)
+- Calculates rotation (`angle` in degrees)
 - Does not apply transforms — only provides computed coordinates
-- Does not store state after swipe ends (movement always resets)
+
+## Coordinate spaces
+
+Swipe exposes two related spaces in [`ISwipeCoords`](interfaces#iswipecoords):
+
+| Space        | Fields                                              | Use for                                                   |
+| ------------ | --------------------------------------------------- | --------------------------------------------------------- |
+| **Pointer**  | `start`, `prev`, `current`, `diff`, `step`, `accum` | Gesture deltas, direction detection, velocity             |
+| **Movement** | `movement`, `prevMovement`, `scale`                 | Element `transform` when using `bounds` / `snap` / rubber |
+
+`movement` and `scale` are accumulated for the instance lifetime (not reset on each swipe). Per-gesture offsets live in `diff` and `step`.
+
+With [`pointers`](props#props.pointers) `> 1`, pointer-space coordinates follow the **center** between active pointers (via internal [`Pointers.move`](/docs/Pointers/accessors#move)), not the first touch only.
 
 ## Basic Demo
 
@@ -50,10 +68,12 @@ To explore more demos, click [here](./demos).
 
 :::caution
 
-- `Swipe` does not transform elements — it only computes movement values.
-- `Swipe` does not persist any state after swipe completion (all coordinates reset).
-- Inertia is optional and triggers only if the calculated distance exceeds the threshold.
+- `Swipe` does not transform elements — apply `movement`, `scale` (or `diff`) yourself in callbacks.
+- With `bounds` / `snap`, prefer **`movement`** and **`scale`** for transforms; `diff` is pointer space only.
+- Set `transform-origin` on the transformed element (typically `top left` / `0 0`) so translate and scale compose predictably.
   :::
+
+Simple drag (pointer space):
 
 ```js
 import { Swipe } from 'vevet';
@@ -64,15 +84,145 @@ const swipe = new Swipe(
     grabCursor: true,
   },
   {
-    onMove: ({ diff }, { container }) => {
-      container.style.transform = `translate(${diff.x}px, ${diff.y}px)`;
+    onMove: ({ diff }) => {
+      el.style.transform = `translate(${diff.x}px, ${diff.y}px)`;
     },
-    onEnd: (data, { container }) => {
-      container.style.transform = 'none';
+    onEnd: () => {
+      el.style.transform = '';
     },
   },
 );
 ```
+
+Bounded drag with rubber and inertia (movement space):
+
+```js
+import { Swipe } from 'vevet';
+
+const wrapper = document.getElementById('wrapper');
+const thumb = document.getElementById('thumb');
+
+const swipe = new Swipe({
+  container: wrapper,
+  thumb,
+  relative: true,
+  grabCursor: true,
+  inertia: true,
+  overflow: () => 50,
+  bounds: () => ({ x: [0, 300], y: [0, 300] }),
+  onMove: ({ movement }) => {
+    thumb.style.transform = `translate(${movement.x}px, ${movement.y}px)`;
+  },
+});
+
+// Optional initial offset
+swipe.setMovement({ x: 150, y: 150 });
+```
+
+Image viewer with pan, wheel zoom, and scale-aware bounds (movement space):
+
+```js
+import { addEventListener, clamp, Swipe } from 'vevet';
+
+const wrapper = document.getElementById('wrapper');
+const thumb = document.getElementById('thumb');
+
+const minScale = 1;
+const maxScale = 3;
+
+const swipe = new Swipe({
+  container: wrapper,
+  thumb,
+  relative: true,
+  inertia: true,
+  grabCursor: true,
+  bounds: ({ scale }) => ({
+    x: [0, wrapper.clientWidth - thumb.clientWidth * scale],
+    y: [0, wrapper.clientHeight - thumb.clientHeight * scale],
+  }),
+  onMove: ({ movement, scale }) => {
+    thumb.style.transform = `translate(${movement.x}px, ${movement.y}px) scale(${scale})`;
+  },
+});
+
+addEventListener(
+  thumb,
+  'wheel',
+  (event) => {
+    event.preventDefault();
+
+    if (swipe.isSwiping) {
+      return;
+    }
+
+    swipe.setScale(
+      clamp(swipe.scale - event.deltaY * 0.001, minScale, maxScale),
+      event,
+    );
+  },
+  { passive: false },
+);
+
+addEventListener(thumb, 'dblclick', (event) => {
+  const next =
+    swipe.scale >= maxScale
+      ? minScale
+      : clamp(swipe.scale + 1, minScale, maxScale);
+
+  swipe.setScale(next, event);
+});
+```
+
+Two-finger pan (touch) + pinch zoom via a separate [`Pointers`](/docs/Pointers) instance:
+
+```js
+import { clamp, Pointers, Swipe } from 'vevet';
+
+const wrapper = document.getElementById('wrapper');
+const thumb = document.getElementById('thumb');
+
+const minScale = 1;
+const maxScale = 10;
+
+// Pan — one mouse pointer or two touch pointers
+const swipe = new Swipe({
+  container: wrapper,
+  relative: true,
+  inertia: true,
+  pointers: (type) => (type === 'mouse' ? 1 : 2),
+  bounds: ({ scale }) => ({
+    x: [0, wrapper.clientWidth - thumb.clientWidth * scale],
+    y: [0, wrapper.clientHeight - thumb.clientHeight * scale],
+  }),
+  onMove: ({ movement, scale }) => {
+    thumb.style.transform = `translate(${movement.x}px, ${movement.y}px) scale(${scale})`;
+  },
+});
+
+// Pinch — zoom toward the midpoint between fingers
+const pinch = new Pointers({
+  container: wrapper,
+  minPointers: 2,
+  maxPointers: 2,
+  relative: false, // client coords — matches Swipe.setScale origin decoding
+  onMove: ({ center, scale, prevScale }) => {
+    if (prevScale === scale) {
+      return;
+    }
+
+    swipe.setScale(
+      clamp(swipe.scale * (scale / prevScale), minScale, maxScale),
+      center,
+    );
+  },
+  onStart: () => swipe.updateProps({ inertia: false }),
+  onEnd: () => swipe.updateProps({ inertia: true }),
+});
+```
+
+:::tip Coordinate space for pinch origin
+Use a separate [`Pointers`](/docs/Pointers) instance with `relative: false` and pass `move.center` to [`setScale`](methods#setscale). Coordinates are client-based; Swipe converts them to container space when [`relative`](props#props.relative) is `true`.
+:::
 
 Detect direction:
 
@@ -83,11 +233,10 @@ swipe.on('toLeft', () => console.log('swipe to left'));
 Add inertia:
 
 ```js
-import { Swipe } from 'vevet';
-
 const swipe = new Swipe({
   container: document.getElementById('container'),
   inertia: true,
+  inertiaThreshold: 1, // px/s or deg/s minimum release speed
 });
 ```
 

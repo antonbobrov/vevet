@@ -7,8 +7,6 @@ import {
   Module,
 } from '@/index';
 
-// todo: update
-
 interface ICallbacks extends IModuleCallbacksMap {}
 
 type TStaticProps = IModuleStaticProps & {

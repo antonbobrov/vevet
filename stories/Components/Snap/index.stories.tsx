@@ -4,23 +4,46 @@ import { Cards as CardsComponent } from './Cards';
 import { CardsStack as CardsStackComponent } from './CardsStack';
 import { Carousel as CarouselComponent } from './Carousel';
 import { Circular as CircularComponent } from './Circular';
-import { CreativeScale as CreativeScaleComponent } from './CreativeScale';
-import { CreativeSine as CreativeSineComponent } from './CreativeSine';
 import { DynamicWidth as DynamicWidthComponent } from './DynamicWidth';
-import { Fade as FadeComponent } from './Fade';
-import { Glide as GlideComponent } from './Glide';
-import { InfluenceParallaxGap as InfluenceParallaxGapComponent } from './InfluenceParallaxGap';
-import { InfluenceParallaxSkew as InfluenceParallaxSkewComponent } from './InfluenceParallaxSkew';
+import { ImpulseParallaxGap as ImpulseParallaxGapComponent } from './ImpulseParallaxGap';
+import { ImpulseParallaxSkew as ImpulseParallaxSkewComponent } from './ImpulseParallaxSkew';
 import { Panorama as PanoramaComponent } from './Panorama';
-import { ParallaxStickers as ParallaxStickersComponent } from './ParallaxStickers';
 import { Rtl as RtlComponent } from './Rtl';
-import { SlickGap as SlickGapComponent } from './SlickGap';
-import { Spiral as SpiralComponent } from './Spiral';
-import { Stack3D as Stack3DComponent } from './Stack3D';
 import { Test as TestComponent } from './Test';
 import { Virtual as VirtualComponent } from './Virtual';
 
+import type { TTestSnapProps } from './Test';
 import type { Meta, StoryFn } from '@storybook/react';
+
+type Torigin = NonNullable<TTestSnapProps['origin']>;
+
+interface ITestStoryArgs {
+  origin: Torigin;
+  loop: boolean;
+  snapProps?: Omit<TTestSnapProps, 'origin' | 'loop'>;
+}
+
+type TTestStory = StoryFn<ITestStoryArgs>;
+type TTestStoryArgTypes = NonNullable<TTestStory['argTypes']>;
+
+const testArgTypes = {
+  origin: {
+    control: 'select',
+    options: ['start', 'center', 'end'] satisfies Torigin[],
+  },
+  loop: { control: 'boolean' },
+  snapProps: { table: { disable: true } },
+} satisfies TTestStoryArgTypes;
+
+const renderTest: TTestStory = ({ origin, loop, snapProps }) => (
+  <TestComponent
+    snapProps={{
+      ...snapProps,
+      origin,
+      loop,
+    }}
+  />
+);
 
 const meta: Meta = {
   title: 'Components/Snap',
@@ -28,11 +51,69 @@ const meta: Meta = {
 
 export default meta;
 
-export const Test: StoryFn = () => <TestComponent />;
+export const Default: TTestStory = renderTest.bind({});
+Default.args = {
+  origin: 'start',
+  loop: false,
+  snapProps: {},
+} satisfies ITestStoryArgs;
+Default.argTypes = testArgTypes;
+
+export const FreemodeWheelNoFollow: TTestStory = renderTest.bind({});
+FreemodeWheelNoFollow.args = {
+  origin: 'start',
+  loop: false,
+  snapProps: {
+    freemode: true,
+    followWheel: false,
+    wheelThrottle: 'auto',
+  },
+} satisfies ITestStoryArgs;
+FreemodeWheelNoFollow.argTypes = testArgTypes;
+
+export const SwipeNoFollow: TTestStory = renderTest.bind({});
+SwipeNoFollow.args = {
+  origin: 'start',
+  loop: false,
+  snapProps: {
+    followSwipe: false,
+  },
+} satisfies ITestStoryArgs;
+SwipeNoFollow.argTypes = testArgTypes;
+
+export const Rewind: TTestStory = renderTest.bind({});
+Rewind.args = {
+  origin: 'start',
+  loop: false,
+  snapProps: {
+    followSwipe: false,
+    rewind: true,
+  },
+} satisfies ITestStoryArgs;
+Rewind.argTypes = testArgTypes;
+
+export const FreemodeSticky: TTestStory = renderTest.bind({});
+FreemodeSticky.args = {
+  origin: 'start',
+  loop: false,
+  snapProps: {
+    freemode: 'sticky',
+  },
+} satisfies ITestStoryArgs;
+FreemodeSticky.argTypes = testArgTypes;
+
+export const Vertical: TTestStory = renderTest.bind({});
+Vertical.args = {
+  origin: 'start',
+  loop: false,
+  snapProps: {
+    direction: 'vertical',
+    followWheel: false,
+  },
+} satisfies ITestStoryArgs;
+Vertical.argTypes = testArgTypes;
 
 export const Rtl: StoryFn = () => <RtlComponent />;
-
-export const Fade: StoryFn = () => <FadeComponent />;
 
 export const Carousel: StoryFn = () => <CarouselComponent />;
 
@@ -42,30 +123,16 @@ export const Panorama: StoryFn = () => <PanoramaComponent />;
 
 export const Circular: StoryFn = () => <CircularComponent />;
 
-export const Glide: StoryFn = () => <GlideComponent />;
-
 export const CardsStack: StoryFn = () => <CardsStackComponent />;
-
-export const Spiral: StoryFn = () => <SpiralComponent />;
-
-export const SlickGap: StoryFn = () => <SlickGapComponent />;
 
 export const DynamicWidth: StoryFn = () => <DynamicWidthComponent />;
 
-export const CreativeScale: StoryFn = () => <CreativeScaleComponent />;
-
-export const CreativeSine: StoryFn = () => <CreativeSineComponent />;
-
-export const Stack3D: StoryFn = () => <Stack3DComponent />;
-
-export const InfluenceParallaxGap: StoryFn = () => (
-  <InfluenceParallaxGapComponent />
+export const ImpulseParallaxGap: StoryFn = () => (
+  <ImpulseParallaxGapComponent />
 );
 
-export const InfluenceParallaxSkew: StoryFn = () => (
-  <InfluenceParallaxSkewComponent />
+export const ImpulseParallaxSkew: StoryFn = () => (
+  <ImpulseParallaxSkewComponent />
 );
-
-export const ParallaxStickers: StoryFn = () => <ParallaxStickersComponent />;
 
 export const Virtual: StoryFn = () => <VirtualComponent />;

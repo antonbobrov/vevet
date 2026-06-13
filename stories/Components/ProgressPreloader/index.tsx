@@ -61,8 +61,6 @@ export const Component: FC = () => {
         </button>
       </div>
 
-      <br />
-
       <p
         className="js-preload"
         data-weight="1"

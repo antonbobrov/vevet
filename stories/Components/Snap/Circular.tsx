@@ -16,8 +16,9 @@ export const Circular: FC = () => {
       wheel: true,
       swipeAxis: 'angle',
       wheelAxis: 'y',
-      loop: true,
       freemode: true,
+      swipeSpeed: -1,
+      loop: true,
       onUpdate: (data, { containerSize, slides }) => {
         const radius = containerSize / 2;
         const p2 = Math.PI * 2;
@@ -25,7 +26,7 @@ export const Circular: FC = () => {
 
         slides.forEach((slide) => {
           const element = slide.element!;
-          const progress = -slide.progress / slides.length;
+          const progress = slide.progress / slides.length;
 
           const x = Math.cos(p2 * progress + offset) * radius;
           const y = Math.sin(p2 * progress + offset) * radius;
@@ -46,10 +47,8 @@ export const Circular: FC = () => {
           .container {
             --size: min(50vh, 50vw);
 
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
+            margin: 0 auto;
             width: var(--size);
             height: var(--size);
           }
@@ -77,6 +76,8 @@ export const Circular: FC = () => {
 
             border-radius: 8px;
             overflow: hidden;
+            
+            background: #000;
           }
 
           .wrapper img {
@@ -108,13 +109,13 @@ export const Circular: FC = () => {
               className="wrapper"
               data-snap-parallax-scale="-5"
               data-snap-parallax-scale-min="0.755"
-              data-snap-parallax-scale-influence
+              data-snap-parallax-scale-impulse
               data-snap-parallax-scale-abs
               data-snap-parallax-scale-scope="1,1"
               data-snap-parallax-skew="-200"
               data-snap-parallax-skew-min="-30"
               data-snap-parallax-skew-max="30"
-              data-snap-parallax-skew-influence
+              data-snap-parallax-skew-impulse
               data-snap-parallax-skew-directional
               data-snap-parallax-skew-scope="1,1"
             >

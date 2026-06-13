@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Pinch as PinchComponent } from './Pinch';
 import { Test as TestComponent } from './Test';
 import { WithCanvas as WithCanvasComponent } from './WithCanvas';
 
@@ -14,3 +15,5 @@ export default meta;
 export const Test: StoryFn = () => <TestComponent />;
 
 export const WithCanvas: StoryFn = () => <WithCanvasComponent />;
+
+export const Pinch: StoryFn = () => <PinchComponent />;

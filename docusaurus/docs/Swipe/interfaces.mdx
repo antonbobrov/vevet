@@ -17,6 +17,8 @@ import Head from '@docusaurus/Head';
 
 ## ISwipeVec2
 
+2D vector in swipe coordinate space.
+
 ```ts
 interface ISwipeVec2 {
   x: number;
@@ -24,55 +26,95 @@ interface ISwipeVec2 {
 }
 ```
 
-## ISwipeCanMoveArg
+## ISwipeVec3
+
+2D vector with rotation (`angle` in degrees).
 
 ```ts
-interface ISwipeCanMoveArg {
-  type: 'touch' | 'mouse';
-  matrix: ISwipeMatrix;
-  start: ISwipeVec2;
-  diff: ISwipeVec2;
+interface ISwipeVec3 extends ISwipeVec2 {
+  angle: number;
+}
+```
+
+## ISwipeState
+
+Pointer sample: position plus `time` (ms, `performance.now()`).
+
+```ts
+interface ISwipeState extends ISwipeVec3 {
+  time: number;
 }
 ```
 
 ## ISwipeMatrix
 
+:::caution Deprecated
+Use [`ISwipeVec3`](#iswipevec3) or [`ISwipeState`](#iswipestate) instead.
+:::
+
 ```ts
-interface ISwipeMatrix {
-  x: number; // pixels
-  y: number; // pixels
-  angle: number; // degrees
-}
+interface ISwipeMatrix extends ISwipeVec3 {}
 ```
 
-## ISwipeVelocity
+## ISwipeAxes
+
+Optional numeric values per axis (`x`, `y`, `angle`).
+
+- **`bounds`**: each array is normalized to `[min, max]` movement limits.
+- **`snap`**: each array lists snap targets in movement space.
 
 ```ts
-interface ISwipeVelocity {
-  x: number; // pixels
-  y: number; // pixels
-  angle: number; // degrees
-  timestamp: number;
+interface ISwipeAxes {
+  x?: number[];
+  y?: number[];
+  angle?: number[];
 }
 ```
 
 ## ISwipeCoords
 
+Snapshot on swipe callbacks and accessors.
+
+**Pointer space:** `start`, `prev`, `current`, `diff`, `step`, `accum`.  
+**Movement space:** `movement`, `prevMovement`, `scale` (after rubber and snap — use for transforms with `bounds`).
+
 ```ts
 interface ISwipeCoords {
-  /** Event timestamp. */
+  /** Last event timestamp (ms). */
   timestamp: number;
-  /** Start position. */
-  start: ISwipeMatrix;
-  /** Previous position. */
-  prev: ISwipeMatrix;
-  /** Current position. */
-  current: ISwipeMatrix;
-  /** Movement offset from start. */
-  diff: ISwipeMatrix;
-  /** Movement offset from previous position. */
-  step: ISwipeMatrix;
-  /** Total accumulated movement. */
-  accum: ISwipeVec2;
+  /** Pointer position at swipe start. */
+  start: ISwipeState;
+  /** Previous pointer position. */
+  prev: ISwipeState;
+  /** Current pointer position. */
+  current: ISwipeState;
+  /** Offset from `start` to `current` (angle is accumulated). */
+  diff: ISwipeState;
+  /** Offset from `prev` to `current`. */
+  step: ISwipeState;
+  /** Absolute path length since swipe start (`|step|` per axis). */
+  accum: ISwipeVec3;
+  /** Total displacement in movement space (rubber + snap applied). */
+  movement: ISwipeVec3;
+  /** Movement on the previous frame (movement space, after rubber and snap). */
+  prevMovement: ISwipeVec3;
+  /** Current scale modifier (default `1`). */
+  scale: number;
+}
+```
+
+## ISwipeCanMoveArg
+
+Arguments for [`willAbort`](props#props.willAbort).
+
+```ts
+interface ISwipeCanMoveArg {
+  type: 'touch' | 'mouse';
+  /** Current pointer sample. */
+  state: ISwipeState;
+  /** Pointer position when the gesture began. */
+  start: ISwipeVec2;
+  /** Offset from `start` to `state` (pointer space). */
+  diff: ISwipeVec2;
 }
 ```
