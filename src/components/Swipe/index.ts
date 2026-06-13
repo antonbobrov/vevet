@@ -92,6 +92,7 @@ export class Swipe extends Module<TC, TS, TM> {
       container,
       props: this.props,
       hasInertia: () => this.hasInertia,
+      recalculateBoundsOnInertia: () => this.props.recalculateBoundsOnInertia,
     });
 
     this._styles = new SwipeStyles(this as any);

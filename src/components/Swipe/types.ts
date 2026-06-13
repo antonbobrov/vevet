@@ -188,6 +188,12 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
   bounds?: null | ((coords: ISwipeCoords) => ISwipeAxes | null);
 
   /**
+   * Enable bounds recalculation when inertia is active
+   * @default true
+   */
+  recalculateBoundsOnInertia?: boolean;
+
+  /**
    * Snap targets per axis in movement space.
    * @default null
    */

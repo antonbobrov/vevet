@@ -35,6 +35,7 @@ export const MUTABLE_PROPS: TRequiredProps<ISwipeMutableProps> = {
   inertiaThreshold: 1,
   maxVelocity: { x: 7, y: 7, angle: 3 },
   bounds: null as any,
+  recalculateBoundsOnInertia: true,
   snap: null as any,
   canBounce: () => true,
   snapRadius: null as any,

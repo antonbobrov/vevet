@@ -13,6 +13,7 @@ interface IProps {
   container: Element;
   props: typeof Swipe.prototype.props;
   hasInertia: () => boolean;
+  recalculateBoundsOnInertia: () => boolean;
 }
 
 export class SwipeCoords {
@@ -300,12 +301,17 @@ export class SwipeCoords {
 
   /** Update coordinates */
   public update({ x, y, angle, time }: ISwipeState, applyRatio = true) {
-    // Update bounds
-    this.calculateBounds();
-
     // Vars
     const { start, ctx } = this;
     const stepRatio = applyRatio ? ctx.props.ratio : 1;
+
+    // Update bounds
+    if (
+      (ctx.hasInertia() && ctx.recalculateBoundsOnInertia()) ||
+      !ctx.hasInertia()
+    ) {
+      this.calculateBounds();
+    }
 
     // Save
     this._timestamp = performance.now();

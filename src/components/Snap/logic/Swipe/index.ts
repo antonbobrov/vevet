@@ -23,6 +23,7 @@ export class SnapSwipe extends SnapLogic {
       container: this.eventsEmitter,
       inertia: false,
       inertiaThreshold: 3,
+      recalculateBoundsOnInertia: false,
       overflow: () => ctx.containerSize * (1 - ctx.props.edgeFriction),
       canBounce: () => !this.isTransitioning,
       bounds: this._getBounds.bind(this),
