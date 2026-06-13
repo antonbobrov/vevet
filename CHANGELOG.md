@@ -1,5 +1,31 @@
 # Changelog
 
+# [5.10.0](https://github.com/antonbobrov/vevet/compare/v5.9.1...v5.10.0) (2026-06-13)
+
+
+### Pointers
+
+* add `move`, pan, scale, rotate logic ([e123c9d](https://github.com/antonbobrov/vevet/commit/e123c9d2f4bf17aed522df2f6ece541d7649a952))
+* allow dynamic values for `buttons`, `minPointers` & `maxPointers` ([367089c](https://github.com/antonbobrov/vevet/commit/367089c39e62bc7d8f539d2cc1770ecddeb2fa7e))
+
+### Snap
+
+* add `isWheeling` ([8c6f67b](https://github.com/antonbobrov/vevet/commit/8c6f67b9c0679d2eeaaf751303a1c7eee987c038))
+* avoid `influence`, use `impulse` ([3256c4b](https://github.com/antonbobrov/vevet/commit/3256c4b79abf65d60c6af692f163f464b727af25))
+* better zero-slide behavior ([da588c6](https://github.com/antonbobrov/vevet/commit/da588c60d0c209b32519b506e261ba1c584c9981))
+* change default `duration` to 600 ([5a11c4a](https://github.com/antonbobrov/vevet/commit/5a11c4a870b81e91290a75d784b7773e496c6c16))
+* deprecate `centered` & add `align` ([698b72b](https://github.com/antonbobrov/vevet/commit/698b72bb5b1f6547b14019d56aea3c9d68548c2e))
+* disable sticking when targetIndex is the same as activeIndex in toSlide; allow controllable carousels ([e942665](https://github.com/antonbobrov/vevet/commit/e9426654ebf8e61b74cc5ee4d83f6a61785f5c7a))
+* fix track loopCount when loop is disabled ([856c722](https://github.com/antonbobrov/vevet/commit/856c7221a4b892e933c33cf8a579f8c57483f183))
+* rename `align` to `origin` ([7b87407](https://github.com/antonbobrov/vevet/commit/7b87407a7db81bcb2fc1ee1ff939ae406eb7cc64))
+* use exponential inertia ([2cb5087](https://github.com/antonbobrov/vevet/commit/2cb50871d8f475eb313da9a24826ae89e2944fe1))
+
+### Swipe
+
+* add `recalculateBoundsOnInertia` ([409f068](https://github.com/antonbobrov/vevet/commit/409f068a299b9f9d80a1245fcf5111e223f84c0c))
+* add `scale`, `setScale` & `releaseBounce` ([41479f8](https://github.com/antonbobrov/vevet/commit/41479f8dc5f4da5862e96df7e2547cf68165962a))
+* add exponential inertia, `bounds`, `overflow`, `snap`, `snapRadius`, `inertiaDecay`,	`inertiaBounceEase`, `inertiaThreshold`, `inertiaDistanceModifier`, `maxVelocity`, `bounceDuration`, `movement` and `prevMovement` (deprecate timeline inertia props) ([3b2a8bf](https://github.com/antonbobrov/vevet/commit/3b2a8bfe8e051d5e32d64c3d84fd229412546b9f))
+
 ## [5.9.1](https://github.com/antonbobrov/vevet/compare/v5.9.0...v5.9.1) (2026-05-08)
 
 
