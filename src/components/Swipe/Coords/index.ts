@@ -1,5 +1,6 @@
 import { initVevet } from '@/global/initVevet';
 import { isFiniteNumber } from '@/internal/isFiniteNumber';
+import { unwrapAngleDelta } from '@/internal/unwrapAngle';
 import { closest } from '@/utils';
 
 import { ISwipeCoords, ISwipeVec2 } from '../global';
@@ -431,16 +432,11 @@ export class SwipeCoords {
 
   /** Unwrap raw atan2 angle and accumulate into _angle */
   private _updateTempAngle(rawAngle: number) {
-    const halfTurn = 180;
+    this._tempAngle.unwrapped += unwrapAngleDelta(
+      rawAngle,
+      this._tempAngle.raw,
+    );
 
-    let angleDelta = rawAngle - this._tempAngle.raw;
-    if (angleDelta > halfTurn) {
-      angleDelta -= halfTurn * 2;
-    } else if (angleDelta < -halfTurn) {
-      angleDelta += halfTurn * 2;
-    }
-
-    this._tempAngle.unwrapped += angleDelta;
     this._tempAngle.raw = rawAngle;
   }
 
