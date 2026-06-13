@@ -11,7 +11,7 @@
 | **CDN global**            | `Vevet` (IIFE build)                                                |
 | **Docs site**             | https://vevetjs.com/                                                |
 | **LLM index**             | https://vevetjs.com/llms.txt                                        |
-| **Full doc export**       | https://vevetjs.com/llms-full.txt — includes all demo code |
+| **Full doc export**       | https://vevetjs.com/llms-full.txt — includes all demo code          |
 | **Markdown pages**        | append `.md` to any doc URL, e.g. https://vevetjs.com/docs/intro.md |
 | **GitHub**                | https://github.com/antonbobrov/vevet                                |
 | **Current major version** | v5 (see `package.json` for exact version)                           |
@@ -54,8 +54,7 @@ import { vevet, SplitText } from 'vevet';
 
 console.log(vevet.version);
 
-const split = new SplitText({ container: '.title' });
-split.on('split', () => console.log('text split'));
+const split = new SplitText({ container: document.getElementById('text') });
 ```
 
 CDN:
@@ -64,7 +63,7 @@ CDN:
 <script src="https://cdn.jsdelivr.net/npm/vevet@5/lib/cdn/vevet.iife.min.js"></script>
 <script>
   console.log(Vevet.app.version);
-  new Vevet.SplitText({ container: '.title' });
+  new Vevet.SplitText({ container: document.getElementById('text') });
 </script>
 ```
 
