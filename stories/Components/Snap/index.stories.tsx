@@ -64,8 +64,9 @@ FreemodeWheelNoFollow.args = {
   origin: 'start',
   loop: false,
   snapProps: {
-    freemode: true,
+    freemode: false,
     followWheel: false,
+    rewind: true,
     wheelThrottle: 'auto',
   },
 } satisfies ITestStoryArgs;
@@ -108,7 +109,6 @@ Vertical.args = {
   loop: false,
   snapProps: {
     direction: 'vertical',
-    followWheel: false,
   },
 } satisfies ITestStoryArgs;
 Vertical.argTypes = testArgTypes;
