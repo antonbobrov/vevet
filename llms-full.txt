@@ -8,193 +8,193 @@
 
 ### base
 
-- [Callbacks](https://vevetjs.com/docs/base/Callbacks.md): Callbacks class — event listeners with one-or-multi-time execution, protection and delays. Vevet.js base.
-- [Module](https://vevetjs.com/docs/base/Module.md): Module — base class for Vevet.js components. Props, callbacks, updateProps, onDestroy, destroy.
-- [Responsive](https://vevetjs.com/docs/base/Responsive.md): Responsive — apply different props by viewport and device. Breakpoints, rules, Module integration. Vevet.js base.
+- [Callbacks](https://vevetjs.com/docs/base/Callbacks/): Callbacks class — event listeners with one-or-multi-time execution, protection and delays. Vevet.js base.
+- [Module](https://vevetjs.com/docs/base/Module/): Module — base class for Vevet.js components. Props, callbacks, updateProps, onDestroy, destroy.
+- [Responsive](https://vevetjs.com/docs/base/Responsive/): Responsive — apply different props by viewport and device. Breakpoints, rules, Module integration. Vevet.js base.
 
 ### Canvas
 
 Canvas — Vevet.js class for HTML5 Canvas and 2D context. Simplifies canvas rendering and animation.
 
-- [Canvas](https://vevetjs.com/docs/Canvas.md): Canvas — Vevet.js class for HTML5 Canvas and 2D context. Simplifies canvas rendering and animation.
-- [Accessors](https://vevetjs.com/docs/Canvas/accessors.md): Canvas accessors — context, size getters. Vevet.js Canvas API reference.
-- [Callbacks](https://vevetjs.com/docs/Canvas/callbacks.md): Canvas callbacks — render and resize events. Vevet.js Canvas API reference.
-- [Methods](https://vevetjs.com/docs/Canvas/methods.md): Canvas methods — API reference. Vevet.js Canvas component.
-- [Props](https://vevetjs.com/docs/Canvas/props.md): Canvas props — configuration. Vevet.js Canvas API reference.
+- [Canvas](https://vevetjs.com/docs/Canvas/): Canvas — Vevet.js class for HTML5 Canvas and 2D context. Simplifies canvas rendering and animation.
+- [Accessors](https://vevetjs.com/docs/Canvas/accessors): Canvas accessors — context, size getters. Vevet.js Canvas API reference.
+- [Callbacks](https://vevetjs.com/docs/Canvas/callbacks): Canvas callbacks — render and resize events. Vevet.js Canvas API reference.
+- [Methods](https://vevetjs.com/docs/Canvas/methods): Canvas methods — API reference. Vevet.js Canvas component.
+- [Props](https://vevetjs.com/docs/Canvas/props): Canvas props — configuration. Vevet.js Canvas API reference.
 
 ### CanvasMedia
 
 CanvasMedia — Vevet.js pre-rendering of media into canvas layer for animations, effects and transitions.
 
-- [CanvasMedia](https://vevetjs.com/docs/CanvasMedia.md): CanvasMedia — Vevet.js pre-rendering of media into canvas layer for animations, effects and transitions.
-- [Accessors](https://vevetjs.com/docs/CanvasMedia/accessors.md): CanvasMedia accessors — state getters. Vevet.js CanvasMedia API reference.
-- [Callbacks](https://vevetjs.com/docs/CanvasMedia/callbacks.md): CanvasMedia callbacks — media events. Vevet.js CanvasMedia API reference.
-- [Methods](https://vevetjs.com/docs/CanvasMedia/methods.md): CanvasMedia methods — API reference. Vevet.js CanvasMedia component.
-- [Props](https://vevetjs.com/docs/CanvasMedia/props.md): CanvasMedia props — configuration. Vevet.js CanvasMedia API reference.
+- [CanvasMedia](https://vevetjs.com/docs/CanvasMedia/): CanvasMedia — Vevet.js pre-rendering of media into canvas layer for animations, effects and transitions.
+- [Accessors](https://vevetjs.com/docs/CanvasMedia/accessors): CanvasMedia accessors — state getters. Vevet.js CanvasMedia API reference.
+- [Callbacks](https://vevetjs.com/docs/CanvasMedia/callbacks): CanvasMedia callbacks — media events. Vevet.js CanvasMedia API reference.
+- [Methods](https://vevetjs.com/docs/CanvasMedia/methods): CanvasMedia methods — API reference. Vevet.js CanvasMedia component.
+- [Props](https://vevetjs.com/docs/CanvasMedia/props): CanvasMedia props — configuration. Vevet.js CanvasMedia API reference.
 
 ### core
 
 Vevet.js Core — viewport detection, browser and OS detection, custom callbacks for page load and viewport changes.
 
-- [Core](https://vevetjs.com/docs/core.md): Vevet.js Core — viewport detection, browser and OS detection, custom callbacks for page load and viewport changes.
-- [CSS Variables](https://vevetjs.com/docs/core/css-vars.md): Vevet.js CSS variables — --vw, --vh, --svh, --scrollbar-width for viewport units and layout.
-- [Customization](https://vevetjs.com/docs/core/customization.md): Customize Vevet.js via window.VEVET_PROPS — override default settings before library initialization.
-- [Features](https://vevetjs.com/docs/core/features.md): Vevet.js features — device detection, application states, viewport changes, NPM usage and configuration.
+- [Core](https://vevetjs.com/docs/core/): Vevet.js Core — viewport detection, browser and OS detection, custom callbacks for page load and viewport changes.
+- [CSS Variables](https://vevetjs.com/docs/core/css-vars): Vevet.js CSS variables — --vw, --vh, --svh, --scrollbar-width for viewport units and layout.
+- [Customization](https://vevetjs.com/docs/core/customization): Customize Vevet.js via window.VEVET_PROPS — override default settings before library initialization.
+- [Features](https://vevetjs.com/docs/core/features): Vevet.js features — device detection, application states, viewport changes, NPM usage and configuration.
 
 ### Cursor
 
 Cursor — Vevet.js smooth custom cursor with hover interactions. Position, size and appearance interpolation.
 
-- [Cursor](https://vevetjs.com/docs/Cursor.md): Cursor — Vevet.js smooth custom cursor with hover interactions. Position, size and appearance interpolation.
-- [Accessors](https://vevetjs.com/docs/Cursor/accessors.md): Cursor accessors — position, state getters. Vevet.js Cursor API reference.
-- [Callbacks](https://vevetjs.com/docs/Cursor/callbacks.md): Cursor callbacks — hover and move events. Vevet.js Cursor API reference.
-- [Demos](https://vevetjs.com/docs/Cursor/demos.md): Cursor demos and examples. Vevet.js Cursor component.
-- [Interfaces](https://vevetjs.com/docs/Cursor/interfaces.md): Cursor interfaces — TypeScript types. Vevet.js Cursor API reference.
-- [Methods](https://vevetjs.com/docs/Cursor/methods.md): Cursor methods — API reference. Vevet.js Cursor component.
-- [Props](https://vevetjs.com/docs/Cursor/props.md): Cursor props — configuration. Vevet.js Cursor API reference.
+- [Cursor](https://vevetjs.com/docs/Cursor/): Cursor — Vevet.js smooth custom cursor with hover interactions. Position, size and appearance interpolation.
+- [Accessors](https://vevetjs.com/docs/Cursor/accessors): Cursor accessors — position, state getters. Vevet.js Cursor API reference.
+- [Callbacks](https://vevetjs.com/docs/Cursor/callbacks): Cursor callbacks — hover and move events. Vevet.js Cursor API reference.
+- [Demos](https://vevetjs.com/docs/Cursor/demos): Cursor demos and examples. Vevet.js Cursor component.
+- [Interfaces](https://vevetjs.com/docs/Cursor/interfaces): Cursor interfaces — TypeScript types. Vevet.js Cursor API reference.
+- [Methods](https://vevetjs.com/docs/Cursor/methods): Cursor methods — API reference. Vevet.js Cursor component.
+- [Props](https://vevetjs.com/docs/Cursor/props): Cursor props — configuration. Vevet.js Cursor API reference.
 
 ### intro
 
 Introduction to Vevet.js — a flexible JavaScript library for creative web development. Installation, core, components, and utils overview.
 
-- [Vevet.js](https://vevetjs.com/docs/intro.md): Introduction to Vevet.js — a flexible JavaScript library for creative web development. Installation, core, components, and utils overview.
+- [Vevet.js](https://vevetjs.com/docs/intro): Introduction to Vevet.js — a flexible JavaScript library for creative web development. Installation, core, components, and utils overview.
 
 ### InView
 
 InView — Vevet.js visibility detection with IntersectionObserver. Viewport enter/leave, direction, CSS classes and animations.
 
-- [InView](https://vevetjs.com/docs/InView.md): InView — Vevet.js visibility detection with IntersectionObserver. Viewport enter/leave, direction, CSS classes and animations.
-- [Accessors](https://vevetjs.com/docs/InView/accessors.md): InView accessors — visibility state getters. Vevet.js InView API reference.
-- [Callbacks](https://vevetjs.com/docs/InView/callbacks.md): InView callbacks — visibility and direction events. Vevet.js InView API reference.
-- [Demos](https://vevetjs.com/docs/InView/demos.md): InView demos and examples. Vevet.js InView component.
-- [Methods](https://vevetjs.com/docs/InView/methods.md): InView methods — API reference. Vevet.js InView component.
-- [Props](https://vevetjs.com/docs/InView/props.md): InView props — configuration. Vevet.js InView API reference.
+- [InView](https://vevetjs.com/docs/InView/): InView — Vevet.js visibility detection with IntersectionObserver. Viewport enter/leave, direction, CSS classes and animations.
+- [Accessors](https://vevetjs.com/docs/InView/accessors): InView accessors — visibility state getters. Vevet.js InView API reference.
+- [Callbacks](https://vevetjs.com/docs/InView/callbacks): InView callbacks — visibility and direction events. Vevet.js InView API reference.
+- [Demos](https://vevetjs.com/docs/InView/demos): InView demos and examples. Vevet.js InView component.
+- [Methods](https://vevetjs.com/docs/InView/methods): InView methods — API reference. Vevet.js InView component.
+- [Props](https://vevetjs.com/docs/InView/props): InView props — configuration. Vevet.js InView API reference.
 
 ### Marquee
 
 Marquee — Vevet.js custom marquee component for smooth scrolling of child elements.
 
-- [Marquee](https://vevetjs.com/docs/Marquee.md): Marquee — Vevet.js custom marquee component for smooth scrolling of child elements.
-- [Accessors](https://vevetjs.com/docs/Marquee/accessors.md): Marquee accessors — state getters. Vevet.js Marquee API reference.
-- [Callbacks](https://vevetjs.com/docs/Marquee/callbacks.md): Marquee callbacks — scroll events. Vevet.js Marquee API reference.
-- [Demos](https://vevetjs.com/docs/Marquee/demos.md): Marquee demos and examples. Vevet.js Marquee component.
-- [Methods](https://vevetjs.com/docs/Marquee/methods.md): Marquee methods — API reference. Vevet.js Marquee component.
-- [Props](https://vevetjs.com/docs/Marquee/props.md): Marquee props — configuration. Vevet.js Marquee API reference.
+- [Marquee](https://vevetjs.com/docs/Marquee/): Marquee — Vevet.js custom marquee component for smooth scrolling of child elements.
+- [Accessors](https://vevetjs.com/docs/Marquee/accessors): Marquee accessors — state getters. Vevet.js Marquee API reference.
+- [Callbacks](https://vevetjs.com/docs/Marquee/callbacks): Marquee callbacks — scroll events. Vevet.js Marquee API reference.
+- [Demos](https://vevetjs.com/docs/Marquee/demos): Marquee demos and examples. Vevet.js Marquee component.
+- [Methods](https://vevetjs.com/docs/Marquee/methods): Marquee methods — API reference. Vevet.js Marquee component.
+- [Props](https://vevetjs.com/docs/Marquee/props): Marquee props — configuration. Vevet.js Marquee API reference.
 
 ### Pointers
 
 Pointers — Vevet.js pointer events manager. Track multiple pointers, pan/pinch/rotate via move callback, type-aware props.
 
-- [Pointers](https://vevetjs.com/docs/Pointers.md): Pointers — Vevet.js pointer events manager. Track multiple pointers, pan/pinch/rotate via move callback, type-aware props.
-- [Accessors](https://vevetjs.com/docs/Pointers/accessors.md): Pointers accessors — state getters. Vevet.js Pointers API reference.
-- [Callbacks](https://vevetjs.com/docs/Pointers/callbacks.md): Pointers callbacks — pointer events. Vevet.js Pointers API reference.
-- [Interfaces](https://vevetjs.com/docs/Pointers/interfaces.md): Pointers interfaces — TypeScript types. Vevet.js Pointers API reference.
-- [Methods](https://vevetjs.com/docs/Pointers/methods.md): Pointers methods — API reference. Vevet.js Pointers component.
-- [Props](https://vevetjs.com/docs/Pointers/props.md): Pointers props — configuration. Vevet.js Pointers API reference.
+- [Pointers](https://vevetjs.com/docs/Pointers/): Pointers — Vevet.js pointer events manager. Track multiple pointers, pan/pinch/rotate via move callback, type-aware props.
+- [Accessors](https://vevetjs.com/docs/Pointers/accessors): Pointers accessors — state getters. Vevet.js Pointers API reference.
+- [Callbacks](https://vevetjs.com/docs/Pointers/callbacks): Pointers callbacks — pointer events. Vevet.js Pointers API reference.
+- [Interfaces](https://vevetjs.com/docs/Pointers/interfaces): Pointers interfaces — TypeScript types. Vevet.js Pointers API reference.
+- [Methods](https://vevetjs.com/docs/Pointers/methods): Pointers methods — API reference. Vevet.js Pointers component.
+- [Props](https://vevetjs.com/docs/Pointers/props): Pointers props — configuration. Vevet.js Pointers API reference.
 
 ### Preloader
 
 Preloader — Vevet.js page preloader component for loading screen visibility and lifecycle.
 
-- [Preloader](https://vevetjs.com/docs/Preloader.md): Preloader — Vevet.js page preloader component for loading screen visibility and lifecycle.
-- [Accessors](https://vevetjs.com/docs/Preloader/accessors.md): Preloader accessors — state getters. Vevet.js Preloader API reference.
-- [Callbacks](https://vevetjs.com/docs/Preloader/callbacks.md): Preloader callbacks — lifecycle events. Vevet.js Preloader API reference.
-- [Demos](https://vevetjs.com/docs/Preloader/demos.md): Preloader demos and examples. Vevet.js Preloader component.
-- [Methods](https://vevetjs.com/docs/Preloader/methods.md): Preloader methods — API reference. Vevet.js Preloader component.
-- [Props](https://vevetjs.com/docs/Preloader/props.md): Preloader props — configuration. Vevet.js Preloader API reference.
+- [Preloader](https://vevetjs.com/docs/Preloader/): Preloader — Vevet.js page preloader component for loading screen visibility and lifecycle.
+- [Accessors](https://vevetjs.com/docs/Preloader/accessors): Preloader accessors — state getters. Vevet.js Preloader API reference.
+- [Callbacks](https://vevetjs.com/docs/Preloader/callbacks): Preloader callbacks — lifecycle events. Vevet.js Preloader API reference.
+- [Demos](https://vevetjs.com/docs/Preloader/demos): Preloader demos and examples. Vevet.js Preloader component.
+- [Methods](https://vevetjs.com/docs/Preloader/methods): Preloader methods — API reference. Vevet.js Preloader component.
+- [Props](https://vevetjs.com/docs/Preloader/props): Preloader props — configuration. Vevet.js Preloader API reference.
 
 ### ProgressPreloader
 
 ProgressPreloader — Vevet.js preloader for tracking and displaying loading progress of images, videos and custom resources.
 
-- [ProgressPreloader](https://vevetjs.com/docs/ProgressPreloader.md): ProgressPreloader — Vevet.js preloader for tracking and displaying loading progress of images, videos and custom resources.
-- [Accessors](https://vevetjs.com/docs/ProgressPreloader/accessors.md): ProgressPreloader accessors — progress getters. Vevet.js ProgressPreloader API reference.
-- [Callbacks](https://vevetjs.com/docs/ProgressPreloader/callbacks.md): ProgressPreloader callbacks — loading events. Vevet.js ProgressPreloader API reference.
-- [Demos](https://vevetjs.com/docs/ProgressPreloader/demos.md): ProgressPreloader demos and examples. Vevet.js ProgressPreloader.
-- [Methods](https://vevetjs.com/docs/ProgressPreloader/methods.md): ProgressPreloader methods — API reference. Vevet.js ProgressPreloader.
-- [Props](https://vevetjs.com/docs/ProgressPreloader/props.md): ProgressPreloader props — configuration. Vevet.js ProgressPreloader API reference.
+- [ProgressPreloader](https://vevetjs.com/docs/ProgressPreloader/): ProgressPreloader — Vevet.js preloader for tracking and displaying loading progress of images, videos and custom resources.
+- [Accessors](https://vevetjs.com/docs/ProgressPreloader/accessors): ProgressPreloader accessors — progress getters. Vevet.js ProgressPreloader API reference.
+- [Callbacks](https://vevetjs.com/docs/ProgressPreloader/callbacks): ProgressPreloader callbacks — loading events. Vevet.js ProgressPreloader API reference.
+- [Demos](https://vevetjs.com/docs/ProgressPreloader/demos): ProgressPreloader demos and examples. Vevet.js ProgressPreloader.
+- [Methods](https://vevetjs.com/docs/ProgressPreloader/methods): ProgressPreloader methods — API reference. Vevet.js ProgressPreloader.
+- [Props](https://vevetjs.com/docs/ProgressPreloader/props): ProgressPreloader props — configuration. Vevet.js ProgressPreloader API reference.
 
 ### Raf
 
 Raf — Vevet.js requestAnimationFrame loop with FPS throttling, play/pause, FPS measurement and frame-rate-independent animations.
 
-- [Raf](https://vevetjs.com/docs/Raf.md): Raf — Vevet.js requestAnimationFrame loop with FPS throttling, play/pause, FPS measurement and frame-rate-independent animations.
-- [Accessors](https://vevetjs.com/docs/Raf/accessors.md): Raf accessors — FPS, duration getters. Vevet.js Raf API reference.
-- [Callbacks](https://vevetjs.com/docs/Raf/callbacks.md): Raf callbacks — frame events. Vevet.js Raf API reference.
-- [Demos](https://vevetjs.com/docs/Raf/demos.md): Raf demos and examples. Vevet.js Raf animation loop.
-- [Methods](https://vevetjs.com/docs/Raf/methods.md): Raf methods — play, pause, API reference. Vevet.js Raf component.
-- [Props](https://vevetjs.com/docs/Raf/props.md): Raf props — FPS, throttle options. Vevet.js Raf API reference.
+- [Raf](https://vevetjs.com/docs/Raf/): Raf — Vevet.js requestAnimationFrame loop with FPS throttling, play/pause, FPS measurement and frame-rate-independent animations.
+- [Accessors](https://vevetjs.com/docs/Raf/accessors): Raf accessors — FPS, duration getters. Vevet.js Raf API reference.
+- [Callbacks](https://vevetjs.com/docs/Raf/callbacks): Raf callbacks — frame events. Vevet.js Raf API reference.
+- [Demos](https://vevetjs.com/docs/Raf/demos): Raf demos and examples. Vevet.js Raf animation loop.
+- [Methods](https://vevetjs.com/docs/Raf/methods): Raf methods — play, pause, API reference. Vevet.js Raf component.
+- [Props](https://vevetjs.com/docs/Raf/props): Raf props — FPS, throttle options. Vevet.js Raf API reference.
 
 ### Scrollbar
 
 Scrollbar — Vevet.js customizable scrollbar for window or element. Scroll tracking, drag, auto-sizing and styling.
 
-- [Scrollbar](https://vevetjs.com/docs/Scrollbar.md): Scrollbar — Vevet.js customizable scrollbar for window or element. Scroll tracking, drag, auto-sizing and styling.
-- [Accessors](https://vevetjs.com/docs/Scrollbar/accessors.md): Scrollbar accessors — scroll position, progress getters. Vevet.js Scrollbar API reference.
-- [Callbacks](https://vevetjs.com/docs/Scrollbar/callbacks.md): Scrollbar callbacks — scroll events. Vevet.js Scrollbar API reference.
-- [Demos](https://vevetjs.com/docs/Scrollbar/demos.md): Scrollbar demos and examples. Vevet.js Scrollbar component.
-- [Methods](https://vevetjs.com/docs/Scrollbar/methods.md): Scrollbar methods — API reference. Vevet.js Scrollbar component.
-- [Props](https://vevetjs.com/docs/Scrollbar/props.md): Scrollbar props — configuration. Vevet.js Scrollbar API reference.
+- [Scrollbar](https://vevetjs.com/docs/Scrollbar/): Scrollbar — Vevet.js customizable scrollbar for window or element. Scroll tracking, drag, auto-sizing and styling.
+- [Accessors](https://vevetjs.com/docs/Scrollbar/accessors): Scrollbar accessors — scroll position, progress getters. Vevet.js Scrollbar API reference.
+- [Callbacks](https://vevetjs.com/docs/Scrollbar/callbacks): Scrollbar callbacks — scroll events. Vevet.js Scrollbar API reference.
+- [Demos](https://vevetjs.com/docs/Scrollbar/demos): Scrollbar demos and examples. Vevet.js Scrollbar component.
+- [Methods](https://vevetjs.com/docs/Scrollbar/methods): Scrollbar methods — API reference. Vevet.js Scrollbar component.
+- [Props](https://vevetjs.com/docs/Scrollbar/props): Scrollbar props — configuration. Vevet.js Scrollbar API reference.
 
 ### ScrollProgress
 
 ScrollProgress — Vevet.js component for tracking scroll progress of a section. Scroll-based and parallax animations.
 
-- [ScrollProgress](https://vevetjs.com/docs/ScrollProgress.md): ScrollProgress — Vevet.js component for tracking scroll progress of a section. Scroll-based and parallax animations.
+- [ScrollProgress](https://vevetjs.com/docs/ScrollProgress/): ScrollProgress — Vevet.js component for tracking scroll progress of a section. Scroll-based and parallax animations.
 
 ### Snap
 
 Snap — Vevet.js carousel handler with precise control over movement, snapping and interaction. Custom layout and styling.
 
-- [Snap](https://vevetjs.com/docs/Snap.md): Snap — Vevet.js carousel handler with precise control over movement, snapping and interaction. Custom layout and styling.
-- [Accessors](https://vevetjs.com/docs/Snap/accessors.md): Snap accessors — index, progress, state getters. Vevet.js Snap API reference.
-- [Advanced Demos](https://vevetjs.com/docs/Snap/advanced-demos.md): Snap advanced demos. Vevet.js Snap carousel.
-- [Basic Demos](https://vevetjs.com/docs/Snap/basic-demos.md): Snap basic demos and examples. Vevet.js Snap carousel.
-- [Callbacks](https://vevetjs.com/docs/Snap/callbacks.md): Snap callbacks — onActiveSlide, onSwipe and more. Vevet.js Snap API reference.
-- [Methods](https://vevetjs.com/docs/Snap/methods.md): Snap methods — API reference. Vevet.js Snap carousel.
-- [Parallax](https://vevetjs.com/docs/Snap/parallax.md): Snap Parallax — parallax effects with Snap. Vevet.js Snap API reference.
-- [Parallax Demos](https://vevetjs.com/docs/Snap/parallax-demos.md): Snap parallax demos. Vevet.js Snap carousel.
-- [Props](https://vevetjs.com/docs/Snap/props.md): Snap props — carousel configuration. Vevet.js Snap API reference.
-- [SnapSlide](https://vevetjs.com/docs/Snap/slide.md): SnapSlide — virtual slides in Snap. Vevet.js Snap carousel API reference.
+- [Snap](https://vevetjs.com/docs/Snap/): Snap — Vevet.js carousel handler with precise control over movement, snapping and interaction. Custom layout and styling.
+- [Accessors](https://vevetjs.com/docs/Snap/accessors): Snap accessors — index, progress, state getters. Vevet.js Snap API reference.
+- [Advanced Demos](https://vevetjs.com/docs/Snap/advanced-demos): Snap advanced demos. Vevet.js Snap carousel.
+- [Basic Demos](https://vevetjs.com/docs/Snap/basic-demos): Snap basic demos and examples. Vevet.js Snap carousel.
+- [Callbacks](https://vevetjs.com/docs/Snap/callbacks): Snap callbacks — onActiveSlide, onSwipe and more. Vevet.js Snap API reference.
+- [Methods](https://vevetjs.com/docs/Snap/methods): Snap methods — API reference. Vevet.js Snap carousel.
+- [Parallax](https://vevetjs.com/docs/Snap/parallax): Snap Parallax — parallax effects with Snap. Vevet.js Snap API reference.
+- [Parallax Demos](https://vevetjs.com/docs/Snap/parallax-demos): Snap parallax demos. Vevet.js Snap carousel.
+- [Props](https://vevetjs.com/docs/Snap/props): Snap props — carousel configuration. Vevet.js Snap API reference.
+- [SnapSlide](https://vevetjs.com/docs/Snap/slide): SnapSlide — virtual slides in Snap. Vevet.js Snap carousel API reference.
 
 ### SplitText
 
 SplitText — split text into lines, words and letters. Resize support, HTML and emoji handling. Vevet.js.
 
-- [SplitText](https://vevetjs.com/docs/SplitText.md): SplitText — split text into lines, words and letters. Resize support, HTML and emoji handling. Vevet.js.
-- [Accessors](https://vevetjs.com/docs/SplitText/accessors.md): SplitText accessors — lines, words, letters getters. Vevet.js SplitText API reference.
-- [Callbacks](https://vevetjs.com/docs/SplitText/callbacks.md): SplitText callbacks — event hooks. Vevet.js SplitText API reference.
-- [Demos](https://vevetjs.com/docs/SplitText/demos.md): SplitText demos and examples. Vevet.js SplitText component.
-- [Methods](https://vevetjs.com/docs/SplitText/methods.md): SplitText methods — split, destroy. Vevet.js SplitText API reference.
-- [Props](https://vevetjs.com/docs/SplitText/props.md): SplitText props — configuration options. Vevet.js SplitText API reference.
+- [SplitText](https://vevetjs.com/docs/SplitText/): SplitText — split text into lines, words and letters. Resize support, HTML and emoji handling. Vevet.js.
+- [Accessors](https://vevetjs.com/docs/SplitText/accessors): SplitText accessors — lines, words, letters getters. Vevet.js SplitText API reference.
+- [Callbacks](https://vevetjs.com/docs/SplitText/callbacks): SplitText callbacks — event hooks. Vevet.js SplitText API reference.
+- [Demos](https://vevetjs.com/docs/SplitText/demos): SplitText demos and examples. Vevet.js SplitText component.
+- [Methods](https://vevetjs.com/docs/SplitText/methods): SplitText methods — split, destroy. Vevet.js SplitText API reference.
+- [Props](https://vevetjs.com/docs/SplitText/props): SplitText props — configuration options. Vevet.js SplitText API reference.
 
 ### Swipe
 
 Swipe — Vevet.js component for swipe interactions, pointer tracking, direction detection, rotation, bounds, rubber-band, snap, scale and inertia.
 
-- [Swipe](https://vevetjs.com/docs/Swipe.md): Swipe — Vevet.js component for swipe interactions, pointer tracking, direction detection, rotation, bounds, rubber-band, snap, scale and inertia.
-- [Accessors](https://vevetjs.com/docs/Swipe/accessors.md): Swipe accessors — getters for coordinates and state. Vevet.js Swipe API reference.
-- [Callbacks](https://vevetjs.com/docs/Swipe/callbacks.md): Swipe callbacks — onStart, onMove, onEnd. Vevet.js Swipe API reference.
-- [Demos](https://vevetjs.com/docs/Swipe/demos.md): Swipe demos and examples. Vevet.js Swipe component.
-- [Interfaces](https://vevetjs.com/docs/Swipe/interfaces.md): Swipe interfaces — TypeScript types and interfaces. Vevet.js Swipe API reference.
-- [Methods](https://vevetjs.com/docs/Swipe/methods.md): Swipe methods — API reference. Vevet.js Swipe component.
-- [Props](https://vevetjs.com/docs/Swipe/props.md): Swipe props — configuration options for swipe component. Vevet.js Swipe API reference.
+- [Swipe](https://vevetjs.com/docs/Swipe/): Swipe — Vevet.js component for swipe interactions, pointer tracking, direction detection, rotation, bounds, rubber-band, snap, scale and inertia.
+- [Accessors](https://vevetjs.com/docs/Swipe/accessors): Swipe accessors — getters for coordinates and state. Vevet.js Swipe API reference.
+- [Callbacks](https://vevetjs.com/docs/Swipe/callbacks): Swipe callbacks — onStart, onMove, onEnd. Vevet.js Swipe API reference.
+- [Demos](https://vevetjs.com/docs/Swipe/demos): Swipe demos and examples. Vevet.js Swipe component.
+- [Interfaces](https://vevetjs.com/docs/Swipe/interfaces): Swipe interfaces — TypeScript types and interfaces. Vevet.js Swipe API reference.
+- [Methods](https://vevetjs.com/docs/Swipe/methods): Swipe methods — API reference. Vevet.js Swipe component.
+- [Props](https://vevetjs.com/docs/Swipe/props): Swipe props — configuration options for swipe component. Vevet.js Swipe API reference.
 
 ### Timeline
 
 Timeline — Vevet.js class for managing animations with easing, play, reverse, pause, and progress control.
 
-- [Timeline](https://vevetjs.com/docs/Timeline.md): Timeline — Vevet.js class for managing animations with easing, play, reverse, pause, and progress control.
-- [Accessors](https://vevetjs.com/docs/Timeline/accessors.md): Timeline accessors — progress, duration, state getters. Vevet.js Timeline API reference.
-- [Callbacks](https://vevetjs.com/docs/Timeline/callbacks.md): Timeline callbacks — onStart, onUpdate, onEnd. Vevet.js Timeline API reference.
-- [Methods](https://vevetjs.com/docs/Timeline/methods.md): Timeline methods — play, reverse, pause, reset and more. Vevet.js Timeline API reference.
-- [Props](https://vevetjs.com/docs/Timeline/props.md): Timeline props — mutable and static properties. Vevet.js Timeline API reference.
+- [Timeline](https://vevetjs.com/docs/Timeline/): Timeline — Vevet.js class for managing animations with easing, play, reverse, pause, and progress control.
+- [Accessors](https://vevetjs.com/docs/Timeline/accessors): Timeline accessors — progress, duration, state getters. Vevet.js Timeline API reference.
+- [Callbacks](https://vevetjs.com/docs/Timeline/callbacks): Timeline callbacks — onStart, onUpdate, onEnd. Vevet.js Timeline API reference.
+- [Methods](https://vevetjs.com/docs/Timeline/methods): Timeline methods — play, reverse, pause, reset and more. Vevet.js Timeline API reference.
+- [Props](https://vevetjs.com/docs/Timeline/props): Timeline props — mutable and static properties. Vevet.js Timeline API reference.
 
 ### utils
 
 Vevet.js utils — uid, closest, clamp and other lightweight utility functions. API reference.
 
-- [utils](https://vevetjs.com/docs/utils.md): Vevet.js utils — uid, closest, clamp and other lightweight utility functions. API reference.
+- [utils](https://vevetjs.com/docs/utils/): Vevet.js utils — uid, closest, clamp and other lightweight utility functions. API reference.
 
 ## Optional
 - [GitHub repository](https://github.com/antonbobrov/vevet): Source code, issues, changelog
@@ -212,7 +212,7 @@ Vevet.js utils — uid, closest, clamp and other lightweight utility functions. 
 
 **Callbacks** class manages event listeners with support for one-time execution, protection, and delays.
 
-It's used internally in the **[Module](https://vevetjs.com/docs/base/Module/.md)** and all components, but you can also instantiate it independently:
+It's used internally in the **[Module](https://vevetjs.com/docs/base/Module/)** and all components, but you can also instantiate it independently:
 
 ```
 // Define the interface for callback events
@@ -352,7 +352,7 @@ callbacks.destroy();
 **Module** is the abstract base class for all Vevet.js components. It provides:
 
 * **Unified props** — static and mutable properties with a single `props` object.
-* **Callbacks** — built-in `destroy` and `props` events, plus custom events via **[Callbacks](https://vevetjs.com/docs/base/Callbacks/.md)**.
+* **Callbacks** — built-in `destroy` and `props` events, plus custom events via **[Callbacks](https://vevetjs.com/docs/base/Callbacks/)**.
 * **Lifecycle** — `updateProps()`, `onDestroy()`, and `destroy()` with automatic cleanup.
 
 All components (Timeline, Swipe, Scrollbar, Marquee, etc.) extend **Module**. You can extend it to build your own modules.
@@ -374,7 +374,7 @@ new Module<CallbacksMap, StaticProps, MutableProps>(
 
 ## Callbacks[​](#callbacks "Direct link to Callbacks")
 
-Every Module has at least these callbacks (see **[Callbacks](https://vevetjs.com/docs/base/Callbacks/.md)** for `on()`, settings, etc.):
+Every Module has at least these callbacks (see **[Callbacks](https://vevetjs.com/docs/base/Callbacks/)** for `on()`, settings, etc.):
 
 | Event     | Payload     | When                                                      |
 | --------- | ----------- | --------------------------------------------------------- |
@@ -417,13 +417,13 @@ remove();
 
 ## Accessors[​](#accessors "Direct link to Accessors")
 
-| Accessor      | Type                            | Description                                                                         |
-| ------------- | ------------------------------- | ----------------------------------------------------------------------------------- |
-| `props`       | `StaticProps & MutableProps`    | Current properties. Do not mutate directly; use `updateProps()`.                    |
-| `prefix`      | `string`                        | Class name prefix from core (e.g. for CSS class names).                             |
-| `name`        | `string`                        | Constructor name (e.g. `"Timeline"`).                                               |
-| `isDestroyed` | `boolean`                       | Whether the module has been destroyed.                                              |
-| `callbacks`   | `Callbacks<CallbacksMap, this>` | The internal **[Callbacks](https://vevetjs.com/docs/base/Callbacks/.md)** instance. |
+| Accessor      | Type                            | Description                                                                      |
+| ------------- | ------------------------------- | -------------------------------------------------------------------------------- |
+| `props`       | `StaticProps & MutableProps`    | Current properties. Do not mutate directly; use `updateProps()`.                 |
+| `prefix`      | `string`                        | Class name prefix from core (e.g. for CSS class names).                          |
+| `name`        | `string`                        | Constructor name (e.g. `"Timeline"`).                                            |
+| `isDestroyed` | `boolean`                       | Whether the module has been destroyed.                                           |
+| `callbacks`   | `Callbacks<CallbacksMap, this>` | The internal **[Callbacks](https://vevetjs.com/docs/base/Callbacks/)** instance. |
 
 ## Methods[​](#methods "Direct link to Methods")
 
@@ -447,7 +447,7 @@ module.onDestroy(() => element.classList.remove('active'));
 
 ### `on(target, listener, settings?)`[​](#ontarget-listener-settings "Direct link to ontarget-listener-settings")
 
-Adds a callback for an event. Returns a function that removes the callback. See **[Callbacks](https://vevetjs.com/docs/base/Callbacks/.md)** for `settings` (e.g. `once`, `timeout`, `protected`).
+Adds a callback for an event. Returns a function that removes the callback. See **[Callbacks](https://vevetjs.com/docs/base/Callbacks/)** for `settings` (e.g. `once`, `timeout`, `protected`).
 
 ```
 const remove = module.on('props', () => {});
@@ -552,7 +552,7 @@ For full API details and types, see **[Module](https://vevetjs.com/v5/classes/Mo
 
 # Responsive
 
-**Responsive** applies different property values based on viewport and device. You pass a **source** (a **[Module](https://vevetjs.com/docs/base/Module/.md)** instance or a plain object) and a list of **rules**. When the active breakpoint changes, the matching rule’s `props` are merged into the source and (for Module) applied via `updateProps()`.
+**Responsive** applies different property values based on viewport and device. You pass a **source** (a **[Module](https://vevetjs.com/docs/base/Module/)** instance or a plain object) and a list of **rules**. When the active breakpoint changes, the matching rule’s `props` are merged into the source and (for Module) applied via `updateProps()`.
 
 Use it to change component options by screen size (e.g. Marquee `gap`, Snap `slidesPerView`) or to drive any key-value state from breakpoints.
 
@@ -570,7 +570,7 @@ new Responsive<T>(
 );
 ```
 
-* **source** — a **[Module](https://vevetjs.com/docs/base/Module/.md)** instance or a plain object. For Module, only its **mutable** props are read and updated; for a plain object, the object is used as-is.
+* **source** — a **[Module](https://vevetjs.com/docs/base/Module/)** instance or a plain object. For Module, only its **mutable** props are read and updated; for a plain object, the object is used as-is.
 * **rules** — array of `{ at: query, props: partialProps }`. The first matching rule (and any following matches) are merged in order; later rules override earlier ones.
 * **onChange** — optional callback called with the current merged `props` whenever the active breakpoint set changes.
 
@@ -942,7 +942,7 @@ instance.destroy();
 
 note
 
-All **[Module accessors](https://vevetjs.com/docs/base/Module/.md#accessors)** are available in this class.
+All **[Module accessors](https://vevetjs.com/docs/base/Module/#accessors)** are available in this class.
 
 ### `canRender`[​](#canrender "Direct link to canrender")
 
@@ -1065,7 +1065,7 @@ canvas.width; // returns canvas width
 
 note
 
-All **[Module callbacks](https://vevetjs.com/docs/base/Module/.md#callbacks)** are available in this class.
+All **[Module callbacks](https://vevetjs.com/docs/base/Module/#callbacks)** are available in this class.
 
 ### `resize`[​](#resize "Direct link to resize")
 
@@ -1100,7 +1100,7 @@ destruct();
 
 note
 
-All **[Module methods](https://vevetjs.com/docs/base/Module/.md#methods)** are available in this class.
+All **[Module methods](https://vevetjs.com/docs/base/Module/#methods)** are available in this class.
 
 ### `render`[​](#render "Direct link to render")
 
@@ -1232,7 +1232,7 @@ const canvas = new Canvas({
 
 * **Type:** `'width' | 'height' | 'both' | 'onlyWidth' | 'onlyHeight' | 'any' | 'trigger'`
 * **Default:** `'any'`
-* Defines which dimension(s) should trigger a resize. [Learn more](https://vevetjs.com/docs/core/features.md#vevetonresize)
+* Defines which dimension(s) should trigger a resize. [Learn more](https://vevetjs.com/docs/core/features#vevetonresize)
 
 ```
 const canvas = new Canvas({
@@ -1262,7 +1262,7 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 
 Adaptive props
 
-To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/.md#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
+To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
 
 ### `width`[​](#props.width "Direct link to props.width")
 
@@ -1553,7 +1553,7 @@ instance.destroy();
 
 note
 
-All **[Canvas's accessors](https://vevetjs.com/docs/Canvas/accessors.md)** are available in this class.
+All **[Canvas's accessors](https://vevetjs.com/docs/Canvas/accessors)** are available in this class.
 
 
 ---
@@ -1564,7 +1564,7 @@ All **[Canvas's accessors](https://vevetjs.com/docs/Canvas/accessors.md)** are a
 
 note
 
-All **[Canvas callbacks](https://vevetjs.com/docs/Canvas/callbacks.md)** are available in this class.
+All **[Canvas callbacks](https://vevetjs.com/docs/Canvas/callbacks)** are available in this class.
 
 ### `render`[​](#render "Direct link to render")
 
@@ -1603,7 +1603,7 @@ destruct();
 
 note
 
-All **[Canvas methods](https://vevetjs.com/docs/Canvas/methods.md)** are available in this class.
+All **[Canvas methods](https://vevetjs.com/docs/Canvas/methods)** are available in this class.
 
 ### `render`[​](#render "Direct link to render")
 
@@ -1642,7 +1642,7 @@ canvas.destroy();
 
 note
 
-All **[Canvas props](https://vevetjs.com/docs/Canvas/props.md)** are available in this class.
+All **[Canvas props](https://vevetjs.com/docs/Canvas/props)** are available in this class.
 
 ### Static Props[​](#static-props "Direct link to Static Props")
 
@@ -1693,7 +1693,7 @@ Mutable properties can be changed at runtime via [.updateProps](#updateprops)
 
 Adaptive props
 
-To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/.md#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
+To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
 
 ### `rule`[​](#props.rule "Direct link to props.rule")
 
@@ -1784,7 +1784,7 @@ https://cdn.jsdelivr.net/npm/vevet@5/lib/cdn/vevet.iife.min.js
 
 ## Features[​](#features-1 "Direct link to Features")
 
-Learn more in the **[Features Documentation](https://vevetjs.com/docs/core/features.md)**.
+Learn more in the **[Features Documentation](https://vevetjs.com/docs/core/features)**.
 
 ## CSS Variables[​](#css-variables "Direct link to CSS Variables")
 
@@ -1798,7 +1798,7 @@ Vevet provides key CSS variables:
 
 * `--scrollbar-width` – Width of the browser scrollbar
 
-Learn more in **[CSS Variables](https://vevetjs.com/docs/core/css-vars.md)**
+Learn more in **[CSS Variables](https://vevetjs.com/docs/core/css-vars)**
 
 
 ---
@@ -2081,7 +2081,7 @@ console.log(Vevet.app.browserName); // => 'chrome'
 * **Type**: `ICoreProps`
   <br />
   <!-- -->
-  Represents application settings. See [Customization](https://vevetjs.com/docs/core/customization.md).
+  Represents application settings. See [Customization](https://vevetjs.com/docs/core/customization).
 
 ### `vevet.doc`[​](#vevetdoc "Direct link to vevetdoc")
 
@@ -2801,7 +2801,7 @@ snap.forEach(element => {
 
 ## More demos[​](#more-demos "Direct link to More demos")
 
-To explore more demos, click [here](https://vevetjs.com/docs/Cursor/demos.md).
+To explore more demos, click [here](https://vevetjs.com/docs/Cursor/demos).
 
 ## Advantages[​](#advantages "Direct link to Advantages")
 
@@ -2930,7 +2930,7 @@ cursor.destroy();
 
 note
 
-All **[Module accessors](https://vevetjs.com/docs/base/Module/.md#accessors)** are available in this class.
+All **[Module accessors](https://vevetjs.com/docs/base/Module/#accessors)** are available in this class.
 
 ### `container`[​](#container "Direct link to container")
 
@@ -2986,14 +2986,14 @@ cursor.domContainer; // cursor DOM parent
 
 ### `hoveredElement`[​](#hoveredelement "Direct link to hoveredelement")
 
-Type: `undefined` | **[CursorHoverElement](https://vevetjs.com/docs/Cursor/interfaces.md#cursorhoverelement)**
+Type: `undefined` | **[CursorHoverElement](https://vevetjs.com/docs/Cursor/interfaces#cursorhoverelement)**
 
 Contains information about the currently hovered **attached** element.
 
 * Available only while hovering an element registered via `.attachHover()`
 * Automatically resets to `undefined` when no interactive element is hovered
 
-**Works for attached elements only. See [.attachHover()](https://vevetjs.com/docs/Cursor/methods.md#attachhover).**
+**Works for attached elements only. See [.attachHover()](https://vevetjs.com/docs/Cursor/methods#attachhover).**
 
 ```
 const cursor = new Cursor();
@@ -3077,7 +3077,7 @@ Type: `SVGPathElement`
 
 An SVG `<path>` element that stores a smoothed curve of the user’s pointer movement. Available only when `behavior: "path"` is enabled.
 
-**[Read more](https://vevetjs.com/docs/Cursor/props.md#props.behavior)** / **[Demo](https://vevetjs.com/docs/Cursor/demos.md#tail-path-cursor)**
+**[Read more](https://vevetjs.com/docs/Cursor/props#props.behavior)** / **[Demo](https://vevetjs.com/docs/Cursor/demos#tail-path-cursor)**
 
 ```
 const cursor = new Cursor();
@@ -3096,7 +3096,7 @@ cursor.path; // SVGPathElement
 
 note
 
-All **[Module callbacks](https://vevetjs.com/docs/base/Module/.md#callbacks)** are available in this class.
+All **[Module callbacks](https://vevetjs.com/docs/base/Module/#callbacks)** are available in this class.
 
 ### `render`[​](#render "Direct link to render")
 
@@ -6280,7 +6280,7 @@ instantCursor.inner.classList.add("fill");
 
 ## CursorHoverElement[​](#cursorhoverelement "Direct link to CursorHoverElement")
 
-Runtime representation of a hoverable element attached to the cursor. This object is created internally and exposed via the<br />**[hoveredElement](https://vevetjs.com/docs/Cursor/accessors.md#hoveredelement)** accessor while the element is hovered.
+Runtime representation of a hoverable element attached to the cursor. This object is created internally and exposed via the<br />**[hoveredElement](https://vevetjs.com/docs/Cursor/accessors#hoveredelement)** accessor while the element is hovered.
 
 ```
 class CursorHoverElement {
@@ -6342,7 +6342,7 @@ class CursorHoverElement {
 
 ## ICursorHoverElementProps[​](#icursorhoverelementprops "Direct link to ICursorHoverElementProps")
 
-Configuration object passed to **[attachHover()](https://vevetjs.com/docs/Cursor/methods.md#attachhover)**<br /><!-- -->to define cursor behavior for a specific hoverable element.
+Configuration object passed to **[attachHover()](https://vevetjs.com/docs/Cursor/methods#attachhover)**<br /><!-- -->to define cursor behavior for a specific hoverable element.
 
 ```
 interface ICursorHoverElementProps {
@@ -6561,15 +6561,15 @@ export type TCursorHoverElementStickyAmplitudeObject = {
 
 note
 
-All **[Module methods](https://vevetjs.com/docs/base/Module/.md#methods)** are available in this class.
+All **[Module methods](https://vevetjs.com/docs/base/Module/#methods)** are available in this class.
 
 ### `attachCursor`[​](#attachcursor "Direct link to attachcursor")
 
-Registers a **cursor type** and appends its element into the cursor's **[inner](https://vevetjs.com/docs/Cursor/accessors.md#inner)** container.
+Registers a **cursor type** and appends its element into the cursor's **[inner](https://vevetjs.com/docs/Cursor/accessors#inner)** container.
 
 Each cursor type is identified by a unique `type` string and can later be activated when hovering elements.
 
-See **[ICursorType](https://vevetjs.com/docs/Cursor/interfaces.md#icursortype)**.
+See **[ICursorType](https://vevetjs.com/docs/Cursor/interfaces#icursortype)**.
 
 ```
 const cursor = new Cursor();
@@ -6598,7 +6598,7 @@ While hovering the element, the cursor can:
 
 Returns a **cleanup function** that removes all listeners and bindings.
 
-For the full configuration options, see **[ICursorHoverElementProps](https://vevetjs.com/docs/Cursor/interfaces.md#icursorhoverelementprops)**.
+For the full configuration options, see **[ICursorHoverElementProps](https://vevetjs.com/docs/Cursor/interfaces#icursorhoverelementprops)**.
 
 ```
 const cursor = new Cursor();
@@ -6793,7 +6793,7 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 
 Adaptive props
 
-To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/.md#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
+To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
 
 ### `enabled`[​](#props.enabled "Direct link to props.enabled")
 
@@ -6932,13 +6932,13 @@ Vevet.js is a flexible client-side JavaScript library for creative web developme
 
 The library consists of:
 
-* **[core](https://vevetjs.com/docs/core/.md)**<br /><!-- -->Handles viewport events, page load states, and provides essential info about the viewport and user agent.
+* **[core](https://vevetjs.com/docs/core/)**<br /><!-- -->Handles viewport events, page load states, and provides essential info about the viewport and user agent.
 
-* **[components](https://vevetjs.com/docs/Marquee/.md)**<br /><!-- -->A collection of abstract and functional modules such as loaders, scroll tools, split text, carousels, and more.
+* **[components](https://vevetjs.com/docs/Marquee/)**<br /><!-- -->A collection of abstract and functional modules such as loaders, scroll tools, split text, carousels, and more.
 
-* **[base](https://vevetjs.com/docs/base/Callbacks/.md)**<br /><!-- -->Basic abstract classes.
+* **[base](https://vevetjs.com/docs/base/Callbacks/)**<br /><!-- -->Basic abstract classes.
 
-* **[utils](https://vevetjs.com/docs/utils/.md)**<br /><!-- -->Lightweight internal utilities.
+* **[utils](https://vevetjs.com/docs/utils/)**<br /><!-- -->Lightweight internal utilities.
 
 ## Installation[​](#installation "Direct link to Installation")
 
@@ -7303,7 +7303,7 @@ elements.forEach(element => {
 
 ## More demos[​](#more-demos "Direct link to More demos")
 
-To explore more demos, click [here](https://vevetjs.com/docs/InView/demos.md).
+To explore more demos, click [here](https://vevetjs.com/docs/InView/demos).
 
 ## Initialization[​](#initialization "Direct link to Initialization")
 
@@ -7432,7 +7432,7 @@ Direction is determined by comparing the element's position to the viewport cent
 
 note
 
-All **[Module accessors](https://vevetjs.com/docs/base/Module/.md#accessors)** are available in this class.
+All **[Module accessors](https://vevetjs.com/docs/base/Module/#accessors)** are available in this class.
 
 ### `elements`[​](#elements "Direct link to elements")
 
@@ -7513,7 +7513,7 @@ observer.on('in', ({ element, direction }) => {
 
 note
 
-All **[Module callbacks](https://vevetjs.com/docs/base/Module/.md#callbacks)** are available in this class.
+All **[Module callbacks](https://vevetjs.com/docs/base/Module/#callbacks)** are available in this class.
 
 ### `in`[​](#in "Direct link to in")
 
@@ -9369,7 +9369,7 @@ elements.forEach(element => {
 
 note
 
-All **[Module methods](https://vevetjs.com/docs/base/Module/.md#methods)** are available in this class.
+All **[Module methods](https://vevetjs.com/docs/base/Module/#methods)** are available in this class.
 
 ### `addElement`[​](#addelement "Direct link to addelement")
 
@@ -9510,7 +9510,7 @@ Static properties are set during initialization and cannot be modified later.
 * **Default:** `true`
 * Determines whether elements leaving the viewport should trigger an `out` event.
 * Set to `false` for one-time triggers to improve performance and reduce callback spam.
-* **See [demo](https://vevetjs.com/docs/InView/demos.md#in-out-animation)**
+* **See [demo](https://vevetjs.com/docs/InView/demos#in-out-animation)**
 
 ```
 // Enable out events (default)
@@ -9540,7 +9540,7 @@ const observer = new InView({
 * The delay is calculated based on the element's position relative to the viewport, creating a staggered animation effect.
 * Elements closer to the viewport have shorter delays, while elements further away have longer delays (up to `maxInitialDelay`).
 * Set to `0` to disable initial delays.
-* **See [demo](https://vevetjs.com/docs/InView/demos.md#control)**
+* **See [demo](https://vevetjs.com/docs/InView/demos#control)**
 
 ```
 // Stagger animations over 1 second (default)
@@ -9579,7 +9579,7 @@ const observer = new InView({
 * Defines the primary scrolling axis used for delay calculations and direction detection.
 * Use `'horizontal'` for horizontal scrolling pages or carousels.
 * Direction values will be `'fromLeft'`/`'fromRight'` for horizontal, `'fromTop'`/`'fromBottom'` for vertical.
-* **See [demo](https://vevetjs.com/docs/InView/demos.md#horizontal-inview)**
+* **See [demo](https://vevetjs.com/docs/InView/demos#horizontal-inview)**
 
 ```
 // Vertical scrolling (default)
@@ -9607,7 +9607,7 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 
 Adaptive props
 
-To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/.md#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
+To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
 
 ### `enabled`[​](#props.enabled "Direct link to props.enabled")
 
@@ -9616,7 +9616,7 @@ To apply different values by viewport or device, use **[Responsive](https://veve
 * Enables or disables the `IntersectionObserver` instance.
 * When disabled, no visibility events are triggered, but elements remain registered.
 * Useful for temporarily pausing observation without removing elements.
-* **See [demo](https://vevetjs.com/docs/InView/demos.md#control)**
+* **See [demo](https://vevetjs.com/docs/InView/demos#control)**
 
 ```
 const observer = new InView({
@@ -9781,7 +9781,7 @@ new Marquee({
 
 ## More demos[​](#more-demos "Direct link to More demos")
 
-To explore more demos, click [here](https://vevetjs.com/docs/Marquee/demos.md).
+To explore more demos, click [here](https://vevetjs.com/docs/Marquee/demos).
 
 ## Advantages[​](#advantages "Direct link to Advantages")
 
@@ -9871,7 +9871,7 @@ marquee.destroy();
 
 note
 
-All **[Module accessors](https://vevetjs.com/docs/base/Module/.md#accessors)** are available in this class.
+All **[Module accessors](https://vevetjs.com/docs/base/Module/#accessors)** are available in this class.
 
 ### `totalSize`[​](#totalsize "Direct link to totalsize")
 
@@ -9918,7 +9918,7 @@ marquee.coord = 0; // reset to initial position
 
 note
 
-All **[Module callbacks](https://vevetjs.com/docs/base/Module/.md#callbacks)** are available in this class.
+All **[Module callbacks](https://vevetjs.com/docs/base/Module/#callbacks)** are available in this class.
 
 ### `render`[​](#render "Direct link to render")
 
@@ -10957,7 +10957,7 @@ new Responsive(instance, [{
 
 ## Draggable Marquee[​](#draggable-marquee "Direct link to Draggable Marquee")
 
-By default, Marquee does not support swiping. But this can be solved with [Swipe](https://vevetjs.com/docs/Swipe/.md):
+By default, Marquee does not support swiping. But this can be solved with [Swipe](https://vevetjs.com/docs/Swipe/):
 
 [Vevet Demo XJJrYeR](https://codepen.io/anton-bobrov/embed/XJJrYeR?default-tab=result)
 
@@ -11107,7 +11107,7 @@ const swipe = new Swipe({
 
 ## Scrollable Marquee[​](#scrollable-marquee "Direct link to Scrollable Marquee")
 
-This is a combination of [Marquee](https://vevetjs.com/docs/Marquee/.md) and [ScrollProgress](https://vevetjs.com/docs/ScrollProgress/.md). With ScrollProgress, you can handle scrolling logic for your marquee element:
+This is a combination of [Marquee](https://vevetjs.com/docs/Marquee/) and [ScrollProgress](https://vevetjs.com/docs/ScrollProgress/). With ScrollProgress, you can handle scrolling logic for your marquee element:
 
 [Vevet Demo raaBKYy](https://codepen.io/anton-bobrov/embed/raaBKYy?default-tab=result)
 
@@ -11368,7 +11368,7 @@ new Marquee({
 
 note
 
-All **[Module methods](https://vevetjs.com/docs/base/Module/.md#methods)** are available in this class.
+All **[Module methods](https://vevetjs.com/docs/base/Module/#methods)** are available in this class.
 
 ### `render`[​](#render "Direct link to render")
 
@@ -11439,7 +11439,7 @@ Static properties are set during initialization and cannot be modified later.
 
 * **Type:** `HTMLElement`
 * The container element that holds the marquee content.
-* **See [demo](https://vevetjs.com/docs/Marquee/demos.md#simple-demo)**
+* **See [demo](https://vevetjs.com/docs/Marquee/demos#simple-demo)**
 
 ```
 const marquee = new Marquee({
@@ -11485,7 +11485,7 @@ const marquee = new Marquee({
 * Cloned nodes are recreated dynamically on every resize() call, if the content is not long enough to form a seamless loop.
 * In most cases clones are created during the initial setup, but on resize they may be recalculated and replaced.
 * All cloned nodes are fully removed when the instance is destroyed using `.destroy()`
-* **See [demo](https://vevetjs.com/docs/Marquee/demos.md#no-clones)**
+* **See [demo](https://vevetjs.com/docs/Marquee/demos#no-clones)**
 
 ```
 const marquee = new Marquee({
@@ -11500,7 +11500,7 @@ const marquee = new Marquee({
 * **Type:** `'horizontal' | 'vertical'`
 * **Default:** `'horizontal'`
 * Indicates the direction of the marquee animation.
-* **See [demo](https://vevetjs.com/docs/Marquee/demos.md#vertical-marquee)**
+* **See [demo](https://vevetjs.com/docs/Marquee/demos#vertical-marquee)**
 
 ```
 const marquee = new Marquee({
@@ -11516,14 +11516,14 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 
 Adaptive props
 
-To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/.md#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
+To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
 
 ### `speed`[​](#props.speed "Direct link to props.speed")
 
 * **Type:** `number | string`
 * **Default:** `1`
 * The speed of the marquee animation. Supports CSS units like `px`, `rem`, `vw`, `vh`, `svh`. Negative speed reverses marquee animation.
-* **See [demo](https://vevetjs.com/docs/Marquee/demos.md#reverse-marquee)**
+* **See [demo](https://vevetjs.com/docs/Marquee/demos#reverse-marquee)**
 
 ```
 const marquee = new Marquee({
@@ -11548,7 +11548,7 @@ marquee.updateProps({
 * **Type:** `number | string`
 * **Default:** `0`
 * The gap between the marquee elements. Supports CSS units like `px`, `rem`, `vw`, `vh`, `svh`.
-* **See [demo](https://vevetjs.com/docs/Marquee/demos.md#with-css-units)**
+* **See [demo](https://vevetjs.com/docs/Marquee/demos#with-css-units)**
 
 ```
 const marquee = new Marquee({
@@ -11576,7 +11576,7 @@ marquee.updateProps({
 * When `enabled: false`, the internal requestAnimationFrame loop is paused, so the marquee stops updating.
 * While disabled, the marquee keeps its current coord value — animation resumes from the same position.
 * Hover-based control (`pauseOnHover`) is ignored when the marquee is disabled manually.
-* **See [demo](https://vevetjs.com/docs/Marquee/demos.md#controllable-marquee)**
+* **See [demo](https://vevetjs.com/docs/Marquee/demos#controllable-marquee)**
 
 ```
 const marquee = new Marquee({
@@ -11601,7 +11601,7 @@ marquee.updateProps({
 * **Type:** `boolean`
 * **Default:** `false`
 * Pauses the marquee when the mouse hovers over it.
-* **See [demo](https://vevetjs.com/docs/Marquee/demos.md#pause-on-hover)**
+* **See [demo](https://vevetjs.com/docs/Marquee/demos#pause-on-hover)**
 
 ```
 const marquee = new Marquee({
@@ -11650,7 +11650,7 @@ marquee.updateProps({
 * **Type:** `boolean`
 * **Default:** `true`
 * When needed, uses a dynamic FPS factor to adjust the speed of the marquee for consistent animation across different screens with unique frame rates.
-* **See [demo](https://vevetjs.com/docs/Marquee/demos.md#with-speed-adjustment)**
+* **See [demo](https://vevetjs.com/docs/Marquee/demos#with-speed-adjustment)**
 
 ```
 const marquee = new Marquee({
@@ -11953,7 +11953,7 @@ new Pointers({
 
 note
 
-All **[Module callbacks](https://vevetjs.com/docs/base/Module/.md#callbacks)** are available in this class.
+All **[Module callbacks](https://vevetjs.com/docs/base/Module/#callbacks)** are available in this class.
 
 ## Initialization[​](#initialization "Direct link to Initialization")
 
@@ -12027,13 +12027,13 @@ pointers.destroy();
 
 * Always set an appropriate `touch-action` on the container to ensure consistent pointermove behavior on mobile.
 * Use `relative: true` when working with draggable, scrollable, or transformed containers for stable coordinates.
-* For pan, pinch, and rotate, prefer the high-level [`move`](https://vevetjs.com/docs/Pointers/callbacks.md#move) callback instead of manual distance math on `pointersMap`.
-* Use [`pointerdown`](https://vevetjs.com/docs/Pointers/callbacks.md#pointerdown) `event.pointerType` (`'mouse'` | `'touch'`) or type-aware props when mouse and touch need different rules.
+* For pan, pinch, and rotate, prefer the high-level [`move`](https://vevetjs.com/docs/Pointers/callbacks#move) callback instead of manual distance math on `pointersMap`.
+* Use [`pointerdown`](https://vevetjs.com/docs/Pointers/callbacks#pointerdown) `event.pointerType` (`'mouse'` | `'touch'`) or type-aware props when mouse and touch need different rules.
 * Destroy the instance when it's no longer needed to avoid memory leaks and stale event listeners.
 
 ## Pinch & rotate[​](#pinch--rotate "Direct link to Pinch & rotate")
 
-Use `minPointers: 2` and the [`move`](https://vevetjs.com/docs/Pointers/callbacks.md#move) callback. It fires **once per microtask** after any pointer moves, with deduplicated pan / pinch / rotate metrics:
+Use `minPointers: 2` and the [`move`](https://vevetjs.com/docs/Pointers/callbacks#move) callback. It fires **once per microtask** after any pointer moves, with deduplicated pan / pinch / rotate metrics:
 
 ```
 import { clamp, Pointers } from 'vevet';
@@ -12081,7 +12081,7 @@ const pointers = new Pointers({
 });
 ```
 
-See [`IPointersMove`](https://vevetjs.com/docs/Pointers/interfaces.md#ipointersmove) for the full payload.
+See [`IPointersMove`](https://vevetjs.com/docs/Pointers/interfaces#ipointersmove) for the full payload.
 
 
 ---
@@ -12092,7 +12092,7 @@ See [`IPointersMove`](https://vevetjs.com/docs/Pointers/interfaces.md#ipointersm
 
 note
 
-All **[Module accessors](https://vevetjs.com/docs/base/Module/.md#accessors)** are available in this class.
+All **[Module accessors](https://vevetjs.com/docs/base/Module/#accessors)** are available in this class.
 
 ### `container`[​](#container "Direct link to container")
 
@@ -12132,9 +12132,9 @@ pointers.isStarted; // true or false
 
 ### `move`[​](#move "Direct link to move")
 
-Type: [`IPointersMove`](https://vevetjs.com/docs/Pointers/interfaces.md#ipointersmove) | `null`
+Type: [`IPointersMove`](https://vevetjs.com/docs/Pointers/interfaces#ipointersmove) | `null`
 
-Latest aggregated gesture snapshot from the most recent [`move`](https://vevetjs.com/docs/Pointers/callbacks.md#move) update, or `null` before the first move after [`start`](#start) / after [`end`](#end).
+Latest aggregated gesture snapshot from the most recent [`move`](https://vevetjs.com/docs/Pointers/callbacks#move) update, or `null` before the first move after [`start`](#start) / after [`end`](#end).
 
 ```
 const pointers = new Pointers({
@@ -12154,7 +12154,7 @@ pointers.move?.scale; // pinch multiplier since gesture start
 
 ### `pointersMap`[​](#pointersmap "Direct link to pointersmap")
 
-Type: `Map<number,` [IPointersItem](https://vevetjs.com/docs/Pointers/interfaces.md#ipointersitem)`>`
+Type: `Map<number,` [IPointersItem](https://vevetjs.com/docs/Pointers/interfaces#ipointersitem)`>`
 
 Contains all currently active pointers.<br /><!-- -->Keys correspond to native `pointerId` values from Pointer Events API.<br /><!-- -->Entries are updated every frame and preserved until the pointer is fully released (`pointerup` / `pointercancel`).
 
@@ -12179,7 +12179,7 @@ pointers.pointersMap; // map of active pointers
 
 note
 
-All **[Module callbacks](https://vevetjs.com/docs/base/Module/.md#callbacks)** are available in this class.
+All **[Module callbacks](https://vevetjs.com/docs/base/Module/#callbacks)** are available in this class.
 
 ### `start`[​](#start "Direct link to start")
 
@@ -12211,7 +12211,7 @@ destruct();
 
 Fired when a pointer is added.
 
-`event.pointerType` is `'mouse'` or `'touch'` (see [`TPointersType`](https://vevetjs.com/docs/Pointers/interfaces.md#tpointerstype)). Use it to branch logic or with type-aware props.
+`event.pointerType` is `'mouse'` or `'touch'` (see [`TPointersType`](https://vevetjs.com/docs/Pointers/interfaces#tpointerstype)). Use it to branch logic or with type-aware props.
 
 ```
 const pointers = new Pointers({
@@ -12273,7 +12273,7 @@ destruct();
 
 Fired **once per microtask** when any pointer moves after [`start`](#start).<br /><!-- -->Coalesces multiple `pointermove` events in the same tick (typical on touch with two fingers).
 
-Provides aggregated gesture state: pan (`center`), pinch (`scale`), and rotate (`angle`).<br /><!-- -->See [`IPointersMove`](https://vevetjs.com/docs/Pointers/interfaces.md#ipointersmove).
+Provides aggregated gesture state: pan (`center`), pinch (`scale`), and rotate (`angle`).<br /><!-- -->See [`IPointersMove`](https://vevetjs.com/docs/Pointers/interfaces#ipointersmove).
 
 Low-level per-pointer updates remain on [`pointermove`](#pointermove).
 
@@ -12374,11 +12374,11 @@ destruct();
 type TPointersType = 'mouse' | 'touch';
 ```
 
-Used by type-aware props ([`buttons`](https://vevetjs.com/docs/Pointers/props.md#props.buttons), [`minPointers`](https://vevetjs.com/docs/Pointers/props.md#props.minPointers), [`maxPointers`](https://vevetjs.com/docs/Pointers/props.md#props.maxPointers)).<br /><!-- -->Resolved from [`PointerEvent.pointerType`](https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent/pointerType) on the first pointer of a gesture; unknown values fall back to `'mouse'`.
+Used by type-aware props ([`buttons`](https://vevetjs.com/docs/Pointers/props#props.buttons), [`minPointers`](https://vevetjs.com/docs/Pointers/props#props.minPointers), [`maxPointers`](https://vevetjs.com/docs/Pointers/props#props.maxPointers)).<br /><!-- -->Resolved from [`PointerEvent.pointerType`](https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent/pointerType) on the first pointer of a gesture; unknown values fall back to `'mouse'`.
 
 ## IPointersMove[​](#ipointersmove "Direct link to IPointersMove")
 
-Aggregated gesture state passed to the [`move`](https://vevetjs.com/docs/Pointers/callbacks.md#move) callback and exposed via the [`move`](https://vevetjs.com/docs/Pointers/accessors.md#move) accessor.
+Aggregated gesture state passed to the [`move`](https://vevetjs.com/docs/Pointers/callbacks#move) callback and exposed via the [`move`](https://vevetjs.com/docs/Pointers/accessors#move) accessor.
 
 ```
 interface IPointersMove {
@@ -12455,7 +12455,7 @@ interface IPointersVec2 {
 
 note
 
-All **[Module methods](https://vevetjs.com/docs/base/Module/.md#methods)** are available in this class.
+All **[Module methods](https://vevetjs.com/docs/base/Module/#methods)** are available in this class.
 
 
 ---
@@ -12513,7 +12513,7 @@ const pointers = new Pointers({
 
   See [MouseEvent.button](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button).
 
-  `type` is resolved from the first [`pointerdown`](https://vevetjs.com/docs/Pointers/callbacks.md#pointerdown) [`PointerEvent.pointerType`](https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent/pointerType) (`'mouse'` or `'touch'`; unknown values fall back to `'mouse'`).
+  `type` is resolved from the first [`pointerdown`](https://vevetjs.com/docs/Pointers/callbacks#pointerdown) [`PointerEvent.pointerType`](https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent/pointerType) (`'mouse'` or `'touch'`; unknown values fall back to `'mouse'`).
 
 ```
 const pointers = new Pointers({
@@ -12541,7 +12541,7 @@ const pointers = new Pointers({
 
 * **Type:** `number | ((type: TPointersType) => number)`
 * **Default:** `1`
-* Minimum number of active pointers (fingers) required to trigger the [`start`](https://vevetjs.com/docs/Pointers/callbacks.md#start) callback.
+* Minimum number of active pointers (fingers) required to trigger the [`start`](https://vevetjs.com/docs/Pointers/callbacks#start) callback.
 
 ```
 const pointers = new Pointers({
@@ -12601,7 +12601,7 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 
 Adaptive props
 
-To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/.md#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
+To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
 
 ### `enabled`[​](#props.enabled "Direct link to props.enabled")
 
@@ -12846,7 +12846,7 @@ new Preloader({
 
 ## More demos[​](#more-demos "Direct link to More demos")
 
-To explore more demos, click [here](https://vevetjs.com/docs/Preloader/demos.md).
+To explore more demos, click [here](https://vevetjs.com/docs/Preloader/demos).
 
 ## Initialization[​](#initialization "Direct link to Initialization")
 
@@ -12915,7 +12915,7 @@ preloader.destroy();
 
 note
 
-All **[Module accessors](https://vevetjs.com/docs/base/Module/.md#accessors)** are available in this class.
+All **[Module accessors](https://vevetjs.com/docs/base/Module/#accessors)** are available in this class.
 
 ### `isHidden`[​](#ishidden "Direct link to ishidden")
 
@@ -12947,7 +12947,7 @@ preloader.isHidden; // detect final hidden state
 
 note
 
-All **[Module callbacks](https://vevetjs.com/docs/base/Module/.md#callbacks)** are available in this class.
+All **[Module callbacks](https://vevetjs.com/docs/base/Module/#callbacks)** are available in this class.
 
 ### `loaded`[​](#loaded "Direct link to loaded")
 
@@ -13559,13 +13559,13 @@ const preloader = new Preloader({
 
 note
 
-All **[Module methods](https://vevetjs.com/docs/base/Module/.md#methods)** are available in this class.
+All **[Module methods](https://vevetjs.com/docs/base/Module/#methods)** are available in this class.
 
 ### `hide`[​](#hide "Direct link to hide")
 
 Hides the preloader with a custom animation duration.<br /><!-- -->The method works only after the page is loaded — if called earlier or when already hidden, it returns `undefined`.
 
-See **[demo](https://vevetjs.com/docs/Preloader/demos.md#custom-hiding-logic)**
+See **[demo](https://vevetjs.com/docs/Preloader/demos#custom-hiding-logic)**
 
 ```
 const preloader = new Preloader({
@@ -13709,7 +13709,7 @@ const preloader = new Preloader({
   <!-- -->
   Calling `.hide()` before the `loaded` event will return `undefined`.
 
-* **See [demo](https://vevetjs.com/docs/Preloader/demos.md#custom-hiding-logic)**
+* **See [demo](https://vevetjs.com/docs/Preloader/demos#custom-hiding-logic)**
 
 ```
 const preloader = new Preloader({
@@ -14078,7 +14078,7 @@ customLoader.addEventListener("click", () => {
 
 ## More demos[​](#more-demos "Direct link to More demos")
 
-To explore more demos, click [here](https://vevetjs.com/docs/ProgressPreloader/demos.md).
+To explore more demos, click [here](https://vevetjs.com/docs/ProgressPreloader/demos).
 
 ## Features[​](#features "Direct link to Features")
 
@@ -14208,13 +14208,13 @@ preloader.destroy();
 
 note
 
-All **[Preloader's accessors](https://vevetjs.com/docs/Preloader/accessors.md)** are available in this class.
+All **[Preloader's accessors](https://vevetjs.com/docs/Preloader/accessors)** are available in this class.
 
 ### `loadedWeight`[​](#loadedweight "Direct link to loadedweight")
 
 Type: `number`
 
-Total loaded resources weight.<br /><!-- -->Custom resources may have a `data-loaded` attribute which represents their loaded weight.<br />**See [demo](https://vevetjs.com/docs/ProgressPreloader/demos.md#resource-count)**
+Total loaded resources weight.<br /><!-- -->Custom resources may have a `data-loaded` attribute which represents their loaded weight.<br />**See [demo](https://vevetjs.com/docs/ProgressPreloader/demos#resource-count)**
 
 ```
 const preloader = new ProgressPreloader({
@@ -14250,7 +14250,7 @@ preloader.loadProgress; // rigid progress
 
 Type: `number`
 
-Gets the current interpolated progress value (0 to 1).<br /><!-- -->The smoothness of the progress update depends on `lerp` props.<br />**See [demo](https://vevetjs.com/docs/ProgressPreloader/demos.md#simple-preloader)**
+Gets the current interpolated progress value (0 to 1).<br /><!-- -->The smoothness of the progress update depends on `lerp` props.<br />**See [demo](https://vevetjs.com/docs/ProgressPreloader/demos#simple-preloader)**
 
 ```
 const preloader = new ProgressPreloader({
@@ -14268,7 +14268,7 @@ preloader.progress; // smooth progress
 
 Type: `IProgressPreloaderResource[]`
 
-The list of all tracked custom resources.<br />**See [demo](https://vevetjs.com/docs/ProgressPreloader/demos.md#virtual-resources)**
+The list of all tracked custom resources.<br />**See [demo](https://vevetjs.com/docs/ProgressPreloader/demos#virtual-resources)**
 
 **IProgressPreloaderResource structure**
 
@@ -14300,7 +14300,7 @@ preloader.resources; // list of resources
 
 Type: `number`
 
-Returns the total weight of all resources to preload.<br />**See [demo](https://vevetjs.com/docs/ProgressPreloader/demos.md#resource-count)**
+Returns the total weight of all resources to preload.<br />**See [demo](https://vevetjs.com/docs/ProgressPreloader/demos#resource-count)**
 
 ```
 const preloader = new ProgressPreloader({
@@ -14323,7 +14323,7 @@ preloader.totalWeight; // total resources weight
 
 note
 
-All **[Preloader's callbacks](https://vevetjs.com/docs/Preloader/callbacks.md)** are available in this class.
+All **[Preloader's callbacks](https://vevetjs.com/docs/Preloader/callbacks)** are available in this class.
 
 ### `progress`[​](#progress "Direct link to progress")
 
@@ -15827,7 +15827,7 @@ const preloader = new ProgressPreloader({
 
 note
 
-All **[Preloader's methods](https://vevetjs.com/docs/Preloader/methods.md)** are available in this class.
+All **[Preloader's methods](https://vevetjs.com/docs/Preloader/methods)** are available in this class.
 
 ### `addResource`[​](#addresource "Direct link to addresource")
 
@@ -15872,7 +15872,7 @@ preloader.destroy();
 
 note
 
-All **[Preloader's props](https://vevetjs.com/docs/Preloader/props.md)** are available in this class.
+All **[Preloader's props](https://vevetjs.com/docs/Preloader/props)** are available in this class.
 
 ### Static Props[​](#static-props "Direct link to Static Props")
 
@@ -15942,7 +15942,7 @@ const preloader = new ProgressPreloader({
   <br />
   <!-- -->
   The actual loading logic must be handled externally. Example: `data-weight="10"` indicates weight; `data-loaded="10"` means fully loaded.
-* **See [demo](https://vevetjs.com/docs/ProgressPreloader/demos.md#virtual-resources)**
+* **See [demo](https://vevetjs.com/docs/ProgressPreloader/demos#virtual-resources)**
 
 ```
 const preloader = new ProgressPreloader({
@@ -15984,7 +15984,7 @@ const preloader = new ProgressPreloader({
 
 * **Type:** `number`
 * **Default:** `0.1`
-* Controls how smoothly the visible progress value ([progress](https://vevetjs.com/docs/ProgressPreloader/accessors.md#progress)) interpolates toward the real loading progress ([loadProgress](https://vevetjs.com/docs/ProgressPreloader/accessors.md#loadprogress)).
+* Controls how smoothly the visible progress value ([progress](https://vevetjs.com/docs/ProgressPreloader/accessors#progress)) interpolates toward the real loading progress ([loadProgress](https://vevetjs.com/docs/ProgressPreloader/accessors#loadprogress)).
 * Lower values → slower, smoother animation.
 * `1` disables interpolation and makes `progress` equal to `loadProgress` every frame.
 * This affects only **visual animation**, not the real loading state.
@@ -16005,7 +16005,7 @@ const preloader = new ProgressPreloader({
 
 * **Type:** `number`
 * **Default:** `500`
-* Duration (in ms) for a forced completion animation when all resources are loaded but the current interpolated [progress](https://vevetjs.com/docs/ProgressPreloader/accessors.md#progress) is still below `1`.
+* Duration (in ms) for a forced completion animation when all resources are loaded but the current interpolated [progress](https://vevetjs.com/docs/ProgressPreloader/accessors#progress) is still below `1`.
   <br />
   <!-- -->
   This creates a smooth "finish animation" even if the last resources load instantly
@@ -16251,7 +16251,7 @@ document.getElementById("pause").addEventListener("click", () => raf.pause());
 
 ## More demos[​](#more-demos "Direct link to More demos")
 
-To explore more demos, click [here](https://vevetjs.com/docs/Raf/demos.md).
+To explore more demos, click [here](https://vevetjs.com/docs/Raf/demos).
 
 ## Initialization[​](#initialization "Direct link to Initialization")
 
@@ -16333,7 +16333,7 @@ const raf = new Raf(
 );
 ```
 
-Damping (used for consistent animations across 60Hz, 120Hz, and others, **see [demo](https://vevetjs.com/docs/Raf/demos.md#damping)**):
+Damping (used for consistent animations across 60Hz, 120Hz, and others, **see [demo](https://vevetjs.com/docs/Raf/demos#damping)**):
 
 ```
 const ease = raf.lerpFactor(0.1);
@@ -16372,7 +16372,7 @@ raf.destroy();
 
 note
 
-All **[Module accessors](https://vevetjs.com/docs/base/Module/.md#accessors)** are available in this class.
+All **[Module accessors](https://vevetjs.com/docs/base/Module/#accessors)** are available in this class.
 
 ### `duration`[​](#duration "Direct link to duration")
 
@@ -16392,7 +16392,7 @@ raf.duration; // returns duration of the last frame in ms
 
 Type: `number`
 
-Real-time FPS. **See [demo](https://vevetjs.com/docs/Raf/demos.md#info)**
+Real-time FPS. **See [demo](https://vevetjs.com/docs/Raf/demos#info)**
 
 ```
 const raf = new Raf();
@@ -16410,7 +16410,7 @@ Scaling coefficient based on a 60 FPS target.
 
 Useful for making physics and easing consistent regardless of monitor refresh rate.
 
-**See [demo](https://vevetjs.com/docs/Raf/demos.md#info)**
+**See [demo](https://vevetjs.com/docs/Raf/demos#info)**
 
 ```
 const raf = new Raf();
@@ -16424,7 +16424,7 @@ raf.fpsFactor; // returns scaling coefficient
 
 Type: `number`
 
-Current frame index. **See [demo](https://vevetjs.com/docs/Raf/demos.md#info)**
+Current frame index. **See [demo](https://vevetjs.com/docs/Raf/demos#info)**
 
 ```
 const raf = new Raf();
@@ -16452,7 +16452,7 @@ raf.isPlaying; // true or false
 
 Type: `number`
 
-Timestamp of the current frame. **See [demo](https://vevetjs.com/docs/Raf/demos.md#info)**
+Timestamp of the current frame. **See [demo](https://vevetjs.com/docs/Raf/demos#info)**
 
 ```
 const raf = new Raf();
@@ -16471,7 +16471,7 @@ raf.timestamp; // returns timestamp
 
 note
 
-All **[Module callbacks](https://vevetjs.com/docs/base/Module/.md#callbacks)** are available in this class.
+All **[Module callbacks](https://vevetjs.com/docs/base/Module/#callbacks)** are available in this class.
 
 ### `play`[​](#play "Direct link to play")
 
@@ -17767,13 +17767,13 @@ document.getElementById("pause").addEventListener("click", () => raf.pause());
 
 note
 
-All **[Module methods](https://vevetjs.com/docs/base/Module/.md#methods)** are available in this class.
+All **[Module methods](https://vevetjs.com/docs/base/Module/#methods)** are available in this class.
 
 ### `lerpFactor`[​](#lerpfactor "Direct link to lerpfactor")
 
 Calculates a linear interpolation factor to make animations run the same regardless of FPS.
 
-**See [demo](https://vevetjs.com/docs/Raf/demos.md#damping)**
+**See [demo](https://vevetjs.com/docs/Raf/demos#damping)**
 
 ```
 // lerpFactor() calculates an FPS-independent interpolation coefficient.
@@ -17824,7 +17824,7 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 
 Adaptive props
 
-To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/.md#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
+To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
 
 ### `fps`[​](#props.fps "Direct link to props.fps")
 
@@ -17833,7 +17833,7 @@ To apply different values by viewport or device, use **[Responsive](https://veve
 * Frames per second (FPS) for the animation.
 * `'auto'` dynamically adapts to real device refresh rate (60Hz / 90Hz / 120Hz / 144Hz / 240Hz).
 * Throttling to a manual value (e.g. `30`) reduces CPU/GPU load.
-* **See [demo](https://vevetjs.com/docs/Raf/demos.md#fps-throttling)**
+* **See [demo](https://vevetjs.com/docs/Raf/demos#fps-throttling)**
 
 ```
 const raf = new Raf({
@@ -17858,7 +17858,7 @@ raf.updateProps({
 * **Type:** `boolean`
 * **Default:** `false`
 * Enables or disables the Raf animation loop.
-* **See [demo](https://vevetjs.com/docs/Raf/demos.md#info)**
+* **See [demo](https://vevetjs.com/docs/Raf/demos#info)**
 
 ```
 const raf = new Raf({
@@ -18173,7 +18173,7 @@ new Scrollbar({
 
 ## More demos[​](#more-demos "Direct link to More demos")
 
-To explore more demos, click [here](https://vevetjs.com/docs/Scrollbar/demos.md).
+To explore more demos, click [here](https://vevetjs.com/docs/Scrollbar/demos).
 
 ## Features[​](#features "Direct link to Features")
 
@@ -18256,7 +18256,7 @@ x.destroy();
 
 note
 
-All **[Module accessors](https://vevetjs.com/docs/base/Module/.md#accessors)** are available in this class.
+All **[Module accessors](https://vevetjs.com/docs/base/Module/#accessors)** are available in this class.
 
 ### `axis`[​](#axis "Direct link to axis")
 
@@ -18435,7 +18435,7 @@ instance.trackSize; // returns size of the scrollbar track container
 
 note
 
-All **[Module callbacks](https://vevetjs.com/docs/base/Module/.md#callbacks)** are available in this class.
+All **[Module callbacks](https://vevetjs.com/docs/base/Module/#callbacks)** are available in this class.
 
 ### `update`[​](#update "Direct link to update")
 
@@ -20709,7 +20709,7 @@ new Scrollbar({
 
 note
 
-All **[Module methods](https://vevetjs.com/docs/base/Module/.md#methods)** are available in this class.
+All **[Module methods](https://vevetjs.com/docs/base/Module/#methods)** are available in this class.
 
 ### `resize`[​](#resize "Direct link to resize")
 
@@ -20748,7 +20748,7 @@ Static properties are set during initialization and cannot be modified later.
 * **Default:** `window`
 * The element whose scroll position the scrollbar reflects.
 * For nested scroll areas, pass a custom `HTMLElement`.
-* **See [demo](https://vevetjs.com/docs/Scrollbar/demos.md#inner-scrollbar)**
+* **See [demo](https://vevetjs.com/docs/Scrollbar/demos#inner-scrollbar)**
 
 ```
 // window
@@ -20773,7 +20773,7 @@ const instance = new Scrollbar({
 * The parent element where the scrollbar should be appended.
 * If set to `false`, the scrollbar is appended directly to the `container`.
 * Use `parent` for correct behavior when the scrollbar is applied to an HTML element instead of Window.
-* **See [demo](https://vevetjs.com/docs/Scrollbar/demos.md#inner-scrollbar)**
+* **See [demo](https://vevetjs.com/docs/Scrollbar/demos#inner-scrollbar)**
 
 ```
 const instance = new Scrollbar({
@@ -20811,7 +20811,7 @@ const instance = new Scrollbar({
   * `'x'` for horizontal scrolling
   * `'y'` for vertical scrolling
 
-* **See [demo](https://vevetjs.com/docs/Scrollbar/demos.md#horizontal-scrollbar)**
+* **See [demo](https://vevetjs.com/docs/Scrollbar/demos#horizontal-scrollbar)**
 
 ```
 const instance = new Scrollbar({
@@ -20840,7 +20840,7 @@ const instance = new Scrollbar({
 * **Type:** `boolean`
 * **Default:** `true`
 * Automatically hides the scrollbar when inactive.
-* **See [demo](https://vevetjs.com/docs/Scrollbar/demos.md#autohide)**
+* **See [demo](https://vevetjs.com/docs/Scrollbar/demos#autohide)**
 
 ```
 const instance = new Scrollbar({
@@ -20871,7 +20871,7 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 
 Adaptive props
 
-To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/.md#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
+To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
 
 ### `minSize`[​](#props.minSize "Direct link to props.minSize")
 
@@ -20879,7 +20879,7 @@ To apply different values by viewport or device, use **[Responsive](https://veve
 * **Default:** `50`
 * Minimum size of the scrollbar thumb.
 * Can be specified as a number (pixels) or as a CSS unit string (`px`, `rem`, `vw`, `vh`, `svh`).
-* **See [demo](https://vevetjs.com/docs/Scrollbar/demos.md#min-size)**
+* **See [demo](https://vevetjs.com/docs/Scrollbar/demos#min-size)**
 
 ```
 const instance = new Scrollbar({
@@ -20904,7 +20904,7 @@ instance.updateProps({
 * **Type:** `boolean`
 * **Default:** `true`
 * Enables automatic adjustment of the scrollbar thumb size based on the content and container.
-* **See [demo](https://vevetjs.com/docs/Scrollbar/demos.md#no-auto-size)**
+* **See [demo](https://vevetjs.com/docs/Scrollbar/demos#no-auto-size)**
 
 ```
 const instance = new Scrollbar({
@@ -20971,7 +20971,7 @@ Static properties are set during initialization and cannot be modified later.
 
 note
 
-All **[Module accessors](https://vevetjs.com/docs/base/Module/.md#accessors)** are available in this class.
+All **[Module accessors](https://vevetjs.com/docs/base/Module/#accessors)** are available in this class.
 
 ### `inProgress`[​](#inprogress "Direct link to inprogress")
 
@@ -21025,7 +21025,7 @@ The bounds of the section element relative to the root element.
 
 note
 
-All **[Module methods](https://vevetjs.com/docs/base/Module/.md#methods)** are available in this class.
+All **[Module methods](https://vevetjs.com/docs/base/Module/#methods)** are available in this class.
 
 ### `getProgress`[​](#getprogress "Direct link to getprogress")
 
@@ -21065,7 +21065,7 @@ instance.update();
 
 note
 
-All **[Module callbacks](https://vevetjs.com/docs/base/Module/.md#callbacks)** are available in this class.
+All **[Module callbacks](https://vevetjs.com/docs/base/Module/#callbacks)** are available in this class.
 
 ### `update`[​](#update-1 "Direct link to update-1")
 
@@ -22210,7 +22210,7 @@ carousel.slides.forEach(({
 
 ## More demos[​](#more-demos "Direct link to More demos")
 
-To explore more demos, click [here](https://vevetjs.com/docs/Snap/basic-demos.md).
+To explore more demos, click [here](https://vevetjs.com/docs/Snap/basic-demos).
 
 ## Advantages[​](#advantages "Direct link to Advantages")
 
@@ -22322,7 +22322,7 @@ carousel.on('update', () => {
 
 note
 
-All **[Module accessors](https://vevetjs.com/docs/base/Module/.md#accessors)** are available in this class.
+All **[Module accessors](https://vevetjs.com/docs/base/Module/#accessors)** are available in this class.
 
 ### `activeIndex`[​](#activeindex "Direct link to activeindex")
 
@@ -22336,7 +22336,7 @@ snap.activeIndex; // active slide index
 
 ### `activeSlide`[​](#activeslide "Direct link to activeslide")
 
-Type: **[SnapSlide](https://vevetjs.com/docs/Snap/slide.md)**
+Type: **[SnapSlide](https://vevetjs.com/docs/Snap/slide)**
 
 Returns the currently active slide instance.
 
@@ -22348,7 +22348,7 @@ snap.activeSlide; // active slide instance
 
 Type: `'start' | 'center' | 'end'`
 
-Returns the resolved slide magnets origin. Reflects [`origin`](https://vevetjs.com/docs/Snap/props.md#props.origin) and the deprecated [`centered`](https://vevetjs.com/docs/Snap/props.md#props.centered) prop (`centered: true` → `'center'`).
+Returns the resolved slide magnets origin. Reflects [`origin`](https://vevetjs.com/docs/Snap/props#props.origin) and the deprecated [`centered`](https://vevetjs.com/docs/Snap/props#props.centered) prop (`centered: true` → `'center'`).
 
 ```
 snap.origin; // 'start' | 'center' | 'end'
@@ -22436,7 +22436,7 @@ snap.hasInertia; // true or false
 
 ### `scrollableSlides`[​](#scrollableslides "Direct link to scrollableslides")
 
-Type: [SnapSlide](https://vevetjs.com/docs/Snap/slide.md)\[]
+Type: [SnapSlide](https://vevetjs.com/docs/Snap/slide)\[]
 
 Returns slides whose sizes exceed the container size.
 
@@ -22446,7 +22446,7 @@ snap.scrollableSlides; // array of slide instance
 
 ### `slides`[​](#slides "Direct link to slides")
 
-Type: [SnapSlide](https://vevetjs.com/docs/Snap/slide.md)\[]
+Type: [SnapSlide](https://vevetjs.com/docs/Snap/slide)\[]
 
 Returns all slide instances.
 
@@ -22521,7 +22521,7 @@ snap.progress; // number
 
 Type: `number`
 
-Returns the looped current track value. Uses the **[.loopCoord()](https://vevetjs.com/docs/Snap/methods.md#loopcoord)** method internally.
+Returns the looped current track value. Uses the **[.loopCoord()](https://vevetjs.com/docs/Snap/methods#loopcoord)** method internally.
 
 ```
 snap.loopedCurrent; // number
@@ -29801,7 +29801,7 @@ carousel.on("update", () => {
 
 ## Origin[​](#origin "Direct link to Origin")
 
-`Snap` slides can align to the **start**, **center**, or **end** of the container via [`origin`](https://vevetjs.com/docs/Snap/props.md#props.origin). The demo below uses centered slides (`origin: 'center'`):
+`Snap` slides can align to the **start**, **center**, or **end** of the container via [`origin`](https://vevetjs.com/docs/Snap/props#props.origin). The demo below uses centered slides (`origin: 'center'`):
 
 [Vevet Demo PwwOgvv](https://codepen.io/anton-bobrov/embed/PwwOgvv?default-tab=result)
 
@@ -34640,11 +34640,11 @@ carousel.on("update", () => {
 
 note
 
-All **[Module callbacks](https://vevetjs.com/docs/base/Module/.md#callbacks)** are available in this class.
+All **[Module callbacks](https://vevetjs.com/docs/base/Module/#callbacks)** are available in this class.
 
 ### `activeSlide`[​](#activeslide "Direct link to activeslide")
 
-Triggered when the active slide changes.<br /><!-- -->The callback receives the active slide instance. See **[SnapSlide](https://vevetjs.com/docs/Snap/slide.md)**.
+Triggered when the active slide changes.<br /><!-- -->The callback receives the active slide instance. See **[SnapSlide](https://vevetjs.com/docs/Snap/slide)**.
 
 ```
 const snap = new Snap({
@@ -35175,7 +35175,7 @@ destruct();
 
 note
 
-All **[Module methods](https://vevetjs.com/docs/base/Module/.md#methods)** are available in this class.
+All **[Module methods](https://vevetjs.com/docs/base/Module/#methods)** are available in this class.
 
 ### `next`[​](#next "Direct link to next")
 
@@ -35399,7 +35399,7 @@ snap.clampTarget();
 
 ### `loopCoord`[​](#loopcoord "Direct link to loopcoord")
 
-Wrap a coordinate between the minimum and maximum track values and return a normalized looped value.<br />**See [loop utilities](https://vevetjs.com/docs/utils/.md#loop).**
+Wrap a coordinate between the minimum and maximum track values and return a normalized looped value.<br />**See [loop utilities](https://vevetjs.com/docs/utils/#loop).**
 
 ```
 const snap = new Snap({ container });
@@ -36176,7 +36176,7 @@ All effect attributes accept numbers or any supported CSS unit.
 
 By default, parallax values are applied while the slide transition progress is between `-1` and `1`.
 
-You can inspect slide progress in **[this demo](https://vevetjs.com/docs/Snap/basic-demos.md#progress)**.
+You can inspect slide progress in **[this demo](https://vevetjs.com/docs/Snap/basic-demos#progress)**.
 
 To change the active range, use the `data-snap-parallax-scope` attribute:
 
@@ -38942,11 +38942,11 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 
 Adaptive props
 
-To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/.md#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
+To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
 
 ### `slides`[​](#props.slides "Direct link to props.slides")
 
-* **Type:** (`HTMLElement` | [**SnapSlide**](https://vevetjs.com/docs/Snap/slide.md))\[] | `false`;
+* **Type:** (`HTMLElement` | [**SnapSlide**](https://vevetjs.com/docs/Snap/slide))\[] | `false`;
 * **Default:** `false`
 * Slide instances. If `false`, all container's children will be considered as slides.
 
@@ -39008,7 +39008,7 @@ snap.updateProps({
 * **Default:** `1`
 * Indicates the number of slides to scroll on swipe or wheel.
   <br />
-  **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#slides-to-scroll)**
+  **See [demo](https://vevetjs.com/docs/Snap/basic-demos#slides-to-scroll)**
 
 ```
 const snap = new Snap({
@@ -39036,7 +39036,7 @@ snap.updateProps({
 * **Default:** `'horizontal'`
 * Sliding direction.
   <br />
-  **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#vertical)**
+  **See [demo](https://vevetjs.com/docs/Snap/basic-demos#vertical)**
 
 ```
 const snap = new Snap({
@@ -39070,7 +39070,7 @@ snap.updateProps({
   * `'center'` — slide centered in the container.
   * `'end'` — trailing edge of the slide at the trailing edge of the container.
 
-  **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#origin)**
+  **See [demo](https://vevetjs.com/docs/Snap/basic-demos#origin)**
 
 ```
 const snap = new Snap({
@@ -39112,7 +39112,7 @@ const snap = new Snap({
 * **Default:** `false`
 * Determines whether to loop the slides.
   <br />
-  **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#loop)**
+  **See [demo](https://vevetjs.com/docs/Snap/basic-demos#loop)**
 
 ```
 const snap = new Snap({
@@ -39140,7 +39140,7 @@ snap.updateProps({
 * **Default:** `0`
 * The gap between slides. Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.
   <br />
-  **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#gap)**
+  **See [demo](https://vevetjs.com/docs/Snap/basic-demos#gap)**
 
 ```
 const snap = new Snap({
@@ -39168,7 +39168,7 @@ snap.updateProps({
 * **Default:** `vevet.mobile ? 1 : 0.2`
 * Linear interpolation factor for smooth animation (between `0` and `1`) with higher values indicating faster movement.
   <br />
-  **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#hypersmooth)**
+  **See [demo](https://vevetjs.com/docs/Snap/basic-demos#hypersmooth)**
 
 ```
 const snap = new Snap({
@@ -39199,7 +39199,7 @@ snap.updateProps({
 * `true` - disables magnets
 * `"sticky"` - allows swipe with inertia and snapping to the nearest slide.
   <br />
-  **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#freemode)**
+  **See [demo](https://vevetjs.com/docs/Snap/basic-demos#freemode)**
 
 tip
 
@@ -39241,7 +39241,7 @@ snap.updateProps({
 * **Default:** `false`
 * Enables wrap-around navigation: advancing from the last slide jumps to the first, and going back from the first jumps to the last. Has no effect when `loop` mode is enabled.
   <br />
-  **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#rewind)**
+  **See [demo](https://vevetjs.com/docs/Snap/basic-demos#rewind)**
 
 ```
 const snap = new Snap({
@@ -39268,7 +39268,7 @@ snap.updateProps({
 * **Type:** `boolean`
 * **Default:** `true`
 * Snap to the nearest slide on carousel resize.
-* **See [demo](https://vevetjs.com/docs/Snap/advanced-demos.md#expand-slide)**
+* **See [demo](https://vevetjs.com/docs/Snap/advanced-demos#expand-slide)**
 
 ```
 const snap = new Snap({
@@ -39303,7 +39303,7 @@ snap.updateProps({
   Higher values mean stronger friction. `0` disables friction.
 * Friction is not applied for `shortSwipes`.
 * Friction is disabled for swipes by default. See **[.swipeFriction](#props.swipeFriction)**.
-* **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#friction)**
+* **See [demo](https://vevetjs.com/docs/Snap/basic-demos#friction)**
 
 ```
 const snap = new Snap({
@@ -39334,7 +39334,7 @@ snap.updateProps({
   <!-- -->
   The value must be `0 to 1`. The higher value the more resistance is applied.
   <br />
-  **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#edge-friction)**
+  **See [demo](https://vevetjs.com/docs/Snap/basic-demos#edge-friction)**
 
 ```
 const snap = new Snap({
@@ -39362,7 +39362,7 @@ snap.updateProps({
 * **Default:** `600`
 * Slide animation duration.
   <br />
-  **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#hypersmooth)**
+  **See [demo](https://vevetjs.com/docs/Snap/basic-demos#hypersmooth)**
 
 ```
 const snap = new Snap({
@@ -39391,9 +39391,9 @@ snap.updateProps({
 * Easing type for smoother animation. Accepts standard easing types or an array of bezier values.
   <br />
   <!-- -->
-  See **[easing types](https://vevetjs.com/docs/utils/.md#easing-types)** for more information.
+  See **[easing types](https://vevetjs.com/docs/utils/#easing-types)** for more information.
   <br />
-  **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#easing)**
+  **See [demo](https://vevetjs.com/docs/Snap/basic-demos#easing)**
 
 ```
 const snap = new Snap({
@@ -39432,7 +39432,7 @@ snap.updateProps({
 
 * Note that this property does not change real slide sizes. It is used for virtual slides & custom logic.
   <br />
-  **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#virtual)**
+  **See [demo](https://vevetjs.com/docs/Snap/basic-demos#virtual)**
 
 ```
 const snap = new Snap({
@@ -39496,7 +39496,7 @@ snap.updateProps({
 * **Default:** `false`
 * Users will see the "grab" cursor when hovering and "grabbing" when swiping.
   <br />
-  **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#grab-cursor)**
+  **See [demo](https://vevetjs.com/docs/Snap/basic-demos#grab-cursor)**
 
 ```
 const snap = new Snap({
@@ -39522,7 +39522,7 @@ snap.updateProps({
 
 * **Type:** `number`
 * **Default:** `1`
-* Speed factor for swipe movements. **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#reverse-swipe)**
+* Speed factor for swipe movements. **See [demo](https://vevetjs.com/docs/Snap/basic-demos#reverse-swipe)**
 
 ```
 const snap = new Snap({
@@ -39584,7 +39584,7 @@ snap.updateProps({
 * **Default:** `false`
 * If `false`, the carousel will be animated only when you release your finger; it will not move while you hold your finger on it.
   <br />
-  **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#swipe-no-follow)**
+  **See [demo](https://vevetjs.com/docs/Snap/basic-demos#swipe-no-follow)**
 
 ```
 const snap = new Snap({
@@ -39693,7 +39693,7 @@ snap.updateProps({
 * **Default:** `false`
 * Defines if `friction` is allowed when swiping. Doesn't work with short swipes or when `followSwipe` is `false`.
   <br />
-  **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#friction)**
+  **See [demo](https://vevetjs.com/docs/Snap/basic-demos#friction)**
 
 ```
 const snap = new Snap({
@@ -39805,7 +39805,7 @@ snap.updateProps({
 * **Default:** `false`
 * Enable or disable mouse wheel control.
   <br />
-  **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#wheel)**
+  **See [demo](https://vevetjs.com/docs/Snap/basic-demos#wheel)**
 
 ```
 const snap = new Snap({
@@ -39859,7 +39859,7 @@ snap.updateProps({
 * **Default:** `'auto'`
 * Wheel axis. If `auto`, the axis will be automatically detected depending on **[direction](#props.direction)**.
   <br />
-  **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#wheel)**
+  **See [demo](https://vevetjs.com/docs/Snap/basic-demos#wheel)**
 
 ```
 const snap = new Snap({
@@ -39887,7 +39887,7 @@ snap.updateProps({
 * **Default:** `true`
 * If `false`, disables smooth, continuous scrolling behavior from the mouse wheel and instead updates the snap position in discrete steps (like pagination).
   <br />
-  **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#throttled-wheel)**
+  **See [demo](https://vevetjs.com/docs/Snap/basic-demos#throttled-wheel)**
 
 ```
 const snap = new Snap({
@@ -39941,7 +39941,7 @@ snap.updateProps({
 * **Default:** `true`
 * Enable snapping when wheel stop. Works with **[followWheel](#props.followWheel)** enabled.
   <br />
-  **See [demo](https://vevetjs.com/docs/Snap/basic-demos.md#free-wheel)**
+  **See [demo](https://vevetjs.com/docs/Snap/basic-demos#free-wheel)**
 
 ```
 const snap = new Snap({
@@ -40346,7 +40346,7 @@ carousel.on("update", () => {
 ### `magnets`[​](#magnets "Direct link to magnets")
 
 * **Type:** `number[]`
-* Magnetic snap points for the slide in track coordinates. Positions depend on the Snap [`origin`](https://vevetjs.com/docs/Snap/props.md#props.origin) mode (`'start'`, `'center'`, or `'end'`).
+* Magnetic snap points for the slide in track coordinates. Positions depend on the Snap [`origin`](https://vevetjs.com/docs/Snap/props#props.origin) mode (`'start'`, `'center'`, or `'end'`).
 
 ### `progress`[​](#progress "Direct link to progress")
 
@@ -40630,7 +40630,7 @@ document.getElementById("animate").onclick = function() {
 
 ## More demos[​](#more-demos "Direct link to More demos")
 
-To explore more demos, click [here](https://vevetjs.com/docs/SplitText/demos.md).
+To explore more demos, click [here](https://vevetjs.com/docs/SplitText/demos).
 
 ## Performance[​](#performance "Direct link to Performance")
 
@@ -40753,7 +40753,7 @@ text.destroy();
 
 note
 
-All **[Module accessors](https://vevetjs.com/docs/base/Module/.md#accessors)** are available in this class.
+All **[Module accessors](https://vevetjs.com/docs/base/Module/#accessors)** are available in this class.
 
 ### `letters`[​](#letters "Direct link to letters")
 
@@ -40884,7 +40884,7 @@ interface ISplitTextWordMeta {
 
 note
 
-All **[Module callbacks](https://vevetjs.com/docs/base/Module/.md#callbacks)** are available in this class.
+All **[Module callbacks](https://vevetjs.com/docs/base/Module/#callbacks)** are available in this class.
 
 ### `beforeSplit`[​](#beforesplit "Direct link to beforesplit")
 
@@ -43248,7 +43248,7 @@ const splitText = new SplitText({
 
 note
 
-All **[Module methods](https://vevetjs.com/docs/base/Module/.md#methods)** are available in this class.
+All **[Module methods](https://vevetjs.com/docs/base/Module/#methods)** are available in this class.
 
 ### `split`[​](#split "Direct link to split")
 
@@ -43333,7 +43333,7 @@ const text = new SplitText({
 * **Type:** `boolean`
 * **Default:** `false`
 * Whether to split the text into individual letters.
-* **See [demo](https://vevetjs.com/docs/SplitText/demos.md#animated-letters)**
+* **See [demo](https://vevetjs.com/docs/SplitText/demos#animated-letters)**
 
 ```
 const text = new SplitText({
@@ -43348,7 +43348,7 @@ const text = new SplitText({
 * **Type:** `boolean`
 * **Default:** `false`
 * Whether to split the text into lines.
-* **See [demo](https://vevetjs.com/docs/SplitText/demos.md#animated-lines)**
+* **See [demo](https://vevetjs.com/docs/SplitText/demos#animated-lines)**
 
 ```
 const text = new SplitText({
@@ -43363,7 +43363,7 @@ const text = new SplitText({
 * **Type:** `boolean`
 * **Default:** `false`
 * Whether to wrap each line in an additional container.
-* **See [demo](https://vevetjs.com/docs/SplitText/demos.md#reveal-lines)**
+* **See [demo](https://vevetjs.com/docs/SplitText/demos#reveal-lines)**
 
 ```
 const text = new SplitText({
@@ -43490,7 +43490,7 @@ const text = new SplitText({
 * **Type:** `string | HTMLElement[] | ((element: HTMLElement) => boolean) | null`
 * **Default:** `null`
 * Elements or selectors to exclude from splitting. Can be a CSS selector string, an array of HTMLElements, or a function that returns a boolean.
-* **See [demo](https://vevetjs.com/docs/SplitText/demos.md#ignore-selectors)**
+* **See [demo](https://vevetjs.com/docs/SplitText/demos#ignore-selectors)**
 
 ```
 const text = new SplitText({
@@ -43505,7 +43505,7 @@ const text = new SplitText({
 * **Type:** `(text: string) => string`
 * **Default:** `(text) => text`
 * Optional callback to preprocess text before it is split into words. This function receives the original text and should return the modified text. It is useful for languages like Chinese where standard word splitting may not work correctly.
-* **See [demo](https://vevetjs.com/docs/SplitText/demos.md#chinese)**
+* **See [demo](https://vevetjs.com/docs/SplitText/demos#chinese)**
 
 ```
 const segmenter = new Intl.Segmenter('zh', { granularity: 'word' });
@@ -43528,7 +43528,7 @@ const text = new SplitText({
 * **Type:** `string`
 * **Default:** `(whitespace)`
 * Specifies a custom delimiter used to split text into words. By default, splitting occurs on regular whitespace.
-* **See [demo](https://vevetjs.com/docs/SplitText/demos.md#word-delimiter)**
+* **See [demo](https://vevetjs.com/docs/SplitText/demos#word-delimiter)**
 
 ```
 const text = new SplitText({
@@ -43543,7 +43543,7 @@ const text = new SplitText({
 * **Type:** `string | null`
 * **Default:** `null`
 * Provides an alternative delimiter to use when outputting the split words. Useful when a custom input delimiter is used but the output should differ.
-* **See [demo](https://vevetjs.com/docs/SplitText/demos.md#word-delimiter)**
+* **See [demo](https://vevetjs.com/docs/SplitText/demos#word-delimiter)**
 
 ```
 const text = new SplitText({
@@ -43564,13 +43564,13 @@ Manages swipe interactions:
 * Emits events on start, move, and end
 * Supports RAF-based release inertia with optional bounds bounce
 * Optional movement `bounds`, rubber-band `overflow`, and `snap` targets
-* Optional programmatic [`scale`](https://vevetjs.com/docs/Swipe/accessors.md#scale) with zoom-to-point via [`setScale`](https://vevetjs.com/docs/Swipe/methods.md#setScale)
+* Optional programmatic [`scale`](https://vevetjs.com/docs/Swipe/accessors#scale) with zoom-to-point via [`setScale`](https://vevetjs.com/docs/Swipe/methods#setScale)
 * Calculates rotation (`angle` in degrees)
 * Does not apply transforms — only provides computed coordinates
 
 ## Coordinate spaces[​](#coordinate-spaces "Direct link to Coordinate spaces")
 
-Swipe exposes two related spaces in [`ISwipeCoords`](https://vevetjs.com/docs/Swipe/interfaces.md#iswipecoords):
+Swipe exposes two related spaces in [`ISwipeCoords`](https://vevetjs.com/docs/Swipe/interfaces#iswipecoords):
 
 | Space        | Fields                                              | Use for                                                   |
 | ------------ | --------------------------------------------------- | --------------------------------------------------------- |
@@ -43579,7 +43579,7 @@ Swipe exposes two related spaces in [`ISwipeCoords`](https://vevetjs.com/docs/Sw
 
 `movement` and `scale` are accumulated for the instance lifetime (not reset on each swipe). Per-gesture offsets live in `diff` and `step`.
 
-With [`pointers`](https://vevetjs.com/docs/Swipe/props.md#props.pointers) `> 1`, pointer-space coordinates follow the **center** between active pointers (via internal [`Pointers.move`](https://vevetjs.com/docs/Pointers/accessors.md#move)), not the first touch only.
+With [`pointers`](https://vevetjs.com/docs/Swipe/props#props.pointers) `> 1`, pointer-space coordinates follow the **center** between active pointers (via internal [`Pointers.move`](https://vevetjs.com/docs/Pointers/accessors#move)), not the first touch only.
 
 ## Basic Demo[​](#basic-demo "Direct link to Basic Demo")
 
@@ -43927,7 +43927,7 @@ new Swipe({
 
 ## More demos[​](#more-demos "Direct link to More demos")
 
-To explore more demos, click [here](https://vevetjs.com/docs/Swipe/demos.md).
+To explore more demos, click [here](https://vevetjs.com/docs/Swipe/demos).
 
 ## Initialization[​](#initialization "Direct link to Initialization")
 
@@ -44119,7 +44119,7 @@ addEventListener(thumb, 'dblclick', (event) => {
 });
 ```
 
-Two-finger pan (touch) + pinch zoom via a separate [`Pointers`](https://vevetjs.com/docs/Pointers/.md) instance:
+Two-finger pan (touch) + pinch zoom via a separate [`Pointers`](https://vevetjs.com/docs/Pointers/) instance:
 
 ```
 import { clamp, Pointers, Swipe } from 'vevet';
@@ -44209,7 +44209,7 @@ const pinch = new Pointers({
 
 Coordinate space for pinch origin
 
-Use a separate [`Pointers`](https://vevetjs.com/docs/Pointers/.md) instance with `relative: false` and pass `move.center` to [`setScale`](https://vevetjs.com/docs/Swipe/methods.md#setscale). Coordinates are client-based; Swipe converts them to container space when [`relative`](https://vevetjs.com/docs/Swipe/props.md#props.relative) is `true`.
+Use a separate [`Pointers`](https://vevetjs.com/docs/Pointers/) instance with `relative: false` and pass `move.center` to [`setScale`](https://vevetjs.com/docs/Swipe/methods#setscale). Coordinates are client-based; Swipe converts them to container space when [`relative`](https://vevetjs.com/docs/Swipe/props#props.relative) is `true`.
 
 Detect direction:
 
@@ -44246,11 +44246,11 @@ swipe.destroy();
 
 note
 
-All **[Module accessors](https://vevetjs.com/docs/base/Module/.md#accessors)** are available in this class.
+All **[Module accessors](https://vevetjs.com/docs/base/Module/#accessors)** are available in this class.
 
 ### `coords`[​](#coords "Direct link to coords")
 
-Type: **[ISwipeCoords](https://vevetjs.com/docs/Swipe/interfaces.md#iswipecoords)**
+Type: **[ISwipeCoords](https://vevetjs.com/docs/Swipe/interfaces#iswipecoords)**
 
 Full snapshot: pointer fields plus movement-space fields (`movement`, `prevMovement`, `scale`).
 
@@ -44282,7 +44282,7 @@ instance.container;
 
 ### `movement`[​](#movement "Direct link to movement")
 
-Type: **[ISwipeVec3](https://vevetjs.com/docs/Swipe/interfaces.md#iswipevec3)**
+Type: **[ISwipeVec3](https://vevetjs.com/docs/Swipe/interfaces#iswipevec3)**
 
 Total displacement in **movement space** (rubber + snap). Use for transforms when `bounds` / `snap` are enabled.
 
@@ -44308,7 +44308,7 @@ instance.movement.x;
 
 Type: `number`
 
-Current scale modifier in movement space. Default is `1`. Updated by [`setScale`](https://vevetjs.com/docs/Swipe/methods.md#setscale). Included in [`ISwipeCoords`](https://vevetjs.com/docs/Swipe/interfaces.md#iswipecoords) on callbacks.
+Current scale modifier in movement space. Default is `1`. Updated by [`setScale`](https://vevetjs.com/docs/Swipe/methods#setscale). Included in [`ISwipeCoords`](https://vevetjs.com/docs/Swipe/interfaces#iswipecoords) on callbacks.
 
 ```
 const instance = new Swipe({
@@ -44328,7 +44328,7 @@ instance.scale;
 
 ### `start`[​](#start "Direct link to start")
 
-Type: **[ISwipeState](https://vevetjs.com/docs/Swipe/interfaces.md#iswipestate)**
+Type: **[ISwipeState](https://vevetjs.com/docs/Swipe/interfaces#iswipestate)**
 
 Pointer position at swipe start.
 
@@ -44340,7 +44340,7 @@ instance.start.time;
 
 ### `prev`[​](#prev "Direct link to prev")
 
-Type: **[ISwipeState](https://vevetjs.com/docs/Swipe/interfaces.md#iswipestate)**
+Type: **[ISwipeState](https://vevetjs.com/docs/Swipe/interfaces#iswipestate)**
 
 Previous pointer position.
 
@@ -44350,7 +44350,7 @@ instance.prev.x;
 
 ### `current`[​](#current "Direct link to current")
 
-Type: **[ISwipeState](https://vevetjs.com/docs/Swipe/interfaces.md#iswipestate)**
+Type: **[ISwipeState](https://vevetjs.com/docs/Swipe/interfaces#iswipestate)**
 
 Current pointer position.
 
@@ -44362,7 +44362,7 @@ instance.current.angle;
 
 ### `diff`[​](#diff "Direct link to diff")
 
-Type: **[ISwipeState](https://vevetjs.com/docs/Swipe/interfaces.md#iswipestate)**
+Type: **[ISwipeState](https://vevetjs.com/docs/Swipe/interfaces#iswipestate)**
 
 Offset from swipe start to current pointer position (pointer space).
 
@@ -44374,7 +44374,7 @@ instance.diff.angle;
 
 ### `step`[​](#step "Direct link to step")
 
-Type: **[ISwipeState](https://vevetjs.com/docs/Swipe/interfaces.md#iswipestate)**
+Type: **[ISwipeState](https://vevetjs.com/docs/Swipe/interfaces#iswipestate)**
 
 Offset from previous to current pointer position.
 
@@ -44384,7 +44384,7 @@ instance.step.x;
 
 ### `accum`[​](#accum "Direct link to accum")
 
-Type: **[ISwipeVec3](https://vevetjs.com/docs/Swipe/interfaces.md#iswipevec3)**
+Type: **[ISwipeVec3](https://vevetjs.com/docs/Swipe/interfaces#iswipevec3)**
 
 Absolute path length since swipe start (`|step|` per axis).
 
@@ -44433,11 +44433,11 @@ instance.isSwiping;
 
 note
 
-All **[Module callbacks](https://vevetjs.com/docs/base/Module/.md#callbacks)** are available in this class.
+All **[Module callbacks](https://vevetjs.com/docs/base/Module/#callbacks)** are available in this class.
 
 ### `start`[​](#start "Direct link to start")
 
-Swipe start event. See [ISwipeCoords](https://vevetjs.com/docs/Swipe/interfaces.md#iswipecoords).
+Swipe start event. See [ISwipeCoords](https://vevetjs.com/docs/Swipe/interfaces#iswipecoords).
 
 ```
 const observer = new Swipe({
@@ -44463,7 +44463,7 @@ destruct();
 
 ### `move`[​](#move "Direct link to move")
 
-Swipe move event. Payload: [ISwipeCoords](https://vevetjs.com/docs/Swipe/interfaces.md#iswipecoords) (includes `movement`, `scale`, and `prevMovement` for bounded / snapped / zoomed transforms).
+Swipe move event. Payload: [ISwipeCoords](https://vevetjs.com/docs/Swipe/interfaces#iswipecoords) (includes `movement`, `scale`, and `prevMovement` for bounded / snapped / zoomed transforms).
 
 ```
 const observer = new Swipe({
@@ -44493,7 +44493,7 @@ destruct();
 
 ### `end`[​](#end "Direct link to end")
 
-Swipe end event. See [ISwipeCoords](https://vevetjs.com/docs/Swipe/interfaces.md#iswipecoords).
+Swipe end event. See [ISwipeCoords](https://vevetjs.com/docs/Swipe/interfaces#iswipecoords).
 
 ```
 const observer = new Swipe({
@@ -47202,7 +47202,7 @@ interface ISwipeCoords {
 
 ## ISwipeCanMoveArg[​](#iswipecanmovearg "Direct link to ISwipeCanMoveArg")
 
-Arguments for [`willAbort`](https://vevetjs.com/docs/Swipe/props.md#props.willAbort).
+Arguments for [`willAbort`](https://vevetjs.com/docs/Swipe/props#props.willAbort).
 
 ```
 interface ISwipeCanMoveArg {
@@ -47233,11 +47233,11 @@ interface ISwipeCanMoveArg {
 
 note
 
-All **[Module methods](https://vevetjs.com/docs/base/Module/.md#methods)** are available in this class.
+All **[Module methods](https://vevetjs.com/docs/base/Module/#methods)** are available in this class.
 
 ### `calculateBounds`[​](#calculatebounds "Direct link to calculatebounds")
 
-Re-reads [`bounds`](https://vevetjs.com/docs/Swipe/props.md#props.bounds) and caches normalized `[min, max]` per axis. Called automatically on every move update; call manually when layout changes outside a gesture (for example after resize).
+Re-reads [`bounds`](https://vevetjs.com/docs/Swipe/props#props.bounds) and caches normalized `[min, max]` per axis. Called automatically on every move update; call manually when layout changes outside a gesture (for example after resize).
 
 ```
 const swipe = new Swipe({
@@ -47262,7 +47262,7 @@ swipe.calculateBounds();
 Sets programmatic scale in movement space. Optionally zooms toward an **origin** point, re-reads bounds, emits `move`, and clamps overflow via [`releaseBounce(0)`](#releasebounce) when inertia is not running.
 
 * **`value`:** next scale.
-* **`origin`:** `MouseEvent`, `TouchEvent`, or `{ x, y }` in **client (viewport) coordinates** — decoded with the same rules as [`relative`](https://vevetjs.com/docs/Swipe/props.md#props.relative). Pass a wheel or click event for zoom-to-cursor behavior.
+* **`origin`:** `MouseEvent`, `TouchEvent`, or `{ x, y }` in **client (viewport) coordinates** — decoded with the same rules as [`relative`](https://vevetjs.com/docs/Swipe/props#props.relative). Pass a wheel or click event for zoom-to-cursor behavior.
 
 ```
 import { clamp } from 'vevet';
@@ -47368,7 +47368,7 @@ swipe.cancelBounce();
 
 ### `releaseBounce`[​](#releasebounce "Direct link to releasebounce")
 
-Starts overflow bounce-back when movement exceeds [`bounds`](https://vevetjs.com/docs/Swipe/props.md#props.bounds) and [`canBounce`](https://vevetjs.com/docs/Swipe/props.md#props.canBounce) allows it. Called automatically on swipe release when inertia does not run.
+Starts overflow bounce-back when movement exceeds [`bounds`](https://vevetjs.com/docs/Swipe/props#props.bounds) and [`canBounce`](https://vevetjs.com/docs/Swipe/props#props.canBounce) allows it. Called automatically on swipe release when inertia does not run.
 
 Pass `0` as `targetDuration` for an instant clamp (used internally by [`setScale`](#setscale) and [`setMovement`](#setmovement)).
 
@@ -47394,7 +47394,7 @@ swipe.calculateBounds();
 swipe.releaseBounce(0);
 ```
 
-Animated bounce on release (default [`bounceDuration`](https://vevetjs.com/docs/Swipe/props.md#props.bounceduration)):
+Animated bounce on release (default [`bounceDuration`](https://vevetjs.com/docs/Swipe/props#props.bounceduration)):
 
 ```
 swipe.releaseBounce();
@@ -47448,7 +47448,7 @@ const observer = new Swipe({
   <br />
   <!-- -->
   Movement is still calculated relative to the container — `thumb` only defines where a user can grab.
-* **See [demo](https://vevetjs.com/docs/Swipe/demos.md#lever-rotation)**
+* **See [demo](https://vevetjs.com/docs/Swipe/demos#lever-rotation)**
 
 ```
 const observer = new Swipe({
@@ -47478,9 +47478,9 @@ const observer = new Swipe({
 
 * See [MouseEvent.button](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button).
 
-* **See [demo](https://vevetjs.com/docs/Swipe/demos.md#right-click-drag)**
+* **See [demo](https://vevetjs.com/docs/Swipe/demos#right-click-drag)**
 
-Same shape as [`Pointers` `buttons`](https://vevetjs.com/docs/Pointers/props.md#props.buttons).
+Same shape as [`Pointers` `buttons`](https://vevetjs.com/docs/Pointers/props#props.buttons).
 
 ```
 const observer = new Swipe({
@@ -47516,9 +47516,9 @@ const swipe = new Swipe({
 
 * Required pointer count to activate swiping.<br /><!-- -->Useful for touch gestures such as two-finger pan.<br /><!-- -->If fewer pointers are present, swipe will not start.
 
-  Same shape as [`Pointers` `minPointers`](https://vevetjs.com/docs/Pointers/props.md#props.minPointers).<br /><!-- -->Swipe sets both `minPointers` and `maxPointers` on its internal [`Pointers`](https://vevetjs.com/docs/Pointers/.md) instance to this value.
+  Same shape as [`Pointers` `minPointers`](https://vevetjs.com/docs/Pointers/props#props.minPointers).<br /><!-- -->Swipe sets both `minPointers` and `maxPointers` on its internal [`Pointers`](https://vevetjs.com/docs/Pointers/) instance to this value.
 
-  During move, Swipe tracks the **center** between active pointers (from [`Pointers.move`](https://vevetjs.com/docs/Pointers/accessors.md#move)), not the first touch only.
+  During move, Swipe tracks the **center** between active pointers (from [`Pointers.move`](https://vevetjs.com/docs/Pointers/accessors#move)), not the first touch only.
 
 ```
 const observer = new Swipe({
@@ -47548,7 +47548,7 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 
 Adaptive props
 
-To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/.md#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
+To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
 
 ### `enabled`[​](#props.enabled "Direct link to props.enabled")
 
@@ -47581,7 +47581,7 @@ observer.updateProps({
 * **Type:** `boolean`
 * **Default:** `false`
 * Calculates coordinates relative to the container rather than the page.
-* **See [demo](https://vevetjs.com/docs/Swipe/demos.md#rotation-swipe)**
+* **See [demo](https://vevetjs.com/docs/Swipe/demos#rotation-swipe)**
 
 ```
 const observer = new Swipe({
@@ -47608,7 +47608,7 @@ observer.updateProps({
 * **Type:** `null | 'x' | 'y'`
 * **Default:** `null`
 * Primary swiping axis.
-* **See [demo](https://vevetjs.com/docs/Swipe/demos.md#basic-demo)**
+* **See [demo](https://vevetjs.com/docs/Swipe/demos#basic-demo)**
 
 ```
 const observer = new Swipe({
@@ -47943,9 +47943,9 @@ const swipe = new Swipe({
 * **Type:** `null | ((coords: ISwipeCoords) => ISwipeAxes | null)`
 * **Default:** `null`
 * Movement limits per axis. Unset axis is unbounded. Values are normalized to `[min, max]`.
-* The callback receives the full [`ISwipeCoords`](https://vevetjs.com/docs/Swipe/interfaces.md#iswipecoords) snapshot — use `coords.scale`, `coords.movement`, etc. when limits depend on zoom or layout.
-* Limits are re-read on every move update (including after [`setScale`](https://vevetjs.com/docs/Swipe/methods.md#setscale)).
-* Use [`movement`](https://vevetjs.com/docs/Swipe/accessors.md#movement) and [`scale`](https://vevetjs.com/docs/Swipe/accessors.md#scale) in callbacks for transforms.
+* The callback receives the full [`ISwipeCoords`](https://vevetjs.com/docs/Swipe/interfaces#iswipecoords) snapshot — use `coords.scale`, `coords.movement`, etc. when limits depend on zoom or layout.
+* Limits are re-read on every move update (including after [`setScale`](https://vevetjs.com/docs/Swipe/methods#setscale)).
+* Use [`movement`](https://vevetjs.com/docs/Swipe/accessors#movement) and [`scale`](https://vevetjs.com/docs/Swipe/accessors#scale) in callbacks for transforms.
 
 ```
 const swipe = new Swipe({
@@ -48000,7 +48000,7 @@ const swipe = new Swipe({
 * When `true`, [`bounds`](#props.bounds) are re-read on every move update while release inertia is active.
   <br />
   <!-- -->
-  Set to `false` when bounds are static during inertia (for example in [`Snap`](https://vevetjs.com/docs/Snap/.md)) to avoid extra layout work.
+  Set to `false` when bounds are static during inertia (for example in [`Snap`](https://vevetjs.com/docs/Snap/)) to avoid extra layout work.
 
 ```
 const swipe = new Swipe({
@@ -48085,7 +48085,7 @@ const swipe = new Swipe({
 * **Type:** `boolean`
 * **Default:** `false`
 * Enables RAF-based release inertia after swipe end.
-* **See [demo](https://vevetjs.com/docs/Swipe/demos.md#drag-inertia)**
+* **See [demo](https://vevetjs.com/docs/Swipe/demos#drag-inertia)**
 
 ```
 const swipe = new Swipe({
@@ -48195,7 +48195,7 @@ const swipe = new Swipe({
 
 ### `maxVelocity`[​](#props.maxVelocity "Direct link to props.maxVelocity")
 
-* **Type:** [`ISwipeVec3`](https://vevetjs.com/docs/Swipe/interfaces.md#iswipevec3)
+* **Type:** [`ISwipeVec3`](https://vevetjs.com/docs/Swipe/interfaces#iswipevec3)
 * **Default:** `{ x: 7, y: 7, angle: 3 }`
 * Max release velocity per axis (coord/ms for x/y, deg/ms for `angle`).
   <br />
@@ -48555,7 +48555,7 @@ tm.destroy();
 
 note
 
-All **[Module accessors](https://vevetjs.com/docs/base/Module/.md#accessors)** are available in this class.
+All **[Module accessors](https://vevetjs.com/docs/base/Module/#accessors)** are available in this class.
 
 ### `duration`[​](#duration "Direct link to duration")
 
@@ -48660,7 +48660,7 @@ tm.progress = 0.5;
 
 note
 
-All **[Module callbacks](https://vevetjs.com/docs/base/Module/.md#callbacks)** are available in this class.
+All **[Module callbacks](https://vevetjs.com/docs/base/Module/#callbacks)** are available in this class.
 
 ### `start`[​](#start "Direct link to start")
 
@@ -48763,7 +48763,7 @@ destruct();
 
 note
 
-All **[Module methods](https://vevetjs.com/docs/base/Module/.md#methods)** are available in this class.
+All **[Module methods](https://vevetjs.com/docs/base/Module/#methods)** are available in this class.
 
 ### `pause`[​](#pause "Direct link to pause")
 
@@ -48848,7 +48848,7 @@ Mutable properties can be updated at runtime using `.updateProps()`.
 
 Adaptive props
 
-To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/.md#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
+To apply different values by viewport or device, use **[Responsive](https://vevetjs.com/docs/base/Responsive/#example-with-module)** with this component as the source. Props will update automatically when breakpoints change.
 
 ### `duration`[​](#props.duration "Direct link to props.duration")
 
@@ -48877,7 +48877,7 @@ tm.updateProps({
 ### `easing`[​](#props.easing "Direct link to props.easing")
 
 * **Type:** `TEasingType`
-* **Default:** `inherited from core settings` - [see settings](https://vevetjs.com/docs/core/customization.md#modifying-settings).
+* **Default:** `inherited from core settings` - [see settings](https://vevetjs.com/docs/core/customization#modifying-settings).
 * Easing function for timeline progression.
   <br />
   <!-- -->
@@ -48887,7 +48887,7 @@ tm.updateProps({
   Use `false` for linear progress.
   <br />
   <!-- -->
-  See [easing types](https://vevetjs.com/docs/utils/.md#easing-types) for more information.
+  See [easing types](https://vevetjs.com/docs/utils/#easing-types) for more information.
 
 ```
 const tm = new Timeline({
@@ -49163,7 +49163,7 @@ document.addEventListener('wheel', (event) => {
 
 Adds resize listeners to elements (using `ResizeObserver`) and/or the viewport.
 
-Check [`viewport`](https://vevetjs.com/docs/core/features.md#viewport) to understand `viewportTarget` in detail.
+Check [`viewport`](https://vevetjs.com/docs/core/features#viewport) to understand `viewportTarget` in detail.
 
 ```
 const resizeWithElement = onResize({
