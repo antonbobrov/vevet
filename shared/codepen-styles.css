@@ -59,3 +59,8 @@ body {
 .btn:hover {
   background-position: right center;
 }
+
+img {
+  display: block;
+  background-color: #000;
+}
