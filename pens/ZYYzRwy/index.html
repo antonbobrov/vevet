@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · ZYYzRwy</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 30px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 100vh;
+
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+  color: #fff;
+
+  font-family: "Ubuntu", sans-serif;
+}
+
+#quote {
+  font-size: 24px;
+  max-width: 20em;
+  text-align: center;
+  line-height: 1.2;
+  font-kerning: none;
+
+  perspective: 400px;
+
+  opacity: 0;
+}
+
+.button {
+  margin-top: 32px;
+  height: 48px;
+  padding: 0 32px;
+  border: 0;
+  cursor: pointer;
+
+  background: linear-gradient(135deg,
+      rgb(13, 110, 253) 0%,
+      rgb(140, 122, 230) 50%,
+      rgb(0, 201, 177) 100%);
+  background-size: 200% auto;
+  box-shadow: 0 4px 20px rgba(13, 110, 253, 0.1);
+  border-radius: 50vw;
+
+  font: inherit;
+  font-size: 24px;
+  color: currentColor;
+
+  transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.button:hover {
+  background-position: right center;
+}</style>
+      </head>
+      <body>
+        <div id="quote">
+  SplitText supports multiple <br><br>
+  <b style="color: #ff8709">newlines</b>,<br><br>
+  <b style="color: #00bae2">non-breaking&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;spaces,</b> <b style="color: #f100cb">nested tags</b> like&nbsp;&lt;span&gt;,
+  &lt;strong&gt;, and handles&nbsp;emojis&nbsp;🥰
+</div>
+
+<button type="button" id="animate" class="button">Animate</button>
+        
+  <script type="module">
+import {
+  SplitText
+} from "https://esm.sh/vevet@5";
+import gsap from "https://esm.sh/gsap@3";
+
+const tl = gsap.timeline();
+const container = document.getElementById("quote");
+
+const splitText = new SplitText({
+  container,
+  letters: true,
+  onSplit: (data, {
+    letters
+  }) => {
+    container.style.opacity = "1";
+
+    tl.from(letters, {
+      duration: 0.8,
+      opacity: 0,
+      scale: 0,
+      y: 80,
+      rotationX: 180,
+      transformOrigin: "0% 50% -50",
+      ease: "back",
+      stagger: 0.01
+    });
+
+  }
+});
+
+document.getElementById("animate").onclick = function() {
+  tl.restart();
+};
+
+  </script>
+      </body>
+    </html>
+  

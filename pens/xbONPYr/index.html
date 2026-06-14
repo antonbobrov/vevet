@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · xbONPYr</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 0 10px;
+
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+  color: #fff;
+
+  font-family: "Ubuntu", sans-serif;
+  font-size: 30px;
+}
+
+.dot-cursor {
+  background: linear-gradient(35deg,
+      rgb(255, 127, 135) 0%,
+      rgb(244, 214, 157) 100%);
+  border-radius: 50%;
+}
+
+h1 {
+  margin: 30px 0;
+  font-size: 40px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.hover {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+}
+
+.hover-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.1);
+}</style>
+      </head>
+      <body>
+        <div class="container">
+  <h1>Sticky Ghost</h1>
+
+  <div class="hover">
+    <div class="hover-bg"></div>
+    <div class="hover-bg"></div>
+    <div class="hover-bg"></div>
+    <div class="hover-bg"></div>
+    <div class="hover-bg"></div>
+  </div>
+</div>
+        
+  <script type="module">
+import {
+  Cursor
+} from "https://esm.sh/vevet@5";
+
+const dotCursor = new Cursor({
+  lerp: 0.25,
+  width: 10,
+  height: 10
+});
+
+dotCursor.inner.classList.add("dot-cursor");
+
+const bgs = document.querySelectorAll(".hover-bg");
+
+bgs.forEach((bg, index) => {
+  dotCursor.attachHover({
+    element: bg,
+    emitter: bg.parentElement,
+    width: 16,
+    height: 16,
+    sticky: true,
+    stickyFriction: 0.4 - index * 0.075
+  });
+
+});
+
+  </script>
+      </body>
+    </html>
+  

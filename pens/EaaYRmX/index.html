@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · EaaYRmX</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 0 30px;
+
+  background: rgb(30, 43, 82);
+  color: #fff;
+
+  font-family: "Ubuntu", sans-serif;
+  font-size: 30px;
+}
+
+h1 {
+  margin: 30px 0;
+  font-size: 50px;
+  font-weight: 600;
+}
+
+p {
+  margin: 0.5em 0;
+}
+
+.animate {
+  opacity: 0;
+}
+
+.fadeInUp {
+  animation: fade-in-up;
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.61, 1, 0.88, 1);
+  animation-fill-mode: both;
+}
+
+@keyframes fade-in-up {
+  from {
+    transform: translateY(3rem);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}</style>
+      </head>
+      <body>
+        <div class="container">
+  <h1 class="animate" data-in-view-class="fadeInUp">InView</h1>
+
+  <p class="animate" data-in-view-class="fadeInUp">
+    Lorem
+  </p>
+
+  <p class="animate" data-in-view-class="fadeInUp">
+    ipsum
+  </p>
+
+  <p class="animate" data-in-view-class="fadeInUp">
+    dolor
+  </p>
+
+  <p class="animate" data-in-view-class="fadeInUp">
+    sit
+  </p>
+
+  <p class="animate" data-in-view-class="fadeInUp">
+    amet
+  </p>
+
+  <p class="animate" data-in-view-class="fadeInUp">
+    consectetur
+  </p>
+
+  <p class="animate" data-in-view-class="fadeInUp">
+    adipiscing
+  </p>
+
+  <p class="animate" data-in-view-class="fadeInUp">
+    elit
+  </p>
+
+  <p class="animate" data-in-view-class="fadeInUp">
+    sed
+  </p>
+
+  <p class="animate" data-in-view-class="fadeInUp">do</p>
+
+  <p class="animate" data-in-view-class="fadeInUp">
+    eiusmod
+  </p>
+
+  <p class="animate" data-in-view-class="fadeInUp">
+    Lorem
+  </p>
+
+  <p class="animate" data-in-view-class="fadeInUp">
+    ipsum
+  </p>
+
+  <p class="animate" data-in-view-class="fadeInUp">
+    dolor
+  </p>
+
+  <p class="animate" data-in-view-class="fadeInUp">
+    sit
+  </p>
+
+  <p class="animate" data-in-view-class="fadeInUp">
+    amet
+  </p>
+
+  <p class="animate" data-in-view-class="fadeInUp">
+    consectetur
+  </p>
+
+  <p class="animate" data-in-view-class="fadeInUp">
+    adipiscing
+  </p>
+
+  <p class="animate" data-in-view-class="fadeInUp">
+    elit
+  </p>
+
+  <p class="animate" data-in-view-class="fadeInUp">
+    sed
+  </p>
+
+  <p class="animate" data-in-view-class="fadeInUp">do</p>
+
+  <p class="animate" data-in-view-class="fadeInUp">
+    eiusmod
+  </p>
+</div>
+        
+  <script type="module">
+import {
+  InView
+} from "https://esm.sh/vevet@5";
+
+const instance = new InView({
+  hasOut: false,
+  maxInitialDelay: 700
+});
+
+const elements = document.querySelectorAll("*[data-in-view-class]");
+elements.forEach(element => {
+  instance.addElement(element);
+});
+
+  </script>
+      </body>
+    </html>
+  

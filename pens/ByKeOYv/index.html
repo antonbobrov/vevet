@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · ByKeOYv</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 0 10px;
+
+  background: rgb(30, 43, 82);
+  color: #fff;
+
+  font-family: "Ubuntu", sans-serif;
+  font-size: 30px;
+}
+
+.v-cursor__inner {
+  background-color: transparent !important;
+}
+
+[data-cursor="default"] {
+  width: var(--cursor-w);
+  height: var(--cursor-h);
+  border-radius: 50vw;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  box-sizing: border-box;
+}
+
+[data-cursor="play"] {
+  width: var(--cursor-w);
+  height: var(--cursor-h);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(35deg,
+      rgb(255, 127, 135) 0%,
+      rgb(244, 214, 157) 100%);
+  color: #000;
+
+  svg {
+    width: 30%;
+    transform: translate(5%, 0);
+  }
+}
+
+h1 {
+  margin: 30px 0;
+  font-size: 40px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+
+  .grid {
+    width: 600px;
+    max-width: 100%;
+  }
+}
+
+.grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  border-radius: 10px;
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.1);
+
+  transition: color 1s, background-color 1s;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+}</style>
+      </head>
+      <body>
+        <div class="container">
+  <h1>Custom Typed Cursor</h1>
+
+  <div class="grid">
+    <div class="item" data-cursor-type="play">Play</div>
+
+    <div class="item">No Type</div>
+  </div>
+</div>
+
+
+
+<div class="cursor" data-cursor="default"></div>
+
+<div class="cursor" data-cursor="play">
+  <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20.4086 9.35258C22.5305 10.5065 22.5305 13.4935 20.4086 14.6474L7.59662 21.6145C5.53435 22.736 3 21.2763 3 18.9671L3 5.0329C3 2.72368 5.53435 1.26402 7.59661 2.38548L20.4086 9.35258Z" stroke="currentColor" stroke-width="1.5"></path>
+  </svg>
+</div>
+        
+  <script type="module">
+import {
+  Cursor
+} from "https://esm.sh/vevet@5";
+
+const cursor = new Cursor({
+  lerp: 0.2
+});
+
+cursor.attachHover({
+  element: document.body,
+  type: "default"
+});
+
+const defaultCursor = document.querySelector("[data-cursor='default']");
+cursor.attachCursor({
+  element: defaultCursor,
+  type: "default"
+});
+
+const playCursor = document.querySelector("[data-cursor='play']");
+cursor.attachCursor({
+  element: playCursor,
+  type: "play"
+});
+
+const playHover = document.querySelector("[data-cursor-type='play']");
+cursor.attachHover({
+  element: playHover,
+  type: "play",
+  width: 100,
+  height: 100
+});
+
+  </script>
+      </body>
+    </html>
+  

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · emzOLZP</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 0 10px;
+
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+  color: #fff;
+
+  font-family: "Ubuntu", sans-serif;
+  font-size: 30px;
+}
+
+.v-cursor__inner {
+  background: transparent;
+
+  .airplane-cursor {
+    display: block;
+  }
+}
+
+.airplane-cursor {
+  width: 100%;
+  height: 100%;
+  display: none;
+
+  svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    fill: transparent;
+    stroke: #fff;
+    stroke-width: 10px;
+  }
+}
+
+h1 {
+  margin: 30px 0;
+  font-size: 40px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}</style>
+      </head>
+      <body>
+        <div class="container">
+  <h1>Airplane Cursor</h1>
+</div>
+
+<div class="airplane-cursor" id="airplane-cursor">
+  <svg version="1.1" id="svg2" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" sodipodi:docname="plane.svg" inkscape:version="0.48.4 r9939" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800px" height="800px" viewBox="0 0 1200 1200" enable-background="new 0 0 1200 1200" xml:space="preserve">
+    <path id="path16765" inkscape:connector-curvature="0" d="M321,1164h120l269.28-480.06H1020c0,0,180,0,180-83.94c0-84-180-84-180-84
+	H710.28L441,36H321l149.28,480H255.06L120,395.94H0l96.06,204L0,804h120l135.06-120.06h215.22L321,1164z"></path>
+  </svg>
+</div>
+        
+  <script type="module">
+import {
+  Cursor
+} from "https://esm.sh/vevet@5";
+
+const cursor = new Cursor({
+  lerp: 0.25,
+  width: 80,
+  height: 80,
+  transformModifier: ({
+    x,
+    y,
+    angle,
+    velocity
+  }) => {
+    const scale = velocity * 0.2;
+    const scaleX = 1 + scale;
+    const scaleY = 1 - scale;
+
+    return `translate(${x}px, ${y}px) rotate(${angle}deg) scale(${scaleX}, ${scaleY})`;
+  }
+});
+
+cursor.attachCursor({
+  element: document.getElementById("airplane-cursor"),
+  type: "airplane"
+});
+
+cursor.attachHover({
+  element: document.body,
+  type: "airplane"
+});
+
+  </script>
+      </body>
+    </html>
+  

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · ZYWVMwj</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+}
+
+.container {
+  width: 200px;
+  height: 200px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+  background: linear-gradient(135deg,
+      rgb(13, 110, 253) 0%,
+      rgb(140, 122, 230) 50%,
+      rgb(0, 201, 177) 100%);
+
+  font-family: "Ubuntu", sans-serif;
+  font-size: 20px;
+  color: #fff;
+}</style>
+      </head>
+      <body>
+        <div id="container" class="container">
+  Swipe Me
+</div>
+        
+  <script type="module">
+import {
+  Swipe
+} from "https://esm.sh/vevet@5";
+
+new Swipe({
+  container: document.getElementById("container"),
+  onStart: (data, {
+    container
+  }) => {
+    container.innerHTML = "start";
+  },
+  onToLeft: (data, {
+    container
+  }) => {
+    container.innerHTML = "to left";
+  },
+  onToRight: (data, {
+    container
+  }) => {
+    container.innerHTML = "to right";
+  },
+  onToTop: (data, {
+    container
+  }) => {
+    container.innerHTML = "to top";
+  },
+  onToBottom: (data, {
+    container
+  }) => {
+    container.innerHTML = "to bottom";
+  }
+});
+
+  </script>
+      </body>
+    </html>
+  

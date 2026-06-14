@@ -30,7 +30,7 @@ src/
   utils/          # math (easing, clamp, lerp), DOM helpers, etc.
 docusaurus/       # documentation site (MDX + Docusaurus)
   docs/           # human-readable docs with live CodePen demos
-  data/           # demo-contents.json — HTML/CSS/JS snippets for demos
+  data/           # pens-contents.json — HTML/CSS/JS snippets for demos
 stories/          # Storybook examples
 lib/              # build output (ESM, CJS, types, CDN IIFE) — generated
 ```
@@ -40,7 +40,7 @@ lib/              # build output (ESM, CJS, types, CDN IIFE) — generated
 1. **Prefer official docs** over guessing. Fetch https://vevetjs.com/llms.txt for a curated index, or read `docusaurus/docs/` in this repo.
 2. **Each component** has pages: `index`, `props`, `methods`, `callbacks`, `accessors`, `demos` (not every component has every page).
 3. **All components extend `Module`** — they accept `(props, onCallbacks)`, support `updateProps()`, `on('event', fn)`, and `destroy()`. See `docusaurus/docs/base/Module/index.md`.
-4. **Working examples** are on `demos.md` pages (linked in llms.txt per component) and included in llms-full.txt as HTML/CSS/JS code blocks. Source data: `docusaurus/data/demo-contents.json` (internal, used by the docs site).
+4. **Working examples** are on `demos.md` pages (linked in llms.txt per component) and included in llms-full.txt as HTML/CSS/JS code blocks. Source data: `docusaurus/data/pens-contents.json` (internal, used by the docs site).
 5. **TypeScript API reference** is at https://vevetjs.com/v5/ (TypeDoc).
 
 ## Quick start (correct usage)

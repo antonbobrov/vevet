@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · yyOmYZq</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 100vh;
+  overflow: hidden;
+
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+  color: #fff;
+
+  font-family: "Ubuntu", sans-serif;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 50vw;
+  max-height: 50vh;
+
+  opacity: 0;
+  transition: opacity 0.25s linear;
+}
+
+.carousel.ready {
+  opacity: 1;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 20vw;
+  max-width: 50vh;
+}
+
+.slide .wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ececec;
+}
+
+.slide:nth-child(1) .wrap {
+  background: linear-gradient(35deg, #a33c45ff 0%, #d7888eff 100%);
+}
+
+.slide:nth-child(2) .wrap {
+  background: linear-gradient(35deg,
+      rgba(149, 112, 112, 1) 0%,
+      rgba(194, 167, 167, 1) 100%);
+}
+
+.slide:nth-child(3) .wrap {
+  background: linear-gradient(35deg, #e7a873 0%, #f7c6a4 100%);
+}
+
+.slide:nth-child(4) .wrap {
+  background: linear-gradient(35deg, #ff8b94 0%, #ffc9cd 100%);
+}
+
+.slide:nth-child(5) .wrap {
+  background: linear-gradient(35deg,
+      rgba(172, 162, 92, 1) 0%,
+      rgba(214, 208, 156, 1) 100%);
+}
+
+.slide:nth-child(6) .wrap {
+  background: linear-gradient(35deg, #654b4bff 0%, #9a7f7fff 100%);
+}
+
+.slide:nth-child(7) .wrap {
+  background: linear-gradient(35deg, #61783bff 0%, #95ab6aff 100%);
+}
+
+.slide:nth-child(8) .wrap {
+  background: linear-gradient(35deg, #9e6a48ff 0%, #cfa681ff 100%);
+}</style>
+      </head>
+      <body>
+        <div class="carousel" id="carousel">
+  <div class="slide">
+    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">1</div>
+  </div>
+
+  <div class="slide">
+    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">2</div>
+  </div>
+
+  <div class="slide">
+    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">3</div>
+  </div>
+
+  <div class="slide">
+    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">4</div>
+  </div>
+
+  <div class="slide">
+    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">5</div>
+  </div>
+
+  <div class="slide">
+    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">6</div>
+  </div>
+
+  <div class="slide">
+    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">7</div>
+  </div>
+
+  <div class="slide">
+    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">8</div>
+  </div>
+</div>
+        
+  <script type="module">
+import {
+  Snap
+} from "https://esm.sh/vevet@5";
+
+const container = document.getElementById("carousel");
+
+const carousel = new Snap({
+  container,
+  origin: "center",
+  loop: true,
+  gap: "1vw",
+  lerp: 0.2,
+  freemode: true,
+  shortSwipes: false,
+  grabCursor: true
+});
+
+container.classList.add("ready");
+
+carousel.on("update", () => {
+  carousel.slides.forEach(({
+    element,
+    coord,
+    isVisible
+  }) => {
+    element.style.transform = `translate(${coord}px, 0)`;
+  });
+});
+
+  </script>
+      </body>
+    </html>
+  

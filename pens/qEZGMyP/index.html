@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · qEZGMyP</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 0 10px;
+
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+  color: #fff;
+
+  font-family: "Ubuntu", sans-serif;
+  font-size: 30px;
+}
+
+.v-cursor__inner {
+  background-color: transparent !important;
+  border: 2px solid #fff;
+  border-radius: 4px;
+}
+
+h1 {
+  margin: 30px 0;
+  font-size: 40px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+
+  .grid {
+    width: 600px;
+    max-width: 100%;
+  }
+}
+
+.grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  border-radius: 10px;
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.1);
+
+  transition: color 1s, background-color 1s;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+}</style>
+      </head>
+      <body>
+        <div class="container">
+  <h1>Dynamic Cursor Size</h1>
+
+  <div class="grid">
+    <div class="item" data-small>Small</div>
+
+    <div class="item" data-has-padding>With Padding</div>
+
+    <div class="item" data-no-padding>No Padding</div>
+  </div>
+</div>
+        
+  <script type="module">
+import {
+  Cursor
+} from "https://esm.sh/vevet@5";
+
+const cursor = new Cursor();
+
+cursor.attachHover({
+  element: document.querySelector("[data-small]"),
+  width: 20,
+  height: 10
+});
+
+cursor.attachHover({
+  element: document.querySelector("[data-has-padding]"),
+  width: "auto",
+  height: "auto",
+  padding: 10
+});
+
+cursor.attachHover({
+  element: document.querySelector("[data-no-padding]"),
+  width: "auto",
+  height: "auto"
+});
+
+  </script>
+      </body>
+    </html>
+  

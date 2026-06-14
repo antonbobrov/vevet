@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · XJJrYeR</title>
+        <style>body {
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 100vh;
+
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+}
+
+#marquee {
+  img {
+    width: 300px !important;
+    min-width: 30vw;
+    height: auto;
+    display: block;
+    border-radius: 1rem;
+  }
+}</style>
+      </head>
+      <body>
+        <div id="marquee">
+  <img src="https://picsum.photos/id/199/300/200" width="300" height="200" alt="">
+  <img src="https://picsum.photos/id/201/300/200" width="300" height="200" alt="">
+  <img src="https://picsum.photos/id/203/300/200" width="300" height="200" alt="">
+  <img src="https://picsum.photos/id/206/300/200" width="300" height="200" alt="">
+</div>
+        
+  <script type="module">
+import {
+  Marquee,
+  Swipe
+} from "https://esm.sh/vevet@5";
+
+const container = document.getElementById("marquee");
+
+const marquee = new Marquee({
+  container,
+  speed: "0.25vw",
+  gap: "2vw"
+});
+
+const swipe = new Swipe({
+  container,
+  grabCursor: true,
+  inertia: true,
+  onMove: ({
+    step
+  }) => marquee.render(-step.x),
+  onStart: () => marquee.updateProps({
+    enabled: false
+  }),
+  onEnd: ({
+    diff
+  }) => {
+    marquee.updateProps({
+      enabled: true,
+      speed: diff.x > 0 ? "-0.25vw" : "0.25vw"
+    });
+
+  }
+});
+
+  </script>
+      </body>
+    </html>
+  

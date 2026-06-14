@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · QwNYJGo</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 100vh;
+  overflow: hidden;
+
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+  color: #fff;
+
+  font-family: "Ubuntu", sans-serif;
+}
+
+.carousel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 240px;
+  height: 320px;
+
+  transform-style: preserve-3d;
+  perspective: 1000px;
+
+  opacity: 0;
+}
+
+.carousel.ready {
+  opacity: 1;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 20px;
+
+  font-weight: bold;
+  font-size: 20px;
+  color: #fff;
+}</style>
+      </head>
+      <body>
+        <div class="carousel" id="carousel">
+  <div class="slide" style="background: linear-gradient(35deg, #a33c45ff 0%, #d7888eff 100%)">1</div>
+  <div class="slide" " style=" background: linear-gradient(35deg, rgba(149,112,112,1) 0%, rgba(194,167,167,1) 100%)">2</div>
+  <div class="slide" style="background: linear-gradient(35deg, #e7a873 0%, #f7c6a4 100%)">3</div>
+  <div class="slide" style="background: linear-gradient(35deg, #FF8B94 0%, #ffc9cd 100%)">4</div>
+  <div class="slide" style="background: linear-gradient(35deg, rgba(172,162,92,1) 0%, rgba(214,208,156,1) 100%)">5</div>
+  <div class="slide" style="background: linear-gradient(35deg, #654b4bff 0%, #9a7f7fff 100%)">6</div>
+  <div class="slide" style="background: linear-gradient(35deg, #61783bff 0%, #95ab6aff 100%)">7</div>
+</div>
+        
+  <script type="module">
+import {
+  Snap,
+  inRange,
+  clamp
+} from "https://esm.sh/vevet@5";
+
+const container = document.getElementById("carousel");
+let startIndex = 0;
+
+new Snap({
+    container: container,
+    direction: "horizontal",
+    grabCursor: true
+  },
+
+  {
+    onResize: () => {
+      container.classList.add("ready");
+    },
+    onSwipeStart: (data, {
+      activeIndex
+    }) => {
+      startIndex = activeIndex;
+    },
+    onUpdate: (data, {
+      slides
+    }) => {
+      const baseRotation = 6;
+      const baseX = 12;
+      const baseZ = -100;
+      const maxVisible = 6;
+
+      slides.forEach(({
+        element,
+        index,
+        progress
+      }) => {
+        let x = -baseX * progress;
+        let rotate = progress * -baseRotation;
+        const z = Math.abs(progress) * baseZ;
+
+        if (inRange(progress, -1, 1)) {
+          if (startIndex === index) {
+            x += Math.sin(Math.PI * progress) * -60;
+          } else {
+            x += Math.sin(Math.PI * progress) * -20;
+          }
+        }
+
+        x = clamp(x, -baseX * maxVisible, baseX * maxVisible);
+
+        rotate = clamp(
+          rotate,
+          -baseRotation * maxVisible,
+          baseRotation * maxVisible);
+
+        element.style.transform = `translateX(${x}%) translateZ(${z}px) rotate(${rotate}deg)`;
+      });
+    }
+  });
+
+  </script>
+      </body>
+    </html>
+  

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · NPdRrLy</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+}
+
+.container {
+  width: 80%;
+  height: 120px;
+
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.thumb {
+  width: 120px;
+  height: 120px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: inherit;
+  background: linear-gradient(90deg,
+      rgb(13, 110, 253) 0%,
+      rgb(140, 122, 230) 50%,
+      rgb(0, 201, 177) 100%);
+
+  img {
+    width: 40px;
+    height: auto;
+    filter: invert(100%);
+  }
+}</style>
+      </head>
+      <body>
+        <div id="container" class="container">
+  <div id="thumb" class="thumb"><img src="https://www.svgrepo.com/show/379996/drag-horizontal.svg" alt=""></div>
+</div>
+        
+  <script type="module">
+import {
+  Swipe,
+  vevet,
+  clamp,
+  onResize
+} from "https://esm.sh/vevet@5";
+
+const container = document.getElementById("container");
+const thumb = document.getElementById("thumb");
+
+const swipe = new Swipe({
+  container,
+  thumb,
+  inertia: true,
+  grabCursor: true,
+  bounds: () => ({
+    x: [0, container.clientWidth - thumb.clientWidth]
+  }),
+
+  onMove: ({
+    movement
+  }, {
+    container
+  }) => {
+    thumb.style.transform = `translate(${movement.x}px, 0)`;
+  }
+});
+
+onResize({
+  element: [container],
+  callback: () => {
+    swipe.releaseBounce(0);
+  }
+});
+
+  </script>
+      </body>
+    </html>
+  

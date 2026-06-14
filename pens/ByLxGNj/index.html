@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · ByLxGNj</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+
+  height: 100vh;
+  overflow: hidden;
+
+  background: rgb(30, 43, 82);
+  color: #fff;
+
+  font-family: "Ubuntu", sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+.info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  width: 80%;
+
+  >* {
+    &:nth-child(2n + 2) {
+      text-align: right;
+    }
+  }
+}
+
+.carousel {
+  --size: max(25vw, 25vh);
+
+  position: relative;
+  width: 100%;
+  height: var(--size);
+
+  opacity: 0;
+  transition: opacity 0.25s linear;
+}
+
+.carousel.ready {
+  opacity: 1;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--size);
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide-wrap {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  box-sizing: border-box;
+  padding: 20px;
+
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ececec;
+  text-align: center;
+}
+
+.slide [data-progress] {
+  width: 100%;
+  padding-top: 1rem;
+  border-top: 1px solid currentColor;
+}</style>
+      </head>
+      <body>
+        <div class="info">
+  <div>Current: <span data-value-current></span></div>
+  <div>Target: <span data-value-target></span></div>
+  <div>Min: <span data-value-min></span></div>
+  <div>Max: <span data-value-max></span></div>
+  <div>Loop: <span data-value-loop></span></div>
+  <div>Impulse: <span data-value-impulse></span></div>
+  <div>Interpolating: <span data-value-interpolating></span></div>
+  <div>Idle: <span data-value-idle></span></div>
+</div>
+
+<div class="carousel" id="carousel">
+  <div class="slide">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+      <div>Slide 1</div>
+      <div data-progress>0%</div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+      <div>Slide 2</div>
+      <div data-progress>0%</div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+      <div>Slide 3</div>
+      <div data-progress>0%</div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+      <div>Slide 4</div>
+      <div data-progress>0%</div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+      <div>Slide 5</div>
+      <div data-progress>0%</div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+      <div>Slide 6</div>
+      <div data-progress>0%</div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+      <div>Slide 7</div>
+      <div data-progress>0%</div>
+    </div>
+  </div>
+</div>
+        
+  <script type="module">
+import {
+  Snap,
+  EaseOutBack
+} from "https://esm.sh/vevet@5";
+
+const container = document.getElementById("carousel");
+
+const valueCurrent = document.querySelector("[data-value-current]");
+const valueTarget = document.querySelector("[data-value-target]");
+const valueMin = document.querySelector("[data-value-min]");
+const valueMax = document.querySelector("[data-value-max]");
+const valueLoop = document.querySelector("[data-value-loop]");
+const valueImpulse = document.querySelector("[data-value-impulse]");
+const valueInterpolating = document.querySelector("[data-value-interpolating]");
+const valueIdle = document.querySelector("[data-value-idle]");
+
+const carousel = new Snap({
+  container,
+  gap: "1rem",
+  lerp: 0.1,
+  duration: 750,
+  easing: EaseOutBack,
+  grabCursor: true,
+  freemode: "sticky",
+  origin: "center",
+  loop: true
+});
+
+container.classList.add("ready");
+
+carousel.slides.forEach(({
+  element
+}) => {
+  element.progressElement = element.querySelector("[data-progress]");
+});
+
+carousel.on("update", () => {
+  valueCurrent.innerHTML = carousel.current.toFixed(2);
+  valueTarget.innerHTML = carousel.target.toFixed(2);
+  valueMin.innerHTML = carousel.min.toFixed(2);
+  valueMax.innerHTML = carousel.max.toFixed(2);
+  valueLoop.innerHTML = carousel.loopCount;
+  valueImpulse.innerHTML = carousel.impulse.toFixed(2);
+  valueInterpolating.innerHTML = carousel.isInterpolating;
+  valueIdle.innerHTML = carousel.isIdle;
+
+  carousel.slides.forEach(({
+    element,
+    coord,
+    progress,
+    index
+  }) => {
+    element.style.transform = `translate(${coord}px, 0)`;
+
+    const percent = (progress * 100).toFixed(0);
+
+    element.progressElement.innerHTML = `${percent}%`;
+  });
+});
+
+carousel.on("idle", () => {
+  valueIdle.innerHTML = carousel.isIdle;
+});
+
+  </script>
+      </body>
+    </html>
+  

@@ -72,9 +72,9 @@ InView — Vevet.js visibility detection with IntersectionObserver. Viewport ent
 
 ### Marquee
 
-Marquee — Vevet.js custom marquee component for smooth scrolling of child elements.
+Marquee — Vevet.js custom marquee component for smooth horizontal or vertical scrolling.
 
-- [Marquee](https://vevetjs.com/docs/Marquee/): Marquee — Vevet.js custom marquee component for smooth scrolling of child elements.
+- [Marquee](https://vevetjs.com/docs/Marquee/): Marquee — Vevet.js custom marquee component for smooth horizontal or vertical scrolling.
 - [Accessors](https://vevetjs.com/docs/Marquee/accessors): Marquee accessors — state getters. Vevet.js Marquee API reference.
 - [Callbacks](https://vevetjs.com/docs/Marquee/callbacks): Marquee callbacks — scroll events. Vevet.js Marquee API reference.
 - [Demos](https://vevetjs.com/docs/Marquee/demos): Marquee demos and examples. Vevet.js Marquee component.
@@ -148,12 +148,12 @@ Snap — Vevet.js carousel handler with precise control over movement, snapping 
 
 - [Snap](https://vevetjs.com/docs/Snap/): Snap — Vevet.js carousel handler with precise control over movement, snapping and interaction. Custom layout and styling.
 - [Accessors](https://vevetjs.com/docs/Snap/accessors): Snap accessors — index, progress, state getters. Vevet.js Snap API reference.
-- [Advanced Demos](https://vevetjs.com/docs/Snap/advanced-demos): Snap advanced demos. Vevet.js Snap carousel.
+- [Advanced Demos](https://vevetjs.com/docs/Snap/advanced-demos): Snap advanced demos. Custom carousel patterns with Vevet.js Snap.
 - [Basic Demos](https://vevetjs.com/docs/Snap/basic-demos): Snap basic demos and examples. Vevet.js Snap carousel.
 - [Callbacks](https://vevetjs.com/docs/Snap/callbacks): Snap callbacks — onActiveSlide, onSwipe and more. Vevet.js Snap API reference.
 - [Methods](https://vevetjs.com/docs/Snap/methods): Snap methods — API reference. Vevet.js Snap carousel.
 - [Parallax](https://vevetjs.com/docs/Snap/parallax): Snap Parallax — parallax effects with Snap. Vevet.js Snap API reference.
-- [Parallax Demos](https://vevetjs.com/docs/Snap/parallax-demos): Snap parallax demos. Vevet.js Snap carousel.
+- [Parallax Demos](https://vevetjs.com/docs/Snap/parallax-demos): Snap parallax demos. Built-in parallax attributes for Vevet.js Snap carousels.
 - [Props](https://vevetjs.com/docs/Snap/props): Snap props — carousel configuration. Vevet.js Snap API reference.
 - [SnapSlide](https://vevetjs.com/docs/Snap/slide): SnapSlide — virtual slides in Snap. Vevet.js Snap carousel API reference.
 

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · LENXYqq</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  direction: rtl;
+
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+  background-attachment: fixed;
+  color: #fff;
+
+  font-family: "Ubuntu", sans-serif;
+  font-size: 30px;
+}
+
+.container {
+  width: max-content;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 30px;
+}
+
+h1 {
+  margin: 30px;
+  font-size: 50px;
+  font-weight: 600;
+}
+
+.rect {
+  margin: 10px;
+  height: 200px;
+  width: 200px;
+
+  border-radius: 12px;
+
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+
+  opacity: 0;
+}
+
+.visible {
+  animation: fade-in-scale;
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.61, 1, 0.88, 1);
+  animation-fill-mode: both;
+}
+
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}</style>
+      </head>
+      <body>
+        <div class="container">
+  <h1 class="animate">InView</h1>
+
+  <div class="rect" data-in-view-class="visible"></div>
+  <div class="rect" data-in-view-class="visible"></div>
+  <div class="rect" data-in-view-class="visible"></div>
+  <div class="rect" data-in-view-class="visible"></div>
+  <div class="rect" data-in-view-class="visible"></div>
+  <div class="rect" data-in-view-class="visible"></div>
+  <div class="rect" data-in-view-class="visible"></div>
+  <div class="rect" data-in-view-class="visible"></div>
+  <div class="rect" data-in-view-class="visible"></div>
+  <div class="rect" data-in-view-class="visible"></div>
+</div>
+        
+  <script type="module">
+import {
+  InView
+} from "https://esm.sh/vevet@5";
+import {
+  animate,
+  stagger
+} from "https://esm.sh/animejs@4";
+
+const inView = new InView({
+  scrollDirection: "horizontal"
+});
+
+const elements = document.querySelectorAll(".rect");
+
+elements.forEach(element => {
+  inView.addElement(element);
+});
+
+  </script>
+      </body>
+    </html>
+  

@@ -72,9 +72,9 @@ InView — Vevet.js visibility detection with IntersectionObserver. Viewport ent
 
 ### Marquee
 
-Marquee — Vevet.js custom marquee component for smooth scrolling of child elements.
+Marquee — Vevet.js custom marquee component for smooth horizontal or vertical scrolling.
 
-- [Marquee](https://vevetjs.com/docs/Marquee/): Marquee — Vevet.js custom marquee component for smooth scrolling of child elements.
+- [Marquee](https://vevetjs.com/docs/Marquee/): Marquee — Vevet.js custom marquee component for smooth horizontal or vertical scrolling.
 - [Accessors](https://vevetjs.com/docs/Marquee/accessors): Marquee accessors — state getters. Vevet.js Marquee API reference.
 - [Callbacks](https://vevetjs.com/docs/Marquee/callbacks): Marquee callbacks — scroll events. Vevet.js Marquee API reference.
 - [Demos](https://vevetjs.com/docs/Marquee/demos): Marquee demos and examples. Vevet.js Marquee component.
@@ -148,12 +148,12 @@ Snap — Vevet.js carousel handler with precise control over movement, snapping 
 
 - [Snap](https://vevetjs.com/docs/Snap/): Snap — Vevet.js carousel handler with precise control over movement, snapping and interaction. Custom layout and styling.
 - [Accessors](https://vevetjs.com/docs/Snap/accessors): Snap accessors — index, progress, state getters. Vevet.js Snap API reference.
-- [Advanced Demos](https://vevetjs.com/docs/Snap/advanced-demos): Snap advanced demos. Vevet.js Snap carousel.
+- [Advanced Demos](https://vevetjs.com/docs/Snap/advanced-demos): Snap advanced demos. Custom carousel patterns with Vevet.js Snap.
 - [Basic Demos](https://vevetjs.com/docs/Snap/basic-demos): Snap basic demos and examples. Vevet.js Snap carousel.
 - [Callbacks](https://vevetjs.com/docs/Snap/callbacks): Snap callbacks — onActiveSlide, onSwipe and more. Vevet.js Snap API reference.
 - [Methods](https://vevetjs.com/docs/Snap/methods): Snap methods — API reference. Vevet.js Snap carousel.
 - [Parallax](https://vevetjs.com/docs/Snap/parallax): Snap Parallax — parallax effects with Snap. Vevet.js Snap API reference.
-- [Parallax Demos](https://vevetjs.com/docs/Snap/parallax-demos): Snap parallax demos. Vevet.js Snap carousel.
+- [Parallax Demos](https://vevetjs.com/docs/Snap/parallax-demos): Snap parallax demos. Built-in parallax attributes for Vevet.js Snap carousels.
 - [Props](https://vevetjs.com/docs/Snap/props): Snap props — carousel configuration. Vevet.js Snap API reference.
 - [SnapSlide](https://vevetjs.com/docs/Snap/slide): SnapSlide — virtual slides in Snap. Vevet.js Snap carousel API reference.
 
@@ -796,8 +796,6 @@ const instance = new Canvas({
 
 
 
-
-
 const render = ({
 
   ctx,
@@ -834,6 +832,8 @@ instance.render(render);
 
 instance.on("resize", () => instance.render(render));
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/bNNbKXE)
 
 ## Overview[​](#overview "Direct link to Overview")
 
@@ -1484,6 +1484,8 @@ if (sourceImage.complete) {
 
 }
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/vEEBroM)
 
 ## Initialization[​](#initialization "Direct link to Initialization")
 
@@ -2650,8 +2652,6 @@ const cursor = new Cursor({
 
 
 
-
-
 cursor.attachHover({
 
   element: document.body,
@@ -2798,6 +2798,8 @@ snap.forEach(element => {
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/vEEBNWN)
 
 ## More demos[​](#more-demos "Direct link to More demos")
 
@@ -3598,8 +3600,6 @@ const cursor = new Cursor({
 
 
 
-
-
 cursor.attachHover({
 
   element: document.body,
@@ -3747,6 +3747,8 @@ snap.forEach(element => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/vEEBNWN)
+
 ## Typed Cursor[​](#typed-cursor "Direct link to Typed Cursor")
 
 [Vevet Demo ByKeOYv](https://codepen.io/anton-bobrov/embed/ByKeOYv?default-tab=result)
@@ -3808,13 +3810,7 @@ body {
 
 
 
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
+  background: rgb(30, 43, 82);
 
   color: #fff;
 
@@ -4016,8 +4012,6 @@ cursor.attachCursor({
 
 
 
-
-
 const playCursor = document.querySelector("[data-cursor='play']");
 
 cursor.attachCursor({
@@ -4027,8 +4021,6 @@ cursor.attachCursor({
   type: "play"
 
 });
-
-
 
 
 
@@ -4046,6 +4038,8 @@ cursor.attachHover({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/ByKeOYv)
 
 ## Dynamic Size[​](#dynamic-size "Direct link to Dynamic Size")
 
@@ -4236,8 +4230,6 @@ cursor.attachHover({
 
 
 
-
-
 cursor.attachHover({
 
   element: document.querySelector("[data-has-padding]"),
@@ -4252,8 +4244,6 @@ cursor.attachHover({
 
 
 
-
-
 cursor.attachHover({
 
   element: document.querySelector("[data-no-padding]"),
@@ -4264,6 +4254,8 @@ cursor.attachHover({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/qEZGMyP)
 
 ## Cursor Area[​](#cursor-area "Direct link to Cursor Area")
 
@@ -4396,6 +4388,8 @@ const cursor = new Cursor({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/bNpyxQP)
 
 ## Snap Cursor[​](#snap-cursor "Direct link to Snap Cursor")
 
@@ -4582,8 +4576,6 @@ cursor.attachHover({
 
 
 
-
-
 cursor.attachHover({
 
   element: document.querySelector("[data-snap]"),
@@ -4596,6 +4588,8 @@ cursor.attachHover({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/MYydqRe)
 
 ## Sticky Cursor[​](#sticky-cursor "Direct link to Sticky Cursor")
 
@@ -4852,8 +4846,6 @@ bgCursor.attachHover({
 
 
 
-
-
 bgCursor.attachHover({
 
   element: stickyY,
@@ -4880,8 +4872,6 @@ bgCursor.attachHover({
 
 
 
-
-
 bgCursor.attachHover({
 
   element: stickyXY,
@@ -4900,6 +4890,8 @@ bgCursor.attachHover({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/emzOjqK)
 
 ## Sticky Friction Cursor[​](#sticky-friction-cursor "Direct link to Sticky Friction Cursor")
 
@@ -5140,8 +5132,6 @@ items.forEach(item => {
 
 
 
-
-
   bgCursor.attachHover({
 
     element: item,
@@ -5162,6 +5152,8 @@ items.forEach(item => {
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/KwMYOjo)
 
 ## Sticky & Snap Behavior[​](#sticky--snap-behavior "Direct link to Sticky & Snap Behavior")
 
@@ -5364,8 +5356,6 @@ dotCursor.attachHover({
 
 
 
-
-
 dotCursor.attachHover({
 
   element: document.querySelector(".js-sticky"),
@@ -5390,8 +5380,6 @@ dotCursor.attachHover({
 
 
 
-
-
 dotCursor.attachHover({
 
   element: document.querySelector(".js-friction"),
@@ -5406,6 +5394,8 @@ dotCursor.attachHover({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/azZrVwJ)
 
 ## Sticky Ghost[​](#sticky-ghost "Direct link to Sticky Ghost")
 
@@ -5603,6 +5593,8 @@ bgs.forEach((bg, index) => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/xbONPYr)
+
 ## Elastic Cursor[​](#elastic-cursor "Direct link to Elastic Cursor")
 
 [Vevet Demo yyJBxNK](https://codepen.io/anton-bobrov/embed/yyJBxNK?default-tab=result)
@@ -5752,8 +5744,6 @@ const elasticCursor = new Cursor({
 
 
 
-
-
 elasticCursor.inner.classList.add("elastic-cursor");
 
 
@@ -5772,10 +5762,10 @@ const dotCursor = new Cursor({
 
 
 
-
-
 dotCursor.inner.classList.add("dot-cursor");
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/yyJBxNK)
 
 ## Airplane Cursor[​](#airplane-cursor "Direct link to Airplane Cursor")
 
@@ -5966,8 +5956,6 @@ const cursor = new Cursor({
 
 
 
-
-
 cursor.attachCursor({
 
   element: document.getElementById("airplane-cursor"),
@@ -5975,8 +5963,6 @@ cursor.attachCursor({
   type: "airplane"
 
 });
-
-
 
 
 
@@ -5988,6 +5974,8 @@ cursor.attachHover({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/emzOLZP)
 
 ## Trailing Cursor[​](#trailing-cursor "Direct link to Trailing Cursor")
 
@@ -6086,8 +6074,6 @@ const count = 15;
 
 for (let index = 0; index < count; index += 1) {
 
-  if (window.CP.shouldStopExecution(0)) break;
-
   const lerp = 0.1;
 
 
@@ -6101,9 +6087,9 @@ for (let index = 0; index < count; index += 1) {
   });
 
 }
-
-window.CP.exitedLoop(0);
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/RNazaLO)
 
 ## Cursor Path Visualization[​](#cursor-path-visualization "Direct link to Cursor Path Visualization")
 
@@ -6146,13 +6132,7 @@ body {
 
 
 
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
+  background: rgb(30, 43, 82);
 
   color: #fff;
 
@@ -6266,10 +6246,10 @@ const instantCursor = new Cursor({
 
 
 
-
-
 instantCursor.inner.classList.add("fill");
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/ByKgKrN)
 
 
 ---
@@ -7184,15 +7164,7 @@ body {
 
 
 
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  background-attachment: fixed;
+  background: rgb(30, 43, 82);
 
   color: #fff;
 
@@ -7300,6 +7272,8 @@ elements.forEach(element => {
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/EaaYRmX)
 
 ## More demos[​](#more-demos "Direct link to More demos")
 
@@ -7811,15 +7785,7 @@ body {
 
 
 
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  background-attachment: fixed;
+  background: rgb(30, 43, 82);
 
   color: #fff;
 
@@ -7927,6 +7893,8 @@ elements.forEach(element => {
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/EaaYRmX)
 
 ## In-Out Animation[​](#in-out-animation "Direct link to In-Out Animation")
 
@@ -8279,6 +8247,8 @@ elements.forEach(element => {
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/GgZepMd)
 
 ## Control[​](#control "Direct link to Control")
 
@@ -8706,6 +8676,8 @@ toggle.addEventListener("click", () => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/GgZwgZZ)
+
 ## With Anime.js[​](#with-animejs "Direct link to With Anime.js")
 
 [Vevet Demo LENXYRr](https://codepen.io/anton-bobrov/embed/LENXYRr?default-tab=result)
@@ -8879,7 +8851,7 @@ import {
 
   stagger
 
-} from "https://esm.sh/animejs@4";
+} from "animejs";
 
 
 
@@ -8925,8 +8897,6 @@ const inView = new InView({
 
 
 
-
-
 const elements = document.querySelectorAll(".animate");
 
 
@@ -8937,6 +8907,8 @@ elements.forEach(element => {
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/LENXYRr)
 
 ## Horizontal InView[​](#horizontal-inview "Direct link to Horizontal InView")
 
@@ -9123,7 +9095,7 @@ import {
 
   stagger
 
-} from "https://esm.sh/animejs@4";
+} from "animejs";
 
 
 
@@ -9132,8 +9104,6 @@ const inView = new InView({
   scrollDirection: "horizontal"
 
 });
-
-
 
 
 
@@ -9147,6 +9117,8 @@ elements.forEach(element => {
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/GgZwRWa)
 
 ## Horizontal RTL[​](#horizontal-rtl "Direct link to Horizontal RTL")
 
@@ -9335,7 +9307,7 @@ import {
 
   stagger
 
-} from "https://esm.sh/animejs@4";
+} from "animejs";
 
 
 
@@ -9344,8 +9316,6 @@ const inView = new InView({
   scrollDirection: "horizontal"
 
 });
-
-
 
 
 
@@ -9359,6 +9329,8 @@ elements.forEach(element => {
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/LENXYqq)
 
 
 ---
@@ -9701,7 +9673,7 @@ observer.updateProps({
 
 # Marquee
 
-A custom marquee component that smoothly scrolls its child elements.
+A custom marquee component that smoothly scrolls its children horizontally or vertically.
 
 ## Basic Demo[​](#basic-demo "Direct link to Basic Demo")
 
@@ -9778,6 +9750,8 @@ new Marquee({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/zxxOadw)
 
 ## More demos[​](#more-demos "Direct link to More demos")
 
@@ -9981,7 +9955,7 @@ destruct();
 
 ## Simple Marquee[​](#simple-marquee "Direct link to Simple Marquee")
 
-A simple Marquee with default settings:
+A basic example with scrollable text in a custom marquee element.
 
 [Vevet Demo zxxOadw](https://codepen.io/anton-bobrov/embed/zxxOadw?default-tab=result)
 
@@ -10057,9 +10031,11 @@ new Marquee({
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/zxxOadw)
+
 ## Vertical Marquee[​](#vertical-marquee "Direct link to Vertical Marquee")
 
-Vevet Marquee supports vertical mode:
+Vertical scrolling with `direction: 'vertical'`.
 
 [Vevet Demo JoGLENV](https://codepen.io/anton-bobrov/embed/JoGLENV?default-tab=result)
 
@@ -10155,9 +10131,11 @@ new Marquee({
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/JoGLENV)
+
 ## Pause on Hover[​](#pause-on-hover "Direct link to Pause on Hover")
 
-A simple Marquee that pauses when it is being hovered:
+Use `pauseOnHover: true` to pause the animation while the element is hovered.
 
 [Vevet Demo pvgWjRM](https://codepen.io/anton-bobrov/embed/pvgWjRM?default-tab=result)
 
@@ -10235,9 +10213,11 @@ new Marquee({
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/pvgWjRM)
+
 ## Reverse Marquee[​](#reverse-marquee "Direct link to Reverse Marquee")
 
-A simple Marquee with reversed motion:
+The `speed` prop accepts negative values for reverse motion. Example: `speed: -1`.
 
 [Vevet Demo EaaLbOp](https://codepen.io/anton-bobrov/embed/EaaLbOp?default-tab=result)
 
@@ -10276,13 +10256,7 @@ body {
 
 
 
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
+  background: rgb(30, 43, 82);
 
   color: #fff;
 
@@ -10315,9 +10289,14 @@ new Marquee({
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/EaaLbOp)
+
 ## Controllable Marquee[​](#controllable-marquee "Direct link to Controllable Marquee")
 
-A marquee with controls:
+Programmatic control examples:
+
+* `marquee.updateProps({ enabled: true, speed: 1.25 })` — toggle playback and change speed
+* `marquee.render(10)` — scroll contents manually by 10px
 
 [Vevet Demo QwyqjzW](https://codepen.io/anton-bobrov/embed/QwyqjzW?default-tab=result)
 
@@ -10494,8 +10473,6 @@ const instance = new Marquee({
 
 
 
-
-
 const play = document.getElementById("play");
 
 play.addEventListener("click", () => {
@@ -10571,9 +10548,16 @@ render10.addEventListener("click", () => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/QwyqjzW)
+
 ## With CSS units[​](#with-css-units "Direct link to With CSS units")
 
-Marquee `gap` and `speed` may accept a string with CSS units like `px`, `rem`, `vw`, `vh`, `svh`:
+Both `gap` and `speed` accept CSS length strings such as `px`, `rem`, `vw`, `vh`, and `svh`.
+
+Examples:
+
+* `gap: "10vw"`
+* `speed: "0.1vw"`
 
 [Vevet Demo jEWGWqq](https://codepen.io/anton-bobrov/embed/jEWGWqq?default-tab=result)
 
@@ -10653,9 +10637,15 @@ new Marquee({
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/jEWGWqq)
+
 ## With speed adjustment[​](#with-speed-adjustment "Direct link to With speed adjustment")
 
-Marquee can adjust speed depending on the user's FPS rate. This feature is enabled by default. It helps make the marquee move the same way across displays with different update frequencies.
+Linear requestAnimationFrame animations can look faster on high-refresh displays (120 Hz and above).
+
+Marquee compensates by adjusting speed based on the user's FPS. Enabled by default: `adjustSpeed: true`.
+
+This keeps motion consistent across 60 Hz and 120+ Hz displays.
 
 [Vevet Demo KwVXVNg](https://codepen.io/anton-bobrov/embed/KwVXVNg?default-tab=result)
 
@@ -10810,8 +10800,6 @@ const instance = new Marquee({
 
 
 
-
-
 const enable = document.getElementById("enable");
 
 enable.addEventListener("click", () => {
@@ -10839,11 +10827,13 @@ disable.addEventListener("click", () => {
 });
 ```
 
-## Responsive Marquee[​](#responsive-marquee "Direct link to Responsive Marquee")
+[Open live demo ↗](https://vevetjs.com/pens/KwVXVNg)
 
-Marquee, like any other component in Vevet, may be customized depending on the user's viewport sizes or their device type.
+## Adaptive Marquee[​](#adaptive-marquee "Direct link to Adaptive Marquee")
 
-In this demo, marquee speed and gap are dynamic - they change depending on responsive breakpoints:
+Like any other Vevet component, Marquee supports viewport- and device-based customization via responsive props.
+
+In this demo, `speed` and `gap` change at responsive breakpoints.
 
 [Vevet Demo bNEopqo](https://codepen.io/anton-bobrov/embed/bNEopqo?default-tab=result)
 
@@ -10924,8 +10914,6 @@ const instance = new Marquee({
 
 
 
-
-
 new Responsive(instance, [{
 
     at: "@media (min-width: 768px)",
@@ -10955,9 +10943,13 @@ new Responsive(instance, [{
 ]);
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/bNEopqo)
+
 ## Draggable Marquee[​](#draggable-marquee "Direct link to Draggable Marquee")
 
-By default, Marquee does not support swiping. But this can be solved with [Swipe](https://vevetjs.com/docs/Swipe/):
+A combination of [Swipe](https://vevetjs.com/docs/Swipe/) and [Marquee](https://vevetjs.com/docs/Marquee/).
+
+Shows how to control a marquee with drag/swipe gestures.
 
 [Vevet Demo XJJrYeR](https://codepen.io/anton-bobrov/embed/XJJrYeR?default-tab=result)
 
@@ -11062,8 +11054,6 @@ const marquee = new Marquee({
 
 
 
-
-
 const swipe = new Swipe({
 
   container,
@@ -11105,9 +11095,13 @@ const swipe = new Swipe({
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/XJJrYeR)
+
 ## Scrollable Marquee[​](#scrollable-marquee "Direct link to Scrollable Marquee")
 
-This is a combination of [Marquee](https://vevetjs.com/docs/Marquee/) and [ScrollProgress](https://vevetjs.com/docs/ScrollProgress/). With ScrollProgress, you can handle scrolling logic for your marquee element:
+Combines [Marquee](https://vevetjs.com/docs/Marquee/) with [ScrollProgress](https://vevetjs.com/docs/ScrollProgress/).
+
+The marquee position follows the section's scroll progress.
 
 [Vevet Demo raaBKYy](https://codepen.io/anton-bobrov/embed/raaBKYy?default-tab=result)
 
@@ -11246,8 +11240,6 @@ const marquee = new Marquee({
 
 
 
-
-
 let prevProgress = 0;
 
 
@@ -11275,9 +11267,11 @@ const scrollable = new ScrollProgress({
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/raaBKYy)
+
 ## No clones[​](#no-clones "Direct link to No clones")
 
-By default, Marquee clones its nodes. This may be disabled if needed:
+By default, Marquee clones child nodes for seamless looping. Disable with `cloneNodes: false`.
 
 [Vevet Demo wBMpPve](https://codepen.io/anton-bobrov/embed/wBMpPve?default-tab=result)
 
@@ -11358,6 +11352,8 @@ new Marquee({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/wBMpPve)
 
 
 ---
@@ -11674,7 +11670,7 @@ marquee.updateProps({
 
 * **Type:** `boolean`
 * **Default:** `true`
-* Pauses the marquee when the mouse leaves the viewport.
+* Pauses the marquee when the element leaves the viewport.
 
 ```
 const marquee = new Marquee({
@@ -11948,6 +11944,8 @@ new Pointers({
 
   });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/OPNdJzd)
 
 ## Callbacks[​](#callbacks "Direct link to Callbacks")
 
@@ -12844,6 +12842,8 @@ new Preloader({
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/VYYZdyB)
+
 ## More demos[​](#more-demos "Direct link to More demos")
 
 To explore more demos, click [here](https://vevetjs.com/docs/Preloader/demos).
@@ -13242,6 +13242,8 @@ new Preloader({
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/VYYZdyB)
+
 ## Custom Hiding Logic[​](#custom-hiding-logic "Direct link to Custom Hiding Logic")
 
 [Vevet Demo ZYWweeJ](https://codepen.io/anton-bobrov/embed/ZYWweeJ?default-tab=result)
@@ -13549,6 +13551,8 @@ const preloader = new Preloader({
 
   });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/ZYWweeJ)
 
 
 ---
@@ -14051,10 +14055,6 @@ const preloader = new ProgressPreloader({
 
 
 
-
-
-
-
 customLoader.addEventListener("click", () => {
 
   const resource = preloader.resources.find(({
@@ -14075,6 +14075,8 @@ customLoader.addEventListener("click", () => {
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/VYYZdQG)
 
 ## More demos[​](#more-demos "Direct link to More demos")
 
@@ -14644,6 +14646,8 @@ const preloader = new ProgressPreloader({
   });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/vEGbxeq)
+
 ## Custom Hiding Logic[​](#custom-hiding-logic "Direct link to Custom Hiding Logic")
 
 [Vevet Demo EaKrWoR](https://codepen.io/anton-bobrov/embed/EaKrWoR?default-tab=result)
@@ -14743,15 +14747,7 @@ body {
 
 
 
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  background-attachment: fixed;
+  background: rgb(30, 43, 82);
 
   color: #fff;
 
@@ -14793,13 +14789,7 @@ body {
 
 
 
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
+  background: rgb(30, 43, 82);
 
 
 
@@ -14979,6 +14969,8 @@ const preloader = new ProgressPreloader({
 
   });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/EaKrWoR)
 
 ## Resource Count[​](#resource-count "Direct link to Resource Count")
 
@@ -15227,6 +15219,8 @@ const preloader = new ProgressPreloader({
 
   });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/QwNYpmp)
 
 ## Virtual Resources[​](#virtual-resources "Direct link to Virtual Resources")
 
@@ -15517,10 +15511,6 @@ const preloader = new ProgressPreloader({
 
 
 
-
-
-
-
 customLoader.addEventListener("click", () => {
 
   const resource = preloader.resources.find(({
@@ -15541,6 +15531,8 @@ customLoader.addEventListener("click", () => {
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/VYYZdQG)
 
 ## Line Preloader[​](#line-preloader "Direct link to Line Preloader")
 
@@ -15818,6 +15810,8 @@ const preloader = new ProgressPreloader({
   });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/ogxROvY)
+
 
 ---
 
@@ -16094,13 +16088,7 @@ body {
 
 
 
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
+  background: rgb(30, 43, 82);
 
   color: #fff;
 
@@ -16240,14 +16228,14 @@ const raf = new Raf({
 
 
 
-
-
 document.getElementById("play").addEventListener("click", () => raf.play());
 
 
 
 document.getElementById("pause").addEventListener("click", () => raf.pause());
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/EaaYREw)
 
 ## More demos[​](#more-demos "Direct link to More demos")
 
@@ -16655,13 +16643,7 @@ body {
 
 
 
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
+  background: rgb(30, 43, 82);
 
   color: #fff;
 
@@ -16801,14 +16783,14 @@ const raf = new Raf({
 
 
 
-
-
 document.getElementById("play").addEventListener("click", () => raf.play());
 
 
 
 document.getElementById("pause").addEventListener("click", () => raf.pause());
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/EaaYREw)
 
 ## Damping[​](#damping "Direct link to Damping")
 
@@ -17049,8 +17031,6 @@ const raf = new Raf({
 
 
 
-
-
     lerpElement.style.transform = `translateX(${lerpValue.current}px)`;
 
     dampElement.style.transform = `translateX(${dampValue.current}px)`;
@@ -17058,8 +17038,6 @@ const raf = new Raf({
   }
 
 });
-
-
 
 
 
@@ -17079,6 +17057,8 @@ document.getElementById("play").addEventListener("click", () => {
 
 document.getElementById("pause").addEventListener("click", () => raf.pause());
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/RNaEXOW)
 
 ## Real-time FPS[​](#real-time-fps "Direct link to Real-time FPS")
 
@@ -17297,14 +17277,14 @@ const raf = new Raf({
 
 
 
-
-
 document.getElementById("play").addEventListener("click", () => raf.play());
 
 
 
 document.getElementById("pause").addEventListener("click", () => raf.pause());
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/azNXojO)
 
 ## FPS factor[​](#fps-factor "Direct link to FPS factor")
 
@@ -17523,14 +17503,14 @@ const raf = new Raf({
 
 
 
-
-
 document.getElementById("play").addEventListener("click", () => raf.play());
 
 
 
 document.getElementById("pause").addEventListener("click", () => raf.pause());
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/MYyLgvZ)
 
 ## FPS Throttling[​](#fps-throttling "Direct link to FPS Throttling")
 
@@ -17749,14 +17729,14 @@ const raf = new Raf({
 
 
 
-
-
 document.getElementById("play").addEventListener("click", () => raf.play());
 
 
 
 document.getElementById("pause").addEventListener("click", () => raf.pause());
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/YPqBKJV)
 
 
 ---
@@ -18170,6 +18150,8 @@ new Scrollbar({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/XJJrYYa)
 
 ## More demos[​](#more-demos "Direct link to More demos")
 
@@ -18896,6 +18878,8 @@ new Scrollbar({
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/XJJrYYa)
+
 ## Horizontal Scrollbar[​](#horizontal-scrollbar "Direct link to Horizontal Scrollbar")
 
 [Vevet Demo wBBwXEv](https://codepen.io/anton-bobrov/embed/wBBwXEv?default-tab=result)
@@ -19187,6 +19171,8 @@ new Scrollbar({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/wBBwXEv)
 
 ## Horizontal RTL Scrollbar[​](#horizontal-rtl-scrollbar "Direct link to Horizontal RTL Scrollbar")
 
@@ -19481,6 +19467,8 @@ new Scrollbar({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/MYyZqGQ)
 
 ## AutoHide[​](#autohide "Direct link to AutoHide")
 
@@ -19789,6 +19777,8 @@ new Scrollbar({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/WbrXOWB)
 
 ## Inner Scrollbar[​](#inner-scrollbar "Direct link to Inner Scrollbar")
 
@@ -20128,6 +20118,8 @@ new Scrollbar({
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/emmOKjW)
+
 ## Min-size[​](#min-size "Direct link to Min-size")
 
 [Vevet Demo NPxweQN](https://codepen.io/anton-bobrov/embed/NPxweQN?default-tab=result)
@@ -20414,6 +20406,8 @@ new Scrollbar({
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/NPxweQN)
+
 ## No Auto-size[​](#no-auto-size "Direct link to No Auto-size")
 
 [Vevet Demo qEbVLeM](https://codepen.io/anton-bobrov/embed/qEbVLeM?default-tab=result)
@@ -20699,6 +20693,8 @@ new Scrollbar({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/qEbVLeM)
 
 
 ---
@@ -21109,7 +21105,7 @@ HTML
 
   <div>Loop: <span data-value-loop></span></div>
 
-  <div>Influence: <span data-value-influence></span></div>
+  <div>Impulse: <span data-value-impulse></span></div>
 
   <div>Interpolating: <span data-value-interpolating></span></div>
 
@@ -21123,7 +21119,7 @@ HTML
 
   <div class="slide">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
       <div>Slide 1</div>
 
@@ -21137,7 +21133,7 @@ HTML
 
   <div class="slide">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
       <div>Slide 2</div>
 
@@ -21151,7 +21147,7 @@ HTML
 
   <div class="slide">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
       <div>Slide 3</div>
 
@@ -21165,7 +21161,7 @@ HTML
 
   <div class="slide">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
       <div>Slide 4</div>
 
@@ -21179,7 +21175,7 @@ HTML
 
   <div class="slide">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
       <div>Slide 5</div>
 
@@ -21193,7 +21189,7 @@ HTML
 
   <div class="slide">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
       <div>Slide 6</div>
 
@@ -21207,7 +21203,7 @@ HTML
 
   <div class="slide">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
       <div>Slide 7</div>
 
@@ -21255,13 +21251,7 @@ body {
 
 
 
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
+  background: rgb(30, 43, 82);
 
   color: #fff;
 
@@ -21421,7 +21411,7 @@ import {
 
   EaseOutBack
 
-} from "vevet.10.0";
+} from "vevet";
 
 
 
@@ -21439,7 +21429,7 @@ const valueMax = document.querySelector("[data-value-max]");
 
 const valueLoop = document.querySelector("[data-value-loop]");
 
-const valueInfluence = document.querySelector("[data-value-influence]");
+const valueImpulse = document.querySelector("[data-value-impulse]");
 
 const valueInterpolating = document.querySelector("[data-value-interpolating]");
 
@@ -21461,13 +21451,13 @@ const carousel = new Snap({
 
   grabCursor: true,
 
+  freemode: "sticky",
+
   origin: "center",
 
   loop: true
 
 });
-
-
 
 
 
@@ -21499,7 +21489,7 @@ carousel.on("update", () => {
 
   valueLoop.innerHTML = carousel.loopCount;
 
-  valueInfluence.innerHTML = carousel.influence.toFixed(2);
+  valueImpulse.innerHTML = carousel.impulse.toFixed(2);
 
   valueInterpolating.innerHTML = carousel.isInterpolating;
 
@@ -21541,6 +21531,8 @@ carousel.on("idle", () => {
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/ByLxGNj)
 
 ### Panorama[​](#panorama "Direct link to Panorama")
 
@@ -21729,7 +21721,9 @@ const carousel = new Snap({
 
   grabCursor: true,
 
-  centered: true,
+  origin: "center",
+
+  freemode: true,
 
   loop: true,
 
@@ -21738,8 +21732,6 @@ const carousel = new Snap({
   duration: 300
 
 });
-
-
 
 
 
@@ -21793,6 +21785,8 @@ carousel.on("update", () => {
 
 container.classList.add("ready");
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/OPMzdaX)
 
 ### Expand Slide[​](#expand-slide "Direct link to Expand Slide")
 
@@ -22053,6 +22047,8 @@ const carousel = new Snap({
 
     freemode: "sticky",
 
+    shortSwipes: false,
+
     stickOnResize: false,
 
     edgeFriction: 0.95,
@@ -22092,10 +22088,6 @@ const carousel = new Snap({
     }
 
   });
-
-
-
-
 
 
 
@@ -22169,8 +22161,6 @@ const toggleSlide = index => {
 
 
 
-
-
         } else {
 
           carousel.clampTarget();
@@ -22182,10 +22172,6 @@ const toggleSlide = index => {
     }
 
   });
-
-
-
-
 
 
 
@@ -22207,6 +22193,8 @@ carousel.slides.forEach(({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/jEqdQZg)
 
 ## More demos[​](#more-demos "Direct link to More demos")
 
@@ -22614,7 +22602,15 @@ snap.isSlideScrolling; // true or false
 
 <!-- -->
 
+These demos are **custom UI patterns** built on top of Snap — not built-in presets.
+
+Most map `coord`, `progress`, and slide metadata in the `update` callback to CSS transforms. Some also use other vevet modules ([Timeline](https://vevetjs.com/docs/Timeline/), [Swipe](https://vevetjs.com/docs/Swipe/), [Responsive](https://vevetjs.com/docs/base/Responsive/), and others). Expand the HTML/CSS/JS snippets below each demo to see the full implementation.
+
 ## Panorama[​](#panorama "Direct link to Panorama")
+
+3D panorama carousel inspired by [Panorama Slider](https://panorama-slider.uiinitiative.com/).
+
+Maps `progress` to `translateZ`, `rotateY`, and a horizontal offset in `onUpdate`. Uses `origin: "center"`, `freemode: true`, and `loop: true`.
 
 [Vevet Demo OPMzdaX](https://codepen.io/anton-bobrov/embed/OPMzdaX?default-tab=result)
 
@@ -22801,7 +22797,9 @@ const carousel = new Snap({
 
   grabCursor: true,
 
-  centered: true,
+  origin: "center",
+
+  freemode: true,
 
   loop: true,
 
@@ -22810,8 +22808,6 @@ const carousel = new Snap({
   duration: 300
 
 });
-
-
 
 
 
@@ -22866,7 +22862,11 @@ carousel.on("update", () => {
 container.classList.add("ready");
 ```
 
-## Circular Carousel[​](#circular-carousel "Direct link to Circular Carousel")
+[Open live demo ↗](https://vevetjs.com/pens/OPMzdaX)
+
+## Circular carousel[​](#circular-carousel "Direct link to Circular carousel")
+
+Slides positioned on a circle with `swipeAxis: "angle"`. Each slide's `progress` drives `sin` / `cos` placement and rotation.
 
 [Vevet Demo XJKQwyb](https://codepen.io/anton-bobrov/embed/XJKQwyb?default-tab=result)
 
@@ -22879,7 +22879,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-influence data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/758/400/600" alt="">
 
@@ -22891,7 +22891,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-influence data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/760/400/600" alt="">
 
@@ -22903,7 +22903,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-influence data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/770/400/600" alt="">
 
@@ -22915,7 +22915,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-influence data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/780/400/600" alt="">
 
@@ -22927,7 +22927,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-influence data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/790/400/600" alt="">
 
@@ -22939,7 +22939,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-influence data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/780/400/600" alt="">
 
@@ -22951,7 +22951,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-influence data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/800/400/600" alt="">
 
@@ -22963,7 +22963,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-influence data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/780/400/600" alt="">
 
@@ -22975,7 +22975,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-influence data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/810/400/600" alt="">
 
@@ -22987,7 +22987,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-influence data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/820/400/600" alt="">
 
@@ -22999,7 +22999,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-influence data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/830/400/600" alt="">
 
@@ -23011,7 +23011,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-influence data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/840/400/600" alt="">
 
@@ -23220,7 +23220,11 @@ const carousel = new Snap({
   });
 ```
 
-## Cylinder Carousel[​](#cylinder-carousel "Direct link to Cylinder Carousel")
+[Open live demo ↗](https://vevetjs.com/pens/XJKQwyb)
+
+## Cylinder carousel[​](#cylinder-carousel "Direct link to Cylinder carousel")
+
+Horizontal cylinder layout: slides orbit with `translateX` / `translateZ` from circular math in `onUpdate`.
 
 [Vevet Demo GgqLVWg](https://codepen.io/anton-bobrov/embed/GgqLVWg?default-tab=result)
 
@@ -23233,7 +23237,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/758/400/600" alt="">
 
@@ -23245,7 +23249,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/760/400/600" alt="">
 
@@ -23257,7 +23261,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/770/400/600" alt="">
 
@@ -23269,7 +23273,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/780/400/600" alt="">
 
@@ -23281,7 +23285,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/790/400/600" alt="">
 
@@ -23293,7 +23297,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/780/400/600" alt="">
 
@@ -23305,7 +23309,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/800/400/600" alt="">
 
@@ -23317,7 +23321,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/780/400/600" alt="">
 
@@ -23329,7 +23333,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/810/400/600" alt="">
 
@@ -23341,7 +23345,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/820/400/600" alt="">
 
@@ -23353,7 +23357,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/830/400/600" alt="">
 
@@ -23365,7 +23369,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-influence data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
 
       <img src="https://picsum.photos/id/840/400/600" alt="">
 
@@ -23578,7 +23582,11 @@ const carousel = new Snap({
   });
 ```
 
-## Perspective Carousel[​](#perspective-carousel "Direct link to Perspective Carousel")
+[Open live demo ↗](https://vevetjs.com/pens/GgqLVWg)
+
+## Perspective carousel[​](#perspective-carousel "Direct link to Perspective carousel")
+
+CSS 3D perspective carousel. Maps `progress` to `translateZ` and `rotateZ` per slide.
 
 [Vevet Demo azdEEXV](https://codepen.io/anton-bobrov/embed/azdEEXV?default-tab=result)
 
@@ -23751,17 +23759,15 @@ const carousel = new Snap({
 
   wheelAxis: "y",
 
-  centered: true,
+  origin: "center",
 
   loop: true,
 
   shortSwipes: false,
 
-  freemode: vevet.mobile ? false : "sticky"
+  freemode: "sticky"
 
 });
-
-
 
 
 
@@ -23796,7 +23802,13 @@ carousel.on("update", () => {
 container.classList.add("ready");
 ```
 
-## Stack Overlap[​](#stack-overlap "Direct link to Stack Overlap")
+[Open live demo ↗](https://vevetjs.com/pens/azdEEXV)
+
+## Stack overlap[​](#stack-overlap "Direct link to Stack overlap")
+
+Overlapping stack: the active slide stays in place while previous slides shrink back in Z-space.
+
+Driven by `progress` — `translateX`, `translateZ`, and `brightness` in `onUpdate`.
 
 [Vevet Demo LEZvwOv](https://codepen.io/anton-bobrov/embed/LEZvwOv?default-tab=result)
 
@@ -23985,7 +23997,7 @@ const carousel = new Snap({
 
   direction: "horizontal",
 
-  centered: true,
+  origin: "center",
 
   loop: false,
 
@@ -23994,8 +24006,6 @@ const carousel = new Snap({
   grabCursor: true
 
 });
-
-
 
 
 
@@ -24038,7 +24048,13 @@ carousel.on("update", (data, {
 container.classList.add("ready");
 ```
 
-## Wavy Sine[​](#wavy-sine "Direct link to Wavy Sine")
+[Open live demo ↗](https://vevetjs.com/pens/LEZvwOv)
+
+## Wavy sine[​](#wavy-sine "Direct link to Wavy sine")
+
+Horizontal track with sine-wave vertical offset, rotation, and scale per slide.
+
+Uses `eventsEmitter: document.documentElement`, `freemode: true`, and `origin: "center"`.
 
 [Vevet Demo WbxWVyO](https://codepen.io/anton-bobrov/embed/WbxWVyO?default-tab=result)
 
@@ -24203,7 +24219,7 @@ const carousel = new Snap({
 
   direction: "horizontal",
 
-  centered: true,
+  origin: "center",
 
   loop: true,
 
@@ -24214,8 +24230,6 @@ const carousel = new Snap({
   freemode: true
 
 });
-
-
 
 
 
@@ -24268,7 +24282,11 @@ carousel.on("update", (data, {
 container.classList.add("ready");
 ```
 
-## Clip-Path Carousel[​](#clip-path-carousel "Direct link to Clip-Path Carousel")
+[Open live demo ↗](https://vevetjs.com/pens/WbxWVyO)
+
+## Clip-path carousel[​](#clip-path-carousel "Direct link to Clip-path carousel")
+
+Full-page vertical carousel with `clip-path`, 3D rotation, and asymmetric reveal timing per corner.
 
 [Vevet Demo QwKwBvv](https://codepen.io/anton-bobrov/embed/QwKwBvv?default-tab=result)
 
@@ -24493,8 +24511,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -24574,7 +24590,13 @@ carousel.on("update", () => {
 });
 ```
 
-## Fullsize Parallax Rotation[​](#fullsize-parallax-rotation "Direct link to Fullsize Parallax Rotation")
+[Open live demo ↗](https://vevetjs.com/pens/QwKwBvv)
+
+## Fullsize parallax rotation[​](#fullsize-parallax-rotation "Direct link to Fullsize parallax rotation")
+
+Vertical full-page carousel with child parallax via `data-snap-parallax-*` attributes on images and content.
+
+See also [Snap parallax](https://vevetjs.com/docs/Snap/parallax). Snap moves slides with `translateY(${coord}px)`; parallax runs on nested elements.
 
 [Vevet Demo bNwKERM](https://codepen.io/anton-bobrov/embed/bNwKERM?default-tab=result)
 
@@ -24865,8 +24887,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -24888,7 +24908,11 @@ carousel.on("update", () => {
 });
 ```
 
-## Arc Carousel[​](#arc-carousel "Direct link to Arc Carousel")
+[Open live demo ↗](https://vevetjs.com/pens/bNwKERM)
+
+## Arc carousel[​](#arc-carousel "Direct link to Arc carousel")
+
+Slides follow an arc path: `coord` maps to a sine curve with tangent-based rotation and depth offset.
 
 [Vevet Demo qEayRzw](https://codepen.io/anton-bobrov/embed/qEayRzw?default-tab=result)
 
@@ -25121,7 +25145,7 @@ import {
 
   scoped
 
-} from "vevet.9.0";
+} from "vevet";
 
 
 
@@ -25139,13 +25163,11 @@ const carousel = new Snap({
 
   gap: "1rem",
 
-  centered: true,
+  origin: "center",
 
   freemode: true
 
 });
-
-
 
 
 
@@ -25208,7 +25230,13 @@ carousel.on("update", () => {
 });
 ```
 
-## Expo Slider[​](#expo-slider "Direct link to Expo Slider")
+[Open live demo ↗](https://vevetjs.com/pens/qEayRzw)
+
+## Expo slider[​](#expo-slider "Direct link to Expo slider")
+
+Expo-style carousel inspired by [Expo Slider](https://expo-slider.uiinitiative.com/).
+
+Smooth motion via `easing: EaseOutExpo`, `duration: 1500`, `lerp: 0.2`.
 
 [Vevet Demo MYyLroo](https://codepen.io/anton-bobrov/embed/MYyLroo?default-tab=result)
 
@@ -25475,7 +25503,7 @@ const carousel = new Snap({
 
   container,
 
-  centered: true,
+  origin: "center",
 
   loop: true,
 
@@ -25490,8 +25518,6 @@ const carousel = new Snap({
   duration: 1500
 
 });
-
-
 
 
 
@@ -25518,7 +25544,13 @@ carousel.on("update", () => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/MYyLroo)
+
 ## Cards[​](#cards "Direct link to Cards")
+
+Card stack with horizontal offset, Z-depth, and rotation from `progress`. Passed cards tuck beneath the active slide.
+
+Uses `onSwipeStart` to track the gesture origin slide for asymmetric motion.
 
 [Vevet Demo QwNYJGo](https://codepen.io/anton-bobrov/embed/QwNYJGo?default-tab=result)
 
@@ -25783,8 +25815,6 @@ new Snap({
 
 
 
-
-
         element.style.transform = `translateX(${x}%) translateZ(${z}px) rotate(${rotate}deg)`;
 
       });
@@ -25794,7 +25824,13 @@ new Snap({
   });
 ```
 
-## Expand Slide[​](#expand-slide "Direct link to Expand Slide")
+[Open live demo ↗](https://vevetjs.com/pens/QwNYJGo)
+
+## Expand slide[​](#expand-slide "Direct link to Expand slide")
+
+Freemode carousel where clicking a slide expands its width with [Timeline](https://vevetjs.com/docs/Timeline/) and calls `slide.resize()` + `carousel.set()`.
+
+Key props: `freemode: "sticky"`, `wheel: true`, `edgeFriction: 0.95`, `stickOnResize: false`.
 
 [Vevet Demo jEqdQZg](https://codepen.io/anton-bobrov/embed/jEqdQZg?default-tab=result)
 
@@ -26053,6 +26089,8 @@ const carousel = new Snap({
 
     freemode: "sticky",
 
+    shortSwipes: false,
+
     stickOnResize: false,
 
     edgeFriction: 0.95,
@@ -26092,10 +26130,6 @@ const carousel = new Snap({
     }
 
   });
-
-
-
-
 
 
 
@@ -26169,8 +26203,6 @@ const toggleSlide = index => {
 
 
 
-
-
         } else {
 
           carousel.clampTarget();
@@ -26182,10 +26214,6 @@ const toggleSlide = index => {
     }
 
   });
-
-
-
-
 
 
 
@@ -26208,7 +26236,13 @@ carousel.slides.forEach(({
 });
 ```
 
-## Slick Gap[​](#slick-gap "Direct link to Slick Gap")
+[Open live demo ↗](https://vevetjs.com/pens/jEqdQZg)
+
+## Slick gap[​](#slick-gap "Direct link to Slick gap")
+
+Exponential gap between slides based on `progress` — each slide gets an extra offset: `coord + progress * absGap`.
+
+Uses `freemode: "sticky"`, `origin: "center"`, and `shortSwipes: false`.
 
 [Vevet Demo myVpvoe](https://codepen.io/anton-bobrov/embed/myVpvoe?default-tab=result)
 
@@ -26389,7 +26423,7 @@ const carousel = new Snap({
 
   grabCursor: true,
 
-  centered: true,
+  origin: "center",
 
   loop: true,
 
@@ -26398,8 +26432,6 @@ const carousel = new Snap({
   shortSwipes: false
 
 });
-
-
 
 
 
@@ -26432,9 +26464,309 @@ carousel.on("update", () => {
 container.classList.add("ready");
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/myVpvoe)
+
 ## Android UI[​](#android-ui "Direct link to Android UI")
 
+Android home-screen layout with two [Snap](https://vevetjs.com/docs/Snap/) instances — page dots and a 3D active-apps dock.
+
+Also uses [Swipe](https://vevetjs.com/docs/Swipe/) and [Timeline](https://vevetjs.com/docs/Timeline/).
+
 [Vevet Demo OPMvbZL](https://codepen.io/anton-bobrov/embed/OPMvbZL?default-tab=result)
+
+HTML
+
+```
+<div class="phone">
+
+  <div class="main">
+
+    <img class="wallpaper" src="https://vevetjs.com/shared/android-ui-snap/wallpaper.png">
+
+
+
+    <div class="pages">
+
+      <div class="grid">
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/settings.png">
+
+
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/clock.png">
+
+
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/calendar.png">
+
+
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/calculator.png">
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/google.png">
+
+
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/maps.png">
+
+
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/drive.png">
+
+
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/photos.png">
+
+
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/meet.png">
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/music.png">
+
+
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/beats.png">
+
+      </div>
+
+
+
+      <div class="grid">
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/telegram.png">
+
+
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/linkedin.png">
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/instagram.png">
+
+
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/chrome.png">
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <div></div>
+
+
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/Gallery.png">
+
+
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/Files.png">
+
+
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/camera.png">
+
+      </div>
+
+
+
+      <div class="grid"></div>
+
+    </div>
+
+
+
+    <ul class="pages-nav">
+
+      <li>
+
+        <button type="button" aria-label="Page 1" class="pages-nav__button"></button>
+
+      </li>
+
+
+
+      <li>
+
+        <button type="button" aria-label="Page 1" class="pages-nav__button"></button>
+
+      </li>
+
+
+
+      <li>
+
+        <button type="button" aria-label="Page 1" class="pages-nav__button"></button>
+
+      </li>
+
+    </ul>
+
+  </div>
+
+
+
+  <div class="active-apps">
+
+    <div class="active-apps__slide">
+
+      <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/clock.png">
+
+
+
+      <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/clock.jpg">
+
+    </div>
+
+
+
+    <div class="active-apps__slide">
+
+      <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/settings.png">
+
+
+
+      <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/settings.jpg">
+
+    </div>
+
+
+
+    <div class="active-apps__slide">
+
+      <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/Files.png">
+
+
+
+      <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/files.jpg">
+
+    </div>
+
+
+
+    <div class="active-apps__slide">
+
+      <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/calendar.png">
+
+
+
+      <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/calendar.jpg">
+
+    </div>
+
+  </div>
+
+
+
+  <div class="navbar"></div>
+
+</div>
+```
 
 CSS
 
@@ -26879,8 +27211,6 @@ const pages = new Snap({
 
 
 
-
-
 pages.on("update", () => {
 
   pages.slides.forEach(({
@@ -26929,7 +27259,7 @@ const activeApps = new Snap({
 
   gap: "2.8vh",
 
-  centered: true,
+  origin: "center",
 
   freemode: "sticky",
 
@@ -26943,13 +27273,9 @@ const activeApps = new Snap({
 
 
 
-
-
 const activeAppsIcons = activeApps.slides.map((slide) =>
 
   slide.element.querySelector(".active-apps__icon"));
-
-
 
 
 
@@ -26986,8 +27312,6 @@ function renderActiveApps(progress, parallax = 0) {
       targetCoords.rotate,
 
       progress);
-
-
 
 
 
@@ -27259,8 +27583,6 @@ const activeAppsOutsideClick = addEventListener(
 
 
 
-
-
     if (!isSlide) {
 
       hideActiveApps();
@@ -27268,8 +27590,6 @@ const activeAppsOutsideClick = addEventListener(
     }
 
   });
-
-
 
 
 
@@ -27284,8 +27604,6 @@ const navbarSwipe = new Swipe({
   axis: "y"
 
 });
-
-
 
 
 
@@ -27344,7 +27662,11 @@ navbarSwipe.on("end", ({
 });
 ```
 
-## 3D Stack[​](#3d-stack "Direct link to 3D Stack")
+[Open live demo ↗](https://vevetjs.com/pens/OPMvbZL)
+
+## 3D stack[​](#3d-stack "Direct link to 3D stack")
+
+Vertical 3D stack: previous slides fold beneath the active one with `rotateX`, skew, and opacity from `progress`.
 
 [Vevet Demo dPGddQL](https://codepen.io/anton-bobrov/embed/dPGddQL?default-tab=result)
 
@@ -27537,8 +27859,6 @@ const carousel = new Snap({
 
 
 
-
-
 carousel.on("update", () => {
 
   carousel.slides.forEach(({
@@ -27614,7 +27934,11 @@ carousel.on("update", () => {
 container.classList.add("ready");
 ```
 
-## 3D Stack 2[​](#3d-stack-2 "Direct link to 3D Stack 2")
+[Open live demo ↗](https://vevetjs.com/pens/dPGddQL)
+
+## 3D stack 2[​](#3d-stack-2 "Direct link to 3D stack 2")
+
+Variant of the vertical stack — upcoming slides stay partially visible below the active slide.
 
 [Vevet Demo PwNXrEV](https://codepen.io/anton-bobrov/embed/PwNXrEV?default-tab=result)
 
@@ -27779,8 +28103,6 @@ const carousel = new Snap({
 
 
 
-
-
 carousel.on("update", () => {
 
   carousel.slides.forEach(({
@@ -27850,7 +28172,11 @@ carousel.on("update", () => {
 container.classList.add("ready");
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/PwNXrEV)
+
 ## TimeSelect[​](#timeselect "Direct link to TimeSelect")
+
+Vertical time-picker with dynamically created slides, 3D `rotateX`, and opacity fade by distance from center.
 
 [Vevet Demo KwMgpvV](https://codepen.io/anton-bobrov/embed/KwMgpvV?default-tab=result)
 
@@ -28005,8 +28331,6 @@ function createSelect(container, max) {
 
   for (let i = 0; i < max; i += 1) {
 
-    if (window.CP.shouldStopExecution(0)) break;
-
     const slide = document.createElement("div");
 
     slide.classList.add("slide");
@@ -28018,8 +28342,6 @@ function createSelect(container, max) {
     slide.innerHTML = `${i}`.padStart(2, "0");
 
   }
-
-  window.CP.exitedLoop(0);
 
 
 
@@ -28033,7 +28355,7 @@ function createSelect(container, max) {
 
     loop: true,
 
-    centered: true,
+    origin: "center",
 
     freemode: "sticky",
 
@@ -28046,8 +28368,6 @@ function createSelect(container, max) {
     shortSwipes: false
 
   });
-
-
 
 
 
@@ -28094,7 +28414,13 @@ createSelect(document.getElementById("hours"), 24);
 createSelect(document.getElementById("minutes"), 60);
 ```
 
-## Parallax Glide[​](#parallax-glide "Direct link to Parallax Glide")
+[Open live demo ↗](https://vevetjs.com/pens/KwMgpvV)
+
+## Parallax glide[​](#parallax-glide "Direct link to Parallax glide")
+
+Horizontal carousel with a glide parallax offset: `coord + parallax * (size / 2)` where `parallax = clamp(progress, 0, 1)`.
+
+Includes dot navigation via `carousel.toSlide(index)` and the `activeSlide` callback.
 
 [Vevet Demo dPGJaZr](https://codepen.io/anton-bobrov/embed/dPGJaZr?default-tab=result)
 
@@ -28375,8 +28701,6 @@ const carousel = new Snap({
 
 
 
-
-
 carousel.on("update", () => {
 
   carousel.slides.forEach(({
@@ -28442,7 +28766,11 @@ carousel.on("activeSlide", updateDots);
 updateDots();
 ```
 
-## Simple Fade[​](#simple-fade "Direct link to Simple Fade")
+[Open live demo ↗](https://vevetjs.com/pens/dPGJaZr)
+
+## Simple fade[​](#simple-fade "Direct link to Simple fade")
+
+Opacity-only transitions: `opacity = clamp(1 - Math.abs(progress))` with `followSwipe: false` so slides cross-fade instead of tracking the finger.
 
 [Vevet Demo qEbpgrJ](https://codepen.io/anton-bobrov/embed/qEbpgrJ?default-tab=result)
 
@@ -28665,8 +28993,6 @@ const carousel = new Snap({
 
 
 
-
-
 carousel.on("update", () => {
 
   carousel.slides.forEach(({
@@ -28730,6 +29056,8 @@ carousel.on("activeSlide", updateDots);
 updateDots();
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/qEbpgrJ)
+
 
 ---
 
@@ -28738,6 +29066,12 @@ updateDots();
 <!-- -->
 
 ## Carousel values[​](#carousel-values "Direct link to Carousel values")
+
+Overview demo: horizontal carousel with CSS-unit gap, smooth interpolation, and per-slide progress.
+
+Key props: `gap: "1rem"`, `lerp: 0.1`, `duration: 750`, `origin: "center"`, `loop: true`.
+
+Also reads track accessors in the `update` callback — `current`, `target`, `min`, `max`, `influence`, and each slide's `progress`.
 
 [Vevet Demo ByLxGNj](https://codepen.io/anton-bobrov/embed/ByLxGNj?default-tab=result)
 
@@ -28756,7 +29090,7 @@ HTML
 
   <div>Loop: <span data-value-loop></span></div>
 
-  <div>Influence: <span data-value-influence></span></div>
+  <div>Impulse: <span data-value-impulse></span></div>
 
   <div>Interpolating: <span data-value-interpolating></span></div>
 
@@ -28770,7 +29104,7 @@ HTML
 
   <div class="slide">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
       <div>Slide 1</div>
 
@@ -28784,7 +29118,7 @@ HTML
 
   <div class="slide">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
       <div>Slide 2</div>
 
@@ -28798,7 +29132,7 @@ HTML
 
   <div class="slide">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
       <div>Slide 3</div>
 
@@ -28812,7 +29146,7 @@ HTML
 
   <div class="slide">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
       <div>Slide 4</div>
 
@@ -28826,7 +29160,7 @@ HTML
 
   <div class="slide">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
       <div>Slide 5</div>
 
@@ -28840,7 +29174,7 @@ HTML
 
   <div class="slide">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
       <div>Slide 6</div>
 
@@ -28854,7 +29188,7 @@ HTML
 
   <div class="slide">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">
+    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
       <div>Slide 7</div>
 
@@ -28902,13 +29236,7 @@ body {
 
 
 
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
+  background: rgb(30, 43, 82);
 
   color: #fff;
 
@@ -29068,7 +29396,7 @@ import {
 
   EaseOutBack
 
-} from "vevet.10.0";
+} from "vevet";
 
 
 
@@ -29086,7 +29414,7 @@ const valueMax = document.querySelector("[data-value-max]");
 
 const valueLoop = document.querySelector("[data-value-loop]");
 
-const valueInfluence = document.querySelector("[data-value-influence]");
+const valueImpulse = document.querySelector("[data-value-impulse]");
 
 const valueInterpolating = document.querySelector("[data-value-interpolating]");
 
@@ -29108,13 +29436,13 @@ const carousel = new Snap({
 
   grabCursor: true,
 
+  freemode: "sticky",
+
   origin: "center",
 
   loop: true
 
 });
-
-
 
 
 
@@ -29146,7 +29474,7 @@ carousel.on("update", () => {
 
   valueLoop.innerHTML = carousel.loopCount;
 
-  valueInfluence.innerHTML = carousel.influence.toFixed(2);
+  valueImpulse.innerHTML = carousel.impulse.toFixed(2);
 
   valueInterpolating.innerHTML = carousel.isInterpolating;
 
@@ -29189,9 +29517,11 @@ carousel.on("idle", () => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/ByLxGNj)
+
 ## Default active index[​](#default-active-index "Direct link to Default active index")
 
-`Vevet Snap` supports a default active index. Provide `activeIndex` (zero-based) when initializing to open the carousel at a specific slide:
+Start on a specific slide with `activeIndex: 1` — a zero-based slide index.
 
 [Vevet Demo myVqdQK](https://codepen.io/anton-bobrov/embed/myVqdQK?default-tab=result)
 
@@ -29368,8 +29698,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -29393,11 +29721,11 @@ carousel.on("update", () => {
 });
 ```
 
-## Variable Size[​](#variable-size "Direct link to Variable Size")
+[Open live demo ↗](https://vevetjs.com/pens/myVqdQK)
 
-`Snap` supports slides of varying sizes - they don't need to be equal in width or height.
+## Variable size[​](#variable-size "Direct link to Variable size")
 
-Some slides may be larger than their container. In this case, they can be smoothly scrolled:
+Slides can have different widths or heights. Some slides may be wider than the container and scroll with inertia.
 
 [Vevet Demo RNNjdxK](https://codepen.io/anton-bobrov/embed/RNNjdxK?default-tab=result)
 
@@ -29572,8 +29900,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -29597,9 +29923,11 @@ carousel.on("update", () => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/RNNjdxK)
+
 ## Vertical[​](#vertical "Direct link to Vertical")
 
-`Snap` can operate in either horizontal or vertical orientation:
+Vertical carousel with `direction: "vertical"`.
 
 [Vevet Demo ZYYaZmp](https://codepen.io/anton-bobrov/embed/ZYYaZmp?default-tab=result)
 
@@ -29774,8 +30102,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -29799,9 +30125,11 @@ carousel.on("update", () => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/ZYYaZmp)
+
 ## Origin[​](#origin "Direct link to Origin")
 
-`Snap` slides can align to the **start**, **center**, or **end** of the container via [`origin`](https://vevetjs.com/docs/Snap/props#props.origin). The demo below uses centered slides (`origin: 'center'`):
+Align snap magnets with `origin: "center"`. Equivalent to the deprecated `centered: true`.
 
 [Vevet Demo PwwOgvv](https://codepen.io/anton-bobrov/embed/PwwOgvv?default-tab=result)
 
@@ -29972,11 +30300,9 @@ const carousel = new Snap({
 
   gap: 20,
 
-  centered: true
+  origin: "center"
 
 });
-
-
 
 
 
@@ -30003,9 +30329,215 @@ carousel.on("update", () => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/PwwOgvv)
+
+## Origin end[​](#origin-end "Direct link to Origin end")
+
+Align snap magnets with `origin: "end"` — the trailing edge of each slide sticks to the trailing edge of the container.
+
+[Vevet Demo jEyMGwq](https://codepen.io/anton-bobrov/embed/jEyMGwq?default-tab=result)
+
+HTML
+
+```
+<div class="carousel" id="carousel">
+
+  <div class="slide">1</div>
+
+  <div class="slide">2</div>
+
+  <div class="slide">3</div>
+
+  <div class="slide">4</div>
+
+  <div class="slide">5</div>
+
+  <div class="slide">6</div>
+
+  <div class="slide">7</div>
+
+</div>
+```
+
+CSS
+
+```
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+
+
+body {
+
+  margin: 0;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+
+
+  height: 100vh;
+
+  overflow: hidden;
+
+
+
+  background: linear-gradient(165deg,
+
+      rgb(17, 25, 42) 0%,
+
+      rgb(30, 43, 82) 40%,
+
+      rgb(0, 58, 82) 100%);
+
+  color: #fff;
+
+
+
+  font-family: "Ubuntu", sans-serif;
+
+}
+
+
+
+.carousel {
+
+  position: relative;
+
+  width: 100%;
+
+  height: 50vw;
+
+  max-height: 50vh;
+
+
+
+  opacity: 0;
+
+  transition: opacity 0.25s linear;
+
+}
+
+
+
+.carousel.ready {
+
+  opacity: 1;
+
+}
+
+
+
+.slide {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 30vw;
+
+  height: 100%;
+
+
+
+  display: flex;
+
+  flex-direction: row;
+
+  align-items: center;
+
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  padding: 20px;
+
+  border-radius: 12px;
+
+
+
+  background: rgba(255, 255, 255, 0.08);
+
+  border-radius: 16px;
+
+
+
+  font-size: 2rem;
+
+  font-weight: bold;
+
+  color: #ececec;
+
+}
+```
+
+JavaScript
+
+```
+import {
+
+  Snap
+
+} from "vevet";
+
+
+
+const container = document.getElementById("carousel");
+
+
+
+const carousel = new Snap({
+
+  container,
+
+  gap: 20,
+
+  origin: "end"
+
+});
+
+
+
+container.classList.add("ready");
+
+
+
+carousel.on("update", () => {
+
+  carousel.slides.forEach(({
+
+    element,
+
+    coord,
+
+    isVisible
+
+  }) => {
+
+    element.style.transform = `translate(${coord}px, 0)`;
+
+  });
+
+});
+```
+
+[Open live demo ↗](https://vevetjs.com/pens/jEyMGwq)
+
 ## Loop[​](#loop "Direct link to Loop")
 
-Any `Snap` carousel can be infinite:
+Infinite carousel with `loop: true`.
 
 [Vevet Demo zxxPQNR](https://codepen.io/anton-bobrov/embed/zxxPQNR?default-tab=result)
 
@@ -30176,13 +30708,11 @@ const carousel = new Snap({
 
   gap: 20,
 
-  centered: true,
+  origin: "center",
 
   loop: true
 
 });
-
-
 
 
 
@@ -30209,9 +30739,13 @@ carousel.on("update", () => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/zxxPQNR)
+
 ## Gap[​](#gap "Direct link to Gap")
 
-`Snap` supports custom gaps between slides. The gap can be set in `px`, `rem`, `vw`, `vh` or `svh`:
+Spacing between slides via `gap`. Accepts CSS units such as `px`, `rem`, `vw`, `vh`, and `svh`.
+
+Example: `gap: "10vw"`.
 
 [Vevet Demo raxYLVE](https://codepen.io/anton-bobrov/embed/raxYLVE?default-tab=result)
 
@@ -30386,8 +30920,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -30411,7 +30943,11 @@ carousel.on("update", () => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/raxYLVE)
+
 ## Grab cursor[​](#grab-cursor "Direct link to Grab cursor")
+
+Show grab/grabbing cursor during interaction with `grabCursor: true`.
 
 [Vevet Demo myVqOoR](https://codepen.io/anton-bobrov/embed/myVqOoR?default-tab=result)
 
@@ -30588,8 +31124,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -30613,9 +31147,11 @@ carousel.on("update", () => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/myVqOoR)
+
 ## Wheel[​](#wheel "Direct link to Wheel")
 
-`Snap` supports wheel control:
+Horizontal carousel controlled by the mouse wheel. Enable with `wheel: true` and `wheelAxis: "y"`. Slides snap to magnets when wheeling stops.
 
 [Vevet Demo EaaEYwX](https://codepen.io/anton-bobrov/embed/EaaEYwX?default-tab=result)
 
@@ -30674,13 +31210,7 @@ body {
 
 
 
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
+  background: rgb(30, 43, 82);
 
   color: #fff;
 
@@ -30796,8 +31326,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -30821,9 +31349,11 @@ carousel.on("update", () => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/EaaEYwX)
+
 ## Free wheel[​](#free-wheel "Direct link to Free wheel")
 
-The `Snap` wheel behavior may differ slightly. For example, after a swipe, the carousel snaps to the nearest magnet, but after a wheel scroll ends, it won't - that part is up to you:
+Magnetic snapping while swiping, but free scrolling on wheel release via `stickOnWheelEnd: false`.
 
 [Vevet Demo raxYLWB](https://codepen.io/anton-bobrov/embed/raxYLWB?default-tab=result)
 
@@ -31006,8 +31536,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -31031,9 +31559,11 @@ carousel.on("update", () => {
 });
 ```
 
-## Wheel No-Follow Auto-Throttle[​](#wheel-no-follow-auto-throttle "Direct link to Wheel No-Follow Auto-Throttle")
+[Open live demo ↗](https://vevetjs.com/pens/raxYLWB)
 
-Sometimes you may want to prevent scrolling through multiple slides at once — Vevet `Snap` provides automatic wheel throttling to handle that, which works well in most cases:
+## Throttled wheel[​](#throttled-wheel "Direct link to Throttled wheel")
+
+With `followWheel: false`, wheel input is throttled automatically so one gesture does not skip multiple slides.
 
 [Vevet Demo jEWaryX](https://codepen.io/anton-bobrov/embed/jEWaryX?default-tab=result)
 
@@ -31214,8 +31744,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -31239,7 +31767,11 @@ carousel.on("update", () => {
 });
 ```
 
-## Wheel No-Follow Numeric Throttle[​](#wheel-no-follow-numeric-throttle "Direct link to Wheel No-Follow Numeric Throttle")
+[Open live demo ↗](https://vevetjs.com/pens/jEWaryX)
+
+## Throttled wheel by time[​](#throttled-wheel-by-time "Direct link to Throttled wheel by time")
+
+Time-based wheel throttling with `followWheel: false` and `wheelThrottle: 100` — wheel input is blocked for 100ms after each slide change, including during transitions.
 
 [Vevet Demo GgZzmmr](https://codepen.io/anton-bobrov/embed/GgZzmmr?default-tab=result)
 
@@ -31422,8 +31954,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -31447,9 +31977,11 @@ carousel.on("update", () => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/GgZzmmr)
+
 ## Hypersmooth[​](#hypersmooth "Direct link to Hypersmooth")
 
-One of the best features is track value interpolation, which allows you to make scrolling and swiping as smooth as you want - right out of the box:
+Very smooth motion with low lerp and long duration. Example: `lerp: 0.05`, `duration: 1500`.
 
 [Vevet Demo VYYrOow](https://codepen.io/anton-bobrov/embed/VYYrOow?default-tab=result)
 
@@ -31634,8 +32166,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -31659,9 +32189,11 @@ carousel.on("update", () => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/VYYrOow)
+
 ## Freemode[​](#freemode "Direct link to Freemode")
 
-`Snap` freemode allows you to ignore magnets when swiping or wheel scrolling ends:
+Free scrolling with inertia via `freemode: true`. When `loop: false`, movement bounces at the track edges.
 
 [Vevet Demo bNNYPwo](https://codepen.io/anton-bobrov/embed/bNNYPwo?default-tab=result)
 
@@ -31844,8 +32376,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -31869,9 +32399,13 @@ carousel.on("update", () => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/bNNYPwo)
+
 ## Sticky freemode[​](#sticky-freemode "Direct link to Sticky freemode")
 
-`Snap` freemode also supports sticky mode. Users can scroll freely with inertia, but when their interaction ends, magnets take effect, snapping the carousel to the nearest slide:
+Combines freemode inertia with magnetic snapping at the end of the gesture: `freemode: "sticky"`.
+
+Movement stays within bounds and always settles on the nearest slide magnet when inertia ends.
 
 [Vevet Demo WbrXoVJ](https://codepen.io/anton-bobrov/embed/WbrXoVJ?default-tab=result)
 
@@ -32050,11 +32584,9 @@ const carousel = new Snap({
 
   wheelAxis: "y",
 
-  shortSwipesDuration: 30
+  shortSwipes: false
 
 });
-
-
 
 
 
@@ -32081,9 +32613,11 @@ carousel.on("update", () => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/WbrXoVJ)
+
 ## Rewind[​](#rewind "Direct link to Rewind")
 
-Enables wrap-around navigation: advancing from the last slide jumps to the first, and going back from the first jumps to the last:
+Wrap-around navigation without looping the track: `rewind: true`. Works when `loop: false` — from the last slide, next goes to the first, and vice versa.
 
 [Vevet Demo qEZgjRm](https://codepen.io/anton-bobrov/embed/qEZgjRm?default-tab=result)
 
@@ -32262,8 +32796,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -32287,9 +32819,11 @@ carousel.on("update", () => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/qEZgjRm)
+
 ## Friction[​](#friction "Direct link to Friction")
 
-`Snap` supports friction for both wheel and swipe interactions. Friction adds resistance to the user's scrolling, pulling slides toward their magnets:
+Add resistance during wheel and swipe interactions with `friction: 0.3` and `swipeFriction: true`. Pulls movement toward slide magnets.
 
 [Vevet Demo YPwEZBg](https://codepen.io/anton-bobrov/embed/YPwEZBg?default-tab=result)
 
@@ -32478,8 +33012,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -32503,9 +33035,11 @@ carousel.on("update", () => {
 });
 ```
 
-## Edge Friction[​](#edge-friction "Direct link to Edge Friction")
+[Open live demo ↗](https://vevetjs.com/pens/YPwEZBg)
 
-`Snap` supports edge friction, making swipe interactions feel more natural and engaging. Edge friction adds resistance when swiping near the carousel's edges:
+## Edge friction[​](#edge-friction "Direct link to Edge friction")
+
+Extra resistance near the carousel edges. Enabled by default — override with `edgeFriction: 0.25`.
 
 [Vevet Demo QwyOped](https://codepen.io/anton-bobrov/embed/QwyOped?default-tab=result)
 
@@ -32684,8 +33218,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -32709,9 +33241,11 @@ carousel.on("update", () => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/QwyOped)
+
 ## Interval[​](#interval "Direct link to Interval")
 
-`Snap` supports automatic slide change with custom intervals.
+Auto-advance slides with `interval: 500` — moves to the next slide 500ms after each transition ends.
 
 [Vevet Demo zxKxodd](https://codepen.io/anton-bobrov/embed/zxKxodd?default-tab=result)
 
@@ -32882,7 +33416,7 @@ const carousel = new Snap({
 
   gap: 20,
 
-  centered: true,
+  origin: "center",
 
   loop: true,
 
@@ -32891,8 +33425,6 @@ const carousel = new Snap({
   interval: 500
 
 });
-
-
 
 
 
@@ -32919,9 +33451,11 @@ carousel.on("update", () => {
 });
 ```
 
-## Bounce[​](#bounce "Direct link to Bounce")
+[Open live demo ↗](https://vevetjs.com/pens/zxKxodd)
 
-You can customize your animation - use any easing you like:
+## Easing[​](#easing "Direct link to Easing")
+
+Custom transition easing. Example: `easing: EaseOutBack`, `duration: 850`.
 
 [Vevet Demo emmVqwN](https://codepen.io/anton-bobrov/embed/emmVqwN?default-tab=result)
 
@@ -33104,8 +33638,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -33129,9 +33661,11 @@ carousel.on("update", () => {
 });
 ```
 
-## Swipe No Follow[​](#swipe-no-follow "Direct link to Swipe No Follow")
+[Open live demo ↗](https://vevetjs.com/pens/emmVqwN)
 
-By default, `Snap` follows the user's swipe interaction. This behavior can be disabled, causing slides to change only after the interaction ends:
+## Swipe no follow[​](#swipe-no-follow "Direct link to Swipe no follow")
+
+Disable live swipe tracking so slides change only after the gesture ends: `followSwipe: false`.
 
 [Vevet Demo YPwEVzo](https://codepen.io/anton-bobrov/embed/YPwEVzo?default-tab=result)
 
@@ -33310,8 +33844,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -33335,9 +33867,11 @@ carousel.on("update", () => {
 });
 ```
 
-## Reverse Swipe[​](#reverse-swipe "Direct link to Reverse Swipe")
+[Open live demo ↗](https://vevetjs.com/pens/YPwEVzo)
 
-Both wheel and swipe speeds can be customized:
+## Reverse swipe[​](#reverse-swipe "Direct link to Reverse swipe")
+
+Reverse swipe direction with a negative `swipeSpeed`. Example: `swipeSpeed: -1`.
 
 [Vevet Demo myyxbdL](https://codepen.io/anton-bobrov/embed/myyxbdL?default-tab=result)
 
@@ -33518,8 +34052,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -33543,7 +34075,15 @@ carousel.on("update", () => {
 });
 ```
 
-## RTL Carousel[​](#rtl-carousel "Direct link to RTL Carousel")
+[Open live demo ↗](https://vevetjs.com/pens/myyxbdL)
+
+## RTL carousel[​](#rtl-carousel "Direct link to RTL carousel")
+
+Manual RTL setup:
+
+* `dir="rtl"` on the container
+* `swipeSpeed: -1`
+* apply transforms with the opposite sign
 
 [Vevet Demo xbVMdVo](https://codepen.io/anton-bobrov/embed/xbVMdVo?default-tab=result)
 
@@ -33724,8 +34264,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -33747,7 +34285,11 @@ carousel.on("update", () => {
 });
 ```
 
-## Slides to Scroll[​](#slides-to-scroll "Direct link to Slides to Scroll")
+[Open live demo ↗](https://vevetjs.com/pens/xbVMdVo)
+
+## Slides to scroll[​](#slides-to-scroll "Direct link to Slides to scroll")
+
+Scroll multiple slides per interaction with `slidesToScroll: 2`.
 
 [Vevet Demo MYyLmbq](https://codepen.io/anton-bobrov/embed/MYyLmbq?default-tab=result)
 
@@ -33926,8 +34468,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -33951,7 +34491,31 @@ carousel.on("update", () => {
 });
 ```
 
-## Responsive Carousel[​](#responsive-carousel "Direct link to Responsive Carousel")
+[Open live demo ↗](https://vevetjs.com/pens/MYyLmbq)
+
+## Adaptive Snap[​](#adaptive-snap "Direct link to Adaptive Snap")
+
+Use [Responsive](https://vevetjs.com/docs/base/Responsive/) to change Snap props at breakpoints:
+
+```
+new Responsive(carousel, [
+
+  {
+
+    at: '@media (max-width: 768px)',
+
+    props: {
+
+      slidesToScroll: 1,
+
+      followSwipe: false,
+
+    },
+
+  },
+
+]);
+```
 
 [Vevet Demo LENKmpN](https://codepen.io/anton-bobrov/embed/LENKmpN?default-tab=result)
 
@@ -34140,8 +34704,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -34181,9 +34743,11 @@ new Responsive(carousel, [{
 }]);
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/LENKmpN)
+
 ## Progress[​](#progress "Direct link to Progress")
 
-`Snap` is a powerful solution for custom carousels. It allows you to track slide progress and animate them however you like:
+Read each slide's `progress` and `index` in the `update` callback — useful for parallax, opacity, and 3D effects.
 
 [Vevet Demo ByNdgGj](https://codepen.io/anton-bobrov/embed/ByNdgGj?default-tab=result)
 
@@ -34242,13 +34806,7 @@ body {
 
 
 
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
+  background: rgb(30, 43, 82);
 
   color: #fff;
 
@@ -34360,13 +34918,11 @@ const carousel = new Snap({
 
   grabCursor: true,
 
-  centered: true,
+  origin: "center",
 
   loop: true
 
 });
-
-
 
 
 
@@ -34399,7 +34955,11 @@ carousel.on("update", () => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/ByNdgGj)
+
 ## Virtual[​](#virtual "Direct link to Virtual")
+
+Virtual slides: pass `SnapSlide` instances with `virtual: true`. DOM nodes are created on init; only visible slides stay in the document.
 
 [Vevet Demo azONLzb](https://codepen.io/anton-bobrov/embed/azONLzb?default-tab=result)
 
@@ -34600,11 +35160,9 @@ const carousel = new Snap({
 
   loop: true,
 
-  centered: true
+  origin: "center"
 
 });
-
-
 
 
 
@@ -34630,6 +35188,8 @@ carousel.on("update", () => {
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/azONLzb)
 
 
 ---
@@ -35477,7 +36037,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-influence="5" data-snap-parallax-skew-directional>1</div>
+    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>1</div>
 
   </div>
 
@@ -35485,7 +36045,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-influence="5" data-snap-parallax-skew-directional>2</div>
+    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>2</div>
 
   </div>
 
@@ -35493,7 +36053,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-influence="5" data-snap-parallax-skew-directional>3</div>
+    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>3</div>
 
   </div>
 
@@ -35501,7 +36061,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-influence="5" data-snap-parallax-skew-directional>4</div>
+    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>4</div>
 
   </div>
 
@@ -35509,7 +36069,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-influence="5" data-snap-parallax-skew-directional>5</div>
+    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>5</div>
 
   </div>
 
@@ -35517,7 +36077,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-influence="5" data-snap-parallax-skew-directional>6</div>
+    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>6</div>
 
   </div>
 
@@ -35525,7 +36085,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-influence="5" data-snap-parallax-skew-directional>7</div>
+    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>7</div>
 
   </div>
 
@@ -35533,7 +36093,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-influence="5" data-snap-parallax-skew-directional>8</div>
+    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>8</div>
 
   </div>
 
@@ -35753,7 +36313,7 @@ import {
 
   Snap
 
-} from "vevet.4.0";
+} from "vevet";
 
 
 
@@ -35765,7 +36325,7 @@ const carousel = new Snap({
 
   container,
 
-  centered: true,
+  origin: "center",
 
   loop: true,
 
@@ -35783,8 +36343,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -35808,6 +36366,8 @@ carousel.on("update", () => {
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/gbrqRjZ)
+
 ### Parallax Gap[​](#parallax-gap "Direct link to Parallax Gap")
 
 [Vevet Demo gbrqRXB](https://codepen.io/anton-bobrov/embed/gbrqRXB?default-tab=result)
@@ -35819,7 +36379,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">1</div>
+    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">1</div>
 
   </div>
 
@@ -35827,7 +36387,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">2</div>
+    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">2</div>
 
   </div>
 
@@ -35835,7 +36395,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">3</div>
+    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">3</div>
 
   </div>
 
@@ -35843,7 +36403,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">4</div>
+    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">4</div>
 
   </div>
 
@@ -35851,7 +36411,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">5</div>
+    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">5</div>
 
   </div>
 
@@ -35859,7 +36419,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">6</div>
+    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">6</div>
 
   </div>
 
@@ -35867,7 +36427,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">7</div>
+    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">7</div>
 
   </div>
 
@@ -35875,7 +36435,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">8</div>
+    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">8</div>
 
   </div>
 
@@ -36095,7 +36655,7 @@ import {
 
   Snap
 
-} from "vevet.4.0";
+} from "vevet";
 
 
 
@@ -36107,7 +36667,7 @@ const carousel = new Snap({
 
   container,
 
-  centered: true,
+  origin: "center",
 
   loop: true,
 
@@ -36120,8 +36680,6 @@ const carousel = new Snap({
   grabCursor: true
 
 });
-
-
 
 
 
@@ -36147,6 +36705,8 @@ carousel.on("update", () => {
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/gbrqRXB)
 
 ## Parallax Effects[​](#parallax-effects "Direct link to Parallax Effects")
 
@@ -36429,7 +36989,19 @@ This might be useful for reverse animations.
 
 <!-- -->
 
-## Parallax Gap[​](#parallax-gap "Direct link to Parallax Gap")
+Built-in parallax via `data-snap-parallax-*` attributes on **inner wrappers** inside slides — not on the slide element itself.
+
+See [Parallax](https://vevetjs.com/docs/Snap/parallax) for the full attribute reference (scope, impulse, offset, min/max, and more). Slide `progress` is explained in [Progress](https://vevetjs.com/docs/Snap/basic-demos#progress).
+
+## Parallax gap[​](#parallax-gap "Direct link to Parallax gap")
+
+Gap between slides grows with swipe or wheel intensity.
+
+Example attributes on the inner wrapper:
+
+* `data-snap-parallax-x="-50%"`
+* `data-snap-parallax-x-scope="none"`
+* `data-snap-parallax-x-impulse="3"`
 
 [Vevet Demo gbrqRXB](https://codepen.io/anton-bobrov/embed/gbrqRXB?default-tab=result)
 
@@ -36440,7 +37012,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">1</div>
+    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">1</div>
 
   </div>
 
@@ -36448,7 +37020,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">2</div>
+    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">2</div>
 
   </div>
 
@@ -36456,7 +37028,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">3</div>
+    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">3</div>
 
   </div>
 
@@ -36464,7 +37036,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">4</div>
+    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">4</div>
 
   </div>
 
@@ -36472,7 +37044,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">5</div>
+    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">5</div>
 
   </div>
 
@@ -36480,7 +37052,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">6</div>
+    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">6</div>
 
   </div>
 
@@ -36488,7 +37060,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">7</div>
+    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">7</div>
 
   </div>
 
@@ -36496,7 +37068,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-influence="3">8</div>
+    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">8</div>
 
   </div>
 
@@ -36716,7 +37288,7 @@ import {
 
   Snap
 
-} from "vevet.4.0";
+} from "vevet";
 
 
 
@@ -36728,7 +37300,7 @@ const carousel = new Snap({
 
   container,
 
-  centered: true,
+  origin: "center",
 
   loop: true,
 
@@ -36741,8 +37313,6 @@ const carousel = new Snap({
   grabCursor: true
 
 });
-
-
 
 
 
@@ -36769,7 +37339,19 @@ carousel.on("update", () => {
 });
 ```
 
-## Skew Parallax[​](#skew-parallax "Direct link to Skew Parallax")
+[Open live demo ↗](https://vevetjs.com/pens/gbrqRXB)
+
+## Skew parallax[​](#skew-parallax "Direct link to Skew parallax")
+
+Slides skew in the swipe direction during interaction. Same parallax config on every slide.
+
+Example attributes:
+
+* `data-snap-parallax-skew="-40"`
+* `data-snap-parallax-skew-min="-40"` / `data-snap-parallax-skew-max="40"`
+* `data-snap-parallax-skew-scope="const"`
+* `data-snap-parallax-skew-impulse="5"`
+* `data-snap-parallax-skew-directional`
 
 [Vevet Demo gbrqRjZ](https://codepen.io/anton-bobrov/embed/gbrqRjZ?default-tab=result)
 
@@ -36780,7 +37362,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-influence="5" data-snap-parallax-skew-directional>1</div>
+    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>1</div>
 
   </div>
 
@@ -36788,7 +37370,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-influence="5" data-snap-parallax-skew-directional>2</div>
+    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>2</div>
 
   </div>
 
@@ -36796,7 +37378,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-influence="5" data-snap-parallax-skew-directional>3</div>
+    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>3</div>
 
   </div>
 
@@ -36804,7 +37386,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-influence="5" data-snap-parallax-skew-directional>4</div>
+    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>4</div>
 
   </div>
 
@@ -36812,7 +37394,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-influence="5" data-snap-parallax-skew-directional>5</div>
+    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>5</div>
 
   </div>
 
@@ -36820,7 +37402,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-influence="5" data-snap-parallax-skew-directional>6</div>
+    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>6</div>
 
   </div>
 
@@ -36828,7 +37410,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-influence="5" data-snap-parallax-skew-directional>7</div>
+    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>7</div>
 
   </div>
 
@@ -36836,7 +37418,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-influence="5" data-snap-parallax-skew-directional>8</div>
+    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>8</div>
 
   </div>
 
@@ -37056,7 +37638,7 @@ import {
 
   Snap
 
-} from "vevet.4.0";
+} from "vevet";
 
 
 
@@ -37068,7 +37650,7 @@ const carousel = new Snap({
 
   container,
 
-  centered: true,
+  origin: "center",
 
   loop: true,
 
@@ -37086,8 +37668,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -37111,7 +37691,17 @@ carousel.on("update", () => {
 });
 ```
 
-## Scale Parallax[​](#scale-parallax "Direct link to Scale Parallax")
+[Open live demo ↗](https://vevetjs.com/pens/gbrqRjZ)
+
+## Scale parallax[​](#scale-parallax "Direct link to Scale parallax")
+
+Side slides shrink while the active slide stays at scale `1`. Uses a narrow progress scope so only neighbors are affected.
+
+Example attributes:
+
+* `data-snap-parallax-scale="-0.2"`
+* `data-snap-parallax-scale-scope="-1,1"`
+* `data-snap-parallax-scale-abs`
 
 [Vevet Demo GgZbxyj](https://codepen.io/anton-bobrov/embed/GgZbxyj?default-tab=result)
 
@@ -37218,13 +37808,7 @@ body {
 
 
 
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
+  background: rgb(30, 43, 82);
 
   color: #fff;
 
@@ -37410,7 +37994,7 @@ const carousel = new Snap({
 
   container,
 
-  centered: true,
+  origin: "center",
 
   loop: true,
 
@@ -37425,8 +38009,6 @@ const carousel = new Snap({
   grabCursor: true
 
 });
-
-
 
 
 
@@ -37453,7 +38035,18 @@ carousel.on("update", () => {
 });
 ```
 
-## Reverse Scale Parallax[​](#reverse-scale-parallax "Direct link to Reverse Scale Parallax")
+[Open live demo ↗](https://vevetjs.com/pens/GgZbxyj)
+
+## Reverse scale parallax[​](#reverse-scale-parallax "Direct link to Reverse scale parallax")
+
+Slides scale down as they approach the active position — smallest at center, larger toward the edges.
+
+Example attributes:
+
+* `data-snap-parallax-scale="0.33"`
+* `data-snap-parallax-scale-offset="-0.66"`
+* `data-snap-parallax-scale-scope="-2,2"`
+* `data-snap-parallax-scale-abs`
 
 [Vevet Demo GgZbxEZ](https://codepen.io/anton-bobrov/embed/GgZbxEZ?default-tab=result)
 
@@ -37560,6 +38153,352 @@ body {
 
 
 
+  background: rgb(30, 43, 82);
+
+  color: #fff;
+
+
+
+  font-family: "Ubuntu", sans-serif;
+
+}
+
+
+
+.carousel {
+
+  position: relative;
+
+  width: 100%;
+
+  height: 50vw;
+
+  max-height: 50vh;
+
+
+
+  opacity: 0;
+
+  transition: opacity 0.25s linear;
+
+}
+
+
+
+.carousel.ready {
+
+  opacity: 1;
+
+}
+
+
+
+.slide {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  height: 100%;
+
+  width: 20vw;
+
+  max-width: 50vh;
+
+}
+
+
+
+.slide .wrap {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+
+
+  background: rgba(255, 255, 255, 0.08);
+
+  border-radius: 16px;
+
+
+
+  font-size: 2rem;
+
+  font-weight: bold;
+
+  color: #ececec;
+
+}
+
+
+
+.slide:nth-child(1) .wrap {
+
+  background: linear-gradient(35deg, #a33c45ff 0%, #d7888eff 100%);
+
+}
+
+
+
+.slide:nth-child(2) .wrap {
+
+  background: linear-gradient(35deg,
+
+      rgba(149, 112, 112, 1) 0%,
+
+      rgba(194, 167, 167, 1) 100%);
+
+}
+
+
+
+.slide:nth-child(3) .wrap {
+
+  background: linear-gradient(35deg, #e7a873 0%, #f7c6a4 100%);
+
+}
+
+
+
+.slide:nth-child(4) .wrap {
+
+  background: linear-gradient(35deg, #ff8b94 0%, #ffc9cd 100%);
+
+}
+
+
+
+.slide:nth-child(5) .wrap {
+
+  background: linear-gradient(35deg,
+
+      rgba(172, 162, 92, 1) 0%,
+
+      rgba(214, 208, 156, 1) 100%);
+
+}
+
+
+
+.slide:nth-child(6) .wrap {
+
+  background: linear-gradient(35deg, #654b4bff 0%, #9a7f7fff 100%);
+
+}
+
+
+
+.slide:nth-child(7) .wrap {
+
+  background: linear-gradient(35deg, #61783bff 0%, #95ab6aff 100%);
+
+}
+
+
+
+.slide:nth-child(8) .wrap {
+
+  background: linear-gradient(35deg, #9e6a48ff 0%, #cfa681ff 100%);
+
+}
+```
+
+JavaScript
+
+```
+import {
+
+  Snap
+
+} from "vevet";
+
+
+
+const container = document.getElementById("carousel");
+
+
+
+const carousel = new Snap({
+
+  container,
+
+  origin: "center",
+
+  loop: true,
+
+  gap: 0,
+
+  lerp: 0.2,
+
+  freemode: "sticky",
+
+  shortSwipes: false,
+
+  grabCursor: true
+
+});
+
+
+
+container.classList.add("ready");
+
+
+
+carousel.on("update", () => {
+
+  carousel.slides.forEach(({
+
+    element,
+
+    coord,
+
+    isVisible
+
+  }) => {
+
+    element.style.transform = `translate(${coord}px, 0)`;
+
+  });
+
+});
+```
+
+[Open live demo ↗](https://vevetjs.com/pens/GgZbxEZ)
+
+## Impulse scale[​](#impulse-scale "Direct link to Impulse scale")
+
+Slides shrink only while the carousel is moving. Driven by interaction impulse, not slide progress.
+
+Example attributes:
+
+* `data-snap-parallax-scale="-1"`
+* `data-snap-parallax-scale-min="0.5"`
+* `data-snap-parallax-scale-scope="const"`
+* `data-snap-parallax-scale-abs`
+* `data-snap-parallax-scale-impulse`
+
+[Vevet Demo NPNQqWV](https://codepen.io/anton-bobrov/embed/NPNQqWV?default-tab=result)
+
+HTML
+
+```
+<div class="carousel" id="carousel">
+
+  <div class="slide">
+
+    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>1</div>
+
+  </div>
+
+
+
+  <div class="slide">
+
+    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>2</div>
+
+  </div>
+
+
+
+  <div class="slide">
+
+    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>3</div>
+
+  </div>
+
+
+
+  <div class="slide">
+
+    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>4</div>
+
+  </div>
+
+
+
+  <div class="slide">
+
+    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>5</div>
+
+  </div>
+
+
+
+  <div class="slide">
+
+    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>6</div>
+
+  </div>
+
+
+
+  <div class="slide">
+
+    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>7</div>
+
+  </div>
+
+
+
+  <div class="slide">
+
+    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>8</div>
+
+  </div>
+
+</div>
+```
+
+CSS
+
+```
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+
+
+body {
+
+  margin: 0;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+
+
+  height: 100vh;
+
+  overflow: hidden;
+
+
+
   background: linear-gradient(165deg,
 
       rgb(17, 25, 42) 0%,
@@ -37752,349 +38691,7 @@ const carousel = new Snap({
 
   container,
 
-  centered: true,
-
-  loop: true,
-
-  gap: 0,
-
-  lerp: 0.2,
-
-  freemode: "sticky",
-
-  shortSwipes: false,
-
-  grabCursor: true
-
-});
-
-
-
-
-
-container.classList.add("ready");
-
-
-
-carousel.on("update", () => {
-
-  carousel.slides.forEach(({
-
-    element,
-
-    coord,
-
-    isVisible
-
-  }) => {
-
-    element.style.transform = `translate(${coord}px, 0)`;
-
-  });
-
-});
-```
-
-## Impulse Scale[​](#impulse-scale "Direct link to Impulse Scale")
-
-[Vevet Demo NPNQqWV](https://codepen.io/anton-bobrov/embed/NPNQqWV?default-tab=result)
-
-HTML
-
-```
-<div class="carousel" id="carousel">
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-influence>1</div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-influence>2</div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-influence>3</div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-influence>4</div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-influence>5</div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-influence>6</div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-influence>7</div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-influence>8</div>
-
-  </div>
-
-</div>
-```
-
-CSS
-
-```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-}
-
-
-
-.carousel {
-
-  position: relative;
-
-  width: 100%;
-
-  height: 50vw;
-
-  max-height: 50vh;
-
-
-
-  opacity: 0;
-
-  transition: opacity 0.25s linear;
-
-}
-
-
-
-.carousel.ready {
-
-  opacity: 1;
-
-}
-
-
-
-.slide {
-
-  position: absolute;
-
-  top: 0;
-
-  left: 0;
-
-  height: 100%;
-
-  width: 20vw;
-
-  max-width: 50vh;
-
-}
-
-
-
-.slide .wrap {
-
-  position: absolute;
-
-  top: 0;
-
-  left: 0;
-
-  width: 100%;
-
-  height: 100%;
-
-
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-
-
-  background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
-
-}
-
-
-
-.slide:nth-child(1) .wrap {
-
-  background: linear-gradient(35deg, #a33c45ff 0%, #d7888eff 100%);
-
-}
-
-
-
-.slide:nth-child(2) .wrap {
-
-  background: linear-gradient(35deg,
-
-      rgba(149, 112, 112, 1) 0%,
-
-      rgba(194, 167, 167, 1) 100%);
-
-}
-
-
-
-.slide:nth-child(3) .wrap {
-
-  background: linear-gradient(35deg, #e7a873 0%, #f7c6a4 100%);
-
-}
-
-
-
-.slide:nth-child(4) .wrap {
-
-  background: linear-gradient(35deg, #ff8b94 0%, #ffc9cd 100%);
-
-}
-
-
-
-.slide:nth-child(5) .wrap {
-
-  background: linear-gradient(35deg,
-
-      rgba(172, 162, 92, 1) 0%,
-
-      rgba(214, 208, 156, 1) 100%);
-
-}
-
-
-
-.slide:nth-child(6) .wrap {
-
-  background: linear-gradient(35deg, #654b4bff 0%, #9a7f7fff 100%);
-
-}
-
-
-
-.slide:nth-child(7) .wrap {
-
-  background: linear-gradient(35deg, #61783bff 0%, #95ab6aff 100%);
-
-}
-
-
-
-.slide:nth-child(8) .wrap {
-
-  background: linear-gradient(35deg, #9e6a48ff 0%, #cfa681ff 100%);
-
-}
-```
-
-JavaScript
-
-```
-import {
-
-  Snap
-
-} from "vevet.4.0";
-
-
-
-const container = document.getElementById("carousel");
-
-
-
-const carousel = new Snap({
-
-  container,
-
-  centered: true,
+  origin: "center",
 
   loop: true,
 
@@ -38112,8 +38709,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -38137,7 +38732,19 @@ carousel.on("update", () => {
 });
 ```
 
-## Scoped Impulse Scale[​](#scoped-impulse-scale "Direct link to Scoped Impulse Scale")
+[Open live demo ↗](https://vevetjs.com/pens/NPNQqWV)
+
+## Scoped impulse scale[​](#scoped-impulse-scale "Direct link to Scoped impulse scale")
+
+Non-active slides scale during interaction, clamped between a min and max. Combines progress scope with impulse.
+
+Example attributes:
+
+* `data-snap-parallax-scale="-0.25"`
+* `data-snap-parallax-scale-scope="-2,2"`
+* `data-snap-parallax-scale-min="0.5"` / `data-snap-parallax-scale-max="1"`
+* `data-snap-parallax-scale-abs`
+* `data-snap-parallax-scale-impulse="3"`
 
 [Vevet Demo yyOmYZq](https://codepen.io/anton-bobrov/embed/yyOmYZq?default-tab=result)
 
@@ -38148,7 +38755,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-influence="3">1</div>
+    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">1</div>
 
   </div>
 
@@ -38156,7 +38763,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-influence="3">2</div>
+    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">2</div>
 
   </div>
 
@@ -38164,7 +38771,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-influence="3">3</div>
+    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">3</div>
 
   </div>
 
@@ -38172,7 +38779,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-influence="3">4</div>
+    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">4</div>
 
   </div>
 
@@ -38180,7 +38787,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-influence="3">5</div>
+    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">5</div>
 
   </div>
 
@@ -38188,7 +38795,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-influence="3">6</div>
+    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">6</div>
 
   </div>
 
@@ -38196,7 +38803,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-influence="3">7</div>
+    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">7</div>
 
   </div>
 
@@ -38204,7 +38811,7 @@ HTML
 
   <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-influence="3">8</div>
+    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">8</div>
 
   </div>
 
@@ -38424,7 +39031,7 @@ import {
 
   Snap
 
-} from "vevet.7.0";
+} from "vevet";
 
 
 
@@ -38436,7 +39043,7 @@ const carousel = new Snap({
 
   container,
 
-  centered: true,
+  origin: "center",
 
   loop: true,
 
@@ -38451,8 +39058,6 @@ const carousel = new Snap({
   grabCursor: true
 
 });
-
-
 
 
 
@@ -38479,7 +39084,16 @@ carousel.on("update", () => {
 });
 ```
 
-## Fullsize Parallax[​](#fullsize-parallax "Direct link to Fullsize Parallax")
+[Open live demo ↗](https://vevetjs.com/pens/yyOmYZq)
+
+## Fullsize parallax[​](#fullsize-parallax "Direct link to Fullsize parallax")
+
+Horizontal full-width carousel. Title and description inside each slide move at different X speeds.
+
+Example attributes on nested elements:
+
+* `data-snap-parallax-x="10rem"` + `data-snap-parallax-x-abs` on the title
+* `data-snap-parallax-x="20rem"` + `data-snap-parallax-x-abs` on the description
 
 [Vevet Demo gbrNeZW](https://codepen.io/anton-bobrov/embed/gbrNeZW?default-tab=result)
 
@@ -38858,8 +39472,6 @@ const carousel = new Snap({
 
 
 
-
-
 container.classList.add("ready");
 
 
@@ -38882,6 +39494,8 @@ carousel.on("update", () => {
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/gbrNeZW)
 
 
 ---
@@ -40251,11 +40865,9 @@ const carousel = new Snap({
 
   loop: true,
 
-  centered: true
+  origin: "center"
 
 });
-
-
 
 
 
@@ -40281,6 +40893,8 @@ carousel.on("update", () => {
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/azONLzb)
 
 ## Parameters[​](#parameters "Direct link to Parameters")
 
@@ -40551,7 +41165,7 @@ import {
 
   stagger
 
-} from "https://esm.sh/animejs@4";
+} from "animejs";
 
 
 
@@ -40619,14 +41233,14 @@ const splitText = new SplitText({
 
 
 
-
-
 document.getElementById("animate").onclick = function() {
 
   tl.restart();
 
 };
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/gbbYKQN)
 
 ## More demos[​](#more-demos "Direct link to More demos")
 
@@ -40947,7 +41561,7 @@ destruct();
 
 ## Animated letters[​](#animated-letters "Direct link to Animated letters")
 
-Animate Vevet SplitText letters with [Anime.js](https://animejs.com/):
+Initialize SplitText with `letters: true`, then animate the split letters with [Anime.js](https://animejs.com/).
 
 [Vevet Demo gbbYKQN](https://codepen.io/anton-bobrov/embed/gbbYKQN?default-tab=result)
 
@@ -41108,7 +41722,7 @@ import {
 
   stagger
 
-} from "https://esm.sh/animejs@4";
+} from "animejs";
 
 
 
@@ -41176,8 +41790,6 @@ const splitText = new SplitText({
 
 
 
-
-
 document.getElementById("animate").onclick = function() {
 
   tl.restart();
@@ -41185,9 +41797,11 @@ document.getElementById("animate").onclick = function() {
 };
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/gbbYKQN)
+
 ## Animated lines[​](#animated-lines "Direct link to Animated lines")
 
-SplitText lines can be easily animated by lines:
+Initialize SplitText with `lines: true`, then animate the split lines with [Anime.js](https://animejs.com/).
 
 [Vevet Demo JoXePjG](https://codepen.io/anton-bobrov/embed/JoXePjG?default-tab=result)
 
@@ -41340,7 +41954,7 @@ import {
 
   stagger
 
-} from "https://esm.sh/animejs@4";
+} from "animejs";
 
 
 
@@ -41402,8 +42016,6 @@ const splitText = new SplitText({
 
 
 
-
-
 document.getElementById("animate").onclick = function() {
 
   tl?.restart();
@@ -41411,9 +42023,11 @@ document.getElementById("animate").onclick = function() {
 };
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/JoXePjG)
+
 ## Reveal lines[​](#reveal-lines "Direct link to Reveal lines")
 
-SplitText provides an additional wrapper for lines, making reveal animations simpler to implement:
+Use `lines: true` with `linesWrapper: true` to wrap each line in an extra container — useful for mask and reveal animations.
 
 [Vevet Demo vEEBrPP](https://codepen.io/anton-bobrov/embed/vEEBrPP?default-tab=result)
 
@@ -41574,7 +42188,7 @@ import {
 
   stagger
 
-} from "https://esm.sh/animejs@4";
+} from "animejs";
 
 
 
@@ -41638,8 +42252,6 @@ const splitText = new SplitText({
 
 
 
-
-
 document.getElementById("animate").onclick = function() {
 
   tl?.restart();
@@ -41647,7 +42259,11 @@ document.getElementById("animate").onclick = function() {
 };
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/vEEBrPP)
+
 ## Chinese[​](#chinese "Direct link to Chinese")
+
+Split Chinese text with `prepareText` and `Intl.Segmenter('zh', { granularity: 'word' })`. Whitespace-based splitting does not work reliably for CJK text.
 
 [Vevet Demo NPNEKPL](https://codepen.io/anton-bobrov/embed/NPNEKPL?default-tab=result)
 
@@ -41802,7 +42418,7 @@ import {
 
   stagger
 
-} from "https://esm.sh/animejs@4";
+} from "animejs";
 
 
 
@@ -41870,8 +42486,6 @@ const splitText = new SplitText({
 
 
 
-
-
 document.getElementById("animate").onclick = function() {
 
   tl?.restart();
@@ -41879,7 +42493,11 @@ document.getElementById("animate").onclick = function() {
 };
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/NPNEKPL)
+
 ## Thai[​](#thai "Direct link to Thai")
+
+Split Thai text with `prepareText` and `Intl.Segmenter('th', { granularity: 'word' })`.
 
 [Vevet Demo WbwYerY](https://codepen.io/anton-bobrov/embed/WbwYerY?default-tab=result)
 
@@ -42034,7 +42652,7 @@ import {
 
   stagger
 
-} from "https://esm.sh/animejs@4";
+} from "animejs";
 
 
 
@@ -42102,8 +42720,6 @@ const splitText = new SplitText({
 
 
 
-
-
 document.getElementById("animate").onclick = function() {
 
   tl?.restart();
@@ -42111,7 +42727,11 @@ document.getElementById("animate").onclick = function() {
 };
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/WbwYerY)
+
 ## Arabic[​](#arabic "Direct link to Arabic")
+
+Split Arabic text with `prepareText` and `Intl.Segmenter('ar', { granularity: 'word' })`. Set `direction: rtl` on the container for RTL languages.
 
 [Vevet Demo pvyQzyB](https://codepen.io/anton-bobrov/embed/pvyQzyB?default-tab=result)
 
@@ -42266,7 +42886,7 @@ import {
 
   stagger
 
-} from "https://esm.sh/animejs@4";
+} from "animejs";
 
 
 
@@ -42334,8 +42954,6 @@ const splitText = new SplitText({
 
 
 
-
-
 document.getElementById("animate").onclick = function() {
 
   tl?.restart();
@@ -42343,9 +42961,11 @@ document.getElementById("animate").onclick = function() {
 };
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/pvyQzyB)
+
 ## Text formatting[​](#text-formatting "Direct link to Text formatting")
 
-SplitText can handle HTML elements inside. They can all be animated the way you want:
+SplitText preserves inline HTML, `<br>` tags, `&nbsp;`, nested tags, and emojis inside the container.
 
 [Vevet Demo ZYYzRwy](https://codepen.io/anton-bobrov/embed/ZYYzRwy?default-tab=result)
 
@@ -42502,7 +43122,7 @@ import {
 
 } from "vevet";
 
-import gsap from "https://esm.sh/gsap";
+import gsap from "gsap";
 
 
 
@@ -42556,8 +43176,6 @@ const splitText = new SplitText({
 
 
 
-
-
 document.getElementById("animate").onclick = function() {
 
   tl.restart();
@@ -42565,7 +43183,14 @@ document.getElementById("animate").onclick = function() {
 };
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/ZYYzRwy)
+
 ## Word Delimiter[​](#word-delimiter "Direct link to Word Delimiter")
+
+Customize word splitting and output separators:
+
+* `wordDelimiter: " "` — delimiter used to split input text into words
+* `wordDelimiterOutput: "—"` — separator inserted between words in the output
 
 [Vevet Demo OPNaLmw](https://codepen.io/anton-bobrov/embed/OPNaLmw?default-tab=result)
 
@@ -42712,7 +43337,7 @@ import {
 
   stagger
 
-} from "https://esm.sh/animejs@4";
+} from "animejs";
 
 
 
@@ -42774,8 +43399,6 @@ const splitText = new SplitText({
 
 
 
-
-
 document.getElementById("animate").onclick = function() {
 
   tl?.restart();
@@ -42783,9 +43406,11 @@ document.getElementById("animate").onclick = function() {
 };
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/OPNaLmw)
+
 ## Split into letters[​](#split-into-letters "Direct link to Split into letters")
 
-Simple text division into letters:
+Letter splitting with `letters: true`. Every even letter is highlighted.
 
 [Vevet Demo azdLgPp](https://codepen.io/anton-bobrov/embed/azdLgPp?default-tab=result)
 
@@ -42893,9 +43518,11 @@ const splitText = new SplitText({
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/azdLgPp)
+
 ## Split into words[​](#split-into-words "Direct link to Split into words")
 
-Simple text division into words:
+Words are split by default. Every even word is highlighted.
 
 [Vevet Demo JoGrQQy](https://codepen.io/anton-bobrov/embed/JoGrQQy?default-tab=result)
 
@@ -43001,9 +43628,11 @@ const splitText = new SplitText({
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/JoGrQQy)
+
 ## Split into lines[​](#split-into-lines "Direct link to Split into lines")
 
-Simple text division into lines:
+Line splitting with `lines: true`. Every even line is highlighted.
 
 [Vevet Demo zxrEgYZ](https://codepen.io/anton-bobrov/embed/zxrEgYZ?default-tab=result)
 
@@ -43111,9 +43740,11 @@ const splitText = new SplitText({
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/zxrEgYZ)
+
 ## Ignore selectors[​](#ignore-selectors "Direct link to Ignore selectors")
 
-Sometimes you may not want to split certain elements - no problem! We can handle that:
+Skip specific elements during splitting with `ignore: ".ignore-me"`. Also accepts an array of elements or a filter function.
 
 [Vevet Demo MYKENye](https://codepen.io/anton-bobrov/embed/MYKENye?default-tab=result)
 
@@ -43238,6 +43869,8 @@ const splitText = new SplitText({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/MYKENye)
 
 
 ---
@@ -43764,8 +44397,6 @@ new Swipe({
 
 
 
-
-
 // HORIZONTAL
 
 
@@ -43819,8 +44450,6 @@ new Swipe({
   }
 
 });
-
-
 
 
 
@@ -43880,8 +44509,6 @@ new Swipe({
 
 
 
-
-
 // ROTATION
 
 
@@ -43924,6 +44551,8 @@ new Swipe({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/bNNbKyV)
 
 ## More demos[​](#more-demos "Direct link to More demos")
 
@@ -45185,8 +45814,6 @@ new Swipe({
 
 
 
-
-
 // HORIZONTAL
 
 
@@ -45240,8 +45867,6 @@ new Swipe({
   }
 
 });
-
-
 
 
 
@@ -45301,8 +45926,6 @@ new Swipe({
 
 
 
-
-
 // ROTATION
 
 
@@ -45345,6 +45968,8 @@ new Swipe({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/bNNbKyV)
 
 ## Multidirectional Swipe[​](#multidirectional-swipe "Direct link to Multidirectional Swipe")
 
@@ -45489,6 +46114,8 @@ new Swipe({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/xbVmaaB)
 
 ## Right-Click Drag[​](#right-click-drag "Direct link to Right-Click Drag")
 
@@ -45636,6 +46263,8 @@ new Swipe({
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/MYyLWLb)
+
 ## Horizontal Swipe[​](#horizontal-swipe "Direct link to Horizontal Swipe")
 
 [Vevet Demo ZYWVMqR](https://codepen.io/anton-bobrov/embed/ZYWVMqR?default-tab=result)
@@ -45781,6 +46410,8 @@ new Swipe({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/ZYWVMqR)
 
 ## Vertical Swipe[​](#vertical-swipe "Direct link to Vertical Swipe")
 
@@ -45928,6 +46559,8 @@ new Swipe({
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/vEGvzvO)
+
 ## Rotation Swipe[​](#rotation-swipe "Direct link to Rotation Swipe")
 
 [Vevet Demo qEZLMLz](https://codepen.io/anton-bobrov/embed/qEZLMLz?default-tab=result)
@@ -46071,6 +46704,8 @@ new Swipe({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/qEZLMLz)
 
 ## Slide Right[​](#slide-right "Direct link to Slide Right")
 
@@ -46243,8 +46878,6 @@ const swipe = new Swipe({
 
 
 
-
-
 onResize({
 
   element: [container],
@@ -46257,6 +46890,8 @@ onResize({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/NPdRrLy)
 
 ## Lever rotation[​](#lever-rotation "Direct link to Lever rotation")
 
@@ -46430,6 +47065,8 @@ new Swipe({
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/bNpOmGo)
+
 ## Detect Swipe Direction[​](#detect-swipe-direction "Direct link to Detect Swipe Direction")
 
 [Vevet Demo ZYWVMwj](https://codepen.io/anton-bobrov/embed/ZYWVMwj?default-tab=result)
@@ -46590,6 +47227,8 @@ new Swipe({
 });
 ```
 
+[Open live demo ↗](https://vevetjs.com/pens/ZYWVMwj)
+
 ## Drag Inertia[​](#drag-inertia "Direct link to Drag Inertia")
 
 [Vevet Demo azNPaxx](https://codepen.io/anton-bobrov/embed/azNPaxx?default-tab=result)
@@ -46733,6 +47372,8 @@ new Swipe({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/azNPaxx)
 
 ## Drag Inertia Bounce[​](#drag-inertia-bounce "Direct link to Drag Inertia Bounce")
 
@@ -46895,6 +47536,8 @@ new Swipe({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/zxqbwVg)
 
 ## Ball[​](#ball "Direct link to Ball")
 
@@ -47073,6 +47716,8 @@ new Swipe({
 
 });
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/pvyqOMV)
 
 
 ---
@@ -48478,10 +49123,6 @@ const tm = new Timeline({
 
 
 
-
-
-
-
 document.getElementById("play").addEventListener("click", () => tm.play());
 
 
@@ -48500,6 +49141,8 @@ addEventListener("click", () => tm.reverse());
 
 document.getElementById("reset").addEventListener("click", () => tm.reset());
 ```
+
+[Open live demo ↗](https://vevetjs.com/pens/jEENKjV)
 
 ## Initialization[​](#initialization "Direct link to Initialization")
 

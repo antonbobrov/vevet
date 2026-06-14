@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · NPNEKPL</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 30px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 100vh;
+
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+  color: #fff;
+
+  font-family: "Ubuntu", sans-serif;
+}
+
+#quote {
+  max-width: 20em;
+  font-size: 24px;
+  text-align: center;
+  line-height: 1.2;
+  font-kerning: none;
+
+  opacity: 0;
+}
+
+.ignore {
+  display: inline-block;
+}
+
+.button {
+  margin-top: 2rem;
+  height: 3rem;
+  padding: 0 2rem;
+  border: 0;
+  cursor: pointer;
+
+  background: linear-gradient(135deg,
+      rgb(13, 110, 253) 0%,
+      rgb(140, 122, 230) 50%,
+      rgb(0, 201, 177) 100%);
+  background-size: 200% auto;
+  box-shadow: 0 4px 20px rgba(13, 110, 253, 0.1);
+  border-radius: 50vw;
+
+  font: inherit;
+  font-size: 1.25rem;
+  color: currentColor;
+
+  transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.button:hover {
+  background-position: right center;
+}</style>
+      </head>
+      <body>
+        <div id="quote"><span class="ignore">vevet.js</span> 太简洁了我爱死它了!</div>
+
+<button type="button" id="animate" class="button">Animate</button>
+        
+  <script type="module">
+import {
+  SplitText
+} from "https://esm.sh/vevet@5";
+import {
+  animate,
+  stagger
+} from "https://esm.sh/animejs@4";
+
+let tl;
+const container = document.getElementById("quote");
+const segmenter = new Intl.Segmenter("zh", {
+  granularity: "word"
+});
+
+const splitText = new SplitText({
+  container: document.getElementById("quote"),
+  ignore: ".ignore",
+  prepareText: (source) => [...segmenter.segment(source)].map(s => s.segment).join(" "),
+  onSplit: (data, {
+    words
+  }) => {
+    container.style.opacity = "1";
+
+    tl = animate(words, {
+      duration: 350,
+      opacity: {
+        from: 0,
+        to: 1
+      },
+      ease: "outSine",
+      delay: stagger(250),
+      y: {
+        from: "-100%",
+        to: 0
+      }
+    });
+
+  }
+});
+
+document.getElementById("animate").onclick = function() {
+  tl?.restart();
+};
+
+  </script>
+      </body>
+    </html>
+  

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · azNXojO</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 100vh;
+
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+  color: #fff;
+
+  font-family: "Ubuntu", sans-serif;
+  font-size: 30px;
+}
+
+.container {
+  display: grid;
+  gap: 30px;
+  width: 300px;
+}
+
+.sample {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(35deg,
+      rgb(255, 127, 135) 0%,
+      rgb(244, 214, 157) 100%);
+  font-size: 16px;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1vw;
+}
+
+.button {
+  height: 48px;
+  padding: 0 32px;
+  border: 0;
+  cursor: pointer;
+
+  background: linear-gradient(135deg,
+      rgb(13, 110, 253) 0%,
+      rgb(140, 122, 230) 50%,
+      rgb(0, 201, 177) 100%);
+  background-size: 200% auto;
+  box-shadow: 0 4px 20px rgba(13, 110, 253, 0.1);
+  border-radius: 50vw;
+
+  font: inherit;
+  font-size: 24px;
+  color: currentColor;
+
+  transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.button:hover {
+  background-position: right center;
+}</style>
+      </head>
+      <body>
+        <div class="container">
+  <div class="sample" id="factor"></div>
+
+  <div class="buttons">
+    <button type="button" class="button" id="play">Play</button>
+
+    <button type="button" class="button" id="pause">Pause</button>
+  </div>
+</div>
+        
+  <script type="module">
+import {
+  Raf,
+  lerp
+} from "https://esm.sh/vevet@5";
+
+const factor = document.getElementById("factor");
+
+let x = 0;
+
+const raf = new Raf({
+  enabled: true,
+  onFrame: () => {
+    x = (x + raf.fpsFactor) % 250;
+
+    factor.style.transform = `translateX(${x}px)`;
+    factor.innerHTML = raf.fps;
+  }
+});
+
+document.getElementById("play").addEventListener("click", () => raf.play());
+
+document.getElementById("pause").addEventListener("click", () => raf.pause());
+
+  </script>
+      </body>
+    </html>
+  

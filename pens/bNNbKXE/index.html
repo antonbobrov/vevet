@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · bNNbKXE</title>
+        <style>body {
+  margin: 0;
+  padding: 30px;
+  min-height: 100vh;
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+}
+
+.container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}</style>
+      </head>
+      <body>
+        <div class="container" id="container"></div>
+        
+  <script type="module">
+import {
+  Canvas
+} from "https://esm.sh/vevet@5";
+
+const instance = new Canvas({
+  container: document.getElementById("container")
+});
+
+const render = ({
+  ctx,
+  width,
+  height
+}) => {
+  ctx.beginPath();
+  ctx.fillStyle = "#f8f9ff";
+  ctx.fillRect(0, 0, width, height);
+  ctx.closePath();
+
+  ctx.beginPath();
+  ctx.fillStyle = "#0D6EFD";
+  ctx.fillRect(10, 10, 50, 50);
+  ctx.closePath();
+};
+
+instance.render(render);
+instance.on("resize", () => instance.render(render));
+
+  </script>
+      </body>
+    </html>
+  

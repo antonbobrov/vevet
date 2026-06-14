@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · GgZzmmr</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 100vh;
+  overflow: hidden;
+
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+  color: #fff;
+
+  font-family: "Ubuntu", sans-serif;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  opacity: 0;
+  transition: opacity 0.25s linear;
+}
+
+.carousel.ready {
+  opacity: 1;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 20px;
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ececec;
+}</style>
+      </head>
+      <body>
+        <div class="carousel" id="carousel">
+  <div class="slide">1</div>
+  <div class="slide">2</div>
+  <div class="slide">3</div>
+  <div class="slide">4</div>
+  <div class="slide">5</div>
+  <div class="slide">6</div>
+  <div class="slide">7</div>
+</div>
+        
+  <script type="module">
+import {
+  Snap
+} from "https://esm.sh/vevet@5";
+
+const container = document.getElementById("carousel");
+
+const carousel = new Snap({
+  container,
+  gap: 20,
+  direction: "vertical",
+  wheel: true,
+  followWheel: false,
+  wheelThrottle: 100,
+  grabCursor: true
+});
+
+container.classList.add("ready");
+
+carousel.on("update", () => {
+  carousel.slides.forEach(({
+    element,
+    coord,
+    isVisible
+  }) => {
+    element.style.transform = `translate(0, ${coord}px)`;
+  });
+});
+
+  </script>
+      </body>
+    </html>
+  

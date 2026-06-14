@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · OPMvbZL</title>
+        <style>body {
+  height: 100vh;
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+}
+
+.phone {
+  --size: 85vh;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(0.4617 * var(--size));
+  height: var(--size);
+  border: calc(0.012 * var(--size)) solid #000;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+
+  border-radius: calc(0.04 * var(--size));
+  overflow: hidden;
+}
+
+.main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.pages-nav {
+  position: absolute;
+  bottom: 15.8%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  gap: calc(0.01328125 * var(--size));
+
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.pages-nav__button {
+  display: block;
+  padding: 0;
+  border: 0;
+  width: calc(0.0078125 * var(--size));
+  height: calc(0.0078125 * var(--size));
+  border-radius: 50%;
+  opacity: 0.5;
+  transition: opacity 0.125s linear;
+
+  background: #fff;
+
+  &.active {
+    opacity: 1;
+  }
+}
+
+.pages {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: calc(0.03 * var(--size)) calc(0.023 * var(--size));
+  padding: calc(0.096 * var(--size)) calc(0.03 * var(--size));
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  div {
+    aspect-ratio: 1;
+  }
+}
+
+.wallpaper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.active-apps {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(0 0 0 / 50%);
+
+  transform-style: preserve-3d;
+  perspective: var(--size);
+
+  opacity: 0;
+  pointer-events: none;
+
+  &.active {
+    pointer-events: all;
+  }
+}
+
+.active-apps__slide {
+  position: absolute;
+  top: calc(0.144 * var(--size));
+  left: 0;
+  width: calc(0.2912 * var(--size));
+  height: calc(0.5965 * var(--size));
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.active-apps__preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-position: cover;
+  border-radius: calc(0.022 * var(--size));
+}
+
+.active-apps__icon {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 50%;
+  width: 20%;
+  height: auto;
+  transform: translate(-50%, -50%);
+}
+
+.navbar {
+  position: absolute;
+  bottom: calc(-0.023437 * var(--size));
+  bottom: 0;
+  left: 50%;
+  width: calc(0.16 * var(--size));
+  height: calc(0.0359375 * var(--size));
+  transform: translateX(-50%);
+  cursor: grab;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: calc(0.0046875 * var(--size));
+    margin-top: calc(0.0046875 * var(--size));
+    border-radius: 3px;
+    opacity: 0.5;
+    background: #fff;
+
+    animation: navbar-pulse;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+  }
+}
+
+@keyframes navbar-pulse {
+  from {
+    transform: scale(1) translateY(0%);
+  }
+
+  50% {
+    transform: scale(1.1) translateY(-100%);
+  }
+
+  to {
+    transform: scale(1) translateY(0%);
+  }
+}</style>
+      </head>
+      <body>
+        <div class="phone">
+  <div class="main">
+    <img class="wallpaper" src="https://vevetjs.com/shared/android-ui-snap/wallpaper.png">
+
+    <div class="pages">
+      <div class="grid">
+        <img src="https://vevetjs.com/shared/android-ui-snap/settings.png">
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/clock.png">
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/calendar.png">
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/calculator.png">
+
+        <div></div>
+
+        <div></div>
+
+        <div></div>
+
+        <div></div>
+
+        <div></div>
+
+        <div></div>
+
+        <div></div>
+
+        <div></div>
+
+        <div></div>
+
+        <div></div>
+
+        <div></div>
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/google.png">
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/maps.png">
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/drive.png">
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/photos.png">
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/meet.png">
+
+        <div></div>
+
+        <div></div>
+
+        <div></div>
+
+        <div></div>
+
+        <div></div>
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/music.png">
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/beats.png">
+      </div>
+
+      <div class="grid">
+        <img src="https://vevetjs.com/shared/android-ui-snap/telegram.png">
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/linkedin.png">
+
+        <div></div>
+
+        <div></div>
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/instagram.png">
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/chrome.png">
+
+        <div></div>
+
+        <div></div>
+
+        <div></div>
+
+        <div></div>
+
+        <div></div>
+
+        <div></div>
+
+        <div></div>
+
+        <div></div>
+
+        <div></div>
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/Gallery.png">
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/Files.png">
+
+        <img src="https://vevetjs.com/shared/android-ui-snap/camera.png">
+      </div>
+
+      <div class="grid"></div>
+    </div>
+
+    <ul class="pages-nav">
+      <li>
+        <button type="button" aria-label="Page 1" class="pages-nav__button"></button>
+      </li>
+
+      <li>
+        <button type="button" aria-label="Page 1" class="pages-nav__button"></button>
+      </li>
+
+      <li>
+        <button type="button" aria-label="Page 1" class="pages-nav__button"></button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="active-apps">
+    <div class="active-apps__slide">
+      <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/clock.png">
+
+      <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/clock.jpg">
+    </div>
+
+    <div class="active-apps__slide">
+      <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/settings.png">
+
+      <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/settings.jpg">
+    </div>
+
+    <div class="active-apps__slide">
+      <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/Files.png">
+
+      <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/files.jpg">
+    </div>
+
+    <div class="active-apps__slide">
+      <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/calendar.png">
+
+      <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/calendar.jpg">
+    </div>
+  </div>
+
+  <div class="navbar"></div>
+</div>
+        
+  <script type="module">
+import {
+  Snap,
+  lerp,
+  clamp,
+  scoped,
+  EaseInOutSine,
+  Swipe,
+  addEventListener,
+  easing,
+  Timeline,
+  clampScope,
+  EaseOutSine
+} from "https://esm.sh/vevet@5";
+
+const activeAppsContainer = document.querySelector(".active-apps");
+const navbarContainer = document.querySelector(".navbar");
+const pagesContainer = document.querySelector(".pages");
+
+const pages = new Snap({
+  container: pagesContainer,
+  direction: "horizontal"
+});
+
+pages.on("update", () => {
+  pages.slides.forEach(({
+    element,
+    coord
+  }) => {
+    element.style.transform = `translateX(${coord}px)`;
+  });
+});
+
+const pagesDots = document.querySelectorAll(".pages-nav__button");
+pagesDots[0].classList.add("active");
+
+pages.on("activeSlide", () => {
+  pagesDots.forEach((dot, index) => {
+    dot.classList.toggle("active", index === pages.activeIndex);
+  });
+});
+
+///
+
+const activeApps = new Snap({
+  container: activeAppsContainer,
+  direction: "horizontal",
+  gap: "2.8vh",
+  origin: "center",
+  freemode: "sticky",
+  shortSwipes: false,
+  swipeInertiaRatio: 0.1,
+  activeIndex: activeAppsContainer.children.length - 1
+});
+
+const activeAppsIcons = activeApps.slides.map((slide) =>
+  slide.element.querySelector(".active-apps__icon"));
+
+activeApps.on("update", () => renderActiveApps(1));
+
+function renderActiveApps(progress, parallax = 0) {
+  const activeSlideCoords = getActiveAppsCoords(activeApps.activeSlide);
+
+  activeApps.slides.forEach(slide => {
+    const targetCoords = getActiveAppsCoords(slide);
+    const x = lerp(activeSlideCoords.x, targetCoords.x, progress) + parallax;
+
+    const z = lerp(activeSlideCoords.z, targetCoords.z, progress);
+
+    const scale = lerp(activeSlideCoords.scale, targetCoords.scale, progress);
+
+    const rotate = lerp(
+      activeSlideCoords.rotate,
+      targetCoords.rotate,
+      progress);
+
+    const iconOpacity = 1 - clamp(Math.abs(slide.progress));
+    const iconScale = lerp(0.75, 1.01, iconOpacity);
+    const iconY = lerp(40, 0, iconOpacity);
+
+    const icon = activeAppsIcons[slide.index];
+
+    slide.element.style.transform = `translate3d(${x}px, 0, ${z}px) scale(${scale}) rotateY(${rotate}deg)`;
+    icon.style.transform = `scale(${iconScale}) translate(-50%, ${
+    -50 - iconY
+    }%)`;
+    icon.style.opacity = `${iconOpacity}`;
+  });
+}
+
+function getActiveAppsCoords({
+  coord,
+  progress,
+  size
+}) {
+  let scale = 1;
+  let x = coord;
+  let z = 0;
+  let rotate = 0;
+
+  if (progress < 0) {
+    const scaleProgress = clamp(Math.abs(progress), 0, 1);
+    const targetScale = 1.0497;
+    scale = 1 + (targetScale - 1) * scaleProgress;
+  } else {
+    x += size * progress * 0.725;
+    z += size * progress * -0.35;
+    rotate = progress * 10;
+  }
+
+  return {
+    scale,
+    x,
+    z,
+    rotate
+  };
+}
+
+///
+
+let showActiveAppsTm;
+let hideActiveAppsTm;
+
+let isAactiveAppsVisible = false;
+
+function showActiveApps() {
+  if (showActiveAppsTm || isAactiveAppsVisible || hideActiveAppsTm) {
+    return;
+  }
+
+  activeAppsContainer.classList.add("active");
+
+  isAactiveAppsVisible = true;
+
+  showActiveAppsTm = new Timeline({
+    duration: 650
+  });
+
+  showActiveAppsTm.on("update", ({
+    progress
+  }) => {
+    const showProgress = clampScope(progress, [0, 0.5]);
+    const appsProgress = clampScope(progress, [0.3, 1]);
+
+    pagesContainer.style.transform = `scale(${1 - 0.05 * progress})`;
+    pagesContainer.style.opacity = `${1 - progress}`;
+
+    activeAppsContainer.style.backdropFilter = `blur(${showProgress * 10}px)`;
+    activeAppsContainer.style.opacity = `${showProgress}`;
+
+    const appsParallax = lerp(-20, 0, easing(appsProgress, EaseOutSine));
+    renderActiveApps(easing(appsProgress, EaseOutSine), appsParallax);
+  });
+
+  showActiveAppsTm.on("end", () => {
+    showActiveAppsTm = undefined;
+  });
+
+  showActiveAppsTm.play();
+}
+
+function hideActiveApps() {
+  if (!isAactiveAppsVisible || showActiveAppsTm) {
+    return;
+  }
+
+  activeAppsContainer.classList.remove("active");
+
+  isAactiveAppsVisible = false;
+
+  hideActiveAppsTm = new Timeline({
+    duration: 200
+  });
+
+  hideActiveAppsTm.on("update", ({
+    progress
+  }) => {
+    const showProgress = 1 - progress;
+
+    pagesContainer.style.transform = `scale(${0.95 + 0.05 * progress})`;
+    pagesContainer.style.opacity = `${progress}`;
+
+    activeAppsContainer.style.backdropFilter = `blur(${showProgress * 10}px)`;
+    activeAppsContainer.style.opacity = `${showProgress}`;
+  });
+
+  hideActiveAppsTm.on("end", () => {
+    hideActiveAppsTm = undefined;
+    activeApps.toSlide(activeApps.slides.length - 1, {
+      duration: 0
+    });
+  });
+
+  hideActiveAppsTm.play();
+}
+
+///
+
+const activeAppsOutsideClick = addEventListener(
+  activeAppsContainer,
+  "click",
+  evt => {
+    const {
+      target
+    } = evt;
+    const isSlide = activeApps.slides.some(({
+        element
+      }) =>
+      element?.contains(target));
+
+    if (!isSlide) {
+      hideActiveApps();
+    }
+  });
+
+///
+
+const navbarSwipe = new Swipe({
+  container: navbarContainer,
+  axis: "y"
+});
+
+navbarSwipe.on("move", ({
+  diff
+}) => {
+  const max = -50;
+  const swipeProgress = easing(clamp(diff.y / max, 0, 1), EaseInOutSine);
+
+  const y = swipeProgress * max;
+  const scale = 1 + swipeProgress * 0.1;
+
+  navbarContainer.style.transition = "none";
+  navbarContainer.style.transform = `translate(-50%, ${y}%) scale(${scale})`;
+});
+
+navbarSwipe.on("end", ({
+  diff
+}) => {
+  navbarContainer.style.transition = "transform 0.35s ease-out";
+  navbarContainer.style.transform = "translate(-50%, 0)";
+
+  if (diff.y < -20) {
+    if (isAactiveAppsVisible) {
+      hideActiveApps();
+    } else {
+      showActiveApps();
+    }
+  }
+});
+
+  </script>
+      </body>
+    </html>
+  

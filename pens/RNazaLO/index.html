@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · RNazaLO</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+  color: #fff;
+
+  font-family: "Ubuntu", sans-serif;
+  text-align: center;
+  font-size: 30px;
+}
+
+.v-cursor__inner {
+  background-color: transparent !important;
+  border: 2px solid #fff;
+  border-radius: 50%;
+}
+
+h1 {
+  font-size: 40px;
+  font-weight: 600;
+}</style>
+      </head>
+      <body>
+        <h1>Move Your Cursor</h1>
+        
+  <script type="module">
+import {
+  Cursor
+} from "https://esm.sh/vevet@5";
+
+const count = 15;
+
+for (let index = 0; index < count; index += 1) {
+  const lerp = 0.1;
+
+  new Cursor({
+    lerp: lerp - lerp * 0.7 / count * index,
+    behavior: "path" // comment this line to see difference
+  });
+}
+
+  </script>
+      </body>
+    </html>
+  

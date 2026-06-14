@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · qEZLMLz</title>
+        <style>body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+}
+
+.item {
+  width: 80px;
+  height: 80px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+  background-color: #000;
+
+  font-size: 12px;
+
+  img {
+    width: 40px;
+    height: auto;
+    filter: invert(100%);
+  }
+}</style>
+      </head>
+      <body>
+        <div id="rotation" class="item" style="background: linear-gradient(35deg, rgb(255, 127, 135) 0%, rgb(244, 214, 157) 100%);">
+  <img src="https://www.svgrepo.com/show/533709/rotate.svg" alt="">
+</div>
+        
+  <script type="module">
+import {
+  Swipe
+} from "https://esm.sh/vevet@5";
+
+new Swipe({
+  container: document.getElementById("rotation"),
+  relative: true,
+  grabCursor: true,
+  onMove: ({
+    diff
+  }, {
+    container
+  }) => {
+    container.style.transition = "";
+    container.style.transform = `rotate(${diff.angle}deg)`;
+  },
+  onEnd: (data, {
+    container
+  }) => {
+    container.style.transition = "transform 0.25s";
+    container.style.transform = "none";
+  }
+});
+
+  </script>
+      </body>
+    </html>
+  

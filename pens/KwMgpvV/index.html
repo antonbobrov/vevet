@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · KwMgpvV</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  height: 100vh;
+  overflow: hidden;
+
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+
+  font-family: "Ubuntu", sans-serif;
+  font-size: 2rem;
+  line-height: 2rem;
+  font-weight: bold;
+  color: #ececec;
+}
+
+.carousel {
+  position: relative;
+  width: 4rem;
+  height: 100%;
+
+  opacity: 0;
+  transition: opacity 0.25s linear;
+
+  transform-style: preserve-3d;
+  perspective: 6rem;
+}
+
+.carousel.ready {
+  opacity: 1;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3rem;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}</style>
+      </head>
+      <body>
+        <div class="carousel" id="hours"></div>
+
+:
+
+<div class="carousel" id="minutes"></div>
+        
+  <script type="module">
+import {
+  Snap,
+  clamp,
+  scoped
+} from "https://esm.sh/vevet@5";
+
+function createSelect(container, max) {
+  for (let i = 0; i < max; i += 1) {
+    const slide = document.createElement("div");
+    slide.classList.add("slide");
+    container.append(slide);
+
+    slide.innerHTML = `${i}`.padStart(2, "0");
+  }
+
+  const carousel = new Snap({
+    container,
+    gap: 0,
+    direction: "vertical",
+    loop: true,
+    origin: "center",
+    freemode: "sticky",
+    wheel: true,
+    grabCursor: true,
+    swipeInertiaRatio: 0.6,
+    shortSwipes: false
+  });
+
+  container.classList.add("ready");
+
+  carousel.on("update", () => {
+    carousel.slides.forEach(({
+      element,
+      coord,
+      isVisible,
+      progress
+    }) => {
+      const rotateX = progress * 20;
+      const z = Math.abs(progress) * -0.5;
+      const opacity = 1 - clamp(Math.abs(scoped(progress, 0, 2.5)));
+
+      element.style.transform = `translate(0, ${coord}px) rotateX(${rotateX}deg) translateZ(${z}rem)`;
+      element.style.opacity = opacity;
+    });
+  });
+}
+
+createSelect(document.getElementById("hours"), 24);
+createSelect(document.getElementById("minutes"), 60);
+
+  </script>
+      </body>
+    </html>
+  

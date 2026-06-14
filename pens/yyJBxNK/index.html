@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · yyJBxNK</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 0 10px;
+
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+  color: #fff;
+
+  font-family: "Ubuntu", sans-serif;
+  font-size: 30px;
+}
+
+.elastic-cursor {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+.dot-cursor {
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+h1 {
+  margin: 30px 0;
+  font-size: 40px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}</style>
+      </head>
+      <body>
+        <div class="container">
+  <h1>Elastic Cursor</h1>
+</div>
+        
+  <script type="module">
+import {
+  Cursor
+} from "https://esm.sh/vevet@5";
+
+const elasticCursor = new Cursor({
+  lerp: 0.3,
+  width: 80,
+  height: 80,
+  transformModifier: ({
+    x,
+    y,
+    angle,
+    velocity
+  }) => {
+    const scale = velocity * 0.2;
+    const scaleX = 1 + scale;
+    const scaleY = 1 - scale;
+
+    return `translate(${x}px, ${y}px) rotate(${angle}deg) scale(${scaleX}, ${scaleY})`;
+  }
+});
+
+elasticCursor.inner.classList.add("elastic-cursor");
+
+const dotCursor = new Cursor({
+  lerp: 0.5,
+  width: 10,
+  height: 10,
+  hideNative: true
+});
+
+dotCursor.inner.classList.add("dot-cursor");
+
+  </script>
+      </body>
+    </html>
+  

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · emzOjqK</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 0 10px;
+
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+  color: #fff;
+
+  font-family: "Ubuntu", sans-serif;
+  font-size: 30px;
+}
+
+.bg-cursor {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+}
+
+.dot-cursor {
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+h1 {
+  margin: 30px 0;
+  font-size: 40px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+
+  .grid {
+    width: 600px;
+    max-width: 100%;
+  }
+}
+
+.grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  border-radius: 10px;
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.1);
+
+  transition: background-color 1s;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+}</style>
+      </head>
+      <body>
+        <div class="container">
+  <h1>Custom Sticky Cursor</h1>
+
+  <div class="grid">
+    <div class="item" data-sticky-x>Sticky-X</div>
+
+    <div class="item" data-sticky-y>Sticky-Y</div>
+
+    <div class="item" data-sticky-xy>Sticky-XY</div>
+  </div>
+</div>
+        
+  <script type="module">
+import {
+  Cursor
+} from "https://esm.sh/vevet@5";
+
+const bgCursor = new Cursor({
+  lerp: 0.1,
+  width: 80,
+  height: 80
+});
+
+bgCursor.inner.classList.add("bg-cursor");
+
+const dotCursor = new Cursor({
+  lerp: 0.5,
+  width: 10,
+  height: 10,
+  hideNative: true
+});
+
+dotCursor.inner.classList.add("dot-cursor");
+
+const stickyX = document.querySelector("[data-sticky-x]");
+
+const stickyY = document.querySelector("[data-sticky-y]");
+
+const stickyXY = document.querySelector("[data-sticky-xy]");
+
+bgCursor.attachHover({
+  element: stickyX,
+  snap: true,
+  width: 30,
+  height: 30,
+  sticky: true,
+  stickyAmplitude: {
+    x: 10,
+    y: 0
+  },
+  stickyLerp: 0.2
+});
+
+bgCursor.attachHover({
+  element: stickyY,
+  snap: true,
+  width: 30,
+  height: 30,
+  sticky: true,
+  stickyAmplitude: {
+    x: 0,
+    y: 20
+  },
+  stickyLerp: 0.2
+});
+
+bgCursor.attachHover({
+  element: stickyXY,
+  snap: true,
+  width: 30,
+  height: 30,
+  sticky: true,
+  stickyAmplitude: 10,
+  stickyLerp: 0.2
+});
+
+  </script>
+      </body>
+    </html>
+  

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · qEbpgrJ</title>
+        <style>body {
+  background: #000;
+}
+
+.carousel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  opacity: 0;
+  transition: opacity 0.25s linear;
+}
+
+.carousel.ready {
+  opacity: 1;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dots {
+  position: fixed;
+  z-index: 1;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+
+  display: flex;
+  gap: 10px;
+}
+
+.dot {
+  padding: 0;
+  cursor: pointer;
+
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 2px solid #000;
+
+  transition: border-color 0.35s linear, background-color 0.35s linear;
+}
+
+.dot.active {
+  background-color: #000;
+  border-color: #fff;
+}</style>
+      </head>
+      <body>
+        <div class="carousel" id="carousel">
+  <div class="slide">
+    <img src="https://picsum.photos/id/1070/1920/1080" alt="">
+  </div>
+  <div class="slide">
+    <img src="https://picsum.photos/id/1080/1920/1080" alt="">
+  </div>
+  <div class="slide">
+    <img src="https://picsum.photos/id/1082/1920/1080" alt="">
+  </div>
+</div>
+
+<ul class="dots">
+  <li>
+    <button type="button" class="dot" title="Slide 1"></button>
+  </li>
+
+  <li>
+    <button type="button" class="dot" title="Slide 2"></button>
+  </li>
+
+  <li>
+    <button type="button" class="dot" title="Slide 3"></button>
+  </li>
+</ul>
+        
+  <script type="module">
+import {
+  Snap,
+  vevet,
+  clamp
+} from "https://esm.sh/vevet@5";
+
+const container = document.getElementById("carousel");
+
+const carousel = new Snap({
+  container,
+  direction: "horizontal",
+  followSwipe: false,
+  loop: true
+});
+
+carousel.on("update", () => {
+  carousel.slides.forEach(({
+    element,
+    size,
+    coord,
+    progress
+  }) => {
+    const opacity = clamp(1 - Math.abs(progress));
+
+    element.style.opacity = `${opacity}`;
+  });
+});
+
+container.classList.add("ready");
+
+const dots = document.querySelectorAll(".dot");
+
+dots.forEach((dot, index) => {
+  dot.addEventListener("click", () => {
+    carousel.toSlide(index);
+  });
+});
+
+function updateDots() {
+  dots.forEach((dot, index) => {
+    dot.classList.toggle("active", index === carousel.activeIndex);
+  });
+}
+
+carousel.on("activeSlide", updateDots);
+updateDots();
+
+  </script>
+      </body>
+    </html>
+  

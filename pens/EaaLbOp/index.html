@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · EaaLbOp</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 100vh;
+
+  background: rgb(30, 43, 82);
+  color: #fff;
+
+  font-family: "Ubuntu", sans-serif;
+  font-size: 40px;
+}</style>
+      </head>
+      <body>
+        <div id="marquee">This is a reverse marquee🔥</div>
+        
+  <script type="module">
+import {
+  Marquee
+} from "https://esm.sh/vevet@5";
+
+new Marquee({
+  container: document.getElementById("marquee"),
+  speed: -1
+});
+
+  </script>
+      </body>
+    </html>
+  

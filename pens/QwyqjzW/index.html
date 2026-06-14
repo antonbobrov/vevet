@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · QwyqjzW</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2vw;
+
+  height: 100vh;
+
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+  color: #fff;
+
+  font-family: "Ubuntu", sans-serif;
+  font-size: 40px;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1vw;
+  width: 400px;
+}
+
+.button {
+  height: 48px;
+  padding: 0 32px;
+  border: 0;
+  cursor: pointer;
+
+  background: linear-gradient(135deg,
+      rgb(13, 110, 253) 0%,
+      rgb(140, 122, 230) 50%,
+      rgb(0, 201, 177) 100%);
+  background-size: 200% auto;
+  box-shadow: 0 4px 20px rgba(13, 110, 253, 0.1);
+  border-radius: 50vw;
+
+  font: inherit;
+  font-size: 24px;
+  color: currentColor;
+
+  transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.button:hover {
+  background-position: right center;
+}</style>
+      </head>
+      <body>
+        <div id="marquee">You can control me&nbsp;😃&nbsp;</div>
+<div class="buttons">
+  <button type="button" class="button" id="play">Play</button>
+
+  <button type="button" class="button" id="pause">Pause</button>
+</div>
+
+<div class="buttons">
+  <button type="button" class="button" id="faster">Faster</button>
+
+  <button type="button" class="button" id="slower">Slower</button>
+</div>
+
+<div class="buttons">
+  <button type="button" class="button" id="render">Render</button>
+
+  <button type="button" class="button" id="render10">Render 10</button>
+</div>
+        
+  <script type="module">
+import {
+  Marquee
+} from "https://esm.sh/vevet@5";
+
+const instance = new Marquee({
+  container: document.getElementById("marquee")
+});
+
+const play = document.getElementById("play");
+play.addEventListener("click", () => {
+  instance.updateProps({
+    enabled: true
+  });
+});
+
+const pause = document.getElementById("pause");
+pause.addEventListener("click", () => {
+  instance.updateProps({
+    enabled: false
+  });
+});
+
+const faster = document.getElementById("faster");
+faster.addEventListener("click", () => {
+  instance.updateProps({
+    speed: instance.props.speed * 1.5
+  });
+});
+
+const slower = document.getElementById("slower");
+slower.addEventListener("click", () => {
+  instance.updateProps({
+    speed: instance.props.speed / 1.5
+  });
+});
+
+const render = document.getElementById("render");
+render.addEventListener("click", () => {
+  instance.render(1);
+});
+
+const render10 = document.getElementById("render10");
+render10.addEventListener("click", () => {
+  instance.render(10);
+});
+
+  </script>
+      </body>
+    </html>
+  

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · raaBKYy</title>
+        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+
+  background: linear-gradient(165deg,
+      rgb(17, 25, 42) 0%,
+      rgb(30, 43, 82) 40%,
+      rgb(0, 58, 82) 100%);
+  color: #fff;
+
+  font-family: "Ubuntu", sans-serif;
+  font-size: 40px;
+}
+
+.gap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50vh;
+  text-align: center;
+}
+
+.container {
+  padding: 25vh 0;
+}
+
+#marquee {
+  img {
+    width: 200px !important;
+    min-width: 30vw;
+    height: auto;
+    display: block;
+    border-radius: 1rem;
+  }
+}</style>
+      </head>
+      <body>
+        <div class="gap">Scroll The Page</div>
+
+<div class="container">
+  <div id="marquee">
+    <img src="https://picsum.photos/id/199/300/200" width="300" height="200" alt="">
+    <img src="https://picsum.photos/id/201/300/200" width="300" height="200" alt="">
+    <img src="https://picsum.photos/id/203/300/200" width="300" height="200" alt="">
+    <img src="https://picsum.photos/id/206/300/200" width="300" height="200" alt="">
+  </div>
+</div>
+
+<div class="gap">Scroll The Page</div>
+        
+  <script type="module">
+import {
+  Marquee,
+  ScrollProgress
+} from "https://esm.sh/vevet@5";
+
+const marquee = new Marquee({
+  container: document.getElementById("marquee"),
+  gap: "2vw",
+  enabled: false
+});
+
+let prevProgress = 0;
+
+const scrollable = new ScrollProgress({
+  section: document.querySelector(".container"),
+  onUpdate: (data, {
+    progress
+  }) => {
+    let step = progress.y - prevProgress;
+    marquee.render(step * marquee.totalWidth);
+
+    prevProgress = progress.y;
+  }
+});
+
+  </script>
+      </body>
+    </html>
+  
