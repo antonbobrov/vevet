@@ -5,31 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · QwNYpmp</title>
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
-        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-body {
-  margin: 0;
-  padding: 0 30px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  height: 100vh;
-
-  background: linear-gradient(165deg,
-      rgb(17, 25, 42) 0%,
-      rgb(30, 43, 82) 40%,
-      rgb(0, 58, 82) 100%);
-  background-attachment: fixed;
-  color: #fff;
-
-  font-family: "Ubuntu", sans-serif;
-  font-size: 30px;
-}
-
-#preloader {
+        <style>#preloader {
   position: fixed;
   top: 0;
   left: 0;
@@ -41,34 +17,29 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3vw;
+  gap: 1rem;
 
   background: linear-gradient(165deg,
       rgb(17, 25, 42) 0%,
       rgb(30, 43, 82) 40%,
       rgb(0, 58, 82) 100%);
 
-  font-size: 50px;
+  font-size: 1.5rem;
 }
 
 .grid {
   width: 100%;
-  min-height: 100vh;
-  padding: 3vw;
-  box-sizing: border-box;
+  padding: 1rem;
 
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 2vw;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
 
   img {
     display: block;
-    width: 30%;
+    width: 100%;
     height: auto;
-    border-radius: 10px;
+    border-radius: 1rem;
   }
 }</style>
       </head>
