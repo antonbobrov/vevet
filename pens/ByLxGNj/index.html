@@ -4,34 +4,13 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · ByLxGNj</title>
-        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-body {
-  margin: 0;
-  padding: 20px;
-  box-sizing: border-box;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-
-  height: 100vh;
-  overflow: hidden;
-
-  background: rgb(30, 43, 82);
-  color: #fff;
-
-  font-family: "Ubuntu", sans-serif;
-  font-variant-numeric: tabular-nums;
-}
-
-.info {
+        <style>.info {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
   width: 80%;
+  gap: 0.5rem;
+
+  font-size: 0.875rem;
 
   >* {
     &:nth-child(2n + 2) {
@@ -76,18 +55,13 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  text-align: center;
 
-  box-sizing: border-box;
-  padding: 20px;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #ececec;
-  text-align: center;
 }
 
 .slide [data-progress] {
@@ -97,64 +71,66 @@ body {
 }</style>
       </head>
       <body>
-        <div class="info">
-  <div>Current: <span data-value-current></span></div>
-  <div>Target: <span data-value-target></span></div>
-  <div>Min: <span data-value-min></span></div>
-  <div>Max: <span data-value-max></span></div>
-  <div>Loop: <span data-value-loop></span></div>
-  <div>Impulse: <span data-value-impulse></span></div>
-  <div>Interpolating: <span data-value-interpolating></span></div>
-  <div>Idle: <span data-value-idle></span></div>
-</div>
-
-<div class="carousel" id="carousel">
-  <div class="slide">
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
-      <div>Slide 1</div>
-      <div data-progress>0%</div>
-    </div>
+        <div class="fullpage-center">
+  <div class="info">
+    <div>Current: <span data-value-current></span></div>
+    <div>Target: <span data-value-target></span></div>
+    <div>Min: <span data-value-min></span></div>
+    <div>Max: <span data-value-max></span></div>
+    <div>Loop: <span data-value-loop></span></div>
+    <div>Impulse: <span data-value-impulse></span></div>
+    <div>Interpolating: <span data-value-interpolating></span></div>
+    <div>Idle: <span data-value-idle></span></div>
   </div>
 
-  <div class="slide">
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
-      <div>Slide 2</div>
-      <div data-progress>0%</div>
+  <div class="carousel" id="carousel">
+    <div class="slide">
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+        <div>Slide 1</div>
+        <div data-progress>0%</div>
+      </div>
     </div>
-  </div>
 
-  <div class="slide">
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
-      <div>Slide 3</div>
-      <div data-progress>0%</div>
+    <div class="slide">
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+        <div>Slide 2</div>
+        <div data-progress>0%</div>
+      </div>
     </div>
-  </div>
 
-  <div class="slide">
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
-      <div>Slide 4</div>
-      <div data-progress>0%</div>
+    <div class="slide">
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+        <div>Slide 3</div>
+        <div data-progress>0%</div>
+      </div>
     </div>
-  </div>
 
-  <div class="slide">
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
-      <div>Slide 5</div>
-      <div data-progress>0%</div>
+    <div class="slide">
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+        <div>Slide 4</div>
+        <div data-progress>0%</div>
+      </div>
     </div>
-  </div>
 
-  <div class="slide">
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
-      <div>Slide 6</div>
-      <div data-progress>0%</div>
+    <div class="slide">
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+        <div>Slide 5</div>
+        <div data-progress>0%</div>
+      </div>
     </div>
-  </div>
 
-  <div class="slide">
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
-      <div>Slide 7</div>
-      <div data-progress>0%</div>
+    <div class="slide">
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+        <div>Slide 6</div>
+        <div data-progress>0%</div>
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+        <div>Slide 7</div>
+        <div data-progress>0%</div>
+      </div>
     </div>
   </div>
 </div>

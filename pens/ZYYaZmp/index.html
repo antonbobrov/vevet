@@ -4,28 +4,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · ZYYaZmp</title>
-        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-body {
-  margin: 0;
-  padding: 20px;
-  box-sizing: border-box;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  height: 100vh;
+        <style>.wrapper {
+  display: grid;
+  padding: 1rem;
+  height: 100svh;
   overflow: hidden;
-
-  background: linear-gradient(165deg,
-      rgb(17, 25, 42) 0%,
-      rgb(30, 43, 82) 40%,
-      rgb(0, 58, 82) 100%);
-  color: #fff;
-
-  font-family: "Ubuntu", sans-serif;
 }
 
 .carousel {
@@ -52,27 +35,22 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
-  padding: 20px;
-  border-radius: 12px;
 
+  border-radius: 1rem;
   background: rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-
-  font-size: 2rem;
-  font-weight: bold;
-  color: #ececec;
 }</style>
       </head>
       <body>
-        <div class="carousel" id="carousel">
-  <div class="slide">1</div>
-  <div class="slide">2</div>
-  <div class="slide">3</div>
-  <div class="slide">4</div>
-  <div class="slide">5</div>
-  <div class="slide">6</div>
-  <div class="slide">7</div>
+        <div class="wrapper">
+  <div class="carousel" id="carousel">
+    <div class="slide">1</div>
+    <div class="slide">2</div>
+    <div class="slide">3</div>
+    <div class="slide">4</div>
+    <div class="slide">5</div>
+    <div class="slide">6</div>
+    <div class="slide">7</div>
+  </div>
 </div>
         
   <script type="module">
@@ -84,7 +62,7 @@ const container = document.getElementById("carousel");
 
 const carousel = new Snap({
   container,
-  gap: 20,
+  gap: "1rem",
   direction: "vertical"
 });
 

@@ -20487,121 +20487,125 @@ Snap is a flexible, low-level carousel handler focused on precise control over m
 HTML
 
 ```
-<div class="info">
+<div class="fullpage-center">
 
-  <div>Current: <span data-value-current></span></div>
+  <div class="info">
 
-  <div>Target: <span data-value-target></span></div>
+    <div>Current: <span data-value-current></span></div>
 
-  <div>Min: <span data-value-min></span></div>
+    <div>Target: <span data-value-target></span></div>
 
-  <div>Max: <span data-value-max></span></div>
+    <div>Min: <span data-value-min></span></div>
 
-  <div>Loop: <span data-value-loop></span></div>
+    <div>Max: <span data-value-max></span></div>
 
-  <div>Impulse: <span data-value-impulse></span></div>
+    <div>Loop: <span data-value-loop></span></div>
 
-  <div>Interpolating: <span data-value-interpolating></span></div>
+    <div>Impulse: <span data-value-impulse></span></div>
 
-  <div>Idle: <span data-value-idle></span></div>
+    <div>Interpolating: <span data-value-interpolating></span></div>
 
-</div>
-
-
-
-<div class="carousel" id="carousel">
-
-  <div class="slide">
-
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
-
-      <div>Slide 1</div>
-
-      <div data-progress>0%</div>
-
-    </div>
+    <div>Idle: <span data-value-idle></span></div>
 
   </div>
 
 
 
-  <div class="slide">
+  <div class="carousel" id="carousel">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+    <div class="slide">
 
-      <div>Slide 2</div>
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
-      <div data-progress>0%</div>
+        <div>Slide 1</div>
 
-    </div>
+        <div data-progress>0%</div>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
-
-      <div>Slide 3</div>
-
-      <div data-progress>0%</div>
+      </div>
 
     </div>
 
-  </div>
 
 
+    <div class="slide">
 
-  <div class="slide">
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+        <div>Slide 2</div>
 
-      <div>Slide 4</div>
+        <div data-progress>0%</div>
 
-      <div data-progress>0%</div>
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
-
-      <div>Slide 5</div>
-
-      <div data-progress>0%</div>
+      </div>
 
     </div>
 
-  </div>
 
 
+    <div class="slide">
 
-  <div class="slide">
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+        <div>Slide 3</div>
 
-      <div>Slide 6</div>
+        <div data-progress>0%</div>
 
-      <div data-progress>0%</div>
+      </div>
 
     </div>
 
-  </div>
+
+
+    <div class="slide">
+
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+
+        <div>Slide 4</div>
+
+        <div data-progress>0%</div>
+
+      </div>
+
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
-      <div>Slide 7</div>
+        <div>Slide 5</div>
 
-      <div data-progress>0%</div>
+        <div data-progress>0%</div>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+
+        <div>Slide 6</div>
+
+        <div data-progress>0%</div>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+
+        <div>Slide 7</div>
+
+        <div data-progress>0%</div>
+
+      </div>
 
     </div>
 
@@ -20613,61 +20617,19 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 2rem;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: rgb(30, 43, 82);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-variant-numeric: tabular-nums;
-
-}
-
-
-
 .info {
 
   display: grid;
 
   grid-template-columns: 1fr 1fr;
 
-  gap: 1rem;
-
   width: 80%;
+
+  gap: 0.5rem;
+
+
+
+  font-size: 0.875rem;
 
 
 
@@ -20757,29 +20719,19 @@ body {
 
   justify-content: center;
 
+  text-align: center;
+
+
+
   gap: 1rem;
 
+  padding: 1rem;
 
-
-  box-sizing: border-box;
-
-  padding: 20px;
+  border-radius: 1rem;
 
 
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 1.5rem;
-
-  font-weight: bold;
-
-  color: #ececec;
-
-  text-align: center;
 
 }
 
@@ -28472,121 +28424,125 @@ Also reads track accessors in the `update` callback — `current`, `target`, `mi
 HTML
 
 ```
-<div class="info">
+<div class="fullpage-center">
 
-  <div>Current: <span data-value-current></span></div>
+  <div class="info">
 
-  <div>Target: <span data-value-target></span></div>
+    <div>Current: <span data-value-current></span></div>
 
-  <div>Min: <span data-value-min></span></div>
+    <div>Target: <span data-value-target></span></div>
 
-  <div>Max: <span data-value-max></span></div>
+    <div>Min: <span data-value-min></span></div>
 
-  <div>Loop: <span data-value-loop></span></div>
+    <div>Max: <span data-value-max></span></div>
 
-  <div>Impulse: <span data-value-impulse></span></div>
+    <div>Loop: <span data-value-loop></span></div>
 
-  <div>Interpolating: <span data-value-interpolating></span></div>
+    <div>Impulse: <span data-value-impulse></span></div>
 
-  <div>Idle: <span data-value-idle></span></div>
+    <div>Interpolating: <span data-value-interpolating></span></div>
 
-</div>
-
-
-
-<div class="carousel" id="carousel">
-
-  <div class="slide">
-
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
-
-      <div>Slide 1</div>
-
-      <div data-progress>0%</div>
-
-    </div>
+    <div>Idle: <span data-value-idle></span></div>
 
   </div>
 
 
 
-  <div class="slide">
+  <div class="carousel" id="carousel">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+    <div class="slide">
 
-      <div>Slide 2</div>
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
-      <div data-progress>0%</div>
+        <div>Slide 1</div>
 
-    </div>
+        <div data-progress>0%</div>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
-
-      <div>Slide 3</div>
-
-      <div data-progress>0%</div>
+      </div>
 
     </div>
 
-  </div>
 
 
+    <div class="slide">
 
-  <div class="slide">
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+        <div>Slide 2</div>
 
-      <div>Slide 4</div>
+        <div data-progress>0%</div>
 
-      <div data-progress>0%</div>
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
-
-      <div>Slide 5</div>
-
-      <div data-progress>0%</div>
+      </div>
 
     </div>
 
-  </div>
 
 
+    <div class="slide">
 
-  <div class="slide">
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+        <div>Slide 3</div>
 
-      <div>Slide 6</div>
+        <div data-progress>0%</div>
 
-      <div data-progress>0%</div>
+      </div>
 
     </div>
 
-  </div>
+
+
+    <div class="slide">
+
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+
+        <div>Slide 4</div>
+
+        <div data-progress>0%</div>
+
+      </div>
+
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
 
-      <div>Slide 7</div>
+        <div>Slide 5</div>
 
-      <div data-progress>0%</div>
+        <div data-progress>0%</div>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+
+        <div>Slide 6</div>
+
+        <div data-progress>0%</div>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="slide-wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">
+
+        <div>Slide 7</div>
+
+        <div data-progress>0%</div>
+
+      </div>
 
     </div>
 
@@ -28598,61 +28554,19 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 2rem;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: rgb(30, 43, 82);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-variant-numeric: tabular-nums;
-
-}
-
-
-
 .info {
 
   display: grid;
 
   grid-template-columns: 1fr 1fr;
 
-  gap: 1rem;
-
   width: 80%;
+
+  gap: 0.5rem;
+
+
+
+  font-size: 0.875rem;
 
 
 
@@ -28742,29 +28656,19 @@ body {
 
   justify-content: center;
 
+  text-align: center;
+
+
+
   gap: 1rem;
 
+  padding: 1rem;
 
-
-  box-sizing: border-box;
-
-  padding: 20px;
+  border-radius: 1rem;
 
 
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 1.5rem;
-
-  font-weight: bold;
-
-  color: #ececec;
-
-  text-align: center;
 
 }
 
@@ -28922,21 +28826,25 @@ Start on a specific slide with `activeIndex: 1` — a zero-based slide index.
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -28944,49 +28852,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -28997,6 +28865,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -29030,7 +28900,7 @@ body {
 
   height: 100%;
 
-  width: 100%;
+  width: 75%;
 
 
 
@@ -29042,25 +28912,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -29086,7 +28942,7 @@ const carousel = new Snap({
 
   activeIndex: 1,
 
-  gap: 20
+  gap: "1.25rem"
 
 });
 
@@ -29126,21 +28982,25 @@ Slides can have different widths or heights. Some slides may be wider than the c
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide" style="min-width: 200px;">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide" style="min-width: 300px;">2</div>
+    <div class="slide" style="min-width: 200px;">1</div>
 
-  <div class="slide" style="min-width: 400px;">3</div>
+    <div class="slide" style="min-width: 300px;">2</div>
 
-  <div class="slide" style="min-width: 150vw;">4</div>
+    <div class="slide" style="min-width: 400px;">3</div>
 
-  <div class="slide" style="min-width: 150px;">5</div>
+    <div class="slide" style="min-width: 150vw;">4</div>
 
-  <div class="slide" style="min-width: 200px">6</div>
+    <div class="slide" style="min-width: 150px;">5</div>
 
-  <div class="slide" style="min-width: 300px">7</div>
+    <div class="slide" style="min-width: 200px">6</div>
+
+    <div class="slide" style="min-width: 300px">7</div>
+
+  </div>
 
 </div>
 ```
@@ -29148,49 +29008,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -29201,6 +29021,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -29244,27 +29066,11 @@ body {
 
   justify-content: center;
 
-  width: max-content;
-
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -29328,21 +29134,25 @@ Vertical carousel with `direction: "vertical"`.
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="wrapper">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -29350,49 +29160,15 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.wrapper {
 
+  display: grid;
 
+  padding: 1rem;
 
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
+  height: 100svh;
 
   overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
 
 }
 
@@ -29446,25 +29222,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -29488,7 +29250,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: "1rem",
 
   direction: "vertical"
 
@@ -29530,21 +29292,25 @@ Align snap magnets with `origin: "center"`. Equivalent to the deprecated `center
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -29552,49 +29318,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -29605,6 +29331,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -29636,9 +29364,9 @@ body {
 
   left: 0;
 
-  width: 30vw;
-
   height: 100%;
+
+  width: 30%;
 
 
 
@@ -29650,25 +29378,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -29734,21 +29448,25 @@ Align snap magnets with `origin: "end"` — the trailing edge of each slide stic
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -29756,49 +29474,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -29809,6 +29487,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -29840,9 +29520,9 @@ body {
 
   left: 0;
 
-  width: 30vw;
-
   height: 100%;
+
+  width: 30%;
 
 
 
@@ -29854,25 +29534,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -29938,21 +29604,25 @@ Infinite carousel with `loop: true`.
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -29960,49 +29630,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -30013,6 +29643,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -30044,9 +29676,9 @@ body {
 
   left: 0;
 
-  width: 30vw;
-
   height: 100%;
+
+  width: 30%;
 
 
 
@@ -30058,25 +29690,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -30146,21 +29764,25 @@ Example: `gap: "10vw"`.
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -30168,49 +29790,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -30221,6 +29803,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -30252,9 +29836,9 @@ body {
 
   left: 0;
 
-  width: 30vw;
-
   height: 100%;
+
+  width: 30%;
 
 
 
@@ -30266,25 +29850,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -30348,21 +29918,25 @@ Show grab/grabbing cursor during interaction with `grabCursor: true`.
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -30370,49 +29944,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -30423,6 +29957,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -30454,9 +29990,9 @@ body {
 
   left: 0;
 
-  width: 30vw;
-
   height: 100%;
+
+  width: 30%;
 
 
 
@@ -30468,25 +30004,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -30552,21 +30074,25 @@ Horizontal carousel controlled by the mouse wheel. Enable with `wheel: true` and
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -30574,43 +30100,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: rgb(30, 43, 82);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -30621,6 +30113,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -30654,7 +30148,7 @@ body {
 
   height: 100%;
 
-  width: 30vw;
+  width: 30%;
 
 
 
@@ -30666,25 +30160,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -30754,21 +30234,25 @@ Magnetic snapping while swiping, but free scrolling on wheel release via `stickO
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -30776,49 +30260,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -30829,6 +30273,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -30860,9 +30306,9 @@ body {
 
   left: 0;
 
-  width: 30vw;
-
   height: 100%;
+
+  width: 30%;
 
 
 
@@ -30874,25 +30320,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -30964,21 +30396,25 @@ With `followWheel: false`, wheel input is throttled automatically so one gesture
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="wrapper">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -30986,49 +30422,15 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.wrapper {
 
+  display: grid;
 
+  padding: 1rem;
 
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
+  height: 100svh;
 
   overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
 
 }
 
@@ -31082,25 +30484,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -31124,7 +30512,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: "1rem",
 
   direction: "vertical",
 
@@ -31172,21 +30560,25 @@ Time-based wheel throttling with `followWheel: false` and `wheelThrottle: 100` �
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="wrapper">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -31194,49 +30586,15 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.wrapper {
 
+  display: grid;
 
+  padding: 1rem;
 
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
+  height: 100svh;
 
   overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
 
 }
 
@@ -31290,25 +30648,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -31332,7 +30676,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: "1rem  ",
 
   direction: "vertical",
 
@@ -31382,21 +30726,25 @@ Very smooth motion with low lerp and long duration. Example: `lerp: 0.05`, `dura
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -31404,49 +30752,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -31457,6 +30765,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -31490,7 +30800,7 @@ body {
 
   height: 100%;
 
-  width: 30vw;
+  width: 30%;
 
 
 
@@ -31502,25 +30812,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
