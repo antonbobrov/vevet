@@ -6,13 +6,13 @@
 
 body {
   margin: 0;
-  padding: 20px;
+  padding: 0;
 
   background: rgb(30, 43, 82);
   color: #fff;
 
   font-family: 'Ubuntu', sans-serif;
-  font-size: min(5vw, 5svh);
+  font-size: 20px;
 }
 
 .fullpage-center {
@@ -23,6 +23,7 @@ body {
   gap: 1rem;
 
   min-height: 100vh;
+  padding: 1rem 0;
 }
 
 .double-grid {
