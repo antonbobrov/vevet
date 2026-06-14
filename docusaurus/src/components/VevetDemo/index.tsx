@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 
 import DemoIframe from './DemoIframe';
 import DemoMissingNotice from './DemoMissingNotice';
+import DemoPenLink from './DemoPenLink';
 import DemoSnippets from './DemoSnippets';
 import type { VevetDemoProps } from './types';
 import { getDemoContent, getDemoSnippets } from './utils';
@@ -20,6 +21,8 @@ export default function VevetDemo({
       <DemoIframe id={id} height={height} />
 
       <DemoSnippets snippets={snippets} />
+
+      {content ? <DemoPenLink id={id} /> : null}
 
       {!content ? <DemoMissingNotice id={id} /> : null}
     </div>

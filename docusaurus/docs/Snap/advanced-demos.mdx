@@ -1,6 +1,6 @@
 ---
 sidebar_position: 10
-description: Snap advanced demos. Vevet.js Snap carousel.
+description: Snap advanced demos. Custom carousel patterns with Vevet.js Snap.
 keywords:
   - snap advanced demos
   - vevet snap
@@ -9,103 +9,186 @@ keywords:
 
 import VevetDemo from '@site/src/components/VevetDemo';
 
+import Head from '@docusaurus/Head';
+
 # Advanced Demos
 
 <Head>
   <title>Snap Advanced Demos | vevet.js</title>
 </Head>
 
+These demos are **custom UI patterns** built on top of Snap — not built-in presets.
+
+Most map `coord`, `progress`, and slide metadata in the `update` callback to CSS transforms. Some also use other vevet modules ([Timeline](/docs/Timeline/), [Swipe](/docs/Swipe/), [Responsive](/docs/base/Responsive/), and others). Expand the HTML/CSS/JS snippets below each demo to see the full implementation.
+
 <section>
-  ## Panorama
-  <VevetDemo id="OPMzdaX" height={500} />
+## Panorama
+
+3D panorama carousel inspired by [Panorama Slider](https://panorama-slider.uiinitiative.com/).
+
+Maps `progress` to `translateZ`, `rotateY`, and a horizontal offset in `onUpdate`. Uses `origin: "center"`, `freemode: true`, and `loop: true`.
+
+<VevetDemo id="OPMzdaX" height={500} />
 </section>
 
 <section>
-  ## Circular Carousel
-  <VevetDemo id="XJKQwyb" height={500} />
+## Circular carousel
+
+Slides positioned on a circle with `swipeAxis: "angle"`. Each slide's `progress` drives `sin` / `cos` placement and rotation.
+
+<VevetDemo id="XJKQwyb" height={500} />
 </section>
 
 <section>
-  ## Cylinder Carousel
-  <VevetDemo id="GgqLVWg" height={500} />
+## Cylinder carousel
+
+Horizontal cylinder layout: slides orbit with `translateX` / `translateZ` from circular math in `onUpdate`.
+
+<VevetDemo id="GgqLVWg" height={500} />
 </section>
 
 <section>
-  ## Perspective Carousel
-  <VevetDemo id="azdEEXV" height={500} />
+## Perspective carousel
+
+CSS 3D perspective carousel. Maps `progress` to `translateZ` and `rotateZ` per slide.
+
+<VevetDemo id="azdEEXV" height={500} />
 </section>
 
 <section>
-  ## Stack Overlap
-  <VevetDemo id="LEZvwOv" height={500} />
+## Stack overlap
+
+Overlapping stack: the active slide stays in place while previous slides shrink back in Z-space.
+
+Driven by `progress` — `translateX`, `translateZ`, and `brightness` in `onUpdate`.
+
+<VevetDemo id="LEZvwOv" height={500} />
 </section>
 
 <section>
-  ## Wavy Sine
-  <VevetDemo id="WbxWVyO" height={500} />
+## Wavy sine
+
+Horizontal track with sine-wave vertical offset, rotation, and scale per slide.
+
+Uses `eventsEmitter: document.documentElement`, `freemode: true`, and `origin: "center"`.
+
+<VevetDemo id="WbxWVyO" height={500} />
 </section>
 
 <section>
-  ## Clip-Path Carousel
-  <VevetDemo id="QwKwBvv" height={500} />
+## Clip-path carousel
+
+Full-page vertical carousel with `clip-path`, 3D rotation, and asymmetric reveal timing per corner.
+
+<VevetDemo id="QwKwBvv" height={500} />
 </section>
 
 <section>
-  ## Fullsize Parallax Rotation
-  <VevetDemo id="bNwKERM" height={500} />
+## Fullsize parallax rotation
+
+Vertical full-page carousel with child parallax via `data-snap-parallax-*` attributes on images and content.
+
+See also [Snap parallax](/docs/Snap/parallax/). Snap moves slides with `translateY(${coord}px)`; parallax runs on nested elements.
+
+<VevetDemo id="bNwKERM" height={500} />
 </section>
 
 <section>
-  ## Arc Carousel
-  <VevetDemo id="qEayRzw" height={500} />
+## Arc carousel
+
+Slides follow an arc path: `coord` maps to a sine curve with tangent-based rotation and depth offset.
+
+<VevetDemo id="qEayRzw" height={500} />
 </section>
 
 <section>
-  ## Expo Slider
-  <VevetDemo id="MYyLroo" height={500} />
+## Expo slider
+
+Expo-style carousel inspired by [Expo Slider](https://expo-slider.uiinitiative.com/).
+
+Smooth motion via `easing: EaseOutExpo`, `duration: 1500`, `lerp: 0.2`.
+
+<VevetDemo id="MYyLroo" height={500} />
 </section>
 
 <section>
-  ## Cards
-  <VevetDemo id="QwNYJGo" height={500} />
+## Cards
+
+Card stack with horizontal offset, Z-depth, and rotation from `progress`. Passed cards tuck beneath the active slide.
+
+Uses `onSwipeStart` to track the gesture origin slide for asymmetric motion.
+
+<VevetDemo id="QwNYJGo" height={500} />
 </section>
 
 <section>
-  ## Expand Slide
-  <VevetDemo id="jEqdQZg" height={500} />
+## Expand slide {#expand-slide}
+
+Freemode carousel where clicking a slide expands its width with [Timeline](/docs/Timeline/) and calls `slide.resize()` + `carousel.set()`.
+
+Key props: `freemode: "sticky"`, `wheel: true`, `edgeFriction: 0.95`, `stickOnResize: false`.
+
+<VevetDemo id="jEqdQZg" height={500} />
 </section>
 
 <section>
-  ## Slick Gap
-  <VevetDemo id="myVpvoe" height={500} />
+## Slick gap
+
+Exponential gap between slides based on `progress` — each slide gets an extra offset: `coord + progress * absGap`.
+
+Uses `freemode: "sticky"`, `origin: "center"`, and `shortSwipes: false`.
+
+<VevetDemo id="myVpvoe" height={500} />
 </section>
 
 <section>
-  ## Android UI
-  <VevetDemo id="OPMvbZL" height={500} />
+## Android UI
+
+Android home-screen layout with two [Snap](/docs/Snap/) instances — page dots and a 3D active-apps dock.
+
+Also uses [Swipe](/docs/Swipe/) and [Timeline](/docs/Timeline/).
+
+<VevetDemo id="OPMvbZL" height={500} />
 </section>
 
 <section>
-  ## 3D Stack
-  <VevetDemo id="dPGddQL" height={500} />
+## 3D stack
+
+Vertical 3D stack: previous slides fold beneath the active one with `rotateX`, skew, and opacity from `progress`.
+
+<VevetDemo id="dPGddQL" height={500} />
 </section>
 
 <section>
-  ## 3D Stack 2
-  <VevetDemo id="PwNXrEV" height={500} />
+## 3D stack 2
+
+Variant of the vertical stack — upcoming slides stay partially visible below the active slide.
+
+<VevetDemo id="PwNXrEV" height={500} />
 </section>
 
 <section>
-  ## TimeSelect
-  <VevetDemo id="KwMgpvV" height={500} />
+## TimeSelect
+
+Vertical time-picker with dynamically created slides, 3D `rotateX`, and opacity fade by distance from center.
+
+<VevetDemo id="KwMgpvV" height={500} />
 </section>
 
 <section>
-  ## Parallax Glide
-  <VevetDemo id="dPGJaZr" height={500} />
+## Parallax glide
+
+Horizontal carousel with a glide parallax offset: `coord + parallax * (size / 2)` where `parallax = clamp(progress, 0, 1)`.
+
+Includes dot navigation via `carousel.toSlide(index)` and the `activeSlide` callback.
+
+<VevetDemo id="dPGJaZr" height={500} />
 </section>
 
 <section>
-  ## Simple Fade
-  <VevetDemo id="qEbpgrJ" height={500} />
+## Simple fade
+
+Opacity-only transitions: `opacity = clamp(1 - Math.abs(progress))` with `followSwipe: false` so slides cross-fade instead of tracking the finger.
+
+<VevetDemo id="qEbpgrJ" height={500} />
 </section>

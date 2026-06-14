@@ -1,4 +1,4 @@
-import demoContentsJson from '../../data/demo-contents.json';
+import demoContentsJson from '../../data/pens-contents.json';
 
 export type DemoContent = {
   id: string;
@@ -11,9 +11,7 @@ export type DemoContent = {
 
 const demoContents = demoContentsJson as DemoContent[];
 
-const demoContentsById = new Map(
-  demoContents.map((item) => [item.id, item]),
-);
+const demoContentsById = new Map(demoContents.map((item) => [item.id, item]));
 
 export function findDemoContent(id: string): DemoContent | undefined {
   return demoContentsById.get(id);

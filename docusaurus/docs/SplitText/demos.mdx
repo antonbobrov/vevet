@@ -20,7 +20,7 @@ import Head from '@docusaurus/Head';
 <section>
 ## Animated letters
 
-Animate Vevet SplitText letters with [Anime.js](https://animejs.com/):
+Initialize SplitText with `letters: true`, then animate the split letters with [Anime.js](https://animejs.com/).
 
 <VevetDemo id="gbbYKQN" height={500} />
 </section>
@@ -28,7 +28,7 @@ Animate Vevet SplitText letters with [Anime.js](https://animejs.com/):
 <section>
 ## Animated lines
 
-SplitText lines can be easily animated by lines:
+Initialize SplitText with `lines: true`, then animate the split lines with [Anime.js](https://animejs.com/).
 
 <VevetDemo id="JoXePjG" height={500} />
 </section>
@@ -36,7 +36,7 @@ SplitText lines can be easily animated by lines:
 <section>
 ## Reveal lines
 
-SplitText provides an additional wrapper for lines, making reveal animations simpler to implement:
+Use `lines: true` with `linesWrapper: true` to wrap each line in an extra container — useful for mask and reveal animations.
 
 <VevetDemo id="vEEBrPP" height={500} />
 </section>
@@ -44,11 +44,15 @@ SplitText provides an additional wrapper for lines, making reveal animations sim
 <section>
 ## Chinese
 
+Split Chinese text with `prepareText` and `Intl.Segmenter('zh', { granularity: 'word' })`. Whitespace-based splitting does not work reliably for CJK text.
+
 <VevetDemo id="NPNEKPL" height={500} />
 </section>
 
 <section>
 ## Thai
+
+Split Thai text with `prepareText` and `Intl.Segmenter('th', { granularity: 'word' })`.
 
 <VevetDemo id="WbwYerY" height={500} />
 </section>
@@ -56,13 +60,15 @@ SplitText provides an additional wrapper for lines, making reveal animations sim
 <section>
 ## Arabic
 
+Split Arabic text with `prepareText` and `Intl.Segmenter('ar', { granularity: 'word' })`. Set `direction: rtl` on the container for RTL languages.
+
 <VevetDemo id="pvyQzyB" height={500} />
 </section>
 
 <section>
 ## Text formatting
 
-SplitText can handle HTML elements inside. They can all be animated the way you want:
+SplitText preserves inline HTML, `<br>` tags, `&nbsp;`, nested tags, and emojis inside the container.
 
 <VevetDemo id="ZYYzRwy" height={500} />
 </section>
@@ -70,13 +76,18 @@ SplitText can handle HTML elements inside. They can all be animated the way you 
 <section>
 ## Word Delimiter
 
+Customize word splitting and output separators:
+
+- `wordDelimiter: " "` — delimiter used to split input text into words
+- `wordDelimiterOutput: "—"` — separator inserted between words in the output
+
 <VevetDemo id="OPNaLmw" height={500} />
 </section>
 
 <section>
 ## Split into letters
 
-Simple text division into letters:
+Letter splitting with `letters: true`. Every even letter is highlighted.
 
 <VevetDemo id="azdLgPp" height={500} />
 </section>
@@ -84,7 +95,7 @@ Simple text division into letters:
 <section>
 ## Split into words
 
-Simple text division into words:
+Words are split by default. Every even word is highlighted.
 
 <VevetDemo id="JoGrQQy" height={500} />
 </section>
@@ -92,7 +103,7 @@ Simple text division into words:
 <section>
 ## Split into lines
 
-Simple text division into lines:
+Line splitting with `lines: true`. Every even line is highlighted.
 
 <VevetDemo id="zxrEgYZ" height={600} />
 </section>
@@ -100,7 +111,7 @@ Simple text division into lines:
 <section>
 ## Ignore selectors
 
-Sometimes you may not want to split certain elements - no problem! We can handle that:
+Skip specific elements during splitting with `ignore: ".ignore-me"`. Also accepts an array of elements or a filter function.
 
 <VevetDemo id="MYKENye" height={500} />
 </section>

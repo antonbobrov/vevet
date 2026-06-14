@@ -81,7 +81,7 @@ export interface IMarqueeMutableProps extends IModuleMutableProps {
   adjustSpeed?: boolean;
 
   /**
-   * Pauses the marquee when the mouse leaves the viewport.
+   * Pauses the marquee when the element leaves the viewport.
    * @default true
    */
   pauseOnOut?: boolean;

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 10
-description: Snap parallax demos. Vevet.js Snap carousel.
+description: Snap parallax demos. Built-in parallax attributes for Vevet.js Snap carousels.
 keywords:
   - snap parallax demos
   - vevet snap
@@ -9,50 +9,118 @@ keywords:
 
 import VevetDemo from '@site/src/components/VevetDemo';
 
+import Head from '@docusaurus/Head';
+
 # Parallax Demos
 
 <Head>
   <title>Snap Parallax Demos | vevet.js</title>
 </Head>
 
+Built-in parallax via `data-snap-parallax-*` attributes on **inner wrappers** inside slides — not on the slide element itself.
+
+See [Parallax](/docs/Snap/parallax/) for the full attribute reference (scope, impulse, offset, min/max, and more). Slide `progress` is explained in [Progress](/docs/Snap/basic-demos#progress).
+
 <section>
-## Parallax Gap
+## Parallax gap
+
+Gap between slides grows with swipe or wheel intensity.
+
+Example attributes on the inner wrapper:
+
+- `data-snap-parallax-x="-50%"`
+- `data-snap-parallax-x-scope="none"`
+- `data-snap-parallax-x-impulse="3"`
 
 <VevetDemo id="gbrqRXB" height={500} />
 </section>
 
 <section>
-## Skew Parallax
+## Skew parallax
+
+Slides skew in the swipe direction during interaction. Same parallax config on every slide.
+
+Example attributes:
+
+- `data-snap-parallax-skew="-40"`
+- `data-snap-parallax-skew-min="-40"` / `data-snap-parallax-skew-max="40"`
+- `data-snap-parallax-skew-scope="const"`
+- `data-snap-parallax-skew-impulse="5"`
+- `data-snap-parallax-skew-directional`
 
 <VevetDemo id="gbrqRjZ" height={500} />
 </section>
 
 <section>
-## Scale Parallax
+## Scale parallax
+
+Side slides shrink while the active slide stays at scale `1`. Uses a narrow progress scope so only neighbors are affected.
+
+Example attributes:
+
+- `data-snap-parallax-scale="-0.2"`
+- `data-snap-parallax-scale-scope="-1,1"`
+- `data-snap-parallax-scale-abs`
 
 <VevetDemo id="GgZbxyj" height={500} />
 </section>
 
 <section>
-## Reverse Scale Parallax
+## Reverse scale parallax
+
+Slides scale down as they approach the active position — smallest at center, larger toward the edges.
+
+Example attributes:
+
+- `data-snap-parallax-scale="0.33"`
+- `data-snap-parallax-scale-offset="-0.66"`
+- `data-snap-parallax-scale-scope="-2,2"`
+- `data-snap-parallax-scale-abs`
 
 <VevetDemo id="GgZbxEZ" height={500} />
 </section>
 
 <section>
-## Impulse Scale
+## Impulse scale
+
+Slides shrink only while the carousel is moving. Driven by interaction impulse, not slide progress.
+
+Example attributes:
+
+- `data-snap-parallax-scale="-1"`
+- `data-snap-parallax-scale-min="0.5"`
+- `data-snap-parallax-scale-scope="const"`
+- `data-snap-parallax-scale-abs`
+- `data-snap-parallax-scale-impulse`
 
 <VevetDemo id="NPNQqWV" height={500} />
 </section>
 
 <section>
-## Scoped Impulse Scale
+## Scoped impulse scale
+
+Non-active slides scale during interaction, clamped between a min and max. Combines progress scope with impulse.
+
+Example attributes:
+
+- `data-snap-parallax-scale="-0.25"`
+- `data-snap-parallax-scale-scope="-2,2"`
+- `data-snap-parallax-scale-min="0.5"` / `data-snap-parallax-scale-max="1"`
+- `data-snap-parallax-scale-abs`
+- `data-snap-parallax-scale-impulse="3"`
 
 <VevetDemo id="yyOmYZq" height={500} />
 </section>
 
 <section>
-## Fullsize Parallax
+## Fullsize parallax
+
+Horizontal full-width carousel. Title and description inside each slide move at different X speeds.
+
+Example attributes on nested elements:
+
+- `data-snap-parallax-x="10rem"` + `data-snap-parallax-x-abs` on the title
+- `data-snap-parallax-x="20rem"` + `data-snap-parallax-x-abs` on the description
 
 <VevetDemo id="gbrNeZW" height={500} />
 </section>

@@ -3,3 +3,4 @@ node_modules
 lib
 *storybook.log
 .npmrc
+docusaurus/static/pens

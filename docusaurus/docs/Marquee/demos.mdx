@@ -17,17 +17,17 @@ import Head from '@docusaurus/Head';
 </Head>
 
 <section>
-  ## Simple Marquee
+## Simple Marquee
 
-A simple Marquee with default settings:
+A basic example with scrollable text in a custom marquee element.
 
-  <VevetDemo id="zxxOadw" height={500} />
+<VevetDemo id="zxxOadw" height={500} />
 </section>
 
 <section>
 ## Vertical Marquee
 
-Vevet Marquee supports vertical mode:
+Vertical scrolling with `direction: 'vertical'`.
 
 <VevetDemo id="JoGLENV" height={500} />
 </section>
@@ -35,7 +35,7 @@ Vevet Marquee supports vertical mode:
 <section>
 ## Pause on Hover
 
-A simple Marquee that pauses when it is being hovered:
+Use `pauseOnHover: true` to pause the animation while the element is hovered.
 
 <VevetDemo id="pvgWjRM" height={500} />
 </section>
@@ -43,7 +43,7 @@ A simple Marquee that pauses when it is being hovered:
 <section>
 ## Reverse Marquee
 
-A simple Marquee with reversed motion:
+The `speed` prop accepts negative values for reverse motion. Example: `speed: -1`.
 
 <VevetDemo id="EaaLbOp" height={500} />
 </section>
@@ -51,7 +51,10 @@ A simple Marquee with reversed motion:
 <section>
 ## Controllable Marquee
 
-A marquee with controls:
+Programmatic control examples:
+
+- `marquee.updateProps({ enabled: true, speed: 1.25 })` — toggle playback and change speed
+- `marquee.render(10)` — scroll contents manually by 10px
 
 <VevetDemo id="QwyqjzW" height={500} />
 </section>
@@ -59,7 +62,12 @@ A marquee with controls:
 <section>
 ## With CSS units
 
-Marquee `gap` and `speed` may accept a string with CSS units like `px`, `rem`, `vw`, `vh`, `svh`:
+Both `gap` and `speed` accept CSS length strings such as `px`, `rem`, `vw`, `vh`, and `svh`.
+
+Examples:
+
+- `gap: "10vw"`
+- `speed: "0.1vw"`
 
 <VevetDemo id="jEWGWqq" height={500} />
 </section>
@@ -67,17 +75,21 @@ Marquee `gap` and `speed` may accept a string with CSS units like `px`, `rem`, `
 <section>
 ## With speed adjustment
 
-Marquee can adjust speed depending on the user's FPS rate. This feature is enabled by default. It helps make the marquee move the same way across displays with different update frequencies.
+Linear requestAnimationFrame animations can look faster on high-refresh displays (120 Hz and above).
+
+Marquee compensates by adjusting speed based on the user's FPS. Enabled by default: `adjustSpeed: true`.
+
+This keeps motion consistent across 60 Hz and 120+ Hz displays.
 
 <VevetDemo id="KwVXVNg" height={500} />
 </section>
 
 <section>
-## Responsive Marquee
+## Adaptive Marquee
 
-Marquee, like any other component in Vevet, may be customized depending on the user's viewport sizes or their device type.
+Like any other Vevet component, Marquee supports viewport- and device-based customization via responsive props.
 
-In this demo, marquee speed and gap are dynamic - they change depending on responsive breakpoints:
+In this demo, `speed` and `gap` change at responsive breakpoints.
 
 <VevetDemo id="bNEopqo" height={500} />
 </section>
@@ -85,7 +97,9 @@ In this demo, marquee speed and gap are dynamic - they change depending on respo
 <section>
 ## Draggable Marquee
 
-By default, Marquee does not support swiping. But this can be solved with [Swipe](/docs/Swipe):
+A combination of [Swipe](/docs/Swipe) and [Marquee](/docs/Marquee).
+
+Shows how to control a marquee with drag/swipe gestures.
 
 <VevetDemo id="XJJrYeR" height={600} />
 </section>
@@ -93,7 +107,9 @@ By default, Marquee does not support swiping. But this can be solved with [Swipe
 <section>
 ## Scrollable Marquee
 
-This is a combination of [Marquee](/docs/Marquee) and [ScrollProgress](/docs/ScrollProgress). With ScrollProgress, you can handle scrolling logic for your marquee element:
+Combines [Marquee](/docs/Marquee) with [ScrollProgress](/docs/ScrollProgress).
+
+The marquee position follows the section's scroll progress.
 
 <VevetDemo id="raaBKYy" height={600} />
 </section>
@@ -101,7 +117,7 @@ This is a combination of [Marquee](/docs/Marquee) and [ScrollProgress](/docs/Scr
 <section>
 ## No clones
 
-By default, Marquee clones its nodes. This may be disabled if needed:
+By default, Marquee clones child nodes for seamless looping. Disable with `cloneNodes: false`.
 
 <VevetDemo id="wBMpPve" height={600} />
 </section>

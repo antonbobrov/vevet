@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const docsDir = path.join(__dirname, '../docs');
-const outputFile = path.join(__dirname, '../data/demo-ids.json');
+const outputFile = path.join(__dirname, '../data/pens-ids.json');
 
 const demoIdPattern = /<VevetDemo\s[^>]*\bid=["']([^"']+)["']/g;
 

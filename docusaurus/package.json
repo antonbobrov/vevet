@@ -5,8 +5,9 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
-    "build": "docusaurus build",
-    "collect-demo-ids": "node scripts/collect-demo-ids.mjs"
+    "build": "npm run generate-pens-pages && docusaurus build",
+    "collect-pens-ids": "node scripts/collect-pens-ids.mjs",
+    "generate-pens-pages": "node scripts/generate-pens-pages.mjs"
   },
   "dependencies": {
     "@docusaurus/core": "^3.10.1",

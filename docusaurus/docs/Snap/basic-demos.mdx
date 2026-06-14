@@ -9,6 +9,8 @@ keywords:
 
 import VevetDemo from '@site/src/components/VevetDemo';
 
+import Head from '@docusaurus/Head';
+
 # Basic Demos
 
 <Head>
@@ -16,108 +18,127 @@ import VevetDemo from '@site/src/components/VevetDemo';
 </Head>
 
 <section>
-  ## Carousel values
-  <VevetDemo id="ByLxGNj" height={600} />
+## Carousel values
+
+Overview demo: horizontal carousel with CSS-unit gap, smooth interpolation, and per-slide progress.
+
+Key props: `gap: "1rem"`, `lerp: 0.1`, `duration: 750`, `origin: "center"`, `loop: true`.
+
+Also reads track accessors in the `update` callback — `current`, `target`, `min`, `max`, `influence`, and each slide's `progress`.
+
+<VevetDemo id="ByLxGNj" height={600} />
 </section>
 
 <section>
 ## Default active index
 
-`Vevet Snap` supports a default active index. Provide `activeIndex` (zero-based) when initializing to open the carousel at a specific slide:
+Start on a specific slide with `activeIndex: 1` — a zero-based slide index.
 
 <VevetDemo id="myVqdQK" height={500} />
 </section>
 
 <section>
-## Variable Size
+## Variable size
 
-`Snap` supports slides of varying sizes - they don't need to be equal in width or height.
-
-Some slides may be larger than their container. In this case, they can be smoothly scrolled:
+Slides can have different widths or heights. Some slides may be wider than the container and scroll with inertia.
 
 <VevetDemo id="RNNjdxK" height={500} />
 </section>
 
 <section>
-## Vertical
+## Vertical {#vertical}
 
-`Snap` can operate in either horizontal or vertical orientation:
+Vertical carousel with `direction: "vertical"`.
 
 <VevetDemo id="ZYYaZmp" height={500} />
 </section>
 
 <section>
-## Origin {/* #origin */}
+## Origin {#origin}
 
-`Snap` slides can align to the **start**, **center**, or **end** of the container via [`origin`](./props#props.origin). The demo below uses centered slides (`origin: 'center'`):
+Align snap magnets with `origin: "center"`. Equivalent to the deprecated `centered: true`.
 
 <VevetDemo id="PwwOgvv" height={500} />
 </section>
 
 <section>
-## Loop
+## Origin end {#origin-end}
 
-Any `Snap` carousel can be infinite:
+Align snap magnets with `origin: "end"` — the trailing edge of each slide sticks to the trailing edge of the container.
+
+<VevetDemo id="jEyMGwq" height={500} />
+</section>
+
+<section>
+## Loop {#loop}
+
+Infinite carousel with `loop: true`.
 
 <VevetDemo id="zxxPQNR" height={500} />
 </section>
 
 <section>
-## Gap
+## Gap {#gap}
 
-`Snap` supports custom gaps between slides. The gap can be set in `px`, `rem`, `vw`, `vh` or `svh`:
+Spacing between slides via `gap`. Accepts CSS units such as `px`, `rem`, `vw`, `vh`, and `svh`.
+
+Example: `gap: "10vw"`.
 
 <VevetDemo id="raxYLVE" height={500} />
 </section>
 
 <section>
-## Grab cursor
+## Grab cursor {#grab-cursor}
+
+Show grab/grabbing cursor during interaction with `grabCursor: true`.
 
 <VevetDemo id="myVqOoR" height={500} />
 </section>
 
 <section>
-## Wheel
+## Wheel {#wheel}
 
-`Snap` supports wheel control:
+Horizontal carousel controlled by the mouse wheel. Enable with `wheel: true` and `wheelAxis: "y"`. Slides snap to magnets when wheeling stops.
 
 <VevetDemo id="EaaEYwX" height={500} />
 </section>
 
 <section>
-## Free wheel
+## Free wheel {#free-wheel}
 
-The `Snap` wheel behavior may differ slightly. For example, after a swipe, the carousel snaps to the nearest magnet, but after a wheel scroll ends, it won't - that part is up to you:
+Magnetic snapping while swiping, but free scrolling on wheel release via `stickOnWheelEnd: false`.
 
 <VevetDemo id="raxYLWB" height={500} />
 </section>
 
 <section>
-## Wheel No-Follow Auto-Throttle
+## Throttled wheel {#throttled-wheel}
 
-Sometimes you may want to prevent scrolling through multiple slides at once — Vevet `Snap` provides automatic wheel throttling to handle that, which works well in most cases:
+With `followWheel: false`, wheel input is throttled automatically so one gesture does not skip multiple slides.
 
 <VevetDemo id="jEWaryX" height={500} />
 </section>
 
 <section>
-## Wheel No-Follow Numeric Throttle
+## Throttled wheel by time
+
+Time-based wheel throttling with `followWheel: false` and `wheelThrottle: 100` — wheel input is blocked for 100ms after each slide change, including during transitions.
 
 <VevetDemo id="GgZzmmr" height={500} />
 </section>
 
 <section>
-## Hypersmooth
+## Hypersmooth {#hypersmooth}
 
-One of the best features is track value interpolation, which allows you to make scrolling and swiping as smooth as you want - right out of the box:
+Very smooth motion with low lerp and long duration. Example: `lerp: 0.05`.
 
 <VevetDemo id="VYYrOow" height={500} />
 </section>
 
 <section>
-## Freemode
+## Freemode {#freemode}
 
-`Snap` freemode allows you to ignore magnets when swiping or wheel scrolling ends:
+Free scrolling with inertia via `freemode: true`. When `loop: false`, movement bounces at the track edges.
 
 <VevetDemo id="bNNYPwo" height={500} />
 </section>
@@ -125,31 +146,33 @@ One of the best features is track value interpolation, which allows you to make 
 <section>
 ## Sticky freemode
 
-`Snap` freemode also supports sticky mode. Users can scroll freely with inertia, but when their interaction ends, magnets take effect, snapping the carousel to the nearest slide:
+Combines freemode inertia with magnetic snapping at the end of the gesture: `freemode: "sticky"`.
+
+Movement stays within bounds and always settles on the nearest slide magnet when inertia ends.
 
 <VevetDemo id="WbrXoVJ" height={500} />
 </section>
 
 <section>
-## Rewind
+## Rewind {#rewind}
 
-Enables wrap-around navigation: advancing from the last slide jumps to the first, and going back from the first jumps to the last:
+Wrap-around navigation without looping the track: `rewind: true`. Works when `loop: false` — from the last slide, next goes to the first, and vice versa.
 
 <VevetDemo id="qEZgjRm" height={500} />
 </section>
 
 <section>
-## Friction
+## Friction {#friction}
 
-`Snap` supports friction for both wheel and swipe interactions. Friction adds resistance to the user's scrolling, pulling slides toward their magnets:
+Add resistance during wheel and swipe interactions with `friction: 0.3` and `swipeFriction: true`. Pulls movement toward slide magnets.
 
 <VevetDemo id="YPwEZBg" height={500} />
 </section>
 
 <section>
-## Edge Friction
+## Edge friction {#edge-friction}
 
-`Snap` supports edge friction, making swipe interactions feel more natural and engaging. Edge friction adds resistance when swiping near the carousel's edges:
+Extra resistance near the carousel edges. Enabled by default — override with `edgeFriction: 0.25`.
 
 <VevetDemo id="QwyOped" height={500} />
 </section>
@@ -157,49 +180,71 @@ Enables wrap-around navigation: advancing from the last slide jumps to the first
 <section>
 ## Interval
 
-`Snap` supports automatic slide change with custom intervals.
+Auto-advance slides with `interval: 500` — moves to the next slide 500ms after each transition ends.
 
 <VevetDemo id="zxKxodd" height={500} />
 </section>
 
 <section>
-## Bounce
+## Easing {#easing}
 
-You can customize your animation - use any easing you like:
+Custom transition easing. Example: `easing: EaseOutBack`, `duration: 850`.
 
 <VevetDemo id="emmVqwN" height={500} />
 </section>
 
 <section>
-## Swipe No Follow
+## Swipe no follow {#swipe-no-follow}
 
-By default, `Snap` follows the user's swipe interaction. This behavior can be disabled, causing slides to change only after the interaction ends:
+Disable live swipe tracking so slides change only after the gesture ends: `followSwipe: false`.
 
 <VevetDemo id="YPwEVzo" height={500} />
 </section>
 
 <section>
-## Reverse Swipe
+## Reverse swipe {#reverse-swipe}
 
-Both wheel and swipe speeds can be customized:
+Reverse swipe direction with a negative `swipeSpeed`. Example: `swipeSpeed: -1`.
 
 <VevetDemo id="myyxbdL" height={500} />
 </section>
 
 <section>
-## RTL Carousel
+## RTL carousel
+
+Manual RTL setup:
+
+- `dir="rtl"` on the container
+- `swipeSpeed: -1`
+- apply transforms with the opposite sign
 
 <VevetDemo id="xbVMdVo" height={500} />
 </section>
 
 <section>
-## Slides to Scroll
+## Slides to scroll {#slides-to-scroll}
+
+Scroll multiple slides per interaction with `slidesToScroll: 2`.
 
 <VevetDemo id="MYyLmbq" height={500} />
 </section>
 
 <section>
-## Responsive Carousel
+## Adaptive Snap
+
+Use [Responsive](/docs/base/Responsive/) to change Snap props at breakpoints:
+
+```js
+new Responsive(carousel, [
+  {
+    at: '@media (max-width: 768px)',
+    props: {
+      slidesToScroll: 1,
+      followSwipe: false,
+    },
+  },
+]);
+```
 
 <VevetDemo id="LENKmpN" height={500} />
 </section>
@@ -207,13 +252,15 @@ Both wheel and swipe speeds can be customized:
 <section>
 ## Progress
 
-`Snap` is a powerful solution for custom carousels. It allows you to track slide progress and animate them however you like:
+Read each slide's `progress` and `index` in the `update` callback — useful for parallax, opacity, and 3D effects.
 
 <VevetDemo id="ByNdgGj" height={500} />
 </section>
 
 <section>
-## Virtual
+## Virtual {#virtual}
+
+Virtual slides: pass `SnapSlide` instances with `virtual: true`. DOM nodes are created on init; only visible slides stay in the document.
 
 <VevetDemo id="azONLzb" height={500} />
 </section>
