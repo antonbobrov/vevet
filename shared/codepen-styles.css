@@ -40,7 +40,7 @@ body {
 .btn {
   border: 0;
   padding: 0 1rem;
-  height: 2.5rem;
+  height: 2rem;
 
   cursor: pointer;
 
@@ -55,7 +55,7 @@ body {
   border-radius: 50vw;
 
   font: inherit;
-  font-size: 1rem;
+  font-size: 0.75rem;
   color: currentColor;
 }
 
