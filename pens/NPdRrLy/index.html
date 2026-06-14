@@ -5,35 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · NPdRrLy</title>
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
-        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-body {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
-
-  background: linear-gradient(165deg,
-      rgb(17, 25, 42) 0%,
-      rgb(30, 43, 82) 40%,
-      rgb(0, 58, 82) 100%);
-}
-
-.container {
+        <style>.container {
   width: 80%;
-  height: 120px;
+  height: 3rem;
 
-  border-radius: 10px;
+  border-radius: 0.5rem;
   background: rgba(255, 255, 255, 0.1);
 }
 
 .thumb {
-  width: 120px;
-  height: 120px;
+  width: 3rem;
+  height: 3rem;
 
   display: flex;
   flex-direction: row;
@@ -47,15 +29,18 @@ body {
       rgb(0, 201, 177) 100%);
 
   img {
-    width: 40px;
+    width: 1.5rem;
     height: auto;
     filter: invert(100%);
+    background: transparent;
   }
 }</style>
       </head>
       <body>
-        <div id="container" class="container">
-  <div id="thumb" class="thumb"><img src="https://www.svgrepo.com/show/379996/drag-horizontal.svg" alt=""></div>
+        <div class="fullpage-center">
+  <div id="container" class="container">
+    <div id="thumb" class="thumb"><img src="https://www.svgrepo.com/show/379996/drag-horizontal.svg" alt=""></div>
+  </div>
 </div>
         
   <script type="module">

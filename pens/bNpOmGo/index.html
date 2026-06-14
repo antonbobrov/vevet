@@ -5,28 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · bNpOmGo</title>
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
-        <style>body {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
-
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
-
-  background: linear-gradient(165deg,
-      rgb(17, 25, 42) 0%,
-      rgb(30, 43, 82) 40%,
-      rgb(0, 58, 82) 100%);
-}
-
-.item {
+        <style>.item {
   position: relative;
-  width: 180px;
-  height: 180px;
+  width: 6rem;
+  height: 6rem;
 
   display: flex;
   flex-direction: row;
@@ -36,21 +18,20 @@
   border-radius: 50%;
   background-color: #000;
 
-  font-size: 12px;
-
   img {
-    width: 80px;
+    width: 2rem;
     height: auto;
     filter: invert(100%);
+    background: transparent;
   }
 }
 
 .thumb {
   position: absolute;
-  top: -15px;
-  left: calc(50% - 15px);
-  width: 30px;
-  height: 30px;
+  top: -0.6rem;
+  left: calc(50% - 0.6rem);
+  width: 1.2rem;
+  height: 1.2rem;
   background: linear-gradient(0deg,
       rgb(13, 110, 253) 0%,
       rgb(140, 122, 230) 50%,
@@ -60,10 +41,12 @@
 }</style>
       </head>
       <body>
-        <div id="rotation" class="item" style="background: linear-gradient(35deg, rgb(255, 127, 135) 0%, rgb(244, 214, 157) 100%);">
-  <img src="https://www.svgrepo.com/show/533709/rotate.svg" alt="">
+        <div class="fullpage-center">
+  <div id="rotation" class="item" style="background: linear-gradient(35deg, rgb(255, 127, 135) 0%, rgb(244, 214, 157) 100%);">
+    <img src="https://www.svgrepo.com/show/533709/rotate.svg" alt="">
 
-  <div id="thumb" class="thumb"></div>
+    <div id="thumb" class="thumb"></div>
+  </div>
 </div>
         
   <script type="module">
