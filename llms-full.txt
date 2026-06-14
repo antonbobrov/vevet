@@ -9682,57 +9682,11 @@ A custom marquee component that smoothly scrolls its children horizontally or ve
 HTML
 
 ```
-<div class="page">
+<div class="fullpage-center">
 
   <div id="marquee">Breaking News🔥</div>
 
 </div>
-```
-
-CSS
-
-```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 0;
-
-
-
-  background: rgb(30, 43, 82);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 40px;
-
-}
-
-
-
-.page {
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-}
 ```
 
 JavaScript
@@ -9964,57 +9918,11 @@ A basic example with scrollable text in a custom marquee element.
 HTML
 
 ```
-<div class="page">
+<div class="fullpage-center">
 
   <div id="marquee">Breaking News🔥</div>
 
 </div>
-```
-
-CSS
-
-```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 0;
-
-
-
-  background: rgb(30, 43, 82);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 40px;
-
-}
-
-
-
-.page {
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-}
 ```
 
 JavaScript
@@ -10046,7 +9954,7 @@ Vertical scrolling with `direction: 'vertical'`.
 HTML
 
 ```
-<div class="page">
+<div class="fullpage-center">
 
   <div id="marquee">
 
@@ -10064,53 +9972,11 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 0;
-
-
-
-  background: rgb(30, 43, 82);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 40px;
-
-}
-
-
-
-.page {
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-}
-
-
-
 #marquee {
 
   white-space: nowrap;
+
+  min-height: 100svh;
 
 }
 ```
@@ -10148,57 +10014,11 @@ Use `pauseOnHover: true` to pause the animation while the element is hovered.
 HTML
 
 ```
-<div class="page">
+<div class="fullpage-center">
 
   <div id="marquee">Pause on Hover&nbsp;</div>
 
 </div>
-```
-
-CSS
-
-```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 0;
-
-
-
-  background: rgb(30, 43, 82);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 40px;
-
-}
-
-
-
-.page {
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-}
 ```
 
 JavaScript
@@ -10232,57 +10052,11 @@ The `speed` prop accepts negative values for reverse motion. Example: `speed: -1
 HTML
 
 ```
-<div class="page">
+<div class="fullpage-center">
 
   <div id="marquee">This is a reverse marquee🔥</div>
 
 </div>
-```
-
-CSS
-
-```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 0;
-
-
-
-  background: rgb(30, 43, 82);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 40px;
-
-}
-
-
-
-.page {
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-}
 ```
 
 JavaScript
@@ -10319,159 +10093,45 @@ Programmatic control examples:
 HTML
 
 ```
-<div class="page">
+<div class="fullpage-center">
 
   <div id="marquee">You can control me&nbsp;😃&nbsp;</div>
 
-  <div class="buttons">
+  <div class="double-grid">
 
-    <button type="button" class="button" id="play">Play</button>
-
-
-
-    <button type="button" class="button" id="pause">Pause</button>
-
-  </div>
+    <button type="button" class="btn" id="play">Play</button>
 
 
 
-  <div class="buttons">
-
-    <button type="button" class="button" id="faster">Faster</button>
-
-
-
-    <button type="button" class="button" id="slower">Slower</button>
+    <button type="button" class="btn" id="pause">Pause</button>
 
   </div>
 
 
 
-  <div class="buttons">
+  <div class="double-grid">
 
-    <button type="button" class="button" id="render">Render</button>
+    <button type="button" class="btn" id="faster">Faster</button>
 
 
 
-    <button type="button" class="button" id="render10">Render 10</button>
+    <button type="button" class="btn" id="slower">Slower</button>
+
+  </div>
+
+
+
+  <div class="double-grid">
+
+    <button type="button" class="btn" id="render">Render</button>
+
+
+
+    <button type="button" class="btn" id="render10">Render 10</button>
 
   </div>
 
 </div>
-```
-
-CSS
-
-```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 0;
-
-
-
-  background: rgb(30, 43, 82);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 40px;
-
-}
-
-
-
-.page {
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 1rem;
-
-
-
-  height: 100vh;
-
-}
-
-
-
-.buttons {
-
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  gap: 1rem;
-
-  width: 400px;
-
-  max-width: 90%;
-
-}
-
-
-
-.button {
-
-  height: 48px;
-
-  padding: 0 32px;
-
-  border: 0;
-
-  cursor: pointer;
-
-
-
-  background: linear-gradient(135deg,
-
-      rgb(13, 110, 253) 0%,
-
-      rgb(140, 122, 230) 50%,
-
-      rgb(0, 201, 177) 100%);
-
-  background-size: 200% auto;
-
-  box-shadow: 0 4px 20px rgba(13, 110, 253, 0.1);
-
-  border-radius: 50vw;
-
-
-
-  font: inherit;
-
-  font-size: 16px;
-
-  color: currentColor;
-
-
-
-  transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-
-}
-
-
-
-.button:hover {
-
-  background-position: right center;
-
-}
 ```
 
 JavaScript
@@ -10584,57 +10244,11 @@ Examples:
 HTML
 
 ```
-<div class="page">
+<div class="fullpage-center">
 
   <div id="marquee">The gap & speed are set with css units</div>
 
 </div>
-```
-
-CSS
-
-```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 0;
-
-
-
-  background: rgb(30, 43, 82);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 40px;
-
-}
-
-
-
-.page {
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-}
 ```
 
 JavaScript
@@ -10674,137 +10288,23 @@ This keeps motion consistent across 60 Hz and 120+ Hz displays.
 HTML
 
 ```
-<div class="page">
+<div class="fullpage-center">
 
   <div id="marquee">The speed is adjustable depending on users's fps.&nbsp;</div>
 
 
 
-  <div class="buttons">
+  <div class="double-grid">
 
-    <button type="button" class="button" id="enable">Enable</button>
+    <button type="button" class="btn" id="enable">Enable</button>
 
 
 
-    <button type="button" class="button" id="disable">Disable</button>
+    <button type="button" class="btn" id="disable">Disable</button>
 
   </div>
 
 </div>
-```
-
-CSS
-
-```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 0;
-
-
-
-  background: rgb(30, 43, 82);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 40px;
-
-}
-
-
-
-.page {
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 1rem;
-
-
-
-  height: 100vh;
-
-}
-
-
-
-.buttons {
-
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  gap: 1vw;
-
-  width: 300px;
-
-  max-width: 90%;
-
-}
-
-
-
-.button {
-
-  height: 48px;
-
-  padding: 0 32px;
-
-  border: 0;
-
-  cursor: pointer;
-
-
-
-  background: linear-gradient(135deg,
-
-      rgb(13, 110, 253) 0%,
-
-      rgb(140, 122, 230) 50%,
-
-      rgb(0, 201, 177) 100%);
-
-  background-size: 200% auto;
-
-  box-shadow: 0 4px 20px rgba(13, 110, 253, 0.1);
-
-  border-radius: 50vw;
-
-
-
-  font: inherit;
-
-  font-size: 24px;
-
-  color: currentColor;
-
-
-
-  transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-
-}
-
-
-
-.button:hover {
-
-  background-position: right center;
-
-}
 ```
 
 JavaScript
@@ -10866,57 +10366,11 @@ In this demo, `speed` and `gap` change at responsive breakpoints.
 HTML
 
 ```
-<div class="page">
+<div class="fullpage-center">
 
   <div id="marquee">Resize the window to see changes</div>
 
 </div>
-```
-
-CSS
-
-```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 0;
-
-
-
-  background: rgb(30, 43, 82);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 40px;
-
-}
-
-
-
-.page {
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-}
 ```
 
 JavaScript
@@ -10944,11 +10398,25 @@ const instance = new Marquee({
 
 new Responsive(instance, [{
 
-    at: "@media (min-width: 768px)",
+    at: "@media (min-width: 350px)",
 
     props: {
 
       speed: 4
+
+    }
+
+  },
+
+
+
+  {
+
+    at: "@media (min-width: 768px)",
+
+    props: {
+
+      speed: -4
 
     }
 
@@ -10984,7 +10452,7 @@ Shows how to control a marquee with drag/swipe gestures.
 HTML
 
 ```
-<div class="page">
+<div class="fullpage-center">
 
   <div id="marquee">
 
@@ -11004,46 +10472,6 @@ HTML
 CSS
 
 ```
-body {
-
-  margin: 0;
-
-  padding: 0;
-
-
-
-  background: rgb(30, 43, 82);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 40px;
-
-}
-
-
-
-.page {
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-}
-
-
-
 #marquee {
 
   img {
@@ -11053,8 +10481,6 @@ body {
     min-width: 30vw;
 
     height: auto;
-
-    display: block;
 
     border-radius: 1rem;
 
@@ -11146,60 +10572,38 @@ The marquee position follows the section's scroll progress.
 HTML
 
 ```
-<div class="gap">Scroll The Page</div>
+<div class="fullpage-center">
+
+  <div class="gap">Scroll The Page</div>
 
 
 
-<div class="container">
+  <div class="container">
 
-  <div id="marquee">
+    <div id="marquee">
 
-    <img src="https://picsum.photos/id/199/300/200" width="300" height="200" alt="">
+      <img src="https://picsum.photos/id/199/300/200" width="300" height="200" alt="">
 
-    <img src="https://picsum.photos/id/201/300/200" width="300" height="200" alt="">
+      <img src="https://picsum.photos/id/201/300/200" width="300" height="200" alt="">
 
-    <img src="https://picsum.photos/id/203/300/200" width="300" height="200" alt="">
+      <img src="https://picsum.photos/id/203/300/200" width="300" height="200" alt="">
 
-    <img src="https://picsum.photos/id/206/300/200" width="300" height="200" alt="">
+      <img src="https://picsum.photos/id/206/300/200" width="300" height="200" alt="">
+
+    </div>
 
   </div>
 
+
+
+  <div class="gap">Scroll The Page</div>
+
 </div>
-
-
-
-<div class="gap">Scroll The Page</div>
 ```
 
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 0;
-
-
-
-  background: rgb(30, 43, 82);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 30px;
-
-}
-
-
-
 .gap {
 
   display: flex;
@@ -11222,7 +10626,9 @@ body {
 
 .container {
 
-  padding: 25vh 0;
+  margin: 10rem 0;
+
+  width: 100%;
 
 }
 
@@ -11310,57 +10716,11 @@ By default, Marquee clones child nodes for seamless looping. Disable with `clone
 HTML
 
 ```
-<div class="page">
+<div class="fullpage-center">
 
   <div id="marquee">This text will not be cloned&nbsp;</div>
 
 </div>
-```
-
-CSS
-
-```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 0;
-
-
-
-  background: rgb(30, 43, 82);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 40px;
-
-}
-
-
-
-.page {
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-}
 ```
 
 JavaScript
@@ -41842,17 +41202,21 @@ Initialize SplitText with `lines: true`, then animate the split lines with [Anim
 HTML
 
 ```
-<div id="quote">
+<div class="page">
 
-  Vevet SplitText is a free utility that enables seamless text splitting
+  <div id="quote">
 
-  into words, letters, or lines as needed.
+    Vevet SplitText is a free utility that enables seamless text splitting
+
+    into words, letters, or lines as needed.
+
+  </div>
+
+
+
+  <button type="button" id="animate" class="button">Animate</button>
 
 </div>
-
-
-
-<button type="button" id="animate" class="button">Animate</button>
 ```
 
 CSS
@@ -41866,9 +41230,25 @@ body {
 
   margin: 0;
 
-  padding: 30px;
+  padding: 20px;
 
 
+
+  background: rgb(30, 43, 82);
+
+  color: #fff;
+
+
+
+  font-family: "Ubuntu", sans-serif;
+
+  font-size: 16px;
+
+}
+
+
+
+.centered {
 
   display: flex;
 
@@ -41880,29 +41260,15 @@ body {
 
 
 
-  height: 100vh;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  min-height: 100vh;
 
 }
 
 
 
 #quote {
+
+  width: 100%;
 
   max-width: 20em;
 

@@ -4,20 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · raaBKYy</title>
-        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-body {
-  margin: 0;
-  padding: 0;
-
-  background: rgb(30, 43, 82);
-  color: #fff;
-
-  font-family: "Ubuntu", sans-serif;
-  font-size: 30px;
-}
-
-.gap {
+        <style>.gap {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -28,7 +15,8 @@ body {
 }
 
 .container {
-  padding: 25vh 0;
+  margin: 10rem 0;
+  width: 100%;
 }
 
 #marquee {
@@ -42,18 +30,20 @@ body {
 }</style>
       </head>
       <body>
-        <div class="gap">Scroll The Page</div>
+        <div class="fullpage-center">
+  <div class="gap">Scroll The Page</div>
 
-<div class="container">
-  <div id="marquee">
-    <img src="https://picsum.photos/id/199/300/200" width="300" height="200" alt="">
-    <img src="https://picsum.photos/id/201/300/200" width="300" height="200" alt="">
-    <img src="https://picsum.photos/id/203/300/200" width="300" height="200" alt="">
-    <img src="https://picsum.photos/id/206/300/200" width="300" height="200" alt="">
+  <div class="container">
+    <div id="marquee">
+      <img src="https://picsum.photos/id/199/300/200" width="300" height="200" alt="">
+      <img src="https://picsum.photos/id/201/300/200" width="300" height="200" alt="">
+      <img src="https://picsum.photos/id/203/300/200" width="300" height="200" alt="">
+      <img src="https://picsum.photos/id/206/300/200" width="300" height="200" alt="">
+    </div>
   </div>
-</div>
 
-<div class="gap">Scroll The Page</div>
+  <div class="gap">Scroll The Page</div>
+</div>
         
   <script type="module">
 import {
