@@ -9682,7 +9682,11 @@ A custom marquee component that smoothly scrolls its children horizontally or ve
 HTML
 
 ```
-<div id="marquee">Breaking News🔥</div>
+<div class="page">
+
+  <div id="marquee">Breaking News🔥</div>
+
+</div>
 ```
 
 CSS
@@ -9700,6 +9704,22 @@ body {
 
 
 
+  background: rgb(30, 43, 82);
+
+  color: #fff;
+
+
+
+  font-family: "Ubuntu", sans-serif;
+
+  font-size: 40px;
+
+}
+
+
+
+.page {
+
   display: flex;
 
   flex-direction: column;
@@ -9711,24 +9731,6 @@ body {
 
 
   height: 100vh;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 40px;
 
 }
 ```
@@ -9962,7 +9964,11 @@ A basic example with scrollable text in a custom marquee element.
 HTML
 
 ```
-<div id="marquee">Breaking News🔥</div>
+<div class="page">
+
+  <div id="marquee">Breaking News🔥</div>
+
+</div>
 ```
 
 CSS
@@ -9980,6 +9986,22 @@ body {
 
 
 
+  background: rgb(30, 43, 82);
+
+  color: #fff;
+
+
+
+  font-family: "Ubuntu", sans-serif;
+
+  font-size: 40px;
+
+}
+
+
+
+.page {
+
   display: flex;
 
   flex-direction: column;
@@ -9991,24 +10013,6 @@ body {
 
 
   height: 100vh;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 40px;
 
 }
 ```
@@ -10042,13 +10046,17 @@ Vertical scrolling with `direction: 'vertical'`.
 HTML
 
 ```
-<div id="marquee">
+<div class="page">
 
-  <span>Vertical Marquee</span>
+  <div id="marquee">
+
+    <span>Vertical Marquee</span>
 
 
 
-  <span>Is so easy</span>
+    <span>Is so easy</span>
+
+  </div>
 
 </div>
 ```
@@ -10068,6 +10076,22 @@ body {
 
 
 
+  background: rgb(30, 43, 82);
+
+  color: #fff;
+
+
+
+  font-family: "Ubuntu", sans-serif;
+
+  font-size: 40px;
+
+}
+
+
+
+.page {
+
   display: flex;
 
   flex-direction: column;
@@ -10079,24 +10103,6 @@ body {
 
 
   height: 100vh;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 40px;
 
 }
 
@@ -10142,7 +10148,11 @@ Use `pauseOnHover: true` to pause the animation while the element is hovered.
 HTML
 
 ```
-<div id="marquee">Pause on Hover&nbsp;</div>
+<div class="page">
+
+  <div id="marquee">Pause on Hover&nbsp;</div>
+
+</div>
 ```
 
 CSS
@@ -10160,6 +10170,22 @@ body {
 
 
 
+  background: rgb(30, 43, 82);
+
+  color: #fff;
+
+
+
+  font-family: "Ubuntu", sans-serif;
+
+  font-size: 40px;
+
+}
+
+
+
+.page {
+
   display: flex;
 
   flex-direction: column;
@@ -10171,24 +10197,6 @@ body {
 
 
   height: 100vh;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 40px;
 
 }
 ```
@@ -10224,7 +10232,11 @@ The `speed` prop accepts negative values for reverse motion. Example: `speed: -1
 HTML
 
 ```
-<div id="marquee">This is a reverse marquee🔥</div>
+<div class="page">
+
+  <div id="marquee">This is a reverse marquee🔥</div>
+
+</div>
 ```
 
 CSS
@@ -10242,6 +10254,22 @@ body {
 
 
 
+  background: rgb(30, 43, 82);
+
+  color: #fff;
+
+
+
+  font-family: "Ubuntu", sans-serif;
+
+  font-size: 40px;
+
+}
+
+
+
+.page {
+
   display: flex;
 
   flex-direction: column;
@@ -10253,18 +10281,6 @@ body {
 
 
   height: 100vh;
-
-
-
-  background: rgb(30, 43, 82);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 40px;
 
 }
 ```
@@ -10303,39 +10319,43 @@ Programmatic control examples:
 HTML
 
 ```
-<div id="marquee">You can control me&nbsp;😃&nbsp;</div>
+<div class="page">
 
-<div class="buttons">
+  <div id="marquee">You can control me&nbsp;😃&nbsp;</div>
 
-  <button type="button" class="button" id="play">Play</button>
+  <div class="buttons">
 
-
-
-  <button type="button" class="button" id="pause">Pause</button>
-
-</div>
+    <button type="button" class="button" id="play">Play</button>
 
 
 
-<div class="buttons">
+    <button type="button" class="button" id="pause">Pause</button>
 
-  <button type="button" class="button" id="faster">Faster</button>
-
-
-
-  <button type="button" class="button" id="slower">Slower</button>
-
-</div>
+  </div>
 
 
 
-<div class="buttons">
+  <div class="buttons">
 
-  <button type="button" class="button" id="render">Render</button>
+    <button type="button" class="button" id="faster">Faster</button>
 
 
 
-  <button type="button" class="button" id="render10">Render 10</button>
+    <button type="button" class="button" id="slower">Slower</button>
+
+  </div>
+
+
+
+  <div class="buttons">
+
+    <button type="button" class="button" id="render">Render</button>
+
+
+
+    <button type="button" class="button" id="render10">Render 10</button>
+
+  </div>
 
 </div>
 ```
@@ -10355,29 +10375,7 @@ body {
 
 
 
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 2vw;
-
-
-
-  height: 100vh;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
+  background: rgb(30, 43, 82);
 
   color: #fff;
 
@@ -10391,15 +10389,37 @@ body {
 
 
 
+.page {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 1rem;
+
+
+
+  height: 100vh;
+
+}
+
+
+
 .buttons {
 
   display: grid;
 
   grid-template-columns: 1fr 1fr;
 
-  gap: 1vw;
+  gap: 1rem;
 
   width: 400px;
+
+  max-width: 90%;
 
 }
 
@@ -10435,7 +10455,7 @@ body {
 
   font: inherit;
 
-  font-size: 24px;
+  font-size: 16px;
 
   color: currentColor;
 
@@ -10564,7 +10584,11 @@ Examples:
 HTML
 
 ```
-<div id="marquee">The gap & speed are set with css units</div>
+<div class="page">
+
+  <div id="marquee">The gap & speed are set with css units</div>
+
+</div>
 ```
 
 CSS
@@ -10582,6 +10606,22 @@ body {
 
 
 
+  background: rgb(30, 43, 82);
+
+  color: #fff;
+
+
+
+  font-family: "Ubuntu", sans-serif;
+
+  font-size: 40px;
+
+}
+
+
+
+.page {
+
   display: flex;
 
   flex-direction: column;
@@ -10593,24 +10633,6 @@ body {
 
 
   height: 100vh;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 40px;
 
 }
 ```
@@ -10652,17 +10674,21 @@ This keeps motion consistent across 60 Hz and 120+ Hz displays.
 HTML
 
 ```
-<div id="marquee">The speed is adjustable depending on users's fps.&nbsp;</div>
+<div class="page">
+
+  <div id="marquee">The speed is adjustable depending on users's fps.&nbsp;</div>
 
 
 
-<div class="buttons">
+  <div class="buttons">
 
-  <button type="button" class="button" id="enable">Enable</button>
+    <button type="button" class="button" id="enable">Enable</button>
 
 
 
-  <button type="button" class="button" id="disable">Disable</button>
+    <button type="button" class="button" id="disable">Disable</button>
+
+  </div>
 
 </div>
 ```
@@ -10682,29 +10708,7 @@ body {
 
 
 
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 30px;
-
-
-
-  height: 100vh;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
+  background: rgb(30, 43, 82);
 
   color: #fff;
 
@@ -10713,6 +10717,26 @@ body {
   font-family: "Ubuntu", sans-serif;
 
   font-size: 40px;
+
+}
+
+
+
+.page {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 1rem;
+
+
+
+  height: 100vh;
 
 }
 
@@ -10727,6 +10751,8 @@ body {
   gap: 1vw;
 
   width: 300px;
+
+  max-width: 90%;
 
 }
 
@@ -10840,7 +10866,11 @@ In this demo, `speed` and `gap` change at responsive breakpoints.
 HTML
 
 ```
-<div id="marquee">Resize the window to see changes</div>
+<div class="page">
+
+  <div id="marquee">Resize the window to see changes</div>
+
+</div>
 ```
 
 CSS
@@ -10858,6 +10888,22 @@ body {
 
 
 
+  background: rgb(30, 43, 82);
+
+  color: #fff;
+
+
+
+  font-family: "Ubuntu", sans-serif;
+
+  font-size: 40px;
+
+}
+
+
+
+.page {
+
   display: flex;
 
   flex-direction: column;
@@ -10869,24 +10915,6 @@ body {
 
 
   height: 100vh;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 40px;
 
 }
 ```
@@ -10956,15 +10984,19 @@ Shows how to control a marquee with drag/swipe gestures.
 HTML
 
 ```
-<div id="marquee">
+<div class="page">
 
-  <img src="https://picsum.photos/id/199/300/200" width="300" height="200" alt="">
+  <div id="marquee">
 
-  <img src="https://picsum.photos/id/201/300/200" width="300" height="200" alt="">
+    <img src="https://picsum.photos/id/199/300/200" width="300" height="200" alt="">
 
-  <img src="https://picsum.photos/id/203/300/200" width="300" height="200" alt="">
+    <img src="https://picsum.photos/id/201/300/200" width="300" height="200" alt="">
 
-  <img src="https://picsum.photos/id/206/300/200" width="300" height="200" alt="">
+    <img src="https://picsum.photos/id/203/300/200" width="300" height="200" alt="">
+
+    <img src="https://picsum.photos/id/206/300/200" width="300" height="200" alt="">
+
+  </div>
 
 </div>
 ```
@@ -10980,6 +11012,22 @@ body {
 
 
 
+  background: rgb(30, 43, 82);
+
+  color: #fff;
+
+
+
+  font-family: "Ubuntu", sans-serif;
+
+  font-size: 40px;
+
+}
+
+
+
+.page {
+
   display: flex;
 
   flex-direction: column;
@@ -10991,16 +11039,6 @@ body {
 
 
   height: 100vh;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
 
 }
 
@@ -11148,13 +11186,7 @@ body {
 
 
 
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
+  background: rgb(30, 43, 82);
 
   color: #fff;
 
@@ -11162,7 +11194,7 @@ body {
 
   font-family: "Ubuntu", sans-serif;
 
-  font-size: 40px;
+  font-size: 30px;
 
 }
 
@@ -11278,7 +11310,11 @@ By default, Marquee clones child nodes for seamless looping. Disable with `clone
 HTML
 
 ```
-<div id="marquee">This text will not be cloned&nbsp;</div>
+<div class="page">
+
+  <div id="marquee">This text will not be cloned&nbsp;</div>
+
+</div>
 ```
 
 CSS
@@ -11296,6 +11332,22 @@ body {
 
 
 
+  background: rgb(30, 43, 82);
+
+  color: #fff;
+
+
+
+  font-family: "Ubuntu", sans-serif;
+
+  font-size: 40px;
+
+}
+
+
+
+.page {
+
   display: flex;
 
   flex-direction: column;
@@ -11307,24 +11359,6 @@ body {
 
 
   height: 100vh;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 40px;
 
 }
 ```

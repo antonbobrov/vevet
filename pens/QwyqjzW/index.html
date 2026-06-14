@@ -10,29 +10,29 @@ body {
   margin: 0;
   padding: 0;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2vw;
-
-  height: 100vh;
-
-  background: linear-gradient(165deg,
-      rgb(17, 25, 42) 0%,
-      rgb(30, 43, 82) 40%,
-      rgb(0, 58, 82) 100%);
+  background: rgb(30, 43, 82);
   color: #fff;
 
   font-family: "Ubuntu", sans-serif;
   font-size: 40px;
 }
 
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  height: 100vh;
+}
+
 .buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1vw;
+  gap: 1rem;
   width: 400px;
+  max-width: 90%;
 }
 
 .button {
@@ -50,7 +50,7 @@ body {
   border-radius: 50vw;
 
   font: inherit;
-  font-size: 24px;
+  font-size: 16px;
   color: currentColor;
 
   transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
@@ -61,23 +61,25 @@ body {
 }</style>
       </head>
       <body>
-        <div id="marquee">You can control me&nbsp;😃&nbsp;</div>
-<div class="buttons">
-  <button type="button" class="button" id="play">Play</button>
+        <div class="page">
+  <div id="marquee">You can control me&nbsp;😃&nbsp;</div>
+  <div class="buttons">
+    <button type="button" class="button" id="play">Play</button>
 
-  <button type="button" class="button" id="pause">Pause</button>
-</div>
+    <button type="button" class="button" id="pause">Pause</button>
+  </div>
 
-<div class="buttons">
-  <button type="button" class="button" id="faster">Faster</button>
+  <div class="buttons">
+    <button type="button" class="button" id="faster">Faster</button>
 
-  <button type="button" class="button" id="slower">Slower</button>
-</div>
+    <button type="button" class="button" id="slower">Slower</button>
+  </div>
 
-<div class="buttons">
-  <button type="button" class="button" id="render">Render</button>
+  <div class="buttons">
+    <button type="button" class="button" id="render">Render</button>
 
-  <button type="button" class="button" id="render10">Render 10</button>
+    <button type="button" class="button" id="render10">Render 10</button>
+  </div>
 </div>
         
   <script type="module">
