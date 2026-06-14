@@ -740,32 +740,16 @@ The **Canvas** class simplifies working with an HTML5 Canvas element and its 2D 
 HTML
 
 ```
-<div class="container" id="container"></div>
+<div class="fullpage-center">
+
+  <div class="container" id="container"></div>
+
+</div>
 ```
 
 CSS
 
 ```
-body {
-
-  margin: 0;
-
-  padding: 30px;
-
-  min-height: 100vh;
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-}
-
-
-
 .container {
 
   position: relative;
@@ -1350,75 +1334,35 @@ canvas.updateProps({
 HTML
 
 ```
-<h1>Original</h1>
+<div class="fullpage-center">
+
+  <p>Original</p>
 
 
 
-<img id="source" class="source" src="https://picsum.photos/2000/2000">
+  <img id="source" class="source" src="https://picsum.photos/2000/2000">
 
 
 
-<h1>Prerendered</h1>
+  <p>Prerendered</p>
 
 
 
-<div class="container" id="container"></div>
+  <div class="container" id="container"></div>
+
+</div>
 ```
 
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 0 30px;
-
-  min-height: 100vh;
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 30px;
-
-  color: #fff;
-
-}
-
-
-
-h1 {
-
-  margin: 30px 0;
-
-  font-weight: 500;
-
-  font-size: 30px;
-
-}
-
-
-
 .container {
 
   position: relative;
 
   width: 200px;
 
-  height: 300px;
+  height: 250px;
 
   background: linear-gradient(35deg,
 
@@ -29094,7 +29038,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20
+  gap: "1.25rem"
 
 });
 
@@ -29562,7 +29506,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: "1.25rem",
 
   origin: "end"
 
@@ -30032,7 +29976,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: "1.25rem",
 
   grabCursor: true
 
@@ -30188,7 +30132,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: "1.25rem",
 
   wheel: true,
 
@@ -30348,7 +30292,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: "1.25rem",
 
   wheel: true,
 
@@ -30719,7 +30663,7 @@ carousel.on("update", () => {
 
 ## Hypersmooth[​](#hypersmooth "Direct link to Hypersmooth")
 
-Very smooth motion with low lerp and long duration. Example: `lerp: 0.05`, `duration: 1500`.
+Very smooth motion with low lerp and long duration. Example: `lerp: 0.05`.
 
 [Vevet Demo VYYrOow](https://codepen.io/anton-bobrov/embed/VYYrOow?default-tab=result)
 
@@ -30840,7 +30784,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: "1.25rem",
 
   wheel: true,
 
@@ -30850,7 +30794,9 @@ const carousel = new Snap({
 
   duration: 1500,
 
-  grabCursor: true
+  grabCursor: true,
+
+  freemode: true
 
 });
 
@@ -30890,21 +30836,25 @@ Free scrolling with inertia via `freemode: true`. When `loop: false`, movement b
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide" style="width: 150vw">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide" style="width: 150vw">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -30912,49 +30862,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -30965,6 +30875,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -30998,7 +30910,7 @@ body {
 
   height: 100%;
 
-  width: 30vw;
+  width: 30%;
 
 
 
@@ -31010,25 +30922,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -31052,7 +30950,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: "1.25rem",
 
   grabCursor: true,
 
@@ -31102,21 +31000,25 @@ Movement stays within bounds and always settles on the nearest slide magnet when
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide" style="width: 150vw">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide" style="width: 150vw">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -31124,49 +31026,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -31177,6 +31039,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -31210,7 +31074,7 @@ body {
 
   height: 100%;
 
-  width: 30vw;
+  width: 30%;
 
 
 
@@ -31222,25 +31086,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -31264,7 +31114,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: "1.25rem",
 
   grabCursor: true,
 
@@ -31314,21 +31164,25 @@ Wrap-around navigation without looping the track: `rewind: true`. Works when `lo
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -31336,49 +31190,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -31389,6 +31203,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -31422,7 +31238,7 @@ body {
 
   height: 100%;
 
-  width: 75%;
+  width: 50%;
 
 
 
@@ -31434,25 +31250,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -31476,7 +31278,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: "1.25rem",
 
   rewind: true,
 
@@ -31520,21 +31322,25 @@ Add resistance during wheel and swipe interactions with `friction: 0.3` and `swi
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -31542,49 +31348,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -31595,6 +31361,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -31626,9 +31394,9 @@ body {
 
   left: 0;
 
-  width: 30vw;
-
   height: 100%;
+
+  width: 45%;
 
 
 
@@ -31640,25 +31408,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -31682,7 +31436,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: "1.25rem",
 
   wheel: true,
 
@@ -31736,21 +31490,25 @@ Extra resistance near the carousel edges. Enabled by default — override with `
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -31758,49 +31516,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -31811,6 +31529,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -31842,9 +31562,9 @@ body {
 
   left: 0;
 
-  width: 30vw;
-
   height: 100%;
+
+  width: 45%;
 
 
 
@@ -31856,25 +31576,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -31898,7 +31604,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: "1.25rem",
 
   edgeFriction: 0.25,
 
@@ -31942,21 +31648,25 @@ Auto-advance slides with `interval: 500` — moves to the next slide 500ms after
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -31964,49 +31674,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -32017,6 +31687,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -32048,9 +31720,9 @@ body {
 
   left: 0;
 
-  width: 30vw;
-
   height: 100%;
+
+  width: 45%;
 
 
 
@@ -32062,25 +31734,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -32104,7 +31762,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: '1.25rem',
 
   origin: "center",
 
@@ -32152,21 +31810,25 @@ Custom transition easing. Example: `easing: EaseOutBack`, `duration: 850`.
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -32174,49 +31836,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -32227,6 +31849,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -32258,9 +31882,9 @@ body {
 
   left: 0;
 
-  width: 30vw;
-
   height: 100%;
+
+  width: 45%;
 
 
 
@@ -32272,25 +31896,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -32316,7 +31926,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: "1.25rem",
 
   grabCursor: true,
 
@@ -32362,21 +31972,25 @@ Disable live swipe tracking so slides change only after the gesture ends: `follo
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -32384,49 +31998,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -32437,6 +32011,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -32468,9 +32044,9 @@ body {
 
   left: 0;
 
-  width: 30vw;
-
   height: 100%;
+
+  width: 45%;
 
 
 
@@ -32482,25 +32058,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -32524,7 +32086,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: "1.25rem",
 
   followSwipe: false,
 
@@ -32568,21 +32130,25 @@ Reverse swipe direction with a negative `swipeSpeed`. Example: `swipeSpeed: -1`.
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -32590,49 +32156,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -32643,6 +32169,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -32674,9 +32202,9 @@ body {
 
   left: 0;
 
-  width: 30vw;
-
   height: 100%;
+
+  width: 45%;
 
 
 
@@ -32688,25 +32216,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -32732,7 +32246,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: "1.25rem",
 
   grabCursor: true,
 
@@ -32780,21 +32294,25 @@ Manual RTL setup:
 HTML
 
 ```
-<div class="carousel" id="carousel" dir="rtl">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel" dir="rtl">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -32802,49 +32320,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -32855,6 +32333,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -32886,9 +32366,9 @@ body {
 
   right: 0;
 
-  width: 30vw;
-
   height: 100%;
+
+  width: 45%;
 
 
 
@@ -32900,25 +32380,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -32944,7 +32410,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: "1.25rem",
 
   grabCursor: true,
 
@@ -32986,21 +32452,25 @@ Scroll multiple slides per interaction with `slidesToScroll: 2`.
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -33008,49 +32478,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -33061,6 +32491,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -33094,7 +32526,7 @@ body {
 
   height: 100%;
 
-  width: calc(50% - 10px);
+  width: calc(50% - 0.625rem);
 
 
 
@@ -33106,25 +32538,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -33148,7 +32566,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: "1.25rem",
 
   grabCursor: true,
 
@@ -33212,21 +32630,25 @@ new Responsive(carousel, [
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -33234,49 +32656,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -33287,6 +32669,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -33320,7 +32704,7 @@ body {
 
   height: 100%;
 
-  width: calc(50% - 10px);
+  width: calc(50% - 0.625rem);
 
 
 
@@ -33332,25 +32716,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 
 
@@ -33384,7 +32754,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: "1.25rem",
 
   grabCursor: true,
 
@@ -33444,21 +32814,25 @@ Read each slide's `progress` and `index` in the `update` callback — useful for
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">1</div>
+  <div class="carousel" id="carousel">
 
-  <div class="slide">2</div>
+    <div class="slide">1</div>
 
-  <div class="slide">3</div>
+    <div class="slide">2</div>
 
-  <div class="slide">4</div>
+    <div class="slide">3</div>
 
-  <div class="slide">5</div>
+    <div class="slide">4</div>
 
-  <div class="slide">6</div>
+    <div class="slide">5</div>
 
-  <div class="slide">7</div>
+    <div class="slide">6</div>
+
+    <div class="slide">7</div>
+
+  </div>
 
 </div>
 ```
@@ -33466,43 +32840,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: rgb(30, 43, 82);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -33513,6 +32853,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -33544,9 +32886,9 @@ body {
 
   left: 0;
 
-  width: 25vw;
-
   height: 100%;
+
+  width: 40%;
 
 
 
@@ -33558,27 +32900,11 @@ body {
 
   justify-content: center;
 
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 12px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
-
-  font-variant-numeric: tabular-nums;
 
 }
 ```
@@ -33604,7 +32930,7 @@ const carousel = new Snap({
 
   container,
 
-  gap: 20,
+  gap: "1.25rem",
 
   grabCursor: true,
 
@@ -33656,55 +32982,19 @@ Virtual slides: pass `SnapSlide` instances with `virtual: true`. DOM nodes are c
 HTML
 
 ```
-<div class="carousel" id="carousel"></div>
+<div class="fullpage-center">
+
+  <div class="carousel" id="carousel"></div>
+
+</div>
 ```
 
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -33715,6 +33005,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -33758,27 +33050,11 @@ body {
 
   justify-content: center;
 
-  width: max-content;
-
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 16px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -33804,7 +33080,7 @@ const createSlides = count => {
 
   const slides = new Array(count).fill(0).map((item, index) => {
 
-    const size = "25vw";
+    const size = "40vw";
 
 
 
@@ -33844,7 +33120,7 @@ const carousel = new Snap({
 
   slides: createSlides(500),
 
-  gap: 20,
+  gap: "1.25rem",
 
   grabCursor: true,
 
@@ -39361,55 +38637,19 @@ The `SnapSlide` class allows you to create virtual slides within the `Snap` syst
 HTML
 
 ```
-<div class="carousel" id="carousel"></div>
+<div class="fullpage-center">
+
+  <div class="carousel" id="carousel"></div>
+
+</div>
 ```
 
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
+  padding-inline: 1.25rem;
 
 }
 
@@ -39420,6 +38660,8 @@ body {
   position: relative;
 
   width: 100%;
+
+
 
   height: 50vw;
 
@@ -39463,27 +38705,11 @@ body {
 
   justify-content: center;
 
-  width: max-content;
-
-  box-sizing: border-box;
-
-  padding: 20px;
-
-  border-radius: 16px;
 
 
+  border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
-
-  border-radius: 16px;
-
-
-
-  font-size: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
 
 }
 ```
@@ -39509,7 +38735,7 @@ const createSlides = count => {
 
   const slides = new Array(count).fill(0).map((item, index) => {
 
-    const size = "25vw";
+    const size = "40vw";
 
 
 
@@ -39549,7 +38775,7 @@ const carousel = new Snap({
 
   slides: createSlides(500),
 
-  gap: 20,
+  gap: "1.25rem",
 
   grabCursor: true,
 
@@ -39726,8 +38952,6 @@ CSS
   width: 20em;
 
   max-width: 100%;
-
-  font-size: 1.5rem;
 
   line-height: 1.2;
 
@@ -40186,8 +39410,6 @@ CSS
 
   max-width: 100%;
 
-  font-size: 1.5rem;
-
   line-height: 1.2;
 
   text-align: center;
@@ -40328,8 +39550,6 @@ CSS
 
   max-width: 100%;
 
-  font-size: 1.5rem;
-
   line-height: 1.2;
 
   text-align: center;
@@ -40463,8 +39683,6 @@ CSS
   width: 20em;
 
   max-width: 100%;
-
-  font-size: 1.5rem;
 
   line-height: 1.2;
 
@@ -40603,8 +39821,6 @@ CSS
   width: 20em;
 
   max-width: 100%;
-
-  font-size: 1.5rem;
 
   line-height: 1.2;
 
@@ -40747,8 +39963,6 @@ CSS
   width: 20em;
 
   max-width: 100%;
-
-  font-size: 1.5rem;
 
   line-height: 1.2;
 
@@ -40902,8 +40116,6 @@ CSS
 
   max-width: 100%;
 
-  font-size: 1.5rem;
-
   line-height: 1.2;
 
   font-kerning: none;
@@ -41054,8 +40266,6 @@ CSS
 
   max-width: 100%;
 
-  font-size: 1.5rem;
-
   line-height: 1;
 
   text-align: center;
@@ -41176,8 +40386,6 @@ CSS
   width: 20em;
 
   max-width: 100%;
-
-  font-size: 1.5rem;
 
   line-height: 1.2;
 
@@ -41315,8 +40523,6 @@ CSS
 
   max-width: 100%;
 
-  font-size: 1.5rem;
-
   line-height: 1.2;
 
   text-align: center;
@@ -41389,8 +40595,6 @@ CSS
 
   max-width: 100%;
 
-  font-size: 1.5rem;
-
   line-height: 1.2;
 
   text-align: center;
@@ -41460,8 +40664,6 @@ CSS
   width: 20em;
 
   max-width: 100%;
-
-  font-size: 1.5rem;
 
   line-height: 1.2;
 
@@ -41534,8 +40736,6 @@ CSS
   width: 20em;
 
   max-width: 100%;
-
-  font-size: 1.5rem;
 
   line-height: 1.2;
 
@@ -46625,23 +45825,27 @@ It provides methods for playing, reversing, pausing, and resetting the timeline.
 HTML
 
 ```
-<div class="line">
+<div class="fullpage-center">
 
-  <div class="thumb" id="thumb"></div>
+  <div class="line">
 
-</div>
+    <div class="thumb" id="thumb"></div>
+
+  </div>
 
 
 
-<div class="nav">
+  <div class="nav">
 
-  <button type="button" id="play" class="button">Play</button>
+    <button type="button" id="play" class="btn">Play</button>
 
-  <button type="button" id="pause" class="button">Pause</button>
+    <button type="button" id="pause" class="btn">Pause</button>
 
-  <button type="button" id="reverse" class="button">Reverse</button>
+    <button type="button" id="reverse" class="btn">Reverse</button>
 
-  <button type="button" id="reset" class="button">Reset</button>
+    <button type="button" id="reset" class="btn">Reset</button>
+
+  </div>
 
 </div>
 ```
@@ -46649,54 +45853,6 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 0 30px;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 30px;
-
-
-
-  height: 100vh;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 3vw;
-
-}
-
-
-
 .nav {
 
   display: flex;
@@ -46709,7 +45865,9 @@ body {
 
   flex-wrap: wrap;
 
-  gap: 10px;
+  gap: 0.5rem;
+
+  padding: 0 1rem;
 
 }
 
@@ -46721,9 +45879,9 @@ body {
 
   width: 80%;
 
-  height: 10px;
+  height: 0.5rem;
 
-  border-radius: 5px;
+  border-radius: 50vw;
 
   background: rgba(255, 255, 255, 0.1);
 
@@ -46735,71 +45893,21 @@ body {
 
   position: absolute;
 
-  top: -10px;
+  top: -0.5rem;
 
   left: 0;
 
-  width: 10px;
+  width: 0.25rem;
 
-  height: 30px;
+  height: 1.5rem;
 
-  border-radius: 5px;
+  border-radius: 50vw;
 
   background: linear-gradient(135deg,
 
       rgb(255, 127, 135) 0%,
 
       rgb(244, 214, 157) 100%);
-
-}
-
-
-
-.button {
-
-  height: 48px;
-
-  padding: 0 32px;
-
-  border: 0;
-
-  cursor: pointer;
-
-
-
-  background: linear-gradient(135deg,
-
-      rgb(13, 110, 253) 0%,
-
-      rgb(140, 122, 230) 50%,
-
-      rgb(0, 201, 177) 100%);
-
-  background-size: 200% auto;
-
-  box-shadow: 0 4px 20px rgba(13, 110, 253, 0.1);
-
-  border-radius: 50vw;
-
-
-
-  font: inherit;
-
-  font-size: 24px;
-
-  color: currentColor;
-
-
-
-  transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-
-}
-
-
-
-.button:hover {
-
-  background-position: right center;
 
 }
 ```

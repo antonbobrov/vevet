@@ -62,12 +62,13 @@ const container = document.getElementById("carousel");
 
 const carousel = new Snap({
   container,
-  gap: 20,
+  gap: "1.25rem",
   wheel: true,
   wheelAxis: "y",
   lerp: 0.05,
   duration: 1500,
-  grabCursor: true
+  grabCursor: true,
+  freemode: true
 });
 
 container.classList.add("ready");

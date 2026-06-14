@@ -5,94 +5,48 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · jEENKjV</title>
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
-        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-body {
-  margin: 0;
-  padding: 0 30px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-
-  height: 100vh;
-
-  background: linear-gradient(165deg,
-      rgb(17, 25, 42) 0%,
-      rgb(30, 43, 82) 40%,
-      rgb(0, 58, 82) 100%);
-  color: #fff;
-
-  font-family: "Ubuntu", sans-serif;
-  font-size: 3vw;
-}
-
-.nav {
+        <style>.nav {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 0.5rem;
+  padding: 0 1rem;
 }
 
 .line {
   position: relative;
   width: 80%;
-  height: 10px;
-  border-radius: 5px;
+  height: 0.5rem;
+  border-radius: 50vw;
   background: rgba(255, 255, 255, 0.1);
 }
 
 .thumb {
   position: absolute;
-  top: -10px;
+  top: -0.5rem;
   left: 0;
-  width: 10px;
-  height: 30px;
-  border-radius: 5px;
+  width: 0.25rem;
+  height: 1.5rem;
+  border-radius: 50vw;
   background: linear-gradient(135deg,
       rgb(255, 127, 135) 0%,
       rgb(244, 214, 157) 100%);
-}
-
-.button {
-  height: 48px;
-  padding: 0 32px;
-  border: 0;
-  cursor: pointer;
-
-  background: linear-gradient(135deg,
-      rgb(13, 110, 253) 0%,
-      rgb(140, 122, 230) 50%,
-      rgb(0, 201, 177) 100%);
-  background-size: 200% auto;
-  box-shadow: 0 4px 20px rgba(13, 110, 253, 0.1);
-  border-radius: 50vw;
-
-  font: inherit;
-  font-size: 24px;
-  color: currentColor;
-
-  transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.button:hover {
-  background-position: right center;
 }</style>
       </head>
       <body>
-        <div class="line">
-  <div class="thumb" id="thumb"></div>
-</div>
+        <div class="fullpage-center">
+  <div class="line">
+    <div class="thumb" id="thumb"></div>
+  </div>
 
-<div class="nav">
-  <button type="button" id="play" class="button">Play</button>
-  <button type="button" id="pause" class="button">Pause</button>
-  <button type="button" id="reverse" class="button">Reverse</button>
-  <button type="button" id="reset" class="button">Reset</button>
+  <div class="nav">
+    <button type="button" id="play" class="btn">Play</button>
+    <button type="button" id="pause" class="btn">Pause</button>
+    <button type="button" id="reverse" class="btn">Reverse</button>
+    <button type="button" id="reset" class="btn">Reset</button>
+  </div>
 </div>
         
   <script type="module">

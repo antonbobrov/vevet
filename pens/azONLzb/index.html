@@ -5,33 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · azONLzb</title>
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
-        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-body {
-  margin: 0;
-  padding: 20px;
-  box-sizing: border-box;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  height: 100vh;
-  overflow: hidden;
-
-  background: linear-gradient(165deg,
-      rgb(17, 25, 42) 0%,
-      rgb(30, 43, 82) 40%,
-      rgb(0, 58, 82) 100%);
-  color: #fff;
-
-  font-family: "Ubuntu", sans-serif;
+        <style>.fullpage-center {
+  padding-inline: 1.25rem;
 }
 
 .carousel {
   position: relative;
   width: 100%;
+
   height: 50vw;
   max-height: 50vh;
 
@@ -53,21 +34,15 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: max-content;
-  box-sizing: border-box;
-  padding: 20px;
-  border-radius: 16px;
 
+  border-radius: 1rem;
   background: rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-
-  font-size: 2rem;
-  font-weight: bold;
-  color: #ececec;
 }</style>
       </head>
       <body>
-        <div class="carousel" id="carousel"></div>
+        <div class="fullpage-center">
+  <div class="carousel" id="carousel"></div>
+</div>
         
   <script type="module">
 import {
@@ -79,7 +54,7 @@ const container = document.getElementById("carousel");
 
 const createSlides = count => {
   const slides = new Array(count).fill(0).map((item, index) => {
-    const size = "25vw";
+    const size = "40vw";
 
     const element = document.createElement("div");
     element.className = "slide";
@@ -99,7 +74,7 @@ const createSlides = count => {
 const carousel = new Snap({
   container,
   slides: createSlides(500),
-  gap: 20,
+  gap: "1.25rem",
   grabCursor: true,
   loop: true,
   origin: "center"
