@@ -4,33 +4,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · vEEBrPP</title>
-        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-body {
-  margin: 0;
-  padding: 30px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  height: 100vh;
-
-  background: linear-gradient(165deg,
-      rgb(17, 25, 42) 0%,
-      rgb(30, 43, 82) 40%,
-      rgb(0, 58, 82) 100%);
-  color: #fff;
-
-  font-family: "Ubuntu", sans-serif;
-}
-
-#quote {
-  max-width: 20em;
-  font-size: 24px;
-  text-align: center;
+        <style>#quote {
+  width: 20em;
+  max-width: 100%;
+  font-size: 1.5rem;
   line-height: 1.2;
+  text-align: center;
   font-kerning: none;
 
   opacity: 0;
@@ -38,41 +17,17 @@ body {
   .v-split-text__line-wrapper {
     overflow: hidden;
   }
-}
-
-.button {
-  margin-top: 2rem;
-  height: 3rem;
-  padding: 0 2rem;
-  border: 0;
-  cursor: pointer;
-
-  background: linear-gradient(135deg,
-      rgb(13, 110, 253) 0%,
-      rgb(140, 122, 230) 50%,
-      rgb(0, 201, 177) 100%);
-  background-size: 200% auto;
-  box-shadow: 0 4px 20px rgba(13, 110, 253, 0.1);
-  border-radius: 50vw;
-
-  font: inherit;
-  font-size: 1.25rem;
-  color: currentColor;
-
-  transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.button:hover {
-  background-position: right center;
 }</style>
       </head>
       <body>
-        <div id="quote">
-  Vevet SplitText is a free utility that enables seamless text splitting
-  into words, letters, or lines as needed.
-</div>
+        <div class="fullpage-center">
+  <div id="quote">
+    Vevet SplitText is a free utility that enables seamless text splitting
+    into words, letters, or lines as needed.
+  </div>
 
-<button type="button" id="animate" class="button">Animate</button>
+  <button type="button" id="animate" class="btn">Animate</button>
+</div>
         
   <script type="module">
 import {

@@ -4,15 +4,17 @@
   box-sizing: border-box;
 }
 
+:root {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 24px;
+}
+
 body {
   margin: 0;
   padding: 0;
 
   background: rgb(30, 43, 82);
   color: #fff;
-
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 24px;
 }
 
 .fullpage-center {
@@ -20,7 +22,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 1.5rem;
 
   min-height: 100vh;
   padding: 1rem 0;
