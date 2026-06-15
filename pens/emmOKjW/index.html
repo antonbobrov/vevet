@@ -5,61 +5,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · emmOKjW</title>
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
-        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-
-  font-family: "Ubuntu", sans-serif;
-
-  background: linear-gradient(165deg,
-      rgb(17, 25, 42) 0%,
-      rgb(30, 43, 82) 40%,
-      rgb(0, 58, 82) 100%);
-  color: #fff;
-}
-
-.v-scrollbar {
-  &.v-scrollbar_y {
-    right: 0.25rem;
-    top: 0.5rem;
-    height: calc(100% - 1rem);
-  }
-
-  .v-scrollbar__track {
-    background-color: transparent;
-
-    .v-scrollbar__thumb {
-      border-radius: 5px;
-      background: linear-gradient(135deg,
-          rgb(255, 127, 135) 0%,
-          rgb(244, 214, 157) 100%);
-    }
-  }
-}
-
-.wrapper {
+        <style>.wrapper {
   position: relative;
   width: max-content;
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 1rem;
-  backdrop-filter: blur(1rem);
+  font-size: 0.75rem;
 }
 
 .scrollable {
-  width: 300px;
+  width: 20rem;
   max-width: 80vw;
-  height: 200px;
+  height: 15rem;
   overflow: auto;
-  padding: 16px 32px 16px 16px;
-  box-sizing: border-box;
+  padding: 1rem 2rem 1rem 1rem;
 }
 
 .scrollable {
@@ -75,88 +34,107 @@ body {
 }
 
 p {
-  margin: 8px 0;
+  margin: 0.5rem 0;
+}
+
+.v-scrollbar {
+  &.v-scrollbar_y {
+    right: 0.25rem;
+    top: 0.5rem;
+    height: calc(100% - 1rem);
+  }
+
+  .v-scrollbar__track {
+    background-color: transparent;
+
+    .v-scrollbar__thumb {
+      border-radius: 5px;
+      background: var(--gradient-sunset, #000);
+    }
+  }
 }</style>
       </head>
       <body>
-        <div class="wrapper">
-  <div class="scrollable">
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-      aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
-      mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
-      recusandae harum minus.
-    </p>
+        <div class="fullpage-center">
+  <div class="wrapper">
+    <div class="scrollable">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
+        aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
+        mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
+        recusandae harum minus.
+      </p>
 
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-      aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
-      mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
-      recusandae harum minus.
-    </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
+        aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
+        mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
+        recusandae harum minus.
+      </p>
 
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-      aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
-      mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
-      recusandae harum minus.
-    </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
+        aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
+        mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
+        recusandae harum minus.
+      </p>
 
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-      aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
-      mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
-      recusandae harum minus.
-    </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
+        aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
+        mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
+        recusandae harum minus.
+      </p>
 
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-      aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
-      mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
-      recusandae harum minus.
-    </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
+        aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
+        mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
+        recusandae harum minus.
+      </p>
 
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-      aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
-      mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
-      recusandae harum minus.
-    </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
+        aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
+        mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
+        recusandae harum minus.
+      </p>
 
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-      aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
-      mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
-      recusandae harum minus.
-    </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
+        aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
+        mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
+        recusandae harum minus.
+      </p>
 
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-      aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
-      mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
-      recusandae harum minus.
-    </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
+        aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
+        mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
+        recusandae harum minus.
+      </p>
 
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-      aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
-      mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
-      recusandae harum minus.
-    </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
+        aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
+        mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
+        recusandae harum minus.
+      </p>
 
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-      aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
-      mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
-      recusandae harum minus.
-    </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
+        aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
+        mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
+        recusandae harum minus.
+      </p>
 
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-      aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
-      mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
-      recusandae harum minus.
-    </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
+        aperiam adipisci earum cum perspiciatis eos, exercitationem distinctio
+        mollitia omnis explicabo. Ab natus facilis vitae nemo fugiat magnam
+        recusandae harum minus.
+      </p>
+    </div>
   </div>
 </div>
         

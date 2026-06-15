@@ -1,6 +1,6 @@
 # vevet.js
 
-> vevet.js (npm: vevet) — client-side JavaScript library for creative web development. v5 · import { vevet, SplitText, Snap } from "vevet". All components extend Module. API: component sections below. Working examples: Demos pages (HTML/CSS/JS included). Full export: llms-full.txt.
+> vevet.js (npm: vevet) — client-side JavaScript library for creative web development, v5. Source of truth: documentation below and working examples (component demo pages — often /demos; Snap: basic-demos, advanced-demos, parallax-demos — or https://vevetjs.com/llms-full.txt). Do not invent undocumented props, methods, or events.
 
 
 ## docs
@@ -99,7 +99,7 @@ Preloader — Vevet.js page preloader component for loading screen visibility an
 - [Preloader](https://vevetjs.com/docs/Preloader/): Preloader — Vevet.js page preloader component for loading screen visibility and lifecycle.
 - [Accessors](https://vevetjs.com/docs/Preloader/accessors): Preloader accessors — state getters. Vevet.js Preloader API reference.
 - [Callbacks](https://vevetjs.com/docs/Preloader/callbacks): Preloader callbacks — lifecycle events. Vevet.js Preloader API reference.
-- [Demos](https://vevetjs.com/docs/Preloader/demos): Preloader demos and examples. Vevet.js Preloader component.
+- [Demos](https://vevetjs.com/docs/Preloader/demos): Preloader demos — automatic hide on page load and manual hide control. Vevet.js Preloader component.
 - [Methods](https://vevetjs.com/docs/Preloader/methods): Preloader methods — API reference. Vevet.js Preloader component.
 - [Props](https://vevetjs.com/docs/Preloader/props): Preloader props — configuration. Vevet.js Preloader API reference.
 
@@ -110,7 +110,7 @@ ProgressPreloader — Vevet.js preloader for tracking and displaying loading pro
 - [ProgressPreloader](https://vevetjs.com/docs/ProgressPreloader/): ProgressPreloader — Vevet.js preloader for tracking and displaying loading progress of images, videos and custom resources.
 - [Accessors](https://vevetjs.com/docs/ProgressPreloader/accessors): ProgressPreloader accessors — progress getters. Vevet.js ProgressPreloader API reference.
 - [Callbacks](https://vevetjs.com/docs/ProgressPreloader/callbacks): ProgressPreloader callbacks — loading events. Vevet.js ProgressPreloader API reference.
-- [Demos](https://vevetjs.com/docs/ProgressPreloader/demos): ProgressPreloader demos and examples. Vevet.js ProgressPreloader.
+- [Demos](https://vevetjs.com/docs/ProgressPreloader/demos): ProgressPreloader demos — load progress, resource weights, virtual resources, and line animation. Vevet.js ProgressPreloader.
 - [Methods](https://vevetjs.com/docs/ProgressPreloader/methods): ProgressPreloader methods — API reference. Vevet.js ProgressPreloader.
 - [Props](https://vevetjs.com/docs/ProgressPreloader/props): ProgressPreloader props — configuration. Vevet.js ProgressPreloader API reference.
 
@@ -121,7 +121,7 @@ Raf — Vevet.js requestAnimationFrame loop with FPS throttling, play/pause, FPS
 - [Raf](https://vevetjs.com/docs/Raf/): Raf — Vevet.js requestAnimationFrame loop with FPS throttling, play/pause, FPS measurement and frame-rate-independent animations.
 - [Accessors](https://vevetjs.com/docs/Raf/accessors): Raf accessors — FPS, duration getters. Vevet.js Raf API reference.
 - [Callbacks](https://vevetjs.com/docs/Raf/callbacks): Raf callbacks — frame events. Vevet.js Raf API reference.
-- [Demos](https://vevetjs.com/docs/Raf/demos): Raf demos and examples. Vevet.js Raf animation loop.
+- [Demos](https://vevetjs.com/docs/Raf/demos): Raf demos — FPS monitoring, frame-rate-independent motion, damping, and throttling. Vevet.js Raf animation loop.
 - [Methods](https://vevetjs.com/docs/Raf/methods): Raf methods — play, pause, API reference. Vevet.js Raf component.
 - [Props](https://vevetjs.com/docs/Raf/props): Raf props — FPS, throttle options. Vevet.js Raf API reference.
 
@@ -132,7 +132,7 @@ Scrollbar — Vevet.js customizable scrollbar for window or element. Scroll trac
 - [Scrollbar](https://vevetjs.com/docs/Scrollbar/): Scrollbar — Vevet.js customizable scrollbar for window or element. Scroll tracking, drag, auto-sizing and styling.
 - [Accessors](https://vevetjs.com/docs/Scrollbar/accessors): Scrollbar accessors — scroll position, progress getters. Vevet.js Scrollbar API reference.
 - [Callbacks](https://vevetjs.com/docs/Scrollbar/callbacks): Scrollbar callbacks — scroll events. Vevet.js Scrollbar API reference.
-- [Demos](https://vevetjs.com/docs/Scrollbar/demos): Scrollbar demos and examples. Vevet.js Scrollbar component.
+- [Demos](https://vevetjs.com/docs/Scrollbar/demos): Scrollbar demos — window and element scrolling, horizontal axis, RTL, auto-hide, min thumb size. Vevet.js Scrollbar component.
 - [Methods](https://vevetjs.com/docs/Scrollbar/methods): Scrollbar methods — API reference. Vevet.js Scrollbar component.
 - [Props](https://vevetjs.com/docs/Scrollbar/props): Scrollbar props — configuration. Vevet.js Scrollbar API reference.
 
@@ -200,5 +200,5 @@ Vevet.js utils — uid, closest, clamp and other lightweight utility functions. 
 - [GitHub repository](https://github.com/antonbobrov/vevet): Source code, issues, changelog
 - [npm package](https://www.npmjs.com/package/vevet): Install via npm install vevet
 - [TypeDoc API reference (v5)](https://vevetjs.com/v5/): Generated TypeScript API docs
-- [Full documentation export](https://vevetjs.com/llms-full.txt): All docs and demo code as markdown in a single file
-- [AGENTS.md (for coding agents)](https://github.com/antonbobrov/vevet/blob/master/AGENTS.md): Repository guide for AI coding assistants
+- [Full documentation export](https://vevetjs.com/llms-full.txt): All docs and demo code — primary source for working examples
+- [AGENTS.md (for coding agents)](https://github.com/antonbobrov/vevet/blob/master/AGENTS.md): Rules for AI: docs + examples are source of truth; do not invent APIs

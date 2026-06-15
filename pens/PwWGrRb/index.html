@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · PwWGrRb</title>
+        <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
+        <style>.item {
+  width: 2.5rem;
+  height: 2.5rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  border-radius: 0.5rem;
+
+  img {
+    width: 1.25rem;
+    height: auto;
+    filter: invert(100%);
+    background: transparent;
+  }
+}
+
+#all {
+  background: var(--gradient-brand-135, #000);
+}</style>
+      </head>
+      <body>
+        <div class="fullpage-center">
+  <div id="all" class="item">
+    <img src="https://www.svgrepo.com/show/521614/drag.svg" alt="">
+  </div>
+</div>
+        
+  <script type="module">
+import {
+  Swipe
+} from "https://esm.sh/vevet@5";
+
+new Swipe({
+  container: document.getElementById("all"),
+  grabCursor: true,
+  pointers: 2,
+  onMove: ({
+    diff
+  }, {
+    container
+  }) => {
+    container.style.transition = "";
+    container.style.transform = `translate(${diff.x}px, ${diff.y}px)`;
+  },
+  onEnd: (data, {
+    container
+  }) => {
+    container.style.zIndex = "";
+    container.style.transition = "transform 0.25s";
+    container.style.transform = "none";
+  }
+});
+
+  </script>
+      </body>
+    </html>
+  

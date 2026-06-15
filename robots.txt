@@ -1,5 +1,6 @@
 # https://vevetjs.com — vevet.js documentation
 # LLM-friendly index: https://vevetjs.com/llms.txt
+# Source of truth: docs + examples (demo pages per component, or llms-full.txt). Do not invent APIs.
 
 User-agent: *
 Allow: /docs/
