@@ -12,7 +12,7 @@ const START_STATE = { ...START_VEC3, time: 0 };
 
 interface IProps {
   container: Element;
-  props: typeof Swipe.prototype.props;
+  props: () => typeof Swipe.prototype.props;
   hasInertia: () => boolean;
   recalculateBoundsOnInertia: () => boolean;
 }
@@ -127,7 +127,9 @@ export class SwipeCoords {
   }
 
   get overflow() {
-    return this.ctx.props.overflow ? Math.abs(this.ctx.props.overflow()) : 0;
+    const props = this.ctx.props();
+
+    return props.overflow ? Math.abs(props.overflow()) : 0;
   }
 
   /** Current scale modifier */
@@ -217,7 +219,8 @@ export class SwipeCoords {
   /** Parses pointer coordinates relative to the container */
   public decode(event: MouseEvent | TouchEvent | ISwipeVec2): ISwipeState {
     const vevet = initVevet();
-    const { props, container } = this.ctx;
+    const { container } = this.ctx;
+    const props = this.ctx.props();
 
     let clientX = 0;
     let clientY = 0;
@@ -304,7 +307,8 @@ export class SwipeCoords {
   public update({ x, y, angle, time }: ISwipeState, applyRatio = true) {
     // Vars
     const { start, ctx } = this;
-    const stepRatio = applyRatio ? ctx.props.ratio : 1;
+    const props = this.ctx.props();
+    const stepRatio = applyRatio ? props.ratio : 1;
 
     // Update bounds
     if (
@@ -367,7 +371,8 @@ export class SwipeCoords {
 
   /** Snap movement axis */
   private _snapMovementAxis(axis: 'x' | 'y' | 'angle') {
-    const { props, hasInertia } = this.ctx;
+    const { hasInertia } = this.ctx;
+    const props = this.ctx.props();
 
     const snap = props.snap?.();
     if (!snap) {
@@ -402,7 +407,7 @@ export class SwipeCoords {
 
   /** Calculate bounds */
   public calculateBounds() {
-    const { props } = this.ctx;
+    const props = this.ctx.props();
 
     if (!props.bounds) {
       this._bounds = null;

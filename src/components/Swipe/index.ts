@@ -90,7 +90,7 @@ export class Swipe extends Module<TC, TS, TM> {
 
     this._coords = new SwipeCoords({
       container,
-      props: this.props,
+      props: () => this.props,
       hasInertia: () => this.hasInertia,
       recalculateBoundsOnInertia: () => this.props.recalculateBoundsOnInertia,
     });
@@ -98,7 +98,7 @@ export class Swipe extends Module<TC, TS, TM> {
     this._styles = new SwipeStyles(this as any);
 
     this._inertia = new SwipeInertia({
-      props: this.props,
+      props: () => this.props,
       coords: this._coords,
       onStart: () => {
         this._coords.syncTempAngle();

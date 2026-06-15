@@ -13,7 +13,7 @@ const LERP_APPROX = 0.01;
 const BELOW_THRESHOLD = 0.1;
 
 interface IProps {
-  props: typeof Swipe.prototype.props;
+  props: () => typeof Swipe.prototype.props;
   coords: SwipeCoords;
   onStart: () => void;
   onFail: () => void;
@@ -50,7 +50,7 @@ export class SwipeInertia {
   /** Apply inertia-based movement */
   public release(onUpdate: (state: ISwipeVec3) => void) {
     const { ctx } = this;
-    const { props } = ctx;
+    const props = ctx.props();
 
     this._modifiedDistance = undefined;
     this._saveCurrent = { ...ctx.coords.current };
@@ -104,7 +104,7 @@ export class SwipeInertia {
   /** Calculate velocity */
   private _calcVelocity() {
     const { _saveCurrent: current, _saveStep: step } = this;
-    const { inertiaRatio, ratio, maxVelocity, ...props } = this.ctx.props;
+    const { inertiaRatio, ratio, maxVelocity, ...props } = this.ctx.props();
 
     if (!current || !step) {
       return null;
@@ -144,7 +144,9 @@ export class SwipeInertia {
 
     const { _raf: raf } = this;
     const duration = this._raf.duration;
-    const { coords, props } = this.ctx;
+
+    const { coords } = this.ctx;
+    const props = this.ctx.props();
 
     const {
       _velocity: velocity,
