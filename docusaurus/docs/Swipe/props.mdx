@@ -82,6 +82,7 @@ const swipe = new Swipe({
 
 - **Type:** `number | ((type: TPointersType) => number)`
 - **Default:** `1`
+- **See [demo](demos#two-fingers-pan)**
 - Required pointer count to activate swiping.  
   Useful for touch gestures such as two-finger pan.  
   If fewer pointers are present, swipe will not start.
@@ -376,6 +377,7 @@ const swipe = new Swipe({
 - **Type:** `() => number`
 - **Default:** `() => 50`
 - Rubber-band distance past `bounds` (px for x/y, degrees for `angle`).
+- **See [demo](demos#drag-inertia-bounce)**
 
 ```js
 const swipe = new Swipe({
@@ -393,6 +395,7 @@ const swipe = new Swipe({
 - The callback receives the full [`ISwipeCoords`](interfaces#iswipecoords) snapshot — use `coords.scale`, `coords.movement`, etc. when limits depend on zoom or layout.
 - Limits are re-read on every move update (including after [`setScale`](methods#setscale)).
 - Use [`movement`](accessors#movement) and [`scale`](accessors#scale) in callbacks for transforms.
+- **See [demo](demos#drag-inertia-bounce)**
 
 ```js
 const swipe = new Swipe({
@@ -504,6 +507,7 @@ const swipe = new Swipe({
 - **Type:** `number`
 - **Default:** `0.05`
 - Velocity decay per frame during inertia (higher = stops sooner).
+- **See [demo](demos#inertia-settings)**
 
 ```js
 const swipe = new Swipe({
@@ -517,6 +521,7 @@ const swipe = new Swipe({
 - **Type:** `number`
 - **Default:** `0.3`
 - Easing factor for pulling inertia back inside `bounds` (per frame, FPS-independent).
+- **See [demo](demos#inertia-settings)**
 
 ```js
 const swipe = new Swipe({
@@ -531,6 +536,7 @@ const swipe = new Swipe({
 - **Type:** `number`
 - **Default:** `1`
 - Extra multiplier for release velocity. Effective scale is [`ratio`](#props.ratio) `× inertiaRatio`.
+- **See [demo](demos#inertia-settings)**
 
 ```js
 const swipe = new Swipe({
@@ -545,6 +551,7 @@ const swipe = new Swipe({
 - **Default:** `null`
 - Called once before release inertia starts with predicted inertia distance (`x`/`y` in px, `angle` in degrees).  
   Return a vector to override the total inertia travel, or `null` to keep the default decay-based inertia.
+- **See [demo](demos#inertia-distance-modifier)**
 
 ```js
 const swipe = new Swipe({
@@ -590,23 +597,3 @@ const swipe = new Swipe({
 :::caution
 Timelined inertia (`inertiaDuration`, `inertiaEasing`) and `velocityModifier` are **no longer applied**. Use RAF inertia props above (`inertiaDecay`, `inertiaBounceEase`, `inertiaThreshold`, `maxVelocity`).
 :::
-
-### `inertiaDuration` {#props.inertiaDuration}
-
-- **Type:** `(distance: number) => number`
-- **Status:** deprecated — not used
-
-### `inertiaEasing` {#props.inertiaEasing}
-
-- **Type:** `TEasingType`
-- **Status:** deprecated — not used
-
-### `velocityModifier` {#props.velocityModifier}
-
-- **Type:** `false | ((velocity: ISwipeState) => ISwipeState)`
-- **Status:** deprecated — not used
-
-### `inertiaDistanceThreshold` {#props.inertiaDistanceThreshold}
-
-- **Type:** `number`
-- **Status:** deprecated — use [`inertiaThreshold`](#props.inertiaThreshold) instead (fallback if set)

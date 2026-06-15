@@ -31,12 +31,14 @@ console.log(vevet.browserName); // => 'chrome'
 
 ## CDN Usage
 
+On CDN the global is `Vevet` — components and utilities are `Vevet.SplitText`, `Vevet.clamp`, etc. The initialized core instance (same as `import { vevet } from 'vevet'`) is **`Vevet.app`**.
+
 ```html
 <script src="https://cdn.jsdelivr.net/npm/vevet@5/lib/cdn/vevet.iife.min.js"></script>
 ```
 
 ```js
-console.log(Vevet.app); // => ICore instance
+console.log(Vevet.app); // => core instance (ICore)
 console.log(Vevet.app.version); // => '5.0.0'
 console.log(Vevet.app.osName); // => 'windows'
 console.log(Vevet.app.browserName); // => 'chrome'

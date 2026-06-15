@@ -1,9 +1,10 @@
 ---
 sidebar_position: 10
-description: ProgressPreloader demos and examples. Vevet.js ProgressPreloader.
+description: ProgressPreloader demos — load progress, resource weights, virtual resources, and line animation. Vevet.js ProgressPreloader.
 keywords:
   - progress preloader demos
   - vevet preloader
+  - loading progress
 ---
 
 import VevetDemo from '@site/src/components/VevetDemo';
@@ -17,26 +18,51 @@ import Head from '@docusaurus/Head';
 </Head>
 
 <section>
-  ## Simple Preloader
-  <VevetDemo id="vEGbxeq" height={500} />
+## Simple Preloader {#simple-preloader}
+
+Tracks page resource loading and displays smooth [`progress`](accessors#progress) as a percentage.
+
+Key props: [`hide: 700`](props#props.hide), [`onProgress`](callbacks#progress). Images in the grid are observed automatically via [`preloadImages`](props#props.preloadImages).
+
+<VevetDemo id="vEGbxeq" height={500} />
 </section>
 
 <section>
-  ## Custom Hiding Logic
-  <VevetDemo id="EaKrWoR" height={500} />
+## Custom Hiding Logic {#custom-hiding-logic}
+
+Progress updates in real time, but the overlay stays until the user dismisses it.
+
+Key props: [`hide: false`](props#props.hide), [`onLoaded`](callbacks#loaded). A button appears after load completes and calls [`hide()`](/docs/Preloader/methods#hide).
+
+<VevetDemo id="EaKrWoR" height={500} />
 </section>
 
 <section>
-  ## Resource Count
-  <VevetDemo id="QwNYpmp" height={500} />
+## Resource Count {#resource-count}
+
+Shows raw resource weights instead of a percentage.
+
+Reads [`loadedWeight`](accessors#loadedweight) and [`totalWeight`](accessors#totalweight) in `onProgress` — useful for debugging or technical UIs.
+
+<VevetDemo id="QwNYpmp" height={500} />
 </section>
 
 <section>
-  ## Virtual Resources
-  <VevetDemo id="VYYZdQG" height={500} />
+## Virtual Resources {#virtual-resources}
+
+Track custom payloads that are not images or videos.
+
+The button uses the default [`customSelector`](props#props.customselector) (`.js-preload`) with `data-weight="4"`. Each click calls [`resolveResource()`](/docs/ProgressPreloader/methods#resolveresource) to increment loaded weight until the resource is complete.
+
+<VevetDemo id="VYYZdQG" height={500} />
 </section>
 
 <section>
-  ## Line Preloader
-  <VevetDemo id="ogxROvY" height={500} />
+## Line Preloader {#line-preloader}
+
+Minimal progress bar driven by [`progress`](accessors#progress).
+
+`onProgress` maps progress to `transform: scale(x, 1)` on a line element — a common full-width loading indicator pattern.
+
+<VevetDemo id="ogxROvY" height={500} />
 </section>

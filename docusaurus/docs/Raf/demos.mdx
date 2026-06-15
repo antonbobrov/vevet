@@ -1,9 +1,12 @@
 ---
 sidebar_position: 10
-description: Raf demos and examples. Vevet.js Raf animation loop.
+description: Raf demos — FPS monitoring, frame-rate-independent motion, damping, and throttling. Vevet.js Raf animation loop.
 keywords:
   - raf demos
   - vevet raf
+  - requestAnimationFrame
+  - fps throttling
+  - damping
 ---
 
 import VevetDemo from '@site/src/components/VevetDemo';
@@ -17,29 +20,49 @@ import Head from '@docusaurus/Head';
 </Head>
 
 <section>
-  ## Info
-  <VevetDemo id="EaaYREw" height={500} />
+## Info {#info}
+
+Live dashboard of the Raf loop — target FPS, real-time metrics, and playback controls.
+
+Reads [`fps`](accessors#fps), [`fpsFactor`](accessors#fpsfactor), [`timestamp`](accessors#timestamp), and [`index`](accessors#index) on every [`onFrame`](callbacks#frame). Use **Play** / **Pause** to call [`play()`](methods#play) and [`pause()`](methods#pause).
+
+<VevetDemo id="EaaYREw" height={500} />
 </section>
 
 <section>
-## Damping
+## Damping {#damping}
 
-Raf ensures consistent animation speed on devices with refresh rates above 60 FPS.
+Compare standard `lerp()` with frame-rate–independent easing via [`lerpFactor()`](methods#lerpfactor).
+
+Both squares chase the same target, but only the bottom one uses `raf.lerpFactor(ease)` — motion stays consistent on 60 Hz, 120 Hz, and higher refresh rates.
 
 <VevetDemo id="RNaEXOW" height={500} />
 </section>
 
 <section>
-  ## Real-time FPS
-  <VevetDemo id="azNXojO" height={500} />
+## Real-time FPS {#real-time-fps}
+
+Block moves using [`fpsFactor`](accessors#fpsfactor) while displaying the current [`fps`](accessors#fps) value.
+
+Position advances by `raf.fpsFactor` each frame — the same pattern used for refresh-rate–independent physics.
+
+<VevetDemo id="azNXojO" height={500} />
 </section>
 
 <section>
-  ## FPS factor
-  <VevetDemo id="MYyLgvZ" height={500} />
+## FPS Factor {#fps-factor}
+
+Same movement pattern, but the label shows [`fpsFactor`](accessors#fpsfactor) instead of FPS.
+
+On a 120 Hz display the factor is ~`0.50`; on 60 Hz it stays near `1.00` — useful when you need the raw multiplier in UI or debug output.
+
+<VevetDemo id="MYyLgvZ" height={500} />
 </section>
 
 <section>
-  ## FPS Throttling
-  <VevetDemo id="YPqBKJV" height={500} />
+## FPS Throttling {#fps-throttling}
+
+Cap the loop to a fixed frame rate with [`fps: 10`](props#props.fps).
+
+<VevetDemo id="YPqBKJV" height={500} />
 </section>

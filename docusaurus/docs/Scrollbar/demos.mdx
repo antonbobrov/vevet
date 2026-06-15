@@ -1,9 +1,11 @@
 ---
 sidebar_position: 10
-description: Scrollbar demos and examples. Vevet.js Scrollbar component.
+description: Scrollbar demos — window and element scrolling, horizontal axis, RTL, auto-hide, min thumb size. Vevet.js Scrollbar component.
 keywords:
   - scrollbar demos
   - vevet scrollbar
+  - custom scrollbar
+  - rtl scroll
 ---
 
 import VevetDemo from '@site/src/components/VevetDemo';
@@ -17,36 +19,67 @@ import Head from '@docusaurus/Head';
 </Head>
 
 <section>
-  ## Window Scrollbar
-  <VevetDemo id="XJJrYYa" height={500} />
+## Window Scrollbar {#window-scrollbar}
+
+Default setup: vertical scrollbar on [`window`](props#props.container).
+
+<VevetDemo id="XJJrYYa" height={500} />
 </section>
 
 <section>
-  ## Horizontal Scrollbar
-  <VevetDemo id="wBBwXEv" height={500} />
+## Horizontal Scrollbar {#horizontal-scrollbar}
+
+Vertical and horizontal scrollbars on the same page.
+
+Creates two instances — default `axis: "y"` on the window plus [`axis: "x"`](props#props.axis) for wide content.
+
+<VevetDemo id="wBBwXEv" height={500} />
 </section>
 
 <section>
-  ## Horizontal RTL Scrollbar
-  <VevetDemo id="MYyZqGQ" height={500} />
+## Horizontal RTL Scrollbar {#horizontal-rtl-scrollbar}
+
+Same dual-axis layout with `direction: rtl` on `html`.
+
+Scrollbar positions and scroll direction follow RTL layout — no extra Scrollbar props required.
+
+<VevetDemo id="MYyZqGQ" height={500} />
 </section>
 
 <section>
-  ## AutoHide
-  <VevetDemo id="WbrXOWB" height={500} />
+## AutoHide {#autohide}
+
+Scrollbars fade out when idle and reappear on scroll or drag.
+
+Key prop: [`autoHide: true`](props#props.autoHide) on both vertical and horizontal instances.
+
+<VevetDemo id="WbrXOWB" height={500} />
 </section>
 
 <section>
-  ## Inner Scrollbar
-  <VevetDemo id="emmOKjW" height={500} />
+## Inner Scrollbar {#inner-scrollbar}
+
+Custom scrollbar on a nested overflow container instead of the window.
+
+<VevetDemo id="emmOKjW" height={500} />
 </section>
 
 <section>
-  ## Min-size
-  <VevetDemo id="NPxweQN" height={500} />
+## Min-size {#min-size}
+
+Enforce a minimum thumb height even when content is very long.
+
+Key prop: [`minSize: "90vh"`](props#props.minSize) — accepts CSS units (`px`, `rem`, `vh`, `svh`, etc.).
+
+<VevetDemo id="NPxweQN" height={500} />
 </section>
 
 <section>
-  ## No Auto-size
-  <VevetDemo id="qEbVLeM" height={500} />
+## No Auto-size {#no-auto-size}
+
+Disable proportional thumb sizing.
+
+Key prop: [`autoSize: false`](props#props.autoSize) — thumb keeps a fixed size regardless of content length.
+
+<VevetDemo id="qEbVLeM" height={500} />
 </section>

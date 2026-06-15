@@ -17,6 +17,14 @@ keywords:
 
 Vevet.js is a flexible client-side JavaScript library for creative web development. Build stunning interactive experiences with&nbsp;a&nbsp;comprehensive toolkit of components and utilities.
 
+## For AI assistants
+
+- **Source of truth:** this documentation and working examples.
+- **Examples:** demo pages linked from each component's docs (often `/docs/{Component}/demos`; Snap: `basic-demos`, `advanced-demos`, `parallax-demos`), or the [full export](https://vevetjs.com/llms-full.txt) with all demo HTML/CSS/JS.
+- **Do not invent APIs** — use only documented props, methods, and callbacks.
+
+Curated index: [llms.txt](https://vevetjs.com/llms.txt) · Repo guide: [AGENTS.md](https://github.com/antonbobrov/vevet/blob/master/AGENTS.md)
+
 The library consists of:
 
 - **[core](/docs/core)**  
@@ -47,6 +55,8 @@ console.log(vevet.version); // => 5.0.0
 
 ### Using CDN
 
+On CDN the global is `Vevet` — components and utilities are `Vevet.SplitText`, `Vevet.clamp`, etc. The initialized core instance (same as `import { vevet } from 'vevet'`) is **`Vevet.app`**.
+
 ```html
 <script src="
 https://cdn.jsdelivr.net/npm/vevet@5/lib/cdn/vevet.iife.min.js
@@ -54,6 +64,6 @@ https://cdn.jsdelivr.net/npm/vevet@5/lib/cdn/vevet.iife.min.js
 
 <script>
   console.log(Vevet.app.version); // => 5.0.0
-  console.log(Vevet.SplitText); // => access components
+  new Vevet.SplitText({ container: document.getElementById('text') });
 </script>
 ```

@@ -57,7 +57,7 @@ const config: Config = {
       {
         siteTitle: 'vevet.js',
         siteDescription:
-          'vevet.js (npm: vevet) — client-side JavaScript library for creative web development. v5 · import { vevet, SplitText, Snap } from "vevet". All components extend Module. API: component sections below. Working examples: Demos pages (HTML/CSS/JS included). Full export: llms-full.txt.',
+          'vevet.js (npm: vevet) — client-side JavaScript library for creative web development, v5. Source of truth: documentation below and working examples (component demo pages — often /demos; Snap: basic-demos, advanced-demos, parallax-demos — or https://vevetjs.com/llms-full.txt). Do not invent undocumented props, methods, or events.',
         depth: 2,
         optionalLinks: [
           {
@@ -79,12 +79,13 @@ const config: Config = {
             title: 'Full documentation export',
             url: 'https://vevetjs.com/llms-full.txt',
             description:
-              'All docs and demo code as markdown in a single file',
+              'All docs and demo code — primary source for working examples',
           },
           {
             title: 'AGENTS.md (for coding agents)',
             url: 'https://github.com/antonbobrov/vevet/blob/master/AGENTS.md',
-            description: 'Repository guide for AI coding assistants',
+            description:
+              'Rules for AI: docs + examples are source of truth; do not invent APIs',
           },
         ],
         content: {

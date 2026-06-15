@@ -5,7 +5,7 @@ The primary goal of Vevet is to simplify the creation of interactive components 
 ### [Documentation ↗](https://vevetjs.com/)
 ### [Changelog ↗](https://github.com/antonbobrov/vevet/blob/master/CHANGELOG.md)
 
-> **For AI assistants:** curated doc index at [vevetjs.com/llms.txt](https://vevetjs.com/llms.txt) · full export at [llms-full.txt](https://vevetjs.com/llms-full.txt) · repo guide [AGENTS.md](./AGENTS.md)
+> **For AI assistants:** source of truth is the [documentation](https://vevetjs.com/) and working [examples](https://vevetjs.com/llms-full.txt) (demo pages per component — often `demos`, Snap: `basic-demos` / `advanced-demos` / `parallax-demos`). Index: [llms.txt](https://vevetjs.com/llms.txt). **Do not invent undocumented APIs.** See [AGENTS.md](./AGENTS.md).
 
 ## NPM Usage
 
@@ -23,6 +23,8 @@ console.log(vevet.version); // => 5.0.0
 
 ## CDN Usage
 
+On CDN the global is `Vevet` — components and utilities are `Vevet.SplitText`, `Vevet.clamp`, etc. The initialized core instance (same as `import { vevet } from 'vevet'`) is **`Vevet.app`**.
+
 ```html
 <script src="
 https://cdn.jsdelivr.net/npm/vevet@5/lib/cdn/vevet.iife.min.js
@@ -30,6 +32,7 @@ https://cdn.jsdelivr.net/npm/vevet@5/lib/cdn/vevet.iife.min.js
 
 <script>
   console.log(Vevet.app.version); // => 5.0.0
+  new Vevet.SplitText({ container: document.getElementById('text') });
 </script>
 ```
 

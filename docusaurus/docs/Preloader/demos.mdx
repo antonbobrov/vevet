@@ -1,9 +1,10 @@
 ---
 sidebar_position: 10
-description: Preloader demos and examples. Vevet.js Preloader component.
+description: Preloader demos — automatic hide on page load and manual hide control. Vevet.js Preloader component.
 keywords:
   - preloader demos
   - vevet preloader
+  - page load
 ---
 
 import VevetDemo from '@site/src/components/VevetDemo';
@@ -17,11 +18,21 @@ import Head from '@docusaurus/Head';
 </Head>
 
 <section>
-  ## Simple Preloader
-  <VevetDemo id="VYYZdyB" height={500} />
+## Simple Preloader {#simple-preloader}
+
+Waits for the page to finish loading, then hides the overlay automatically.
+
+Key prop: [`hide: 700`](props#props.hide) — fade-out duration in ms once [`loaded`](callbacks#loaded) fires.
+
+<VevetDemo id="VYYZdyB" height={500} />
 </section>
 
 <section>
-  ## Custom Hiding Logic
-  <VevetDemo id="ZYWweeJ" height={500} />
+## Custom Hiding Logic {#custom-hiding-logic}
+
+Disable automatic hide and call [`hide()`](methods#hide) manually when you are ready.
+
+Key props: [`hide: false`](props#props.hide). On [`onLoaded`](callbacks#loaded), reveal a button that triggers `preloader.hide()`.
+
+<VevetDemo id="ZYWweeJ" height={500} />
 </section>
