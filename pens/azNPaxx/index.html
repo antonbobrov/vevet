@@ -5,7 +5,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · azNPaxx</title>
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
-        <style>.container {
+        <style>.fullpage-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.container {
   width: 3rem;
   height: 3rem;
 
@@ -14,13 +22,8 @@
   align-items: center;
   justify-content: center;
 
-  background: linear-gradient(135deg,
-      rgb(13, 110, 253) 0%,
-      rgb(140, 122, 230) 50%,
-      rgb(0, 201, 177) 100%);
-
+  background: var(--gradient-brand-135, #000);
   border-radius: 0.5rem;
-  background-color: #000;
 
   img {
     width: 1.25rem;
@@ -31,7 +34,7 @@
 }</style>
       </head>
       <body>
-        <div class="fullpage-center">
+        <div class="fullpage-center" id="page">
   <div id="container" class="container">
     <img src="https://www.svgrepo.com/show/521614/drag.svg" alt="">
   </div>
@@ -40,9 +43,10 @@
   <script type="module">
 import {
   Swipe,
-  vevet,
   clamp
 } from "https://esm.sh/vevet@5";
+
+const page = document.getElementById("page");
 
 let x = 0;
 let y = 0;
@@ -56,8 +60,11 @@ new Swipe({
   }, {
     container
   }) => {
-    x = clamp(x + step.x, -vevet.width / 2, vevet.width / 2);
-    y = clamp(y + step.y, -vevet.height / 2, vevet.height / 2);
+    const pageWidth = page.clientWidth;
+    const pageHeight = page.clientHeight;
+
+    x = clamp(x + step.x, -pageWidth / 2, pageWidth / 2);
+    y = clamp(y + step.y, -pageHeight / 2, pageHeight / 2);
 
     container.style.transform = `translate(${x}px, ${y}px)`;
   }

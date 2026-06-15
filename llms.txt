@@ -175,7 +175,7 @@ Swipe — Vevet.js component for swipe interactions, pointer tracking, direction
 - [Swipe](https://vevetjs.com/docs/Swipe/): Swipe — Vevet.js component for swipe interactions, pointer tracking, direction detection, rotation, bounds, rubber-band, snap, scale and inertia.
 - [Accessors](https://vevetjs.com/docs/Swipe/accessors): Swipe accessors — getters for coordinates and state. Vevet.js Swipe API reference.
 - [Callbacks](https://vevetjs.com/docs/Swipe/callbacks): Swipe callbacks — onStart, onMove, onEnd. Vevet.js Swipe API reference.
-- [Demos](https://vevetjs.com/docs/Swipe/demos): Swipe demos and examples. Vevet.js Swipe component.
+- [Demos](https://vevetjs.com/docs/Swipe/demos): Swipe demos — pointer tracking, axis lock, rotation, bounds, inertia, rubber-band, direction detection, and image viewer examples.
 - [Interfaces](https://vevetjs.com/docs/Swipe/interfaces): Swipe interfaces — TypeScript types and interfaces. Vevet.js Swipe API reference.
 - [Methods](https://vevetjs.com/docs/Swipe/methods): Swipe methods — API reference. Vevet.js Swipe component.
 - [Props](https://vevetjs.com/docs/Swipe/props): Swipe props — configuration options for swipe component. Vevet.js Swipe API reference.

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · rajMgoY</title>
+        <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
+        <style>.fullpage-center {
+  padding: 1rem;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: min(70svh, 400px);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.image {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+
+  transform-origin: top left;
+}</style>
+      </head>
+      <body>
+        <div class="fullpage-center">
+  <div class="container" id="container">
+    <img class="image" id="image" src="https://fastly.picsum.photos/id/314/1920/1080.jpg?hmac=QAv7htpuXdwRq9YJDaEo_1mEiiAkEJeJFoBlSp-l7VY" alt="">
+  </div>
+</div>
+        
+  <script type="module">
+import {
+  addEventListener,
+  clamp,
+  onResize,
+  Pointers,
+  Swipe
+} from "https://esm.sh/vevet@5";
+
+const maxScale = 5;
+const minScale = 1;
+const stepScale = 1;
+
+const container = document.getElementById("container");
+const image = document.getElementById("image");
+
+function getImageSize() {
+  return {
+    width: image.clientWidth,
+    height: image.clientHeight
+  };
+}
+
+function getContainerSize() {
+  return {
+    width: container.clientWidth,
+    height: container.clientHeight
+  };
+}
+
+const swipe = new Swipe({
+  container,
+  pointers: 1,
+  relative: true,
+  inertia: true,
+  grabCursor: true,
+  buttons: [0],
+  inertiaRatio: 1,
+  bounds: ({
+    scale
+  }) => {
+    const containerSize = getContainerSize();
+    const imageSize = getImageSize();
+
+    return {
+      x: [0, containerSize.width - imageSize.width * scale],
+      y: [0, containerSize.height - imageSize.height * scale]
+    };
+
+  },
+  onMove: ({
+    movement,
+    scale
+  }) => {
+    image.style.transform = `translate(${movement.x}px, ${movement.y}px) scale(${scale})`;
+  }
+});
+
+addEventListener(
+  image,
+  "wheel",
+  evt => {
+    evt.preventDefault();
+
+    if (swipe.isSwiping) {
+      return;
+    }
+
+    swipe.cancelInertia();
+
+    swipe.setScale(
+      clamp(swipe.scale - evt.deltaY * 0.001, minScale, maxScale),
+      evt);
+
+  }, {
+    passive: false
+  });
+
+addEventListener(image, "dblclick", evt => {
+  if (swipe.scale >= maxScale) {
+    swipe.setScale(minScale, evt);
+  } else {
+    swipe.setScale(clamp(swipe.scale + stepScale, minScale, maxScale), evt);
+  }
+});
+
+onResize({
+  element: [container, image],
+
+  callback: () => {
+    if (swipe.scale === minScale) {
+      const containerSize = getContainerSize();
+      const imageSize = getImageSize();
+
+      swipe.setMovement({
+        x: (containerSize.width - imageSize.width) / 2,
+        y: (containerSize.height - imageSize.height) / 2
+      });
+
+    }
+
+    swipe.calculateBounds();
+    swipe.releaseBounce(0);
+  }
+});
+
+new Pointers({
+  container,
+  minPointers: 2,
+  maxPointers: 2,
+  relative: false,
+  onMove: ({
+    prevScale,
+    scale,
+    startCenter
+  }) => {
+    if (prevScale === scale) {
+      return;
+    }
+
+    swipe.setScale(
+      clamp(swipe.scale * (scale / prevScale), minScale, maxScale),
+      startCenter);
+
+  },
+  onStart: () => {
+    swipe.updateProps({
+      enabled: false,
+      inertia: false
+    });
+  },
+  onEnd: () => {
+    setTimeout(() => {
+      swipe.updateProps({
+        enabled: true,
+        inertia: true
+      });
+    });
+  }
+});
+
+  </script>
+      </body>
+    </html>
+  

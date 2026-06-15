@@ -5,25 +5,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · pvyqOMV</title>
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
-        <style>.ball {
+        <style>.fullpage-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.ball {
   width: 3rem;
   height: 3rem;
 
   border-radius: 50%;
-  background: radial-gradient(rgb(0, 201, 177) 10%, rgb(30, 43, 82));
+  background: var(--gradient-sunset, #000);
 }</style>
       </head>
       <body>
-        <div class="fullpage-center">
+        <div class="fullpage-center" id="page">
   <div id="ball" class="ball"></div>
 </div>
         
   <script type="module">
 import {
   Swipe,
-  vevet,
   clamp
 } from "https://esm.sh/vevet@5";
+
+const page = document.getElementById("page");
 
 let x = 0;
 let y = 0;
@@ -44,18 +53,21 @@ new Swipe({
     hasInertia,
     container
   }) => {
+    const pageWidth = page.clientWidth;
+    const pageHeight = page.clientHeight;
+
     if (hasInertia) {
-      if (x >= vevet.width / 2 || x <= -vevet.width / 2) {
+      if (x >= pageWidth / 2 || x <= -pageWidth / 2) {
         xDir *= -1;
       }
 
-      if (y >= vevet.height / 2 || y <= -vevet.height / 2) {
+      if (y >= pageHeight / 2 || y <= -pageHeight / 2) {
         yDir *= -1;
       }
     }
 
-    x = clamp(x + step.x * xDir, -vevet.width / 2, vevet.width / 2);
-    y = clamp(y + step.y * yDir, -vevet.height / 2, vevet.height / 2);
+    x = clamp(x + step.x * xDir, -pageWidth / 2, pageWidth / 2);
+    y = clamp(y + step.y * yDir, -pageHeight / 2, pageHeight / 2);
 
     container.style.transform = `translate(${x}px, ${y}px)`;
   }

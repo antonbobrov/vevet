@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · MYJjRwL</title>
+        <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
+        <style>.container {
+  height: 300px;
+  width: 3rem;
+
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.thumb {
+  width: 3rem;
+  height: 3rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: inherit;
+  background: var(--gradient-brand-0);
+
+  img {
+    width: 1.5rem;
+    height: auto;
+    filter: invert(100%);
+    background: transparent;
+  }
+}</style>
+      </head>
+      <body>
+        <div class="fullpage-center">
+  <div id="container" class="container">
+    <div id="thumb" class="thumb"><img src="https://www.svgrepo.com/show/379997/drag-vertical.svg" alt=""></div>
+  </div>
+</div>
+        
+  <script type="module">
+import {
+  Swipe
+} from "https://esm.sh/vevet@5";
+
+const container = document.getElementById("container");
+const thumb = document.getElementById("thumb");
+
+const swipe = new Swipe({
+  container,
+  thumb,
+  inertia: true,
+  grabCursor: true,
+  bounds: () => ({
+    y: [0, container.clientHeight - thumb.clientHeight]
+  }),
+
+  onMove: ({
+    movement
+  }, {
+    container
+  }) => {
+    thumb.style.transform = `translate(0, ${movement.y}px)`;
+  }
+});
+
+  </script>
+      </body>
+    </html>
+  

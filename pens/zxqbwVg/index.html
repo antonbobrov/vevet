@@ -5,47 +5,47 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · zxqbwVg</title>
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
-        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+        <style>.wrapper {
+  position: relative;
+  width: 10rem;
+  height: 10rem;
 
-body {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
-
-  background: linear-gradient(165deg,
-      rgb(17, 25, 42) 0%,
-      rgb(30, 43, 82) 40%,
-      rgb(0, 58, 82) 100%);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0.25rem;
 }
 
 .container {
-  width: 120px;
-  height: 120px;
+  width: 2rem;
+  height: 2rem;
 
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 
-  border-radius: 10px;
-  background: linear-gradient(135deg,
-      rgb(13, 110, 253) 0%,
-      rgb(140, 122, 230) 50%,
-      rgb(0, 201, 177) 100%);
+  background: var(--gradient-brand-135, #000);
+  border-radius: 0.25rem;
 
-  font-family: "Ubuntu", sans-serif;
-  font-size: 16px;
-  color: #fff;
+  img {
+    width: 1rem;
+    height: auto;
+    filter: invert(100%);
+    background: transparent;
+  }
 }</style>
       </head>
       <body>
-        <div id="container" class="container">
-  Drag Me
+        <div class="fullpage-center">
+  <div id="wrapper" class="wrapper">
+    <div id="container" class="container">
+      <img src="https://www.svgrepo.com/show/521614/drag.svg" alt="">
+    </div>
+  </div>
 </div>
         
   <script type="module">
@@ -56,30 +56,32 @@ import {
   EaseOutBack
 } from "https://esm.sh/vevet@5";
 
-let x = 0;
-let y = 0;
+const wrapper = document.getElementById("wrapper");
+const container = document.getElementById("container");
 
 new Swipe({
   container: document.getElementById("container"),
-  inertia: true,
-  inertiaEasing: EaseOutBack,
   grabCursor: true,
-  inertiaRatio: 0.1,
-  velocityModifier: source => ({
-    ...source,
-    x: clamp(source.x, -x - vevet.width / 2, vevet.width / 2 - x),
-    y: clamp(source.y, -y - vevet.height / 2, vevet.height / 2 - y)
+  inertia: true,
+  overflow: () => 20,
+  bounds: () => ({
+    x: [
+      (wrapper.clientWidth - container.clientWidth) * -0.5,
+      (wrapper.clientWidth - container.clientWidth) * 0.5
+    ],
+
+    y: [
+      (wrapper.clientHeight - container.clientHeight) * -0.5,
+      (wrapper.clientHeight - container.clientHeight) * 0.5
+    ]
   }),
 
   onMove: ({
-    step
+    movement
   }, {
     container
   }) => {
-    x = clamp(x + step.x, -vevet.width / 2, vevet.width / 2);
-    y = clamp(y + step.y, -vevet.height / 2, vevet.height / 2);
-
-    container.style.transform = `translate(${x}px, ${y}px)`;
+    container.style.transform = `translate(${movement.x}px, ${movement.y}px)`;
   }
 });
 

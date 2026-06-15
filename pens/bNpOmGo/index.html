@@ -16,7 +16,7 @@
   justify-content: center;
 
   border-radius: 50%;
-  background-color: #000;
+  background: var(--gradient-sunset, #000);
 
   img {
     width: 2rem;
@@ -32,17 +32,14 @@
   left: calc(50% - 0.6rem);
   width: 1.2rem;
   height: 1.2rem;
-  background: linear-gradient(0deg,
-      rgb(13, 110, 253) 0%,
-      rgb(140, 122, 230) 50%,
-      rgb(0, 201, 177) 100%);
+  background: var(--gradient-brand-0, #000);
   border-radius: 50%;
   cursor: grab;
 }</style>
       </head>
       <body>
         <div class="fullpage-center">
-  <div id="rotation" class="item" style="background: linear-gradient(35deg, rgb(255, 127, 135) 0%, rgb(244, 214, 157) 100%);">
+  <div id="rotation" class="item">
     <img src="https://www.svgrepo.com/show/533709/rotate.svg" alt="">
 
     <div id="thumb" class="thumb"></div>
@@ -60,6 +57,7 @@ new Swipe({
   container: document.getElementById("rotation"),
   thumb: document.getElementById("thumb"),
   inertia: true,
+  relative: true,
   onMove: ({
     step
   }, {

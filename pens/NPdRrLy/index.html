@@ -23,10 +23,7 @@
   justify-content: center;
 
   border-radius: inherit;
-  background: linear-gradient(90deg,
-      rgb(13, 110, 253) 0%,
-      rgb(140, 122, 230) 50%,
-      rgb(0, 201, 177) 100%);
+  background: var(--gradient-brand-90);
 
   img {
     width: 1.5rem;
@@ -46,8 +43,6 @@
   <script type="module">
 import {
   Swipe,
-  vevet,
-  clamp,
   onResize
 } from "https://esm.sh/vevet@5";
 
@@ -75,8 +70,10 @@ const swipe = new Swipe({
 onResize({
   element: [container],
   callback: () => {
+    swipe.calculateBounds();
     swipe.releaseBounce(0);
-  }
+  },
+  resizeDebounce: 100
 });
 
   </script>

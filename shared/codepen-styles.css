@@ -103,7 +103,7 @@ body {
 
   cursor: pointer;
 
-  background: var(--gradient-brand);
+  background: var(--gradient-brand-135);
   background-size: 200% auto;
   box-shadow: 0 4px 20px rgba(13, 110, 253, 0.1);
   border-radius: 50vw;
@@ -111,10 +111,6 @@ body {
   font: inherit;
   font-size: 0.75rem;
   color: currentColor;
-}
-
-.btn:hover {
-  background-position: right center;
 }
 
 img {

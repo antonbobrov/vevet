@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · pvREmov</title>
+        <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
+        <style>.fullpage-center {
+  position: relative;
+  padding: 1rem;
+}
+
+.settings {
+  align-self: start;
+}
+
+.container {
+  position: absolute;
+  top: calc(50% - 1.5rem);
+  left: calc(50% - 1.5rem);
+
+  width: 3rem;
+  height: 3rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--gradient-brand-135, #000);
+  border-radius: 0.5rem;
+
+  img {
+    width: 1.25rem;
+    height: auto;
+    filter: invert(100%);
+    background: transparent;
+  }
+}</style>
+      </head>
+      <body>
+        <div class="fullpage-center" id="page">
+  <div class="settings">
+    <div>
+      ratio <input id="ratio" type="range" min="0" max="1" step="0.001" value="1">
+    </div>
+
+    <div>
+      decay <input id="decay" type="range" min="0.001" max="1" step="0.001" value="0.05">
+    </div>
+
+    <div>
+      bounceEase <input id="bounceEase" type="range" min="0.001" max="1" step="0.001" value="0.3">
+    </div>
+  </div>
+
+  <div id="container" class="container">
+    <img src="https://www.svgrepo.com/show/521614/drag.svg" alt="">
+  </div>
+</div>
+        
+  <script type="module">
+import {
+  Swipe,
+  onResize,
+  clamp
+} from "https://esm.sh/vevet@5";
+
+const page = document.getElementById("page");
+
+const swipe = new Swipe({
+  container: document.getElementById("container"),
+  inertia: true,
+  grabCursor: true,
+  bounds: () => ({
+    x: [
+      (page.clientWidth - container.clientWidth) / -2,
+      (page.clientWidth - container.clientWidth) / 2
+    ],
+
+    y: [
+      (page.clientHeight - container.clientHeight) / -2,
+      (page.clientHeight - container.clientHeight) / 2
+    ]
+  }),
+
+  onMove: ({
+    movement
+  }, {
+    container
+  }) => {
+    container.style.transform = `translate(${movement.x}px, ${movement.y}px)`;
+  }
+});
+
+onResize({
+  element: [page],
+  callback: () => {
+    swipe.calculateBounds();
+    swipe.releaseBounce(0);
+  },
+  resizeDebounce: 100
+});
+
+document.getElementById('ratio').addEventListener('input', evt => {
+  swipe.updateProps({
+    inertiaRatio: parseFloat(evt.currentTarget.value)
+  });
+
+});
+
+document.getElementById('decay').addEventListener('input', evt => {
+  swipe.updateProps({
+    inertiaDecay: parseFloat(evt.currentTarget.value)
+  });
+
+});
+
+document.getElementById('bounceEase').addEventListener('input', evt => {
+  swipe.updateProps({
+    inertiaBounceEase: parseFloat(evt.currentTarget.value)
+  });
+
+});
+
+  </script>
+      </body>
+    </html>
+  

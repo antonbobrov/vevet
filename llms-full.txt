@@ -175,7 +175,7 @@ Swipe — Vevet.js component for swipe interactions, pointer tracking, direction
 - [Swipe](https://vevetjs.com/docs/Swipe/): Swipe — Vevet.js component for swipe interactions, pointer tracking, direction detection, rotation, bounds, rubber-band, snap, scale and inertia.
 - [Accessors](https://vevetjs.com/docs/Swipe/accessors): Swipe accessors — getters for coordinates and state. Vevet.js Swipe API reference.
 - [Callbacks](https://vevetjs.com/docs/Swipe/callbacks): Swipe callbacks — onStart, onMove, onEnd. Vevet.js Swipe API reference.
-- [Demos](https://vevetjs.com/docs/Swipe/demos): Swipe demos and examples. Vevet.js Swipe component.
+- [Demos](https://vevetjs.com/docs/Swipe/demos): Swipe demos — pointer tracking, axis lock, rotation, bounds, inertia, rubber-band, direction detection, and image viewer examples.
 - [Interfaces](https://vevetjs.com/docs/Swipe/interfaces): Swipe interfaces — TypeScript types and interfaces. Vevet.js Swipe API reference.
 - [Methods](https://vevetjs.com/docs/Swipe/methods): Swipe methods — API reference. Vevet.js Swipe component.
 - [Props](https://vevetjs.com/docs/Swipe/props): Swipe props — configuration options for swipe component. Vevet.js Swipe API reference.
@@ -1364,11 +1364,7 @@ CSS
 
   height: 250px;
 
-  background: linear-gradient(35deg,
-
-      rgb(255, 127, 135) 0%,
-
-      rgb(244, 214, 157) 100%);
+  background: var(--gradient-sunset, #000);
 
 }
 
@@ -11048,73 +11044,15 @@ HTML
 
 
 
-  <div class="thumb" style="background: linear-gradient(
+  <div class="thumb"></div>
 
-  165deg,
+  <div class="thumb"></div>
 
-  rgb(255, 140, 80) 0%,
+  <div class="thumb"></div>
 
-  rgb(255, 95, 88) 40%,
+  <div class="thumb"></div>
 
-  rgb(255, 60, 140) 100%
-
-)"></div>
-
-
-
-  <div class="thumb" style=" background: linear-gradient(
-
-  165deg,
-
-  rgb(70, 30, 120) 0%,
-
-  rgb(120, 45, 180) 40%,
-
-  rgb(200, 60, 255) 100%
-
-)"></div>
-
-
-
-  <div class="thumb" style=" background: linear-gradient(
-
-  165deg,
-
-  rgb(110, 200, 40) 0%,
-
-  rgb(40, 160, 80) 40%,
-
-  rgb(0, 100, 60) 100%
-
-)"></div>
-
-
-
-  <div class="thumb" style=" background: linear-gradient(
-
-  165deg,
-
-  rgb(255, 200, 60) 0%,
-
-  rgb(255, 150, 40) 40%,
-
-  rgb(220, 60, 40) 100%
-
-)"></div>
-
-
-
-  <div class="thumb" style="background: linear-gradient(
-
-  165deg,
-
-  rgb(150, 220, 255) 0%,
-
-  rgb(80, 200, 255) 40%,
-
-  rgb(0, 170, 200) 100%
-
-)"></div>
+  <div class="thumb"></div>
 
 </div>
 ```
@@ -11169,6 +11107,46 @@ CSS
 
 
   opacity: 0;
+
+}
+
+
+
+.thumb:nth-child(1) {
+
+  background: var(--gradient-sunset, #000);
+
+}
+
+
+
+.thumb:nth-child(2) {
+
+  background: var(--gradient-violet, #000);
+
+}
+
+
+
+.thumb:nth-child(3) {
+
+  background: var(--gradient-green, #000);
+
+}
+
+
+
+.thumb:nth-child(4) {
+
+  background: var(--gradient-amber, #000);
+
+}
+
+
+
+.thumb:nth-child(5) {
+
+  background: var(--gradient-sky, #000);
 
 }
 ```
@@ -15261,11 +15239,7 @@ CSS
 
   border-radius: 0.5rem;
 
-  background: linear-gradient(35deg,
-
-      rgb(255, 127, 135) 0%,
-
-      rgb(244, 214, 157) 100%);
+  background: var(--gradient-sunset, #000);
 
 }
 
@@ -15447,11 +15421,7 @@ CSS
 
 
 
-  background: linear-gradient(35deg,
-
-      rgb(255, 127, 135) 0%,
-
-      rgb(244, 214, 157) 100%);
+  background: var(--gradient-sunset, #000);
 
 
 
@@ -15597,11 +15567,7 @@ CSS
 
 
 
-  background: linear-gradient(35deg,
-
-      rgb(255, 127, 135) 0%,
-
-      rgb(244, 214, 157) 100%);
+  background: var(--gradient-sunset, #000);
 
 
 
@@ -15747,11 +15713,7 @@ CSS
 
 
 
-  background: linear-gradient(35deg,
-
-      rgb(255, 127, 135) 0%,
-
-      rgb(244, 214, 157) 100%);
+  background: var(--gradient-sunset, #000);
 
 
 
@@ -39901,7 +39863,7 @@ HTML
 
   <div class="wrapper">
 
-    <div id="all" class="item" style="background: linear-gradient(135deg, rgb(13, 110, 253) 0%, rgb(140, 122, 230) 50%, rgb(0, 201, 177) 100%);">
+    <div id="all" class="item">
 
       <img src="https://www.svgrepo.com/show/521614/drag.svg" alt="">
 
@@ -39909,7 +39871,7 @@ HTML
 
 
 
-    <div id="horizontal" class="item" style="background: linear-gradient(90deg, rgb(13, 110, 253) 0%, rgb(140, 122, 230) 50%, rgb(0, 201, 177) 100%);">
+    <div id="horizontal" class="item">
 
       <img src="https://www.svgrepo.com/show/379996/drag-horizontal.svg" alt="">
 
@@ -39917,7 +39879,7 @@ HTML
 
 
 
-    <div id="vertical" class="item" style="background: linear-gradient(0deg, rgb(13, 110, 253) 0%, rgb(140, 122, 230) 50%, rgb(0, 201, 177) 100%);">
+    <div id="vertical" class="item">
 
       <img src="https://www.svgrepo.com/show/379997/drag-vertical.svg" alt="">
 
@@ -39925,7 +39887,7 @@ HTML
 
 
 
-    <div id="rotation" class="item" style="background: linear-gradient(35deg, rgb(255, 127, 135) 0%, rgb(244, 214, 157) 100%);">
+    <div id="rotation" class="item">
 
       <img src="https://www.svgrepo.com/show/533709/rotate.svg" alt="">
 
@@ -39979,8 +39941,6 @@ CSS
 
   border-radius: 0.5rem;
 
-  background-color: #000;
-
 
 
   img {
@@ -39994,6 +39954,38 @@ CSS
     background: transparent;
 
   }
+
+}
+
+
+
+#all {
+
+  background: var(--gradient-brand-135, #000);
+
+}
+
+
+
+#horizontal {
+
+  background: var(--gradient-brand-90, #000);
+
+}
+
+
+
+#vertical {
+
+  background: var(--gradient-brand-0, #000);
+
+}
+
+
+
+#rotation {
+
+  background: var(--gradient-brand-radial, #000);
 
 }
 ```
@@ -41299,6 +41291,12 @@ destruct();
 
 ## Basic Demo[​](#basic-demo "Direct link to Basic Demo")
 
+Overview of the main drag modes in one place: free movement, horizontal, vertical, and rotation.
+
+Each instance uses pointer-space [`diff`](https://vevetjs.com/docs/Swipe/interfaces#iswipecoords) and resets the transform on release — no [`movement`](https://vevetjs.com/docs/Swipe/interfaces#iswipecoords) persistence.
+
+Key props: `grabCursor: true`, `axis: "x"` / `axis: "y"`, `relative: true` (rotation).
+
 [Vevet Demo bNNbKyV](https://codepen.io/anton-bobrov/embed/bNNbKyV?default-tab=result)
 
 HTML
@@ -41308,7 +41306,7 @@ HTML
 
   <div class="wrapper">
 
-    <div id="all" class="item" style="background: linear-gradient(135deg, rgb(13, 110, 253) 0%, rgb(140, 122, 230) 50%, rgb(0, 201, 177) 100%);">
+    <div id="all" class="item">
 
       <img src="https://www.svgrepo.com/show/521614/drag.svg" alt="">
 
@@ -41316,7 +41314,7 @@ HTML
 
 
 
-    <div id="horizontal" class="item" style="background: linear-gradient(90deg, rgb(13, 110, 253) 0%, rgb(140, 122, 230) 50%, rgb(0, 201, 177) 100%);">
+    <div id="horizontal" class="item">
 
       <img src="https://www.svgrepo.com/show/379996/drag-horizontal.svg" alt="">
 
@@ -41324,7 +41322,7 @@ HTML
 
 
 
-    <div id="vertical" class="item" style="background: linear-gradient(0deg, rgb(13, 110, 253) 0%, rgb(140, 122, 230) 50%, rgb(0, 201, 177) 100%);">
+    <div id="vertical" class="item">
 
       <img src="https://www.svgrepo.com/show/379997/drag-vertical.svg" alt="">
 
@@ -41332,7 +41330,7 @@ HTML
 
 
 
-    <div id="rotation" class="item" style="background: linear-gradient(35deg, rgb(255, 127, 135) 0%, rgb(244, 214, 157) 100%);">
+    <div id="rotation" class="item">
 
       <img src="https://www.svgrepo.com/show/533709/rotate.svg" alt="">
 
@@ -41386,8 +41384,6 @@ CSS
 
   border-radius: 0.5rem;
 
-  background-color: #000;
-
 
 
   img {
@@ -41401,6 +41397,38 @@ CSS
     background: transparent;
 
   }
+
+}
+
+
+
+#all {
+
+  background: var(--gradient-brand-135, #000);
+
+}
+
+
+
+#horizontal {
+
+  background: var(--gradient-brand-90, #000);
+
+}
+
+
+
+#vertical {
+
+  background: var(--gradient-brand-0, #000);
+
+}
+
+
+
+#rotation {
+
+  background: var(--gradient-brand-radial, #000);
 
 }
 ```
@@ -41629,6 +41657,10 @@ new Swipe({
 
 ## Multidirectional Swipe[​](#multidirectional-swipe "Direct link to Multidirectional Swipe")
 
+Free drag on both axes without an axis lock.
+
+Applies `diff.x` and `diff.y` in `onMove`; the element snaps back on `onEnd`.
+
 [Vevet Demo xbVmaaB](https://codepen.io/anton-bobrov/embed/xbVmaaB?default-tab=result)
 
 HTML
@@ -41636,7 +41668,7 @@ HTML
 ```
 <div class="fullpage-center">
 
-  <div id="all" class="item" style="background: linear-gradient(135deg, rgb(13, 110, 253) 0%, rgb(140, 122, 230) 50%, rgb(0, 201, 177) 100%);">
+  <div id="all" class="item">
 
     <img src="https://www.svgrepo.com/show/521614/drag.svg" alt="">
 
@@ -41670,8 +41702,6 @@ CSS
 
   border-radius: 0.5rem;
 
-  background-color: #000;
-
 
 
   img {
@@ -41685,6 +41715,14 @@ CSS
     background: transparent;
 
   }
+
+}
+
+
+
+#all {
+
+  background: var(--gradient-brand-135, #000);
 
 }
 ```
@@ -41743,6 +41781,10 @@ new Swipe({
 
 ## Right-Click Drag[​](#right-click-drag "Direct link to Right-Click Drag")
 
+Drag starts only with the right mouse button.
+
+Key prop: [`buttons: [2]`](https://vevetjs.com/docs/Swipe/props#props.buttons).
+
 [Vevet Demo MYyLWLb](https://codepen.io/anton-bobrov/embed/MYyLWLb?default-tab=result)
 
 HTML
@@ -41750,7 +41792,7 @@ HTML
 ```
 <div class="fullpage-center">
 
-  <div id="all" class="item" style="background: radial-gradient( rgb(13, 110, 253), rgb(140, 122, 230));">
+  <div id="all" class="item">
 
     <img src="https://www.svgrepo.com/show/119214/right-click-of-the-mouse.svg" alt="">
 
@@ -41784,8 +41826,6 @@ CSS
 
   border-radius: 0.5rem;
 
-  background-color: #000;
-
 
 
   img {
@@ -41799,6 +41839,14 @@ CSS
     background: transparent;
 
   }
+
+}
+
+
+
+#all {
+
+  background: var(--gradient-brand-radial, #000);
 
 }
 ```
@@ -41859,6 +41907,10 @@ new Swipe({
 
 ## Horizontal Swipe[​](#horizontal-swipe "Direct link to Horizontal Swipe")
 
+Horizontal drag locked to the x-axis.
+
+Key prop: [`axis: "x"`](https://vevetjs.com/docs/Swipe/props#props.axis). Uses `diff.x` and resets on release.
+
 [Vevet Demo ZYWVMqR](https://codepen.io/anton-bobrov/embed/ZYWVMqR?default-tab=result)
 
 HTML
@@ -41866,7 +41918,7 @@ HTML
 ```
 <div class="fullpage-center">
 
-  <div id="horizontal" class="item" style="background: linear-gradient(90deg, rgb(13, 110, 253) 0%, rgb(140, 122, 230) 50%, rgb(0, 201, 177) 100%);">
+  <div id="horizontal" class="item">
 
     <img src="https://www.svgrepo.com/show/379996/drag-horizontal.svg" alt="">
 
@@ -41900,8 +41952,6 @@ CSS
 
   border-radius: 0.5rem;
 
-  background-color: #000;
-
 
 
   img {
@@ -41915,6 +41965,14 @@ CSS
     background: transparent;
 
   }
+
+}
+
+
+
+#horizontal {
+
+  background: var(--gradient-brand-90, #000);
 
 }
 ```
@@ -41975,6 +42033,10 @@ new Swipe({
 
 ## Vertical Swipe[​](#vertical-swipe "Direct link to Vertical Swipe")
 
+Vertical drag locked to the y-axis.
+
+Key prop: [`axis: "y"`](https://vevetjs.com/docs/Swipe/props#props.axis). Uses `diff.y` and resets on release.
+
 [Vevet Demo vEGvzvO](https://codepen.io/anton-bobrov/embed/vEGvzvO?default-tab=result)
 
 HTML
@@ -41982,7 +42044,7 @@ HTML
 ```
 <div class="fullpage-center">
 
-  <div id="vertical" class="item" style="background: linear-gradient(0deg, rgb(13, 110, 253) 0%, rgb(140, 122, 230) 50%, rgb(0, 201, 177) 100%);">
+  <div id="vertical" class="item">
 
     <img src="https://www.svgrepo.com/show/379997/drag-vertical.svg" alt="">
 
@@ -42016,8 +42078,6 @@ CSS
 
   border-radius: 0.5rem;
 
-  background-color: #000;
-
 
 
   img {
@@ -42031,6 +42091,14 @@ CSS
     background: transparent;
 
   }
+
+}
+
+
+
+#vertical {
+
+  background: var(--gradient-brand-0, #000);
 
 }
 ```
@@ -42091,6 +42159,10 @@ new Swipe({
 
 ## Rotation Swipe[​](#rotation-swipe "Direct link to Rotation Swipe")
 
+Angular drag around the element center.
+
+Key props: [`relative: true`](https://vevetjs.com/docs/Swipe/props#props.relative), `diff.angle`. Rotation resets on release.
+
 [Vevet Demo qEZLMLz](https://codepen.io/anton-bobrov/embed/qEZLMLz?default-tab=result)
 
 HTML
@@ -42098,7 +42170,7 @@ HTML
 ```
 <div class="fullpage-center">
 
-  <div id="rotation" class="item" style="background: linear-gradient(35deg, rgb(255, 127, 135) 0%, rgb(244, 214, 157) 100%);">
+  <div id="rotation" class="item">
 
     <img src="https://www.svgrepo.com/show/533709/rotate.svg" alt="">
 
@@ -42132,8 +42204,6 @@ CSS
 
   border-radius: 0.5rem;
 
-  background-color: #000;
-
 
 
   img {
@@ -42147,6 +42217,14 @@ CSS
     background: transparent;
 
   }
+
+}
+
+
+
+#rotation {
+
+  background: var(--gradient-brand-radial, #000);
 
 }
 ```
@@ -42205,6 +42283,12 @@ new Swipe({
 
 ## Slide Right[​](#slide-right "Direct link to Slide Right")
 
+Horizontal slider thumb inside a track. Position persists across gestures via [`movement`](https://vevetjs.com/docs/Swipe/interfaces#iswipecoords).
+
+Key props: [`thumb`](https://vevetjs.com/docs/Swipe/props#props.thumb), [`bounds`](https://vevetjs.com/docs/Swipe/props#props.bounds), [`inertia: true`](https://vevetjs.com/docs/Swipe/props#props.inertia), `grabCursor: true`.
+
+Bounds are recalculated on resize with [`calculateBounds()`](https://vevetjs.com/docs/Swipe/methods#calculateBounds) and [`releaseBounce()`](https://vevetjs.com/docs/Swipe/methods#releaseBounce).
+
 [Vevet Demo NPdRrLy](https://codepen.io/anton-bobrov/embed/NPdRrLy?default-tab=result)
 
 HTML
@@ -42260,13 +42344,7 @@ CSS
 
   border-radius: inherit;
 
-  background: linear-gradient(90deg,
-
-      rgb(13, 110, 253) 0%,
-
-      rgb(140, 122, 230) 50%,
-
-      rgb(0, 201, 177) 100%);
+  background: var(--gradient-brand-90);
 
 
 
@@ -42291,10 +42369,6 @@ JavaScript
 import {
 
   Swipe,
-
-  vevet,
-
-  clamp,
 
   onResize
 
@@ -42350,16 +42424,156 @@ onResize({
 
   callback: () => {
 
+    swipe.calculateBounds();
+
     swipe.releaseBounce(0);
 
-  }
+  },
+
+  resizeDebounce: 100
 
 });
 ```
 
 [Open live demo ↗](https://vevetjs.com/pens/NPdRrLy)
 
+## Slide Down[​](#slide-down "Direct link to Slide Down")
+
+Vertical slider variant — same pattern as Slide Right, but with y-axis [`bounds`](https://vevetjs.com/docs/Swipe/props#props.bounds).
+
+[Vevet Demo MYJjRwL](https://codepen.io/anton-bobrov/embed/MYJjRwL?default-tab=result)
+
+HTML
+
+```
+<div class="fullpage-center">
+
+  <div id="container" class="container">
+
+    <div id="thumb" class="thumb"><img src="https://www.svgrepo.com/show/379997/drag-vertical.svg" alt=""></div>
+
+  </div>
+
+</div>
+```
+
+CSS
+
+```
+.container {
+
+  height: 300px;
+
+  width: 3rem;
+
+
+
+  border-radius: 0.5rem;
+
+  background: rgba(255, 255, 255, 0.1);
+
+}
+
+
+
+.thumb {
+
+  width: 3rem;
+
+  height: 3rem;
+
+
+
+  display: flex;
+
+  flex-direction: row;
+
+  align-items: center;
+
+  justify-content: center;
+
+
+
+  border-radius: inherit;
+
+  background: var(--gradient-brand-0);
+
+
+
+  img {
+
+    width: 1.5rem;
+
+    height: auto;
+
+    filter: invert(100%);
+
+    background: transparent;
+
+  }
+
+}
+```
+
+JavaScript
+
+```
+import {
+
+  Swipe
+
+} from "vevet";
+
+
+
+const container = document.getElementById("container");
+
+const thumb = document.getElementById("thumb");
+
+
+
+const swipe = new Swipe({
+
+  container,
+
+  thumb,
+
+  inertia: true,
+
+  grabCursor: true,
+
+  bounds: () => ({
+
+    y: [0, container.clientHeight - thumb.clientHeight]
+
+  }),
+
+
+
+  onMove: ({
+
+    movement
+
+  }, {
+
+    container
+
+  }) => {
+
+    thumb.style.transform = `translate(0, ${movement.y}px)`;
+
+  }
+
+});
+```
+
+[Open live demo ↗](https://vevetjs.com/pens/MYJjRwL)
+
 ## Lever rotation[​](#lever-rotation "Direct link to Lever rotation")
+
+Radial lever control: drag the handle (`thumb`) to rotate the dial. Angle is measured relative to the container center.
+
+Key props: [`thumb`](https://vevetjs.com/docs/Swipe/props#props.thumb), [`relative: true`](https://vevetjs.com/docs/Swipe/props#props.relative), [`inertia: true`](https://vevetjs.com/docs/Swipe/props#props.inertia). Rotation accumulates via `step.angle`.
 
 [Vevet Demo bNpOmGo](https://codepen.io/anton-bobrov/embed/bNpOmGo?default-tab=result)
 
@@ -42368,7 +42582,7 @@ HTML
 ```
 <div class="fullpage-center">
 
-  <div id="rotation" class="item" style="background: linear-gradient(35deg, rgb(255, 127, 135) 0%, rgb(244, 214, 157) 100%);">
+  <div id="rotation" class="item">
 
     <img src="https://www.svgrepo.com/show/533709/rotate.svg" alt="">
 
@@ -42406,7 +42620,7 @@ CSS
 
   border-radius: 50%;
 
-  background-color: #000;
+  background: var(--gradient-sunset, #000);
 
 
 
@@ -42438,13 +42652,7 @@ CSS
 
   height: 1.2rem;
 
-  background: linear-gradient(0deg,
-
-      rgb(13, 110, 253) 0%,
-
-      rgb(140, 122, 230) 50%,
-
-      rgb(0, 201, 177) 100%);
+  background: var(--gradient-brand-0, #000);
 
   border-radius: 50%;
 
@@ -42476,6 +42684,8 @@ new Swipe({
 
   inertia: true,
 
+  relative: true,
+
   onMove: ({
 
     step
@@ -42501,6 +42711,10 @@ new Swipe({
 
 ## Detect Swipe Direction[​](#detect-swipe-direction "Direct link to Detect Swipe Direction")
 
+Directional callbacks fire after the gesture ends once [`directionThreshold`](https://vevetjs.com/docs/Swipe/props#props.directionThreshold) is met.
+
+Callbacks: `onStart`, `onToLeft`, `onToRight`, `onToTop`, `onToBottom`.
+
 [Vevet Demo ZYWVMwj](https://codepen.io/anton-bobrov/embed/ZYWVMwj?default-tab=result)
 
 HTML
@@ -42522,9 +42736,9 @@ CSS
 ```
 .container {
 
-  width: 10rem;
+  width: 7rem;
 
-  height: 10rem;
+  height: 7rem;
 
 
 
@@ -42540,13 +42754,11 @@ CSS
 
   border-radius: 1rem;
 
-  background: linear-gradient(135deg,
+  background: var(--gradient-brand-135, #000);
 
-      rgb(13, 110, 253) 0%,
 
-      rgb(140, 122, 230) 50%,
 
-      rgb(0, 201, 177) 100%);
+  font-size: 0.75rem;
 
 }
 ```
@@ -42623,12 +42835,16 @@ new Swipe({
 
 ## Drag Inertia[​](#drag-inertia "Direct link to Drag Inertia")
 
+Release inertia without built-in bounds — limits are applied manually in `onMove`.
+
+Key props: [`inertia: true`](https://vevetjs.com/docs/Swipe/props#props.inertia), `grabCursor: true`. Position is accumulated from `step` and clamped with `clamp()`.
+
 [Vevet Demo azNPaxx](https://codepen.io/anton-bobrov/embed/azNPaxx?default-tab=result)
 
 HTML
 
 ```
-<div class="fullpage-center">
+<div class="fullpage-center" id="page">
 
   <div id="container" class="container">
 
@@ -42642,6 +42858,22 @@ HTML
 CSS
 
 ```
+.fullpage-center {
+
+  display: flex;
+
+  flex-direction: row;
+
+  align-items: center;
+
+  justify-content: center;
+
+  overflow: hidden;
+
+}
+
+
+
 .container {
 
   width: 3rem;
@@ -42660,19 +42892,9 @@ CSS
 
 
 
-  background: linear-gradient(135deg,
-
-      rgb(13, 110, 253) 0%,
-
-      rgb(140, 122, 230) 50%,
-
-      rgb(0, 201, 177) 100%);
-
-
+  background: var(--gradient-brand-135, #000);
 
   border-radius: 0.5rem;
-
-  background-color: #000;
 
 
 
@@ -42698,11 +42920,13 @@ import {
 
   Swipe,
 
-  vevet,
-
   clamp
 
 } from "vevet";
+
+
+
+const page = document.getElementById("page");
 
 
 
@@ -42730,9 +42954,15 @@ new Swipe({
 
   }) => {
 
-    x = clamp(x + step.x, -vevet.width / 2, vevet.width / 2);
+    const pageWidth = page.clientWidth;
 
-    y = clamp(y + step.y, -vevet.height / 2, vevet.height / 2);
+    const pageHeight = page.clientHeight;
+
+
+
+    x = clamp(x + step.x, -pageWidth / 2, pageWidth / 2);
+
+    y = clamp(y + step.y, -pageHeight / 2, pageHeight / 2);
 
 
 
@@ -42747,14 +42977,26 @@ new Swipe({
 
 ## Drag Inertia Bounce[​](#drag-inertia-bounce "Direct link to Drag Inertia Bounce")
 
+Movement-space drag inside a wrapper with automatic bounds and rubber-band overflow.
+
+Key props: [`bounds`](https://vevetjs.com/docs/Swipe/props#props.bounds), [`overflow`](https://vevetjs.com/docs/Swipe/props#props.overflow), [`inertia: true`](https://vevetjs.com/docs/Swipe/props#props.inertia), `movement` for transforms.
+
 [Vevet Demo zxqbwVg](https://codepen.io/anton-bobrov/embed/zxqbwVg?default-tab=result)
 
 HTML
 
 ```
-<div id="container" class="container">
+<div class="fullpage-center">
 
-  Drag Me
+  <div id="wrapper" class="wrapper">
+
+    <div id="container" class="container">
+
+      <img src="https://www.svgrepo.com/show/521614/drag.svg" alt="">
+
+    </div>
+
+  </div>
 
 </div>
 ```
@@ -42762,11 +43004,15 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.wrapper {
+
+  position: relative;
+
+  width: 10rem;
+
+  height: 10rem;
 
 
-
-body {
 
   display: flex;
 
@@ -42778,21 +43024,9 @@ body {
 
 
 
-  height: 100vh;
+  background: rgba(255, 255, 255, 0.1);
 
-  width: 100%;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
+  border-radius: 0.25rem;
 
 }
 
@@ -42800,9 +43034,9 @@ body {
 
 .container {
 
-  width: 120px;
+  width: 2rem;
 
-  height: 120px;
+  height: 2rem;
 
 
 
@@ -42816,23 +43050,23 @@ body {
 
 
 
-  border-radius: 10px;
+  background: var(--gradient-brand-135, #000);
 
-  background: linear-gradient(135deg,
-
-      rgb(13, 110, 253) 0%,
-
-      rgb(140, 122, 230) 50%,
-
-      rgb(0, 201, 177) 100%);
+  border-radius: 0.25rem;
 
 
 
-  font-family: "Ubuntu", sans-serif;
+  img {
 
-  font-size: 16px;
+    width: 1rem;
 
-  color: #fff;
+    height: auto;
+
+    filter: invert(100%);
+
+    background: transparent;
+
+  }
 
 }
 ```
@@ -42854,9 +43088,9 @@ import {
 
 
 
-let x = 0;
+const wrapper = document.getElementById("wrapper");
 
-let y = 0;
+const container = document.getElementById("container");
 
 
 
@@ -42864,21 +43098,31 @@ new Swipe({
 
   container: document.getElementById("container"),
 
-  inertia: true,
-
-  inertiaEasing: EaseOutBack,
-
   grabCursor: true,
 
-  inertiaRatio: 0.1,
+  inertia: true,
 
-  velocityModifier: source => ({
+  overflow: () => 20,
 
-    ...source,
+  bounds: () => ({
 
-    x: clamp(source.x, -x - vevet.width / 2, vevet.width / 2 - x),
+    x: [
 
-    y: clamp(source.y, -y - vevet.height / 2, vevet.height / 2 - y)
+      (wrapper.clientWidth - container.clientWidth) * -0.5,
+
+      (wrapper.clientWidth - container.clientWidth) * 0.5
+
+    ],
+
+
+
+    y: [
+
+      (wrapper.clientHeight - container.clientHeight) * -0.5,
+
+      (wrapper.clientHeight - container.clientHeight) * 0.5
+
+    ]
 
   }),
 
@@ -42886,7 +43130,7 @@ new Swipe({
 
   onMove: ({
 
-    step
+    movement
 
   }, {
 
@@ -42894,13 +43138,7 @@ new Swipe({
 
   }) => {
 
-    x = clamp(x + step.x, -vevet.width / 2, vevet.width / 2);
-
-    y = clamp(y + step.y, -vevet.height / 2, vevet.height / 2);
-
-
-
-    container.style.transform = `translate(${x}px, ${y}px)`;
+    container.style.transform = `translate(${movement.x}px, ${movement.y}px)`;
 
   }
 
@@ -42909,14 +43147,18 @@ new Swipe({
 
 [Open live demo ↗](https://vevetjs.com/pens/zxqbwVg)
 
-## Ball[​](#ball "Direct link to Ball")
+## Bouncing Ball[​](#bouncing-ball "Direct link to Bouncing Ball")
+
+Custom physics on top of release inertia: the ball reverses direction when it hits the viewport edges.
+
+Uses `hasInertia` in `onMove` to flip direction only during the inertia phase.
 
 [Vevet Demo pvyqOMV](https://codepen.io/anton-bobrov/embed/pvyqOMV?default-tab=result)
 
 HTML
 
 ```
-<div class="fullpage-center">
+<div class="fullpage-center" id="page">
 
   <div id="ball" class="ball"></div>
 
@@ -42926,6 +43168,22 @@ HTML
 CSS
 
 ```
+.fullpage-center {
+
+  display: flex;
+
+  flex-direction: row;
+
+  align-items: center;
+
+  justify-content: center;
+
+  overflow: hidden;
+
+}
+
+
+
 .ball {
 
   width: 3rem;
@@ -42936,7 +43194,7 @@ CSS
 
   border-radius: 50%;
 
-  background: radial-gradient(rgb(0, 201, 177) 10%, rgb(30, 43, 82));
+  background: var(--gradient-sunset, #000);
 
 }
 ```
@@ -42948,11 +43206,13 @@ import {
 
   Swipe,
 
-  vevet,
-
   clamp
 
 } from "vevet";
+
+
+
+const page = document.getElementById("page");
 
 
 
@@ -42994,9 +43254,15 @@ new Swipe({
 
   }) => {
 
+    const pageWidth = page.clientWidth;
+
+    const pageHeight = page.clientHeight;
+
+
+
     if (hasInertia) {
 
-      if (x >= vevet.width / 2 || x <= -vevet.width / 2) {
+      if (x >= pageWidth / 2 || x <= -pageWidth / 2) {
 
         xDir *= -1;
 
@@ -43004,7 +43270,7 @@ new Swipe({
 
 
 
-      if (y >= vevet.height / 2 || y <= -vevet.height / 2) {
+      if (y >= pageHeight / 2 || y <= -pageHeight / 2) {
 
         yDir *= -1;
 
@@ -43014,9 +43280,9 @@ new Swipe({
 
 
 
-    x = clamp(x + step.x * xDir, -vevet.width / 2, vevet.width / 2);
+    x = clamp(x + step.x * xDir, -pageWidth / 2, pageWidth / 2);
 
-    y = clamp(y + step.y * yDir, -vevet.height / 2, vevet.height / 2);
+    y = clamp(y + step.y * yDir, -pageHeight / 2, pageHeight / 2);
 
 
 
@@ -43028,6 +43294,1505 @@ new Swipe({
 ```
 
 [Open live demo ↗](https://vevetjs.com/pens/pvyqOMV)
+
+## Vertical Scrolling[​](#vertical-scrolling "Direct link to Vertical Scrolling")
+
+Simulated vertical scroll with CSS `translateY` instead of native overflow.
+
+Key props: [`bounds`](https://vevetjs.com/docs/Swipe/props#props.bounds) on the y-axis, [`inertia: true`](https://vevetjs.com/docs/Swipe/props#props.inertia), `movement.y`, `grabCursor: true`.
+
+[Vevet Demo KwagYqE](https://codepen.io/anton-bobrov/embed/KwagYqE?default-tab=result)
+
+HTML
+
+```
+<div class="fullpage-center">
+
+  <div id="container" class="container">
+
+    <div id="grid" class="grid">
+
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
+
+    </div>
+
+  </div>
+
+</div>
+```
+
+CSS
+
+```
+.fullpage-center {
+
+  padding: 1rem;
+
+}
+
+
+
+.container {
+
+  width: 100%;
+
+  height: calc(100svh - 2rem);
+
+
+
+  border-radius: 0.5rem;
+
+  overflow: hidden;
+
+  background: rgba(255, 255, 255, 0.1);
+
+}
+
+
+
+.grid {
+
+  display: grid;
+
+  gap: 1rem;
+
+  padding: 1rem;
+
+}
+
+
+
+p {
+
+  margin: 0;
+
+  padding: 1rem;
+
+
+
+  border-radius: 0.5rem;
+
+  background: rgba(255, 255, 255, 0.1);
+
+
+
+  font-size: 0.75rem;
+
+}
+
+
+
+.thumb {
+
+  width: 3rem;
+
+  height: 3rem;
+
+
+
+  display: flex;
+
+  flex-direction: row;
+
+  align-items: center;
+
+  justify-content: center;
+
+
+
+  border-radius: inherit;
+
+  background: var(--gradient-brand-0);
+
+
+
+  img {
+
+    width: 1.5rem;
+
+    height: auto;
+
+    filter: invert(100%);
+
+    background: transparent;
+
+  }
+
+}
+```
+
+JavaScript
+
+```
+import {
+
+  Swipe,
+
+  vevet,
+
+  clamp,
+
+  onResize
+
+} from "vevet";
+
+
+
+const container = document.getElementById("container");
+
+const grid = document.getElementById("grid");
+
+
+
+const instance = new Swipe({
+
+  container,
+
+  inertia: true,
+
+  grabCursor: true,
+
+  bounds: () => ({
+
+    y: [0, -(grid.clientHeight - container.clientHeight)]
+
+  }),
+
+  onMove: ({
+
+    movement
+
+  }) => {
+
+    grid.style.transform = `translateY(${movement.y}px)`;
+
+  }
+
+});
+```
+
+[Open live demo ↗](https://vevetjs.com/pens/KwagYqE)
+
+## Fullpage Bounds[​](#fullpage-bounds "Direct link to Fullpage Bounds")
+
+Drag an element anywhere on the page, constrained to the viewport center.
+
+Key props: [`bounds`](https://vevetjs.com/docs/Swipe/props#props.bounds) relative to the page size, [`inertia: true`](https://vevetjs.com/docs/Swipe/props#props.inertia), `movement`. Recalculates bounds on resize.
+
+[Vevet Demo OPWRGBo](https://codepen.io/anton-bobrov/embed/OPWRGBo?default-tab=result)
+
+HTML
+
+```
+<div class="fullpage-center" id="page">
+
+  <div id="container" class="container">
+
+    <img src="https://www.svgrepo.com/show/521614/drag.svg" alt="">
+
+  </div>
+
+</div>
+```
+
+CSS
+
+```
+.fullpage-center {
+
+  display: flex;
+
+  flex-direction: row;
+
+  align-items: center;
+
+  justify-content: center;
+
+  overflow: hidden;
+
+}
+
+
+
+.container {
+
+  width: 3rem;
+
+  height: 3rem;
+
+
+
+  display: flex;
+
+  flex-direction: row;
+
+  align-items: center;
+
+  justify-content: center;
+
+
+
+  background: var(--gradient-brand-135, #000);
+
+  border-radius: 0.5rem;
+
+
+
+  img {
+
+    width: 1.25rem;
+
+    height: auto;
+
+    filter: invert(100%);
+
+    background: transparent;
+
+  }
+
+}
+```
+
+JavaScript
+
+```
+import {
+
+  Swipe,
+
+  onResize
+
+} from "vevet";
+
+
+
+const page = document.getElementById("page");
+
+
+
+const swipe = new Swipe({
+
+  container: document.getElementById("container"),
+
+  inertia: true,
+
+  grabCursor: true,
+
+  bounds: () => ({
+
+    x: [
+
+      (page.clientWidth - container.clientWidth) / -2,
+
+      (page.clientWidth - container.clientWidth) / 2
+
+    ],
+
+
+
+    y: [
+
+      (page.clientHeight - container.clientHeight) / -2,
+
+      (page.clientHeight - container.clientHeight) / 2
+
+    ]
+
+  }),
+
+
+
+  onMove: ({
+
+    movement
+
+  }, {
+
+    container
+
+  }) => {
+
+    container.style.transform = `translate(${movement.x}px, ${movement.y}px)`;
+
+  }
+
+});
+
+
+
+onResize({
+
+  elements: [page],
+
+  callback: () => {
+
+    swipe.calculateBounds();
+
+    swipe.releaseBounce(0);
+
+  },
+
+  resizeDebounce: 100
+
+});
+```
+
+[Open live demo ↗](https://vevetjs.com/pens/OPWRGBo)
+
+## Inertia Distance Modifier[​](#inertia-distance-modifier "Direct link to Inertia Distance Modifier")
+
+Caps how far release inertia can travel.
+
+Key prop: [`inertiaDistanceModifier`](https://vevetjs.com/docs/Swipe/props#props.inertiaDistanceModifier) — clamps x/y distance to ±100 px.
+
+[Vevet Demo zxNKXQK](https://codepen.io/anton-bobrov/embed/zxNKXQK?default-tab=result)
+
+HTML
+
+```
+<div class="fullpage-center" id="page">
+
+  <div id="container" class="container">
+
+    <img src="https://www.svgrepo.com/show/521614/drag.svg" alt="">
+
+  </div>
+
+</div>
+```
+
+CSS
+
+```
+.fullpage-center {
+
+  display: flex;
+
+  flex-direction: row;
+
+  align-items: center;
+
+  justify-content: center;
+
+  overflow: hidden;
+
+}
+
+
+
+.container {
+
+  width: 3rem;
+
+  height: 3rem;
+
+
+
+  display: flex;
+
+  flex-direction: row;
+
+  align-items: center;
+
+  justify-content: center;
+
+
+
+  background: var(--gradient-brand-135, #000);
+
+  border-radius: 0.5rem;
+
+
+
+  img {
+
+    width: 1.25rem;
+
+    height: auto;
+
+    filter: invert(100%);
+
+    background: transparent;
+
+  }
+
+}
+```
+
+JavaScript
+
+```
+import {
+
+  Swipe,
+
+  onResize,
+
+  clamp
+
+} from "vevet";
+
+
+
+const page = document.getElementById("page");
+
+
+
+const swipe = new Swipe({
+
+  container: document.getElementById("container"),
+
+  inertia: true,
+
+  grabCursor: true,
+
+  bounds: () => ({
+
+    x: [
+
+      (page.clientWidth - container.clientWidth) / -2,
+
+      (page.clientWidth - container.clientWidth) / 2
+
+    ],
+
+
+
+    y: [
+
+      (page.clientHeight - container.clientHeight) / -2,
+
+      (page.clientHeight - container.clientHeight) / 2
+
+    ]
+
+  }),
+
+
+
+  inertiaDistanceModifier: distance => {
+
+    const limit = 100;
+
+
+
+    return {
+
+      x: clamp(distance.x, -limit, limit),
+
+      y: clamp(distance.y, -limit, limit),
+
+      angle: 0
+
+    };
+
+
+
+  },
+
+  onMove: ({
+
+    movement
+
+  }, {
+
+    container
+
+  }) => {
+
+    container.style.transform = `translate(${movement.x}px, ${movement.y}px)`;
+
+  }
+
+});
+
+
+
+onResize({
+
+  elements: [page],
+
+  callback: () => {
+
+    swipe.calculateBounds();
+
+    swipe.releaseBounce(0);
+
+  },
+
+  resizeDebounce: 100
+
+});
+```
+
+[Open live demo ↗](https://vevetjs.com/pens/zxNKXQK)
+
+## Inertia Settings[​](#inertia-settings "Direct link to Inertia Settings")
+
+Live controls for tuning release inertia feel.
+
+Adjust [`inertiaRatio`](https://vevetjs.com/docs/Swipe/props#props.inertiaRatio), [`inertiaDecay`](https://vevetjs.com/docs/Swipe/props#props.inertiaDecay), and [`inertiaBounceEase`](https://vevetjs.com/docs/Swipe/props#props.inertiaBounceEase) via `updateProps()`.
+
+[Vevet Demo pvREmov](https://codepen.io/anton-bobrov/embed/pvREmov?default-tab=result)
+
+HTML
+
+```
+<div class="fullpage-center" id="page">
+
+  <div class="settings">
+
+    <div>
+
+      ratio <input id="ratio" type="range" min="0" max="1" step="0.001" value="1">
+
+    </div>
+
+
+
+    <div>
+
+      decay <input id="decay" type="range" min="0.001" max="1" step="0.001" value="0.05">
+
+    </div>
+
+
+
+    <div>
+
+      bounceEase <input id="bounceEase" type="range" min="0.001" max="1" step="0.001" value="0.3">
+
+    </div>
+
+  </div>
+
+
+
+  <div id="container" class="container">
+
+    <img src="https://www.svgrepo.com/show/521614/drag.svg" alt="">
+
+  </div>
+
+</div>
+```
+
+CSS
+
+```
+.fullpage-center {
+
+  position: relative;
+
+  padding: 1rem;
+
+}
+
+
+
+.settings {
+
+  align-self: start;
+
+}
+
+
+
+.container {
+
+  position: absolute;
+
+  top: calc(50% - 1.5rem);
+
+  left: calc(50% - 1.5rem);
+
+
+
+  width: 3rem;
+
+  height: 3rem;
+
+
+
+  display: flex;
+
+  flex-direction: row;
+
+  align-items: center;
+
+  justify-content: center;
+
+
+
+  background: var(--gradient-brand-135, #000);
+
+  border-radius: 0.5rem;
+
+
+
+  img {
+
+    width: 1.25rem;
+
+    height: auto;
+
+    filter: invert(100%);
+
+    background: transparent;
+
+  }
+
+}
+```
+
+JavaScript
+
+```
+import {
+
+  Swipe,
+
+  onResize,
+
+  clamp
+
+} from "vevet";
+
+
+
+const page = document.getElementById("page");
+
+
+
+const swipe = new Swipe({
+
+  container: document.getElementById("container"),
+
+  inertia: true,
+
+  grabCursor: true,
+
+  bounds: () => ({
+
+    x: [
+
+      (page.clientWidth - container.clientWidth) / -2,
+
+      (page.clientWidth - container.clientWidth) / 2
+
+    ],
+
+
+
+    y: [
+
+      (page.clientHeight - container.clientHeight) / -2,
+
+      (page.clientHeight - container.clientHeight) / 2
+
+    ]
+
+  }),
+
+
+
+  onMove: ({
+
+    movement
+
+  }, {
+
+    container
+
+  }) => {
+
+    container.style.transform = `translate(${movement.x}px, ${movement.y}px)`;
+
+  }
+
+});
+
+
+
+onResize({
+
+  element: [page],
+
+  callback: () => {
+
+    swipe.calculateBounds();
+
+    swipe.releaseBounce(0);
+
+  },
+
+  resizeDebounce: 100
+
+});
+
+
+
+document.getElementById('ratio').addEventListener('input', evt => {
+
+  swipe.updateProps({
+
+    inertiaRatio: parseFloat(evt.currentTarget.value)
+
+  });
+
+
+
+});
+
+
+
+document.getElementById('decay').addEventListener('input', evt => {
+
+  swipe.updateProps({
+
+    inertiaDecay: parseFloat(evt.currentTarget.value)
+
+  });
+
+
+
+});
+
+
+
+document.getElementById('bounceEase').addEventListener('input', evt => {
+
+  swipe.updateProps({
+
+    inertiaBounceEase: parseFloat(evt.currentTarget.value)
+
+  });
+
+
+
+});
+```
+
+[Open live demo ↗](https://vevetjs.com/pens/pvREmov)
+
+## Image Viewer[​](#image-viewer "Direct link to Image Viewer")
+
+Image viewer with pan, zoom, and pinch support. Combines Swipe with [`Pointers`](https://vevetjs.com/docs/Pointers/).
+
+* Pan: [`movement`](https://vevetjs.com/docs/Swipe/interfaces#iswipecoords) + [`bounds`](https://vevetjs.com/docs/Swipe/props#props.bounds) that depend on [`scale`](https://vevetjs.com/docs/Swipe/accessors#scale)
+* Zoom: mouse wheel, double-click, and two-finger pinch via [`setScale()`](https://vevetjs.com/docs/Swipe/methods#setScale)
+* [`relative: true`](https://vevetjs.com/docs/Swipe/props#props.relative) for zoom-to-point
+
+[Vevet Demo rajMgoY](https://codepen.io/anton-bobrov/embed/rajMgoY?default-tab=result)
+
+HTML
+
+```
+<div class="fullpage-center">
+
+  <div class="container" id="container">
+
+    <img class="image" id="image" src="https://fastly.picsum.photos/id/314/1920/1080.jpg?hmac=QAv7htpuXdwRq9YJDaEo_1mEiiAkEJeJFoBlSp-l7VY" alt="">
+
+  </div>
+
+</div>
+```
+
+CSS
+
+```
+.fullpage-center {
+
+  padding: 1rem;
+
+}
+
+
+
+.container {
+
+  position: relative;
+
+  z-index: 1;
+
+  width: 100%;
+
+  height: min(70svh, 400px);
+
+  overflow: hidden;
+
+  background: rgba(255, 255, 255, 0.1);
+
+}
+
+
+
+.image {
+
+  display: block;
+
+  max-width: 100%;
+
+  max-height: 100%;
+
+  width: auto;
+
+  height: auto;
+
+
+
+  transform-origin: top left;
+
+}
+```
+
+JavaScript
+
+```
+import {
+
+  addEventListener,
+
+  clamp,
+
+  onResize,
+
+  Pointers,
+
+  Swipe
+
+} from "vevet";
+
+
+
+const maxScale = 5;
+
+const minScale = 1;
+
+const stepScale = 1;
+
+
+
+const container = document.getElementById("container");
+
+const image = document.getElementById("image");
+
+
+
+function getImageSize() {
+
+  return {
+
+    width: image.clientWidth,
+
+    height: image.clientHeight
+
+  };
+
+}
+
+
+
+function getContainerSize() {
+
+  return {
+
+    width: container.clientWidth,
+
+    height: container.clientHeight
+
+  };
+
+}
+
+
+
+const swipe = new Swipe({
+
+  container,
+
+  pointers: 1,
+
+  relative: true,
+
+  inertia: true,
+
+  grabCursor: true,
+
+  buttons: [0],
+
+  inertiaRatio: 1,
+
+  bounds: ({
+
+    scale
+
+  }) => {
+
+    const containerSize = getContainerSize();
+
+    const imageSize = getImageSize();
+
+
+
+    return {
+
+      x: [0, containerSize.width - imageSize.width * scale],
+
+      y: [0, containerSize.height - imageSize.height * scale]
+
+    };
+
+
+
+  },
+
+  onMove: ({
+
+    movement,
+
+    scale
+
+  }) => {
+
+    image.style.transform = `translate(${movement.x}px, ${movement.y}px) scale(${scale})`;
+
+  }
+
+});
+
+
+
+addEventListener(
+
+  image,
+
+  "wheel",
+
+  evt => {
+
+    evt.preventDefault();
+
+
+
+    if (swipe.isSwiping) {
+
+      return;
+
+    }
+
+
+
+    swipe.cancelInertia();
+
+
+
+    swipe.setScale(
+
+      clamp(swipe.scale - evt.deltaY * 0.001, minScale, maxScale),
+
+      evt);
+
+
+
+  }, {
+
+    passive: false
+
+  });
+
+
+
+addEventListener(image, "dblclick", evt => {
+
+  if (swipe.scale >= maxScale) {
+
+    swipe.setScale(minScale, evt);
+
+  } else {
+
+    swipe.setScale(clamp(swipe.scale + stepScale, minScale, maxScale), evt);
+
+  }
+
+});
+
+
+
+onResize({
+
+  element: [container, image],
+
+
+
+  callback: () => {
+
+    if (swipe.scale === minScale) {
+
+      const containerSize = getContainerSize();
+
+      const imageSize = getImageSize();
+
+
+
+      swipe.setMovement({
+
+        x: (containerSize.width - imageSize.width) / 2,
+
+        y: (containerSize.height - imageSize.height) / 2
+
+      });
+
+
+
+    }
+
+
+
+    swipe.calculateBounds();
+
+    swipe.releaseBounce(0);
+
+  }
+
+});
+
+
+
+new Pointers({
+
+  container,
+
+  minPointers: 2,
+
+  maxPointers: 2,
+
+  relative: false,
+
+  onMove: ({
+
+    prevScale,
+
+    scale,
+
+    startCenter
+
+  }) => {
+
+    if (prevScale === scale) {
+
+      return;
+
+    }
+
+
+
+    swipe.setScale(
+
+      clamp(swipe.scale * (scale / prevScale), minScale, maxScale),
+
+      startCenter);
+
+
+
+  },
+
+  onStart: () => {
+
+    swipe.updateProps({
+
+      enabled: false,
+
+      inertia: false
+
+    });
+
+  },
+
+  onEnd: () => {
+
+    setTimeout(() => {
+
+      swipe.updateProps({
+
+        enabled: true,
+
+        inertia: true
+
+      });
+
+    });
+
+  }
+
+});
+```
+
+[Open live demo ↗](https://vevetjs.com/pens/rajMgoY)
+
+## Image Viewer Right Click[​](#image-viewer-right-click "Direct link to Image Viewer Right Click")
+
+Same image viewer, but pan is triggered differently per input type:
+
+* Mouse: right button (`buttons: [2]`)
+* Touch: two fingers (`pointers: 2`)
+
+[Vevet Demo OPWReJy](https://codepen.io/anton-bobrov/embed/OPWReJy?default-tab=result)
+
+HTML
+
+```
+<div class="fullpage-center">
+
+  <div class="container" id="container">
+
+    <img class="image" id="image" src="https://fastly.picsum.photos/id/314/1920/1080.jpg?hmac=QAv7htpuXdwRq9YJDaEo_1mEiiAkEJeJFoBlSp-l7VY" alt="">
+
+  </div>
+
+</div>
+```
+
+CSS
+
+```
+.fullpage-center {
+
+  padding: 1rem;
+
+}
+
+
+
+.container {
+
+  position: relative;
+
+  z-index: 1;
+
+  width: 100%;
+
+  height: min(70svh, 400px);
+
+  overflow: hidden;
+
+  background: rgba(255, 255, 255, 0.1);
+
+}
+
+
+
+.image {
+
+  display: block;
+
+  max-width: 100%;
+
+  max-height: 100%;
+
+  width: auto;
+
+  height: auto;
+
+
+
+  transform-origin: top left;
+
+}
+```
+
+JavaScript
+
+```
+import {
+
+  addEventListener,
+
+  clamp,
+
+  onResize,
+
+  Pointers,
+
+  Swipe
+
+} from "vevet";
+
+
+
+const maxScale = 5;
+
+const minScale = 1;
+
+const stepScale = 1;
+
+
+
+const container = document.getElementById("container");
+
+const image = document.getElementById("image");
+
+
+
+function getImageSize() {
+
+  return {
+
+    width: image.clientWidth,
+
+    height: image.clientHeight
+
+  };
+
+}
+
+
+
+function getContainerSize() {
+
+  return {
+
+    width: container.clientWidth,
+
+    height: container.clientHeight
+
+  };
+
+}
+
+
+
+const swipe = new Swipe({
+
+  container,
+
+  pointers: type => type === "mouse" ? 1 : 2,
+
+  relative: true,
+
+  inertia: true,
+
+  grabCursor: true,
+
+  buttons: type => type === "touch" ? [0] : [2],
+
+  inertiaRatio: 0.1,
+
+  bounds: ({
+
+    scale
+
+  }) => {
+
+    const containerSize = getContainerSize();
+
+    const imageSize = getImageSize();
+
+
+
+    return {
+
+      x: [0, containerSize.width - imageSize.width * scale],
+
+      y: [0, containerSize.height - imageSize.height * scale]
+
+    };
+
+
+
+  },
+
+  onMove: ({
+
+    movement,
+
+    scale
+
+  }) => {
+
+    image.style.transform = `translate(${movement.x}px, ${movement.y}px) scale(${scale})`;
+
+  }
+
+});
+
+
+
+addEventListener(
+
+  image,
+
+  "wheel",
+
+  evt => {
+
+    evt.preventDefault();
+
+
+
+    if (swipe.isSwiping) {
+
+      return;
+
+    }
+
+
+
+    swipe.cancelInertia();
+
+
+
+    swipe.setScale(
+
+      clamp(swipe.scale - evt.deltaY * 0.001, minScale, maxScale),
+
+      evt);
+
+
+
+  }, {
+
+    passive: false
+
+  });
+
+
+
+addEventListener(image, "dblclick", evt => {
+
+  if (swipe.scale >= maxScale) {
+
+    swipe.setScale(minScale, evt);
+
+  } else {
+
+    swipe.setScale(clamp(swipe.scale + stepScale, minScale, maxScale), evt);
+
+  }
+
+});
+
+
+
+onResize({
+
+  element: [container, image],
+
+
+
+  callback: () => {
+
+    if (swipe.scale === minScale) {
+
+      const containerSize = getContainerSize();
+
+      const imageSize = getImageSize();
+
+
+
+      swipe.setMovement({
+
+        x: (containerSize.width - imageSize.width) / 2,
+
+        y: (containerSize.height - imageSize.height) / 2
+
+      });
+
+
+
+    }
+
+
+
+    swipe.calculateBounds();
+
+    swipe.releaseBounce(0);
+
+  }
+
+});
+
+
+
+new Pointers({
+
+  container,
+
+  minPointers: 2,
+
+  maxPointers: 2,
+
+  relative: false,
+
+  onMove: ({
+
+    prevScale,
+
+    scale,
+
+    startCenter
+
+  }) => {
+
+    if (prevScale === scale) {
+
+      return;
+
+    }
+
+
+
+    swipe.setScale(
+
+      clamp(swipe.scale * (scale / prevScale), minScale, maxScale),
+
+      startCenter);
+
+
+
+  }
+
+});
+```
+
+[Open live demo ↗](https://vevetjs.com/pens/OPWReJy)
 
 
 ---
@@ -44118,7 +45883,7 @@ const swipe = new Swipe({
 
   inertiaDistanceModifier: (distance) => ({
 
-    x: Math.round(distance.x / 100) * 100,
+    x: clamp(distance.x, -100, 100),
 
     y: distance.y,
 
@@ -44279,7 +46044,7 @@ CSS
 
   top: -0.5rem;
 
-  left: 0;
+  left: -0.125rem;
 
   width: 0.25rem;
 
@@ -44287,11 +46052,7 @@ CSS
 
   border-radius: 50vw;
 
-  background: linear-gradient(135deg,
-
-      rgb(255, 127, 135) 0%,
-
-      rgb(244, 214, 157) 100%);
+  background: var(--gradient-sunset, #000);
 
 }
 ```
