@@ -7,6 +7,65 @@
 :root {
   font-family: 'Ubuntu', sans-serif;
   font-size: 24px;
+
+  --gradient-brand-0: linear-gradient(
+    0deg,
+    rgb(13, 110, 253) 0%,
+    rgb(140, 122, 230) 50%,
+    rgb(0, 201, 177) 100%
+  );
+  --gradient-brand-90: linear-gradient(
+    90deg,
+    rgb(13, 110, 253) 0%,
+    rgb(140, 122, 230) 50%,
+    rgb(0, 201, 177) 100%
+  );
+  --gradient-brand-135: linear-gradient(
+    135deg,
+    rgb(13, 110, 253) 0%,
+    rgb(140, 122, 230) 50%,
+    rgb(0, 201, 177) 100%
+  );
+  --gradient-brand-radial: radial-gradient(
+    rgb(140, 122, 230) 20%,
+    rgb(13, 110, 253) 100%
+  );
+
+  --gradient-sunset: linear-gradient(
+    165deg,
+    rgb(255, 140, 80) 0%,
+    rgb(255, 95, 88) 40%,
+    rgb(255, 60, 140) 100%
+  );
+  --gradient-violet: linear-gradient(
+    165deg,
+    rgb(70, 30, 120) 0%,
+    rgb(120, 45, 180) 40%,
+    rgb(200, 60, 255) 100%
+  );
+  --gradient-green: linear-gradient(
+    165deg,
+    rgb(110, 200, 40) 0%,
+    rgb(40, 160, 80) 40%,
+    rgb(0, 100, 60) 100%
+  );
+  --gradient-amber: linear-gradient(
+    165deg,
+    rgb(255, 200, 60) 0%,
+    rgb(255, 150, 40) 40%,
+    rgb(220, 60, 40) 100%
+  );
+  --gradient-sky: linear-gradient(
+    165deg,
+    rgb(150, 220, 255) 0%,
+    rgb(80, 200, 255) 40%,
+    rgb(0, 170, 200) 100%
+  );
+  --gradient-peach: linear-gradient(
+    35deg,
+    rgb(255, 127, 135) 0%,
+    rgb(244, 214, 157) 100%
+  );
 }
 
 body {
@@ -44,12 +103,7 @@ body {
 
   cursor: pointer;
 
-  background: linear-gradient(
-    135deg,
-    rgb(13, 110, 253) 0%,
-    rgb(140, 122, 230) 50%,
-    rgb(0, 201, 177) 100%
-  );
+  background: var(--gradient-brand-135);
   background-size: 200% auto;
   box-shadow: 0 4px 20px rgba(13, 110, 253, 0.1);
   border-radius: 50vw;
@@ -57,10 +111,6 @@ body {
   font: inherit;
   font-size: 0.75rem;
   color: currentColor;
-}
-
-.btn:hover {
-  background-position: right center;
 }
 
 img {

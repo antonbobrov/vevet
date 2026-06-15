@@ -1,6 +1,6 @@
 ---
 sidebar_position: 10
-description: Swipe demos and examples. Vevet.js Swipe component.
+description: Swipe demos — pointer tracking, axis lock, rotation, bounds, inertia, rubber-band, direction detection, and image viewer examples.
 keywords:
   - swipe demos
   - vevet swipe
@@ -18,7 +18,13 @@ import Head from '@docusaurus/Head';
 </Head>
 
 <section>
-## Basic Demo
+## Basic Demo {#basic-demo}
+
+Overview of the main drag modes in one place: free movement, horizontal, vertical, and rotation.
+
+Each instance uses pointer-space [`diff`](interfaces#iswipecoords) and resets the transform on release — no [`movement`](interfaces#iswipecoords) persistence.
+
+Key props: `grabCursor: true`, `axis: "x"` / `axis: "y"`, `relative: true` (rotation).
 
 <VevetDemo id="bNNbKyV" height={500} />
 </section>
@@ -26,11 +32,19 @@ import Head from '@docusaurus/Head';
 <section>
 ## Multidirectional Swipe
 
+Free drag on both axes without an axis lock.
+
+Applies `diff.x` and `diff.y` in `onMove`; the element snaps back on `onEnd`.
+
 <VevetDemo id="xbVmaaB" height={500} />
 </section>
 
 <section>
-## Right-Click Drag
+## Right-Click Drag {#right-click-drag}
+
+Drag starts only with the right mouse button.
+
+Key prop: [`buttons: [2]`](props#props.buttons).
 
 <VevetDemo id="MYyLWLb" height={500} />
 </section>
@@ -38,17 +52,29 @@ import Head from '@docusaurus/Head';
 <section>
 ## Horizontal Swipe
 
+Horizontal drag locked to the x-axis.
+
+Key prop: [`axis: "x"`](props#props.axis). Uses `diff.x` and resets on release.
+
 <VevetDemo id="ZYWVMqR" height={500} />
 </section>
 
 <section>
 ## Vertical Swipe
 
+Vertical drag locked to the y-axis.
+
+Key prop: [`axis: "y"`](props#props.axis). Uses `diff.y` and resets on release.
+
 <VevetDemo id="vEGvzvO" height={500} />
 </section>
 
 <section>
-## Rotation Swipe
+## Rotation Swipe {#rotation-swipe}
+
+Angular drag around the element center.
+
+Key props: [`relative: true`](props#props.relative), `diff.angle`. Rotation resets on release.
 
 <VevetDemo id="qEZLMLz" height={500} />
 </section>
@@ -56,11 +82,29 @@ import Head from '@docusaurus/Head';
 <section>
 ## Slide Right
 
+Horizontal slider thumb inside a track. Position persists across gestures via [`movement`](interfaces#iswipecoords).
+
+Key props: [`thumb`](props#props.thumb), [`bounds`](props#props.bounds), [`inertia: true`](props#props.inertia), `grabCursor: true`.
+
+Bounds are recalculated on resize with [`calculateBounds()`](methods#calculateBounds) and [`releaseBounce()`](methods#releaseBounce).
+
 <VevetDemo id="NPdRrLy" height={500} />
 </section>
 
 <section>
-## Lever rotation
+## Slide Down
+
+Vertical slider variant — same pattern as Slide Right, but with y-axis [`bounds`](props#props.bounds).
+
+<VevetDemo id="MYJjRwL" height={500} />
+</section>
+
+<section>
+## Lever rotation {#lever-rotation}
+
+Radial lever control: drag the handle (`thumb`) to rotate the dial. Angle is measured relative to the container center.
+
+Key props: [`thumb`](props#props.thumb), [`relative: true`](props#props.relative), [`inertia: true`](props#props.inertia). Rotation accumulates via `step.angle`.
 
 <VevetDemo id="bNpOmGo" height={500} />
 </section>
@@ -68,11 +112,19 @@ import Head from '@docusaurus/Head';
 <section>
 ## Detect Swipe Direction
 
+Directional callbacks fire after the gesture ends once [`directionThreshold`](props#props.directionThreshold) is met.
+
+Callbacks: `onStart`, `onToLeft`, `onToRight`, `onToTop`, `onToBottom`.
+
 <VevetDemo id="ZYWVMwj" height={500} />
 </section>
 
 <section>
-## Drag Inertia
+## Drag Inertia {#drag-inertia}
+
+Release inertia without built-in bounds — limits are applied manually in `onMove`.
+
+Key props: [`inertia: true`](props#props.inertia), `grabCursor: true`. Position is accumulated from `step` and clamped with `clamp()`.
 
 <VevetDemo id="azNPaxx" height={500} />
 </section>
@@ -80,11 +132,82 @@ import Head from '@docusaurus/Head';
 <section>
 ## Drag Inertia Bounce
 
+Movement-space drag inside a wrapper with automatic bounds and rubber-band overflow.
+
+Key props: [`bounds`](props#props.bounds), [`overflow`](props#props.overflow), [`inertia: true`](props#props.inertia), `movement` for transforms.
+
 <VevetDemo id="zxqbwVg" height={500} />
 </section>
 
 <section>
-## Ball
+## Bouncing Ball
+
+Custom physics on top of release inertia: the ball reverses direction when it hits the viewport edges.
+
+Uses `hasInertia` in `onMove` to flip direction only during the inertia phase.
 
 <VevetDemo id="pvyqOMV" height={500} />
+</section>
+
+<section>
+## Vertical Scrolling
+
+Simulated vertical scroll with CSS `translateY` instead of native overflow.
+
+Key props: [`bounds`](props#props.bounds) on the y-axis, [`inertia: true`](props#props.inertia), `movement.y`, `grabCursor: true`.
+
+<VevetDemo id="KwagYqE" height={500} />
+</section>
+
+<section>
+## Fullpage Bounds
+
+Drag an element anywhere on the page, constrained to the viewport center.
+
+Key props: [`bounds`](props#props.bounds) relative to the page size, [`inertia: true`](props#props.inertia), `movement`. Recalculates bounds on resize.
+
+<VevetDemo id="OPWRGBo" height={500} />
+</section>
+
+<section>
+## Inertia Distance Modifier
+
+Caps how far release inertia can travel.
+
+Key prop: [`inertiaDistanceModifier`](props#props.inertiaDistanceModifier) — clamps x/y distance to ±100 px.
+
+<VevetDemo id="zxNKXQK" height={500} />
+</section>
+
+<section>
+## Inertia Settings
+
+Live controls for tuning release inertia feel.
+
+Adjust [`inertiaRatio`](props#props.inertiaRatio), [`inertiaDecay`](props#props.inertiaDecay), and [`inertiaBounceEase`](props#props.inertiaBounceEase) via `updateProps()`.
+
+<VevetDemo id="pvREmov" height={500} />
+</section>
+
+<section>
+## Image Viewer
+
+Image viewer with pan, zoom, and pinch support. Combines Swipe with [`Pointers`](/docs/Pointers).
+
+- Pan: [`movement`](interfaces#iswipecoords) + [`bounds`](props#props.bounds) that depend on [`scale`](accessors#scale)
+- Zoom: mouse wheel, double-click, and two-finger pinch via [`setScale()`](methods#setScale)
+- [`relative: true`](props#props.relative) for zoom-to-point
+
+<VevetDemo id="rajMgoY" height={500} />
+</section>
+
+<section>
+## Image Viewer Right Click
+
+Same image viewer, but pan is triggered differently per input type:
+
+- Mouse: right button (`buttons: [2]`)
+- Touch: two fingers (`pointers: 2`)
+
+<VevetDemo id="OPWReJy" height={500} />
 </section>

@@ -550,7 +550,7 @@ const swipe = new Swipe({
 const swipe = new Swipe({
   inertia: true,
   inertiaDistanceModifier: (distance) => ({
-    x: Math.round(distance.x / 100) * 100,
+    x: clamp(distance.x, -100, 100),
     y: distance.y,
     angle: 0,
   }),
