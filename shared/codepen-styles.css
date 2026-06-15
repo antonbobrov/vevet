@@ -8,8 +8,8 @@
   font-family: 'Ubuntu', sans-serif;
   font-size: 24px;
 
-  --gradient-brand: linear-gradient(
-    135deg,
+  --gradient-brand-0: linear-gradient(
+    0deg,
     rgb(13, 110, 253) 0%,
     rgb(140, 122, 230) 50%,
     rgb(0, 201, 177) 100%
@@ -20,15 +20,15 @@
     rgb(140, 122, 230) 50%,
     rgb(0, 201, 177) 100%
   );
-  --gradient-brand-vertical: linear-gradient(
-    0deg,
+  --gradient-brand-135: linear-gradient(
+    135deg,
     rgb(13, 110, 253) 0%,
     rgb(140, 122, 230) 50%,
     rgb(0, 201, 177) 100%
   );
   --gradient-brand-radial: radial-gradient(
-    rgb(13, 110, 253),
-    rgb(140, 122, 230)
+    rgb(140, 122, 230) 20%,
+    rgb(13, 110, 253) 100%
   );
 
   --gradient-sunset: linear-gradient(
