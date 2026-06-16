@@ -123,7 +123,8 @@ export class SnapWheel extends SnapLogic {
 
   /** Handle `followWheel=false` */
   private _handleNoFollow(deltaProp: number) {
-    const { track, isTouchPad, isGainingDelta, props, activeSlide } = this;
+    const { track, isTouchPad, isGainingDelta, props, activeSlide, canLoop } =
+      this;
     const delta = deltaProp * props.wheelSpeed;
 
     // Detect wheel throttling
@@ -175,7 +176,7 @@ export class SnapWheel extends SnapLogic {
             track.current = track.target;
           }
         } else if (direction === 1) {
-          if (!props.loop && this.activeIndex === this.slides.length - 1) {
+          if (!canLoop && this.activeIndex === this.slides.length - 1) {
             if (!props.rewind) {
               return;
             }
@@ -185,7 +186,7 @@ export class SnapWheel extends SnapLogic {
 
           this.next();
         } else {
-          if (!props.loop && this.activeIndex === 0) {
+          if (!canLoop && this.activeIndex === 0) {
             if (!props.rewind) {
               return;
             }

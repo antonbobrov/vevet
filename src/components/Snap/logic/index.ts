@@ -54,6 +54,10 @@ export class SnapLogic {
     return this._snap.$track;
   }
 
+  protected get canLoop() {
+    return this._snap.canLoop;
+  }
+
   protected get isSlideScrolling() {
     return this._snap.isSlideScrolling;
   }

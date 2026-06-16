@@ -113,10 +113,9 @@ export class SnapSwipe extends SnapLogic {
 
   /** Get swipe bounds */
   private _getBounds() {
-    const { freemode, loop } = this.props;
-    const { isSlideScrolling, track } = this;
+    const { isSlideScrolling, track, canLoop } = this;
 
-    if (!freemode && isSlideScrolling) {
+    if (!this.props.freemode && isSlideScrolling) {
       const { activeSlide, containerSize, track } = this;
       const { staticCoord, size } = activeSlide;
 
@@ -130,7 +129,7 @@ export class SnapSwipe extends SnapLogic {
       };
     }
 
-    if (loop) {
+    if (canLoop) {
       return null;
     }
 

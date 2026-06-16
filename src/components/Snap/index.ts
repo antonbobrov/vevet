@@ -589,7 +589,7 @@ export class Snap extends Module<TC, TS, TM> {
     targetIndex: number,
     { direction = null, ...options }: ISnapToSlideArg = {},
   ) {
-    const { activeIndex, slides, track, props, origin } = this;
+    const { activeIndex, slides, track, origin, canLoop } = this;
     const { current, max, loopCount } = track;
 
     if (this.isDestroyed) {
@@ -629,7 +629,7 @@ export class Snap extends Module<TC, TS, TM> {
 
     // Use static magnet when not looping
 
-    if (!props.loop) {
+    if (!canLoop) {
       return this.toCoord(targetStaticMagnet, options);
     }
 
@@ -659,12 +659,12 @@ export class Snap extends Module<TC, TS, TM> {
     skip = this.props.slidesToScroll,
     ...options
   }: ISnapNexPrevArg = {}) {
-    const { props, slides, activeIndex } = this;
+    const { props, slides, activeIndex, canLoop } = this;
     const { length } = slides;
 
     let index = loop(activeIndex + skip, 0, length);
 
-    if (!props.loop) {
+    if (!canLoop) {
       index = props.rewind
         ? loop(activeIndex + skip, 0, length)
         : Math.min(activeIndex + skip, length - 1);
@@ -678,11 +678,11 @@ export class Snap extends Module<TC, TS, TM> {
     skip = this.props.slidesToScroll,
     ...options
   }: ISnapNexPrevArg = {}) {
-    const { props, slides, activeIndex } = this;
+    const { props, slides, activeIndex, canLoop } = this;
 
     let index = loop(activeIndex - skip, 0, slides.length);
 
-    if (!props.loop) {
+    if (!canLoop) {
       index = props.rewind
         ? loop(activeIndex - skip, 0, slides.length)
         : Math.max(activeIndex - skip, 0);
