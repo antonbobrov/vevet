@@ -27,6 +27,13 @@
   position: absolute;
   width: 100%;
   height: 100%;
+
+  transition: opacity 0.35s linear;
+  opacity: 0;
+}
+
+.slide.active {
+  opacity: 1;
 }
 
 .slide img {
@@ -100,30 +107,16 @@ import {
 } from "https://esm.sh/vevet@5";
 
 const container = document.getElementById("carousel");
+const dots = document.querySelectorAll(".dot");
 
 const carousel = new Snap({
   container,
-  direction: "horizontal",
+  duration: 0,
   followSwipe: false,
   loop: true
 });
 
-carousel.on("update", () => {
-  carousel.slides.forEach(({
-    element,
-    size,
-    coord,
-    progress
-  }) => {
-    const opacity = clamp(1 - Math.abs(progress));
-
-    element.style.opacity = `${opacity}`;
-  });
-});
-
 container.classList.add("ready");
-
-const dots = document.querySelectorAll(".dot");
 
 dots.forEach((dot, index) => {
   dot.addEventListener("click", () => {
@@ -131,14 +124,21 @@ dots.forEach((dot, index) => {
   });
 });
 
-function updateDots() {
+function onActiveSlide() {
+  carousel.slides.forEach(({
+    element,
+    index
+  }) => {
+    element.classList.toggle("active", index === carousel.activeIndex);
+  });
+
   dots.forEach((dot, index) => {
     dot.classList.toggle("active", index === carousel.activeIndex);
   });
 }
 
-carousel.on("activeSlide", updateDots);
-updateDots();
+carousel.on("activeSlide", onActiveSlide);
+onActiveSlide();
 
   </script>
       </body>

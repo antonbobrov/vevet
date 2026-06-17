@@ -27001,6 +27001,20 @@ CSS
 
   height: 100%;
 
+
+
+  transition: opacity 0.35s linear;
+
+  opacity: 0;
+
+}
+
+
+
+.slide.active {
+
+  opacity: 1;
+
 }
 
 
@@ -27089,13 +27103,15 @@ import {
 
 const container = document.getElementById("carousel");
 
+const dots = document.querySelectorAll(".dot");
+
 
 
 const carousel = new Snap({
 
   container,
 
-  direction: "horizontal",
+  duration: 0,
 
   followSwipe: false,
 
@@ -27105,37 +27121,7 @@ const carousel = new Snap({
 
 
 
-carousel.on("update", () => {
-
-  carousel.slides.forEach(({
-
-    element,
-
-    size,
-
-    coord,
-
-    progress
-
-  }) => {
-
-    const opacity = clamp(1 - Math.abs(progress));
-
-
-
-    element.style.opacity = `${opacity}`;
-
-  });
-
-});
-
-
-
 container.classList.add("ready");
-
-
-
-const dots = document.querySelectorAll(".dot");
 
 
 
@@ -27151,7 +27137,21 @@ dots.forEach((dot, index) => {
 
 
 
-function updateDots() {
+function onActiveSlide() {
+
+  carousel.slides.forEach(({
+
+    element,
+
+    index
+
+  }) => {
+
+    element.classList.toggle("active", index === carousel.activeIndex);
+
+  });
+
+
 
   dots.forEach((dot, index) => {
 
@@ -27163,9 +27163,9 @@ function updateDots() {
 
 
 
-carousel.on("activeSlide", updateDots);
+carousel.on("activeSlide", onActiveSlide);
 
-updateDots();
+onActiveSlide();
 ```
 
 [Open live demo ↗](https://vevetjs.com/pens/qEbpgrJ)
