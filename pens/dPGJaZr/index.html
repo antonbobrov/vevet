@@ -5,16 +5,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · dPGJaZr</title>
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
-        <style>body {
-  background: #000;
+        <style>.fullpage-center {
+  padding: 1rem;
 }
 
 .carousel {
-  position: fixed;
-  top: 0;
-  left: 0;
+  position: relative;
   width: 100%;
-  height: 100%;
+  height: 50svh;
+  min-height: 300px;
+  overflow: hidden;
 
   opacity: 0;
   transition: opacity 0.25s linear;
@@ -38,12 +38,6 @@
 }
 
 .dots {
-  position: fixed;
-  z-index: 1;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-
   padding: 0;
   margin: 0;
   list-style-type: none;
@@ -71,59 +65,61 @@
 }</style>
       </head>
       <body>
-        <div class="carousel" id="carousel">
-  <div class="slide">
-    <img src="https://picsum.photos/id/940/1920/1080" alt="">
+        <div class="fullpage-center">
+  <div class="carousel" id="carousel">
+    <div class="slide">
+      <img src="https://picsum.photos/id/940/1920/1080" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/950/1920/1080" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/960/1920/1080" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/970/1920/1080" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/980/1920/1080" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/990/1920/1080" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/1000/1920/1080" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/1020/1920/1080" alt="">
+    </div>
   </div>
-  <div class="slide">
-    <img src="https://picsum.photos/id/950/1920/1080" alt="">
-  </div>
-  <div class="slide">
-    <img src="https://picsum.photos/id/960/1920/1080" alt="">
-  </div>
-  <div class="slide">
-    <img src="https://picsum.photos/id/970/1920/1080" alt="">
-  </div>
-  <div class="slide">
-    <img src="https://picsum.photos/id/980/1920/1080" alt="">
-  </div>
-  <div class="slide">
-    <img src="https://picsum.photos/id/990/1920/1080" alt="">
-  </div>
-  <div class="slide">
-    <img src="https://picsum.photos/id/1000/1920/1080" alt="">
-  </div>
-  <div class="slide">
-    <img src="https://picsum.photos/id/1020/1920/1080" alt="">
-  </div>
-</div>
 
-<ul class="dots">
-  <li>
-    <button type="button" class="dot" title="Slide 1"></button>
-  </li>
-  <li>
-    <button type="button" class="dot" title="Slide 2"></button>
-  </li>
-  <li>
-    <button type="button" class="dot" title="Slide 3"></button>
-  </li>
-  <li>
-    <button type="button" class="dot" title="Slide 4"></button>
-  </li>
-  <li>
-    <button type="button" class="dot" title="Slide 5"></button>
-  </li>
-  <li>
-    <button type="button" class="dot" title="Slide 6"></button>
-  </li>
-  <li>
-    <button type="button" class="dot" title="Slide 7"></button>
-  </li>
-  <li>
-    <button type="button" class="dot" title="Slide 8"></button>
-  </li>
-</ul>
+  <ul class="dots">
+    <li>
+      <button type="button" class="dot" title="Slide 1"></button>
+    </li>
+    <li>
+      <button type="button" class="dot" title="Slide 2"></button>
+    </li>
+    <li>
+      <button type="button" class="dot" title="Slide 3"></button>
+    </li>
+    <li>
+      <button type="button" class="dot" title="Slide 4"></button>
+    </li>
+    <li>
+      <button type="button" class="dot" title="Slide 5"></button>
+    </li>
+    <li>
+      <button type="button" class="dot" title="Slide 6"></button>
+    </li>
+    <li>
+      <button type="button" class="dot" title="Slide 7"></button>
+    </li>
+    <li>
+      <button type="button" class="dot" title="Slide 8"></button>
+    </li>
+  </ul>
+</div>
         
   <script type="module">
 import {

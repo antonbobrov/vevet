@@ -5,26 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · bNwKERM</title>
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
-        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-
-  background: linear-gradient(165deg,
-      rgb(17, 25, 42) 0%,
-      rgb(30, 43, 82) 40%,
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-  font-family: "Ubuntu", sans-serif;
-}
-
-.carousel {
-  position: relative;
+        <style>.carousel {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
 
   opacity: 0;
@@ -44,7 +30,7 @@ body {
   left: 0;
   height: 100%;
   width: 100%;
-  padding: 0 10vw;
+  padding: 0 2rem;
   overflow: hidden;
 
   will-change: transform, clip-path;
@@ -69,13 +55,13 @@ body {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: 1vw;
+  gap: 0.5rem;
 }
 
 .title {
   margin: 0;
 
-  font-size: 8vw;
+  font-size: 2rem;
   font-weight: bold;
   color: #fff;
 }
@@ -83,49 +69,50 @@ body {
 .description {
   margin: 0;
 
-  font-size: 3vw;
-  font-weight: bold;
+  font-size: 1.25rem;
   color: #fff;
 }</style>
       </head>
       <body>
-        <div class="carousel" id="carousel">
-  <div class="slide">
-    <img class="image" data-snap-parallax-y="30%" data-snap-parallax-scale="0.1" data-snap-parallax-scale-abs src="https://picsum.photos/id/608/1920/1080" alt="">
-    <div class="content" data-snap-parallax-opacity="-1" data-snap-parallax-rotate="-10deg" data-snap-parallax-y="20%" data-snap-parallax-scale="0.05">
-      <p class="title">Slide 1</p>
-      <p class="description">Lorem ipsum dolor sit amet</p>
+        <div class="fullpage-center">
+  <div class="carousel" id="carousel">
+    <div class="slide">
+      <img class="image" data-snap-parallax-y="30%" data-snap-parallax-scale="0.1" data-snap-parallax-scale-abs src="https://picsum.photos/id/608/1920/1080" alt="">
+      <div class="content" data-snap-parallax-opacity="-1" data-snap-parallax-rotate="-10deg" data-snap-parallax-y="20%" data-snap-parallax-scale="0.05">
+        <p class="title">Slide 1</p>
+        <p class="description">Lorem ipsum dolor sit amet</p>
+      </div>
     </div>
-  </div>
 
-  <div class="slide">
-    <img class="image" data-snap-parallax-y="30%" data-snap-parallax-scale="0.1" data-snap-parallax-scale-abs src="https://picsum.photos/id/698/1920/1080" alt="">
-    <div class="content" data-snap-parallax-opacity="-1" data-snap-parallax-rotate="-10deg" data-snap-parallax-y="20%" data-snap-parallax-scale="0.05">
-      <p class="title">Slide 2</p>
-      <p class="description">Lorem ipsum dolor sit amet</p>
+    <div class="slide">
+      <img class="image" data-snap-parallax-y="30%" data-snap-parallax-scale="0.1" data-snap-parallax-scale-abs src="https://picsum.photos/id/698/1920/1080" alt="">
+      <div class="content" data-snap-parallax-opacity="-1" data-snap-parallax-rotate="-10deg" data-snap-parallax-y="20%" data-snap-parallax-scale="0.05">
+        <p class="title">Slide 2</p>
+        <p class="description">Lorem ipsum dolor sit amet</p>
+      </div>
     </div>
-  </div>
 
-  <div class="slide">
-    <img class="image" data-snap-parallax-y="30%" data-snap-parallax-scale="0.1" data-snap-parallax-scale-abs src="https://picsum.photos/id/988/1920/1080" alt="">
-    <div class="content" data-snap-parallax-opacity="-1" data-snap-parallax-rotate="-10deg" data-snap-parallax-y="20%" data-snap-parallax-scale="0.05">
-      <p class="title">Slide 3</p>
-      <p class="description">Lorem ipsum dolor sit amet</p>
+    <div class="slide">
+      <img class="image" data-snap-parallax-y="30%" data-snap-parallax-scale="0.1" data-snap-parallax-scale-abs src="https://picsum.photos/id/988/1920/1080" alt="">
+      <div class="content" data-snap-parallax-opacity="-1" data-snap-parallax-rotate="-10deg" data-snap-parallax-y="20%" data-snap-parallax-scale="0.05">
+        <p class="title">Slide 3</p>
+        <p class="description">Lorem ipsum dolor sit amet</p>
+      </div>
     </div>
-  </div>
 
-  <div class="slide">
-    <img class="image" data-snap-parallax-y="30%" data-snap-parallax-scale="0.1" data-snap-parallax-scale-abs src="https://picsum.photos/id/788/1920/1080" alt="">
-    <div class="content" data-snap-parallax-opacity="-1" data-snap-parallax-rotate="-10deg" data-snap-parallax-y="20%" data-snap-parallax-scale="0.05">
-      <p class="title">Slide 1</p>
-      <p class="description">Lorem ipsum dolor sit amet</p>
+    <div class="slide">
+      <img class="image" data-snap-parallax-y="30%" data-snap-parallax-scale="0.1" data-snap-parallax-scale-abs src="https://picsum.photos/id/788/1920/1080" alt="">
+      <div class="content" data-snap-parallax-opacity="-1" data-snap-parallax-rotate="-10deg" data-snap-parallax-y="20%" data-snap-parallax-scale="0.05">
+        <p class="title">Slide 1</p>
+        <p class="description">Lorem ipsum dolor sit amet</p>
+      </div>
     </div>
-  </div>
-  <div class="slide">
-    <img class="image" data-snap-parallax-y="30%" data-snap-parallax-scale="0.1" src="https://picsum.photos/id/608/1920/1080" alt="">
-    <div class="content" data-snap-parallax-opacity="-1" data-snap-parallax-rotate="-10deg" data-snap-parallax-y="20%" data-snap-parallax-scale="0.05">
-      <p class="title">Slide 4</p>
-      <p class="description">Lorem ipsum dolor sit amet</p>
+    <div class="slide">
+      <img class="image" data-snap-parallax-y="30%" data-snap-parallax-scale="0.1" src="https://picsum.photos/id/608/1920/1080" alt="">
+      <div class="content" data-snap-parallax-opacity="-1" data-snap-parallax-rotate="-10deg" data-snap-parallax-y="20%" data-snap-parallax-scale="0.05">
+        <p class="title">Slide 4</p>
+        <p class="description">Lorem ipsum dolor sit amet</p>
+      </div>
     </div>
   </div>
 </div>

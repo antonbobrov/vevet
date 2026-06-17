@@ -5,20 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · OPMzdaX</title>
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
-        <style>body {
-  background: linear-gradient(165deg,
-      rgb(17, 25, 42) 0%,
-      rgb(30, 43, 82) 40%,
-      rgb(0, 58, 82) 100%);
-}
+        <style>.carousel {
+  --size: min(40vw, 40svh);
 
-.carousel {
-  --size: max(30vw, 30vh);
-
-  position: fixed;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
+  position: relative;
   width: 100%;
   height: var(--size);
 
@@ -37,9 +27,8 @@
   position: absolute;
   width: calc(var(--size) * 1);
   height: var(--size);
-  border-radius: 16px;
+  border-radius: 1rem;
   overflow: hidden;
-  box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.1);
 }
 
 .slide img {
@@ -50,36 +39,38 @@
 }</style>
       </head>
       <body>
-        <div class="carousel" id="carousel">
-  <div class="slide">
-    <img src="https://picsum.photos/id/758/400/600" alt="">
-  </div>
-  <div class="slide">
-    <img src="https://picsum.photos/id/760/400/600" alt="">
-  </div>
-  <div class="slide">
-    <img src="https://picsum.photos/id/770/400/600" alt="">
-  </div>
-  <div class="slide">
-    <img src="https://picsum.photos/id/780/400/600" alt="">
-  </div>
-  <div class="slide">
-    <img src="https://picsum.photos/id/790/400/600" alt="">
-  </div>
-  <div class="slide">
-    <img src="https://picsum.photos/id/800/400/600" alt="">
-  </div>
-  <div class="slide">
-    <img src="https://picsum.photos/id/810/400/600" alt="">
-  </div>
-  <div class="slide">
-    <img src="https://picsum.photos/id/820/400/600" alt="">
-  </div>
-  <div class="slide">
-    <img src="https://picsum.photos/id/830/400/600" alt="">
-  </div>
-  <div class="slide">
-    <img src="https://picsum.photos/id/840/400/600" alt="">
+        <div class="fullpage-center">
+  <div class="carousel" id="carousel">
+    <div class="slide">
+      <img src="https://picsum.photos/id/758/400/600" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/760/400/600" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/770/400/600" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/780/400/600" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/790/400/600" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/800/400/600" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/810/400/600" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/820/400/600" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/830/400/600" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/840/400/600" alt="">
+    </div>
   </div>
 </div>
         

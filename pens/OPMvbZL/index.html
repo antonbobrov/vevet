@@ -5,21 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · OPMvbZL</title>
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
-        <style>body {
-  height: 100vh;
-  background: linear-gradient(165deg,
-      rgb(17, 25, 42) 0%,
-      rgb(30, 43, 82) 40%,
-      rgb(0, 58, 82) 100%);
+        <style>img {
+  background: transparent;
 }
 
 .phone {
-  --size: 85vh;
+  --size: 85svh;
 
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
   width: calc(0.4617 * var(--size));
   height: var(--size);
   border: calc(0.012 * var(--size)) solid #000;
@@ -202,150 +195,154 @@
 }</style>
       </head>
       <body>
-        <div class="phone">
-  <div class="main">
-    <img class="wallpaper" src="https://vevetjs.com/shared/android-ui-snap/wallpaper.png">
+        <div class="fullpage-center">
 
-    <div class="pages">
-      <div class="grid">
-        <img src="https://vevetjs.com/shared/android-ui-snap/settings.png">
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/clock.png">
+  <div class="phone">
+    <div class="main">
+      <img class="wallpaper" src="https://vevetjs.com/shared/android-ui-snap/wallpaper.png">
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/calendar.png">
+      <div class="pages">
+        <div class="grid">
+          <img src="https://vevetjs.com/shared/android-ui-snap/settings.png">
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/calculator.png">
+          <img src="https://vevetjs.com/shared/android-ui-snap/clock.png">
 
-        <div></div>
+          <img src="https://vevetjs.com/shared/android-ui-snap/calendar.png">
 
-        <div></div>
+          <img src="https://vevetjs.com/shared/android-ui-snap/calculator.png">
 
-        <div></div>
+          <div></div>
 
-        <div></div>
+          <div></div>
 
-        <div></div>
+          <div></div>
 
-        <div></div>
+          <div></div>
 
-        <div></div>
+          <div></div>
 
-        <div></div>
+          <div></div>
 
-        <div></div>
+          <div></div>
 
-        <div></div>
+          <div></div>
 
-        <div></div>
+          <div></div>
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/google.png">
+          <div></div>
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/maps.png">
+          <div></div>
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/drive.png">
+          <img src="https://vevetjs.com/shared/android-ui-snap/google.png">
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/photos.png">
+          <img src="https://vevetjs.com/shared/android-ui-snap/maps.png">
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/meet.png">
+          <img src="https://vevetjs.com/shared/android-ui-snap/drive.png">
 
-        <div></div>
+          <img src="https://vevetjs.com/shared/android-ui-snap/photos.png">
 
-        <div></div>
+          <img src="https://vevetjs.com/shared/android-ui-snap/meet.png">
 
-        <div></div>
+          <div></div>
 
-        <div></div>
+          <div></div>
 
-        <div></div>
+          <div></div>
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/music.png">
+          <div></div>
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/beats.png">
+          <div></div>
+
+          <img src="https://vevetjs.com/shared/android-ui-snap/music.png">
+
+          <img src="https://vevetjs.com/shared/android-ui-snap/beats.png">
+        </div>
+
+        <div class="grid">
+          <img src="https://vevetjs.com/shared/android-ui-snap/telegram.png">
+
+          <img src="https://vevetjs.com/shared/android-ui-snap/linkedin.png">
+
+          <div></div>
+
+          <div></div>
+
+          <img src="https://vevetjs.com/shared/android-ui-snap/instagram.png">
+
+          <img src="https://vevetjs.com/shared/android-ui-snap/chrome.png">
+
+          <div></div>
+
+          <div></div>
+
+          <div></div>
+
+          <div></div>
+
+          <div></div>
+
+          <div></div>
+
+          <div></div>
+
+          <div></div>
+
+          <div></div>
+
+          <img src="https://vevetjs.com/shared/android-ui-snap/Gallery.png">
+
+          <img src="https://vevetjs.com/shared/android-ui-snap/Files.png">
+
+          <img src="https://vevetjs.com/shared/android-ui-snap/camera.png">
+        </div>
+
+        <div class="grid"></div>
       </div>
 
-      <div class="grid">
-        <img src="https://vevetjs.com/shared/android-ui-snap/telegram.png">
+      <ul class="pages-nav">
+        <li>
+          <button type="button" aria-label="Page 1" class="pages-nav__button"></button>
+        </li>
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/linkedin.png">
+        <li>
+          <button type="button" aria-label="Page 1" class="pages-nav__button"></button>
+        </li>
 
-        <div></div>
+        <li>
+          <button type="button" aria-label="Page 1" class="pages-nav__button"></button>
+        </li>
+      </ul>
+    </div>
 
-        <div></div>
+    <div class="active-apps">
+      <div class="active-apps__slide">
+        <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/clock.png">
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/instagram.png">
-
-        <img src="https://vevetjs.com/shared/android-ui-snap/chrome.png">
-
-        <div></div>
-
-        <div></div>
-
-        <div></div>
-
-        <div></div>
-
-        <div></div>
-
-        <div></div>
-
-        <div></div>
-
-        <div></div>
-
-        <div></div>
-
-        <img src="https://vevetjs.com/shared/android-ui-snap/Gallery.png">
-
-        <img src="https://vevetjs.com/shared/android-ui-snap/Files.png">
-
-        <img src="https://vevetjs.com/shared/android-ui-snap/camera.png">
+        <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/clock.jpg">
       </div>
 
-      <div class="grid"></div>
+      <div class="active-apps__slide">
+        <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/settings.png">
+
+        <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/settings.jpg">
+      </div>
+
+      <div class="active-apps__slide">
+        <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/Files.png">
+
+        <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/files.jpg">
+      </div>
+
+      <div class="active-apps__slide">
+        <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/calendar.png">
+
+        <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/calendar.jpg">
+      </div>
     </div>
 
-    <ul class="pages-nav">
-      <li>
-        <button type="button" aria-label="Page 1" class="pages-nav__button"></button>
-      </li>
-
-      <li>
-        <button type="button" aria-label="Page 1" class="pages-nav__button"></button>
-      </li>
-
-      <li>
-        <button type="button" aria-label="Page 1" class="pages-nav__button"></button>
-      </li>
-    </ul>
+    <div class="navbar"></div>
   </div>
-
-  <div class="active-apps">
-    <div class="active-apps__slide">
-      <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/clock.png">
-
-      <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/clock.jpg">
-    </div>
-
-    <div class="active-apps__slide">
-      <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/settings.png">
-
-      <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/settings.jpg">
-    </div>
-
-    <div class="active-apps__slide">
-      <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/Files.png">
-
-      <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/files.jpg">
-    </div>
-
-    <div class="active-apps__slide">
-      <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/calendar.png">
-
-      <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/calendar.jpg">
-    </div>
-  </div>
-
-  <div class="navbar"></div>
 </div>
         
   <script type="module">

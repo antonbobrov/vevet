@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · MYJbrWP</title>
+        <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
+        <style>.fullpage-center {
+  padding-inline: 1.25rem;
+}
+
+.carousel {
+  --container-height: min(80vw, 80svh);
+  --container-width: min(var(--container-height) * 1.5, 80vw);
+
+  position: relative;
+  width: var(--container-width);
+  height: var(--container-height);
+  overflow: hidden;
+
+  border-radius: calc(var(--container-height) * 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
+
+  opacity: 0;
+  transition: opacity 0.25s linear;
+}
+
+.carousel.ready {
+  opacity: 1;
+}
+
+.slide {
+  --slide-height: calc(var(--container-height) * 0.76);
+  --slide-width: calc(var(--slide-height) * 0.7);
+
+  position: absolute;
+  top: 12%;
+  left: 0;
+  width: var(--slide-width);
+  height: var(--slide-height);
+  transform-origin: center bottom;
+  will-change: transform, filter, opacity;
+}
+
+.slide_frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.5);
+}
+
+.slide_frame img {
+  position: absolute;
+  top: -22%;
+  left: -22%;
+  width: 144%;
+  height: 144%;
+  object-fit: cover;
+  will-change: transform;
+}</style>
+      </head>
+      <body>
+        <div class="fullpage-center">
+  <div class="carousel" id="carousel">
+
+    <div class="slide">
+      <div class="slide_frame">
+        <img src="https://picsum.photos/id/1015/400/600" alt="" data-snap-parallax-x="10%" data-snap-parallax-y="4%">
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide_frame">
+        <img src="https://picsum.photos/id/1018/400/600" alt="" data-snap-parallax-x="10%" data-snap-parallax-y="4%">
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide_frame">
+        <img src="https://picsum.photos/id/1021/400/600" alt="" data-snap-parallax-x="10%" data-snap-parallax-y="4%">
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide_frame">
+        <img src="https://picsum.photos/id/1025/400/600" alt="" data-snap-parallax-x="10%" data-snap-parallax-y="4%">
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide_frame">
+        <img src="https://picsum.photos/id/1035/400/600" alt="" data-snap-parallax-x="10%" data-snap-parallax-y="4%">
+      </div>
+    </div>
+
+    <div class="slide">
+      <div class="slide_frame">
+        <img src="https://picsum.photos/id/1041/400/600" alt="" data-snap-parallax-x="10%" data-snap-parallax-y="4%">
+      </div>
+    </div>
+
+  </div>
+</div>
+        
+  <script type="module">
+import {
+  Snap,
+  EaseOutBack
+} from "https://esm.sh/vevet@5";
+
+const container = document.getElementById("carousel");
+
+const carousel = new Snap({
+  container,
+  direction: "horizontal",
+  grabCursor: true,
+  origin: "center",
+  freemode: "sticky",
+  loop: true,
+  wheel: true,
+  wheelAxis: "y",
+  gap: "-1rem",
+  lerp: 0.11,
+  duration: 650,
+  easing: EaseOutBack
+});
+
+container.classList.add("ready");
+
+carousel.on("update", () => {
+  carousel.slides.forEach(({
+    element,
+    coord,
+    progress
+  }) => {
+    const abs = Math.abs(progress);
+    const focus = Math.exp(-abs * abs * 1.15);
+    const scale = 0.7 + focus * 0.3;
+    const y = Math.sin(progress * 1.2) * (24 + abs * 10);
+    const rotate = progress * -14;
+    const blur = Math.max(0, (abs - 0.1) * 4.5);
+    const bright = 0.5 + focus * 0.5;
+    const opacity = 0.3 + focus * 0.7;
+
+    element.style.zIndex = String(Math.round(focus * 200));
+    element.style.opacity = opacity;
+    element.style.filter = `blur(${blur}px) brightness(${bright})`;
+    element.style.transform = `translate3d(${coord}px, ${y}px, 0) scale(${scale}) rotate(${rotate}deg)`;
+  });
+});
+
+  </script>
+      </body>
+    </html>
+  

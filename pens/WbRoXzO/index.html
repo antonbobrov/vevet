@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vevet pen · WbRoXzO</title>
+        <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
+        <style>.fullpage-center {
+  padding-inline: 1.25rem;
+}
+
+.carousel {
+  --size: min(50vw, 50svh);
+
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+
+  transform-style: preserve-3d;
+  perspective: 1000px;
+
+  opacity: 0;
+  transition: opacity 0.25s linear;
+}
+
+.carousel.ready {
+  opacity: 1;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}</style>
+      </head>
+      <body>
+        <div class="fullpage-center">
+  <div class="carousel" id="carousel">
+    <div class="slide">
+      <img src="https://picsum.photos/id/10/700/700" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/28/700/700" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/37/700/700" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/161/700/700" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/180/700/700" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/649/700/700" alt="">
+    </div>
+  </div>
+</div>
+        
+  <script type="module">
+import {
+  Snap
+} from "https://esm.sh/vevet@5";
+
+const container = document.getElementById("carousel");
+
+const carousel = new Snap({
+  container,
+  direction: "horizontal",
+  wheel: true,
+  wheelAxis: "y",
+  origin: "center",
+  loop: true,
+  freemode: "sticky",
+  interval: 1000,
+  duration: 750,
+  shortSwipes: false,
+  grabCursor: true,
+  onUpdate: (data, {
+    slides
+  }) => {
+    slides.forEach(({
+      element,
+      size,
+      progress
+    }) => {
+      let z = size * 0.5;
+      let rotate = progress * -90;
+      let x = 0;
+      let alpha = 1;
+
+      if (progress > 1 || progress < -1) {
+        z = 0;
+        rotate = 0;
+        x = 0;
+        alpha = 0;
+      }
+
+      element.style.transform = `rotateY(${rotate}deg) translate3d(${x}px, 0, ${z}px)`;
+      element.style.opacity = `${alpha}`;
+    });
+  }
+});
+
+container.classList.add("ready");
+
+  </script>
+      </body>
+    </html>
+  

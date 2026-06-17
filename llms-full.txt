@@ -19919,65 +19919,69 @@ carousel.on("idle", () => {
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">
+  <div class="carousel" id="carousel">
 
-    <img src="https://picsum.photos/id/758/400/600" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/758/400/600" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/760/400/600" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/760/400/600" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/770/400/600" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/770/400/600" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/780/400/600" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/780/400/600" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/790/400/600" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/790/400/600" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/800/400/600" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/800/400/600" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/810/400/600" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/810/400/600" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/820/400/600" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/820/400/600" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/830/400/600" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/830/400/600" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/840/400/600" alt="">
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/840/400/600" alt="">
+
+    </div>
 
   </div>
 
@@ -19987,33 +19991,13 @@ HTML
 CSS
 
 ```
-body {
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-}
-
-
-
 .carousel {
 
-  --size: max(30vw, 30vh);
+  --size: min(40vw, 40svh);
 
 
 
-  position: fixed;
-
-  top: 50%;
-
-  left: 0;
-
-  transform: translateY(-50%);
+  position: relative;
 
   width: 100%;
 
@@ -20051,11 +20035,9 @@ body {
 
   height: var(--size);
 
-  border-radius: 16px;
+  border-radius: 1rem;
 
   overflow: hidden;
-
-  box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.1);
 
 }
 
@@ -20173,73 +20155,77 @@ container.classList.add("ready");
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">
+  <div class="carousel" id="carousel">
 
-    <img src="https://picsum.photos/id/1040/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+    <div class="slide">
 
-    <p class="text">Click me</p>
+      <img src="https://picsum.photos/id/1040/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
 
-  </div>
+      <p class="text">Click me</p>
 
-
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/1050/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
-
-    <p class="text">Click me</p>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <img src="https://picsum.photos/id/1060/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+      <img src="https://picsum.photos/id/1050/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
 
-    <p class="text">Click me</p>
+      <p class="text">Click me</p>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/1070/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
-
-    <p class="text">Click me</p>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <img src="https://picsum.photos/id/1080/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+      <img src="https://picsum.photos/id/1060/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
 
-    <p class="text">Click me</p>
+      <p class="text">Click me</p>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/1081/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
-
-    <p class="text">Click me</p>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <img src="https://picsum.photos/id/1082/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+      <img src="https://picsum.photos/id/1070/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
 
-    <p class="text">Click me</p>
+      <p class="text">Click me</p>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/1080/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+
+      <p class="text">Click me</p>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/1081/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+
+      <p class="text">Click me</p>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/1082/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+
+      <p class="text">Click me</p>
+
+    </div>
 
   </div>
 
@@ -20249,49 +20235,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 0;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  color: #fff;
+  padding: 1rem;
 
 }
 
@@ -20299,17 +20245,11 @@ body {
 
 .carousel {
 
-  position: fixed;
+  position: relative;
 
-  top: 50%;
+  width: 100%;
 
-  left: 50%;
-
-  transform: translate(-50%, -50%);
-
-  width: 95%;
-
-  height: 90%;
+  height: calc(85svh - 1rem);
 
 
 
@@ -20337,11 +20277,9 @@ body {
 
   height: 100%;
 
-  border-radius: 16px;
+  border-radius: 1rem;
 
   overflow: hidden;
-
-  background: #000;
 
 }
 
@@ -20377,7 +20315,9 @@ body {
 
   transform: translate(-50%, -50%);
 
-  font-size: 2.5rem;
+
+
+  font-size: 1.5rem;
 
   font-weight: bold;
 
@@ -20417,7 +20357,7 @@ const carousel = new Snap({
 
     direction: "horizontal",
 
-    gap: "1vw",
+    gap: "1rem",
 
     wheel: true,
 
@@ -20986,76 +20926,92 @@ These demos are **custom UI patterns** built on top of Snap — not built-in pre
 
 Most map `coord`, `progress`, and slide metadata in the `update` callback to CSS transforms. Some also use other vevet modules ([Timeline](https://vevetjs.com/docs/Timeline/), [Swipe](https://vevetjs.com/docs/Swipe/), [Responsive](https://vevetjs.com/docs/base/Responsive/), and others). Expand the HTML/CSS/JS snippets below each demo to see the full implementation.
 
-## Panorama[​](#panorama "Direct link to Panorama")
+## Focus[​](#focus "Direct link to Focus")
 
-3D panorama carousel inspired by [Panorama Slider](https://panorama-slider.uiinitiative.com/).
+(todo read code and describe)
 
-Maps `progress` to `translateZ`, `rotateY`, and a horizontal offset in `onUpdate`. Uses `origin: "center"`, `freemode: true`, and `loop: true`.
-
-[Vevet Demo OPMzdaX](https://codepen.io/anton-bobrov/embed/OPMzdaX?default-tab=result)
+[Vevet Demo MYJbrWP](https://codepen.io/anton-bobrov/embed/MYJbrWP?default-tab=result)
 
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">
+  <div class="carousel" id="carousel">
 
-    <img src="https://picsum.photos/id/758/400/600" alt="">
 
-  </div>
 
-  <div class="slide">
+    <div class="slide">
 
-    <img src="https://picsum.photos/id/760/400/600" alt="">
+      <div class="slide_frame">
 
-  </div>
+        <img src="https://picsum.photos/id/1015/400/600" alt="" data-snap-parallax-x="10%" data-snap-parallax-y="4%">
 
-  <div class="slide">
+      </div>
 
-    <img src="https://picsum.photos/id/770/400/600" alt="">
+    </div>
 
-  </div>
 
-  <div class="slide">
 
-    <img src="https://picsum.photos/id/780/400/600" alt="">
+    <div class="slide">
 
-  </div>
+      <div class="slide_frame">
 
-  <div class="slide">
+        <img src="https://picsum.photos/id/1018/400/600" alt="" data-snap-parallax-x="10%" data-snap-parallax-y="4%">
 
-    <img src="https://picsum.photos/id/790/400/600" alt="">
+      </div>
 
-  </div>
+    </div>
 
-  <div class="slide">
 
-    <img src="https://picsum.photos/id/800/400/600" alt="">
 
-  </div>
+    <div class="slide">
 
-  <div class="slide">
+      <div class="slide_frame">
 
-    <img src="https://picsum.photos/id/810/400/600" alt="">
+        <img src="https://picsum.photos/id/1021/400/600" alt="" data-snap-parallax-x="10%" data-snap-parallax-y="4%">
 
-  </div>
+      </div>
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/820/400/600" alt="">
 
-  </div>
 
-  <div class="slide">
+    <div class="slide">
 
-    <img src="https://picsum.photos/id/830/400/600" alt="">
+      <div class="slide_frame">
 
-  </div>
+        <img src="https://picsum.photos/id/1025/400/600" alt="" data-snap-parallax-x="10%" data-snap-parallax-y="4%">
 
-  <div class="slide">
+      </div>
 
-    <img src="https://picsum.photos/id/840/400/600" alt="">
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="slide_frame">
+
+        <img src="https://picsum.photos/id/1035/400/600" alt="" data-snap-parallax-x="10%" data-snap-parallax-y="4%">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="slide_frame">
+
+        <img src="https://picsum.photos/id/1041/400/600" alt="" data-snap-parallax-x="10%" data-snap-parallax-y="4%">
+
+      </div>
+
+    </div>
+
+
 
   </div>
 
@@ -21065,15 +21021,9 @@ HTML
 CSS
 
 ```
-body {
+.fullpage-center {
 
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
+  padding-inline: 1.25rem;
 
 }
 
@@ -21081,27 +21031,27 @@ body {
 
 .carousel {
 
-  --size: max(30vw, 30vh);
+  --container-height: min(80vw, 80svh);
+
+  --container-width: min(var(--container-height) * 1.5, 80vw);
 
 
 
-  position: fixed;
+  position: relative;
 
-  top: 50%;
+  width: var(--container-width);
 
-  left: 0;
+  height: var(--container-height);
 
-  transform: translateY(-50%);
-
-  width: 100%;
-
-  height: var(--size);
+  overflow: hidden;
 
 
 
-  perspective: calc(var(--size) * 5.55);
+  border-radius: calc(var(--container-height) * 0.05);
 
-  transform-style: preserve-3d;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  background: rgba(255, 255, 255, 0.1);
 
 
 
@@ -21123,31 +21073,65 @@ body {
 
 .slide {
 
+  --slide-height: calc(var(--container-height) * 0.76);
+
+  --slide-width: calc(var(--slide-height) * 0.7);
+
+
+
   position: absolute;
 
-  width: calc(var(--size) * 1);
+  top: 12%;
 
-  height: var(--size);
+  left: 0;
 
-  border-radius: 16px;
+  width: var(--slide-width);
 
-  overflow: hidden;
+  height: var(--slide-height);
 
-  box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.1);
+  transform-origin: center bottom;
+
+  will-change: transform, filter, opacity;
 
 }
 
 
 
-.slide img {
+.slide_frame {
 
-  display: block;
+  position: relative;
 
   width: 100%;
 
   height: 100%;
 
+  border-radius: 14px;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 255, 255, 0.14);
+
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.5);
+
+}
+
+
+
+.slide_frame img {
+
+  position: absolute;
+
+  top: -22%;
+
+  left: -22%;
+
+  width: 144%;
+
+  height: 144%;
+
   object-fit: cover;
+
+  will-change: transform;
 
 }
 ```
@@ -21159,7 +21143,7 @@ import {
 
   Snap,
 
-  vevet
+  EaseOutBack
 
 } from "vevet";
 
@@ -21179,975 +21163,27 @@ const carousel = new Snap({
 
   origin: "center",
 
-  freemode: true,
+  freemode: "sticky",
 
   loop: true,
 
-  gap: 10,
+  wheel: true,
 
-  duration: 300
+  wheelAxis: "y",
 
-});
+  gap: "-1rem",
 
+  lerp: 0.11,
 
+  duration: 650,
 
-carousel.on("update", () => {
-
-  const depth = 200;
-
-  const rotation = 20;
-
-  const scale = 1 / (180 / rotation);
-
-  const halfAngle = rotation * Math.PI / 180 / 2;
-
-
-
-  carousel.slides.forEach(({
-
-    element,
-
-    coord,
-
-    progress,
-
-    size
-
-  }) => {
-
-    const factor = 1 - Math.cos(progress * scale * Math.PI);
-
-
-
-    const xOffset = progress * (size / 3) * factor;
-
-    const zOffset = size * 0.5 / Math.sin(halfAngle) * factor - depth;
-
-    const rotateY = progress * rotation;
-
-
-
-    element.style.transform = `translateX(${
-
-    coord + xOffset
-
-    }px) translateZ(${zOffset}px) rotateY(${rotateY}deg)`;
-
-  });
+  easing: EaseOutBack
 
 });
 
 
 
 container.classList.add("ready");
-```
-
-[Open live demo ↗](https://vevetjs.com/pens/OPMzdaX)
-
-## Circular carousel[​](#circular-carousel "Direct link to Circular carousel")
-
-Slides positioned on a circle with `swipeAxis: "angle"`. Each slide's `progress` drives `sin` / `cos` placement and rotation.
-
-[Vevet Demo XJKQwyb](https://codepen.io/anton-bobrov/embed/XJKQwyb?default-tab=result)
-
-HTML
-
-```
-<div class="container" id="container">
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/758/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/760/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/770/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/780/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/790/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/780/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/800/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/780/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/810/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/820/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/830/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/840/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-</div>
-```
-
-CSS
-
-```
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-}
-
-
-
-.container {
-
-  --size: min(70vh, 70vw);
-
-
-
-  position: fixed;
-
-  top: 50%;
-
-  left: 50%;
-
-  transform: translate(-50%, -50%);
-
-  width: var(--size);
-
-  height: var(--size);
-
-}
-
-
-
-.slide {
-
-  --slide-size: calc(var(--size) / 5);
-
-
-
-  position: absolute;
-
-  top: calc(50% - var(--slide-size) / 2);
-
-  left: calc(50% - var(--slide-size) / 2);
-
-  width: var(--slide-size);
-
-  height: var(--slide-size);
-
-
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-}
-
-
-
-.wrapper {
-
-  position: absolute;
-
-  top: 0;
-
-  left: 0;
-
-  width: 100%;
-
-  height: 100%;
-
-
-
-  border-radius: 8px;
-
-  overflow: hidden;
-
-}
-
-
-
-.wrapper img {
-
-  position: absolute;
-
-  top: 0;
-
-  left: 0;
-
-  width: 100%;
-
-  height: 100%;
-
-  object-fit: cover;
-
-}
-```
-
-JavaScript
-
-```
-import {
-
-  Snap
-
-} from "vevet";
-
-
-
-const carousel = new Snap({
-
-    container: document.getElementById("container"),
-
-    direction: "horizontal",
-
-    wheel: true,
-
-    swipeAxis: "angle",
-
-    wheelAxis: "y",
-
-    loop: true,
-
-    freemode: true,
-
-    grabCursor: true
-
-  },
-
-
-
-  {
-
-    onUpdate: (data, {
-
-      containerSize,
-
-      slides
-
-    }) => {
-
-      const radius = containerSize / 2;
-
-      const p2 = Math.PI * 2;
-
-      const offset = Math.PI * -0.5;
-
-
-
-      slides.forEach(slide => {
-
-        const element = slide.element;
-
-        const progress = -slide.progress / slides.length;
-
-
-
-        const x = Math.cos(p2 * progress + offset) * radius;
-
-        const y = Math.sin(p2 * progress + offset) * radius;
-
-        const rotation = p2 * progress;
-
-
-
-        element.style.transform = `translateX(${x}px) translateY(${y}px) rotate(${rotation}rad)`;
-
-      });
-
-    }
-
-  });
-```
-
-[Open live demo ↗](https://vevetjs.com/pens/XJKQwyb)
-
-## Cylinder carousel[​](#cylinder-carousel "Direct link to Cylinder carousel")
-
-Horizontal cylinder layout: slides orbit with `translateX` / `translateZ` from circular math in `onUpdate`.
-
-[Vevet Demo GgqLVWg](https://codepen.io/anton-bobrov/embed/GgqLVWg?default-tab=result)
-
-HTML
-
-```
-<div class="container" id="container">
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/758/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/760/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/770/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/780/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/790/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/780/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/800/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/780/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/810/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/820/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/830/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
-
-      <img src="https://picsum.photos/id/840/400/600" alt="">
-
-    </div>
-
-  </div>
-
-
-
-</div>
-```
-
-CSS
-
-```
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-}
-
-
-
-.container {
-
-  --size: min(70vh, 70vw);
-
-
-
-  position: fixed;
-
-  top: 50%;
-
-  left: 50%;
-
-  transform: translate(-50%, -50%);
-
-  width: var(--size);
-
-  height: var(--size);
-
-
-
-  transform-style: preserve-3d;
-
-  perspective: calc(var(--size) * 1.5);
-
-}
-
-
-
-.slide {
-
-  --slide-size: calc(var(--size) / 4);
-
-
-
-  position: absolute;
-
-  top: calc(50% - var(--slide-size) / 2);
-
-  left: calc(50% - var(--slide-size) / 2);
-
-  width: var(--slide-size);
-
-  height: var(--slide-size);
-
-
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-}
-
-
-
-.wrapper {
-
-  position: absolute;
-
-  top: 0;
-
-  left: 0;
-
-  width: 100%;
-
-  height: 100%;
-
-
-
-  border-radius: 8px;
-
-  overflow: hidden;
-
-}
-
-
-
-.wrapper img {
-
-  position: absolute;
-
-  top: 0;
-
-  left: 0;
-
-  width: 100%;
-
-  height: 100%;
-
-  object-fit: cover;
-
-}
-```
-
-JavaScript
-
-```
-import {
-
-  Snap
-
-} from "vevet";
-
-
-
-const carousel = new Snap({
-
-    container: document.getElementById("container"),
-
-    direction: "horizontal",
-
-    wheel: true,
-
-    wheelAxis: "y",
-
-    loop: true,
-
-    freemode: true,
-
-    grabCursor: true
-
-  },
-
-
-
-  {
-
-    onUpdate: (data, {
-
-      containerSize,
-
-      slides
-
-    }) => {
-
-      const radius = containerSize / 2;
-
-      const p2 = Math.PI * 2;
-
-      const offset = Math.PI * -0.5;
-
-
-
-      slides.forEach(slide => {
-
-        const element = slide.element;
-
-        const progress = -slide.progress / slides.length;
-
-
-
-        const x = Math.cos(p2 * progress + offset) * radius;
-
-        const z = -Math.sin(p2 * progress + offset) * radius;
-
-        const rotation = p2 * progress;
-
-
-
-        element.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${rotation}rad)`;
-
-      });
-
-    }
-
-  });
-```
-
-[Open live demo ↗](https://vevetjs.com/pens/GgqLVWg)
-
-## Perspective carousel[​](#perspective-carousel "Direct link to Perspective carousel")
-
-CSS 3D perspective carousel. Maps `progress` to `translateZ` and `rotateZ` per slide.
-
-[Vevet Demo azdEEXV](https://codepen.io/anton-bobrov/embed/azdEEXV?default-tab=result)
-
-HTML
-
-```
-<div class="carousel" id="carousel">
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/757/400/600" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/59/400/600" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/400/400/600" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/260/400/600" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/358/400/600" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/478/400/600" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/625/400/600" alt="">
-
-  </div>
-
-</div>
-```
-
-CSS
-
-```
-body {
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-}
-
-
-
-.carousel {
-
-  --size: min(70vw, 70vh);
-
-
-
-  position: fixed;
-
-  top: 50%;
-
-  left: 0;
-
-  transform: translateY(-50%);
-
-  width: 100%;
-
-  height: var(--size);
-
-
-
-  perspective: calc(var(--size) * 1.6);
-
-  transform-style: preserve-3d;
-
-
-
-  opacity: 0;
-
-  transition: opacity 0.25s linear;
-
-}
-
-
-
-.carousel.ready {
-
-  opacity: 1;
-
-}
-
-
-
-.slide {
-
-  position: absolute;
-
-  width: calc(var(--size) * 0.6);
-
-  height: var(--size);
-
-  border-radius: 16px;
-
-  overflow: hidden;
-
-  box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.1);
-
-}
-
-
-
-.slide img {
-
-  display: block;
-
-  width: 100%;
-
-  height: 100%;
-
-  object-fit: cover;
-
-}
-```
-
-JavaScript
-
-```
-import {
-
-  Snap,
-
-  vevet
-
-} from "vevet";
-
-
-
-const container = document.getElementById("carousel");
-
-
-
-const carousel = new Snap({
-
-  container,
-
-  direction: "horizontal",
-
-  grabCursor: true,
-
-  wheel: true,
-
-  wheelAxis: "y",
-
-  origin: "center",
-
-  loop: true,
-
-  shortSwipes: false,
-
-  freemode: "sticky"
-
-});
 
 
 
@@ -22156,8 +21192,6 @@ carousel.on("update", () => {
   carousel.slides.forEach(({
 
     element,
-
-    size,
 
     coord,
 
@@ -22165,2046 +21199,38 @@ carousel.on("update", () => {
 
   }) => {
 
-    const z = Math.abs(progress ** 2) * -(size * 0.625);
+    const abs = Math.abs(progress);
 
-    const rZ = progress * 5;
+    const focus = Math.exp(-abs * abs * 1.15);
 
+    const scale = 0.7 + focus * 0.3;
 
+    const y = Math.sin(progress * 1.2) * (24 + abs * 10);
 
-    element.style.transform = `translateX(${coord}px) translateZ(${z}px) rotateZ(${rZ}deg)`;
+    const rotate = progress * -14;
 
-  });
+    const blur = Math.max(0, (abs - 0.1) * 4.5);
 
-});
+    const bright = 0.5 + focus * 0.5;
 
+    const opacity = 0.3 + focus * 0.7;
 
 
-container.classList.add("ready");
-```
 
-[Open live demo ↗](https://vevetjs.com/pens/azdEEXV)
+    element.style.zIndex = String(Math.round(focus * 200));
 
-## Stack overlap[​](#stack-overlap "Direct link to Stack overlap")
+    element.style.opacity = opacity;
 
-Overlapping stack: the active slide stays in place while previous slides shrink back in Z-space.
+    element.style.filter = `blur(${blur}px) brightness(${bright})`;
 
-Driven by `progress` — `translateX`, `translateZ`, and `brightness` in `onUpdate`.
-
-[Vevet Demo LEZvwOv](https://codepen.io/anton-bobrov/embed/LEZvwOv?default-tab=result)
-
-HTML
-
-```
-<div class="carousel" id="carousel">
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/757/600/900" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/59/600/900" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/400/600/900" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/260/600/900" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/358/600/900" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/478/600/900" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/625/600/900" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/356/600/900" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/380/600/900" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/652/600/900" alt="">
-
-  </div>
-
-</div>
-```
-
-CSS
-
-```
-body {
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-}
-
-
-
-.carousel {
-
-  --size: max(30vw, 30vh);
-
-
-
-  position: fixed;
-
-  top: 50%;
-
-  left: 50%;
-
-  transform: translate(-50%, -50%);
-
-  width: var(--size);
-
-  height: calc(var(--size) * 0.675);
-
-
-
-  opacity: 0;
-
-  transition: opacity 0.25s linear;
-
-
-
-  transform-style: preserve-3d;
-
-  perspective: calc(var(--size) * 2.5);
-
-}
-
-
-
-.carousel.ready {
-
-  opacity: 1;
-
-}
-
-
-
-.slide {
-
-  position: absolute;
-
-  top: 0;
-
-  left: 0;
-
-  width: 100%;
-
-  height: 100%;
-
-  border-radius: 16px;
-
-  overflow: hidden;
-
-  box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.1);
-
-}
-
-
-
-.slide img {
-
-  display: block;
-
-  width: 100%;
-
-  height: 100%;
-
-  object-fit: cover;
-
-}
-```
-
-JavaScript
-
-```
-import {
-
-  Snap,
-
-  clamp
-
-} from "vevet";
-
-
-
-const container = document.getElementById("carousel");
-
-
-
-const carousel = new Snap({
-
-  container,
-
-  direction: "horizontal",
-
-  origin: "center",
-
-  loop: false,
-
-  gap: 20,
-
-  grabCursor: true
-
-});
-
-
-
-carousel.on("update", (data, {
-
-  slides
-
-}) => {
-
-  slides.forEach(({
-
-    element,
-
-    size,
-
-    progress,
-
-    coord
-
-  }) => {
-
-    const x = progress > 0 ? 0 : coord;
-
-    const z = progress < 0 ? 0 : size * progress * -1;
-
-    const brightness = clamp(1 - progress * 0.5);
-
-
-
-    element.style.transform = `translateX(${x}px) translateZ(${z}px)`;
-
-    element.style.filter = `brightness(${brightness})`;
-
-  });
-
-});
-
-
-
-container.classList.add("ready");
-```
-
-[Open live demo ↗](https://vevetjs.com/pens/LEZvwOv)
-
-## Wavy sine[​](#wavy-sine "Direct link to Wavy sine")
-
-Horizontal track with sine-wave vertical offset, rotation, and scale per slide.
-
-Uses `eventsEmitter: document.documentElement`, `freemode: true`, and `origin: "center"`.
-
-[Vevet Demo WbxWVyO](https://codepen.io/anton-bobrov/embed/WbxWVyO?default-tab=result)
-
-HTML
-
-```
-<div class="carousel" id="carousel">
-
-  <div class="slide"><img src="https://picsum.photos/id/12/600/900" alt=""></div>
-
-  <div class="slide"><img src="https://picsum.photos/id/47/600/900" alt=""></div>
-
-  <div class="slide"><img src="https://picsum.photos/id/83/600/900" alt=""></div>
-
-  <div class="slide"><img src="https://picsum.photos/id/119/600/900" alt=""></div>
-
-  <div class="slide"><img src="https://picsum.photos/id/156/600/900" alt=""></div>
-
-  <div class="slide"><img src="https://picsum.photos/id/198/600/900" alt=""></div>
-
-  <div class="slide"><img src="https://picsum.photos/id/234/600/900" alt=""></div>
-
-  <div class="slide"><img src="https://picsum.photos/id/276/600/900" alt=""></div>
-
-  <div class="slide"><img src="https://picsum.photos/id/301/600/900" alt=""></div>
-
-  <div class="slide"><img src="https://picsum.photos/id/349/600/900" alt=""></div>
-
-  <div class="slide"><img src="https://picsum.photos/id/377/600/900" alt=""></div>
-
-  <div class="slide"><img src="https://picsum.photos/id/412/600/900" alt=""></div>
-
-  <div class="slide"><img src="https://picsum.photos/id/445/600/900" alt=""></div>
-
-  <div class="slide"><img src="https://picsum.photos/id/488/600/900" alt=""></div>
-
-  <div class="slide"><img src="https://picsum.photos/id/521/600/900" alt=""></div>
-
-  <div class="slide"><img src="https://picsum.photos/id/556/600/900" alt=""></div>
-
-  <div class="slide"><img src="https://picsum.photos/id/602/600/900" alt=""></div>
-
-  <div class="slide"><img src="https://picsum.photos/id/643/600/900" alt=""></div>
-
-  <div class="slide"><img src="https://picsum.photos/id/689/600/900" alt=""></div>
-
-  <div class="slide"><img src="https://picsum.photos/id/732/600/900" alt=""></div>
-
-</div>
-```
-
-CSS
-
-```
-body {
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-}
-
-
-
-.carousel {
-
-  --size: max(20vw, 20vh);
-
-
-
-  position: fixed;
-
-  top: 50%;
-
-  left: 50%;
-
-  transform: translate(-50%, -50%);
-
-  width: calc(var(--size) * 0.625);
-
-  height: var(--size);
-
-
-
-  opacity: 0;
-
-  transition: opacity 0.25s linear;
-
-}
-
-
-
-.carousel.ready {
-
-  opacity: 1;
-
-}
-
-
-
-.slide {
-
-  position: absolute;
-
-  top: 0;
-
-  left: 0;
-
-  width: 100%;
-
-  height: 100%;
-
-  border-radius: 8px;
-
-  overflow: hidden;
-
-  box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.1);
-
-}
-
-
-
-.slide img {
-
-  display: block;
-
-  width: 100%;
-
-  height: 100%;
-
-  object-fit: cover;
-
-}
-```
-
-JavaScript
-
-```
-import {
-
-  Snap,
-
-  clamp
-
-} from "vevet";
-
-
-
-const container = document.getElementById("carousel");
-
-
-
-const carousel = new Snap({
-
-  container,
-
-  eventsEmitter: document.documentElement,
-
-  direction: "horizontal",
-
-  origin: "center",
-
-  loop: true,
-
-  gap: 30,
-
-  grabCursor: true,
-
-  freemode: true
-
-});
-
-
-
-carousel.on("update", (data, {
-
-  slides
-
-}) => {
-
-  const sineFrequency = 0.25;
-
-  const sineAmp = 0.5;
-
-  const rotationAmp = -30;
-
-  const scaleAmp = 0.2;
-
-
-
-  slides.forEach(({
-
-    element,
-
-    size,
-
-    progress,
-
-    coord
-
-  }) => {
-
-    const x = coord;
-
-    const y = Math.sin(progress * Math.PI * sineFrequency) * size * sineAmp;
-
-    const rotate = Math.cos(progress * Math.PI * sineFrequency) * rotationAmp;
-
-    const scale = clamp(1 - Math.abs(progress) * scaleAmp);
-
-
-
-    element.style.transform = `translateX(${x}px) translateY(${y}px) rotate(${rotate}deg) scale(${scale})`;
-
-  });
-
-});
-
-
-
-container.classList.add("ready");
-```
-
-[Open live demo ↗](https://vevetjs.com/pens/WbxWVyO)
-
-## Clip-path carousel[​](#clip-path-carousel "Direct link to Clip-path carousel")
-
-Full-page vertical carousel with `clip-path`, 3D rotation, and asymmetric reveal timing per corner.
-
-[Vevet Demo QwKwBvv](https://codepen.io/anton-bobrov/embed/QwKwBvv?default-tab=result)
-
-HTML
-
-```
-<div class="carousel" id="carousel">
-
-  <div class="slide">
-
-    <img class="image" src="https://picsum.photos/id/608/1920/1080" alt="">
-
-    <p class="title">Slide 1</p>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <img class="image" src="https://picsum.photos/id/698/1920/1080" alt="">
-
-    <p class="title">Slide 2</p>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <img class="image" src="https://picsum.photos/id/988/1920/1080" alt="">
-
-    <p class="title">Slide 3</p>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <img class="image" src="https://picsum.photos/id/788/1920/1080" alt="">
-
-    <p class="title">Slide 4</p>
-
-  </div>
-
-</div>
-```
-
-CSS
-
-```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 0;
-
-  box-sizing: border-box;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-
-
-  color: #fff;
-
-  font-family: "Ubuntu", sans-serif;
-
-}
-
-
-
-.carousel {
-
-  position: relative;
-
-  width: 100%;
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  opacity: 0;
-
-  transition: opacity 0.25s linear;
-
-
-
-  transform-style: preserve-3d;
-
-  perspective: 100rem;
-
-}
-
-
-
-.carousel.ready {
-
-  opacity: 1;
-
-}
-
-
-
-.slide {
-
-  position: absolute;
-
-  top: 0;
-
-  left: 0;
-
-  height: 100%;
-
-  width: 100%;
-
-
-
-  display: flex;
-
-  flex-direction: row;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  will-change: transform, clip-path;
-
-}
-
-
-
-.image {
-
-  position: absolute;
-
-  top: 0;
-
-  left: 0;
-
-  width: 100%;
-
-  height: 100%;
-
-  object-fit: cover;
-
-}
-
-
-
-.title {
-
-  margin: 0;
-
-
-
-  position: relative;
-
-
-
-  font-size: 8vw;
-
-  font-weight: bold;
-
-  color: #fff;
-
-}
-```
-
-JavaScript
-
-```
-import {
-
-  Snap,
-
-  EaseOutExpo
-
-} from "vevet";
-
-
-
-const container = document.getElementById("carousel");
-
-
-
-const carousel = new Snap({
-
-  container,
-
-  grabCursor: true,
-
-  loop: true,
-
-  direction: "vertical",
-
-  wheel: true,
-
-  followWheel: false,
-
-  duration: 1500,
-
-  lerp: 0.15
-
-});
-
-
-
-container.classList.add("ready");
-
-
-
-carousel.on("update", () => {
-
-  carousel.slides.forEach(({
-
-    element,
-
-    coord,
-
-    progress,
-
-    isVisible
-
-  }) => {
-
-    let translateY = 0;
-
-    let clipY1 = 100;
-
-    let clipY2 = 100;
-
-    let zIndex = 0;
-
-    let rot = 0;
-
-    let origin = "";
-
-
-
-    if (progress >= 0 && progress < 1) {
-
-      clipY1 = (1 - progress) * 100;
-
-      clipY2 = (1 - progress ** 2) * 100;
-
-      translateY = progress * -10;
-
-      rot = 50 * progress;
-
-      zIndex = 2;
-
-      origin = "top center";
-
-    } else if (progress < 0 && progress > -1) {
-
-      clipY1 = (1 - progress) * 100;
-
-      translateY = progress * -10;
-
-      rot = 50 * progress;
-
-      zIndex = 1;
-
-      origin = "bottom center";
-
-    } else {
-
-      translateY = 500;
-
-    }
-
-
-
-    element.style.clipPath = `polygon(0% 0%, 100% 0%, 100% ${clipY1}%, 0% ${clipY2}%)`;
-
-    element.style.transform = `translate(0, ${translateY}%) rotateX(${rot}deg)`;
-
-    element.style.transformOrigin = origin;
-
-    element.style.zIndex = zIndex;
+    element.style.transform = `translate3d(${coord}px, ${y}px, 0) scale(${scale}) rotate(${rotate}deg)`;
 
   });
 
 });
 ```
 
-[Open live demo ↗](https://vevetjs.com/pens/QwKwBvv)
-
-## Fullsize parallax rotation[​](#fullsize-parallax-rotation "Direct link to Fullsize parallax rotation")
-
-Vertical full-page carousel with child parallax via `data-snap-parallax-*` attributes on images and content.
-
-See also [Snap parallax](https://vevetjs.com/docs/Snap/parallax). Snap moves slides with `translateY(${coord}px)`; parallax runs on nested elements.
-
-[Vevet Demo bNwKERM](https://codepen.io/anton-bobrov/embed/bNwKERM?default-tab=result)
-
-HTML
-
-```
-<div class="carousel" id="carousel">
-
-  <div class="slide">
-
-    <img class="image" data-snap-parallax-y="30%" data-snap-parallax-scale="0.1" data-snap-parallax-scale-abs src="https://picsum.photos/id/608/1920/1080" alt="">
-
-    <div class="content" data-snap-parallax-opacity="-1" data-snap-parallax-rotate="-10deg" data-snap-parallax-y="20%" data-snap-parallax-scale="0.05">
-
-      <p class="title">Slide 1</p>
-
-      <p class="description">Lorem ipsum dolor sit amet</p>
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <img class="image" data-snap-parallax-y="30%" data-snap-parallax-scale="0.1" data-snap-parallax-scale-abs src="https://picsum.photos/id/698/1920/1080" alt="">
-
-    <div class="content" data-snap-parallax-opacity="-1" data-snap-parallax-rotate="-10deg" data-snap-parallax-y="20%" data-snap-parallax-scale="0.05">
-
-      <p class="title">Slide 2</p>
-
-      <p class="description">Lorem ipsum dolor sit amet</p>
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <img class="image" data-snap-parallax-y="30%" data-snap-parallax-scale="0.1" data-snap-parallax-scale-abs src="https://picsum.photos/id/988/1920/1080" alt="">
-
-    <div class="content" data-snap-parallax-opacity="-1" data-snap-parallax-rotate="-10deg" data-snap-parallax-y="20%" data-snap-parallax-scale="0.05">
-
-      <p class="title">Slide 3</p>
-
-      <p class="description">Lorem ipsum dolor sit amet</p>
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <img class="image" data-snap-parallax-y="30%" data-snap-parallax-scale="0.1" data-snap-parallax-scale-abs src="https://picsum.photos/id/788/1920/1080" alt="">
-
-    <div class="content" data-snap-parallax-opacity="-1" data-snap-parallax-rotate="-10deg" data-snap-parallax-y="20%" data-snap-parallax-scale="0.05">
-
-      <p class="title">Slide 1</p>
-
-      <p class="description">Lorem ipsum dolor sit amet</p>
-
-    </div>
-
-  </div>
-
-  <div class="slide">
-
-    <img class="image" data-snap-parallax-y="30%" data-snap-parallax-scale="0.1" src="https://picsum.photos/id/608/1920/1080" alt="">
-
-    <div class="content" data-snap-parallax-opacity="-1" data-snap-parallax-rotate="-10deg" data-snap-parallax-y="20%" data-snap-parallax-scale="0.05">
-
-      <p class="title">Slide 4</p>
-
-      <p class="description">Lorem ipsum dolor sit amet</p>
-
-    </div>
-
-  </div>
-
-</div>
-```
-
-CSS
-
-```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 0;
-
-  box-sizing: border-box;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-
-
-  color: #fff;
-
-  font-family: "Ubuntu", sans-serif;
-
-}
-
-
-
-.carousel {
-
-  position: relative;
-
-  width: 100%;
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  opacity: 0;
-
-  transition: opacity 0.25s linear;
-
-
-
-  transform-style: preserve-3d;
-
-  perspective: 100rem;
-
-}
-
-
-
-.carousel.ready {
-
-  opacity: 1;
-
-}
-
-
-
-.slide {
-
-  position: absolute;
-
-  top: 0;
-
-  left: 0;
-
-  height: 100%;
-
-  width: 100%;
-
-  padding: 0 10vw;
-
-  overflow: hidden;
-
-
-
-  will-change: transform, clip-path;
-
-}
-
-
-
-.image {
-
-  position: absolute;
-
-  top: 0;
-
-  left: 0;
-
-  width: 100%;
-
-  height: 100%;
-
-  object-fit: cover;
-
-}
-
-
-
-.content {
-
-  position: relative;
-
-  width: 100%;
-
-  height: 100%;
-
-  transform-origin: center left;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: flex-start;
-
-  justify-content: center;
-
-  gap: 1vw;
-
-}
-
-
-
-.title {
-
-  margin: 0;
-
-
-
-  font-size: 8vw;
-
-  font-weight: bold;
-
-  color: #fff;
-
-}
-
-
-
-.description {
-
-  margin: 0;
-
-
-
-  font-size: 3vw;
-
-  font-weight: bold;
-
-  color: #fff;
-
-}
-```
-
-JavaScript
-
-```
-import {
-
-  Snap
-
-} from "vevet";
-
-
-
-const container = document.getElementById("carousel");
-
-
-
-const carousel = new Snap({
-
-  container,
-
-  grabCursor: true,
-
-  loop: true,
-
-  direction: "vertical",
-
-  wheel: true,
-
-  followWheel: false,
-
-  duration: 1500
-
-});
-
-
-
-container.classList.add("ready");
-
-
-
-carousel.on("update", () => {
-
-  carousel.slides.forEach(({
-
-    element,
-
-    coord
-
-  }) => {
-
-    element.style.transform = `translateY(${coord}px)`;
-
-  });
-
-});
-```
-
-[Open live demo ↗](https://vevetjs.com/pens/bNwKERM)
-
-## Arc carousel[​](#arc-carousel "Direct link to Arc carousel")
-
-Slides follow an arc path: `coord` maps to a sine curve with tangent-based rotation and depth offset.
-
-[Vevet Demo qEayRzw](https://codepen.io/anton-bobrov/embed/qEayRzw?default-tab=result)
-
-HTML
-
-```
-<div class="carousel" id="carousel">
-
-  <div class="slide">
-
-    <img class="image" src="https://picsum.photos/id/608/1920/1080" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img class="image" src="https://picsum.photos/id/609/700/700" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img class="image" src="https://picsum.photos/id/610/700/700" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img class="image" src="https://picsum.photos/id/620/700/700" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img class="image" src="https://picsum.photos/id/621/700/700" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img class="image" src="https://picsum.photos/id/622/700/700" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img class="image" src="https://picsum.photos/id/623/700/700" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img class="image" src="https://picsum.photos/id/634/700/700" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img class="image" src="https://picsum.photos/id/625/700/700" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img class="image" src="https://picsum.photos/id/626/700/700" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img class="image" src="https://picsum.photos/id/627/700/700" alt="">
-
-  </div>
-
-  <div class="slide">
-
-    <img class="image" src="https://picsum.photos/id/628/700/700" alt="">
-
-  </div>
-
-</div>
-```
-
-CSS
-
-```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 2rem;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-variant-numeric: tabular-nums;
-
-}
-
-
-
-.carousel {
-
-  --slide-size: calc(min(100vh, 100vw) / 5);
-
-
-
-  position: relative;
-
-  width: 100vw;
-
-  height: var(--slide-size);
-
-
-
-  opacity: 0;
-
-  transition: opacity 0.25s linear;
-
-
-
-  transform-style: preserve-3d;
-
-  perspective: calc(var(--slide-size) * 2);
-
-}
-
-
-
-.carousel.ready {
-
-  opacity: 1;
-
-}
-
-
-
-.slide {
-
-  position: absolute;
-
-  top: 0;
-
-  left: 0;
-
-  width: var(--slide-size);
-
-  height: var(--slide-size);
-
-
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-
-
-  background: rgba(255, 255, 255, 0.08);
-
-  border-radius: calc(var(--slide-size) * 0.1);
-
-  overflow: hidden;
-
-}
-
-
-
-.image {
-
-  position: absolute;
-
-  top: 0;
-
-  left: 0;
-
-  width: 100%;
-
-  height: 100%;
-
-  object-fit: cover;
-
-}
-```
-
-JavaScript
-
-```
-import {
-
-  Snap,
-
-  scoped
-
-} from "vevet";
-
-
-
-const container = document.getElementById("carousel");
-
-
-
-const carousel = new Snap({
-
-  container,
-
-  grabCursor: true,
-
-  loop: true,
-
-  gap: "1rem",
-
-  origin: "center",
-
-  freemode: true
-
-});
-
-
-
-container.classList.add("ready");
-
-
-
-carousel.on("update", () => {
-
-  const {
-
-    domSize
-
-  } = carousel;
-
-
-
-  carousel.slides.forEach(({
-
-    element,
-
-    coord,
-
-    size
-
-  }) => {
-
-    const amp = size;
-
-    const t = (coord + size / 2) / domSize;
-
-    const centerT = scoped(t, 0.5, 1);
-
-
-
-    const y = Math.sin(Math.PI * t) * -amp + size / 2;
-
-
-
-    const slope = amp * Math.PI * Math.cos(Math.PI * t) / carousel.domSize;
-
-
-
-    const rotation = -Math.atan(slope);
-
-    const z = (1 - Math.abs(centerT)) * size;
-
-
-
-    element.style.transform = `
-
-      translate3d(${coord}px, ${y}px, ${z}px)
-
-      rotate(${rotation}rad)
-
-    `;
-
-  });
-
-});
-```
-
-[Open live demo ↗](https://vevetjs.com/pens/qEayRzw)
-
-## Expo slider[​](#expo-slider "Direct link to Expo slider")
-
-Expo-style carousel inspired by [Expo Slider](https://expo-slider.uiinitiative.com/).
-
-Smooth motion via `easing: EaseOutExpo`, `duration: 1500`, `lerp: 0.2`.
-
-[Vevet Demo MYyLroo](https://codepen.io/anton-bobrov/embed/MYyLroo?default-tab=result)
-
-HTML
-
-```
-<div class="carousel" id="carousel">
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="0.25" data-snap-parallax-scale-abs data-snap-parallax-x="-12.5%" data-snap-parallax-x-scope="-2,2" data-snap-parallax-rotate-y="10deg">
-
-      <img class="image" src="https://picsum.photos/id/758/1920/1080" data-snap-parallax-x="20%" data-snap-parallax-opacity="-0.2" alt="">
-
-
-
-      <p class="title" data-snap-parallax-x="20vw" data-snap-parallax-opacity="-2" data-snap-parallax-opacity-scope="-0.5,0.5">Title 1</p>
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="0.25" data-snap-parallax-scale-abs data-snap-parallax-x="-12.5%" data-snap-parallax-x-scope="-2,2" data-snap-parallax-rotate-y="10deg">
-
-      <img class="image" src="https://picsum.photos/id/760/1920/1080" data-snap-parallax-x="20%" data-snap-parallax-opacity="-0.2" alt="">
-
-
-
-      <p class="title" data-snap-parallax-x="20vw" data-snap-parallax-opacity="-2" data-snap-parallax-opacity-scope="-0.5,0.5">Title 2</p>
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="0.25" data-snap-parallax-scale-abs data-snap-parallax-x="-12.5%" data-snap-parallax-x-scope="-2,2" data-snap-parallax-rotate-y="10deg">
-
-      <img class="image" src="https://picsum.photos/id/768/1920/1080" data-snap-parallax-x="20%" data-snap-parallax-opacity="-0.2" alt="">
-
-
-
-      <p class="title" data-snap-parallax-x="20vw" data-snap-parallax-opacity="-2" data-snap-parallax-opacity-scope="-0.5,0.5">Title 3</p>
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="0.25" data-snap-parallax-scale-abs data-snap-parallax-x="-12.5%" data-snap-parallax-x-scope="-2,2" data-snap-parallax-rotate-y="10deg">
-
-      <img class="image" src="https://picsum.photos/id/832/1920/1080" data-snap-parallax-x="20%" data-snap-parallax-opacity="-0.2" alt="">
-
-
-
-      <p class="title" data-snap-parallax-x="20vw" data-snap-parallax-opacity="-2" data-snap-parallax-opacity-scope="-0.5,0.5">Title 4</p>
-
-    </div>
-
-  </div>
-
-</div>
-```
-
-CSS
-
-```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 0;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-}
-
-
-
-.carousel {
-
-  position: relative;
-
-  width: 100%;
-
-  height: 75%;
-
-
-
-  opacity: 0;
-
-  transition: opacity 0.25s linear;
-
-}
-
-
-
-.carousel.ready {
-
-  opacity: 1;
-
-}
-
-
-
-.slide {
-
-  position: absolute;
-
-  top: 0;
-
-  left: 0;
-
-  height: 100%;
-
-  width: 65vw;
-
-
-
-  transform-style: preserve-3d;
-
-  perspective: 100vw;
-
-}
-
-
-
-.wrap {
-
-  position: absolute;
-
-  top: 0;
-
-  left: 0;
-
-  width: 100%;
-
-  height: 100%;
-
-
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-
-
-  background: #000;
-
-  border-radius: 16px;
-
-  overflow: hidden;
-
-}
-
-
-
-.image {
-
-  position: absolute;
-
-  top: 0;
-
-  left: -20%;
-
-  width: 140%;
-
-  height: 100%;
-
-  object-fit: cover;
-
-}
-
-
-
-.title {
-
-  margin: 0;
-
-
-
-  position: absolute;
-
-  bottom: 5vw;
-
-  left: 5vw;
-
-
-
-  font-size: 8vw;
-
-  font-weight: bold;
-
-  color: #fff;
-
-}
-```
-
-JavaScript
-
-```
-import {
-
-  Snap,
-
-  EaseOutExpo
-
-} from "vevet";
-
-
-
-const container = document.getElementById("carousel");
-
-
-
-const carousel = new Snap({
-
-  container,
-
-  origin: "center",
-
-  loop: true,
-
-  grabCursor: true,
-
-  gap: "2,5vw",
-
-  lerp: 0.2,
-
-  easing: EaseOutExpo,
-
-  duration: 1500
-
-});
-
-
-
-container.classList.add("ready");
-
-
-
-carousel.on("update", () => {
-
-  carousel.slides.forEach(({
-
-    element,
-
-    coord,
-
-    isVisible
-
-  }) => {
-
-    element.style.transform = `translate(${coord}px, 0)`;
-
-  });
-
-});
-```
-
-[Open live demo ↗](https://vevetjs.com/pens/MYyLroo)
-
-## Cards[​](#cards "Direct link to Cards")
-
-Card stack with horizontal offset, Z-depth, and rotation from `progress`. Passed cards tuck beneath the active slide.
-
-Uses `onSwipeStart` to track the gesture origin slide for asymmetric motion.
-
-[Vevet Demo QwNYJGo](https://codepen.io/anton-bobrov/embed/QwNYJGo?default-tab=result)
-
-HTML
-
-```
-<div class="carousel" id="carousel">
-
-  <div class="slide" style="background: linear-gradient(35deg, #a33c45ff 0%, #d7888eff 100%)">1</div>
-
-  <div class="slide" " style=" background: linear-gradient(35deg, rgba(149,112,112,1) 0%, rgba(194,167,167,1) 100%)">2</div>
-
-  <div class="slide" style="background: linear-gradient(35deg, #e7a873 0%, #f7c6a4 100%)">3</div>
-
-  <div class="slide" style="background: linear-gradient(35deg, #FF8B94 0%, #ffc9cd 100%)">4</div>
-
-  <div class="slide" style="background: linear-gradient(35deg, rgba(172,162,92,1) 0%, rgba(214,208,156,1) 100%)">5</div>
-
-  <div class="slide" style="background: linear-gradient(35deg, #654b4bff 0%, #9a7f7fff 100%)">6</div>
-
-  <div class="slide" style="background: linear-gradient(35deg, #61783bff 0%, #95ab6aff 100%)">7</div>
-
-</div>
-```
-
-CSS
-
-```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 0;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-}
-
-
-
-.carousel {
-
-  position: fixed;
-
-  top: 50%;
-
-  left: 50%;
-
-  transform: translate(-50%, -50%);
-
-  width: 240px;
-
-  height: 320px;
-
-
-
-  transform-style: preserve-3d;
-
-  perspective: 1000px;
-
-
-
-  opacity: 0;
-
-}
-
-
-
-.carousel.ready {
-
-  opacity: 1;
-
-}
-
-
-
-.slide {
-
-  position: absolute;
-
-  top: 0;
-
-  left: 0;
-
-  width: 100%;
-
-  height: 100%;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-  align-items: center;
-
-
-
-  border-radius: 20px;
-
-
-
-  font-weight: bold;
-
-  font-size: 20px;
-
-  color: #fff;
-
-}
-```
-
-JavaScript
-
-```
-import {
-
-  Snap,
-
-  inRange,
-
-  clamp
-
-} from "vevet";
-
-
-
-const container = document.getElementById("carousel");
-
-let startIndex = 0;
-
-
-
-new Snap({
-
-    container: container,
-
-    direction: "horizontal",
-
-    grabCursor: true
-
-  },
-
-
-
-  {
-
-    onResize: () => {
-
-      container.classList.add("ready");
-
-    },
-
-    onSwipeStart: (data, {
-
-      activeIndex
-
-    }) => {
-
-      startIndex = activeIndex;
-
-    },
-
-    onUpdate: (data, {
-
-      slides
-
-    }) => {
-
-      const baseRotation = 6;
-
-      const baseX = 12;
-
-      const baseZ = -100;
-
-      const maxVisible = 6;
-
-
-
-      slides.forEach(({
-
-        element,
-
-        index,
-
-        progress
-
-      }) => {
-
-        let x = -baseX * progress;
-
-        let rotate = progress * -baseRotation;
-
-        const z = Math.abs(progress) * baseZ;
-
-
-
-        if (inRange(progress, -1, 1)) {
-
-          if (startIndex === index) {
-
-            x += Math.sin(Math.PI * progress) * -60;
-
-          } else {
-
-            x += Math.sin(Math.PI * progress) * -20;
-
-          }
-
-        }
-
-
-
-        x = clamp(x, -baseX * maxVisible, baseX * maxVisible);
-
-
-
-        rotate = clamp(
-
-          rotate,
-
-          -baseRotation * maxVisible,
-
-          baseRotation * maxVisible);
-
-
-
-        element.style.transform = `translateX(${x}%) translateZ(${z}px) rotate(${rotate}deg)`;
-
-      });
-
-    }
-
-  });
-```
-
-[Open live demo ↗](https://vevetjs.com/pens/QwNYJGo)
+[Open live demo ↗](https://vevetjs.com/pens/MYJbrWP)
 
 ## Expand slide[​](#expand-slide "Direct link to Expand slide")
 
@@ -24217,73 +21243,77 @@ Key props: `freemode: "sticky"`, `wheel: true`, `edgeFriction: 0.95`, `stickOnRe
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">
+  <div class="carousel" id="carousel">
 
-    <img src="https://picsum.photos/id/1040/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+    <div class="slide">
 
-    <p class="text">Click me</p>
+      <img src="https://picsum.photos/id/1040/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
 
-  </div>
+      <p class="text">Click me</p>
 
-
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/1050/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
-
-    <p class="text">Click me</p>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <img src="https://picsum.photos/id/1060/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+      <img src="https://picsum.photos/id/1050/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
 
-    <p class="text">Click me</p>
+      <p class="text">Click me</p>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/1070/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
-
-    <p class="text">Click me</p>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <img src="https://picsum.photos/id/1080/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+      <img src="https://picsum.photos/id/1060/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
 
-    <p class="text">Click me</p>
+      <p class="text">Click me</p>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <img src="https://picsum.photos/id/1081/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
-
-    <p class="text">Click me</p>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <img src="https://picsum.photos/id/1082/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+      <img src="https://picsum.photos/id/1070/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
 
-    <p class="text">Click me</p>
+      <p class="text">Click me</p>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/1080/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+
+      <p class="text">Click me</p>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/1081/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+
+      <p class="text">Click me</p>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/1082/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+
+      <p class="text">Click me</p>
+
+    </div>
 
   </div>
 
@@ -24293,49 +21323,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+.fullpage-center {
 
-
-
-body {
-
-  margin: 0;
-
-  padding: 0;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  color: #fff;
+  padding: 1rem;
 
 }
 
@@ -24343,17 +21333,11 @@ body {
 
 .carousel {
 
-  position: fixed;
+  position: relative;
 
-  top: 50%;
+  width: 100%;
 
-  left: 50%;
-
-  transform: translate(-50%, -50%);
-
-  width: 95%;
-
-  height: 90%;
+  height: calc(85svh - 1rem);
 
 
 
@@ -24381,11 +21365,9 @@ body {
 
   height: 100%;
 
-  border-radius: 16px;
+  border-radius: 1rem;
 
   overflow: hidden;
-
-  background: #000;
 
 }
 
@@ -24421,7 +21403,9 @@ body {
 
   transform: translate(-50%, -50%);
 
-  font-size: 2.5rem;
+
+
+  font-size: 1.5rem;
 
   font-weight: bold;
 
@@ -24461,7 +21445,7 @@ const carousel = new Snap({
 
     direction: "horizontal",
 
-    gap: "1vw",
+    gap: "1rem",
 
     wheel: true,
 
@@ -24618,6 +21602,2862 @@ carousel.slides.forEach(({
 
 [Open live demo ↗](https://vevetjs.com/pens/jEqdQZg)
 
+## Panorama[​](#panorama "Direct link to Panorama")
+
+3D panorama carousel inspired by [Panorama Slider](https://panorama-slider.uiinitiative.com/).
+
+Maps `progress` to `translateZ`, `rotateY`, and a horizontal offset in `onUpdate`. Uses `origin: "center"`, `freemode: true`, and `loop: true`.
+
+[Vevet Demo OPMzdaX](https://codepen.io/anton-bobrov/embed/OPMzdaX?default-tab=result)
+
+HTML
+
+```
+<div class="fullpage-center">
+
+  <div class="carousel" id="carousel">
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/758/400/600" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/760/400/600" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/770/400/600" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/780/400/600" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/790/400/600" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/800/400/600" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/810/400/600" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/820/400/600" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/830/400/600" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/840/400/600" alt="">
+
+    </div>
+
+  </div>
+
+</div>
+```
+
+CSS
+
+```
+.carousel {
+
+  --size: min(40vw, 40svh);
+
+
+
+  position: relative;
+
+  width: 100%;
+
+  height: var(--size);
+
+
+
+  perspective: calc(var(--size) * 5.55);
+
+  transform-style: preserve-3d;
+
+
+
+  opacity: 0;
+
+  transition: opacity 0.25s linear;
+
+}
+
+
+
+.carousel.ready {
+
+  opacity: 1;
+
+}
+
+
+
+.slide {
+
+  position: absolute;
+
+  width: calc(var(--size) * 1);
+
+  height: var(--size);
+
+  border-radius: 1rem;
+
+  overflow: hidden;
+
+}
+
+
+
+.slide img {
+
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+}
+```
+
+JavaScript
+
+```
+import {
+
+  Snap,
+
+  vevet
+
+} from "vevet";
+
+
+
+const container = document.getElementById("carousel");
+
+
+
+const carousel = new Snap({
+
+  container,
+
+  direction: "horizontal",
+
+  grabCursor: true,
+
+  origin: "center",
+
+  freemode: true,
+
+  loop: true,
+
+  gap: 10,
+
+  duration: 300
+
+});
+
+
+
+carousel.on("update", () => {
+
+  const depth = 200;
+
+  const rotation = 20;
+
+  const scale = 1 / (180 / rotation);
+
+  const halfAngle = rotation * Math.PI / 180 / 2;
+
+
+
+  carousel.slides.forEach(({
+
+    element,
+
+    coord,
+
+    progress,
+
+    size
+
+  }) => {
+
+    const factor = 1 - Math.cos(progress * scale * Math.PI);
+
+
+
+    const xOffset = progress * (size / 3) * factor;
+
+    const zOffset = size * 0.5 / Math.sin(halfAngle) * factor - depth;
+
+    const rotateY = progress * rotation;
+
+
+
+    element.style.transform = `translateX(${
+
+    coord + xOffset
+
+    }px) translateZ(${zOffset}px) rotateY(${rotateY}deg)`;
+
+  });
+
+});
+
+
+
+container.classList.add("ready");
+```
+
+[Open live demo ↗](https://vevetjs.com/pens/OPMzdaX)
+
+## Cube[​](#cube "Direct link to Cube")
+
+3D cube carousel with perspective (todo read code and describe)
+
+[Vevet Demo WbRoXzO](https://codepen.io/anton-bobrov/embed/WbRoXzO?default-tab=result)
+
+HTML
+
+```
+<div class="fullpage-center">
+
+  <div class="carousel" id="carousel">
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/10/700/700" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/28/700/700" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/37/700/700" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/161/700/700" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/180/700/700" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/649/700/700" alt="">
+
+    </div>
+
+  </div>
+
+</div>
+```
+
+CSS
+
+```
+.fullpage-center {
+
+  padding-inline: 1.25rem;
+
+}
+
+
+
+.carousel {
+
+  --size: min(50vw, 50svh);
+
+
+
+  position: relative;
+
+  width: var(--size);
+
+  height: var(--size);
+
+
+
+  transform-style: preserve-3d;
+
+  perspective: 1000px;
+
+
+
+  opacity: 0;
+
+  transition: opacity 0.25s linear;
+
+}
+
+
+
+.carousel.ready {
+
+  opacity: 1;
+
+}
+
+
+
+.slide {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  backface-visibility: hidden;
+
+}
+
+
+
+.slide img {
+
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+}
+```
+
+JavaScript
+
+```
+import {
+
+  Snap
+
+} from "vevet";
+
+
+
+const container = document.getElementById("carousel");
+
+
+
+const carousel = new Snap({
+
+  container,
+
+  direction: "horizontal",
+
+  wheel: true,
+
+  wheelAxis: "y",
+
+  origin: "center",
+
+  loop: true,
+
+  freemode: "sticky",
+
+  interval: 1000,
+
+  duration: 750,
+
+  shortSwipes: false,
+
+  grabCursor: true,
+
+  onUpdate: (data, {
+
+    slides
+
+  }) => {
+
+    slides.forEach(({
+
+      element,
+
+      size,
+
+      progress
+
+    }) => {
+
+      let z = size * 0.5;
+
+      let rotate = progress * -90;
+
+      let x = 0;
+
+      let alpha = 1;
+
+
+
+      if (progress > 1 || progress < -1) {
+
+        z = 0;
+
+        rotate = 0;
+
+        x = 0;
+
+        alpha = 0;
+
+      }
+
+
+
+      element.style.transform = `rotateY(${rotate}deg) translate3d(${x}px, 0, ${z}px)`;
+
+      element.style.opacity = `${alpha}`;
+
+    });
+
+  }
+
+});
+
+
+
+container.classList.add("ready");
+```
+
+[Open live demo ↗](https://vevetjs.com/pens/WbRoXzO)
+
+## Circular carousel[​](#circular-carousel "Direct link to Circular carousel")
+
+Slides positioned on a circle with `swipeAxis: "angle"`. Each slide's `progress` drives `sin` / `cos` placement and rotation.
+
+[Vevet Demo XJKQwyb](https://codepen.io/anton-bobrov/embed/XJKQwyb?default-tab=result)
+
+HTML
+
+```
+<div class="fullpage-center">
+
+  <div class="container" id="container">
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/758/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/760/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/770/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/780/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/790/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/780/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/800/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/780/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/810/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/820/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/830/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-scale="-5" data-snap-parallax-scale-min="0.755" data-snap-parallax-scale-impulse data-snap-parallax-scale-abs data-snap-parallax-scale-scope="1,1" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-30" data-snap-parallax-skew-max="30" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/840/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+</div>
+```
+
+CSS
+
+```
+.container {
+
+  --size: min(70svh, 70vw);
+
+
+
+  position: relative;
+
+  width: var(--size);
+
+  height: var(--size);
+
+}
+
+
+
+.slide {
+
+  --slide-size: calc(var(--size) / 5);
+
+
+
+  position: absolute;
+
+  top: calc(50% - var(--slide-size) / 2);
+
+  left: calc(50% - var(--slide-size) / 2);
+
+  width: var(--slide-size);
+
+  height: var(--slide-size);
+
+
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+}
+
+
+
+.wrapper {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+
+
+  border-radius: 0.5rem;
+
+  overflow: hidden;
+
+}
+
+
+
+.wrapper img {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+}
+```
+
+JavaScript
+
+```
+import {
+
+  Snap
+
+} from "vevet";
+
+
+
+const carousel = new Snap({
+
+    container: document.getElementById("container"),
+
+    direction: "horizontal",
+
+    wheel: true,
+
+    swipeAxis: "angle",
+
+    wheelAxis: "y",
+
+    loop: true,
+
+    freemode: true,
+
+    grabCursor: true
+
+  },
+
+
+
+  {
+
+    onUpdate: (data, {
+
+      containerSize,
+
+      slides
+
+    }) => {
+
+      const radius = containerSize / 2;
+
+      const p2 = Math.PI * 2;
+
+      const offset = Math.PI * -0.5;
+
+
+
+      slides.forEach(slide => {
+
+        const element = slide.element;
+
+        const progress = -slide.progress / slides.length;
+
+
+
+        const x = Math.cos(p2 * progress + offset) * radius;
+
+        const y = Math.sin(p2 * progress + offset) * radius;
+
+        const rotation = p2 * progress;
+
+
+
+        element.style.transform = `translateX(${x}px) translateY(${y}px) rotate(${rotation}rad)`;
+
+      });
+
+    }
+
+  });
+```
+
+[Open live demo ↗](https://vevetjs.com/pens/XJKQwyb)
+
+## Cylinder carousel[​](#cylinder-carousel "Direct link to Cylinder carousel")
+
+Horizontal cylinder layout: slides orbit with `translateX` / `translateZ` from circular math in `onUpdate`.
+
+[Vevet Demo GgqLVWg](https://codepen.io/anton-bobrov/embed/GgqLVWg?default-tab=result)
+
+HTML
+
+```
+<div class="fullpage-center">
+
+  <div class="container" id="container">
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/758/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/760/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/770/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/780/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/790/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/780/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/800/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/780/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/810/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/820/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/830/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrapper" data-snap-parallax-skew="-200" data-snap-parallax-skew-min="-50" data-snap-parallax-skew-max="50" data-snap-parallax-skew-impulse data-snap-parallax-skew-directional data-snap-parallax-skew-scope="1,1">
+
+        <img src="https://picsum.photos/id/840/400/600" alt="">
+
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+</div>
+```
+
+CSS
+
+```
+.container {
+
+  --size: min(70svh, 70vw);
+
+
+
+  position: relative;
+
+  width: var(--size);
+
+  height: var(--size);
+
+
+
+  transform-style: preserve-3d;
+
+  perspective: calc(var(--size) * 1.5);
+
+}
+
+
+
+.slide {
+
+  --slide-size: calc(var(--size) / 4);
+
+
+
+  position: absolute;
+
+  top: calc(50% - var(--slide-size) / 2);
+
+  left: calc(50% - var(--slide-size) / 2);
+
+  width: var(--slide-size);
+
+  height: var(--slide-size);
+
+
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+}
+
+
+
+.wrapper {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+
+
+  border-radius: 0.5rem;
+
+  overflow: hidden;
+
+}
+
+
+
+.wrapper img {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+}
+```
+
+JavaScript
+
+```
+import {
+
+  Snap
+
+} from "vevet";
+
+
+
+const carousel = new Snap({
+
+    container: document.getElementById("container"),
+
+    direction: "horizontal",
+
+    wheel: true,
+
+    wheelAxis: "y",
+
+    loop: true,
+
+    freemode: true,
+
+    grabCursor: true
+
+  },
+
+
+
+  {
+
+    onUpdate: (data, {
+
+      containerSize,
+
+      slides
+
+    }) => {
+
+      const radius = containerSize / 2;
+
+      const p2 = Math.PI * 2;
+
+      const offset = Math.PI * -0.5;
+
+
+
+      slides.forEach(slide => {
+
+        const element = slide.element;
+
+        const progress = -slide.progress / slides.length;
+
+
+
+        const x = Math.cos(p2 * progress + offset) * radius;
+
+        const z = -Math.sin(p2 * progress + offset) * radius;
+
+        const rotation = p2 * progress;
+
+
+
+        element.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${rotation}rad)`;
+
+      });
+
+    }
+
+  });
+```
+
+[Open live demo ↗](https://vevetjs.com/pens/GgqLVWg)
+
+## Perspective carousel[​](#perspective-carousel "Direct link to Perspective carousel")
+
+CSS 3D perspective carousel. Maps `progress` to `translateZ` and `rotateZ` per slide.
+
+[Vevet Demo azdEEXV](https://codepen.io/anton-bobrov/embed/azdEEXV?default-tab=result)
+
+HTML
+
+```
+<div class="fullpage-center">
+
+  <div class="carousel" id="carousel">
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/757/400/600" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/59/400/600" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/400/400/600" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/260/400/600" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/358/400/600" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/478/400/600" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/625/400/600" alt="">
+
+    </div>
+
+  </div>
+
+</div>
+```
+
+CSS
+
+```
+.carousel {
+
+  --size: min(70vw, 70svh);
+
+
+
+  position: relative;
+
+  width: 100%;
+
+  height: var(--size);
+
+
+
+  perspective: calc(var(--size) * 1.6);
+
+  transform-style: preserve-3d;
+
+
+
+  opacity: 0;
+
+  transition: opacity 0.25s linear;
+
+}
+
+
+
+.carousel.ready {
+
+  opacity: 1;
+
+}
+
+
+
+.slide {
+
+  position: absolute;
+
+  width: calc(var(--size) * 0.6);
+
+  height: var(--size);
+
+  border-radius: 1rem;
+
+  overflow: hidden;
+
+  box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.1);
+
+}
+
+
+
+.slide img {
+
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+}
+```
+
+JavaScript
+
+```
+import {
+
+  Snap,
+
+  vevet
+
+} from "vevet";
+
+
+
+const container = document.getElementById("carousel");
+
+
+
+const carousel = new Snap({
+
+  container,
+
+  direction: "horizontal",
+
+  grabCursor: true,
+
+  wheel: true,
+
+  wheelAxis: "y",
+
+  origin: "center",
+
+  loop: true,
+
+  shortSwipes: false,
+
+  freemode: "sticky"
+
+});
+
+
+
+carousel.on("update", () => {
+
+  carousel.slides.forEach(({
+
+    element,
+
+    size,
+
+    coord,
+
+    progress
+
+  }) => {
+
+    const z = Math.abs(progress ** 2) * -(size * 0.625);
+
+    const rZ = progress * 5;
+
+
+
+    element.style.transform = `translateX(${coord}px) translateZ(${z}px) rotateZ(${rZ}deg)`;
+
+  });
+
+});
+
+
+
+container.classList.add("ready");
+```
+
+[Open live demo ↗](https://vevetjs.com/pens/azdEEXV)
+
+## Wavy sine[​](#wavy-sine "Direct link to Wavy sine")
+
+Horizontal track with sine-wave vertical offset, rotation, and scale per slide.
+
+Uses `eventsEmitter: document.documentElement`, `freemode: true`, and `origin: "center"`.
+
+[Vevet Demo WbxWVyO](https://codepen.io/anton-bobrov/embed/WbxWVyO?default-tab=result)
+
+HTML
+
+```
+<div class="fullpage-center">
+
+  <div class="carousel" id="carousel">
+
+    <div class="slide"><img src="https://picsum.photos/id/12/600/900" alt=""></div>
+
+    <div class="slide"><img src="https://picsum.photos/id/47/600/900" alt=""></div>
+
+    <div class="slide"><img src="https://picsum.photos/id/83/600/900" alt=""></div>
+
+    <div class="slide"><img src="https://picsum.photos/id/119/600/900" alt=""></div>
+
+    <div class="slide"><img src="https://picsum.photos/id/156/600/900" alt=""></div>
+
+    <div class="slide"><img src="https://picsum.photos/id/198/600/900" alt=""></div>
+
+    <div class="slide"><img src="https://picsum.photos/id/234/600/900" alt=""></div>
+
+    <div class="slide"><img src="https://picsum.photos/id/276/600/900" alt=""></div>
+
+    <div class="slide"><img src="https://picsum.photos/id/301/600/900" alt=""></div>
+
+    <div class="slide"><img src="https://picsum.photos/id/349/600/900" alt=""></div>
+
+    <div class="slide"><img src="https://picsum.photos/id/377/600/900" alt=""></div>
+
+    <div class="slide"><img src="https://picsum.photos/id/412/600/900" alt=""></div>
+
+    <div class="slide"><img src="https://picsum.photos/id/445/600/900" alt=""></div>
+
+    <div class="slide"><img src="https://picsum.photos/id/488/600/900" alt=""></div>
+
+    <div class="slide"><img src="https://picsum.photos/id/521/600/900" alt=""></div>
+
+    <div class="slide"><img src="https://picsum.photos/id/556/600/900" alt=""></div>
+
+    <div class="slide"><img src="https://picsum.photos/id/602/600/900" alt=""></div>
+
+    <div class="slide"><img src="https://picsum.photos/id/643/600/900" alt=""></div>
+
+    <div class="slide"><img src="https://picsum.photos/id/689/600/900" alt=""></div>
+
+    <div class="slide"><img src="https://picsum.photos/id/732/600/900" alt=""></div>
+
+  </div>
+
+</div>
+```
+
+CSS
+
+```
+.carousel {
+
+  --size: min(30vw, 30vh);
+
+
+
+  position: relative;
+
+  width: calc(var(--size) * 0.625);
+
+  height: var(--size);
+
+
+
+  opacity: 0;
+
+  transition: opacity 0.25s linear;
+
+}
+
+
+
+.carousel.ready {
+
+  opacity: 1;
+
+}
+
+
+
+.slide {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  border-radius: 0.5rem;
+
+  overflow: hidden;
+
+  box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.1);
+
+}
+
+
+
+.slide img {
+
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+}
+```
+
+JavaScript
+
+```
+import {
+
+  Snap,
+
+  clamp
+
+} from "vevet";
+
+
+
+const container = document.getElementById("carousel");
+
+
+
+const carousel = new Snap({
+
+  container,
+
+  eventsEmitter: document.documentElement,
+
+  direction: "horizontal",
+
+  origin: "center",
+
+  loop: true,
+
+  gap: 30,
+
+  grabCursor: true,
+
+  freemode: true
+
+});
+
+
+
+carousel.on("update", (data, {
+
+  slides
+
+}) => {
+
+  const sineFrequency = 0.25;
+
+  const sineAmp = 0.5;
+
+  const rotationAmp = -30;
+
+  const scaleAmp = 0.2;
+
+
+
+  slides.forEach(({
+
+    element,
+
+    size,
+
+    progress,
+
+    coord
+
+  }) => {
+
+    const x = coord;
+
+    const y = Math.sin(progress * Math.PI * sineFrequency) * size * sineAmp;
+
+    const rotate = Math.cos(progress * Math.PI * sineFrequency) * rotationAmp;
+
+    const scale = clamp(1 - Math.abs(progress) * scaleAmp);
+
+
+
+    element.style.transform = `translateX(${x}px) translateY(${y}px) rotate(${rotate}deg) scale(${scale})`;
+
+  });
+
+});
+
+
+
+container.classList.add("ready");
+```
+
+[Open live demo ↗](https://vevetjs.com/pens/WbxWVyO)
+
+## Expo slider[​](#expo-slider "Direct link to Expo slider")
+
+Expo-style carousel inspired by [Expo Slider](https://expo-slider.uiinitiative.com/).
+
+Smooth motion via `easing: EaseOutExpo`, `duration: 1500`, `lerp: 0.2`.
+
+[Vevet Demo MYyLroo](https://codepen.io/anton-bobrov/embed/MYyLroo?default-tab=result)
+
+HTML
+
+```
+<div class="fullpage-center">
+
+  <div class="carousel" id="carousel">
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-scale="0.25" data-snap-parallax-scale-abs data-snap-parallax-x="-12.5%" data-snap-parallax-x-scope="-2,2" data-snap-parallax-rotate-y="10deg">
+
+        <img class="image" src="https://picsum.photos/id/758/1920/1080" data-snap-parallax-x="20%" data-snap-parallax-opacity="-0.2" alt="">
+
+
+
+        <p class="title" data-snap-parallax-x="20vw" data-snap-parallax-opacity="-2" data-snap-parallax-opacity-scope="-0.5,0.5">Title 1</p>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-scale="0.25" data-snap-parallax-scale-abs data-snap-parallax-x="-12.5%" data-snap-parallax-x-scope="-2,2" data-snap-parallax-rotate-y="10deg">
+
+        <img class="image" src="https://picsum.photos/id/760/1920/1080" data-snap-parallax-x="20%" data-snap-parallax-opacity="-0.2" alt="">
+
+
+
+        <p class="title" data-snap-parallax-x="20vw" data-snap-parallax-opacity="-2" data-snap-parallax-opacity-scope="-0.5,0.5">Title 2</p>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-scale="0.25" data-snap-parallax-scale-abs data-snap-parallax-x="-12.5%" data-snap-parallax-x-scope="-2,2" data-snap-parallax-rotate-y="10deg">
+
+        <img class="image" src="https://picsum.photos/id/768/1920/1080" data-snap-parallax-x="20%" data-snap-parallax-opacity="-0.2" alt="">
+
+
+
+        <p class="title" data-snap-parallax-x="20vw" data-snap-parallax-opacity="-2" data-snap-parallax-opacity-scope="-0.5,0.5">Title 3</p>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-scale="0.25" data-snap-parallax-scale-abs data-snap-parallax-x="-12.5%" data-snap-parallax-x-scope="-2,2" data-snap-parallax-rotate-y="10deg">
+
+        <img class="image" src="https://picsum.photos/id/832/1920/1080" data-snap-parallax-x="20%" data-snap-parallax-opacity="-0.2" alt="">
+
+
+
+        <p class="title" data-snap-parallax-x="20vw" data-snap-parallax-opacity="-2" data-snap-parallax-opacity-scope="-0.5,0.5">Title 4</p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+```
+
+CSS
+
+```
+.carousel {
+
+  position: relative;
+
+  width: 100%;
+
+  height: 75svh;
+
+
+
+  opacity: 0;
+
+  transition: opacity 0.25s linear;
+
+}
+
+
+
+.carousel.ready {
+
+  opacity: 1;
+
+}
+
+
+
+.slide {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  height: 100%;
+
+  width: 65vw;
+
+
+
+  transform-style: preserve-3d;
+
+  perspective: 100vw;
+
+}
+
+
+
+.wrap {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+
+
+  background: #000;
+
+  border-radius: 0.5rem;
+
+  overflow: hidden;
+
+}
+
+
+
+.image {
+
+  position: absolute;
+
+  top: 0;
+
+  left: -20%;
+
+  width: 140%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+}
+
+
+
+.title {
+
+  margin: 0;
+
+
+
+  position: absolute;
+
+  bottom: 1.5rem;
+
+  left: 1.5rem;
+
+
+
+  font-size: 1.5rem;
+
+  font-weight: bold;
+
+  color: #fff;
+
+}
+```
+
+JavaScript
+
+```
+import {
+
+  Snap,
+
+  EaseOutExpo
+
+} from "vevet";
+
+
+
+const container = document.getElementById("carousel");
+
+
+
+const carousel = new Snap({
+
+  container,
+
+  origin: "center",
+
+  loop: true,
+
+  grabCursor: true,
+
+  gap: "2,5vw",
+
+  lerp: 0.2,
+
+  easing: EaseOutExpo,
+
+  duration: 1500
+
+});
+
+
+
+container.classList.add("ready");
+
+
+
+carousel.on("update", () => {
+
+  carousel.slides.forEach(({
+
+    element,
+
+    coord,
+
+    isVisible
+
+  }) => {
+
+    element.style.transform = `translate(${coord}px, 0)`;
+
+  });
+
+});
+```
+
+[Open live demo ↗](https://vevetjs.com/pens/MYyLroo)
+
+## Stack overlap[​](#stack-overlap "Direct link to Stack overlap")
+
+Overlapping stack: the active slide stays in place while previous slides shrink back in Z-space.
+
+Driven by `progress` — `translateX`, `translateZ`, and `brightness` in `onUpdate`.
+
+[Vevet Demo LEZvwOv](https://codepen.io/anton-bobrov/embed/LEZvwOv?default-tab=result)
+
+HTML
+
+```
+<div class="fullpage-center">
+
+  <div class="carousel" id="carousel">
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/757/600/900" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/59/600/900" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/400/600/900" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/260/600/900" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/358/600/900" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/478/600/900" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/625/600/900" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/356/600/900" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/380/600/900" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/652/600/900" alt="">
+
+    </div>
+
+  </div>
+
+</div>
+```
+
+CSS
+
+```
+.carousel {
+
+  --size: min(50vw, 50svh);
+
+
+
+  position: relative;
+
+  width: var(--size);
+
+  height: calc(var(--size) * 0.675);
+
+
+
+  opacity: 0;
+
+  transition: opacity 0.25s linear;
+
+
+
+  transform-style: preserve-3d;
+
+  perspective: calc(var(--size) * 2.5);
+
+}
+
+
+
+.carousel.ready {
+
+  opacity: 1;
+
+}
+
+
+
+.slide {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  border-radius: 0.5rem;
+
+  overflow: hidden;
+
+  box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.1);
+
+}
+
+
+
+.slide img {
+
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+}
+```
+
+JavaScript
+
+```
+import {
+
+  Snap,
+
+  clamp
+
+} from "vevet";
+
+
+
+const container = document.getElementById("carousel");
+
+
+
+const carousel = new Snap({
+
+  container,
+
+  direction: "horizontal",
+
+  origin: "center",
+
+  loop: false,
+
+  gap: 20,
+
+  grabCursor: true
+
+});
+
+
+
+carousel.on("update", (data, {
+
+  slides
+
+}) => {
+
+  slides.forEach(({
+
+    element,
+
+    size,
+
+    progress,
+
+    coord
+
+  }) => {
+
+    const x = progress > 0 ? 0 : coord;
+
+    const z = progress < 0 ? 0 : size * progress * -1;
+
+    const brightness = clamp(1 - progress * 0.5);
+
+
+
+    element.style.transform = `translateX(${x}px) translateZ(${z}px)`;
+
+    element.style.filter = `brightness(${brightness})`;
+
+  });
+
+});
+
+
+
+container.classList.add("ready");
+```
+
+[Open live demo ↗](https://vevetjs.com/pens/LEZvwOv)
+
+## Clip-path carousel[​](#clip-path-carousel "Direct link to Clip-path carousel")
+
+Full-page vertical carousel with `clip-path`, 3D rotation, and asymmetric reveal timing per corner.
+
+[Vevet Demo QwKwBvv](https://codepen.io/anton-bobrov/embed/QwKwBvv?default-tab=result)
+
+HTML
+
+```
+<div class="fullpage-center">
+
+  <div class="carousel" id="carousel">
+
+    <div class="slide">
+
+      <img class="image" src="https://picsum.photos/id/608/1920/1080" alt="">
+
+      <p class="title">Slide 1</p>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <img class="image" src="https://picsum.photos/id/698/1920/1080" alt="">
+
+      <p class="title">Slide 2</p>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <img class="image" src="https://picsum.photos/id/988/1920/1080" alt="">
+
+      <p class="title">Slide 3</p>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <img class="image" src="https://picsum.photos/id/788/1920/1080" alt="">
+
+      <p class="title">Slide 4</p>
+
+    </div>
+
+  </div>
+
+</div>
+```
+
+CSS
+
+```
+.carousel {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  overflow: hidden;
+
+
+
+  opacity: 0;
+
+  transition: opacity 0.25s linear;
+
+
+
+  transform-style: preserve-3d;
+
+  perspective: 100rem;
+
+}
+
+
+
+.carousel.ready {
+
+  opacity: 1;
+
+}
+
+
+
+.slide {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  height: 100%;
+
+  width: 100%;
+
+
+
+  display: flex;
+
+  flex-direction: row;
+
+  align-items: center;
+
+  justify-content: center;
+
+
+
+  will-change: transform, clip-path;
+
+}
+
+
+
+.image {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+}
+
+
+
+.title {
+
+  margin: 0;
+
+
+
+  position: relative;
+
+
+
+  font-size: 1.5rem;
+
+  font-weight: bold;
+
+  color: #fff;
+
+}
+```
+
+JavaScript
+
+```
+import {
+
+  Snap,
+
+  EaseOutExpo
+
+} from "vevet";
+
+
+
+const container = document.getElementById("carousel");
+
+
+
+const carousel = new Snap({
+
+  container,
+
+  grabCursor: true,
+
+  loop: true,
+
+  direction: "vertical",
+
+  wheel: true,
+
+  followWheel: false,
+
+  duration: 1500,
+
+  lerp: 0.15
+
+});
+
+
+
+container.classList.add("ready");
+
+
+
+carousel.on("update", () => {
+
+  carousel.slides.forEach(({
+
+    element,
+
+    coord,
+
+    progress,
+
+    isVisible
+
+  }) => {
+
+    let translateY = 0;
+
+    let clipY1 = 100;
+
+    let clipY2 = 100;
+
+    let zIndex = 0;
+
+    let rot = 0;
+
+    let origin = "";
+
+
+
+    if (progress >= 0 && progress < 1) {
+
+      clipY1 = (1 - progress) * 100;
+
+      clipY2 = (1 - progress ** 2) * 100;
+
+      translateY = progress * -10;
+
+      rot = 50 * progress;
+
+      zIndex = 2;
+
+      origin = "top center";
+
+    } else if (progress < 0 && progress > -1) {
+
+      clipY1 = (1 - progress) * 100;
+
+      translateY = progress * -10;
+
+      rot = 50 * progress;
+
+      zIndex = 1;
+
+      origin = "bottom center";
+
+    } else {
+
+      translateY = 500;
+
+    }
+
+
+
+    element.style.clipPath = `polygon(0% 0%, 100% 0%, 100% ${clipY1}%, 0% ${clipY2}%)`;
+
+    element.style.transform = `translate(0, ${translateY}%) rotateX(${rot}deg)`;
+
+    element.style.transformOrigin = origin;
+
+    element.style.zIndex = zIndex;
+
+  });
+
+});
+```
+
+[Open live demo ↗](https://vevetjs.com/pens/QwKwBvv)
+
+## Fullsize parallax rotation[​](#fullsize-parallax-rotation "Direct link to Fullsize parallax rotation")
+
+Vertical full-page carousel with child parallax via `data-snap-parallax-*` attributes on images and content.
+
+See also [Snap parallax](https://vevetjs.com/docs/Snap/parallax). Snap moves slides with `translateY(${coord}px)`; parallax runs on nested elements.
+
+[Vevet Demo bNwKERM](https://codepen.io/anton-bobrov/embed/bNwKERM?default-tab=result)
+
+HTML
+
+```
+<div class="fullpage-center">
+
+  <div class="carousel" id="carousel">
+
+    <div class="slide">
+
+      <img class="image" data-snap-parallax-y="30%" data-snap-parallax-scale="0.1" data-snap-parallax-scale-abs src="https://picsum.photos/id/608/1920/1080" alt="">
+
+      <div class="content" data-snap-parallax-opacity="-1" data-snap-parallax-rotate="-10deg" data-snap-parallax-y="20%" data-snap-parallax-scale="0.05">
+
+        <p class="title">Slide 1</p>
+
+        <p class="description">Lorem ipsum dolor sit amet</p>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <img class="image" data-snap-parallax-y="30%" data-snap-parallax-scale="0.1" data-snap-parallax-scale-abs src="https://picsum.photos/id/698/1920/1080" alt="">
+
+      <div class="content" data-snap-parallax-opacity="-1" data-snap-parallax-rotate="-10deg" data-snap-parallax-y="20%" data-snap-parallax-scale="0.05">
+
+        <p class="title">Slide 2</p>
+
+        <p class="description">Lorem ipsum dolor sit amet</p>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <img class="image" data-snap-parallax-y="30%" data-snap-parallax-scale="0.1" data-snap-parallax-scale-abs src="https://picsum.photos/id/988/1920/1080" alt="">
+
+      <div class="content" data-snap-parallax-opacity="-1" data-snap-parallax-rotate="-10deg" data-snap-parallax-y="20%" data-snap-parallax-scale="0.05">
+
+        <p class="title">Slide 3</p>
+
+        <p class="description">Lorem ipsum dolor sit amet</p>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <img class="image" data-snap-parallax-y="30%" data-snap-parallax-scale="0.1" data-snap-parallax-scale-abs src="https://picsum.photos/id/788/1920/1080" alt="">
+
+      <div class="content" data-snap-parallax-opacity="-1" data-snap-parallax-rotate="-10deg" data-snap-parallax-y="20%" data-snap-parallax-scale="0.05">
+
+        <p class="title">Slide 1</p>
+
+        <p class="description">Lorem ipsum dolor sit amet</p>
+
+      </div>
+
+    </div>
+
+    <div class="slide">
+
+      <img class="image" data-snap-parallax-y="30%" data-snap-parallax-scale="0.1" src="https://picsum.photos/id/608/1920/1080" alt="">
+
+      <div class="content" data-snap-parallax-opacity="-1" data-snap-parallax-rotate="-10deg" data-snap-parallax-y="20%" data-snap-parallax-scale="0.05">
+
+        <p class="title">Slide 4</p>
+
+        <p class="description">Lorem ipsum dolor sit amet</p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+```
+
+CSS
+
+```
+.carousel {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  overflow: hidden;
+
+
+
+  opacity: 0;
+
+  transition: opacity 0.25s linear;
+
+
+
+  transform-style: preserve-3d;
+
+  perspective: 100rem;
+
+}
+
+
+
+.carousel.ready {
+
+  opacity: 1;
+
+}
+
+
+
+.slide {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  height: 100%;
+
+  width: 100%;
+
+  padding: 0 2rem;
+
+  overflow: hidden;
+
+
+
+  will-change: transform, clip-path;
+
+}
+
+
+
+.image {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+}
+
+
+
+.content {
+
+  position: relative;
+
+  width: 100%;
+
+  height: 100%;
+
+  transform-origin: center left;
+
+
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  justify-content: center;
+
+  gap: 0.5rem;
+
+}
+
+
+
+.title {
+
+  margin: 0;
+
+
+
+  font-size: 2rem;
+
+  font-weight: bold;
+
+  color: #fff;
+
+}
+
+
+
+.description {
+
+  margin: 0;
+
+
+
+  font-size: 1.25rem;
+
+  color: #fff;
+
+}
+```
+
+JavaScript
+
+```
+import {
+
+  Snap
+
+} from "vevet";
+
+
+
+const container = document.getElementById("carousel");
+
+
+
+const carousel = new Snap({
+
+  container,
+
+  grabCursor: true,
+
+  loop: true,
+
+  direction: "vertical",
+
+  wheel: true,
+
+  followWheel: false,
+
+  duration: 1500
+
+});
+
+
+
+container.classList.add("ready");
+
+
+
+carousel.on("update", () => {
+
+  carousel.slides.forEach(({
+
+    element,
+
+    coord
+
+  }) => {
+
+    element.style.transform = `translateY(${coord}px)`;
+
+  });
+
+});
+```
+
+[Open live demo ↗](https://vevetjs.com/pens/bNwKERM)
+
+## Cards[​](#cards "Direct link to Cards")
+
+Card stack with horizontal offset, Z-depth, and rotation from `progress`. Passed cards tuck beneath the active slide.
+
+Uses `onSwipeStart` to track the gesture origin slide for asymmetric motion.
+
+[Vevet Demo QwNYJGo](https://codepen.io/anton-bobrov/embed/QwNYJGo?default-tab=result)
+
+HTML
+
+```
+<div class="fullpage-center">
+
+  <div class="carousel" id="carousel">
+
+    <div class="slide" style="background: var(--gradient-slide-1, #000)">1</div>
+
+    <div class="slide" style="background: var(--gradient-slide-2, #000)">2</div>
+
+    <div class="slide" style="background: var(--gradient-slide-3, #000)">3</div>
+
+    <div class="slide" style="background: var(--gradient-slide-4, #000)">4</div>
+
+    <div class="slide" style="background: var(--gradient-slide-5, #000)">5</div>
+
+    <div class="slide" style="background: var(--gradient-slide-6, #000)">6</div>
+
+    <div class="slide" style="background: var(--gradient-slide-7, #000)">7</div>
+
+  </div>
+
+</div>
+```
+
+CSS
+
+```
+.carousel {
+
+  position: relative;
+
+  width: 10rem;
+
+  height: 13rem;
+
+
+
+  transform-style: preserve-3d;
+
+  perspective: 1000px;
+
+
+
+  opacity: 0;
+
+}
+
+
+
+.carousel.ready {
+
+  opacity: 1;
+
+}
+
+
+
+.slide {
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+
+
+  border-radius: 1rem;
+
+
+
+  font-size: 1rem;
+
+  font-weight: bold;
+
+  color: #fff;
+
+}
+```
+
+JavaScript
+
+```
+import {
+
+  Snap,
+
+  inRange,
+
+  clamp
+
+} from "vevet";
+
+
+
+const container = document.getElementById("carousel");
+
+let startIndex = 0;
+
+
+
+new Snap({
+
+    container: container,
+
+    direction: "horizontal",
+
+    grabCursor: true
+
+  },
+
+
+
+  {
+
+    onResize: () => {
+
+      container.classList.add("ready");
+
+    },
+
+    onSwipeStart: (data, {
+
+      activeIndex
+
+    }) => {
+
+      startIndex = activeIndex;
+
+    },
+
+    onUpdate: (data, {
+
+      slides
+
+    }) => {
+
+      const baseRotation = 6;
+
+      const baseX = 12;
+
+      const baseZ = -100;
+
+      const maxVisible = 6;
+
+
+
+      slides.forEach(({
+
+        element,
+
+        index,
+
+        progress
+
+      }) => {
+
+        let x = -baseX * progress;
+
+        let rotate = progress * -baseRotation;
+
+        const z = Math.abs(progress) * baseZ;
+
+
+
+        if (inRange(progress, -1, 1)) {
+
+          if (startIndex === index) {
+
+            x += Math.sin(Math.PI * progress) * -60;
+
+          } else {
+
+            x += Math.sin(Math.PI * progress) * -20;
+
+          }
+
+        }
+
+
+
+        x = clamp(x, -baseX * maxVisible, baseX * maxVisible);
+
+
+
+        rotate = clamp(
+
+          rotate,
+
+          -baseRotation * maxVisible,
+
+          baseRotation * maxVisible);
+
+
+
+        element.style.transform = `translateX(${x}%) translateZ(${z}px) rotate(${rotate}deg)`;
+
+      });
+
+    }
+
+  });
+```
+
+[Open live demo ↗](https://vevetjs.com/pens/QwNYJGo)
+
 ## Slick gap[​](#slick-gap "Direct link to Slick gap")
 
 Exponential gap between slides based on `progress` — each slide gets an extra offset: `coord + progress * absGap`.
@@ -24629,65 +24469,69 @@ Uses `freemode: "sticky"`, `origin: "center"`, and `shortSwipes: false`.
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">
+  <div class="carousel" id="carousel">
 
-    <img src="https://picsum.photos/id/757/600/900" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/757/600/900" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/59/600/900" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/59/600/900" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/400/600/900" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/400/600/900" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/260/600/900" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/260/600/900" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/358/600/900" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/358/600/900" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/478/600/900" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/478/600/900" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/625/600/900" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/625/600/900" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/356/600/900" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/356/600/900" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/380/600/900" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/380/600/900" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/652/600/900" alt="">
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/652/600/900" alt="">
+
+    </div>
 
   </div>
 
@@ -24697,33 +24541,13 @@ HTML
 CSS
 
 ```
-body {
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-}
-
-
-
 .carousel {
 
-  --size: max(30vw, 30vh);
+  --size: min(40vw, 40svh);
 
 
 
-  position: fixed;
-
-  top: 50%;
-
-  left: 0;
-
-  transform: translateY(-50%);
+  position: relative;
 
   width: 100%;
 
@@ -24857,293 +24681,301 @@ Also uses [Swipe](https://vevetjs.com/docs/Swipe/) and [Timeline](https://vevetj
 HTML
 
 ```
-<div class="phone">
+<div class="fullpage-center">
 
-  <div class="main">
 
-    <img class="wallpaper" src="https://vevetjs.com/shared/android-ui-snap/wallpaper.png">
 
 
 
-    <div class="pages">
+  <div class="phone">
 
-      <div class="grid">
+    <div class="main">
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/settings.png">
+      <img class="wallpaper" src="https://vevetjs.com/shared/android-ui-snap/wallpaper.png">
 
 
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/clock.png">
+      <div class="pages">
 
+        <div class="grid">
 
+          <img src="https://vevetjs.com/shared/android-ui-snap/settings.png">
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/calendar.png">
 
 
+          <img src="https://vevetjs.com/shared/android-ui-snap/clock.png">
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/calculator.png">
 
 
+          <img src="https://vevetjs.com/shared/android-ui-snap/calendar.png">
 
-        <div></div>
 
 
+          <img src="https://vevetjs.com/shared/android-ui-snap/calculator.png">
 
-        <div></div>
 
 
+          <div></div>
 
-        <div></div>
 
 
+          <div></div>
 
-        <div></div>
 
 
+          <div></div>
 
-        <div></div>
 
 
+          <div></div>
 
-        <div></div>
 
 
+          <div></div>
 
-        <div></div>
 
 
+          <div></div>
 
-        <div></div>
 
 
+          <div></div>
 
-        <div></div>
 
 
+          <div></div>
 
-        <div></div>
 
 
+          <div></div>
 
-        <div></div>
 
 
+          <div></div>
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/google.png">
 
 
+          <div></div>
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/maps.png">
 
 
+          <img src="https://vevetjs.com/shared/android-ui-snap/google.png">
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/drive.png">
 
 
+          <img src="https://vevetjs.com/shared/android-ui-snap/maps.png">
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/photos.png">
 
 
+          <img src="https://vevetjs.com/shared/android-ui-snap/drive.png">
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/meet.png">
 
 
+          <img src="https://vevetjs.com/shared/android-ui-snap/photos.png">
 
-        <div></div>
 
 
+          <img src="https://vevetjs.com/shared/android-ui-snap/meet.png">
 
-        <div></div>
 
 
+          <div></div>
 
-        <div></div>
 
 
+          <div></div>
 
-        <div></div>
 
 
+          <div></div>
 
-        <div></div>
 
 
+          <div></div>
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/music.png">
 
 
+          <div></div>
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/beats.png">
+
+
+          <img src="https://vevetjs.com/shared/android-ui-snap/music.png">
+
+
+
+          <img src="https://vevetjs.com/shared/android-ui-snap/beats.png">
+
+        </div>
+
+
+
+        <div class="grid">
+
+          <img src="https://vevetjs.com/shared/android-ui-snap/telegram.png">
+
+
+
+          <img src="https://vevetjs.com/shared/android-ui-snap/linkedin.png">
+
+
+
+          <div></div>
+
+
+
+          <div></div>
+
+
+
+          <img src="https://vevetjs.com/shared/android-ui-snap/instagram.png">
+
+
+
+          <img src="https://vevetjs.com/shared/android-ui-snap/chrome.png">
+
+
+
+          <div></div>
+
+
+
+          <div></div>
+
+
+
+          <div></div>
+
+
+
+          <div></div>
+
+
+
+          <div></div>
+
+
+
+          <div></div>
+
+
+
+          <div></div>
+
+
+
+          <div></div>
+
+
+
+          <div></div>
+
+
+
+          <img src="https://vevetjs.com/shared/android-ui-snap/Gallery.png">
+
+
+
+          <img src="https://vevetjs.com/shared/android-ui-snap/Files.png">
+
+
+
+          <img src="https://vevetjs.com/shared/android-ui-snap/camera.png">
+
+        </div>
+
+
+
+        <div class="grid"></div>
 
       </div>
 
 
 
-      <div class="grid">
+      <ul class="pages-nav">
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/telegram.png">
+        <li>
 
+          <button type="button" aria-label="Page 1" class="pages-nav__button"></button>
 
-
-        <img src="https://vevetjs.com/shared/android-ui-snap/linkedin.png">
-
-
-
-        <div></div>
+        </li>
 
 
 
-        <div></div>
+        <li>
+
+          <button type="button" aria-label="Page 1" class="pages-nav__button"></button>
+
+        </li>
 
 
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/instagram.png">
+        <li>
+
+          <button type="button" aria-label="Page 1" class="pages-nav__button"></button>
+
+        </li>
+
+      </ul>
+
+    </div>
 
 
 
-        <img src="https://vevetjs.com/shared/android-ui-snap/chrome.png">
+    <div class="active-apps">
+
+      <div class="active-apps__slide">
+
+        <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/clock.png">
 
 
 
-        <div></div>
-
-
-
-        <div></div>
-
-
-
-        <div></div>
-
-
-
-        <div></div>
-
-
-
-        <div></div>
-
-
-
-        <div></div>
-
-
-
-        <div></div>
-
-
-
-        <div></div>
-
-
-
-        <div></div>
-
-
-
-        <img src="https://vevetjs.com/shared/android-ui-snap/Gallery.png">
-
-
-
-        <img src="https://vevetjs.com/shared/android-ui-snap/Files.png">
-
-
-
-        <img src="https://vevetjs.com/shared/android-ui-snap/camera.png">
+        <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/clock.jpg">
 
       </div>
 
 
 
-      <div class="grid"></div>
+      <div class="active-apps__slide">
+
+        <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/settings.png">
+
+
+
+        <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/settings.jpg">
+
+      </div>
+
+
+
+      <div class="active-apps__slide">
+
+        <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/Files.png">
+
+
+
+        <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/files.jpg">
+
+      </div>
+
+
+
+      <div class="active-apps__slide">
+
+        <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/calendar.png">
+
+
+
+        <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/calendar.jpg">
+
+      </div>
 
     </div>
 
 
 
-    <ul class="pages-nav">
-
-      <li>
-
-        <button type="button" aria-label="Page 1" class="pages-nav__button"></button>
-
-      </li>
-
-
-
-      <li>
-
-        <button type="button" aria-label="Page 1" class="pages-nav__button"></button>
-
-      </li>
-
-
-
-      <li>
-
-        <button type="button" aria-label="Page 1" class="pages-nav__button"></button>
-
-      </li>
-
-    </ul>
+    <div class="navbar"></div>
 
   </div>
-
-
-
-  <div class="active-apps">
-
-    <div class="active-apps__slide">
-
-      <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/clock.png">
-
-
-
-      <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/clock.jpg">
-
-    </div>
-
-
-
-    <div class="active-apps__slide">
-
-      <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/settings.png">
-
-
-
-      <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/settings.jpg">
-
-    </div>
-
-
-
-    <div class="active-apps__slide">
-
-      <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/Files.png">
-
-
-
-      <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/files.jpg">
-
-    </div>
-
-
-
-    <div class="active-apps__slide">
-
-      <img class="active-apps__icon" src="https://vevetjs.com/shared/android-ui-snap/calendar.png">
-
-
-
-      <img class="active-apps__preview" src="https://vevetjs.com/shared/android-ui-snap/calendar.jpg">
-
-    </div>
-
-  </div>
-
-
-
-  <div class="navbar"></div>
 
 </div>
 ```
@@ -25151,17 +24983,9 @@ HTML
 CSS
 
 ```
-body {
+img {
 
-  height: 100vh;
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
+  background: transparent;
 
 }
 
@@ -25169,17 +24993,11 @@ body {
 
 .phone {
 
-  --size: 85vh;
+  --size: 85svh;
 
 
 
-  position: fixed;
-
-  top: 50%;
-
-  left: 50%;
-
-  transform: translate(-50%, -50%);
+  position: relative;
 
   width: calc(0.4617 * var(--size));
 
@@ -26053,53 +25871,57 @@ Vertical 3D stack: previous slides fold beneath the active one with `rotateX`, s
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">
+  <div class="carousel" id="carousel">
 
-    <img src="https://picsum.photos/id/170/1920/1080" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/170/1920/1080" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/190/1920/1080" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/190/1920/1080" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/230/1920/1080" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/230/1920/1080" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/260/1920/1080" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/260/1920/1080" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/270/1920/1080" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/270/1920/1080" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/280/1920/1080" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/280/1920/1080" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/330/1920/1080" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/330/1920/1080" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/340/1920/1080" alt="">
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/340/1920/1080" alt="">
+
+    </div>
 
   </div>
 
@@ -26109,37 +25931,17 @@ HTML
 CSS
 
 ```
-body {
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-}
-
-
-
 .carousel {
 
-  --size: min(80vw, 80vh);
+  --size: min(80vw, 80svh);
 
 
 
-  position: fixed;
-
-  top: 50%;
-
-  left: 50%;
+  position: relative;
 
   width: var(--size);
 
   height: calc(var(--size) * 0.7);
-
-  transform: translate(-50%, -50%);
 
 
 
@@ -26173,7 +25975,7 @@ body {
 
   height: 100%;
 
-  border-radius: 16px;
+  border-radius: 1rem;
 
   overflow: hidden;
 
@@ -26325,29 +26127,33 @@ Variant of the vertical stack — upcoming slides stay partially visible below t
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">
+  <div class="carousel" id="carousel">
 
-    <img src="https://picsum.photos/id/170/1920/1080" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/170/1920/1080" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/190/1920/1080" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/190/1920/1080" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/230/1920/1080" alt="">
+    <div class="slide">
 
-  </div>
+      <img src="https://picsum.photos/id/230/1920/1080" alt="">
 
-  <div class="slide">
+    </div>
 
-    <img src="https://picsum.photos/id/260/1920/1080" alt="">
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/260/1920/1080" alt="">
+
+    </div>
 
   </div>
 
@@ -26357,37 +26163,17 @@ HTML
 CSS
 
 ```
-body {
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-}
-
-
-
 .carousel {
 
-  --size: min(80vw, 80vh);
+  --size: min(80vw, 80svh);
 
 
 
-  position: fixed;
-
-  top: 50%;
-
-  left: 50%;
+  position: relative;
 
   width: var(--size);
 
   height: calc(var(--size) * 0.7);
-
-  transform: translate(-50%, -50%);
 
 
 
@@ -26421,7 +26207,7 @@ body {
 
   height: 100%;
 
-  border-radius: 16px;
+  border-radius: 1rem;
 
   overflow: hidden;
 
@@ -26563,33 +26349,25 @@ Vertical time-picker with dynamically created slides, 3D `rotateX`, and opacity 
 HTML
 
 ```
-<div class="carousel" id="hours"></div>
+<div class="fullpage-center">
 
+  <div class="selector">
 
+    <div class="carousel" id="hours"></div>
 
-:
+    :
 
+    <div class="carousel" id="minutes"></div>
 
+  </div>
 
-<div class="carousel" id="minutes"></div>
+</div>
 ```
 
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
+.selector {
 
   display: flex;
 
@@ -26601,34 +26379,6 @@ body {
 
   gap: 1rem;
 
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-  font-size: 2rem;
-
-  line-height: 2rem;
-
-  font-weight: bold;
-
-  color: #ececec;
-
 }
 
 
@@ -26637,9 +26387,9 @@ body {
 
   position: relative;
 
-  width: 4rem;
+  width: 3rem;
 
-  height: 100%;
+  height: 2.25rem;
 
 
 
@@ -26651,7 +26401,7 @@ body {
 
   transform-style: preserve-3d;
 
-  perspective: 6rem;
+  perspective: 4rem;
 
 }
 
@@ -26673,7 +26423,7 @@ body {
 
   left: 0;
 
-  height: 3rem;
+  height: 100%;
 
   width: 100%;
 
@@ -26807,119 +26557,123 @@ Includes dot navigation via `carousel.toSlide(index)` and the `activeSlide` call
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">
+  <div class="carousel" id="carousel">
 
-    <img src="https://picsum.photos/id/940/1920/1080" alt="">
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/940/1920/1080" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/950/1920/1080" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/960/1920/1080" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/970/1920/1080" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/980/1920/1080" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/990/1920/1080" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/1000/1920/1080" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/1020/1920/1080" alt="">
+
+    </div>
 
   </div>
 
-  <div class="slide">
 
-    <img src="https://picsum.photos/id/950/1920/1080" alt="">
 
-  </div>
+  <ul class="dots">
 
-  <div class="slide">
+    <li>
 
-    <img src="https://picsum.photos/id/960/1920/1080" alt="">
+      <button type="button" class="dot" title="Slide 1"></button>
 
-  </div>
+    </li>
 
-  <div class="slide">
+    <li>
 
-    <img src="https://picsum.photos/id/970/1920/1080" alt="">
+      <button type="button" class="dot" title="Slide 2"></button>
 
-  </div>
+    </li>
 
-  <div class="slide">
+    <li>
 
-    <img src="https://picsum.photos/id/980/1920/1080" alt="">
+      <button type="button" class="dot" title="Slide 3"></button>
 
-  </div>
+    </li>
 
-  <div class="slide">
+    <li>
 
-    <img src="https://picsum.photos/id/990/1920/1080" alt="">
+      <button type="button" class="dot" title="Slide 4"></button>
 
-  </div>
+    </li>
 
-  <div class="slide">
+    <li>
 
-    <img src="https://picsum.photos/id/1000/1920/1080" alt="">
+      <button type="button" class="dot" title="Slide 5"></button>
 
-  </div>
+    </li>
 
-  <div class="slide">
+    <li>
 
-    <img src="https://picsum.photos/id/1020/1920/1080" alt="">
+      <button type="button" class="dot" title="Slide 6"></button>
 
-  </div>
+    </li>
+
+    <li>
+
+      <button type="button" class="dot" title="Slide 7"></button>
+
+    </li>
+
+    <li>
+
+      <button type="button" class="dot" title="Slide 8"></button>
+
+    </li>
+
+  </ul>
 
 </div>
-
-
-
-<ul class="dots">
-
-  <li>
-
-    <button type="button" class="dot" title="Slide 1"></button>
-
-  </li>
-
-  <li>
-
-    <button type="button" class="dot" title="Slide 2"></button>
-
-  </li>
-
-  <li>
-
-    <button type="button" class="dot" title="Slide 3"></button>
-
-  </li>
-
-  <li>
-
-    <button type="button" class="dot" title="Slide 4"></button>
-
-  </li>
-
-  <li>
-
-    <button type="button" class="dot" title="Slide 5"></button>
-
-  </li>
-
-  <li>
-
-    <button type="button" class="dot" title="Slide 6"></button>
-
-  </li>
-
-  <li>
-
-    <button type="button" class="dot" title="Slide 7"></button>
-
-  </li>
-
-  <li>
-
-    <button type="button" class="dot" title="Slide 8"></button>
-
-  </li>
-
-</ul>
 ```
 
 CSS
 
 ```
-body {
+.fullpage-center {
 
-  background: #000;
+  padding: 1rem;
 
 }
 
@@ -26927,15 +26681,15 @@ body {
 
 .carousel {
 
-  position: fixed;
-
-  top: 0;
-
-  left: 0;
+  position: relative;
 
   width: 100%;
 
-  height: 100%;
+  height: 50svh;
+
+  min-height: 300px;
+
+  overflow: hidden;
 
 
 
@@ -26982,18 +26736,6 @@ body {
 
 
 .dots {
-
-  position: fixed;
-
-  z-index: 1;
-
-  bottom: 30px;
-
-  left: 50%;
-
-  transform: translateX(-50%);
-
-
 
   padding: 0;
 
@@ -27157,63 +26899,67 @@ Opacity-only transitions: `opacity = clamp(1 - Math.abs(progress))` with `follow
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">
+  <div class="carousel" id="carousel">
 
-    <img src="https://picsum.photos/id/1070/1920/1080" alt="">
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/1070/1920/1080" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/1080/1920/1080" alt="">
+
+    </div>
+
+    <div class="slide">
+
+      <img src="https://picsum.photos/id/1082/1920/1080" alt="">
+
+    </div>
 
   </div>
 
-  <div class="slide">
 
-    <img src="https://picsum.photos/id/1080/1920/1080" alt="">
 
-  </div>
+  <ul class="dots">
 
-  <div class="slide">
+    <li>
 
-    <img src="https://picsum.photos/id/1082/1920/1080" alt="">
+      <button type="button" class="dot" title="Slide 1"></button>
 
-  </div>
+    </li>
+
+
+
+    <li>
+
+      <button type="button" class="dot" title="Slide 2"></button>
+
+    </li>
+
+
+
+    <li>
+
+      <button type="button" class="dot" title="Slide 3"></button>
+
+    </li>
+
+  </ul>
 
 </div>
-
-
-
-<ul class="dots">
-
-  <li>
-
-    <button type="button" class="dot" title="Slide 1"></button>
-
-  </li>
-
-
-
-  <li>
-
-    <button type="button" class="dot" title="Slide 2"></button>
-
-  </li>
-
-
-
-  <li>
-
-    <button type="button" class="dot" title="Slide 3"></button>
-
-  </li>
-
-</ul>
 ```
 
 CSS
 
 ```
-body {
+.fullpage-center {
 
-  background: #000;
+  padding: 1rem;
 
 }
 
@@ -27221,15 +26967,13 @@ body {
 
 .carousel {
 
-  position: fixed;
-
-  top: 0;
-
-  left: 0;
+  position: relative;
 
   width: 100%;
 
-  height: 100%;
+  height: 50svh;
+
+  min-height: 300px;
 
 
 
@@ -27276,18 +27020,6 @@ body {
 
 
 .dots {
-
-  position: fixed;
-
-  z-index: 1;
-
-  bottom: 30px;
-
-  left: 50%;
-
-  transform: translateX(-50%);
-
-
 
   padding: 0;
 
@@ -42184,9 +41916,9 @@ CSS
 ```
 .item {
 
-  width: 2.5rem;
+  width: 4rem;
 
-  height: 2.5rem;
+  height: 4rem;
 
 
 

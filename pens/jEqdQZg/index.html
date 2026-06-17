@@ -5,37 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · jEqdQZg</title>
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
-        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  height: 100vh;
-  overflow: hidden;
-
-  background: linear-gradient(165deg,
-      rgb(17, 25, 42) 0%,
-      rgb(30, 43, 82) 40%,
-      rgb(0, 58, 82) 100%);
-
-  font-family: "Ubuntu", sans-serif;
-  color: #fff;
+        <style>.fullpage-center {
+  padding: 1rem;
 }
 
 .carousel {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 95%;
-  height: 90%;
+  position: relative;
+  width: 100%;
+  height: calc(85svh - 1rem);
 
   opacity: 0;
   transition: opacity 0.35s linear;
@@ -49,9 +26,8 @@ body {
   position: absolute;
   width: 45vw;
   height: 100%;
-  border-radius: 16px;
+  border-radius: 1rem;
   overflow: hidden;
-  background: #000;
 }
 
 .slide img {
@@ -69,46 +45,49 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 2.5rem;
+
+  font-size: 1.5rem;
   font-weight: bold;
   white-space: nowrap;
 }</style>
       </head>
       <body>
-        <div class="carousel" id="carousel">
-  <div class="slide">
-    <img src="https://picsum.photos/id/1040/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
-    <p class="text">Click me</p>
-  </div>
+        <div class="fullpage-center">
+  <div class="carousel" id="carousel">
+    <div class="slide">
+      <img src="https://picsum.photos/id/1040/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+      <p class="text">Click me</p>
+    </div>
 
-  <div class="slide">
-    <img src="https://picsum.photos/id/1050/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
-    <p class="text">Click me</p>
-  </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/1050/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+      <p class="text">Click me</p>
+    </div>
 
-  <div class="slide">
-    <img src="https://picsum.photos/id/1060/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
-    <p class="text">Click me</p>
-  </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/1060/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+      <p class="text">Click me</p>
+    </div>
 
-  <div class="slide">
-    <img src="https://picsum.photos/id/1070/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
-    <p class="text">Click me</p>
-  </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/1070/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+      <p class="text">Click me</p>
+    </div>
 
-  <div class="slide">
-    <img src="https://picsum.photos/id/1080/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
-    <p class="text">Click me</p>
-  </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/1080/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+      <p class="text">Click me</p>
+    </div>
 
-  <div class="slide">
-    <img src="https://picsum.photos/id/1081/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
-    <p class="text">Click me</p>
-  </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/1081/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+      <p class="text">Click me</p>
+    </div>
 
-  <div class="slide">
-    <img src="https://picsum.photos/id/1082/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
-    <p class="text">Click me</p>
+    <div class="slide">
+      <img src="https://picsum.photos/id/1082/1000/1500" alt="" data-snap-parallax-scale="0.2" data-snap-parallax-scale-abs data-snap-parallax-scale-scope="none">
+      <p class="text">Click me</p>
+    </div>
   </div>
 </div>
         
@@ -127,7 +106,7 @@ let tmIndex = 0;
 const carousel = new Snap({
     container: container,
     direction: "horizontal",
-    gap: "1vw",
+    gap: "1rem",
     wheel: true,
     wheelAxis: "y",
     freemode: "sticky",

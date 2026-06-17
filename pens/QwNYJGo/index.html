@@ -5,37 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · QwNYJGo</title>
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
-        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  height: 100vh;
-  overflow: hidden;
-
-  background: linear-gradient(165deg,
-      rgb(17, 25, 42) 0%,
-      rgb(30, 43, 82) 40%,
-      rgb(0, 58, 82) 100%);
-  color: #fff;
-
-  font-family: "Ubuntu", sans-serif;
-}
-
-.carousel {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 240px;
-  height: 320px;
+        <style>.carousel {
+  position: relative;
+  width: 10rem;
+  height: 13rem;
 
   transform-style: preserve-3d;
   perspective: 1000px;
@@ -59,22 +32,24 @@ body {
   justify-content: center;
   align-items: center;
 
-  border-radius: 20px;
+  border-radius: 1rem;
 
+  font-size: 1rem;
   font-weight: bold;
-  font-size: 20px;
   color: #fff;
 }</style>
       </head>
       <body>
-        <div class="carousel" id="carousel">
-  <div class="slide" style="background: linear-gradient(35deg, #a33c45ff 0%, #d7888eff 100%)">1</div>
-  <div class="slide" " style=" background: linear-gradient(35deg, rgba(149,112,112,1) 0%, rgba(194,167,167,1) 100%)">2</div>
-  <div class="slide" style="background: linear-gradient(35deg, #e7a873 0%, #f7c6a4 100%)">3</div>
-  <div class="slide" style="background: linear-gradient(35deg, #FF8B94 0%, #ffc9cd 100%)">4</div>
-  <div class="slide" style="background: linear-gradient(35deg, rgba(172,162,92,1) 0%, rgba(214,208,156,1) 100%)">5</div>
-  <div class="slide" style="background: linear-gradient(35deg, #654b4bff 0%, #9a7f7fff 100%)">6</div>
-  <div class="slide" style="background: linear-gradient(35deg, #61783bff 0%, #95ab6aff 100%)">7</div>
+        <div class="fullpage-center">
+  <div class="carousel" id="carousel">
+    <div class="slide" style="background: var(--gradient-slide-1, #000)">1</div>
+    <div class="slide" style="background: var(--gradient-slide-2, #000)">2</div>
+    <div class="slide" style="background: var(--gradient-slide-3, #000)">3</div>
+    <div class="slide" style="background: var(--gradient-slide-4, #000)">4</div>
+    <div class="slide" style="background: var(--gradient-slide-5, #000)">5</div>
+    <div class="slide" style="background: var(--gradient-slide-6, #000)">6</div>
+    <div class="slide" style="background: var(--gradient-slide-7, #000)">7</div>
+  </div>
 </div>
         
   <script type="module">

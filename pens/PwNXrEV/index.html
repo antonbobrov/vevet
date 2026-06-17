@@ -5,22 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · PwNXrEV</title>
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
-        <style>body {
-  background: linear-gradient(165deg,
-      rgb(17, 25, 42) 0%,
-      rgb(30, 43, 82) 40%,
-      rgb(0, 58, 82) 100%);
-}
+        <style>.carousel {
+  --size: min(80vw, 80svh);
 
-.carousel {
-  --size: min(80vw, 80vh);
-
-  position: fixed;
-  top: 50%;
-  left: 50%;
+  position: relative;
   width: var(--size);
   height: calc(var(--size) * 0.7);
-  transform: translate(-50%, -50%);
 
   transform-style: preserve-3d;
   perspective: calc(var(--size) * 1.5);
@@ -37,7 +27,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  border-radius: 16px;
+  border-radius: 1rem;
   overflow: hidden;
 }
 
@@ -49,18 +39,20 @@
 }</style>
       </head>
       <body>
-        <div class="carousel" id="carousel">
-  <div class="slide">
-    <img src="https://picsum.photos/id/170/1920/1080" alt="">
-  </div>
-  <div class="slide">
-    <img src="https://picsum.photos/id/190/1920/1080" alt="">
-  </div>
-  <div class="slide">
-    <img src="https://picsum.photos/id/230/1920/1080" alt="">
-  </div>
-  <div class="slide">
-    <img src="https://picsum.photos/id/260/1920/1080" alt="">
+        <div class="fullpage-center">
+  <div class="carousel" id="carousel">
+    <div class="slide">
+      <img src="https://picsum.photos/id/170/1920/1080" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/190/1920/1080" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/230/1920/1080" alt="">
+    </div>
+    <div class="slide">
+      <img src="https://picsum.photos/id/260/1920/1080" alt="">
+    </div>
   </div>
 </div>
         
