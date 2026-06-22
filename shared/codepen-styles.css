@@ -9,11 +9,11 @@
   font-size: 24px;
 
   @media (max-width: 1028px) {
-    font-size: 22px;
+    font-size: 21px;
   }
 
   @media (max-width: 768px) {
-    font-size: 20px;
+    font-size: 16px;
   }
 
   --gradient-brand-0: linear-gradient(
