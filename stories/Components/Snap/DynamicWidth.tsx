@@ -16,11 +16,13 @@ export const DynamicWidth: FC = () => {
     const instance = new Snap({
       container: ref.current,
       direction: 'horizontal',
-      gap: '1vw',
+      gap: '1rem',
       wheel: true,
       wheelAxis: 'y',
-      freemode: true,
+      freemode: 'sticky',
+      shortSwipes: false,
       stickOnResize: false,
+      edgeFriction: 0.95,
       grabCursor: true,
       onUpdate: (data, { slides }) => {
         slides.forEach(({ element, coord }) => {

@@ -83,6 +83,16 @@ export class SwipeInertia {
     this._velocity = { x: vx, y: vy, angle: va, time: performance.now() };
     this._initialVelocity = { ...this._velocity };
 
+    if (
+      Math.abs(vx) < BELOW_THRESHOLD &&
+      Math.abs(vy) < BELOW_THRESHOLD &&
+      Math.abs(va) < BELOW_THRESHOLD
+    ) {
+      ctx.onFail();
+
+      return false;
+    }
+
     if (props.inertiaDistanceModifier) {
       this._modifiedDistance = props.inertiaDistanceModifier({
         x: this._predictDistance(vx, props.inertiaDecay),
@@ -206,7 +216,8 @@ export class SwipeInertia {
       rawMovement.x = bx.value;
       velocity.x = bx.velocity;
 
-      isBouncing = 'bounceFinished' in bx ? true : isBouncing;
+      isBouncing =
+        'bounceFinished' in bx && !bx.bounceFinished ? true : isBouncing;
     }
 
     if (bounds?.y) {
@@ -221,7 +232,8 @@ export class SwipeInertia {
       rawMovement.y = by.value;
       velocity.y = by.velocity;
 
-      isBouncing = 'bounceFinished' in by ? true : isBouncing;
+      isBouncing =
+        'bounceFinished' in by && !by.bounceFinished ? true : isBouncing;
     }
 
     if (bounds?.angle) {
@@ -236,7 +248,8 @@ export class SwipeInertia {
       rawMovement.angle = ba.value;
       velocity.angle = ba.velocity;
 
-      isBouncing = 'bounceFinished' in ba ? true : isBouncing;
+      isBouncing =
+        'bounceFinished' in ba && !ba.bounceFinished ? true : isBouncing;
     }
 
     // Callbacks
