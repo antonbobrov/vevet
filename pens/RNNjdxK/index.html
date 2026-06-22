@@ -10,6 +10,8 @@
 }
 
 .carousel {
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
   position: relative;
   width: 100%;
 
@@ -28,6 +30,7 @@
   position: absolute;
   top: 0;
   left: 0;
+  width: var(--size);
   height: 100%;
 
   display: flex;
@@ -37,18 +40,27 @@
 
   border-radius: 1rem;
   background: rgba(255, 255, 255, 0.08);
+}
+
+.slide:nth-child(1) {
+  width: calc(1.15 * var(--size));
+}
+
+.slide:nth-child(3) {
+  width: calc(3 * var(--size));
+  min-width: 130vw;
 }</style>
       </head>
       <body>
         <div class="fullpage-center">
   <div class="carousel" id="carousel">
-    <div class="slide" style="min-width: 200px;">1</div>
-    <div class="slide" style="min-width: 300px;">2</div>
-    <div class="slide" style="min-width: 400px;">3</div>
-    <div class="slide" style="min-width: 150vw;">4</div>
-    <div class="slide" style="min-width: 150px;">5</div>
-    <div class="slide" style="min-width: 200px">6</div>
-    <div class="slide" style="min-width: 300px">7</div>
+    <div class="slide">1</div>
+    <div class="slide">2</div>
+    <div class="slide">3</div>
+    <div class="slide">4</div>
+    <div class="slide">5</div>
+    <div class="slide">6</div>
+    <div class="slide">7</div>
   </div>
 </div>
         
@@ -61,7 +73,8 @@ const container = document.getElementById("carousel");
 
 const carousel = new Snap({
   container,
-  gap: "1.25rem"
+  gap: "1.25rem",
+  grabCursor: true
 });
 
 container.classList.add("ready");

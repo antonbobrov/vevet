@@ -7,21 +7,25 @@
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
         <style>.info {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   width: 80%;
   gap: 0.5rem;
 
   font-size: 0.875rem;
 
-  >* {
-    &:nth-child(2n + 2) {
-      text-align: right;
+  @media (min-width: 769px) {
+    grid-template-columns: 1fr 1fr;
+
+    >* {
+      &:nth-child(2n + 2) {
+        text-align: right;
+      }
     }
   }
 }
 
 .carousel {
-  --size: max(25vw, 25vh);
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
 
   position: relative;
   width: 100%;

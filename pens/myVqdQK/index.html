@@ -10,11 +10,12 @@
 }
 
 .carousel {
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
   position: relative;
   width: 100%;
 
-  height: 50vw;
-  max-height: 50vh;
+  height: var(--size);
 
   opacity: 0;
   transition: opacity 0.25s linear;
@@ -28,8 +29,8 @@
   position: absolute;
   top: 0;
   left: 0;
+  width: var(--size);
   height: 100%;
-  width: 75%;
 
   display: flex;
   flex-direction: row;
@@ -63,7 +64,8 @@ const container = document.getElementById("carousel");
 const carousel = new Snap({
   container,
   activeIndex: 1,
-  gap: "1.25rem"
+  gap: "1.25rem",
+  grabCursor: true
 });
 
 container.classList.add("ready");

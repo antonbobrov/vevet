@@ -5,35 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · gbrqRXB</title>
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
-        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+        <style>.carousel {
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
 
-body {
-  margin: 0;
-  padding: 20px;
-  box-sizing: border-box;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  height: 100vh;
-  overflow: hidden;
-
-  background: linear-gradient(165deg,
-      rgb(17, 25, 42) 0%,
-      rgb(30, 43, 82) 40%,
-      rgb(0, 58, 82) 100%);
-  color: #fff;
-
-  font-family: "Ubuntu", sans-serif;
-}
-
-.carousel {
   position: relative;
   width: 100%;
-  height: 50vw;
-  max-height: 50vh;
+  height: var(--size);
 
   opacity: 0;
   transition: opacity 0.25s linear;
@@ -47,9 +24,8 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+  width: var(--size);
   height: 100%;
-  width: 50vw;
-  max-width: 50vh;
 }
 
 .slide .wrap {
@@ -64,81 +40,72 @@ body {
   align-items: center;
 
   background: rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
+  border-radius: 0.5rem;
 
-  font-size: 2rem;
+  font-size: 1rem;
   font-weight: bold;
   color: #ececec;
 }
 
 .slide:nth-child(1) .wrap {
-  background: linear-gradient(35deg, #a33c45ff 0%, #d7888eff 100%);
+  background: var(--gradient-slide-1, #000);
 }
 
 .slide:nth-child(2) .wrap {
-  background: linear-gradient(35deg,
-      rgba(149, 112, 112, 1) 0%,
-      rgba(194, 167, 167, 1) 100%);
+  background: var(--gradient-slide-2, #000);
 }
 
 .slide:nth-child(3) .wrap {
-  background: linear-gradient(35deg, #e7a873 0%, #f7c6a4 100%);
+  background: var(--gradient-slide-3, #000);
 }
 
 .slide:nth-child(4) .wrap {
-  background: linear-gradient(35deg, #ff8b94 0%, #ffc9cd 100%);
+  background: var(--gradient-slide-4, #000);
 }
 
 .slide:nth-child(5) .wrap {
-  background: linear-gradient(35deg,
-      rgba(172, 162, 92, 1) 0%,
-      rgba(214, 208, 156, 1) 100%);
+  background: var(--gradient-slide-5, #000);
 }
 
 .slide:nth-child(6) .wrap {
-  background: linear-gradient(35deg, #654b4bff 0%, #9a7f7fff 100%);
+  background: var(--gradient-slide-6, #000);
 }
 
 .slide:nth-child(7) .wrap {
-  background: linear-gradient(35deg, #61783bff 0%, #95ab6aff 100%);
-}
-
-.slide:nth-child(8) .wrap {
-  background: linear-gradient(35deg, #9e6a48ff 0%, #cfa681ff 100%);
+  background: var(--gradient-slide-7, #000);
 }</style>
       </head>
       <body>
-        <div class="carousel" id="carousel">
-  <div class="slide">
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">1</div>
-  </div>
+        <div class="fullpage-center">
+  <div class="carousel" id="carousel">
+    <div class="slide">
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">1</div>
+    </div>
 
-  <div class="slide">
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">2</div>
-  </div>
+    <div class="slide">
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">2</div>
+    </div>
 
-  <div class="slide">
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">3</div>
-  </div>
+    <div class="slide">
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">3</div>
+    </div>
 
-  <div class="slide">
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">4</div>
-  </div>
+    <div class="slide">
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">4</div>
+    </div>
 
-  <div class="slide">
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">5</div>
-  </div>
+    <div class="slide">
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">5</div>
+    </div>
 
-  <div class="slide">
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">6</div>
-  </div>
+    <div class="slide">
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">6</div>
+    </div>
 
-  <div class="slide">
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">7</div>
-  </div>
+    <div class="slide">
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">7</div>
+    </div>
 
-  <div class="slide">
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">8</div>
   </div>
 </div>
         
@@ -153,7 +120,7 @@ const carousel = new Snap({
   container,
   origin: "center",
   loop: true,
-  gap: 20,
+  gap: "1.25rem",
   lerp: 0.2,
   freemode: true,
   grabCursor: true

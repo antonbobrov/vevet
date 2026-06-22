@@ -5,34 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · gbrNeZW</title>
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
-        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-body {
-  margin: 0;
+        <style>.fullpage-center {
   padding: 0;
-  box-sizing: border-box;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  height: 100vh;
-  overflow: hidden;
-
-  background: linear-gradient(165deg,
-      rgb(17, 25, 42) 0%,
-      rgb(30, 43, 82) 40%,
-      rgb(0, 58, 82) 100%);
-  color: #fff;
-
-  font-family: "Ubuntu", sans-serif;
 }
 
 .carousel {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 100svh;
 
   opacity: 0;
   transition: opacity 0.25s linear;
@@ -49,20 +29,20 @@ body {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  padding: 40px;
+  padding: 1.75rem;
 
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
-  gap: 2rem;
+  gap: 1rem;
   overflow: hidden;
 
   background: rgba(255, 255, 255, 0.08);
 }
 
 .title {
-  font-size: 4rem;
+  font-size: 1.5rem;
   font-weight: bold;
   transform-origin: left center;
 }
@@ -70,109 +50,94 @@ body {
 .description {
   width: 100%;
   max-width: 40rem;
-  font-size: 1rem;
-  color: #ccc;
+  font-size: 0.75rem;
 }
 
 .slide:nth-child(1) {
-  background: linear-gradient(35deg, #68272d 0%, #d7888eff 100%);
+  background: var(--gradient-slide-1, #000);
 }
 
 .slide:nth-child(2) {
-  background: linear-gradient(35deg,
-      rgb(116 87 87) 0%,
-      rgba(194, 167, 167, 1) 100%);
+  background: var(--gradient-slide-2, #000);
 }
 
 .slide:nth-child(3) {
-  background: linear-gradient(35deg, #8f6848 0%, #f7c6a4 100%);
+  background: var(--gradient-slide-3, #000);
 }
 
 .slide:nth-child(4) {
-  background: linear-gradient(35deg, #9c5359 0%, #e7b2b6 100%);
+  background: var(--gradient-slide-4, #000);
 }
 
 .slide:nth-child(5) {
-  background: linear-gradient(35deg,
-      rgb(122 114 62) 0%,
-      rgba(214, 208, 156, 1) 100%);
+  background: var(--gradient-slide-5, #000);
 }
 
 .slide:nth-child(6) {
-  background: linear-gradient(35deg, #543f3f 0%, #9a7f7fff 100%);
+  background: var(--gradient-slide-6, #000);
 }
 
 .slide:nth-child(7) {
-  background: linear-gradient(35deg, #47582b 0%, #95ab6aff 100%);
-}
-
-.slide:nth-child(8) {
-  background: linear-gradient(35deg, #68462f 0%, #cfa681ff 100%);
+  background: var(--gradient-slide-7, #000);
 }</style>
       </head>
       <body>
-        <div class="carousel" id="carousel">
-  <div class="slide">
-    <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 1</div>
+        <div class="fullpage-center">
+  <div class="carousel" id="carousel">
+    <div class="slide">
+      <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 1</div>
 
-    <div class="description" data-snap-parallax-x="20rem" data-snap-parallax-x-abs>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <div class="description" data-snap-parallax-x="15rem" data-snap-parallax-x-abs>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
     </div>
-  </div>
 
-  <div class="slide">
-    <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 2</div>
+    <div class="slide">
+      <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 2</div>
 
-    <div class="description" data-snap-parallax-x="20rem" data-snap-parallax-x-abs>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <div class="description" data-snap-parallax-x="15rem" data-snap-parallax-x-abs>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
     </div>
-  </div>
 
-  <div class="slide">
-    <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 3</div>
+    <div class="slide">
+      <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 3</div>
 
-    <div class="description" data-snap-parallax-x="20rem" data-snap-parallax-x-abs>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <div class="description" data-snap-parallax-x="15rem" data-snap-parallax-x-abs>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
     </div>
-  </div>
 
-  <div class="slide">
-    <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 4</div>
+    <div class="slide">
+      <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 4</div>
 
-    <div class="description" data-snap-parallax-x="20rem" data-snap-parallax-x-abs>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <div class="description" data-snap-parallax-x="15rem" data-snap-parallax-x-abs>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
     </div>
-  </div>
 
-  <div class="slide">
-    <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 5</div>
+    <div class="slide">
+      <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 5</div>
 
-    <div class="description" data-snap-parallax-x="20rem" data-snap-parallax-x-abs>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <div class="description" data-snap-parallax-x="15rem" data-snap-parallax-x-abs>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
     </div>
-  </div>
 
-  <div class="slide">
-    <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 6</div>
+    <div class="slide">
+      <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 6</div>
 
-    <div class="description" data-snap-parallax-x="20rem" data-snap-parallax-x-abs>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <div class="description" data-snap-parallax-x="15rem" data-snap-parallax-x-abs>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
     </div>
-  </div>
 
-  <div class="slide">
-    <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 7</div>
+    <div class="slide">
+      <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 7</div>
 
-    <div class="description" data-snap-parallax-x="20rem" data-snap-parallax-x-abs>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </div>
-  </div>
-
-  <div class="slide">
-    <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 8</div>
-
-    <div class="description" data-snap-parallax-x="20rem" data-snap-parallax-x-abs>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <div class="description" data-snap-parallax-x="15rem" data-snap-parallax-x-abs>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
     </div>
   </div>
 </div>

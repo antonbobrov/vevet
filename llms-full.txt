@@ -19653,7 +19653,7 @@ CSS
 
   display: grid;
 
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
 
   width: 80%;
 
@@ -19665,11 +19665,19 @@ CSS
 
 
 
-  >* {
+  @media (min-width: 769px) {
 
-    &:nth-child(2n + 2) {
+    grid-template-columns: 1fr 1fr;
 
-      text-align: right;
+
+
+    >* {
+
+      &:nth-child(2n + 2) {
+
+        text-align: right;
+
+      }
 
     }
 
@@ -19681,7 +19689,7 @@ CSS
 
 .carousel {
 
-  --size: max(25vw, 25vh);
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
 
 
 
@@ -27324,7 +27332,7 @@ CSS
 
   display: grid;
 
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
 
   width: 80%;
 
@@ -27336,11 +27344,19 @@ CSS
 
 
 
-  >* {
+  @media (min-width: 769px) {
 
-    &:nth-child(2n + 2) {
+    grid-template-columns: 1fr 1fr;
 
-      text-align: right;
+
+
+    >* {
+
+      &:nth-child(2n + 2) {
+
+        text-align: right;
+
+      }
 
     }
 
@@ -27352,7 +27368,7 @@ CSS
 
 .carousel {
 
-  --size: max(25vw, 25vh);
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
 
 
 
@@ -27628,15 +27644,17 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
 
 
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -27664,9 +27682,9 @@ CSS
 
   left: 0;
 
-  height: 100%;
+  width: var(--size);
 
-  width: 75%;
+  height: 100%;
 
 
 
@@ -27708,7 +27726,9 @@ const carousel = new Snap({
 
   activeIndex: 1,
 
-  gap: "1.25rem"
+  gap: "1.25rem",
+
+  grabCursor: true
 
 });
 
@@ -27752,19 +27772,19 @@ HTML
 
   <div class="carousel" id="carousel">
 
-    <div class="slide" style="min-width: 200px;">1</div>
+    <div class="slide">1</div>
 
-    <div class="slide" style="min-width: 300px;">2</div>
+    <div class="slide">2</div>
 
-    <div class="slide" style="min-width: 400px;">3</div>
+    <div class="slide">3</div>
 
-    <div class="slide" style="min-width: 150vw;">4</div>
+    <div class="slide">4</div>
 
-    <div class="slide" style="min-width: 150px;">5</div>
+    <div class="slide">5</div>
 
-    <div class="slide" style="min-width: 200px">6</div>
+    <div class="slide">6</div>
 
-    <div class="slide" style="min-width: 300px">7</div>
+    <div class="slide">7</div>
 
   </div>
 
@@ -27783,6 +27803,10 @@ CSS
 
 
 .carousel {
+
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
 
   position: relative;
 
@@ -27820,6 +27844,8 @@ CSS
 
   left: 0;
 
+  width: var(--size);
+
   height: 100%;
 
 
@@ -27837,6 +27863,24 @@ CSS
   border-radius: 1rem;
 
   background: rgba(255, 255, 255, 0.08);
+
+}
+
+
+
+.slide:nth-child(1) {
+
+  width: calc(1.15 * var(--size));
+
+}
+
+
+
+.slide:nth-child(3) {
+
+  width: calc(3 * var(--size));
+
+  min-width: 130vw;
 
 }
 ```
@@ -27860,7 +27904,9 @@ const carousel = new Snap({
 
   container,
 
-  gap: "1.25rem"
+  gap: "1.25rem",
+
+  grabCursor: true
 
 });
 
@@ -28018,7 +28064,9 @@ const carousel = new Snap({
 
   gap: "1rem",
 
-  direction: "vertical"
+  direction: "vertical",
+
+  grabCursor: true
 
 });
 
@@ -28094,15 +28142,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -28132,7 +28180,7 @@ CSS
 
   height: 100%;
 
-  width: 30%;
+  width: var(--size);
 
 
 
@@ -28174,7 +28222,9 @@ const carousel = new Snap({
 
   gap: 20,
 
-  origin: "center"
+  origin: "center",
+
+  grabCursor: true
 
 });
 
@@ -28250,15 +28300,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -28288,7 +28338,7 @@ CSS
 
   height: 100%;
 
-  width: 30%;
+  width: var(--size);
 
 
 
@@ -28330,7 +28380,9 @@ const carousel = new Snap({
 
   gap: "1.25rem",
 
-  origin: "end"
+  origin: "end",
+
+  grabCursor: true
 
 });
 
@@ -28406,15 +28458,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -28444,7 +28496,7 @@ CSS
 
   height: 100%;
 
-  width: 30%;
+  width: var(--size);
 
 
 
@@ -28488,7 +28540,9 @@ const carousel = new Snap({
 
   origin: "center",
 
-  loop: true
+  loop: true,
+
+  grabCursor: true
 
 });
 
@@ -28566,15 +28620,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -28604,7 +28658,7 @@ CSS
 
   height: 100%;
 
-  width: 30%;
+  width: var(--size);
 
 
 
@@ -28644,7 +28698,9 @@ const carousel = new Snap({
 
   container,
 
-  gap: "10vw"
+  gap: "10vw",
+
+  grabCursor: true
 
 });
 
@@ -28720,15 +28776,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -28758,7 +28814,7 @@ CSS
 
   height: 100%;
 
-  width: 30%;
+  width: var(--size);
 
 
 
@@ -28876,15 +28932,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -28914,7 +28970,7 @@ CSS
 
   height: 100%;
 
-  width: 30%;
+  width: var(--size);
 
 
 
@@ -29036,15 +29092,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -29074,7 +29130,7 @@ CSS
 
   height: 100%;
 
-  width: 30%;
+  width: var(--size);
 
 
 
@@ -29528,15 +29584,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -29566,7 +29622,7 @@ CSS
 
   height: 100%;
 
-  width: 30%;
+  width: var(--size);
 
 
 
@@ -29694,15 +29750,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -29732,7 +29788,7 @@ CSS
 
   height: 100%;
 
-  width: 30%;
+  width: var(--size);
 
 
 
@@ -29858,15 +29914,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -29896,7 +29952,7 @@ CSS
 
   height: 100%;
 
-  width: 30%;
+  width: var(--size);
 
 
 
@@ -30022,15 +30078,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -30060,7 +30116,7 @@ CSS
 
   height: 100%;
 
-  width: 50%;
+  width: var(--size);
 
 
 
@@ -30180,15 +30236,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -30218,7 +30274,7 @@ CSS
 
   height: 100%;
 
-  width: 45%;
+  width: var(--size);
 
 
 
@@ -30348,15 +30404,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -30386,7 +30442,7 @@ CSS
 
   height: 100%;
 
-  width: 45%;
+  width: var(--size);
 
 
 
@@ -30506,15 +30562,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -30544,7 +30600,7 @@ CSS
 
   height: 100%;
 
-  width: 45%;
+  width: var(--size);
 
 
 
@@ -30668,15 +30724,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -30706,7 +30762,7 @@ CSS
 
   height: 100%;
 
-  width: 45%;
+  width: var(--size);
 
 
 
@@ -30830,15 +30886,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -30868,7 +30924,7 @@ CSS
 
   height: 100%;
 
-  width: 45%;
+  width: var(--size);
 
 
 
@@ -30988,15 +31044,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -31026,7 +31082,7 @@ CSS
 
   height: 100%;
 
-  width: 45%;
+  width: var(--size);
 
 
 
@@ -31152,15 +31208,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -31190,7 +31246,7 @@ CSS
 
   height: 100%;
 
-  width: 45%;
+  width: var(--size);
 
 
 
@@ -31310,15 +31366,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -31488,15 +31544,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -31672,15 +31728,15 @@ CSS
 
 .carousel {
 
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
+
   position: relative;
 
   width: 100%;
 
-
-
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -31710,7 +31766,7 @@ CSS
 
   height: 100%;
 
-  width: 40%;
+  width: var(--size);
 
 
 
@@ -32821,67 +32877,65 @@ Do not apply parallax directly to the slide element. Use inner wrappers instead.
 HTML
 
 ```
-<div class="carousel" id="carousel">
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>1</div>
-
-  </div>
+<div class="fullpage-center">
 
 
 
-  <div class="slide">
+  <div class="carousel" id="carousel">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>2</div>
+    <div class="slide">
 
-  </div>
+      <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>1</div>
 
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>3</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>4</div>
+      <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>2</div>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>5</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>6</div>
+      <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>3</div>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>7</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>8</div>
+      <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>4</div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>5</div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>6</div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>7</div>
+
+    </div>
 
   </div>
 
@@ -32891,63 +32945,17 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-}
-
-
-
 .carousel {
+
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
 
   position: relative;
 
   width: 100%;
 
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -32975,11 +32983,9 @@ body {
 
   left: 0;
 
+  width: var(--size);
+
   height: 100%;
-
-  width: 50vw;
-
-  max-width: 50vh;
 
 }
 
@@ -33009,11 +33015,11 @@ body {
 
   background: rgba(255, 255, 255, 0.08);
 
-  border-radius: 16px;
+  border-radius: 0.5rem;
 
 
 
-  font-size: 2rem;
+  font-size: 1rem;
 
   font-weight: bold;
 
@@ -33025,7 +33031,7 @@ body {
 
 .slide:nth-child(1) .wrap {
 
-  background: linear-gradient(35deg, #a33c45ff 0%, #d7888eff 100%);
+  background: var(--gradient-slide-1, #000);
 
 }
 
@@ -33033,11 +33039,7 @@ body {
 
 .slide:nth-child(2) .wrap {
 
-  background: linear-gradient(35deg,
-
-      rgba(149, 112, 112, 1) 0%,
-
-      rgba(194, 167, 167, 1) 100%);
+  background: var(--gradient-slide-2, #000);
 
 }
 
@@ -33045,7 +33047,7 @@ body {
 
 .slide:nth-child(3) .wrap {
 
-  background: linear-gradient(35deg, #e7a873 0%, #f7c6a4 100%);
+  background: var(--gradient-slide-3, #000);
 
 }
 
@@ -33053,7 +33055,7 @@ body {
 
 .slide:nth-child(4) .wrap {
 
-  background: linear-gradient(35deg, #ff8b94 0%, #ffc9cd 100%);
+  background: var(--gradient-slide-4, #000);
 
 }
 
@@ -33061,11 +33063,7 @@ body {
 
 .slide:nth-child(5) .wrap {
 
-  background: linear-gradient(35deg,
-
-      rgba(172, 162, 92, 1) 0%,
-
-      rgba(214, 208, 156, 1) 100%);
+  background: var(--gradient-slide-5, #000);
 
 }
 
@@ -33073,7 +33071,7 @@ body {
 
 .slide:nth-child(6) .wrap {
 
-  background: linear-gradient(35deg, #654b4bff 0%, #9a7f7fff 100%);
+  background: var(--gradient-slide-6, #000);
 
 }
 
@@ -33081,15 +33079,7 @@ body {
 
 .slide:nth-child(7) .wrap {
 
-  background: linear-gradient(35deg, #61783bff 0%, #95ab6aff 100%);
-
-}
-
-
-
-.slide:nth-child(8) .wrap {
-
-  background: linear-gradient(35deg, #9e6a48ff 0%, #cfa681ff 100%);
+  background: var(--gradient-slide-7, #000);
 
 }
 ```
@@ -33117,7 +33107,7 @@ const carousel = new Snap({
 
   loop: true,
 
-  gap: 20,
+  gap: "1.25rem",
 
   lerp: 0.2,
 
@@ -33163,67 +33153,65 @@ carousel.on("update", () => {
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">
+  <div class="carousel" id="carousel">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">1</div>
+    <div class="slide">
 
-  </div>
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">1</div>
 
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">2</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">3</div>
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">2</div>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">4</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">5</div>
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">3</div>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">6</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">7</div>
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">4</div>
 
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">8</div>
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">5</div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">6</div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">7</div>
+
+    </div>
+
+
 
   </div>
 
@@ -33233,63 +33221,17 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-}
-
-
-
 .carousel {
+
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
 
   position: relative;
 
   width: 100%;
 
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -33317,11 +33259,9 @@ body {
 
   left: 0;
 
+  width: var(--size);
+
   height: 100%;
-
-  width: 50vw;
-
-  max-width: 50vh;
 
 }
 
@@ -33351,11 +33291,11 @@ body {
 
   background: rgba(255, 255, 255, 0.08);
 
-  border-radius: 16px;
+  border-radius: 0.5rem;
 
 
 
-  font-size: 2rem;
+  font-size: 1rem;
 
   font-weight: bold;
 
@@ -33367,7 +33307,7 @@ body {
 
 .slide:nth-child(1) .wrap {
 
-  background: linear-gradient(35deg, #a33c45ff 0%, #d7888eff 100%);
+  background: var(--gradient-slide-1, #000);
 
 }
 
@@ -33375,11 +33315,7 @@ body {
 
 .slide:nth-child(2) .wrap {
 
-  background: linear-gradient(35deg,
-
-      rgba(149, 112, 112, 1) 0%,
-
-      rgba(194, 167, 167, 1) 100%);
+  background: var(--gradient-slide-2, #000);
 
 }
 
@@ -33387,7 +33323,7 @@ body {
 
 .slide:nth-child(3) .wrap {
 
-  background: linear-gradient(35deg, #e7a873 0%, #f7c6a4 100%);
+  background: var(--gradient-slide-3, #000);
 
 }
 
@@ -33395,7 +33331,7 @@ body {
 
 .slide:nth-child(4) .wrap {
 
-  background: linear-gradient(35deg, #ff8b94 0%, #ffc9cd 100%);
+  background: var(--gradient-slide-4, #000);
 
 }
 
@@ -33403,11 +33339,7 @@ body {
 
 .slide:nth-child(5) .wrap {
 
-  background: linear-gradient(35deg,
-
-      rgba(172, 162, 92, 1) 0%,
-
-      rgba(214, 208, 156, 1) 100%);
+  background: var(--gradient-slide-5, #000);
 
 }
 
@@ -33415,7 +33347,7 @@ body {
 
 .slide:nth-child(6) .wrap {
 
-  background: linear-gradient(35deg, #654b4bff 0%, #9a7f7fff 100%);
+  background: var(--gradient-slide-6, #000);
 
 }
 
@@ -33423,15 +33355,7 @@ body {
 
 .slide:nth-child(7) .wrap {
 
-  background: linear-gradient(35deg, #61783bff 0%, #95ab6aff 100%);
-
-}
-
-
-
-.slide:nth-child(8) .wrap {
-
-  background: linear-gradient(35deg, #9e6a48ff 0%, #cfa681ff 100%);
+  background: var(--gradient-slide-7, #000);
 
 }
 ```
@@ -33459,7 +33383,7 @@ const carousel = new Snap({
 
   loop: true,
 
-  gap: 20,
+  gap: "1.25rem",
 
   lerp: 0.2,
 
@@ -33796,67 +33720,65 @@ Example attributes on the inner wrapper:
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">
+  <div class="carousel" id="carousel">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">1</div>
+    <div class="slide">
 
-  </div>
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">1</div>
 
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">2</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">3</div>
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">2</div>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">4</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">5</div>
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">3</div>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">6</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">7</div>
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">4</div>
 
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">8</div>
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">5</div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">6</div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-x="-50%" data-snap-parallax-x-scope="none" data-snap-parallax-x-impulse="3">7</div>
+
+    </div>
+
+
 
   </div>
 
@@ -33866,63 +33788,17 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-}
-
-
-
 .carousel {
+
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
 
   position: relative;
 
   width: 100%;
 
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -33950,11 +33826,9 @@ body {
 
   left: 0;
 
+  width: var(--size);
+
   height: 100%;
-
-  width: 50vw;
-
-  max-width: 50vh;
 
 }
 
@@ -33984,11 +33858,11 @@ body {
 
   background: rgba(255, 255, 255, 0.08);
 
-  border-radius: 16px;
+  border-radius: 0.5rem;
 
 
 
-  font-size: 2rem;
+  font-size: 1rem;
 
   font-weight: bold;
 
@@ -34000,7 +33874,7 @@ body {
 
 .slide:nth-child(1) .wrap {
 
-  background: linear-gradient(35deg, #a33c45ff 0%, #d7888eff 100%);
+  background: var(--gradient-slide-1, #000);
 
 }
 
@@ -34008,11 +33882,7 @@ body {
 
 .slide:nth-child(2) .wrap {
 
-  background: linear-gradient(35deg,
-
-      rgba(149, 112, 112, 1) 0%,
-
-      rgba(194, 167, 167, 1) 100%);
+  background: var(--gradient-slide-2, #000);
 
 }
 
@@ -34020,7 +33890,7 @@ body {
 
 .slide:nth-child(3) .wrap {
 
-  background: linear-gradient(35deg, #e7a873 0%, #f7c6a4 100%);
+  background: var(--gradient-slide-3, #000);
 
 }
 
@@ -34028,7 +33898,7 @@ body {
 
 .slide:nth-child(4) .wrap {
 
-  background: linear-gradient(35deg, #ff8b94 0%, #ffc9cd 100%);
+  background: var(--gradient-slide-4, #000);
 
 }
 
@@ -34036,11 +33906,7 @@ body {
 
 .slide:nth-child(5) .wrap {
 
-  background: linear-gradient(35deg,
-
-      rgba(172, 162, 92, 1) 0%,
-
-      rgba(214, 208, 156, 1) 100%);
+  background: var(--gradient-slide-5, #000);
 
 }
 
@@ -34048,7 +33914,7 @@ body {
 
 .slide:nth-child(6) .wrap {
 
-  background: linear-gradient(35deg, #654b4bff 0%, #9a7f7fff 100%);
+  background: var(--gradient-slide-6, #000);
 
 }
 
@@ -34056,15 +33922,7 @@ body {
 
 .slide:nth-child(7) .wrap {
 
-  background: linear-gradient(35deg, #61783bff 0%, #95ab6aff 100%);
-
-}
-
-
-
-.slide:nth-child(8) .wrap {
-
-  background: linear-gradient(35deg, #9e6a48ff 0%, #cfa681ff 100%);
+  background: var(--gradient-slide-7, #000);
 
 }
 ```
@@ -34092,7 +33950,7 @@ const carousel = new Snap({
 
   loop: true,
 
-  gap: 20,
+  gap: "1.25rem",
 
   lerp: 0.2,
 
@@ -34146,67 +34004,65 @@ Example attributes:
 HTML
 
 ```
-<div class="carousel" id="carousel">
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>1</div>
-
-  </div>
+<div class="fullpage-center">
 
 
 
-  <div class="slide">
+  <div class="carousel" id="carousel">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>2</div>
+    <div class="slide">
 
-  </div>
+      <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>1</div>
 
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>3</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>4</div>
+      <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>2</div>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>5</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>6</div>
+      <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>3</div>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>7</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>8</div>
+      <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>4</div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>5</div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>6</div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-skew="-40" data-snap-parallax-skew-min="-40" data-snap-parallax-skew-max="40" data-snap-parallax-skew-scope="const" data-snap-parallax-skew-impulse="5" data-snap-parallax-skew-directional>7</div>
+
+    </div>
 
   </div>
 
@@ -34216,63 +34072,17 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-}
-
-
-
 .carousel {
+
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
 
   position: relative;
 
   width: 100%;
 
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -34300,11 +34110,9 @@ body {
 
   left: 0;
 
+  width: var(--size);
+
   height: 100%;
-
-  width: 50vw;
-
-  max-width: 50vh;
 
 }
 
@@ -34334,11 +34142,11 @@ body {
 
   background: rgba(255, 255, 255, 0.08);
 
-  border-radius: 16px;
+  border-radius: 0.5rem;
 
 
 
-  font-size: 2rem;
+  font-size: 1rem;
 
   font-weight: bold;
 
@@ -34350,7 +34158,7 @@ body {
 
 .slide:nth-child(1) .wrap {
 
-  background: linear-gradient(35deg, #a33c45ff 0%, #d7888eff 100%);
+  background: var(--gradient-slide-1, #000);
 
 }
 
@@ -34358,11 +34166,7 @@ body {
 
 .slide:nth-child(2) .wrap {
 
-  background: linear-gradient(35deg,
-
-      rgba(149, 112, 112, 1) 0%,
-
-      rgba(194, 167, 167, 1) 100%);
+  background: var(--gradient-slide-2, #000);
 
 }
 
@@ -34370,7 +34174,7 @@ body {
 
 .slide:nth-child(3) .wrap {
 
-  background: linear-gradient(35deg, #e7a873 0%, #f7c6a4 100%);
+  background: var(--gradient-slide-3, #000);
 
 }
 
@@ -34378,7 +34182,7 @@ body {
 
 .slide:nth-child(4) .wrap {
 
-  background: linear-gradient(35deg, #ff8b94 0%, #ffc9cd 100%);
+  background: var(--gradient-slide-4, #000);
 
 }
 
@@ -34386,11 +34190,7 @@ body {
 
 .slide:nth-child(5) .wrap {
 
-  background: linear-gradient(35deg,
-
-      rgba(172, 162, 92, 1) 0%,
-
-      rgba(214, 208, 156, 1) 100%);
+  background: var(--gradient-slide-5, #000);
 
 }
 
@@ -34398,7 +34198,7 @@ body {
 
 .slide:nth-child(6) .wrap {
 
-  background: linear-gradient(35deg, #654b4bff 0%, #9a7f7fff 100%);
+  background: var(--gradient-slide-6, #000);
 
 }
 
@@ -34406,15 +34206,7 @@ body {
 
 .slide:nth-child(7) .wrap {
 
-  background: linear-gradient(35deg, #61783bff 0%, #95ab6aff 100%);
-
-}
-
-
-
-.slide:nth-child(8) .wrap {
-
-  background: linear-gradient(35deg, #9e6a48ff 0%, #cfa681ff 100%);
+  background: var(--gradient-slide-7, #000);
 
 }
 ```
@@ -34442,7 +34234,7 @@ const carousel = new Snap({
 
   loop: true,
 
-  gap: 20,
+  gap: "1.25rem",
 
   lerp: 0.2,
 
@@ -34496,67 +34288,65 @@ Example attributes:
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">
+  <div class="carousel" id="carousel">
 
-    <div class="wrap" data-snap-parallax-scale="-0.2" data-snap-parallax-scale-scope="-1,1" data-snap-parallax-scale-abs>1</div>
+    <div class="slide">
 
-  </div>
+      <div class="wrap" data-snap-parallax-scale="-0.2" data-snap-parallax-scale-scope="-1,1" data-snap-parallax-scale-abs>1</div>
 
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="-0.2" data-snap-parallax-scale-scope="-1,1" data-snap-parallax-scale-abs>2</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="-0.2" data-snap-parallax-scale-scope="-1,1" data-snap-parallax-scale-abs>3</div>
+      <div class="wrap" data-snap-parallax-scale="-0.2" data-snap-parallax-scale-scope="-1,1" data-snap-parallax-scale-abs>2</div>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="-0.2" data-snap-parallax-scale-scope="-1,1" data-snap-parallax-scale-abs>4</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="-0.2" data-snap-parallax-scale-scope="-1,1" data-snap-parallax-scale-abs>5</div>
+      <div class="wrap" data-snap-parallax-scale="-0.2" data-snap-parallax-scale-scope="-1,1" data-snap-parallax-scale-abs>3</div>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="-0.2" data-snap-parallax-scale-scope="-1,1" data-snap-parallax-scale-abs>6</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="-0.2" data-snap-parallax-scale-scope="-1,1" data-snap-parallax-scale-abs>7</div>
+      <div class="wrap" data-snap-parallax-scale="-0.2" data-snap-parallax-scale-scope="-1,1" data-snap-parallax-scale-abs>4</div>
 
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="-0.2" data-snap-parallax-scale-scope="-1,1" data-snap-parallax-scale-abs>8</div>
+      <div class="wrap" data-snap-parallax-scale="-0.2" data-snap-parallax-scale-scope="-1,1" data-snap-parallax-scale-abs>5</div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-scale="-0.2" data-snap-parallax-scale-scope="-1,1" data-snap-parallax-scale-abs>6</div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-scale="-0.2" data-snap-parallax-scale-scope="-1,1" data-snap-parallax-scale-abs>7</div>
+
+    </div>
+
+
 
   </div>
 
@@ -34566,57 +34356,17 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: rgb(30, 43, 82);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-}
-
-
-
 .carousel {
+
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
 
   position: relative;
 
   width: 100%;
 
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -34644,11 +34394,9 @@ body {
 
   left: 0;
 
+  width: var(--size);
+
   height: 100%;
-
-  width: 20vw;
-
-  max-width: 50vh;
 
 }
 
@@ -34678,11 +34426,11 @@ body {
 
   background: rgba(255, 255, 255, 0.08);
 
-  border-radius: 16px;
+  border-radius: 0.5rem;
 
 
 
-  font-size: 2rem;
+  font-size: 1rem;
 
   font-weight: bold;
 
@@ -34694,7 +34442,7 @@ body {
 
 .slide:nth-child(1) .wrap {
 
-  background: linear-gradient(35deg, #a33c45ff 0%, #d7888eff 100%);
+  background: var(--gradient-slide-1, #000);
 
 }
 
@@ -34702,11 +34450,7 @@ body {
 
 .slide:nth-child(2) .wrap {
 
-  background: linear-gradient(35deg,
-
-      rgba(149, 112, 112, 1) 0%,
-
-      rgba(194, 167, 167, 1) 100%);
+  background: var(--gradient-slide-2, #000);
 
 }
 
@@ -34714,7 +34458,7 @@ body {
 
 .slide:nth-child(3) .wrap {
 
-  background: linear-gradient(35deg, #e7a873 0%, #f7c6a4 100%);
+  background: var(--gradient-slide-3, #000);
 
 }
 
@@ -34722,7 +34466,7 @@ body {
 
 .slide:nth-child(4) .wrap {
 
-  background: linear-gradient(35deg, #ff8b94 0%, #ffc9cd 100%);
+  background: var(--gradient-slide-4, #000);
 
 }
 
@@ -34730,11 +34474,7 @@ body {
 
 .slide:nth-child(5) .wrap {
 
-  background: linear-gradient(35deg,
-
-      rgba(172, 162, 92, 1) 0%,
-
-      rgba(214, 208, 156, 1) 100%);
+  background: var(--gradient-slide-5, #000);
 
 }
 
@@ -34742,7 +34482,7 @@ body {
 
 .slide:nth-child(6) .wrap {
 
-  background: linear-gradient(35deg, #654b4bff 0%, #9a7f7fff 100%);
+  background: var(--gradient-slide-6, #000);
 
 }
 
@@ -34750,15 +34490,7 @@ body {
 
 .slide:nth-child(7) .wrap {
 
-  background: linear-gradient(35deg, #61783bff 0%, #95ab6aff 100%);
-
-}
-
-
-
-.slide:nth-child(8) .wrap {
-
-  background: linear-gradient(35deg, #9e6a48ff 0%, #cfa681ff 100%);
+  background: var(--gradient-slide-7, #000);
 
 }
 ```
@@ -34786,7 +34518,7 @@ const carousel = new Snap({
 
   loop: true,
 
-  gap: "1vw",
+  gap: "1.25rem",
 
   lerp: 0.2,
 
@@ -34841,67 +34573,63 @@ Example attributes:
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">
+  <div class="carousel" id="carousel">
 
-    <div class="wrap" data-snap-parallax-scale="0.33" data-snap-parallax-scale-offset="-0.66" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs>1</div>
+    <div class="slide">
 
-  </div>
+      <div class="wrap" data-snap-parallax-scale="0.33" data-snap-parallax-scale-offset="-0.66" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs>1</div>
 
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="0.33" data-snap-parallax-scale-offset="-0.66" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs>2</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="0.33" data-snap-parallax-scale-offset="-0.66" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs>3</div>
+      <div class="wrap" data-snap-parallax-scale="0.33" data-snap-parallax-scale-offset="-0.66" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs>2</div>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="0.33" data-snap-parallax-scale-offset="-0.66" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs>4</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="0.33" data-snap-parallax-scale-offset="-0.66" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs>5</div>
+      <div class="wrap" data-snap-parallax-scale="0.33" data-snap-parallax-scale-offset="-0.66" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs>3</div>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="0.33" data-snap-parallax-scale-offset="-0.66" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs>6</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="0.33" data-snap-parallax-scale-offset="-0.66" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs>7</div>
+      <div class="wrap" data-snap-parallax-scale="0.33" data-snap-parallax-scale-offset="-0.66" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs>4</div>
 
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="0.33" data-snap-parallax-scale-offset="-0.66" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs>8</div>
+      <div class="wrap" data-snap-parallax-scale="0.33" data-snap-parallax-scale-offset="-0.66" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs>5</div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-scale="0.33" data-snap-parallax-scale-offset="-0.66" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs>6</div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-scale="0.33" data-snap-parallax-scale-offset="-0.66" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs>7</div>
+
+    </div>
 
   </div>
 
@@ -34911,57 +34639,17 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: rgb(30, 43, 82);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-}
-
-
-
 .carousel {
+
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
 
   position: relative;
 
   width: 100%;
 
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -34989,11 +34677,9 @@ body {
 
   left: 0;
 
+  width: var(--size);
+
   height: 100%;
-
-  width: 20vw;
-
-  max-width: 50vh;
 
 }
 
@@ -35023,11 +34709,11 @@ body {
 
   background: rgba(255, 255, 255, 0.08);
 
-  border-radius: 16px;
+  border-radius: 0.5rem;
 
 
 
-  font-size: 2rem;
+  font-size: 1rem;
 
   font-weight: bold;
 
@@ -35039,7 +34725,7 @@ body {
 
 .slide:nth-child(1) .wrap {
 
-  background: linear-gradient(35deg, #a33c45ff 0%, #d7888eff 100%);
+  background: var(--gradient-slide-1, #000);
 
 }
 
@@ -35047,11 +34733,7 @@ body {
 
 .slide:nth-child(2) .wrap {
 
-  background: linear-gradient(35deg,
-
-      rgba(149, 112, 112, 1) 0%,
-
-      rgba(194, 167, 167, 1) 100%);
+  background: var(--gradient-slide-2, #000);
 
 }
 
@@ -35059,7 +34741,7 @@ body {
 
 .slide:nth-child(3) .wrap {
 
-  background: linear-gradient(35deg, #e7a873 0%, #f7c6a4 100%);
+  background: var(--gradient-slide-3, #000);
 
 }
 
@@ -35067,7 +34749,7 @@ body {
 
 .slide:nth-child(4) .wrap {
 
-  background: linear-gradient(35deg, #ff8b94 0%, #ffc9cd 100%);
+  background: var(--gradient-slide-4, #000);
 
 }
 
@@ -35075,11 +34757,7 @@ body {
 
 .slide:nth-child(5) .wrap {
 
-  background: linear-gradient(35deg,
-
-      rgba(172, 162, 92, 1) 0%,
-
-      rgba(214, 208, 156, 1) 100%);
+  background: var(--gradient-slide-5, #000);
 
 }
 
@@ -35087,7 +34765,7 @@ body {
 
 .slide:nth-child(6) .wrap {
 
-  background: linear-gradient(35deg, #654b4bff 0%, #9a7f7fff 100%);
+  background: var(--gradient-slide-6, #000);
 
 }
 
@@ -35095,15 +34773,7 @@ body {
 
 .slide:nth-child(7) .wrap {
 
-  background: linear-gradient(35deg, #61783bff 0%, #95ab6aff 100%);
-
-}
-
-
-
-.slide:nth-child(8) .wrap {
-
-  background: linear-gradient(35deg, #9e6a48ff 0%, #cfa681ff 100%);
+  background: var(--gradient-slide-7, #000);
 
 }
 ```
@@ -35187,67 +34857,63 @@ Example attributes:
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">
+  <div class="carousel" id="carousel">
 
-    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>1</div>
+    <div class="slide">
 
-  </div>
+      <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>1</div>
 
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>2</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>3</div>
+      <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>2</div>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>4</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>5</div>
+      <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>3</div>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>6</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>7</div>
+      <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>4</div>
 
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>8</div>
+      <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>5</div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>6</div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-scale="-1" data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-scope="const" data-snap-parallax-scale-abs data-snap-parallax-scale-impulse>7</div>
+
+    </div>
 
   </div>
 
@@ -35257,63 +34923,17 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-}
-
-
-
 .carousel {
+
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
 
   position: relative;
 
   width: 100%;
 
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -35341,11 +34961,9 @@ body {
 
   left: 0;
 
+  width: var(--size);
+
   height: 100%;
-
-  width: 20vw;
-
-  max-width: 50vh;
 
 }
 
@@ -35375,11 +34993,11 @@ body {
 
   background: rgba(255, 255, 255, 0.08);
 
-  border-radius: 16px;
+  border-radius: 0.5rem;
 
 
 
-  font-size: 2rem;
+  font-size: 1rem;
 
   font-weight: bold;
 
@@ -35391,7 +35009,7 @@ body {
 
 .slide:nth-child(1) .wrap {
 
-  background: linear-gradient(35deg, #a33c45ff 0%, #d7888eff 100%);
+  background: var(--gradient-slide-1, #000);
 
 }
 
@@ -35399,11 +35017,7 @@ body {
 
 .slide:nth-child(2) .wrap {
 
-  background: linear-gradient(35deg,
-
-      rgba(149, 112, 112, 1) 0%,
-
-      rgba(194, 167, 167, 1) 100%);
+  background: var(--gradient-slide-2, #000);
 
 }
 
@@ -35411,7 +35025,7 @@ body {
 
 .slide:nth-child(3) .wrap {
 
-  background: linear-gradient(35deg, #e7a873 0%, #f7c6a4 100%);
+  background: var(--gradient-slide-3, #000);
 
 }
 
@@ -35419,7 +35033,7 @@ body {
 
 .slide:nth-child(4) .wrap {
 
-  background: linear-gradient(35deg, #ff8b94 0%, #ffc9cd 100%);
+  background: var(--gradient-slide-4, #000);
 
 }
 
@@ -35427,11 +35041,7 @@ body {
 
 .slide:nth-child(5) .wrap {
 
-  background: linear-gradient(35deg,
-
-      rgba(172, 162, 92, 1) 0%,
-
-      rgba(214, 208, 156, 1) 100%);
+  background: var(--gradient-slide-5, #000);
 
 }
 
@@ -35439,7 +35049,7 @@ body {
 
 .slide:nth-child(6) .wrap {
 
-  background: linear-gradient(35deg, #654b4bff 0%, #9a7f7fff 100%);
+  background: var(--gradient-slide-6, #000);
 
 }
 
@@ -35447,15 +35057,7 @@ body {
 
 .slide:nth-child(7) .wrap {
 
-  background: linear-gradient(35deg, #61783bff 0%, #95ab6aff 100%);
-
-}
-
-
-
-.slide:nth-child(8) .wrap {
-
-  background: linear-gradient(35deg, #9e6a48ff 0%, #cfa681ff 100%);
+  background: var(--gradient-slide-7, #000);
 
 }
 ```
@@ -35483,7 +35085,7 @@ const carousel = new Snap({
 
   loop: true,
 
-  gap: "1vw",
+  gap: "1.25rem",
 
   lerp: 0.2,
 
@@ -35539,67 +35141,63 @@ Example attributes:
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">
+  <div class="carousel" id="carousel">
 
-    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">1</div>
+    <div class="slide">
 
-  </div>
+      <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">1</div>
 
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">2</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">3</div>
+      <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">2</div>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">4</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">5</div>
+      <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">3</div>
 
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">6</div>
-
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">7</div>
+      <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">4</div>
 
-  </div>
+    </div>
 
 
 
-  <div class="slide">
+    <div class="slide">
 
-    <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">8</div>
+      <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">5</div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">6</div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="wrap" data-snap-parallax-scale="-0.25" data-snap-parallax-scale-scope="-2,2" data-snap-parallax-scale-abs data-snap-parallax-scale-min="0.5" data-snap-parallax-scale-max="1" data-snap-parallax-scale-impulse="3">7</div>
+
+    </div>
 
   </div>
 
@@ -35609,63 +35207,17 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
-
-  padding: 20px;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
-
-}
-
-
-
 .carousel {
+
+  --size: clamp(max(10rem, 25vw), 50vh, 50vw);
+
+
 
   position: relative;
 
   width: 100%;
 
-  height: 50vw;
-
-  max-height: 50vh;
+  height: var(--size);
 
 
 
@@ -35693,11 +35245,9 @@ body {
 
   left: 0;
 
+  width: var(--size);
+
   height: 100%;
-
-  width: 20vw;
-
-  max-width: 50vh;
 
 }
 
@@ -35727,11 +35277,11 @@ body {
 
   background: rgba(255, 255, 255, 0.08);
 
-  border-radius: 16px;
+  border-radius: 0.5rem;
 
 
 
-  font-size: 2rem;
+  font-size: 1rem;
 
   font-weight: bold;
 
@@ -35743,7 +35293,7 @@ body {
 
 .slide:nth-child(1) .wrap {
 
-  background: linear-gradient(35deg, #a33c45ff 0%, #d7888eff 100%);
+  background: var(--gradient-slide-1, #000);
 
 }
 
@@ -35751,11 +35301,7 @@ body {
 
 .slide:nth-child(2) .wrap {
 
-  background: linear-gradient(35deg,
-
-      rgba(149, 112, 112, 1) 0%,
-
-      rgba(194, 167, 167, 1) 100%);
+  background: var(--gradient-slide-2, #000);
 
 }
 
@@ -35763,7 +35309,7 @@ body {
 
 .slide:nth-child(3) .wrap {
 
-  background: linear-gradient(35deg, #e7a873 0%, #f7c6a4 100%);
+  background: var(--gradient-slide-3, #000);
 
 }
 
@@ -35771,7 +35317,7 @@ body {
 
 .slide:nth-child(4) .wrap {
 
-  background: linear-gradient(35deg, #ff8b94 0%, #ffc9cd 100%);
+  background: var(--gradient-slide-4, #000);
 
 }
 
@@ -35779,11 +35325,7 @@ body {
 
 .slide:nth-child(5) .wrap {
 
-  background: linear-gradient(35deg,
-
-      rgba(172, 162, 92, 1) 0%,
-
-      rgba(214, 208, 156, 1) 100%);
+  background: var(--gradient-slide-5, #000);
 
 }
 
@@ -35791,7 +35333,7 @@ body {
 
 .slide:nth-child(6) .wrap {
 
-  background: linear-gradient(35deg, #654b4bff 0%, #9a7f7fff 100%);
+  background: var(--gradient-slide-6, #000);
 
 }
 
@@ -35799,15 +35341,7 @@ body {
 
 .slide:nth-child(7) .wrap {
 
-  background: linear-gradient(35deg, #61783bff 0%, #95ab6aff 100%);
-
-}
-
-
-
-.slide:nth-child(8) .wrap {
-
-  background: linear-gradient(35deg, #9e6a48ff 0%, #cfa681ff 100%);
+  background: var(--gradient-slide-7, #000);
 
 }
 ```
@@ -35835,7 +35369,7 @@ const carousel = new Snap({
 
   loop: true,
 
-  gap: "1vw",
+  gap: "1.25rem",
 
   lerp: 0.2,
 
@@ -35888,129 +35422,117 @@ Example attributes on nested elements:
 HTML
 
 ```
-<div class="carousel" id="carousel">
+<div class="fullpage-center">
 
-  <div class="slide">
+  <div class="carousel" id="carousel">
 
-    <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 1</div>
+    <div class="slide">
 
-
-
-    <div class="description" data-snap-parallax-x="20rem" data-snap-parallax-x-abs>
-
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-    </div>
-
-  </div>
+      <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 1</div>
 
 
 
-  <div class="slide">
+      <div class="description" data-snap-parallax-x="15rem" data-snap-parallax-x-abs>
 
-    <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 2</div>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-
-
-    <div class="description" data-snap-parallax-x="20rem" data-snap-parallax-x-abs>
-
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
 
     </div>
 
-  </div>
+
+
+    <div class="slide">
+
+      <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 2</div>
 
 
 
-  <div class="slide">
+      <div class="description" data-snap-parallax-x="15rem" data-snap-parallax-x-abs>
 
-    <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 3</div>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-
-
-    <div class="description" data-snap-parallax-x="20rem" data-snap-parallax-x-abs>
-
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 4</div>
-
-
-
-    <div class="description" data-snap-parallax-x="20rem" data-snap-parallax-x-abs>
-
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
 
     </div>
 
-  </div>
+
+
+    <div class="slide">
+
+      <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 3</div>
 
 
 
-  <div class="slide">
+      <div class="description" data-snap-parallax-x="15rem" data-snap-parallax-x-abs>
 
-    <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 5</div>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-
-
-    <div class="description" data-snap-parallax-x="20rem" data-snap-parallax-x-abs>
-
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-    </div>
-
-  </div>
-
-
-
-  <div class="slide">
-
-    <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 6</div>
-
-
-
-    <div class="description" data-snap-parallax-x="20rem" data-snap-parallax-x-abs>
-
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
 
     </div>
 
-  </div>
+
+
+    <div class="slide">
+
+      <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 4</div>
 
 
 
-  <div class="slide">
+      <div class="description" data-snap-parallax-x="15rem" data-snap-parallax-x-abs>
 
-    <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 7</div>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-
-
-    <div class="description" data-snap-parallax-x="20rem" data-snap-parallax-x-abs>
-
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
 
     </div>
 
-  </div>
+
+
+    <div class="slide">
+
+      <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 5</div>
 
 
 
-  <div class="slide">
+      <div class="description" data-snap-parallax-x="15rem" data-snap-parallax-x-abs>
 
-    <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 8</div>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+      </div>
+
+    </div>
 
 
 
-    <div class="description" data-snap-parallax-x="20rem" data-snap-parallax-x-abs>
+    <div class="slide">
 
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 6</div>
+
+
+
+      <div class="description" data-snap-parallax-x="15rem" data-snap-parallax-x-abs>
+
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+      </div>
+
+    </div>
+
+
+
+    <div class="slide">
+
+      <div class="title" data-snap-parallax-x="10rem" data-snap-parallax-x-abs>Title 7</div>
+
+
+
+      <div class="description" data-snap-parallax-x="15rem" data-snap-parallax-x-abs>
+
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+      </div>
 
     </div>
 
@@ -36022,49 +35544,9 @@ HTML
 CSS
 
 ```
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-
-
-body {
-
-  margin: 0;
+.fullpage-center {
 
   padding: 0;
-
-  box-sizing: border-box;
-
-
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  height: 100vh;
-
-  overflow: hidden;
-
-
-
-  background: linear-gradient(165deg,
-
-      rgb(17, 25, 42) 0%,
-
-      rgb(30, 43, 82) 40%,
-
-      rgb(0, 58, 82) 100%);
-
-  color: #fff;
-
-
-
-  font-family: "Ubuntu", sans-serif;
 
 }
 
@@ -36076,7 +35558,7 @@ body {
 
   width: 100%;
 
-  height: 100%;
+  height: 100svh;
 
 
 
@@ -36110,7 +35592,7 @@ body {
 
   box-sizing: border-box;
 
-  padding: 40px;
+  padding: 1.75rem;
 
 
 
@@ -36122,7 +35604,7 @@ body {
 
   justify-content: flex-end;
 
-  gap: 2rem;
+  gap: 1rem;
 
   overflow: hidden;
 
@@ -36136,7 +35618,7 @@ body {
 
 .title {
 
-  font-size: 4rem;
+  font-size: 1.5rem;
 
   font-weight: bold;
 
@@ -36152,9 +35634,7 @@ body {
 
   max-width: 40rem;
 
-  font-size: 1rem;
-
-  color: #ccc;
+  font-size: 0.75rem;
 
 }
 
@@ -36162,7 +35642,7 @@ body {
 
 .slide:nth-child(1) {
 
-  background: linear-gradient(35deg, #68272d 0%, #d7888eff 100%);
+  background: var(--gradient-slide-1, #000);
 
 }
 
@@ -36170,11 +35650,7 @@ body {
 
 .slide:nth-child(2) {
 
-  background: linear-gradient(35deg,
-
-      rgb(116 87 87) 0%,
-
-      rgba(194, 167, 167, 1) 100%);
+  background: var(--gradient-slide-2, #000);
 
 }
 
@@ -36182,7 +35658,7 @@ body {
 
 .slide:nth-child(3) {
 
-  background: linear-gradient(35deg, #8f6848 0%, #f7c6a4 100%);
+  background: var(--gradient-slide-3, #000);
 
 }
 
@@ -36190,7 +35666,7 @@ body {
 
 .slide:nth-child(4) {
 
-  background: linear-gradient(35deg, #9c5359 0%, #e7b2b6 100%);
+  background: var(--gradient-slide-4, #000);
 
 }
 
@@ -36198,11 +35674,7 @@ body {
 
 .slide:nth-child(5) {
 
-  background: linear-gradient(35deg,
-
-      rgb(122 114 62) 0%,
-
-      rgba(214, 208, 156, 1) 100%);
+  background: var(--gradient-slide-5, #000);
 
 }
 
@@ -36210,7 +35682,7 @@ body {
 
 .slide:nth-child(6) {
 
-  background: linear-gradient(35deg, #543f3f 0%, #9a7f7fff 100%);
+  background: var(--gradient-slide-6, #000);
 
 }
 
@@ -36218,15 +35690,7 @@ body {
 
 .slide:nth-child(7) {
 
-  background: linear-gradient(35deg, #47582b 0%, #95ab6aff 100%);
-
-}
-
-
-
-.slide:nth-child(8) {
-
-  background: linear-gradient(35deg, #68462f 0%, #cfa681ff 100%);
+  background: var(--gradient-slide-7, #000);
 
 }
 ```
