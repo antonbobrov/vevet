@@ -8,6 +8,14 @@
   font-family: 'Ubuntu', sans-serif;
   font-size: 24px;
 
+  @media (max-width: 1028px) {
+    font-size: 21px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+
   --gradient-brand-0: linear-gradient(
     0deg,
     rgb(13, 110, 253) 0%,
@@ -65,6 +73,42 @@
     35deg,
     rgb(255, 127, 135) 0%,
     rgb(244, 214, 157) 100%
+  );
+
+  --gradient-slide-1: linear-gradient(
+    35deg,
+    rgb(163, 60, 69) 0%,
+    rgb(215, 136, 142) 100%
+  );
+  --gradient-slide-2: linear-gradient(
+    35deg,
+    rgb(149, 112, 112) 0%,
+    rgb(194, 167, 167) 100%
+  );
+  --gradient-slide-3: linear-gradient(
+    35deg,
+    rgb(231, 168, 115) 0%,
+    rgb(247, 198, 164) 100%
+  );
+  --gradient-slide-4: linear-gradient(
+    35deg,
+    rgb(255, 139, 148) 0%,
+    rgb(255, 201, 205) 100%
+  );
+  --gradient-slide-5: linear-gradient(
+    35deg,
+    rgb(172, 162, 92) 0%,
+    rgb(214, 208, 156) 100%
+  );
+  --gradient-slide-6: linear-gradient(
+    35deg,
+    rgb(101, 75, 75) 0%,
+    rgb(154, 127, 127) 100%
+  );
+  --gradient-slide-7: linear-gradient(
+    35deg,
+    rgb(97, 120, 59) 0%,
+    rgb(149, 171, 106) 100%
   );
 }
 

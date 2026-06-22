@@ -22,6 +22,24 @@ These demos are **custom UI patterns** built on top of Snap — not built-in pre
 Most map `coord`, `progress`, and slide metadata in the `update` callback to CSS transforms. Some also use other vevet modules ([Timeline](/docs/Timeline/), [Swipe](/docs/Swipe/), [Responsive](/docs/base/Responsive/), and others). Expand the HTML/CSS/JS snippets below each demo to see the full implementation.
 
 <section>
+## Focus
+
+(todo read code and describe)
+
+<VevetDemo id="MYJbrWP" height={500} />
+</section>
+
+<section>
+## Expand slide {#expand-slide}
+
+Freemode carousel where clicking a slide expands its width with [Timeline](/docs/Timeline/) and calls `slide.resize()` + `carousel.set()`.
+
+Key props: `freemode: "sticky"`, `wheel: true`, `edgeFriction: 0.95`, `stickOnResize: false`.
+
+<VevetDemo id="jEqdQZg" height={500} />
+</section>
+
+<section>
 ## Panorama
 
 3D panorama carousel inspired by [Panorama Slider](https://panorama-slider.uiinitiative.com/).
@@ -29,6 +47,14 @@ Most map `coord`, `progress`, and slide metadata in the `update` callback to CSS
 Maps `progress` to `translateZ`, `rotateY`, and a horizontal offset in `onUpdate`. Uses `origin: "center"`, `freemode: true`, and `loop: true`.
 
 <VevetDemo id="OPMzdaX" height={500} />
+</section>
+
+<section>
+## Cube
+
+3D cube carousel with perspective (todo read code and describe)
+
+<VevetDemo id="WbRoXzO" height={500} />
 </section>
 
 <section>
@@ -56,16 +82,6 @@ CSS 3D perspective carousel. Maps `progress` to `translateZ` and `rotateZ` per s
 </section>
 
 <section>
-## Stack overlap
-
-Overlapping stack: the active slide stays in place while previous slides shrink back in Z-space.
-
-Driven by `progress` — `translateX`, `translateZ`, and `brightness` in `onUpdate`.
-
-<VevetDemo id="LEZvwOv" height={500} />
-</section>
-
-<section>
 ## Wavy sine
 
 Horizontal track with sine-wave vertical offset, rotation, and scale per slide.
@@ -73,6 +89,26 @@ Horizontal track with sine-wave vertical offset, rotation, and scale per slide.
 Uses `eventsEmitter: document.documentElement`, `freemode: true`, and `origin: "center"`.
 
 <VevetDemo id="WbxWVyO" height={500} />
+</section>
+
+<section>
+## Expo slider
+
+Expo-style carousel inspired by [Expo Slider](https://expo-slider.uiinitiative.com/).
+
+Smooth motion via `easing: EaseOutExpo`, `duration: 1500`, `lerp: 0.2`.
+
+<VevetDemo id="MYyLroo" height={500} />
+</section>
+
+<section>
+## Stack overlap
+
+Overlapping stack: the active slide stays in place while previous slides shrink back in Z-space.
+
+Driven by `progress` — `translateX`, `translateZ`, and `brightness` in `onUpdate`.
+
+<VevetDemo id="LEZvwOv" height={500} />
 </section>
 
 <section>
@@ -94,24 +130,6 @@ See also [Snap parallax](/docs/Snap/parallax/). Snap moves slides with `translat
 </section>
 
 <section>
-## Arc carousel
-
-Slides follow an arc path: `coord` maps to a sine curve with tangent-based rotation and depth offset.
-
-<VevetDemo id="qEayRzw" height={500} />
-</section>
-
-<section>
-## Expo slider
-
-Expo-style carousel inspired by [Expo Slider](https://expo-slider.uiinitiative.com/).
-
-Smooth motion via `easing: EaseOutExpo`, `duration: 1500`, `lerp: 0.2`.
-
-<VevetDemo id="MYyLroo" height={500} />
-</section>
-
-<section>
 ## Cards
 
 Card stack with horizontal offset, Z-depth, and rotation from `progress`. Passed cards tuck beneath the active slide.
@@ -119,16 +137,6 @@ Card stack with horizontal offset, Z-depth, and rotation from `progress`. Passed
 Uses `onSwipeStart` to track the gesture origin slide for asymmetric motion.
 
 <VevetDemo id="QwNYJGo" height={500} />
-</section>
-
-<section>
-## Expand slide {#expand-slide}
-
-Freemode carousel where clicking a slide expands its width with [Timeline](/docs/Timeline/) and calls `slide.resize()` + `carousel.set()`.
-
-Key props: `freemode: "sticky"`, `wheel: true`, `edgeFriction: 0.95`, `stickOnResize: false`.
-
-<VevetDemo id="jEqdQZg" height={500} />
 </section>
 
 <section>
