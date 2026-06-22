@@ -176,7 +176,7 @@ export class SnapWheel extends SnapLogic {
             track.current = track.target;
           }
         } else if (direction === 1) {
-          if (!canLoop && this.activeIndex === this.slides.length - 1) {
+          if (!canLoop && this.activeIndex === this.slidesCount - 1) {
             if (!props.rewind) {
               return;
             }

@@ -6,6 +6,8 @@ import { SnapSlideParallax } from './Parallax';
 import { PARALLAX_ATTRIBUTES } from './Parallax/constants';
 import { ISnapSlideProps } from './types';
 
+// todo: apply parallax for slides
+
 export class SnapSlide {
   /** Snap component */
   private _ctx?: Snap;
@@ -14,10 +16,10 @@ export class SnapSlide {
   private _props: Required<ISnapSlideProps>;
 
   /** Slide index */
-  private _index: number;
+  private _index = 0;
 
   /** Slide parallax elements */
-  private _parallax?: SnapSlideParallax[];
+  private _parallax?: SnapSlideParallax[] = [];
 
   /** Events on slide resize */
   private _resizer?: IOnResize;
@@ -44,9 +46,6 @@ export class SnapSlide {
     private _element: HTMLElement | null,
     initProps: ISnapSlideProps = {},
   ) {
-    this._index = 0;
-    this._parallax = [];
-
     const defaultProps: ISnapSlideProps = {
       virtual: false,
       size: null,
@@ -143,6 +142,95 @@ export class SnapSlide {
     ctx.resize(isManual);
   }
 
+  /** Get list of parallax nodes */
+  private _getParallaxNodes() {
+    const { element } = this;
+
+    if (!element) {
+      return [];
+    }
+
+    const selector = PARALLAX_ATTRIBUTES.map((attr) => `[${attr}]`).join(',');
+    const nodeList = element.querySelectorAll(selector);
+
+    return Array.from(nodeList) as HTMLElement[];
+  }
+
+  /** Toggle slide append/remove */
+  private _toggleAppend() {
+    if (!this.props.virtual || !this.element || !this.ctx) {
+      return;
+    }
+
+    const { element, ctx } = this;
+
+    if (this.isVisible && !this._isAppended) {
+      this._isAppended = true;
+      ctx.container.appendChild(element);
+    } else if (!this.isVisible && this._isAppended) {
+      this._isAppended = false;
+      ctx.container.removeChild(element);
+    }
+  }
+
+  /** Set slide coordinate */
+  private _setCoord(value: number) {
+    this._coord = value;
+
+    this._isVisible =
+      this.size > 0 &&
+      this._coord > -this.size &&
+      this._coord < (this.ctx?.containerSize ?? 0);
+  }
+
+  /** Get magnets with static coordinates but dynamic alignment */
+  public get magnets() {
+    if (!this.ctx) {
+      return [];
+    }
+
+    const { ctx, staticCoord, size, index } = this;
+    const { containerSize, origin } = ctx;
+
+    let points: number[] = [];
+
+    if (index === 0 && ctx.props.loop) {
+      points.push(ctx.max);
+    }
+
+    if (origin === 'center') {
+      const point = staticCoord + size / 2 - ctx.firstSlideSize / 2;
+
+      if (size > containerSize) {
+        points.push(point);
+        points.push(point + (containerSize - size) / 2);
+        points.push(point - (containerSize - size) / 2);
+      } else {
+        points.push(point);
+      }
+    } else if (origin === 'end') {
+      const point = staticCoord + size - ctx.firstSlideSize;
+
+      points.push(point);
+
+      if (size > containerSize) {
+        points.push(point + (containerSize - size));
+      }
+    } else {
+      points.push(staticCoord);
+
+      if (size > containerSize) {
+        points.push(staticCoord + (size - containerSize));
+      }
+
+      if (!ctx.canLoop) {
+        points = points.map((point) => clamp(point, 0, ctx.max));
+      }
+    }
+
+    return points;
+  }
+
   /**
    * Attach the slide to the Snap class.
    * For internal use only
@@ -193,84 +281,6 @@ export class SnapSlide {
     this._toggleAppend();
 
     this._parallax?.forEach((parallax) => parallax.render());
-  }
-
-  /** Get list of parallax nodes */
-  private _getParallaxNodes() {
-    const { element } = this;
-    if (!element) {
-      return [];
-    }
-
-    const selector = PARALLAX_ATTRIBUTES.map((attr) => `[${attr}]`).join(',');
-    const nodeList = element.querySelectorAll(selector);
-
-    return Array.from(nodeList) as HTMLElement[];
-  }
-
-  /** Toggle slide append/remove */
-  private _toggleAppend() {
-    if (!this.props.virtual || !this.element || !this.ctx) {
-      return;
-    }
-
-    const { element, ctx } = this;
-
-    if (this.isVisible && !this._isAppended) {
-      this._isAppended = true;
-      ctx.container.appendChild(element);
-    } else if (!this.isVisible && this._isAppended) {
-      this._isAppended = false;
-      ctx.container.removeChild(element);
-    }
-  }
-
-  /** Get magnets with static coordinates but dynamic alignment */
-  public get magnets() {
-    if (!this.ctx) {
-      return [];
-    }
-
-    const { ctx, staticCoord, size, index } = this;
-    const { containerSize, origin } = ctx;
-
-    let points: number[] = [];
-
-    if (index === 0 && ctx.props.loop) {
-      points.push(ctx.max);
-    }
-
-    if (origin === 'center') {
-      const point = staticCoord + size / 2 - ctx.firstSlideSize / 2;
-
-      if (size > containerSize) {
-        points.push(point);
-        points.push(point + (containerSize - size) / 2);
-        points.push(point - (containerSize - size) / 2);
-      } else {
-        points.push(point);
-      }
-    } else if (origin === 'end') {
-      const point = staticCoord + size - ctx.firstSlideSize;
-
-      points.push(point);
-
-      if (size > containerSize) {
-        points.push(point + (containerSize - size));
-      }
-    } else {
-      points.push(staticCoord);
-
-      if (size > containerSize) {
-        points.push(staticCoord + (size - containerSize));
-      }
-
-      if (!ctx.canLoop) {
-        points = points.map((point) => clamp(point, 0, ctx.max));
-      }
-    }
-
-    return points;
   }
 
   /**
@@ -345,15 +355,5 @@ export class SnapSlide {
     }
 
     this._setCoord(loop(staticCoord - ctx.current, -size, ctx.max - size));
-  }
-
-  /** Set slide coordinate */
-  private _setCoord(value: number) {
-    this._coord = value;
-
-    this._isVisible =
-      this.size > 0 &&
-      this._coord > -this.size &&
-      this._coord < (this.ctx?.containerSize ?? 0);
   }
 }

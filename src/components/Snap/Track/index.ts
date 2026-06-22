@@ -6,7 +6,7 @@ import { toPixels } from '@/utils';
 import { clamp, lerp, loop } from '@/utils/math';
 
 import { Snap } from '..';
-import { ISnapTransitionArg, SnapSlide } from '../..';
+import { ISnapTransitionArg } from '../..';
 import { LERP_APPROXIMATION } from '../props';
 
 import { IProps } from './types';
@@ -35,10 +35,8 @@ export class SnapTrack {
 
   constructor(
     private props: typeof Snap.prototype.props,
-    private _slides: () => SnapSlide[],
     private ctx: IProps,
   ) {
-    // Create the animation frame
     this._raf = new Raf();
     this._raf.on('frame', () => this._handleRaf());
     this._raf.on('play', () => ctx.onRafPlay?.());
@@ -46,7 +44,7 @@ export class SnapTrack {
   }
 
   private get slides() {
-    return this._slides();
+    return this.ctx.getSlides();
   }
 
   /** Gets the target slide index */
@@ -130,11 +128,18 @@ export class SnapTrack {
     return !!this._tm;
   }
 
+  /** If track values are interpolating */
+  get isInterpolating() {
+    const diff = Math.abs(this.target - this.current);
+
+    return diff > LERP_APPROXIMATION;
+  }
+
   /** Get minimum track value */
   get min() {
     const containerSize = this.ctx.containerSize();
     const origin = this.ctx.origin();
-    const firstSlide = this.slides[0];
+    const firstSlide = this.slides.getFirstSlide();
 
     if (this.canLoop) {
       return 0;
@@ -162,8 +167,8 @@ export class SnapTrack {
 
     const { slides, canLoop, props } = this;
 
-    const firstSlide = slides[0];
-    const lastSlide = slides[slides.length - 1];
+    const firstSlide = slides.getFirstSlide();
+    const lastSlide = slides.getLastSlide();
     const lastCoordWithSlide = lastSlide.staticCoord + lastSlide.size;
 
     let max = canLoop

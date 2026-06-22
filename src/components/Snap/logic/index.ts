@@ -51,7 +51,7 @@ export class SnapLogic {
   }
 
   protected get track() {
-    return this._snap.$track;
+    return this._snap.$_track;
   }
 
   protected get canLoop() {
@@ -74,8 +74,8 @@ export class SnapLogic {
     return this._snap.activeIndex;
   }
 
-  protected get slides() {
-    return this._snap.slides;
+  protected get slidesCount() {
+    return this._snap.slides.length;
   }
 
   protected get isDestroyed() {
