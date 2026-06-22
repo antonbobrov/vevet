@@ -1,12 +1,10 @@
 import { clamp, IOnResize, loop, onResize, scoped, toPixels } from '@/utils';
 
 import { Snap } from '../..';
+import { SnapParallax } from '../Parallax';
+import { PARALLAX_ATTRIBUTES } from '../Parallax/constants';
 
-import { SnapSlideParallax } from './Parallax';
-import { PARALLAX_ATTRIBUTES } from './Parallax/constants';
 import { ISnapSlideProps } from './types';
-
-// todo: apply parallax for slides
 
 export class SnapSlide {
   /** Snap component */
@@ -19,7 +17,7 @@ export class SnapSlide {
   private _index = 0;
 
   /** Slide parallax elements */
-  private _parallax?: SnapSlideParallax[] = [];
+  private _parallax?: SnapParallax[] = [];
 
   /** Events on slide resize */
   private _resizer?: IOnResize;
@@ -242,7 +240,7 @@ export class SnapSlide {
     this._index = index;
 
     this._parallax = this._getParallaxNodes().map(
-      (node) => new SnapSlideParallax(this, node, () => ctx.impulse),
+      (node) => new SnapParallax(this, node, () => ctx.impulse),
     );
 
     if (this.element && this.sizeProp === 'auto') {

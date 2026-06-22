@@ -1,9 +1,9 @@
 import { clamp } from '@/utils';
 
-import { ISnapSlideParallaxGroup } from './types';
+import { ISnapParallaxGroup } from './types';
 import { getAttrName } from './utils';
 
-export const PARALLAX_GROUPS: ISnapSlideParallaxGroup[] = [
+export const PARALLAX_GROUPS: ISnapParallaxGroup[] = [
   {
     prop: 'transform',
     types: [

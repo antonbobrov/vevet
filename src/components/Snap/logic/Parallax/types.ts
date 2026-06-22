@@ -1,14 +1,14 @@
 import { Snap } from '@/components/Snap';
 
-import { SnapSlide } from '..';
+import { SnapSlide } from '../Slide';
 
-export interface ISnapSlideParallaxProps {
+export interface ISnapParallaxProps {
   snap: Snap;
   slide: SnapSlide;
   element: HTMLElement;
 }
 
-export interface ISnapSlideParallaxType {
+export interface ISnapParallaxType {
   attr: string;
   prop: string;
   unit: string;
@@ -16,12 +16,12 @@ export interface ISnapSlideParallaxType {
   modifier?: (value: number) => number;
 }
 
-export interface ISnapSlideParallaxGroup {
+export interface ISnapParallaxGroup {
   prop: string;
-  types: ISnapSlideParallaxType[];
+  types: ISnapParallaxType[];
 }
 
-export interface ISnapSlideParallaxItem extends ISnapSlideParallaxType {
+export interface ISnapParallaxItem extends ISnapParallaxType {
   group: string;
   scope: number[];
   progress: number;

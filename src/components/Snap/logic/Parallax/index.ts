@@ -2,13 +2,15 @@ import { SnapSlide } from '@/components/Snap';
 import { clamp } from '@/utils';
 
 import { PARALLAX_GROUPS, PARALLAX_TYPES } from './constants';
-import { ISnapSlideParallaxItem } from './types';
+import { ISnapParallaxItem } from './types';
 import { getAttr, getFloatAttr, isParallaxAttr } from './utils';
 
-export class SnapSlideParallax {
+export class SnapParallax {
   private _observer: MutationObserver;
 
-  private _items: ISnapSlideParallaxItem[] = [];
+  private _items: ISnapParallaxItem[] = [];
+
+  private _prevStyles: Record<string, string> = {};
 
   private _debounceInit: NodeJS.Timeout | null = null;
 
@@ -109,7 +111,7 @@ export class SnapSlideParallax {
           impulse: impulse || influence,
           isDirectional,
           isAbs,
-        } satisfies ISnapSlideParallaxItem;
+        } satisfies ISnapParallaxItem;
       },
     );
   }
@@ -189,7 +191,10 @@ export class SnapSlideParallax {
 
       const styleString = styles.join(' ');
 
-      element.style[groupProp as any] = styleString;
+      if (this._prevStyles[groupProp] !== styleString) {
+        element.style[groupProp as any] = styleString;
+        this._prevStyles[groupProp] = styleString;
+      }
     });
   }
 
