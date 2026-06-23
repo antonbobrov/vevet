@@ -16,6 +16,7 @@ export const Path: FC = () => {
       width: '2rem',
       height: '2rem',
       lerp: 0.005,
+      angleLerpMultiplier: 20,
       behavior: 'path',
       transformModifier: (coords) =>
         `translate(${coords.x}px, ${coords.y}px) rotate(${coords.angle}deg) `,

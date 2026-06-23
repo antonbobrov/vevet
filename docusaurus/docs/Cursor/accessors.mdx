@@ -32,10 +32,14 @@ cursor.container; // returns cursor container
 
 ### `coords`
 
-Type: `{ height: number; width: number; x: number; y: number; }`
+Type: `{ height: number; width: number; x: number; y: number; angle: number; velocity: number; impulseX: number; impulseY: number }`
 
 The **current interpolated cursor state**.  
 These values are smoothed over time using interpolation and are intended for **rendering and animation logic**.
+
+:::warning
+The coordinates are calculated relatively to the window.
+:::
 
 ```js
 const cursor = new Cursor();
@@ -46,6 +50,8 @@ cursor.coords.width;
 cursor.coords.height;
 cursor.coords.angle;
 cursor.coords.velocity;
+cursor.coords.impulseX;
+cursor.coords.impulseY;
 ```
 
 ### `domContainer`
@@ -111,10 +117,14 @@ cursor.outer; // HTMLElement
 
 ### `targetCoords`
 
-Type: `{ height: number; width: number; x: number; y: number }`
+Type: `{ height: number; width: number; x: number; y: number; angle: number; velocity: number; impulseX: number; impulseY: number }`
 
 The **raw, non-interpolated cursor state**.  
 Represents the immediate result of pointer movement or hover state changes.
+
+:::warning
+The coordinates are calculated relatively to the window.
+:::
 
 ```js
 const cursor = new Cursor();
@@ -125,6 +135,8 @@ cursor.targetCoords.width;
 cursor.targetCoords.height;
 cursor.targetCoords.angle;
 cursor.targetCoords.velocity;
+cursor.targetCoords.impulseX;
+cursor.targetCoords.impulseY;
 ```
 
 ### `path`

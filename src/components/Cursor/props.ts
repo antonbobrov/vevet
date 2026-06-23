@@ -18,5 +18,7 @@ export const MUTABLE_PROPS: TRequiredProps<ICursorMutableProps> = {
   width: 50,
   height: 50,
   lerp: 0.2,
+  angleLerpMultiplier: 2,
+  velocityThreshold: 150,
   autoStop: true,
 };

@@ -68,6 +68,21 @@ export interface ICursorMutableProps extends IModuleMutableProps {
   lerp?: number;
 
   /**
+   * Linear interpolation factor for smooth cursor rotation.
+   * The value multiplies the `lerp` value.
+   * @default 2
+   */
+  angleLerpMultiplier?: number;
+
+  /**
+   * Velocity normalization threshold in pixels.
+   * Used to convert pointer movement deltas into normalized `velocity`, `impulseX`, and `impulseY`.
+   * Higher values reduce sensitivity (slower velocity growth); lower values increase it.
+   * @default 150
+   */
+  velocityThreshold?: number;
+
+  /**
    * Stops rendering the cursor automatically when its coordinates and size
    * closely match the target values.
    * @default true
@@ -118,6 +133,8 @@ export interface ICursorTargetCoords {
   y: number;
   angle: number;
   velocity: number;
+  impulseX: number;
+  impulseY: number;
 }
 
 /**

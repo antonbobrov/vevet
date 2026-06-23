@@ -165,6 +165,43 @@ cursor.updateProps({
 });
 ```
 
+### `angleLerpMultiplier` {#props.angleLerpMultiplier}
+
+- **Type:** `number`
+- **Default:** `2`
+- Linear interpolation factor for smooth cursor rotation.  
+  This value multiplies the `lerp` value.
+
+```js
+const cursor = new Cursor({
+  angleLerpMultiplier: 2,
+});
+
+// change value
+cursor.updateProps({
+  angleLerpMultiplier: 3,
+});
+```
+
+### `velocityThreshold` {#props.velocityThreshold}
+
+- **Type:** `number`
+- **Default:** `150`
+- Velocity normalization threshold in pixels.  
+  Used to convert pointer movement deltas into normalized `velocity`, `impulseX`, and `impulseY`.
+- Higher values reduce sensitivity (slower velocity growth); lower values increase it.
+
+```js
+const cursor = new Cursor({
+  velocityThreshold: 150,
+});
+
+// change value
+cursor.updateProps({
+  velocityThreshold: 250,
+});
+```
+
 ### `autoStop` {#props.autoStop}
 
 - **Type:** `boolean`
