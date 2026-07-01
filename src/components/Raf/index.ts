@@ -198,6 +198,11 @@ export class Raf extends Module<TC, TS, TM> {
     return 1 - Math.exp(-ease * 60 * (this.duration / 1000));
   }
 
+  /** Linear interpolation independent of FPS */
+  public damp(from: number, to: number, ease: number, approximation?: number) {
+    return lerp(from, to, this.lerpFactor(ease), approximation);
+  }
+
   /** Compute real-time FPS from frame durations */
   private _computeFPS() {
     const { duration, index, props } = this;
