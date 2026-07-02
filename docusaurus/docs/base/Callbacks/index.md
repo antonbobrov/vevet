@@ -9,74 +9,101 @@ keywords:
 
 # Callbacks
 
-**Callbacks** class manages event listeners with support for one-time execution, protection, and delays.
+**Callbacks** is a typed event registry with support for one-time listeners, protected listeners, and delayed execution.
 
-It's used internally in the **[Module](/docs/base/Module/)** and all components, but you can also instantiate it independently:
+It is used internally by **[Module](/docs/base/Module/)** and all components. You can also instantiate it directly when building custom logic.
+
+## Event map
+
+Define events by extending `ICallbacksMap`. Each key is an event name; the value is the payload type passed to listeners on `emit`. Use `undefined` for events without a payload.
 
 ```ts
-// Define the interface for callback events
-interface ICallbacks {
+interface IMyCallbacks extends ICallbacksMap {
   init: undefined;
-  update: {
-    value: number;
-  };
+  update: { value: number };
+}
+```
+
+## In components
+
+Every **Module** owns a `callbacks` instance. Component constructor props such as `onMove` or `onDestroy` are registered on that instance (`onMove` → `move`).
+
+You can subscribe in two ways:
+
+- **Declarative** — pass `onEvent` functions in constructor props.
+- **Imperative** — call `instance.on('event', listener)` after creation.
+
+Both approaches use the same underlying **Callbacks** instance. See **[Module](/docs/base/Module/)** for the component-level API.
+
+## Constructor
+
+```ts
+new Callbacks<Types, Ctx>(props?)
+```
+
+| Option | Type   | Description                                                        |
+| ------ | ------ | ------------------------------------------------------------------ |
+| `ctx`  | `Ctx`  | Optional context forwarded as the second argument to every listener |
+
+Inside components, `ctx` is the module instance (`this`).
+
+## Listener signature
+
+Every listener receives two arguments:
+
+```ts
+(data, ctx) => void
+```
+
+- `data` — event payload from the map (`undefined` is passed explicitly when the event has no payload).
+- `ctx` — value from constructor `ctx` (the module instance in components).
+
+## Methods
+
+| Method              | Returns              | Description                                      |
+| ------------------- | -------------------- | ------------------------------------------------ |
+| `on(target, fn, settings?)` | `() => void` | Registers a listener. Returned function removes it. |
+| `add(target, fn, settings?)` | `{ id, remove }` | Same as `on`, but also exposes the callback `id` for `remove()`. |
+| `emit(target, arg)` | `void`               | Invokes all listeners for the event.             |
+| `remove(id)`        | `boolean`            | Removes a listener by id. Protected listeners are skipped. |
+| `destroy()`         | `void`               | Clears all listeners. Further calls to `on` / `add` are no-ops. |
+| `list`              | `ICallback[]`        | Snapshot of registered listeners (for debugging).  |
+
+Prefer `on()` when you only need a destructor. Use `add()` when you need the callback `id`.
+
+## Settings
+
+Pass as the third argument to `on()` or `add()`:
+
+| Option      | Type      | Default     | Description |
+| ----------- | --------- | ----------- | ----------- |
+| `once`      | `boolean` | `false`     | Remove the listener after the first execution. |
+| `protected` | `boolean` | `false`     | Prevent manual removal via `remove()` or the `on()` destructor. Cleared on `destroy()`. |
+| `timeout`   | `number`  | `undefined` | Delay before the listener runs, in milliseconds. |
+| `name`      | `string`  | `undefined` | Optional label for debugging (`list`). |
+
+## Example
+
+```ts
+import { Callbacks, ICallbacksMap } from 'vevet';
+
+interface IMyCallbacks extends ICallbacksMap {
+  init: undefined;
+  update: { value: number };
 }
 
-// Create a Callbacks instance
-const callbacks = new Callbacks<ICallbacks>();
+const callbacks = new Callbacks<IMyCallbacks>();
 
-// Register a basic callback for "init"
-const removeSimpleCallback = callbacks.on('init', () => {
-  console.log('callback on init');
+const remove = callbacks.on('update', ({ value }) => {
+  console.log(value);
 });
 
-// Register a protected callback (cannot be removed manually)
-const protectedCallback = callbacks.on(
-  'init',
-  () => {
-    console.log('protected callback');
-  },
-  { protected: true },
-);
+callbacks.emit('update', { value: 1 });
 
-// Register a one-time callback
-const removeOnceCallback = callbacks.on(
-  'init',
-  () => {
-    console.log('one-time callback');
-  },
-  { once: true },
-);
-
-// Register a delayed callback (executes after 1000ms)
-const removeDelayedCallback = callbacks.on(
-  'init',
-  () => {
-    console.log('delayed callback');
-  },
-  { timeout: 1000 },
-);
-
-// Emit the "init" callbacks
-callbacks.emit('init', undefined);
-
-// Register a callback with an argument and emit it
-const onUpdate = callbacks.on('update', ({ value }) => {
-  console.log('update', value);
-});
-callbacks.emit('update', { value: 0 });
-
-// Remove a specific callback
-removeSimpleCallback();
-
-// Attempting to remove a protected callback (no effect)
-protectedCallback();
-
-// List all registered callbacks
-console.log(callbacks.list);
-
-// Remove all callbacks
+remove();
 callbacks.destroy();
 ```
 
-### Learn more in the <a href="/vevet/v5/classes/Callbacks.html" target="_blank" rel="noopener">Typedoc</a>
+## Typedoc
+
+For full API details and types, see **[Callbacks](https://vevetjs.com/v5/classes/Callbacks.html)** in Typedoc.
