@@ -21,7 +21,7 @@ All **[Module callbacks](/docs/base/Module/#callbacks)** are available in this c
 
 ### `start`
 
-Triggered when the timeline starts.
+Fired when linear progress is set to `0` (including via [`reset`](methods#reset)).
 
 ```ts
 const tm = new Timeline({
@@ -40,7 +40,7 @@ destruct();
 
 ### `update`
 
-Triggered on every timeline update.
+Fired on every progress change.
 
 Provides both:
 
@@ -74,7 +74,7 @@ This allows you to:
 
 ### `end`
 
-Triggered when the timeline completes.
+Fired when linear progress reaches `1`.
 
 ```ts
 const tm = new Timeline({

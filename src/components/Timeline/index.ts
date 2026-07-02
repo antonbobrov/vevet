@@ -19,46 +19,40 @@ type TS = ITimelineStaticProps;
 type TM = ITimelineMutableProps;
 
 /**
- * A timeline class for managing animations with easing and precise progress control.
- * It provides methods for playing, reversing, pausing, and resetting the timeline.
+ * Timeline for time-based progress with easing.
+ *
+ * Operates in the `0 → 1` range; {@link play}, {@link reverse}, {@link pause},
+ * and {@link reset} control playback. Does not touch the DOM — use callbacks
+ * or the {@link progress} / {@link eased} accessors to drive animation.
  *
  * [Documentation](https://vevetjs.com/docs/Timeline)
  *
  * @group Components
  */
 export class Timeline extends Module<TC, TS, TM> {
-  /** Get default static properties. */
   public _getStatic(): TRequiredProps<TS> {
     return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
-  /** Get default mutable properties. */
   public _getMutable(): TRequiredProps<TM> {
     return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 
-  /** Current linear progress of the timeline (0 to 1). */
   private _progress: number;
 
-  /** Current eased progress of the timeline (after applying easing function). */
   private _eased: number;
 
-  /** Stores the ID of the current animation frame request. */
   private _raf?: number;
 
-  /** Stores the timestamp of the last frame update. */
   private _time: number;
 
-  /** Indicates whether the timeline is currently reversed. */
   private _isReversed: boolean;
 
-  /** Indicates whether the timeline is paused. */
   private _isPaused: boolean;
 
   constructor(props?: TModuleProps<TC, TS, TM, Timeline>) {
     super(props);
 
-    // Initialize default values
     this._progress = 0;
     this._eased = 0;
     this._raf = undefined;
@@ -68,8 +62,9 @@ export class Timeline extends Module<TC, TS, TM> {
   }
 
   /**
-   * Get or set the linear progress of the timeline.
-   * Setting this triggers an update and associated callbacks.
+   * Linear progress (`0 → 1`).
+   *
+   * Assigning a value clamps, recalculates {@link eased}, and fires callbacks.
    */
   get progress() {
     return this._progress;
@@ -81,36 +76,30 @@ export class Timeline extends Module<TC, TS, TM> {
     this._onUpdate();
   }
 
-  /**
-   * Get the eased progress of the timeline, derived from the easing function.
-   */
+  /** Eased progress derived from {@link progress} and the `easing` prop. */
   get eased() {
     return this._eased;
   }
 
-  /**
-   * Whether the timeline is currently playing.
-   */
+  /** Whether a `requestAnimationFrame` loop is active. */
   get isPlaying() {
     return !isUndefined(this._raf);
   }
 
-  /**
-   * Whether the timeline is reversed (progress decreases over time).
-   */
+  /** Whether playback direction is reversed. */
   get isReversed() {
     return this._isReversed;
   }
 
-  /**
-   * Whether the timeline is paused.
-   */
+  /** Whether playback is paused. */
   get isPaused() {
     return this._isPaused;
   }
 
   /**
-   * Get the timeline duration, ensuring it is at least 0 ms.
+   * Duration in milliseconds.
+   *
+   * Non-finite or negative values are treated as `0` (instant completion).
    */
   get duration() {
     const source = this.props.duration;
@@ -123,8 +112,9 @@ export class Timeline extends Module<TC, TS, TM> {
   }
 
   /**
-   * Play the timeline, advancing progress toward completion.
-   * Does nothing if the timeline is destroyed or already completed.
+   * Plays forward toward `progress = 1`.
+   *
+   * No-op when destroyed or when progress is already `1`.
    */
   @noopIfDestroyed
   public play() {
@@ -142,8 +132,9 @@ export class Timeline extends Module<TC, TS, TM> {
   }
 
   /**
-   * Reverse the timeline, moving progress toward the start.
-   * Does nothing if the timeline is destroyed or already at the start.
+   * Plays backward toward `progress = 0`.
+   *
+   * No-op when destroyed or when progress is already `0`.
    */
   @noopIfDestroyed
   public reverse() {
@@ -160,9 +151,7 @@ export class Timeline extends Module<TC, TS, TM> {
     }
   }
 
-  /**
-   * Pause the timeline, halting progress without resetting it.
-   */
+  /** Pauses playback without resetting progress. */
   @noopIfDestroyed
   public pause() {
     this._isPaused = true;
@@ -174,18 +163,14 @@ export class Timeline extends Module<TC, TS, TM> {
     this._raf = undefined;
   }
 
-  /**
-   * Reset the timeline to the beginning (progress = 0).
-   */
+  /** Pauses and sets {@link progress} to `0`. */
   @noopIfDestroyed
   public reset() {
     this.pause();
     this.progress = 0;
   }
 
-  /**
-   * Animate the timeline, updating progress based on elapsed time.
-   */
+  /** Advances progress from elapsed time and schedules the next frame. */
   private _animate() {
     if (this.isPaused) {
       return;
@@ -223,9 +208,7 @@ export class Timeline extends Module<TC, TS, TM> {
     this._raf = window.requestAnimationFrame(() => this._animate());
   }
 
-  /**
-   * Handle progress updates and trigger callbacks.
-   */
+  /** Recomputes eased progress and emits `update` / `start` / `end`. */
   private _onUpdate() {
     this._eased = easing(this._progress, this.props.easing);
 
@@ -236,8 +219,6 @@ export class Timeline extends Module<TC, TS, TM> {
 
     if (this.progress === 0) {
       this.callbacks.emit('start', undefined);
-
-      return;
     }
 
     if (this.progress === 1) {
@@ -245,9 +226,6 @@ export class Timeline extends Module<TC, TS, TM> {
     }
   }
 
-  /**
-   * Destroy the timeline, stopping any active animation and cleaning up resources.
-   */
   protected _destroy() {
     this.pause();
 

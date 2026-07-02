@@ -31,12 +31,12 @@ tm.pause();
 
 ### `play`
 
-Play the timeline, advancing progress **from the current value toward `1`.**
+Plays forward toward `progress = 1`.
 
 Notes:
 
 - If the timeline is reversed, calling `play()` switches it to forward mode.
-- Does nothing if the timeline is already playing or destroyed.
+- No-op when progress is already `1` or the instance is destroyed.
 
 ```ts
 const tm = new Timeline();

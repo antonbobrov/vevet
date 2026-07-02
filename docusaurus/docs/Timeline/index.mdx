@@ -36,14 +36,13 @@ It provides methods for playing, reversing, pausing, and resetting the timeline.
 ```js
 import { Timeline } from 'vevet';
 
-const tm = new Timeline(
-  { duration: 350, easing: [0.25, 0.1, 0.25, 1] },
-  {
-    onUpdate: ({ eased }) => {
-      // your animation here
-    },
+const tm = new Timeline({
+  duration: 350,
+  easing: [0.25, 0.1, 0.25, 1],
+  onUpdate: ({ eased }) => {
+    // your animation here
   },
-);
+});
 
 tm.play();
 
