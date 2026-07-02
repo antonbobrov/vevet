@@ -202,7 +202,7 @@ export class Pointers extends Module<TC, TS, TM> {
 
     if (this._points.size === minPointers) {
       this._isStarted = true;
-      this.callbacks.emit('start', undefined);
+      this._emit('start', undefined);
     }
 
     this._setRuntimeEvents();
@@ -211,7 +211,7 @@ export class Pointers extends Module<TC, TS, TM> {
       body.append(styles);
     }
 
-    this.callbacks.emit('pointerdown', { event, pointer });
+    this._emit('pointerdown', { event, pointer });
   }
 
   /**
@@ -230,7 +230,7 @@ export class Pointers extends Module<TC, TS, TM> {
       return;
     }
 
-    this.callbacks.emit('pointermove', { event, pointer });
+    this._emit('pointermove', { event, pointer });
 
     if (!this._isStarted) {
       return;
@@ -248,7 +248,7 @@ export class Pointers extends Module<TC, TS, TM> {
         return;
       }
 
-      this.callbacks.emit('move', this._coords.data);
+      this._emit('move', this._coords.data);
     });
   }
 
@@ -264,14 +264,14 @@ export class Pointers extends Module<TC, TS, TM> {
       return;
     }
 
-    this.callbacks.emit('pointerup', { pointer });
+    this._emit('pointerup', { pointer });
 
     this._points.delete(event.pointerId);
 
     if (this._points.size < minPointers && this._isStarted) {
       this._isStarted = false;
       this._coords.reset();
-      this.callbacks.emit('end', undefined);
+      this._emit('end', undefined);
     }
 
     if (this._points.size === 0) {
@@ -283,10 +283,10 @@ export class Pointers extends Module<TC, TS, TM> {
    * Handles `pointercancel` and window `blur`: fires `end` and resets state.
    */
   private _handleCancel() {
-    this.callbacks.emit('end', undefined);
+    this._emit('end', undefined);
 
     this._points.map.forEach((pointer) => {
-      this.callbacks.emit('pointerup', { pointer });
+      this._emit('pointerup', { pointer });
     });
 
     this._cleanup();

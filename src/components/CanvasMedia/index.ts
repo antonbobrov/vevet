@@ -129,6 +129,6 @@ export class CanvasMedia extends Canvas<TC, TS, TM> {
     ctx.drawImage(source, size.x, size.y, size.width, size.height);
 
     // Trigger prerender callback
-    this.callbacks.emit('render', undefined);
+    this._emit('render', undefined);
   }
 }

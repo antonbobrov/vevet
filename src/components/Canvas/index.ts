@@ -196,7 +196,7 @@ export class Canvas<
     canvas.width = this._width;
     canvas.height = this._height;
 
-    this.callbacks.emit('resize', undefined);
+    this._emit('resize', undefined);
   }
 
   /**

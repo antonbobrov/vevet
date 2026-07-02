@@ -212,17 +212,17 @@ export class Timeline extends Module<TC, TS, TM> {
   private _onUpdate() {
     this._eased = easing(this._progress, this.props.easing);
 
-    this.callbacks.emit('update', {
+    this._emit('update', {
       progress: this._progress,
       eased: this._eased,
     });
 
     if (this.progress === 0) {
-      this.callbacks.emit('start', undefined);
+      this._emit('start', undefined);
     }
 
     if (this.progress === 1) {
-      this.callbacks.emit('end', undefined);
+      this._emit('end', undefined);
     }
   }
 
