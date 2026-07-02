@@ -1,5 +1,6 @@
 import { Module, TModuleProps } from '@/base';
 import { initVevet } from '@/global/initVevet';
+import { isString } from '@/internal/isString';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { TRequiredProps } from '@/internal/requiredProps';
 import { onResize } from '@/utils/listeners/onResize';
@@ -24,146 +25,101 @@ type TS = ISplitTextStaticProps;
 type TM = ISplitTextMutableProps;
 
 /**
- * `SplitText` splits text within a container into individual lines, words, and letters.
+ * Splits text in a container into words, letters, and optionally lines.
  *
- * Features:
- * - Supports resizing, HTML content, and special symbols like emojis.
- * - Handles multi-line breaks and non-breaking spaces.
- * - Saves initial nodes for easy restoration.
- * - Allows splitting into lines, words, or letters as needed.
+ * Preserves inline HTML, supports resize-driven line reflow, and restores
+ * the original DOM on {@link destroy}.
  *
- * **Note**: Apply `fontKerning: none` to prevent layout shifts.
+ * Apply `font-kerning: none` on the container to reduce layout shift.
  *
  * [Documentation](https://vevetjs.com/docs/SplitText)
  *
  * @group Components
  */
 export class SplitText extends Module<TC, TS, TM> {
-  /** Get default static properties. */
   public _getStatic(): TRequiredProps<TS> {
     return { ...super._getStatic(), ...GET_STATIC_PROPS(this.prefix) };
   }
 
-  /** Get default mutable properties. */
   public _getMutable(): TRequiredProps<TM> {
     return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 
-  /**
-   * Saved initial HTML nodes of the container.
-   */
   private _initials: ReturnType<typeof saveInitialNodes>;
 
-  /**
-   * Tracks whether the text is already split into base elements: words and letters.
-   */
-  private _hasSplitBase = false;
+  /** Whether {@link splitBase} has already wrapped words / letters. */
+  private _isBaseSplit = false;
 
-  /**
-   * List of letters metadata.
-   */
   private _lettersMeta: ISplitTextLetterMeta[] = [];
 
-  /**
-   * List of words metadata.
-   */
   private _wordsMeta: ISplitTextWordMeta[] = [];
 
-  /**
-   * List of lines metadata.
-   */
   private _linesMeta: ISplitTextLineMeta[] = [];
 
-  /**
-   * Utility for wrapping words into line containers.
-   */
   private _lineSplitWrapper?: ReturnType<typeof wrapLines>;
 
-  /**
-   * Initializes the SplitText instance and saves the initial state.
-   */
   constructor(props?: TModuleProps<TC, TS, TM, SplitText>) {
     super(props);
 
     const { container, ariaLabel } = this.props;
     const { style } = container;
 
-    // Add styles
     style.fontKerning = 'none';
     style.display = 'block';
 
-    // A11Y
     if (ariaLabel) {
       container.setAttribute(
         'aria-label',
-        typeof ariaLabel === 'string' ? ariaLabel : container.textContent || '',
+        isString(ariaLabel) ? ariaLabel : container.textContent || '',
       );
     }
 
-    // Disable translate
     container.translate = false;
 
-    // Add classes
     this._addTempClassName(container, '');
 
-    // Save initial nodes
     this._initials = saveInitialNodes(container);
 
-    // Set events
     this._setEvents();
   }
 
-  /**
-   * Classname prefix for styling elements.
-   */
+  /** Class name prefix for split elements (`{corePrefix}split-text`). */
   get prefix() {
     return `${initVevet().prefix}split-text`;
   }
 
-  /**
-   * Retrieves an array of letters metadata.
-   */
+  /** Letter metadata from the last split. */
   get lettersMeta() {
     return this._lettersMeta;
   }
 
-  /**
-   * Retrieves an array of letter elements.
-   */
+  /** Letter elements from the last split. */
   get letters() {
     return this._lettersMeta.map((letter) => letter.element);
   }
 
-  /**
-   * Retrieves an array of words metadata.
-   */
+  /** Word metadata from the last split. */
   get wordsMeta() {
     return this._wordsMeta;
   }
 
-  /**
-   * Retrieves an array of word elements.
-   */
+  /** Word elements from the last split. */
   get words() {
     return this._wordsMeta.map((word) => word.element);
   }
 
-  /**
-   * Retrieves an array of lines metadata.
-   */
+  /** Line metadata from the last split (empty when `lines` is `false`). */
   get linesMeta() {
     return this._linesMeta;
   }
 
-  /**
-   * Retrieves an array of line elements.
-   */
+  /** Line elements from the last split (empty when `lines` is `false`). */
   get lines() {
     return this._linesMeta.map((line) => line.element);
   }
 
   /**
-   * Sets up event listeners and handles initial splitting.
+   * Runs an initial split or attaches a resize listener when `lines` is enabled.
    */
   private _setEvents() {
     const { container, resizeDebounce } = this.props;
@@ -188,7 +144,9 @@ export class SplitText extends Module<TC, TS, TM> {
   }
 
   /**
-   * Splits the text into letters, words, and optionally lines based on configuration.
+   * Splits text into words, letters, and optionally lines.
+   *
+   * Emits `beforeSplit`, performs DOM work, then emits `split`.
    */
   @noopIfDestroyed
   public split() {
@@ -203,11 +161,9 @@ export class SplitText extends Module<TC, TS, TM> {
     this.callbacks.emit('split', undefined);
   }
 
-  /**
-   * Splits text into base elements: letters and words.
-   */
+  /** Wraps words and letters once; subsequent calls are no-ops. */
   private _splitBase() {
-    if (this._hasSplitBase) {
+    if (this._isBaseSplit) {
       return;
     }
 
@@ -223,7 +179,7 @@ export class SplitText extends Module<TC, TS, TM> {
       wordDelimiterOutput,
     } = this.props;
 
-    this._hasSplitBase = true;
+    this._isBaseSplit = true;
 
     const { wordsMeta, lettersMeta } = splitBase({
       container,
@@ -243,7 +199,9 @@ export class SplitText extends Module<TC, TS, TM> {
   }
 
   /**
-   * Wraps words into line containers.
+   * Groups words into line wrappers from layout positions.
+   *
+   * No-op when the container is hidden (`offsetParent === null`).
    */
   private _splitLines() {
     const { wordsMeta } = this;
@@ -269,8 +227,7 @@ export class SplitText extends Module<TC, TS, TM> {
   }
 
   /**
-   * Destroys the component.
-   * This method does not restore the initial nodes. For this purpose, use `restore()`.
+   * Stops listeners, unwraps lines when possible, and restores saved DOM.
    */
   protected _destroy() {
     super._destroy();

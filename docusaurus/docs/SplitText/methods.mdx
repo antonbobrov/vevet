@@ -32,7 +32,7 @@ text.split();
 
 ### `destroy`
 
-Destroys the instance and cleans up resources.
+Destroys the instance, removes listeners, unwraps lines when possible, and restores the original container DOM.
 
 ```ts
 const text = new SplitText({ container });

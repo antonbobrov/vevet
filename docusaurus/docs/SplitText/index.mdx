@@ -57,8 +57,8 @@ See performance comparison of:
 
 ## Initialization
 
-:::note Resizing Behavior
-SplitText automatically recalculates lines on every resize.  
+:::note Resizing behavior
+When `lines` is enabled, SplitText reflows line wrappers on resize.
 :::
 
 SplitText is easy to initialize:
@@ -80,7 +80,7 @@ const text = new SplitText({
 });
 ```
 
-Manual splitting (supported for lines only):
+Manual line reflow (only needed when `lines` is `true`):
 
 ```js
 text.split();
@@ -92,24 +92,20 @@ Add animation:
 import { SplitText } from 'vevet';
 import { animate, stagger } from 'animejs';
 
-const text = new SplitText(
-  {
-    container: document.getElementById('quote'),
-    letters: true,
+const text = new SplitText({
+  container: document.getElementById('quote'),
+  letters: true,
+  onSplit: () => {
+    animate(text.letters, {
+      duration: 800,
+      opacity: { from: 0, to: 1 },
+      ease: 'outBack',
+      delay: stagger(12),
+      y: { from: -50, to: 0 },
+      rotateX: { from: 270, to: 0 },
+    });
   },
-  {
-    onSplit: (data, { letters }) => {
-      animate(letters, {
-        duration: 800,
-        opacity: { from: 0, to: 1 },
-        ease: 'outBack',
-        delay: stagger(12),
-        y: { from: -50, to: 0 },
-        rotateX: { from: 270, to: 0 },
-      });
-    },
-  },
-);
+});
 ```
 
 Destroy the SplitText instance:
