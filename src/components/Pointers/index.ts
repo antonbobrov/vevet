@@ -1,4 +1,4 @@
-import { Module, TModuleOnCallbacksProps } from '@/base';
+import { Module, TModuleProps } from '@/base';
 import { body } from '@/internal/env';
 import { isNumber } from '@/internal/isNumber';
 import { TRequiredProps } from '@/internal/requiredProps';
@@ -72,11 +72,8 @@ export class Pointers extends Module<TC, TS, TM> {
   /** Angle data */
   private _angle = { raw: 0, unwrapped: 0, unwrappedStart: 0 };
 
-  constructor(
-    props?: TS & TM & TModuleOnCallbacksProps<TC, Pointers>,
-    onCallbacks?: TModuleOnCallbacksProps<TC, Pointers>,
-  ) {
-    super(props, onCallbacks as any);
+  constructor(props?: TModuleProps<TC, TS, TM, Pointers>) {
+    super(props);
 
     // Defaults
     this._pointersMap = new Map();

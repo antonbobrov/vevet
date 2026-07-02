@@ -1,4 +1,4 @@
-import { Module, TModuleOnCallbacksProps } from '@/base/Module';
+import { Module, TModuleProps } from '@/base/Module';
 import { initVevet } from '@/global/initVevet';
 import { isNumber } from '@/internal/isNumber';
 import { TRequiredProps } from '@/internal/requiredProps';
@@ -50,11 +50,8 @@ export class Preloader<
   /** Indicates if the page is fully loaded. */
   private _isLoaded = false;
 
-  constructor(
-    props?: S & M & TModuleOnCallbacksProps<C, Preloader<C, S, M>>,
-    onCallbacks?: TModuleOnCallbacksProps<C, Preloader<C, S, M>>,
-  ) {
-    super(props, onCallbacks as any);
+  constructor(props?: TModuleProps<C, S, M, Preloader<C, S, M>>) {
+    super(props);
 
     // Handle page load event
     const timeout = setTimeout(() => {

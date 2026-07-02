@@ -1,4 +1,4 @@
-import { Module, TModuleOnCallbacksProps } from '@/base/Module';
+import { Module, TModuleProps } from '@/base/Module';
 import { initVevet } from '@/global/initVevet';
 import { cnAdd, cnRemove, cnToggle } from '@/internal/cn';
 import { body, doc } from '@/internal/env';
@@ -86,11 +86,8 @@ export class Cursor extends Module<TC, TS, TM> {
   /** Cursor Path Instance */
   private _path: CursorPath;
 
-  constructor(
-    props?: TS & TM & TModuleOnCallbacksProps<TC, Cursor>,
-    onCallbacks?: TModuleOnCallbacksProps<TC, Cursor>,
-  ) {
-    super(props, onCallbacks as any);
+  constructor(props?: TModuleProps<TC, TS, TM, Cursor>) {
+    super(props);
 
     const { enabled: isEnabled } = this.props;
     const { initialWidth, initialHeight } = this;
@@ -239,11 +236,11 @@ export class Cursor extends Module<TC, TS, TM> {
     if (this.props.hideNative) {
       domContainer.style.cursor = 'none';
 
-      this._addTempClassName(domContainer, this._cn('-hide-default'));
+      this._addTempClassName(domContainer, '-hide-default');
     }
 
     // Set class names
-    this._addTempClassName(domContainer, this._cn('-container'));
+    this._addTempClassName(domContainer, '-container');
 
     // Set container position
     if (domContainer !== body) {

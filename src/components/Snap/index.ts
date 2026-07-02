@@ -1,4 +1,4 @@
-import { Module, TModuleOnCallbacksProps } from '@/base';
+import { Module, TModuleProps } from '@/base';
 import { isString } from '@/internal/isString';
 import { isUndefined } from '@/internal/isUndefined';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
@@ -91,11 +91,8 @@ export class Snap extends Module<TC, TS, TM> {
   /** Active slide index */
   private _activeIndex: number;
 
-  constructor(
-    props: TS & TM & TModuleOnCallbacksProps<TC, Snap>,
-    onCallbacks?: TModuleOnCallbacksProps<TC, Snap>,
-  ) {
-    super(props, onCallbacks as any);
+  constructor(props: TModuleProps<TC, TS, TM, Snap>) {
+    super(props);
 
     const { container, activeIndex } = this.props;
 
@@ -121,15 +118,15 @@ export class Snap extends Module<TC, TS, TM> {
 
     // add track
     this._track = new SnapTrack(this.props, {
-      onRafPlay: () => this.callbacks.emit('rafPlay', undefined),
-      onRafPause: () => this.callbacks.emit('rafPause', undefined),
+      onRafPlay: () => this._emit('rafPlay', undefined),
+      onRafPause: () => this._emit('rafPause', undefined),
       onRender: this.render.bind(this),
       containerSize: () => this.containerSize,
       firstSlideSize: () => this.firstSlideSize,
       origin: () => this.origin,
-      onTimelineStart: () => this.callbacks.emit('timelineStart', undefined),
-      onTimelineUpdate: (data) => this.callbacks.emit('timelineUpdate', data),
-      onTimelineEnd: () => this.callbacks.emit('timelineEnd', undefined),
+      onTimelineStart: () => this._emit('timelineStart', undefined),
+      onTimelineUpdate: (data) => this._emit('timelineUpdate', data),
+      onTimelineEnd: () => this._emit('timelineEnd', undefined),
       getSlides: () => this._slides,
     });
 

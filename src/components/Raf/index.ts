@@ -1,6 +1,7 @@
-import { Module, TModuleOnCallbacksProps } from '@/base/Module';
+import { Module, TModuleProps } from '@/base/Module';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { TRequiredProps } from '@/internal/requiredProps';
+import { lerp } from '@/utils';
 
 import { MUTABLE_PROPS, STATIC_PROPS } from './props';
 import { IRafCallbacksMap, IRafMutableProps, IRafStaticProps } from './types';
@@ -50,11 +51,8 @@ export class Raf extends Module<TC, TS, TM> {
   /** Duration of the last frame in ms */
   private _duration = 0;
 
-  constructor(
-    props?: TS & TM & TModuleOnCallbacksProps<TC, Raf>,
-    onCallbacks?: TModuleOnCallbacksProps<TC, Raf>,
-  ) {
-    super(props, onCallbacks as any);
+  constructor(props?: TModuleProps<TC, TS, TM, Raf>) {
+    super(props);
 
     // Initialize FPS
     this._fps = this.props.fps === 'auto' ? this._fps : this.props.fps;

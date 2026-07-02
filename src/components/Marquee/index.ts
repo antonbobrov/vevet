@@ -1,4 +1,4 @@
-import { Module, TModuleOnCallbacksProps } from '@/base/Module';
+import { Module, TModuleProps } from '@/base/Module';
 import { initVevet } from '@/global/initVevet';
 import { isFiniteNumber } from '@/internal/isFiniteNumber';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
@@ -73,11 +73,8 @@ export class Marquee extends Module<TC, TS, TM> {
   /** Nodes manager */
   private _nodes: MarqueeNodes;
 
-  constructor(
-    props?: TS & TM & TModuleOnCallbacksProps<TC, Marquee>,
-    onCallbacks?: TModuleOnCallbacksProps<TC, Marquee>,
-  ) {
-    super(props, onCallbacks as any);
+  constructor(props?: TModuleProps<TC, TS, TM, Marquee>) {
+    super(props);
 
     const { container, direction } = this.props;
     const { isVertical } = this;

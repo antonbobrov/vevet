@@ -1,4 +1,4 @@
-import { Module, TModuleOnCallbacksProps } from '@/base';
+import { Module, TModuleProps } from '@/base';
 import { initVevet } from '@/global/initVevet';
 import { TRequiredProps } from '@/internal/requiredProps';
 import { addEventListener, EaseOutCubic } from '@/utils';
@@ -80,11 +80,8 @@ export class Swipe extends Module<TC, TS, TM> {
   /** Initial swipe coordinates (internal use) */
   private _startCoord: ISwipeVec2 | undefined;
 
-  constructor(
-    props?: TS & TM & TModuleOnCallbacksProps<TC, Swipe>,
-    onCallbacks?: TModuleOnCallbacksProps<TC, Swipe>,
-  ) {
-    super(props, onCallbacks as any);
+  constructor(props?: TModuleProps<TC, TS, TM, Swipe>) {
+    super(props);
 
     const { container, thumb, buttons, pointers } = this.props;
 
@@ -104,9 +101,9 @@ export class Swipe extends Module<TC, TS, TM> {
         this._coords.syncTempAngle();
         this.callbacks.emit('inertiaStart', undefined);
       },
-      onFail: () => this.callbacks.emit('inertiaFail', undefined),
-      onCancel: () => this.callbacks.emit('inertiaCancel', undefined),
-      onEnd: () => this.callbacks.emit('inertiaEnd', undefined),
+      onFail: () => this._emit('inertiaFail', undefined),
+      onCancel: () => this._emit('inertiaCancel', undefined),
+      onEnd: () => this._emit('inertiaEnd', undefined),
     });
 
     // create pointers

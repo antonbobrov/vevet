@@ -1,4 +1,4 @@
-import { Module, TModuleOnCallbacksProps } from '@/base/Module';
+import { Module, TModuleProps } from '@/base/Module';
 import { initVevet } from '@/global/initVevet';
 import { cnToggle } from '@/internal/cn';
 import { body } from '@/internal/env';
@@ -63,11 +63,8 @@ export class InView extends Module<TC, TS, TM> {
   /**
    * Initializes the `InView` module.
    */
-  constructor(
-    props?: TS & TM & TModuleOnCallbacksProps<TC, InView>,
-    onCallbacks?: TModuleOnCallbacksProps<TC, InView>,
-  ) {
-    super(props, onCallbacks as any);
+  constructor(props?: TModuleProps<TC, TS, TM, InView>) {
+    super(props);
 
     // get direction
     this._isRtl = getTextDirection(body) === 'rtl';

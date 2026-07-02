@@ -1,4 +1,4 @@
-import { Module, TModuleOnCallbacksProps } from '@/base/Module';
+import { Module, TModuleProps } from '@/base/Module';
 import { isFiniteNumber } from '@/internal/isFiniteNumber';
 import { isUndefined } from '@/internal/isUndefined';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
@@ -55,11 +55,8 @@ export class Timeline extends Module<TC, TS, TM> {
   /** Indicates whether the timeline is paused. */
   private _isPaused: boolean;
 
-  constructor(
-    props?: TS & TM & TModuleOnCallbacksProps<TC, Timeline>,
-    onCallbacks?: TModuleOnCallbacksProps<TC, Timeline>,
-  ) {
-    super(props, onCallbacks as any);
+  constructor(props?: TModuleProps<TC, TS, TM, Timeline>) {
+    super(props);
 
     // Initialize default values
     this._progress = 0;

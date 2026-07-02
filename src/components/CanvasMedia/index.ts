@@ -1,8 +1,8 @@
 import { getPos } from 'get-image-pos';
 
-import { TModuleOnCallbacksProps } from '@/base';
+import { TModuleProps } from '@/base';
+import { isHTMLVideo } from '@/internal/isHTMLVideo';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { TRequiredProps } from '@/internal/requiredProps';
 import { addEventListener } from '@/utils';
 
 import { Canvas, ICanvasRenderArg } from '../Canvas';
@@ -29,21 +29,16 @@ type TM = ICanvasMediaMutableProps;
  * @group Components
  */
 export class CanvasMedia extends Canvas<TC, TS, TM> {
-  /** Get default static properties */
-  public _getStatic(): TRequiredProps<TS> {
+  public _getStatic() {
     return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
-  /** Get default mutable properties */
-  public _getMutable(): TRequiredProps<TM> {
+  public _getMutable() {
     return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 
-  constructor(
-    props?: TS & TM & TModuleOnCallbacksProps<TC, CanvasMedia>,
-    onCallbacks?: TModuleOnCallbacksProps<TC, CanvasMedia>,
-  ) {
-    super(props as any, onCallbacks as any);
+  constructor(props?: TModuleProps<TC, TS, TM, CanvasMedia>) {
+    super(props as any);
 
     this._setMediaEvents();
   }
@@ -57,21 +52,21 @@ export class CanvasMedia extends Canvas<TC, TS, TM> {
   private _setMediaEvents() {
     const { autoRenderVideo: hasVideoAutoRender, media } = this.props;
 
-    if (!hasVideoAutoRender || !(media instanceof HTMLVideoElement)) {
+    if (!hasVideoAutoRender || !isHTMLVideo(media)) {
       return;
     }
 
     // use requestVideoFrameCallback
     if (this.hasRequestVideoFrameCallback) {
-      this._requestVideoFrame();
+      this._videoFrame();
 
       return;
     }
 
     // use timeupdate listener
-    const timeupdate = addEventListener(media, 'timeupdate', () => {
-      this.render();
-    });
+    const timeupdate = addEventListener(media, 'timeupdate', () =>
+      this.render(),
+    );
 
     this.onDestroy(() => timeupdate());
   }
@@ -85,17 +80,14 @@ export class CanvasMedia extends Canvas<TC, TS, TM> {
   }
 
   /** Auto rendering for videos */
-  private _requestVideoFrame() {
-    if (this.isDestroyed) {
-      return;
-    }
-
+  @noopIfDestroyed
+  private _videoFrame() {
     this.render();
 
     const { media } = this.props;
 
     if (media instanceof HTMLVideoElement) {
-      media.requestVideoFrameCallback(() => this._requestVideoFrame());
+      media.requestVideoFrameCallback(() => this._videoFrame());
     }
   }
 
@@ -111,7 +103,6 @@ export class CanvasMedia extends Canvas<TC, TS, TM> {
   private _prerender({ width, height, ctx }: ICanvasRenderArg) {
     const { media, rule } = this.props;
 
-    // Determine the media source and its dimensions
     let source: Exclude<ICanvasMediaStaticProps['media'], Canvas>;
     let sourceWidth: number | undefined;
     let sourceHeight: number | undefined;
@@ -124,7 +115,6 @@ export class CanvasMedia extends Canvas<TC, TS, TM> {
       source = media as any;
     }
 
-    // Calculate media position and size based on the posRule
     const size = getPos({
       source,
       sourceWidth,
@@ -135,7 +125,6 @@ export class CanvasMedia extends Canvas<TC, TS, TM> {
       height,
     });
 
-    // Clear the canvas and draw the media with the calculated size
     ctx.clearRect(0, 0, width, height);
     ctx.drawImage(source, size.x, size.y, size.width, size.height);
 

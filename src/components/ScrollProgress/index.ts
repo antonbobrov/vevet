@@ -1,4 +1,4 @@
-import { Module, TModuleOnCallbacksProps } from '@/base';
+import { Module, TModuleProps } from '@/base';
 import { initVevet } from '@/global/initVevet';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { TRequiredProps } from '@/internal/requiredProps';
@@ -57,11 +57,8 @@ export class ScrollProgress extends Module<TC, TS, TM> {
     height: 1,
   };
 
-  constructor(
-    props?: TS & TM & TModuleOnCallbacksProps<TC, ScrollProgress>,
-    onCallbacks?: TModuleOnCallbacksProps<TC, ScrollProgress>,
-  ) {
-    super(props, onCallbacks as any);
+  constructor(props?: TModuleProps<TC, TS, TM, ScrollProgress>) {
+    super(props);
 
     this._isVisible = !this.props.optimized;
 

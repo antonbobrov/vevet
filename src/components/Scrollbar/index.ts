@@ -1,4 +1,4 @@
-import { Module, TModuleOnCallbacksProps } from '@/base';
+import { Module, TModuleProps } from '@/base';
 import { initVevet } from '@/global/initVevet';
 import { cnAdd, cnHas, cnRemove, cnToggle } from '@/internal/cn';
 import { body, doc, html } from '@/internal/env';
@@ -72,11 +72,8 @@ export class Scrollbar extends Module<TC, TS, TM> {
   /** Detects if the container is RTL */
   private _isRtl = false;
 
-  constructor(
-    props?: TS & TM & TModuleOnCallbacksProps<TC, Scrollbar>,
-    onCallbacks?: TModuleOnCallbacksProps<TC, Scrollbar>,
-  ) {
-    super(props, onCallbacks as any);
+  constructor(props?: TModuleProps<TC, TS, TM, Scrollbar>) {
+    super(props);
 
     // detect features
     this._isRtl = getTextDirection(this.parent) === 'rtl' && this.axis === 'x';
@@ -247,10 +244,10 @@ export class Scrollbar extends Module<TC, TS, TM> {
 
     // Apply global styles
     if (isInWindow) {
-      this._addTempClassName(html, this._cn('-scrollable'));
-      this._addTempClassName(body, this._cn('-scrollable'));
+      this._addTempClassName(html, '-scrollable');
+      this._addTempClassName(body, '-scrollable');
     } else if (scrollElement instanceof HTMLElement) {
-      this._addTempClassName(scrollElement, this._cn('-scrollable'));
+      this._addTempClassName(scrollElement, '-scrollable');
     }
 
     this.onDestroy(() => this._outer.remove());
@@ -272,11 +269,11 @@ export class Scrollbar extends Module<TC, TS, TM> {
     }
 
     if (this.container instanceof Window) {
-      this._addTempClassName(element, this._cn('_in-window'));
+      this._addTempClassName(element, '_in-window');
     }
 
     if (props.autoHide) {
-      this._addTempClassName(element, this._cn('_auto-hide'));
+      this._addTempClassName(element, '_auto-hide');
     }
 
     return element;

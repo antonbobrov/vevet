@@ -23,32 +23,28 @@ All components (Timeline, Swipe, Scrollbar, Marquee, etc.) extend **Module**. Yo
 ```ts
 new Module<CallbacksMap, StaticProps, MutableProps>(
   props?: StaticProps & MutableProps,
-  onCallbacks?: TModuleOnCallbacksProps<CallbacksMap, Module>,
 );
 ```
 
-- **props** — initial static and mutable properties. Subclasses define defaults via `_getStatic()` and `_getMutable()`.
-- **onCallbacks** — optional object of callbacks keyed by `onEventName` (e.g. `onDestroy`, `onProps`). These are registered on the internal Callbacks instance.
+- **props** — static and mutable properties, plus optional `onEvent` callbacks (e.g. `onDestroy`, `onResize`). Subclasses define defaults via `_getStatic()` and `_getMutable()`.
 
 ## Callbacks
 
 Every Module has at least these callbacks (see **[Callbacks](/docs/base/Callbacks/)** for `on()`, settings, etc.):
 
-| Event     | Payload     | When                                                      |
-| --------- | ----------- | --------------------------------------------------------- |
-| `destroy` | `undefined` | Before the module is destroyed and callbacks are cleared. |
-| `props`   | `undefined` | After mutable props are updated via `updateProps()`.      |
+| Event     | Payload                 | When                                                                                 |
+| --------- | ----------------------- | ------------------------------------------------------------------------------------ |
+| `destroy` | `undefined`             | Before the module is destroyed and callbacks are cleared.                            |
+| `props`   | `Partial<MutableProps>` | After mutable props change via `updateProps()`. Diff of changed keys and new values. |
 
 Example:
 
 ```ts
-const module = new Module(
-  { weight: 70 },
-  {
-    onDestroy: () => console.log('destroyed'),
-    onProps: () => console.log('props updated', module.props),
-  },
-);
+const module = new Module({
+  weight: 70,
+  onDestroy: () => console.log('destroyed'),
+  onProps: () => console.log('props updated', module.props),
+});
 
 module.updateProps({ weight: 72 }); // logs "props updated" and new props
 module.destroy(); // logs "destroyed"
@@ -117,8 +113,9 @@ Minimal custom module with typed props and callbacks:
 import {
   Module,
   IModuleCallbacksMap,
-  IModuleStaticProps,
   IModuleMutableProps,
+  IModuleStaticProps,
+  TModuleProps,
 } from 'vevet';
 
 interface IMyCallbacks extends IModuleCallbacksMap {
@@ -136,18 +133,17 @@ class MyModule extends Module<IMyCallbacks, TStatic, TMutable> {
     return { ...super._getMutable(), count: 0 };
   }
 
-  constructor(props?: TStatic & TMutable, onCallbacks?: any) {
-    super(props, onCallbacks);
+  constructor(props?: TModuleProps<IMyCallbacks, TStatic, TMutable, MyModule>) {
+    super(props);
   }
 }
 
-const m = new MyModule(
-  { title: 'Hi', count: 1 },
-  {
-    onDestroy: () => console.log('destroyed'),
-    onProps: () => console.log(m.props),
-  },
-);
+const m = new MyModule({
+  title: 'Hi',
+  count: 1,
+  onDestroy: () => console.log('destroyed'),
+  onProps: () => console.log(m.props),
+});
 
 m.updateProps({ count: 2 });
 m.destroy();

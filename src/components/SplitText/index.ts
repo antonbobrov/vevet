@@ -1,4 +1,4 @@
-import { Module, TModuleOnCallbacksProps } from '@/base';
+import { Module, TModuleProps } from '@/base';
 import { initVevet } from '@/global/initVevet';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { TRequiredProps } from '@/internal/requiredProps';
@@ -82,11 +82,8 @@ export class SplitText extends Module<TC, TS, TM> {
   /**
    * Initializes the SplitText instance and saves the initial state.
    */
-  constructor(
-    props?: TS & TM & TModuleOnCallbacksProps<TC, SplitText>,
-    onCallbacks?: TModuleOnCallbacksProps<TC, SplitText>,
-  ) {
-    super(props, onCallbacks as any);
+  constructor(props?: TModuleProps<TC, TS, TM, SplitText>) {
+    super(props);
 
     const { container, ariaLabel } = this.props;
     const { style } = container;
@@ -107,7 +104,7 @@ export class SplitText extends Module<TC, TS, TM> {
     container.translate = false;
 
     // Add classes
-    this._addTempClassName(container, this._cn(''));
+    this._addTempClassName(container, '');
 
     // Save initial nodes
     this._initials = saveInitialNodes(container);

@@ -1,4 +1,4 @@
-import { TModuleOnCallbacksProps } from '@/base';
+import { TModuleProps } from '@/base';
 import { initVevet } from '@/global/initVevet';
 import { cnHas } from '@/internal/cn';
 import { doc } from '@/internal/env';
@@ -67,11 +67,8 @@ export class ProgressPreloader extends Preloader<TC, TS, TM> {
   /** Animation frame instance for managing smooth progress updates. */
   private _raf: Raf;
 
-  constructor(
-    props?: TS & TM & TModuleOnCallbacksProps<TC, ProgressPreloader>,
-    onCallbacks?: TModuleOnCallbacksProps<TC, ProgressPreloader>,
-  ) {
-    super(props as any, onCallbacks as any);
+  constructor(props?: TModuleProps<TC, TS, TM, ProgressPreloader>) {
+    super(props as any);
 
     // Initialize animation frame if interpolation is enabled
     this._raf = new Raf({ enabled: true });

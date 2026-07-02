@@ -59,7 +59,7 @@ export class Destroyable {
    *
    * @param action - Cleanup function (for example remove listeners or DOM classes).
    */
-  protected onDestroy(action: () => void) {
+  public onDestroy(action: () => void) {
     if (this.isDestroyed) {
       action();
     } else {
