@@ -4,7 +4,14 @@ import {
   IModuleStaticProps,
 } from '@/base';
 
-export type TPointersType = 'mouse' | 'touch';
+import { IPointersMove } from './Coords/types';
+import { TPointersType } from './Decoder/types';
+import { IPointersItem } from './Points/types';
+
+export * from './Points/types';
+export * from './Decoder/types';
+export * from './Coords/types';
+export * from './global';
 
 export interface IPointersStaticProps extends IModuleStaticProps {
   /**
@@ -89,56 +96,8 @@ export interface IPointersCallbacksMap extends IModuleCallbacksMap<IPointersMuta
   pointerup: { pointer: IPointersItem };
 
   /**
-   * Fired when pointer events are canceled.
+   * Fired when the gesture ends: active pointers drop below `minPointers`,
+   * or on `pointercancel` / window `blur`.
    */
   end: undefined;
-}
-
-export interface IPointersVec2 {
-  /** X-coordinate relative to the container. */
-  x: number;
-  /** Y-coordinate relative to the container. */
-  y: number;
-}
-
-export interface IPointersMove {
-  /** Average of `current` positions. */
-  center: IPointersVec2;
-  /** Average of `prev` positions. */
-  prevCenter: IPointersVec2;
-  /** Center at the first `move` after `start`. */
-  startCenter: IPointersVec2;
-  /** Current span between pointers (px). */
-  distance: number;
-  /** Span on the previous `move`. */
-  prevDistance: number;
-  /** Span at the first `move` after `start`. */
-  startDistance: number;
-  /** Multiplier since gesture start: `distance / startDistance`. */
-  scale: number;
-  /** Previous multiplier since gesture start. */
-  prevScale: number;
-  /** Cumulative rotation since gesture start (deg). */
-  angle: number;
-  /** Previous cumulative rotation (deg). */
-  prevAngle: number;
-}
-
-export interface IPointersItem {
-  /** Unique pointer identifier. */
-  id: number;
-  /** Index assigned to the pointer. */
-  index: number;
-  /** Coordinates at the start of the interaction. */
-  start: IPointersVec2;
-  /** Previous recorded coordinates. */
-  prev: IPointersVec2;
-  /** Current pointer coordinates. */
-  current: IPointersVec2;
-  /** Movement offset from the starting position. */
-  diff: IPointersVec2;
-  /** Movement offset from the previous position. */
-  step: IPointersVec2;
-  /** Total accumulated movement since start. */
-  accum: IPointersVec2;
 }

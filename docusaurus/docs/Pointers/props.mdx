@@ -119,6 +119,19 @@ const pointers = new Pointers({
 });
 ```
 
+### `disableUserSelect` {#props.disableUserSelect}
+
+- **Type:** `boolean`
+- **Default:** `true`
+- Prevents text selection while dragging. Injects a temporary global style on gesture start and removes it on cleanup.
+
+```js
+const pointers = new Pointers({
+  container: document.getElementById('container'),
+  disableUserSelect: false,
+});
+```
+
 ### Mutable Props
 
 Mutable properties can be updated at runtime using `.updateProps()`.

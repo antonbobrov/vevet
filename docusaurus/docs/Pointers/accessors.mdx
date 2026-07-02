@@ -68,7 +68,7 @@ Type: `Map<number,` [IPointersItem](interfaces#ipointersitem)`>`
 
 Contains all currently active pointers.  
 Keys correspond to native `pointerId` values from Pointer Events API.  
-Entries are updated every frame and preserved until the pointer is fully released (`pointerup` / `pointercancel`).
+Entries are updated on each `pointermove` and preserved until the pointer is released (`pointerup` / `pointercancel`).
 
 ```js
 const pointers = new Pointers({

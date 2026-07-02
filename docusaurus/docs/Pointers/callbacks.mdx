@@ -137,7 +137,7 @@ destruct();
 
 ### `end`
 
-Fired when pointer events are canceled.
+Fired when the gesture ends: active pointers drop below `minPointers`, or on `pointercancel` / window `blur`.
 
 ```ts
 const pointers = new Pointers({

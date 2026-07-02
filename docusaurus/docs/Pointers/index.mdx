@@ -56,17 +56,13 @@ import { Pointers } from 'vevet';
 
 const container = document.getElementById('container');
 
-const pointers = new Pointers(
-  {
-    container,
-    relative: true,
+const pointers = new Pointers({
+  container,
+  relative: true,
+  onPointermove: ({ pointer }) => {
+    console.log(pointer.current.x, pointer.current.y);
   },
-  {
-    onPointermove: ({ pointer }) => {
-      console.log(pointer.current.x, pointer.current.y);
-    },
-  },
-);
+});
 ```
 
 Destroy the pointers instance:
