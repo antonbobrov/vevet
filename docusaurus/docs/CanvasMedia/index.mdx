@@ -58,6 +58,8 @@ instance.on('render', () => {
 });
 ```
 
+`render` also fires after `resize()` — for example when `rule` or canvas size changes.
+
 Destroy the canvas:
 
 ```js
