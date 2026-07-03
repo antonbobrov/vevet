@@ -44,22 +44,28 @@ observer.elements.forEach((element) => {
 
 Type: `boolean`
 
-Indicates whether the observation has started for the first time. This property is `true` during the initial page load before any elements have been observed, and becomes `false` after the first visibility check completes.
+Whether the **first observation pass** is still active (zero `rootMargin`, staggered [`maxInitialDelay`](props#props.maxInitialDelay)).
 
-This is useful for distinguishing between initial page load animations and subsequent scroll-triggered animations.
+- `true` from construction until the first enter batch is processed
+- becomes `false` **before** staggered `in` callbacks fire
+
+:::caution
+Do not use `observer.isInitialStart` inside the [`in`](callbacks#in) handler to detect initial vs scroll animations — it is already `false` by the time delayed callbacks run. Track that distinction in your own state, or set `maxInitialDelay: 0` for scroll-only behavior.
+:::
 
 ```js
-const observer = new InView();
+const observer = new InView({ maxInitialDelay: 1000 });
 
-console.log(observer.isInitialStart); // true (on initial load)
+console.log(observer.isInitialStart); // true
 
-observer.on('in', ({ element, direction }) => {
-  if (observer.isInitialStart) {
-    // First time observing - apply initial animations
-    console.log('Initial page load animation');
-  } else {
-    // Subsequent scroll-triggered animations
-    console.log('Scroll-triggered animation');
-  }
-});
+// After the first elements intersect (before their delayed `in` fires):
+// observer.isInitialStart === false
 ```
+
+### `isRtl`
+
+Type: `boolean`
+
+Whether the document root uses `direction: rtl` (read once at construction from `body`).
+
+Mirrors horizontal [`maxInitialDelay`](props#props.maxInitialDelay) stagger so elements farther along the reading direction receive longer delays. Useful when building custom RTL scroll layouts alongside [`scrollDirection: 'horizontal'`](props#props.scrollDirection).

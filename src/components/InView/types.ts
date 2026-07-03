@@ -4,6 +4,8 @@ import {
   IModuleStaticProps,
 } from '@/base/Module';
 
+import { TInViewElementDirection } from './global';
+
 /**
  * Static properties for configuring the InView module.
  */
@@ -65,28 +67,4 @@ export interface IInViewCallbacksMap extends IModuleCallbacksMap<IInViewMutableP
 export interface IInViewCallbackArg {
   element: Element;
   direction: TInViewElementDirection;
-}
-
-/**
- * Direction of an element entering or leaving the viewport.
- */
-export type TInViewElementDirection =
-  | 'fromBottom'
-  | 'fromTop'
-  | 'fromLeft'
-  | 'fromRight';
-
-/**
- * Extended element interface for use with the InView module.
- */
-export interface IInViewElement extends Element {
-  /**
-   * Indicates whether the element is currently in view.
-   */
-  $vevetInViewBool?: boolean;
-
-  /**
-   * Timeout reference for managing delays.
-   */
-  $vevetInViewTimeout?: NodeJS.Timeout;
 }

@@ -1,372 +1,177 @@
 import { Module, TModuleProps } from '@/base/Module';
-import { initVevet } from '@/global/initVevet';
-import { cnToggle } from '@/internal/cn';
 import { body } from '@/internal/env';
 import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
 import { TRequiredProps } from '@/internal/requiredProps';
-import { getTextDirection } from '@/internal/textDirection';
-import { clamp } from '@/utils/math';
+import { isRtl } from '@/internal/textDirection';
 
+import { InViewElement } from './Element';
+import { InViewObservers } from './Observers';
 import { MUTABLE_PROPS, STATIC_PROPS } from './props';
 import {
   IInViewCallbacksMap,
-  IInViewElement,
   IInViewMutableProps,
   IInViewStaticProps,
-  TInViewElementDirection,
 } from './types';
 
 export * from './types';
+export * from './global';
 
 type TC = IInViewCallbacksMap;
 type TS = IInViewStaticProps;
 type TM = IInViewMutableProps;
 
 /**
- * InView is a visibility detection utility that leverages the `IntersectionObserver` API to monitor when elements enter or leave the viewport.
- * It provides customizable options for triggering events, delaying visibility changes, and dynamically adding CSS classes to elements based on their visibility state.
+ * Visibility detection via `IntersectionObserver`.
+ *
+ * - Monitors elements entering and optionally leaving the viewport
+ * - Staggered initial delays via `maxInitialDelay` and element position
+ * - Direction detection for scroll-aware animations
+ * - Optional CSS classes via `data-in-view-class`
+ *
+ * Observation lifecycle
+ *
+ * The first pass uses zero `rootMargin` and `isInitialStart` semantics.
+ * After the first enter batch, observers reconnect with `rootMargin`.
  *
  * [Documentation](https://vevetjs.com/docs/InView)
  *
  * @group Components
  */
 export class InView extends Module<TC, TS, TM> {
-  /**
-   * Returns default static properties.
-   */
   public _getStatic(): TRequiredProps<TS> {
     return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
-  /**
-   * Returns default mutable properties.
-   */
   public _getMutable(): TRequiredProps<TM> {
     return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 
-  /** Intersection observer for detecting elements entering the viewport. */
-  private _in?: IntersectionObserver;
+  private _observers: InViewObservers;
 
-  /** Intersection observer for detecting elements leaving the viewport. */
-  private _out?: IntersectionObserver;
+  /** Registered elements. */
+  private _elements: Map<Element, InViewElement> = new Map();
 
-  /** Tracks whether this is the first time the elements are being observed. */
-  private _isInitialStart = true;
+  /** Document `direction: rtl` — flips horizontal initial-delay progress. */
+  private _rtl = false;
 
-  /** Stores the elements being observed. */
-  private _elements: IInViewElement[] = [];
-
-  /** Detects if the container is RTL */
-  private _isRtl = false;
-
-  /**
-   * Initializes the `InView` module.
-   */
   constructor(props?: TModuleProps<TC, TS, TM, InView>) {
     super(props);
 
-    // get direction
-    this._isRtl = getTextDirection(body) === 'rtl';
+    this._rtl = isRtl(body);
 
-    this._setup();
+    this._observers = new InViewObservers(
+      this,
+      this._handleInit.bind(this),
+      this._handleIn.bind(this),
+      this._handleOut.bind(this),
+    );
   }
 
   /**
-   * Indicates whether the observation has started for the first time.
+   * Whether the first observation pass is still active.
+   *
+   * Becomes `false` after the first enter batch is processed, before delayed
+   * `in` callbacks fire. Prefer tracking initial vs scroll animations yourself
+   * if you rely on staggered `maxInitialDelay`.
    */
   get isInitialStart() {
-    return this._isInitialStart;
+    return this._observers?.isStart ?? true;
   }
 
   /**
-   * Returns all elements currently being observed.
+   * Whether the document uses `direction: rtl`.
    */
+  get isRtl() {
+    return this._rtl;
+  }
+
+  /** Elements currently registered via {@link addElement}. */
   get elements() {
-    return this._elements;
+    return Array.from(this._elements.keys());
   }
 
-  /**
-   * Handles property mutations and updates observation events accordingly.
-   */
   protected _handleProps(props: TM) {
     super._handleProps(props);
 
-    this._setup();
+    this._observers.setup();
+  }
+
+  /** Re-attaches all registered elements after observers reconnect. */
+  private _handleInit() {
+    this.elements.forEach((element) => this._observers.observe(element));
   }
 
   /**
-   * Configures or reconfigures the view observation events.
+   * Dispatches enter intersection entries to registered {@link InViewElement} instances.
    */
-  private _setup() {
-    this._removeViewEvents();
-
-    if (this.props.enabled) {
-      this._setViewEvents();
-    }
-  }
-
-  /**
-   * Removes all observation events and disconnects observers.
-   */
-  private _removeViewEvents() {
-    this._in?.disconnect();
-    this._in = undefined;
-
-    this._out?.disconnect();
-    this._out = undefined;
-  }
-
-  /**
-   * Sets up `IntersectionObserver` instances to detect visibility changes.
-   */
-  private _setViewEvents() {
-    const { isInitialStart, props } = this;
-    const rootMargin = isInitialStart ? '0% 0% 0% 0%' : props.rootMargin;
-
-    this._in = new IntersectionObserver(
-      (data) => this._handleIn(data, isInitialStart),
-      { root: null, threshold: 0, rootMargin },
-    );
-
-    this.elements.forEach((element) => this._in?.observe(element));
-
-    if (!props.hasOut) {
-      return;
-    }
-
-    this._out = new IntersectionObserver((data) => this._handleOut(data), {
-      root: null,
-      threshold: 0,
-      rootMargin: '0px 0px 0px 0px',
-    });
-
-    this.elements.forEach((element) => this._out?.observe(element));
-  }
-
-  /**
-   * Handles elements entering the viewport.
-   */
-  private _handleIn(
-    data: IntersectionObserverEntry[],
-    isInitialStart: boolean,
-  ) {
+  private _handleIn(data: IntersectionObserverEntry[]) {
     data.forEach((entry) => {
-      const element = entry.target as IInViewElement;
-
-      if (!entry.isIntersecting || element.$vevetInViewBool) {
+      if (!entry.isIntersecting) {
         return;
       }
 
-      element.$vevetInViewBool = true;
+      const element = entry.target as Element;
+      const target = this._elements.get(element);
 
-      if (element.$vevetInViewTimeout) {
-        clearTimeout(element.$vevetInViewTimeout);
-        element.$vevetInViewTimeout = undefined;
-      }
-
-      element.$vevetInViewTimeout = setTimeout(
-        () => this._handleInOut(entry, true, isInitialStart),
-        this._getDelay(element),
-      );
-
-      if (!this.props.hasOut) {
-        this.removeElement(element);
-      }
+      target?.toggle(true, this._observers.isStart);
     });
-
-    if (this._isInitialStart) {
-      this._isInitialStart = false;
-
-      this._setup();
-    }
   }
 
   /**
-   * Handles elements leaving the viewport.
+   * Dispatches leave intersection entries to registered {@link InViewElement} instances.
    */
   private _handleOut(data: IntersectionObserverEntry[]) {
     data.forEach((entry) => {
-      const element = entry.target as IInViewElement;
-
-      if (entry.isIntersecting || !element.$vevetInViewBool) {
+      if (entry.isIntersecting) {
         return;
       }
 
-      element.$vevetInViewBool = false;
+      const element = entry.target as Element;
+      const target = this._elements.get(element);
 
-      if (element.$vevetInViewTimeout) {
-        clearTimeout(element.$vevetInViewTimeout);
-        element.$vevetInViewTimeout = undefined;
-      }
-
-      element.$vevetInViewTimeout = setTimeout(
-        () => this._handleInOut(entry, false),
-        0,
-      );
+      target?.toggle(false);
     });
-  }
-
-  /**
-   * Toggles visibility classes and emits events for visibility changes.
-   */
-  private _handleInOut(
-    entry: IntersectionObserverEntry,
-    isInView: boolean,
-    isInitialStart = false,
-  ) {
-    const element = entry.target as IInViewElement;
-
-    const direction = this._getDirection(entry, isInView, isInitialStart);
-
-    this._toggleClassname(element, isInView, direction);
-
-    this.callbacks.emit(isInView ? 'in' : 'out', { element, direction });
-  }
-
-  /** Toggles visibility classes */
-  private _toggleClassname(
-    element: Element,
-    isInView: boolean,
-    direction: TInViewElementDirection,
-  ) {
-    const classNames = element.getAttribute('data-in-view-class');
-    if (!classNames) {
-      return;
-    }
-
-    const split = classNames.split('|');
-    const direct = split[0].trim();
-    const reverse = split[1]?.trim() || direct;
-
-    if (!direct) {
-      return;
-    }
-
-    if (isInView) {
-      const isReverse = direction === 'fromRight' || direction === 'fromTop';
-
-      const className = isReverse ? reverse.trim() : direct.trim();
-
-      cnToggle(element, className, isInView);
-
-      return;
-    }
-
-    cnToggle(element, direct, isInView);
-    cnToggle(element, reverse, isInView);
-  }
-
-  /** Gets element direction */
-  private _getDirection(
-    entry: IntersectionObserverEntry,
-    isInView: boolean,
-    isInitialStart: boolean,
-  ) {
-    const app = initVevet();
-    const bounding = entry.boundingClientRect;
-
-    if (this.props.scrollDirection === 'horizontal') {
-      let direction: TInViewElementDirection = 'fromRight';
-
-      if ((isInView && !isInitialStart) || !isInView) {
-        if (bounding.left > app.width / 2) {
-          direction = 'fromRight';
-        } else if (bounding.right < app.width / 2) {
-          direction = 'fromLeft';
-        }
-      }
-
-      return direction;
-    }
-
-    let direction: TInViewElementDirection = 'fromBottom';
-
-    if ((isInView && !isInitialStart) || !isInView) {
-      if (bounding.top > app.height / 2) {
-        direction = 'fromBottom';
-      } else if (bounding.bottom < app.height / 2) {
-        direction = 'fromTop';
-      }
-    }
-
-    return direction;
-  }
-
-  /**
-   * Calculates the delay before triggering an element's visibility event.
-   */
-  private _getDelay(element: IInViewElement) {
-    const { scrollDirection, maxInitialDelay } = this.props;
-    const app = initVevet();
-
-    if (!this.isInitialStart || maxInitialDelay <= 0) {
-      return 0;
-    }
-
-    const bounding = element.getBoundingClientRect();
-
-    const rootBounding = {
-      top: 0,
-      left: 0,
-      width: app.width,
-      height: app.height,
-    };
-
-    let progress = clamp(
-      scrollDirection === 'horizontal'
-        ? (bounding.left - rootBounding.left) / rootBounding.width
-        : (bounding.top - rootBounding.top) / rootBounding.height,
-    );
-
-    if (this._isRtl && scrollDirection === 'horizontal') {
-      progress = 1 - progress;
-    }
-
-    return progress * maxInitialDelay;
   }
 
   /**
    * Registers an element for visibility observation.
    *
-   * If the element has a `data-in-view-class` attribute, the specified class will be applied upon entering the viewport.
+   * When `data-in-view-class` is set, the matching class is toggled on enter/leave.
    *
-   * @returns A function to stop observing the element.
+   * @returns A function that calls {@link removeElement} for this element.
    */
   @noopIfDestroyed
   public addElement(element: Element) {
-    const finalElement = element as IInViewElement;
-    finalElement.$vevetInViewBool = undefined;
+    this.removeElement(element);
 
-    this._elements.push(finalElement);
+    const instance = new InViewElement(this, element, () => {
+      if (!this.props.hasOut) {
+        this.removeElement(element);
+      }
+    });
 
-    this._in?.observe(finalElement);
-    this._out?.observe(finalElement);
+    this._elements.set(element, instance);
+    this._observers.observe(element);
 
-    return () => this.removeElement(finalElement);
+    return () => this.removeElement(element);
   }
 
-  /**
-   * Removes an element from observation, preventing further visibility tracking.
-   */
+  /** Stops observing an element and clears its in-view flag. */
   @noopIfDestroyed
   public removeElement(element: Element) {
-    const finalElement = element as IInViewElement;
+    this._observers.unobserve(element);
 
-    this._in?.unobserve(finalElement);
-    this._out?.unobserve(finalElement);
+    const target = this._elements.get(element);
+    target?.destroy();
 
-    this._elements = this._elements.filter((el) => el !== element);
-
-    finalElement.$vevetInViewBool = undefined;
+    this._elements.delete(element);
   }
 
-  /**
-   * Cleans up the module and disconnects all observers and listeners.
-   */
+  /** Disconnects observers and clears the element registry. */
   protected _destroy() {
     super._destroy();
 
-    this._removeViewEvents();
+    this._elements.forEach((element) => element.destroy());
+    this._elements.clear();
   }
 }

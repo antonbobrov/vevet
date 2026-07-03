@@ -14,9 +14,28 @@ import VevetDemo from '@site/src/components/VevetDemo';
 
 # InView
 
-InView is a visibility detection utility that leverages the `IntersectionObserver API` to monitor when elements enter or leave the viewport.
+Visibility detection via `IntersectionObserver`:
 
-It provides customizable options for triggering events, delaying visibility changes, and dynamically adding CSS classes to elements based on their visibility state and scrolling direction. InView automatically detects the direction from which elements enter or leave the viewport, enabling directional animations and interactions.
+- Monitors elements entering and optionally leaving the viewport
+- Staggered initial delays via `maxInitialDelay` and element position
+- Direction detection for scroll-aware animations
+- Optional CSS classes via `data-in-view-class`
+
+## Observation lifecycle
+
+InView runs two observation phases:
+
+1. **Initial pass** — `rootMargin` is `0%` on all sides. `isInitialStart` is `true`. Enter events use position-based stagger from [`maxInitialDelay`](props#props.maxInitialDelay).
+2. **Ongoing** — after the first enter batch, observers reconnect with [`rootMargin`](props#props.rootMargin) (default `0% 0% -5% 0%`). `isInitialStart` becomes `false`.
+
+Two observers are used internally:
+
+| Observer  | Role                                                            | `rootMargin`                          |
+| --------- | --------------------------------------------------------------- | ------------------------------------- |
+| **Enter** | `in` callbacks, initial stagger                                 | `0%` on first pass, then `rootMargin` |
+| **Leave** | `out` callbacks (when [`hasOut`](props#props.hasOut) is `true`) | always `0px`                          |
+
+When `hasOut` is `false`, the element is unobserved after the first `in` — one-time triggers only.
 
 ## Basic Demo
 
@@ -117,7 +136,13 @@ The direction values are:
 - **`fromLeft`** - Element enters/leaves from the left (horizontal scrolling)
 - **`fromRight`** - Element enters/leaves from the right (horizontal scrolling)
 
-Direction is determined by comparing the element's position to the viewport center. For initial page load, the direction defaults to the natural scroll direction (`fromBottom` for vertical, `fromRight` for horizontal).
+Direction is determined by comparing the element's position to the viewport center. For the initial pass, the direction defaults to the natural scroll direction (`fromBottom` for vertical, `fromRight` for horizontal).
+
+For horizontal layouts in RTL documents, initial stagger delay is mirrored so elements farther along the reading direction receive longer delays.
+
+:::note `isInitialStart` timing
+[`isInitialStart`](accessors#isinitialstart) becomes `false` as soon as the first enter batch is processed — **before** staggered `in` callbacks fire. Do not rely on `observer.isInitialStart` inside the `in` handler to distinguish initial vs scroll animations; track that state yourself or set `maxInitialDelay: 0` for scroll-only triggers.
+:::
 
 ## Best Practices
 
