@@ -32,7 +32,7 @@ If a prop, method, callback, or event is not documented in the docs, demos, Type
 
 ## Module pattern
 
-All components extend `Module` — they accept `(props, onCallbacks)`, support `updateProps()`, `on('event', fn)`, and `destroy()`. See `docusaurus/docs/base/Module/index.md`.
+All components extend `Module` — they accept `props` (config + `onEvent` callbacks), support `updateProps()`, `on('event', fn)`, and `destroy()`. See `docusaurus/docs/base/Module/index.md`.
 
 ## Quick start
 
