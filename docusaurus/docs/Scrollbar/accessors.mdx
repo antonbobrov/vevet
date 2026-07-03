@@ -32,14 +32,14 @@ instance.axis; // returns "x" or "y"
 
 ### `container`
 
-Type: `Window | HTMLElement`
+Type: `Window | HTMLElement | Snap`
 
-The element to which the scrollbar is applied.
+The element whose scroll position the scrollbar reflects.
 
 ```js
 const instance = new Scrollbar();
 
-instance.container; // returns Window or HTMLElement
+instance.container; // Window, HTMLElement, or Snap
 ```
 
 ### `outer`
@@ -80,14 +80,14 @@ instance.scrollableSize; // returns container scrollable size
 
 ### `scrollElement`
 
-Type: `HTMLElement`
+Type: `HTMLElement | Snap`
 
-The actual scrollable element. Returns `document.documentElement` for `window`, otherwise the `container` itself.
+The element used for native scroll metrics. Returns `document.documentElement` for `window`, otherwise the `container` (including `Snap`).
 
 ```js
 const instance = new Scrollbar();
 
-instance.scrollElement; // returns target scrollable element
+instance.scrollElement;
 ```
 
 ### `scrollSize`

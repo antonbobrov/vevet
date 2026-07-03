@@ -3,6 +3,7 @@ import { prependStyles } from '@/internal/prependStyles';
 
 let style: HTMLStyleElement | null = null;
 
+/** Injects global scrollbar styles once per page. */
 export function createScrollbarStyles(prefix: string) {
   if (style) {
     return style;
@@ -12,12 +13,14 @@ export function createScrollbarStyles(prefix: string) {
   prependStyles(style);
 
   style.innerHTML = `
-    .${prefix}-scrollable {
+    .${prefix}-scrollable-x,
+    .${prefix}-scrollable-y {
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
 
-    .${prefix}-scrollable::-webkit-scrollbar {
+    .${prefix}-scrollable-x::-webkit-scrollbar,
+    .${prefix}-scrollable-y::-webkit-scrollbar {
       display: none;
       appearance: none;
       width: 0;

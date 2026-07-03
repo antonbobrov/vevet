@@ -20,10 +20,11 @@ Static properties are set during initialization and cannot be modified later.
 
 ### `container` {#props.container}
 
-- **Type:** `Window | HTMLElement`
+- **Type:** `Window | HTMLElement | Snap`
 - **Default:** `window`
 - The element whose scroll position the scrollbar reflects.
 - For nested scroll areas, pass a custom `HTMLElement`.
+- For [`Snap`](/docs/Snap), pass the Snap instance as `container`.
 - **See [demo](demos#inner-scrollbar)**
 
 ```js
