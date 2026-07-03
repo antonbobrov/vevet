@@ -15,8 +15,15 @@ import Head from '@docusaurus/Head';
 </Head>
 
 :::note
-All **[Preloader's accessors](/docs/Preloader/accessors)** are available in this class.
+All **[Preloader accessors](/docs/Preloader/accessors)** (`isLoaded`, `isHiding`, `isHidden`, …) are available in this class.
 :::
+
+### `resourceContainer`
+
+Type: `HTMLElement | null`
+
+Not a getter on the instance — set via [`resourceContainer`](props#props.resourcecontainer) prop.  
+DOM root used to scan images, videos, and [`customSelector`](props#props.customselector) matches. Defaults to `document` when `null`.
 
 ### `loadedWeight`
 
@@ -38,14 +45,9 @@ preloader.loadedWeight; // loaded weight
 
 Type: `number`
 
-Represents the actual loading progress in the `0–1` range.  
-This value is **never interpolated** and updates immediately whenever a resource loads.
+Actual weighted progress in the `0–1` range. **Not interpolated** — updates immediately when a resource resolves.
 
 ```js
-const preloader = new ProgressPreloader({
-  container: document.getElementById('container'),
-});
-
 preloader.loadProgress; // rigid progress
 ```
 
@@ -53,16 +55,14 @@ preloader.loadProgress; // rigid progress
 
 Type: `number`
 
-Gets the current interpolated progress value (0 to 1).  
-The smoothness of the progress update depends on `lerp` props.  
-**See [demo](demos#simple-preloader)**
+Smoothed progress (`0–1`) for UI. Damped toward `loadProgress` each frame via [`lerp`](props#props.lerp).
+
+[`loaded`](/docs/Preloader/callbacks#loaded) fires when **`progress >= 1`**, not when `loadProgress` hits `1` first.
 
 ```js
-const preloader = new ProgressPreloader({
-  container: document.getElementById('container'),
+preloader.on('progress', () => {
+  console.log(preloader.progress); // smooth value for display
 });
-
-preloader.progress; // smooth progress
 ```
 
 ### `resources`

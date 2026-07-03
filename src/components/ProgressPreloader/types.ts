@@ -4,6 +4,8 @@ import {
   IPreloaderStaticProps,
 } from '../Preloader';
 
+import { IProgressPreloaderResource } from './global';
+
 /**
  * Static properties for configuring the progress preloader.
  */
@@ -70,24 +72,4 @@ export interface IProgressPreloaderCallbacksMap extends IPreloaderCallbacksMap<I
    * Fired each time a resource is loaded during preloading.
    */
   resource: IProgressPreloaderResource;
-}
-
-/**
- * Data structure for custom resources to preload.
- */
-export interface IProgressPreloaderResource {
-  /**
-   * The custom resource identifier.
-   */
-  id: Element | string;
-
-  /**
-   * A resource may be split into multiple parts. This is the resource weight
-   */
-  weight: number;
-
-  /**
-   * Loaded weight
-   */
-  loaded: number;
 }

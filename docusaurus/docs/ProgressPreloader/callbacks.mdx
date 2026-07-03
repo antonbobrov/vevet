@@ -15,17 +15,18 @@ import Head from '@docusaurus/Head';
 </Head>
 
 :::note
-All **[Preloader's callbacks](/docs/Preloader/callbacks)** are available in this class.
+All **[Preloader callbacks](/docs/Preloader/callbacks)** (`loaded`, `hide`, `hidden`, …) are available.  
+[`loaded`](/docs/Preloader/callbacks#loaded) fires when smoothed [`progress`](accessors#progress) reaches `1`, after all resources are resolved and optional [`endDuration`](props#props.endduration) finish.
 :::
 
 ### `progress`
 
-Fired when the preloader's progress updates.
+Fired each animation frame while progress is updating (including the `endDuration` finish timeline).
 
 ```ts
 const preloader = new ProgressPreloader({
   container: document.getElementById('container'),
-  onProgress: () => console.log(preloader.progress),
+  onProgress: (_data, { progress }) => console.log(progress),
 });
 ```
 
