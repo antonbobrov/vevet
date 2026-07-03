@@ -81,10 +81,11 @@ Triggered on every animation frame.
 
 ```ts
 const raf = new Raf({
-  onFrame: ({ fps, fpsFactor, duration }) => {
+  onFrame: ({ fps, fpsFactor, duration, lerpFactor }) => {
     console.log('current FPS', fps);
     console.log('scaling coefficient based on a 60 FPS target', fpsFactor);
     console.log('duration of the last frame in ms', duration);
+    console.log('FPS-independent ease', lerpFactor(0.1));
   },
 });
 ```
@@ -92,10 +93,11 @@ const raf = new Raf({
 or:
 
 ```ts
-const destruct = raf.on('frame', ({ fps, fpsFactor, duration }) => {
+const destruct = raf.on('frame', ({ fps, fpsFactor, duration, lerpFactor }) => {
   console.log('current FPS', fps);
   console.log('scaling coefficient based on a 60 FPS target', fpsFactor);
   console.log('duration of the last frame in ms', duration);
+  console.log('FPS-independent ease', lerpFactor(0.1));
 });
 
 // Cancel the callback
