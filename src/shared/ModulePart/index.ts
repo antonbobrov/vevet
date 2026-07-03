@@ -21,6 +21,11 @@ export class ModulePart<
     this._parent.onDestroy(() => this.destroy());
   }
 
+  /** Parent instance */
+  protected get parent() {
+    return this._parent;
+  }
+
   /**
    * Parent properties.
    *
