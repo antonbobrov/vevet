@@ -73,10 +73,10 @@ interface ISwipeAxes {
 
 ## ISwipeCoords
 
-Snapshot on swipe callbacks and accessors.
+Snapshot on swipe callbacks and accessors. See also [Coordinate spaces](/docs/Swipe#coordinate-spaces).
 
-**Pointer space:** `start`, `prev`, `current`, `diff`, `step`, `accum`.  
-**Movement space:** `movement`, `prevMovement`, `scale` (after rubber and snap — use for transforms with `bounds`).
+**Pointer space:** `start`, `prev`, `current`, `diff`, `step`, `accum` — gesture deltas and velocity.  
+**Movement space:** `movement`, `prevMovement`, `scale` — after rubber and snap; use for transforms with [`bounds`](props#props.bounds).
 
 ```ts
 interface ISwipeCoords {

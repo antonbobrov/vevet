@@ -1,24 +1,35 @@
-import { initVevet } from '@/global/initVevet';
-import { isFiniteNumber } from '@/internal/isFiniteNumber';
-import { unwrapAngleDelta } from '@/internal/unwrapAngle';
-import { closest } from '@/utils';
+import { ModulePart } from '@/shared/ModulePart';
 
-import { ISwipeCoords, ISwipeVec2 } from '../global';
+import { Swipe } from '..';
 
-import type { ISwipeAxes, ISwipeState, ISwipeVec3, Swipe } from '..';
+import { SwipeBounds } from './Bounds';
+import { ISwipeDecodeAngle, SwipeDecode } from './Decode';
+import { applyRubber } from './Rubber';
+import { SwipeSnap } from './Snap';
+
+import type {
+  ISwipeCoords,
+  ISwipeState,
+  ISwipeVec3,
+  ISwipeVec2,
+} from '../global';
 
 const START_VEC3 = { x: 0, y: 0, angle: 0 };
 const START_STATE = { ...START_VEC3, time: 0 };
 
-interface IProps {
-  container: Element;
-  props: () => typeof Swipe.prototype.props;
-  hasInertia: () => boolean;
-  recalculateBoundsOnInertia: () => boolean;
-}
+/**
+ * Coordinate snapshot and movement-space pipeline:
+ *
+ * `decode` → accumulate `rawMovement` → rubber → snap → `movement`
+ *
+ * @internal
+ */
+export class SwipeCoords extends ModulePart<Swipe> {
+  private _decode: SwipeDecode;
 
-export class SwipeCoords {
-  constructor(private ctx: IProps) {}
+  private _bounds: SwipeBounds;
+
+  private _snap: SwipeSnap;
 
   /** Event timestamp. */
   private _timestamp = 0;
@@ -51,16 +62,18 @@ export class SwipeCoords {
   private _rawMovement: ISwipeVec3 = { ...START_VEC3 };
 
   /** Raw atan2 angle and unwrapped cumulative angle. */
-  private _tempAngle = { raw: 0, unwrapped: 0 };
-
-  /** Active snap target per axis, if any. */
-  private _snap: { x?: number; y?: number; angle?: number } = {};
-
-  /** Cached normalized bounds (refreshed on swipe start). */
-  private _bounds: ISwipeAxes | null = null;
+  private _tempAngle: ISwipeDecodeAngle = { raw: 0, unwrapped: 0 };
 
   /** Current scale modifier. */
   private _scale = 1;
+
+  constructor(parent: Swipe) {
+    super(parent);
+
+    this._decode = new SwipeDecode(parent);
+    this._bounds = new SwipeBounds(parent);
+    this._snap = new SwipeSnap(parent);
+  }
 
   get timestamp() {
     return this._timestamp;
@@ -108,7 +121,7 @@ export class SwipeCoords {
   }
 
   /** Previous displacement in movement space (rubber + snap). */
-  get prevMovement(): ISwipeVec3 {
+  get prevMovement() {
     return this._prevMovement;
   }
 
@@ -119,17 +132,18 @@ export class SwipeCoords {
 
   /** Normalized movement limits (`[min, max]` per defined axis). */
   get bounds() {
-    if (this._bounds) {
-      return this._bounds;
+    if (this._bounds.bounds) {
+      return this._bounds.bounds;
     }
 
     return this.calculateBounds();
   }
 
+  /** Bound overflow */
   get overflow() {
-    const props = this.ctx.props();
+    const { overflow } = this.props;
 
-    return props.overflow ? Math.abs(props.overflow()) : 0;
+    return overflow ? Math.abs(overflow()) : 0;
   }
 
   /** Current scale modifier */
@@ -167,7 +181,7 @@ export class SwipeCoords {
 
   /** Resolved snap target per axis during the current gesture. */
   get snap() {
-    return this._snap;
+    return this._snap.targets;
   }
 
   /**
@@ -175,91 +189,18 @@ export class SwipeCoords {
    * Zero when inside limits; used for bounce-back.
    */
   get exceeds() {
-    const { _rawMovement: movement, bounds } = this;
+    const bounds = this.bounds;
 
     if (!bounds) {
       return null;
     }
 
-    let xDiff = 0;
-    let yDiff = 0;
-    let aDiff = 0;
-
-    if (bounds.x) {
-      if (movement.x < bounds.x[0]) {
-        xDiff = movement.x - bounds.x[0];
-      } else if (movement.x > bounds.x[1]) {
-        xDiff = movement.x - bounds.x[1];
-      }
-    }
-
-    if (bounds.y) {
-      if (movement.y < bounds.y[0]) {
-        yDiff = movement.y - bounds.y[0];
-      } else if (movement.y > bounds.y[1]) {
-        yDiff = movement.y - bounds.y[1];
-      }
-    }
-
-    if (bounds.angle) {
-      if (movement.angle < bounds.angle[0]) {
-        aDiff = movement.angle - bounds.angle[0];
-      } else if (movement.angle > bounds.angle[1]) {
-        aDiff = movement.angle - bounds.angle[1];
-      }
-    }
-
-    return {
-      x: xDiff,
-      y: yDiff,
-      angle: aDiff,
-    };
+    return this._bounds.exceeds(this._rawMovement);
   }
 
   /** Parses pointer coordinates relative to the container */
-  public decode(event: MouseEvent | TouchEvent | ISwipeVec2): ISwipeState {
-    const vevet = initVevet();
-    const { container } = this.ctx;
-    const props = this.ctx.props();
-
-    let clientX = 0;
-    let clientY = 0;
-
-    if ('touches' in event) {
-      clientX = event.touches[0].clientX;
-      clientY = event.touches[0].clientY;
-    } else if ('type' in event) {
-      clientX = event.clientX;
-      clientY = event.clientY;
-    } else {
-      clientX = event.x;
-      clientY = event.y;
-    }
-
-    let x = clientX;
-    let y = clientY;
-
-    let centerX = vevet.width / 2;
-    let centerY = vevet.height / 2;
-
-    if (props.relative) {
-      const bounding = container.getBoundingClientRect();
-
-      x = clientX - bounding.left;
-      y = clientY - bounding.top;
-      centerX = bounding.left + bounding.width / 2;
-      centerY = bounding.top + bounding.height / 2;
-    }
-
-    const angleRad = Math.atan2(clientY - centerY, clientX - centerX);
-    const angle = (angleRad * 180) / Math.PI;
-
-    return {
-      x: x,
-      y: y,
-      angle,
-      time: performance.now(),
-    };
+  public decode(event: MouseEvent | TouchEvent | ISwipeVec2) {
+    return this._decode.decode(event);
   }
 
   /** Apply scale and optionally zoom toward an origin in movement space. */
@@ -267,13 +208,13 @@ export class SwipeCoords {
     value: number,
     originProp?: MouseEvent | TouchEvent | ISwipeVec2,
   ) {
-    if (this._scale === value) {
+    if (this.scale === value) {
       return;
     }
 
     if (originProp) {
       const origin = this.decode(originProp);
-      const ratio = value / this._scale;
+      const ratio = value / this.scale;
 
       this.movement = {
         x: origin.x - (origin.x - this._movement.x) * ratio,
@@ -303,32 +244,25 @@ export class SwipeCoords {
     this._tempAngle.unwrapped = this._current.angle;
   }
 
-  /** Update coordinates */
+  /** Update coordinates through the movement pipeline. */
   public update({ x, y, angle, time }: ISwipeState, applyRatio = true) {
-    // Vars
-    const { start, ctx } = this;
-    const props = this.ctx.props();
+    const { start, props, parent } = this;
     const stepRatio = applyRatio ? props.ratio : 1;
 
-    // Update bounds
     if (
-      (ctx.hasInertia() && ctx.recalculateBoundsOnInertia()) ||
-      !ctx.hasInertia()
+      (parent.hasInertia && props.recalculateBoundsOnInertia) ||
+      !parent.hasInertia
     ) {
       this.calculateBounds();
     }
 
-    // Save
     this._timestamp = performance.now();
     this._prev = { ...this.current };
     this._current = { x, y, angle, time };
     const { _current: current, _prev: prev, overflow } = this;
 
-    // Update angle
-    this._updateTempAngle(angle);
+    this._decode.updateAngle(this._tempAngle, angle);
     current.angle = this._tempAngle.unwrapped;
-
-    // Update coords
 
     this._step = {
       x: current.x - prev.x,
@@ -360,121 +294,26 @@ export class SwipeCoords {
     this._prevMovement.y = this._movement.y;
     this._prevMovement.angle = this._movement.angle;
 
-    this._movement.x = this._applyRubber('x', overflow);
-    this._movement.y = this._applyRubber('y', overflow);
-    this._movement.angle = this._applyRubber('angle', overflow);
+    const bounds = this.bounds;
 
-    this._snapMovementAxis('x');
-    this._snapMovementAxis('y');
-    this._snapMovementAxis('angle');
-  }
+    this._movement.x = applyRubber('x', this._rawMovement.x, bounds, overflow);
+    this._movement.y = applyRubber('y', this._rawMovement.y, bounds, overflow);
+    this._movement.angle = applyRubber(
+      'angle',
+      this._rawMovement.angle,
+      bounds,
+      overflow,
+    );
 
-  /** Snap movement axis */
-  private _snapMovementAxis(axis: 'x' | 'y' | 'angle') {
-    const { hasInertia } = this.ctx;
-    const props = this.ctx.props();
+    const { hasInertia } = parent;
 
-    const snap = props.snap?.();
-    if (!snap) {
-      this._snap[axis] = undefined;
-
-      return;
-    }
-
-    const snaps = snap[axis];
-    if (!snaps?.length) {
-      this._snap[axis] = undefined;
-
-      return;
-    }
-
-    const value = this._movement[axis];
-    const target = closest(value, snaps);
-    const radius = props.snapRadius;
-
-    if (isFiniteNumber(radius) && Math.abs(target - value) > Math.abs(radius)) {
-      this._snap[axis] = undefined;
-
-      return;
-    }
-
-    this._snap[axis] = target;
-
-    if (!hasInertia()) {
-      this._movement[axis] = target;
-    }
+    this._snap.applyAxis('x', this._movement, hasInertia);
+    this._snap.applyAxis('y', this._movement, hasInertia);
+    this._snap.applyAxis('angle', this._movement, hasInertia);
   }
 
   /** Calculate bounds */
   public calculateBounds() {
-    const props = this.ctx.props();
-
-    if (!props.bounds) {
-      this._bounds = null;
-
-      return;
-    }
-
-    const bounds = props.bounds(this.coords);
-    const d = [-Infinity, Infinity];
-
-    const x = bounds?.x
-      ? [Math.min(...bounds.x), Math.max(...bounds.x)]
-      : [...d];
-
-    const y = bounds?.y
-      ? [Math.min(...bounds.y), Math.max(...bounds.y)]
-      : [...d];
-
-    const a = bounds?.angle
-      ? [Math.min(...bounds.angle), Math.max(...bounds.angle)]
-      : [...d];
-
-    this._bounds = { x, y, angle: a };
-
-    return this._bounds;
-  }
-
-  /** Unwrap raw atan2 angle and accumulate into _angle */
-  private _updateTempAngle(rawAngle: number) {
-    this._tempAngle.unwrapped += unwrapAngleDelta(
-      rawAngle,
-      this._tempAngle.raw,
-    );
-
-    this._tempAngle.raw = rawAngle;
-  }
-
-  /** Apply rubber-band past movement bounds. */
-  private _applyRubber(axis: 'x' | 'y' | 'angle', overflow: number) {
-    const temp = this._rawMovement[axis];
-    const bounds = this.bounds?.[axis];
-
-    if (!bounds) {
-      return temp;
-    }
-
-    const [min, max] = bounds;
-
-    if (temp >= min && temp <= max) {
-      return temp;
-    }
-
-    if (temp < min) {
-      return min - this._rubberDistance(min - temp, overflow);
-    }
-
-    return max + this._rubberDistance(temp - max, overflow);
-  }
-
-  /**
-   * Overscroll → rubber displacement
-   */
-  private _rubberDistance(overscroll: number, limit: number) {
-    if (overscroll <= 0 || limit <= 0) {
-      return 0;
-    }
-
-    return (limit * overscroll) / (limit + overscroll);
+    return this._bounds.calculate(this.coords);
   }
 }

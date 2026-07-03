@@ -1,5 +1,7 @@
 import { Raf } from '@/components/Raf';
 import { isFiniteNumber } from '@/internal/isFiniteNumber';
+import { now } from '@/internal/now';
+import { ModulePart } from '@/shared/ModulePart';
 import { clamp, lerp } from '@/utils';
 
 import { Swipe } from '..';
@@ -10,19 +12,26 @@ const IDLE_VEC3 = { x: 0, y: 0, angle: 0 };
 const IDLE_STATE = { ...IDLE_VEC3, time: 0 };
 
 const LERP_APPROX = 0.01;
-const BELOW_THRESHOLD = 0.1;
+const BELOW_THRESHOLD = 0.01;
 
-interface IProps {
-  props: () => typeof Swipe.prototype.props;
-  coords: SwipeCoords;
-  onStart: () => void;
-  onFail: () => void;
-  onCancel: () => void;
-  onEnd: () => void;
-}
-
-export class SwipeInertia {
-  constructor(private ctx: IProps) {}
+/**
+ * Release inertia via {@link Raf} after pointer up.
+ *
+ * Velocity is derived from the last `step` and decayed each frame.
+ * When `inertiaDistanceModifier` is set, movement follows a predicted
+ * distance curve instead of integrating velocity directly.
+ *
+ * @internal
+ */
+export class SwipeInertia extends ModulePart<Swipe> {
+  constructor(
+    parent: Swipe,
+    private coords: SwipeCoords,
+    /** Syncs {@link SwipeCoords} angle state when inertia starts. */
+    private _onStart: () => void,
+  ) {
+    super(parent);
+  }
 
   private _raf?: Raf;
 
@@ -30,11 +39,11 @@ export class SwipeInertia {
 
   private _initialVelocity: ISwipeState = { ...IDLE_STATE };
 
-  private _modifiedDistance?: ISwipeVec3 | null;
+  private _distance?: ISwipeVec3 | null;
 
-  private _saveRawMovement: ISwipeVec3 = { ...IDLE_VEC3 };
+  private _saveMovement: ISwipeVec3 = { ...IDLE_VEC3 };
 
-  private _rawMovement: ISwipeVec3 = { ...IDLE_VEC3 };
+  private _movement: ISwipeVec3 = { ...IDLE_VEC3 };
 
   private _saveStep: ISwipeState = { ...IDLE_STATE };
 
@@ -42,28 +51,67 @@ export class SwipeInertia {
 
   private _onUpdate?: (state: ISwipeVec3) => void;
 
-  /** Check if inertia is active */
+  /** Whether release inertia animation is running. */
   get has() {
     return !!this._raf;
   }
 
-  /** Apply inertia-based movement */
+  /**
+   * Starts release inertia from the last pointer velocity.
+   *
+   * @returns `false` when momentum is below threshold (`inertiaFail`).
+   */
   public release(onUpdate: (state: ISwipeVec3) => void) {
-    const { ctx } = this;
-    const props = ctx.props();
+    const { coords, props } = this;
 
-    this._modifiedDistance = undefined;
-    this._saveCurrent = { ...ctx.coords.current };
-    this._saveStep = { ...ctx.coords.step };
-    this._saveRawMovement = { ...ctx.coords.rawMovement };
-    this._rawMovement = { ...ctx.coords.rawMovement };
+    this._distance = undefined;
 
+    this._saveCurrent = { ...coords.current };
+    this._saveStep = { ...coords.step };
+    this._saveMovement = { ...coords.rawMovement };
+    this._movement = { ...coords.rawMovement };
+
+    const data = this._getVelocityData();
+
+    if (!data) {
+      this.callbacks.emit('inertiaFail', undefined);
+
+      return false;
+    }
+
+    this._velocity = {
+      x: data.vx,
+      y: data.vy,
+      angle: data.va,
+      time: now(),
+    };
+
+    this._initialVelocity = { ...this._velocity };
+
+    if (props.inertiaDistanceModifier) {
+      this._distance = props.inertiaDistanceModifier({
+        x: this._predictDistance(data.vx, props.inertiaDecay),
+        y: this._predictDistance(data.vy, props.inertiaDecay),
+        angle: this._predictDistance(data.va, props.inertiaDecay),
+      });
+    }
+
+    this._onUpdate = onUpdate;
+
+    this._raf = new Raf({ enabled: true, onFrame: this._handleRaf.bind(this) });
+
+    this._onStart();
+    this.callbacks.emit('inertiaStart', undefined);
+
+    return true;
+  }
+
+  /** Get velocity data if can start */
+  private _getVelocityData() {
     const data = this._calcVelocity();
 
     if (!data || !isFiniteNumber(data.dt) || data.dt <= 0) {
-      ctx.onFail();
-
-      return false;
+      return null;
     }
 
     const { linearSpeed, angularSpeed, vx, vy, va, threshold } = data;
@@ -73,54 +121,30 @@ export class SwipeInertia {
       !isFiniteNumber(angularSpeed) ||
       (linearSpeed < threshold && angularSpeed < threshold)
     ) {
-      ctx.onFail();
-
-      return false;
+      return null;
     }
-
-    this._onUpdate = onUpdate;
-
-    this._velocity = { x: vx, y: vy, angle: va, time: performance.now() };
-    this._initialVelocity = { ...this._velocity };
 
     if (
       Math.abs(vx) < BELOW_THRESHOLD &&
       Math.abs(vy) < BELOW_THRESHOLD &&
       Math.abs(va) < BELOW_THRESHOLD
     ) {
-      ctx.onFail();
-
-      return false;
+      return null;
     }
 
-    if (props.inertiaDistanceModifier) {
-      this._modifiedDistance = props.inertiaDistanceModifier({
-        x: this._predictDistance(vx, props.inertiaDecay),
-        y: this._predictDistance(vy, props.inertiaDecay),
-        angle: this._predictDistance(va, props.inertiaDecay),
-      });
-    }
-
-    this._raf = new Raf({
-      enabled: true,
-      onFrame: this._handleRaf.bind(this),
-    });
-
-    this.ctx.onStart();
-
-    return true;
+    return data;
   }
 
   /** Calculate velocity */
   private _calcVelocity() {
     const { _saveCurrent: current, _saveStep: step } = this;
-    const { inertiaRatio, ratio, maxVelocity, ...props } = this.ctx.props();
+    const { inertiaRatio, ratio, maxVelocity, ...props } = this.props;
 
     if (!current || !step) {
       return null;
     }
 
-    const gap = performance.now() - current.time;
+    const gap = now() - current.time;
     const dt = Math.max(step.time, gap, 1);
 
     const iRatio = isFiniteNumber(inertiaRatio) ? inertiaRatio : 1;
@@ -141,9 +165,21 @@ export class SwipeInertia {
 
     const linearSpeed = Math.hypot(vx, vy) * 1000;
     const angularSpeed = Math.abs(va) * 1000;
-    const threshold = props.inertiaThreshold;
+    const threshold = Math.abs(props.inertiaThreshold);
 
     return { dt, vx, vy, va, linearSpeed, angularSpeed, threshold };
+  }
+
+  /** Predict inertia distance */
+  private _predictDistance(
+    velocity: number,
+    decay: number,
+    frameMs = 1000 / 60,
+  ) {
+    const k = (decay * 60) / 1000;
+    const r = Math.exp(-k * frameMs);
+
+    return (velocity * frameMs) / (1 - r);
   }
 
   /** Handle RAF update */
@@ -155,16 +191,14 @@ export class SwipeInertia {
     const { _raf: raf } = this;
     const duration = this._raf.duration;
 
-    const { coords } = this.ctx;
-    const props = this.ctx.props();
+    const { coords, props } = this;
 
     const {
       _velocity: velocity,
       _saveCurrent: startCurrent,
-      _saveRawMovement: startRawMovement,
-      _rawMovement: rawMovement,
-      _modifiedDistance: distance,
-      _initialVelocity: initial,
+      _saveMovement: startMovement,
+      _movement: movement,
+      _distance: distance,
     } = this;
 
     const frameMs = duration;
@@ -175,24 +209,24 @@ export class SwipeInertia {
     const dAngle = velocity.angle * frameMs;
 
     // Friction
-    const frictionEase = raf.lerpFactor(props.inertiaDecay);
-    velocity.x = lerp(velocity.x, 0, frictionEase);
-    velocity.y = lerp(velocity.y, 0, frictionEase);
-    velocity.angle = lerp(velocity.angle, 0, frictionEase);
+    const decay = raf.lerpFactor(props.inertiaDecay);
+    velocity.x = lerp(velocity.x, 0, decay);
+    velocity.y = lerp(velocity.y, 0, decay);
+    velocity.angle = lerp(velocity.angle, 0, decay);
 
     // Movement
     if (distance) {
-      const xP = this._getVelocityProgress(velocity.x, initial.x);
-      const yP = this._getVelocityProgress(velocity.y, initial.y);
-      const aP = this._getVelocityProgress(velocity.angle, initial.angle);
+      const xP = this._getVelocityProgress('x');
+      const yP = this._getVelocityProgress('y');
+      const aP = this._getVelocityProgress('angle');
 
-      rawMovement.x = startRawMovement.x + distance.x * xP;
-      rawMovement.y = startRawMovement.y + distance.y * yP;
-      rawMovement.angle = startRawMovement.angle + distance.angle * aP;
+      movement.x = startMovement.x + distance.x * xP;
+      movement.y = startMovement.y + distance.y * yP;
+      movement.angle = startMovement.angle + distance.angle * aP;
     } else {
-      rawMovement.x += dx;
-      rawMovement.y += dy;
-      rawMovement.angle += dAngle;
+      movement.x += dx;
+      movement.y += dy;
+      movement.angle += dAngle;
     }
 
     // Bounce
@@ -207,13 +241,13 @@ export class SwipeInertia {
     if (bounds?.x) {
       const bx = this._applyAxisBounce(
         'x',
-        rawMovement.x,
+        movement.x,
         velocity.x,
         bounds.x,
         bounceEase,
       );
 
-      rawMovement.x = bx.value;
+      movement.x = bx.value;
       velocity.x = bx.velocity;
 
       isBouncing =
@@ -223,13 +257,13 @@ export class SwipeInertia {
     if (bounds?.y) {
       const by = this._applyAxisBounce(
         'y',
-        rawMovement.y,
+        movement.y,
         velocity.y,
         bounds.y,
         bounceEase,
       );
 
-      rawMovement.y = by.value;
+      movement.y = by.value;
       velocity.y = by.velocity;
 
       isBouncing =
@@ -239,13 +273,13 @@ export class SwipeInertia {
     if (bounds?.angle) {
       const ba = this._applyAxisBounce(
         'angle',
-        rawMovement.angle,
+        movement.angle,
         velocity.angle,
         bounds.angle,
         bounceEase,
       );
 
-      rawMovement.angle = ba.value;
+      movement.angle = ba.value;
       velocity.angle = ba.velocity;
 
       isBouncing =
@@ -254,9 +288,9 @@ export class SwipeInertia {
 
     // Callbacks
 
-    const totalX = rawMovement.x - startRawMovement.x;
-    const totalY = rawMovement.y - startRawMovement.y;
-    const totalA = rawMovement.angle - startRawMovement.angle;
+    const totalX = movement.x - startMovement.x;
+    const totalY = movement.y - startMovement.y;
+    const totalA = movement.angle - startMovement.angle;
 
     const x = startCurrent.x + totalX;
     const y = startCurrent.y + totalY;
@@ -269,25 +303,21 @@ export class SwipeInertia {
     const linearStep = Math.hypot(dx, dy);
     const angularStep = Math.abs(dAngle);
 
-    let shouldStop =
+    const shouldStop =
       linearStep < BELOW_THRESHOLD && angularStep < BELOW_THRESHOLD;
 
-    if (distance) {
-      shouldStop =
-        Math.abs(totalX - distance.x) < LERP_APPROX &&
-        Math.abs(totalY - distance.y) < LERP_APPROX &&
-        Math.abs(totalA - distance.angle) < LERP_APPROX;
-    }
-
     if (!isBouncing && shouldStop) {
-      this.ctx.onEnd();
+      this.callbacks.emit('inertiaEnd', undefined);
       this._clear();
     }
   }
 
   /** Calculate velocity progress */
-  private _getVelocityProgress(v: number, initial: number) {
-    if (Math.abs(initial) < BELOW_THRESHOLD) {
+  private _getVelocityProgress(axis: 'x' | 'y' | 'angle') {
+    const v = this._velocity[axis];
+    const initial = this._initialVelocity[axis];
+
+    if (Math.abs(initial) === 0) {
       return 1;
     }
 
@@ -298,17 +328,6 @@ export class SwipeInertia {
     }
 
     return p;
-  }
-
-  private _predictDistance(
-    velocity: number,
-    decay: number,
-    frameMs = 1000 / 60,
-  ) {
-    const k = (decay * 60) / 1000;
-    const r = Math.exp(-k * frameMs);
-
-    return (velocity * frameMs) / (1 - r);
   }
 
   /** Apply exponential axis bounce overflow */
@@ -323,7 +342,7 @@ export class SwipeInertia {
       return { value, velocity };
     }
 
-    const snappy = this.ctx.coords.snap[axis];
+    const snappy = this.coords.snap[axis];
 
     const lo = typeof snappy === 'number' ? snappy : Math.min(...bounds);
     const hi = typeof snappy === 'number' ? snappy : Math.max(...bounds);
@@ -352,17 +371,19 @@ export class SwipeInertia {
     this._velocity = { ...IDLE_STATE };
   }
 
-  /** Stop inertia animation */
+  /** Stops release inertia and emits `inertiaCancel`. */
   public cancel() {
     if (this._raf) {
-      this.ctx.onCancel();
+      this.callbacks.emit('inertiaCancel', undefined);
     }
 
     this._clear();
   }
 
   /** Destroy instance */
-  public destroy() {
+  protected _destroy() {
     this._clear();
+
+    super._destroy();
   }
 }

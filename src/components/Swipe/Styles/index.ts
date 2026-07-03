@@ -1,22 +1,32 @@
 import { body } from '@/internal/env';
+import { ModulePart } from '@/shared/ModulePart';
 
-import { cursorStyles } from './styles';
+import { swipeStyles } from './styles';
 
 import type { Swipe } from '..';
 
-export class SwipeStyles {
-  /** Styles */
+/**
+ * Inline `touch-action` and grab-cursor styles for the swipe target.
+ *
+ * @internal
+ */
+export class SwipeStyles extends ModulePart<Swipe> {
   private _styles?: HTMLStyleElement;
 
-  constructor(private _ctx: Swipe) {
-    this._styles = cursorStyles?.cloneNode(true) as HTMLStyleElement;
+  constructor(parent: Swipe) {
+    super(parent);
+
+    this._styles = swipeStyles?.cloneNode(true) as HTMLStyleElement;
 
     this.setInline();
+
+    this.onDestroy(() => this.remove());
   }
 
   /** Applies touch-action and cursor styles */
   public setInline() {
-    const { props } = this._ctx;
+    const { props } = this;
+
     const target = props.thumb || props.container;
 
     const { axis, enabled, grabCursor: hasGrabCursor } = props;
@@ -37,9 +47,9 @@ export class SwipeStyles {
 
   /** Appends styles */
   public append() {
-    const swipe = this._ctx;
+    const { props } = this;
 
-    if (swipe.props.grabCursor && this._styles) {
+    if (props.grabCursor && this._styles) {
       body.append(this._styles);
     }
   }

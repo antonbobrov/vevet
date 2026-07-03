@@ -9,9 +9,6 @@ export interface ISwipeVec3 extends ISwipeVec2 {
   angle: number;
 }
 
-/** @deprecated Use {@link ISwipeVec3}. */
-export interface ISwipeMatrix extends ISwipeVec3 {}
-
 /** Pointer sample: position plus `time` (ms, `performance.now()`). */
 export interface ISwipeState extends ISwipeVec3 {
   time: number;
@@ -20,8 +17,15 @@ export interface ISwipeState extends ISwipeVec3 {
 /**
  * Snapshot exposed on swipe callbacks and accessors.
  *
- * Pointer space: `start`, `prev`, `current`, `diff`, `step`, `accum`.
- * Movement space: `movement` (after bounds rubber and snap; use for transforms).
+ * Pointer space
+ *
+ * `start`, `prev`, `current`, `diff`, `step`, `accum` — raw gesture tracking.
+ * Use for direction detection and velocity (`step` / `diff`).
+ *
+ * Movement space
+ *
+ * `movement`, `prevMovement`, `scale` — after bounds rubber and snap.
+ * Use for element `transform` when `bounds` or `snap` props are set.
  */
 export interface ISwipeCoords {
   /** Last event timestamp (ms). */

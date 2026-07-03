@@ -29,6 +29,14 @@ Manages swipe interactions:
 - Calculates rotation (`angle` in degrees)
 - Does not apply transforms — only provides computed coordinates
 
+## Basic Demo
+
+<VevetDemo id="bNNbKyV" height={400} />
+
+## More demos
+
+To explore more demos, click [here](./demos).
+
 ## Coordinate spaces
 
 Swipe exposes two related spaces in [`ISwipeCoords`](interfaces#iswipecoords):
@@ -42,13 +50,33 @@ Swipe exposes two related spaces in [`ISwipeCoords`](interfaces#iswipecoords):
 
 With [`pointers`](props#props.pointers) `> 1`, pointer-space coordinates follow the **center** between active pointers (via internal [`Pointers.move`](/docs/Pointers/accessors#move)), not the first touch only.
 
-## Basic Demo
+## Gesture lifecycle
 
-<VevetDemo id="bNNbKyV" height={400} />
+Swipe uses an internal state machine (`pending` → `swiping` → `end` / `aborted`):
 
-## More demos
+1. **`Pointers.start`** — a pointer session begins; window `touchmove` / `mousemove` listeners are attached for movement sampling.
+2. **Pending** — the pointer moves, but [`threshold`](props#props.threshold) or [`minTime`](props#props.mintime) is not satisfied yet. No `start` callback.
+3. **Swiping** — threshold passed → [`start`](callbacks#start) fires, then [`move`](callbacks#move) on each sample.
+4. **End** — all pointers released → [`end`](callbacks#end), optional direction callbacks (`toLeft` …), then [inertia](callbacks#inertia) or bounce-back inside [`bounds`](props#props.bounds).
+5. **Aborted** — wrong [`axis`](props#props.axis) or [`willAbort`](props#props.willabort) → [`abort`](callbacks#abort). No `start` / `end`.
 
-To explore more demos, click [here](./demos).
+If the user releases before the threshold, `start` and `end` do not fire; overflow may still trigger bounce via [`releaseBounce`](methods#releasebounce).
+
+## Input pipeline
+
+Movement is sampled from [`Pointers.move`](/docs/Pointers/accessors#move) on each window `touchmove` / `mousemove`, **not** from `pointermove` directly. This allows:
+
+- [`preventTouchMove`](props#props.preventtouchmove) on touch (passive window listener)
+- [`requireCtrlKey`](props#props.requirectrlkey) for mouse pan
+- Stable coordinates when the browser coalesces or skips `pointermove` events
+
+## Movement pipeline
+
+When [`bounds`](props#props.bounds) or [`snap`](props#props.snap) are set, each `move` sample runs:
+
+**decode** → accumulate **rawMovement** → **rubber-band** past limits → **snap** → expose as `movement`
+
+Use `movement` (not `diff`) for transforms when bounds, rubber, or snap are active.
 
 ## Initialization
 
@@ -231,3 +259,12 @@ Destroy all events:
 ```js
 swipe.destroy();
 ```
+
+## Best practices
+
+- Apply transforms yourself — Swipe only computes coordinates.
+- With `bounds` / `snap` / rubber, use **`movement`** and **`scale`**, not `diff`.
+- Set `transform-origin` on the transformed element (usually `0 0`) for predictable pan/zoom.
+- Use [`thumb`](props#props.thumb) when the drag handle differs from the event [`container`](props#props.container).
+- Enable [`inertia`](props#props.inertia) for natural release; tune [`inertiaThreshold`](props#props.inertiathreshold) if small flicks should not coast.
+- Call [`destroy`](methods#destroy) when removing the component to free listeners and RAF/Timeline instances.
