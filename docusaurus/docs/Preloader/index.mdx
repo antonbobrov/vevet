@@ -14,7 +14,22 @@ import VevetDemo from '@site/src/components/VevetDemo';
 
 # Preloader
 
-Page preloader component that manages the visibility and lifecycle of a loading screen
+Page preloader — loading screen visibility and lifecycle:
+
+- Waits for page load (`loaded`)
+- Optional auto-hide when [`hide`](props#props.hide) is a duration
+- Fades [`container`](props#props.container) opacity via `Timeline`
+
+Does not provide styling for the container.
+
+## Lifecycle
+
+1. **`loaded`** — page is ready (`initVevet().onLoad`; overridable in [`ProgressPreloader`](/docs/ProgressPreloader)).
+2. **`hide`** — fade starts (automatic when `hide` is a number, or via [`hide()`](methods#hide)).
+3. **`hidden`** — fade completed; [`isHidden`](accessors#ishidden) is `true`.
+
+When `hide: false`, call `hide(duration)` manually after load.  
+When `container: null`, only callbacks fire — no DOM animation.
 
 ## Basic Demo
 
