@@ -21,9 +21,12 @@ type TM = ITimelineMutableProps;
 /**
  * Timeline for time-based progress with easing.
  *
- * Operates in the `0 → 1` range; {@link play}, {@link reverse}, {@link pause},
- * and {@link reset} control playback. Does not touch the DOM — use callbacks
- * or the {@link progress} / {@link eased} accessors to drive animation.
+ * - Operates in the `0 → 1` range with configurable `duration` and `easing`
+ * - {@link play}, {@link reverse}, {@link pause}, and {@link reset} control playback
+ * - Emits `update` on every progress change plus lifecycle callbacks (`start`, `end`,
+ *   `play`, `pause`, `reverse`, `reset`, `resume`)
+ * - Does not touch the DOM — drive animation from callbacks or {@link progress} /
+ *   {@link eased}
  *
  * [Documentation](https://vevetjs.com/docs/Timeline)
  *
@@ -122,10 +125,16 @@ export class Timeline extends Module<TC, TS, TM> {
       return;
     }
 
+    if (this._isPaused) {
+      this._emit('resume', undefined);
+    }
+
     this._isReversed = false;
     this._isPaused = false;
 
     if (!this.isPlaying) {
+      this._emit('play', undefined);
+
       this._time = Date.now();
       this._animate();
     }
@@ -142,31 +151,46 @@ export class Timeline extends Module<TC, TS, TM> {
       return;
     }
 
+    if (this._isPaused) {
+      this._emit('resume', undefined);
+    }
+
     this._isReversed = true;
     this._isPaused = false;
 
     if (!this.isPlaying) {
+      this._emit('reverse', undefined);
+
       this._time = Date.now();
       this._animate();
     }
   }
 
-  /** Pauses playback without resetting progress. */
+  /**
+   * Pauses playback without resetting progress.
+   *
+   * Emits `pause` only when a rAF loop is active.
+   */
   @noopIfDestroyed
   public pause() {
-    this._isPaused = true;
-
     if (this._raf) {
+      this._isPaused = true;
+      this._emit('pause', undefined);
       window.cancelAnimationFrame(this._raf);
     }
 
     this._raf = undefined;
   }
 
-  /** Pauses and sets {@link progress} to `0`. */
+  /**
+   * Pauses and sets {@link progress} to `0`.
+   */
   @noopIfDestroyed
   public reset() {
     this.pause();
+    this._emit('reset', undefined);
+
+    this._isPaused = false;
     this.progress = 0;
   }
 

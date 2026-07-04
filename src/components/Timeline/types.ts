@@ -38,6 +38,24 @@ export interface ITimelineCallbacksMap extends IModuleCallbacksMap<ITimelineMuta
    * Fired when linear progress reaches `1`.
    */
   end: undefined;
+
+  /** Fired when {@link Timeline.play} is called. */
+  play: undefined;
+
+  /** Fired when an active playback loop is paused via {@link Timeline.pause}. */
+  pause: undefined;
+
+  /** Fired when {@link Timeline.reverse} is called. */
+  reverse: undefined;
+
+  /** Fired when {@link Timeline.reset} is called, before progress is set to `0`. */
+  reset: undefined;
+
+  /**
+   * Fired when playback resumes after a pause via {@link Timeline.play} or
+   * {@link Timeline.reverse}.
+   */
+  resume: undefined;
 }
 
 /** Payload of the `update` callback. */

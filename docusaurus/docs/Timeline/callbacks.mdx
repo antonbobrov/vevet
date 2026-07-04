@@ -90,3 +90,100 @@ const destruct = tm.on('end', () => console.log('end'));
 // Cancel the callback
 destruct();
 ```
+
+### `play`
+
+Fired when [`play()`](methods#play) is called.
+
+```ts
+const tm = new Timeline({
+  onPlay: () => console.log('play'),
+});
+```
+
+or:
+
+```ts
+const destruct = tm.on('play', () => console.log('play'));
+
+// Cancel the callback
+destruct();
+```
+
+### `pause`
+
+Fired when an active rAF loop is paused via [`pause()`](methods#pause).
+
+```ts
+const tm = new Timeline({
+  onPause: () => console.log('pause'),
+});
+```
+
+or:
+
+```ts
+const destruct = tm.on('pause', () => console.log('pause'));
+
+// Cancel the callback
+destruct();
+```
+
+### `reverse`
+
+Fired when [`reverse()`](methods#reverse) is called.
+
+```ts
+const tm = new Timeline({
+  onReverse: () => console.log('reverse'),
+});
+```
+
+or:
+
+```ts
+const destruct = tm.on('reverse', () => console.log('reverse'));
+
+// Cancel the callback
+destruct();
+```
+
+### `reset`
+
+Fired when [`reset()`](methods#reset) is called, before progress is set to `0`.
+
+```ts
+const tm = new Timeline({
+  onReset: () => console.log('reset'),
+});
+```
+
+or:
+
+```ts
+const destruct = tm.on('reset', () => console.log('reset'));
+
+// Cancel the callback
+destruct();
+```
+
+### `resume`
+
+Fired when playback resumes after a pause via [`play()`](methods#play) or [`reverse()`](methods#reverse).
+
+Emitted before `play` / `reverse`.
+
+```ts
+const tm = new Timeline({
+  onResume: () => console.log('resume'),
+});
+```
+
+or:
+
+```ts
+const destruct = tm.on('resume', () => console.log('resume'));
+
+// Cancel the callback
+destruct();
+```
