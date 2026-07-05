@@ -1,11 +1,41 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useRef, useState } from 'react';
 
-import { Pointers } from '@/index';
+import { MUTABLE_PROPS, STATIC_PROPS } from '@/components/Pointers/props';
+import {
+  IPointersCallbacksMap,
+  IPointersMutableProps,
+  IPointersStaticProps,
+  Pointers,
+} from '@/index';
 
-export const Test: FC = () => {
+import { useLogEvents } from '../../global/useLogEvents';
+import { useOnMutableProps } from '../../global/useOnMutableProps';
+import { useOnProps } from '../../global/useOnProps';
+
+type TProps = Omit<
+  IPointersStaticProps & IPointersMutableProps,
+  '__mutableProp' | '__staticProp' | 'container'
+>;
+
+const LOG_EVENTS: Record<keyof IPointersCallbacksMap, boolean> = {
+  destroy: true,
+  props: true,
+  start: true,
+  pointerdown: true,
+  pointermove: false,
+  move: true,
+  pointerup: true,
+  end: true,
+};
+
+export const Component: FC<TProps> = (props) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  const [instance, setInstance] = useState<Pointers>();
+
+  useLogEvents(instance, LOG_EVENTS);
+
+  useOnProps(props, STATIC_PROPS, (input) => {
     const container = ref.current;
     const thumbs = Array.from(ref.current?.children || []) as HTMLElement[];
 
@@ -13,11 +43,9 @@ export const Test: FC = () => {
       return undefined;
     }
 
-    const instance = new Pointers({
+    const mod = new Pointers({
+      ...input,
       container,
-      relative: true,
-      minPointers: 2,
-      maxPointers: 5,
       onPointermove: ({ pointer }) => {
         const finger = thumbs[pointer.index];
 
@@ -37,8 +65,15 @@ export const Test: FC = () => {
       },
     });
 
-    return () => instance?.destroy();
-  }, []);
+    setInstance(mod);
+
+    return () => {
+      mod.destroy();
+      setInstance(undefined);
+    };
+  });
+
+  useOnMutableProps(instance, props, MUTABLE_PROPS);
 
   return (
     <>

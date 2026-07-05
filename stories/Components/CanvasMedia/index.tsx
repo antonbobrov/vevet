@@ -21,34 +21,31 @@ const LOG_EVENTS: Record<keyof ICanvasMediaCallbacksMap, boolean> = {
   destroy: true,
   props: true,
   resize: true,
-  render: false,
+  render: true,
 };
 
-const VIDEO_SRC =
-  'https://www.shutterstock.com/shutterstock/videos/1080319025/preview/stock-footage-abstract-tech-earth-globalization-in-d-motion-graphic-concept-transmit-ai-networking-on-fiber.mp4';
-
-export const Video: FC<TProps> = (props) => {
+export const Component: FC<TProps> = (props) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const [media, setMedia] = useState<HTMLVideoElement>();
+  const [image, setImage] = useState<HTMLImageElement>();
   const [instance, setInstance] = useState<CanvasMedia>();
 
   useLogEvents(instance, LOG_EVENTS);
 
-  const deps = useMemo(() => [media], [media]);
+  const deps = useMemo(() => [image], [image]);
 
   useOnProps(
     props,
     STATIC_PROPS,
     (input) => {
-      if (!media) {
+      if (!image) {
         return;
       }
 
       const mod = new CanvasMedia({
         ...input,
         container: ref.current,
-        media,
+        media: image,
       });
 
       setInstance(mod);
@@ -78,14 +75,10 @@ export const Video: FC<TProps> = (props) => {
 
       <p>Original media</p>
 
-      <video
-        height={200}
-        autoPlay
-        muted
-        controls
-        playsInline
-        src={VIDEO_SRC}
-        onLoadedMetadata={(event) => setMedia(event.currentTarget)}
+      <img
+        src="https://picsum.photos/400/600"
+        alt=""
+        onLoad={(event) => setImage(event.currentTarget)}
       />
     </>
   );

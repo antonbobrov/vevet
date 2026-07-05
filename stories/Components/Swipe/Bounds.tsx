@@ -24,7 +24,7 @@ export const Bounds: FC = () => {
       relative: true,
       pointers: (type) => (type === 'mouse' ? 1 : 2),
       overflow: () => 50,
-      bounds: () => ({ x: [0, 300], y: [0, 300] }),
+      bounds: () => ({ x: [0, 250], y: [0, 250] }),
       onInertia: () => console.log('inertia'),
       onInertiaStart: () => console.log('inertia start'),
       onInertiaEnd: () => console.log('inertia end'),
@@ -50,7 +50,7 @@ export const Bounds: FC = () => {
       },
     });
 
-    instance.setMovement({ x: 150, y: 150 });
+    instance.setMovement({ x: 125, y: 125 });
 
     return () => {
       instance.destroy();

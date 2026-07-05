@@ -1,12 +1,43 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useRef, useState } from 'react';
 
-import { clamp, Pointers } from '@/index';
+import { MUTABLE_PROPS, STATIC_PROPS } from '@/components/Pointers/props';
+import {
+  clamp,
+  IPointersCallbacksMap,
+  IPointersMutableProps,
+  IPointersStaticProps,
+  Pointers,
+} from '@/index';
 
-export const Pinch: FC = () => {
+import { useLogEvents } from '../../global/useLogEvents';
+import { useOnMutableProps } from '../../global/useOnMutableProps';
+import { useOnProps } from '../../global/useOnProps';
+
+type TProps = Omit<
+  IPointersStaticProps & IPointersMutableProps,
+  '__mutableProp' | '__staticProp' | 'container'
+>;
+
+const LOG_EVENTS: Record<keyof IPointersCallbacksMap, boolean> = {
+  destroy: true,
+  props: true,
+  start: true,
+  pointerdown: true,
+  pointermove: false,
+  move: true,
+  pointerup: true,
+  end: true,
+};
+
+export const PinchComponent: FC<TProps> = (props) => {
   const thumbRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  const [instance, setInstance] = useState<Pointers>();
+
+  useLogEvents(instance, LOG_EVENTS);
+
+  useOnProps(props, STATIC_PROPS, (input) => {
     const thumb = thumbRef.current;
     const content = contentRef.current;
 
@@ -19,24 +50,32 @@ export const Pinch: FC = () => {
     let x = 0;
     let y = 0;
 
-    const instance = new Pointers({
+    const mod = new Pointers({
+      ...input,
       container: thumb,
-      minPointers: 2,
-      maxPointers: 2,
-      relative: false,
       onMove: (data) => {
         scale = clamp(scale + data.scale - data.prevScale, 0.5, 2);
         rotate += data.angle - data.prevAngle;
         x += data.center.x - data.prevCenter.x;
         y += data.center.y - data.prevCenter.y;
-        thumb.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
 
+        thumb.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
         content.style.transform = `scale(${scale}) rotate(${rotate}deg)`;
       },
     });
 
-    return () => instance.destroy();
-  }, []);
+    setInstance(mod);
+
+    return () => {
+      mod.destroy();
+      setInstance(undefined);
+
+      thumb.style.transform = ``;
+      content.style.transform = ``;
+    };
+  });
+
+  useOnMutableProps(instance, props, MUTABLE_PROPS);
 
   return (
     <>

@@ -1,82 +1,136 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 
-import { ProgressPreloader } from '@/index';
+import {
+  MUTABLE_PROPS,
+  STATIC_PROPS,
+} from '@/components/ProgressPreloader/props';
+import {
+  IProgressPreloaderCallbacksMap,
+  IProgressPreloaderMutableProps,
+  IProgressPreloaderStaticProps,
+  ProgressPreloader,
+} from '@/index';
 
-// todo: preloader resourceContainer demo
+import { useLogEvents } from '../../global/useLogEvents';
+import { useOnMutableProps } from '../../global/useOnMutableProps';
+import { useOnProps } from '../../global/useOnProps';
 
-export const Component: FC = () => {
+type TProps = Omit<
+  IProgressPreloaderStaticProps & IProgressPreloaderMutableProps,
+  '__mutableProp' | '__staticProp' | 'container' | 'resourceContainer'
+>;
+
+const LOG_EVENTS: Record<keyof IProgressPreloaderCallbacksMap, boolean> = {
+  destroy: true,
+  props: true,
+  loaded: true,
+  hide: true,
+  requestHide: true,
+  hidden: true,
+  progress: false,
+  resource: true,
+  timelineStart: true,
+  timelineEnd: true,
+  timelineUpdate: true,
+};
+
+export const Component: FC<TProps> = (props) => {
   const ref = useRef<HTMLDivElement>(null);
   const resourceContainerRef = useRef<HTMLDivElement>(null);
 
+  const [instance, setInstance] = useState<ProgressPreloader>();
   const [progress, setProgress] = useState(0);
-  const [preloader, setPreloader] = useState<ProgressPreloader | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [isCustomResourceLoaded, setIsCustomResourceLoaded] = useState(false);
 
-  useEffect(() => {
-    if (!ref.current || !resourceContainerRef.current) {
+  useLogEvents(instance, LOG_EVENTS);
+
+  useOnProps(props, STATIC_PROPS, (input) => {
+    const container = ref.current;
+    const resourceContainer = resourceContainerRef.current;
+
+    if (!container || !resourceContainer) {
       return undefined;
     }
 
-    const instance = new ProgressPreloader({
+    const mod = new ProgressPreloader({
+      ...input,
       container: ref.current,
       resourceContainer: resourceContainerRef.current,
-      preloadImages: true,
-      preloadVideos: true,
       onProgress: (data, { progress }) => setProgress(progress),
-      onResource: (res) => console.log('resource', res),
+      onRequestHide: () => setIsLoaded(true),
     });
 
-    setPreloader(instance);
+    setInstance(mod);
+
+    mod.addResource('button', 2);
 
     const timeout = setTimeout(() => setIsCustomResourceLoaded(true), 2000);
 
-    instance.addResource('button', 2);
-
     return () => {
-      instance?.destroy();
+      mod.destroy();
+      setInstance(undefined);
+
       clearTimeout(timeout);
+
+      setIsCustomResourceLoaded(false);
+      setProgress(0);
+      setIsLoaded(false);
     };
-  }, []);
+  });
+
+  useOnMutableProps(instance, props, MUTABLE_PROPS);
 
   return (
     <>
       <div
         ref={ref}
         style={{
+          position: 'relative',
+          width: '100%',
+          height: 250,
+          background: '#000',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#ccc',
-          fontSize: 40,
           gap: 20,
+          color: '#fff',
         }}
       >
         <div>Progress: {(progress * 100).toFixed(0)}%</div>
 
-        <button
-          type="button"
-          onClick={() => preloader?.resolveResource('button')}
-        >
-          Load button
-        </button>
+        {!isLoaded && (
+          <button
+            type="button"
+            onClick={() => instance?.resolveResource('button')}
+          >
+            Load custom resource
+          </button>
+        )}
+
+        {!props.hide && isLoaded && (
+          <button type="button" onClick={() => instance?.hide(500)}>
+            Hide
+          </button>
+        )}
       </div>
 
-      <p
-        className="js-preload"
-        data-weight="1"
-        data-loaded={isCustomResourceLoaded ? 1 : 0}
-      >
-        Custom invisible resource
-      </p>
-
-      <img
-        src="https://picsum.photos/400/600"
-        alt=""
-        crossOrigin="anonymous"
-        height={200}
-      />
-
       <div ref={resourceContainerRef}>
+        <p
+          className="js-preload"
+          data-weight="1"
+          data-loaded={isCustomResourceLoaded ? 1 : 0}
+        >
+          Custom invisible resource
+        </p>
+
+        <img
+          src="https://picsum.photos/400/600"
+          alt=""
+          crossOrigin="anonymous"
+          height={200}
+        />
+
         <img
           src="https://picsum.photos/400/601"
           alt=""

@@ -18,6 +18,7 @@ export const DynamicWidth: FC = () => {
       direction: 'horizontal',
       gap: '1rem',
       wheel: true,
+      lerp: 1,
       wheelAxis: 'y',
       freemode: 'sticky',
       shortSwipes: false,
@@ -53,31 +54,29 @@ export const DynamicWidth: FC = () => {
       const fromWidth = (element.offsetWidth / vevet.width) * 100;
       const startTrack = snap.current;
 
-      const tm = new Timeline(
-        { duration: 500 },
-        {
-          onUpdate: ({ eased }) => {
-            const toWidth = isExpanding ? 45 : 20;
-            element.style.width = `${lerp(fromWidth, toWidth, eased)}vw`;
+      const tm = new Timeline({
+        duration: 500,
+        onUpdate: ({ eased }) => {
+          const toWidth = isExpanding ? 45 : 20;
+          element.style.width = `${lerp(fromWidth, toWidth, eased)}vw`;
 
-            slide.resize();
+          slide.resize();
 
-            if (timelineIndex.current === index) {
-              if (isExpanding) {
-                snap.set(
-                  lerp(
-                    startTrack,
-                    clamp(slide.staticCoord, snap.min, snap.max),
-                    eased,
-                  ),
-                );
-              } else {
-                snap.clampTarget();
-              }
+          if (timelineIndex.current === index) {
+            if (isExpanding) {
+              snap.set(
+                lerp(
+                  startTrack,
+                  clamp(slide.staticCoord, snap.min, snap.max),
+                  eased,
+                ),
+              );
+            } else {
+              snap.clampTarget();
             }
-          },
+          }
         },
-      );
+      });
 
       tm.play();
     },

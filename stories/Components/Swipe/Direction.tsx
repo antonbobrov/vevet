@@ -27,6 +27,9 @@ export const Direction: FC = () => {
       onToBottom: () => {
         instance.container.innerHTML = 'to bottom';
       },
+      onEnd: () => {
+        instance.container.innerHTML = 'end';
+      },
     });
 
     return () => instance.destroy();

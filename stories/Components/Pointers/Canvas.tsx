@@ -1,11 +1,42 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useRef, useState } from 'react';
 
-import { Canvas, Pointers } from '@/index';
+import { MUTABLE_PROPS, STATIC_PROPS } from '@/components/Pointers/props';
+import {
+  Canvas,
+  IPointersCallbacksMap,
+  IPointersMutableProps,
+  IPointersStaticProps,
+  Pointers,
+} from '@/index';
 
-export const WithCanvas: FC = () => {
+import { useLogEvents } from '../../global/useLogEvents';
+import { useOnMutableProps } from '../../global/useOnMutableProps';
+import { useOnProps } from '../../global/useOnProps';
+
+type TProps = Omit<
+  IPointersStaticProps & IPointersMutableProps,
+  '__mutableProp' | '__staticProp' | 'container'
+>;
+
+const LOG_EVENTS: Record<keyof IPointersCallbacksMap, boolean> = {
+  destroy: true,
+  props: true,
+  start: true,
+  pointerdown: true,
+  pointermove: false,
+  move: true,
+  pointerup: true,
+  end: true,
+};
+
+export const CanvasComponent: FC<TProps> = (props) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  const [instance, setInstance] = useState<Pointers>();
+
+  useLogEvents(instance, LOG_EVENTS);
+
+  useOnProps(props, STATIC_PROPS, (input) => {
     const container = ref.current;
 
     if (!container) {
@@ -22,9 +53,9 @@ export const WithCanvas: FC = () => {
       dpr: 1,
     });
 
-    const fingers = new Pointers({
+    const mod = new Pointers({
+      ...input,
       container,
-      relative: true,
       onPointermove: ({ pointer }) => {
         const color = colors[pointer.index] || 'white';
 
@@ -44,11 +75,16 @@ export const WithCanvas: FC = () => {
       },
     });
 
+    setInstance(mod);
+
     return () => {
-      fingers.destroy();
+      mod.destroy();
       ctx2d.destroy();
+      setInstance(undefined);
     };
-  }, []);
+  });
+
+  useOnMutableProps(instance, props, MUTABLE_PROPS);
 
   return (
     <>

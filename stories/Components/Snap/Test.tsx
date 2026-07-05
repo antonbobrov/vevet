@@ -89,7 +89,7 @@ export const Test: FC<ITestProps> = ({ snapProps }) => {
     const scrollbar = new Scrollbar({
       container: instance,
       axis,
-      autoHide: false,
+      autoHide: true,
     });
 
     setCarousel(instance);

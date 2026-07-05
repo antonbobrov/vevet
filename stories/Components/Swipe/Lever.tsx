@@ -18,7 +18,7 @@ export const Lever: FC = () => {
       inertia: true,
       relative: true,
       grabCursor: true,
-      bounds: () => ({ angle: [-180, 180] }),
+      bounds: () => ({ angle: [-120, 180] }),
       onMove: ({ movement }) => {
         rotateRef.current!.style.transform = `rotate(${movement.angle}deg)`;
       },
