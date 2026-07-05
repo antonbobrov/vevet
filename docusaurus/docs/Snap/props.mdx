@@ -161,19 +161,6 @@ snap.updateProps({
 });
 ```
 
-### `centered` {#props.centered}
-
-- **Type:** `boolean`
-- **Default:** `false`
-- **Status:** deprecated — use [`origin`](#props.origin) instead (`centered: true` is equivalent to `origin: 'center'`). If both are set, `centered` takes precedence.
-
-```js
-const snap = new Snap({
-  container: document.getElementById('container'),
-  origin: 'center',
-});
-```
-
 ### `loop` {#props.loop}
 
 - **Type:** `boolean`
@@ -618,17 +605,11 @@ snap.updateProps({
 });
 ```
 
-### `swipeInertiaDuration` {#props.swipeInertiaDuration}
-
-- **Type:** `(distance: number) => number`
-- **Default:** `null`
-- **Status:** deprecated — release inertia is now RAF-based and this prop is no longer applied.
-
 ### `swipeInertiaRatio` {#props.swipeInertiaRatio}
 
 - **Type:** `number`
 - **Default:** `1`
-- Inertia strength.
+- Inertia strength for freemode / sticky release swipes.
 
 ```js
 const snap = new Snap({

@@ -1,13 +1,3 @@
-import { Snap } from '@/components/Snap';
-
-import { SnapSlide } from '../Slide';
-
-export interface ISnapParallaxProps {
-  snap: Snap;
-  slide: SnapSlide;
-  element: HTMLElement;
-}
-
 export interface ISnapParallaxType {
   attr: string;
   prop: string;

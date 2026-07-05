@@ -18,7 +18,6 @@ export const MUTABLE_PROPS: TRequiredProps<ISnapMutableProps> = {
   containerSize: 'auto',
   slidesToScroll: 1,
   direction: 'horizontal',
-  centered: false,
   origin: 'start',
   loop: false,
   gap: 0,
@@ -41,7 +40,6 @@ export const MUTABLE_PROPS: TRequiredProps<ISnapMutableProps> = {
   swipeFriction: false,
   swipeThreshold: 5,
   swipeMinTime: 0,
-  swipeInertiaDuration: null as any,
   swipeInertiaRatio: 1,
   wheel: false,
   wheelSpeed: 1,
@@ -54,9 +52,3 @@ export const MUTABLE_PROPS: TRequiredProps<ISnapMutableProps> = {
   interval: null as any,
   intervalDirection: 'next',
 };
-
-export const LERP_APPROXIMATION = 0.000001;
-
-export const WHEEL_DEBOUNCE = 200;
-
-export const IDLE_DEBOUNCE = 200;

@@ -1,33 +1,38 @@
-import { SnapLogic } from '..';
-import { Snap } from '../..';
-import { IDLE_DEBOUNCE, WHEEL_DEBOUNCE } from '../../props';
+import { ModulePart } from '@/shared/ModulePart';
 
-export class SnapIdle extends SnapLogic {
-  /** Debounce timeout reference */
+import { Snap } from '../..';
+import { IDLE_DEBOUNCE, WHEEL_DEBOUNCE } from '../../constants';
+
+/**
+ * Debounced `idle` callback when the scene is not animating or interacting.
+ *
+ * @internal
+ */
+export class SnapIdle extends ModulePart<Snap> {
   private _timeout?: NodeJS.Timeout;
 
-  constructor(ctx: Snap) {
-    super(ctx);
+  constructor(parent: Snap) {
+    super(parent);
 
     this.callbacks.on('update', () => this._handleUpdate(), {
       protected: true,
     });
 
-    this.addDestructor(() => this._clear());
+    this.onDestroy(() => this._clear());
   }
 
-  /** Check if idle */
   get isIdle() {
+    const { parent } = this;
+
     return (
-      !this.isSwiping &&
-      !this.hasInertia &&
-      !this.isInterpolating &&
-      !this.isTransitioning &&
-      !this.isWheeling
+      !parent.isSwiping &&
+      !parent.hasInertia &&
+      !parent.isInterpolating &&
+      !parent.isTransitioning &&
+      !parent.isWheeling
     );
   }
 
-  /** Handle Snap update */
   private _handleUpdate() {
     this._clear();
 
@@ -36,14 +41,12 @@ export class SnapIdle extends SnapLogic {
     this._timeout = setTimeout(() => this._handleTimeout(), debounce);
   }
 
-  /** Handle timeout action */
   private _handleTimeout() {
     if (this.isIdle) {
       this.callbacks.emit('idle', undefined);
     }
   }
 
-  /** Clear timeout reference */
   private _clear() {
     if (this._timeout) {
       clearTimeout(this._timeout);

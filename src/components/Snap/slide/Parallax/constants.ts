@@ -93,5 +93,3 @@ export const PARALLAX_GROUPS: ISnapParallaxGroup[] = [
 ];
 
 export const PARALLAX_TYPES = PARALLAX_GROUPS.map(({ types }) => types).flat();
-
-export const PARALLAX_ATTRIBUTES = PARALLAX_TYPES.map(({ attr }) => attr);

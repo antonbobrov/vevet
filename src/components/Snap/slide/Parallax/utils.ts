@@ -26,3 +26,30 @@ export function getFloatAttr(
 
   return Number.isNaN(float) ? defaultValue : float;
 }
+
+export function getScope(
+  element: HTMLElement,
+  suffix: string,
+  defaultValue: number[],
+) {
+  const attrValue = getAttr(element, suffix);
+  const stringValue = attrValue.toLowerCase();
+
+  if (stringValue === 'none') {
+    return [-Infinity, Infinity];
+  }
+
+  if (stringValue === 'const') {
+    return [1, 1];
+  }
+
+  const cleanValue = attrValue.replace(/[\s\\[\]]+/g, '');
+  const minMax = cleanValue.split(',');
+  const minRaw = parseFloat(minMax[0]);
+  const maxRaw = parseFloat(minMax[1]);
+
+  const min = Number.isNaN(minRaw) ? defaultValue[0] : minRaw;
+  const max = Number.isNaN(maxRaw) ? defaultValue[1] : maxRaw;
+
+  return [min, max];
+}

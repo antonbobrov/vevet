@@ -1,6 +1,12 @@
-import { Snap } from '../..';
-import { SnapSlide } from '../Slide';
+import { Snap } from '..';
+import { SnapSlide } from '../slide';
+import { ISnapSlideCtx } from '../slide/ctx';
 
+/**
+ * Collects, attaches, reflows, and renders {@link SnapSlide} instances.
+ *
+ * @internal
+ */
 export class SnapSlides {
   private _slides: SnapSlide[] = [];
 
@@ -36,16 +42,13 @@ export class SnapSlides {
     this._slides.forEach((slide) => slide.$_detach());
   }
 
-  public attachAll(ctx: Snap) {
-    this._slides.forEach((slide, index) => slide.$_attach(ctx, index));
-  }
-
-  public fetch(
+  private _fetch(
     selector: (HTMLElement | SnapSlide)[] | false,
     container: HTMLElement,
   ) {
     const rawChildren = selector ? selector : Array.from(container.children);
 
+    // Ignore scrollbar track elements inside the container
     const children = rawChildren.filter((slide) => {
       if (
         slide instanceof HTMLElement &&
@@ -70,6 +73,30 @@ export class SnapSlides {
     });
 
     this._length = this._slides.length;
+  }
+
+  private _attachAll(ctx: ISnapSlideCtx) {
+    this._slides.forEach((slide, index) => slide.$_attach(ctx, index));
+  }
+
+  public collect(snap: Snap) {
+    this.detachAll();
+
+    this._fetch(snap.props.slides as any, snap.container);
+
+    this._attachAll({
+      getGlobalSlideSize: () => snap.props.slideSize,
+      getContainerSize: () => snap.containerSize,
+      getContainer: () => snap.container,
+      getAxis: () => snap.axis,
+      getOrigin: () => snap.origin,
+      getCanLoop: () => snap.canLoop,
+      getLoop: () => snap.props.loop,
+      requestGlobalResize: (isManual) => snap.resize(isManual),
+      getMax: () => snap.max,
+      getFirstSlideSize: () => this.getFirstSlide().size,
+      getImpulse: () => snap.impulse,
+    });
   }
 
   public reflow(gap: number) {

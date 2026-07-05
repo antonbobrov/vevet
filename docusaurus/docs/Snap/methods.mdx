@@ -208,3 +208,13 @@ const snap = new Snap({ container });
 // move towards coordinate 1350
 snap.setTarget(1350);
 ```
+
+### `destroy`
+
+Releases all Snap resources: container and slide resize observers, RAF loop, active Timeline transition, swipe/wheel/interval/keyboard handlers, and slide parallax instances.
+
+```ts
+const snap = new Snap({ container });
+
+snap.destroy();
+```

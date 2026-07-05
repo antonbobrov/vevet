@@ -1,56 +1,54 @@
 import { initVevet } from '@/global/initVevet';
 import { isNumber } from '@/internal/isNumber';
 import { onlyFinite } from '@/internal/onlyFinite';
+import { ModulePart } from '@/shared/ModulePart';
 import { addEventListener, clamp, normalizeWheel } from '@/utils';
 
-import { SnapLogic } from '..';
 import { Snap } from '../..';
+import { WHEEL_DEBOUNCE } from '../../constants';
 
 const deltasCount = 6;
 
-export class SnapWheel extends SnapLogic {
-  /** Detects if wheel event is started */
+/**
+ * Mouse wheel input with follow and discrete navigation modes.
+ *
+ * @internal
+ */
+export class SnapWheel extends ModulePart<Snap> {
   private _hasStarted = false;
 
-  /** Debounce wheel end event */
-  private _debounceEnd?: NodeJS.Timeout;
+  private _debounce?: NodeJS.Timeout;
 
-  /** Deltas history */
   private _deltas: number[] = [];
 
-  /** Last time wheel event was fired */
   private _lastWheelTime = 0;
 
-  constructor(ctx: Snap) {
-    super(ctx);
+  constructor(parent: Snap) {
+    super(parent);
 
-    const listener = addEventListener(this.eventsEmitter, 'wheel', (event) =>
+    const listener = addEventListener(parent.eventsEmitter, 'wheel', (event) =>
       this._handleWheel(event),
     );
 
-    this.addDestructor(() => {
+    this.onDestroy(() => {
       listener();
 
-      if (this._debounceEnd) {
-        clearTimeout(this._debounceEnd);
+      if (this._debounce) {
+        clearTimeout(this._debounce);
       }
     });
+  }
+
+  private get absDeltas() {
+    return this._deltas.map((d) => Math.abs(d));
   }
 
   get isWheeling() {
     return this._hasStarted;
   }
 
-  /** Get absolute deltas */
-  private get absDeltas() {
-    return this._deltas.map((d) => Math.abs(d));
-  }
-
-  /**
-   * Handles wheel events
-   */
   private _handleWheel(event: WheelEvent) {
-    const { props, snapAxis } = this;
+    const { props, axis } = this.parent;
 
     if (!props.wheel) {
       return;
@@ -58,27 +56,20 @@ export class SnapWheel extends SnapLogic {
 
     event.preventDefault();
 
-    // Get delta
     const wheelData = normalizeWheel(event);
-    const wheelAxis = props.wheelAxis === 'auto' ? snapAxis : props.wheelAxis;
+    const wheelAxis = props.wheelAxis === 'auto' ? axis : props.wheelAxis;
     const delta = wheelAxis === 'x' ? wheelData.pixelX : wheelData.pixelY;
 
-    // Start
     this._handleStart(delta);
-
-    // Start
     this._handleMove(delta, event);
 
-    // Debounce End
-    if (this._debounceEnd) {
-      clearTimeout(this._debounceEnd);
+    if (this._debounce) {
+      clearTimeout(this._debounce);
     }
 
-    // End callback
-    this._debounceEnd = setTimeout(() => this._handleEnd(), 200);
+    this._debounce = setTimeout(() => this._handleEnd(), WHEEL_DEBOUNCE);
   }
 
-  /** Handle wheel start */
   private _handleStart(delta: number) {
     if (this._hasStarted || Math.abs(delta) < 2) {
       return;
@@ -89,63 +80,53 @@ export class SnapWheel extends SnapLogic {
     this.callbacks.emit('wheelStart', undefined);
   }
 
-  /** Handle wheel move */
   private _handleMove(delta: number, event: WheelEvent) {
     if (!this._hasStarted) {
       return;
     }
 
-    // Save delta
     this._addDelta(delta);
 
-    // Handle wheel logic
     if (this.props.followWheel) {
       this._handleFollow(delta);
     } else {
       this._handleNoFollow(delta);
     }
 
-    // Move callback
     this.callbacks.emit('wheel', event);
   }
 
-  /** Handle `followWheel=true` */
   private _handleFollow(delta: number) {
-    const { track, props } = this;
+    const { parent } = this;
+    const { props, target } = parent;
 
-    // Cancel snap transition
-    track.cancelTransition();
-
-    // Update track target
-    track.updateTarget(track.target + delta * props.wheelSpeed);
-    track.clampTarget();
+    parent.cancelTransition();
+    parent.setTarget(target + delta * props.wheelSpeed);
+    parent.clampTarget();
   }
 
-  /** Handle `followWheel=false` */
+  /** Discrete slide steps; may switch to follow mode for oversized slides. */
   private _handleNoFollow(deltaProp: number) {
-    const { track, isTouchPad, isGainingDelta, props, activeSlide, canLoop } =
-      this;
+    const { isTouchPad, isGainingDelta, parent } = this;
+    const { props, activeSlide, canLoop } = parent;
     const delta = deltaProp * props.wheelSpeed;
 
-    // Detect wheel throttling
     if (this._detectNoFollowThrottle()) {
       return;
     }
-
-    // Detect if need to throttle or follow
 
     let shouldFollow = false;
     let isThrottled = true;
 
     if (!shouldFollow) {
-      if (this.isSlideScrolling) {
+      if (parent.isSlideScrolling) {
         if (activeSlide.coord === 0) {
           if (delta > 0) {
             shouldFollow = true;
           }
         } else if (
           activeSlide.coord ===
-          this.containerSize - activeSlide.size
+          parent.containerSize - activeSlide.size
         ) {
           if (delta < 0) {
             shouldFollow = true;
@@ -157,8 +138,6 @@ export class SnapWheel extends SnapLogic {
       }
     }
 
-    // Throttle
-
     if (isThrottled) {
       if (
         !isTouchPad ||
@@ -167,16 +146,16 @@ export class SnapWheel extends SnapLogic {
         const direction = Math.sign(delta);
 
         if (shouldFollow) {
-          track.cancelTransition();
+          parent.cancelTransition();
 
-          track.updateTarget(track.target + direction);
-          track.clampTarget();
+          parent.setTarget(parent.target + direction);
+          parent.clampTarget();
 
           if (!isTouchPad) {
-            track.current = track.target;
+            parent.$_track.current = parent.target;
           }
         } else if (direction === 1) {
-          if (!canLoop && this.activeIndex === this.slidesCount - 1) {
+          if (!canLoop && parent.activeIndex === parent.slides.length - 1) {
             if (!props.rewind) {
               return;
             }
@@ -184,9 +163,9 @@ export class SnapWheel extends SnapLogic {
 
           this._lastWheelTime = +new Date();
 
-          this.next();
+          parent.next();
         } else {
-          if (!canLoop && this.activeIndex === 0) {
+          if (!canLoop && parent.activeIndex === 0) {
             if (!props.rewind) {
               return;
             }
@@ -194,24 +173,22 @@ export class SnapWheel extends SnapLogic {
 
           this._lastWheelTime = +new Date();
 
-          this.prev();
+          parent.prev();
         }
       }
 
       return;
     }
 
-    // Follow wheel
-
     if (shouldFollow) {
-      track.cancelTransition();
+      parent.cancelTransition();
 
       const deltaWithSpeed = delta;
 
       const start = Math.min(...activeSlide.magnets);
       const end = Math.max(...activeSlide.magnets);
 
-      const loopedTarget = track.loopCoord(track.target);
+      const loopedTarget = parent.loopCoord(parent.target);
 
       const clampedLoopedTarget = clamp(
         loopedTarget + deltaWithSpeed,
@@ -219,25 +196,23 @@ export class SnapWheel extends SnapLogic {
         end,
       );
 
-      track.target = track.target + clampedLoopedTarget - loopedTarget;
-      track.clampTarget();
+      parent.$_track.target =
+        parent.target + clampedLoopedTarget - loopedTarget;
+
+      parent.clampTarget();
     }
   }
 
-  /** Detect if wheel should be throttled */
   private _detectNoFollowThrottle() {
-    const { isTouchPad, scrollableSlides, isTransitioning } = this;
+    const { isTouchPad } = this;
     const { wheelThrottle } = this.props;
+    const { scrollableSlides, isTransitioning } = this.parent;
 
     const timeDiff = +new Date() - this._lastWheelTime;
-
-    // NUMBER
 
     if (isNumber(wheelThrottle)) {
       return timeDiff < wheelThrottle;
     }
-
-    // AUTO
 
     if (isTouchPad) {
       return isTransitioning;
@@ -258,27 +233,21 @@ export class SnapWheel extends SnapLogic {
     return false;
   }
 
-  /** Handle wheel end */
   private _handleEnd() {
     if (!this._hasStarted) {
       return;
     }
 
-    const { props, activeSlide, isSlideScrolling, isTransitioning } = this;
+    const { props, parent } = this;
+    const { activeSlide, isSlideScrolling, isTransitioning } = this.parent;
 
     const lastThreeDeltas = this._deltas.slice(-3).reduce((a, b) => a + b, 0);
-
-    // Reset states
 
     this._deltas = [];
     this._hasStarted = false;
 
-    // Stick to the nearest magnet
-
     if (!props.freemode || props.freemode === 'sticky') {
       if (props.followWheel && props.stickOnWheelEnd) {
-        // Classic stick when scrolling stops
-
         const slideThreshold = onlyFinite(
           Math.abs(props.stickOnWheelEndThreshold) / activeSlide.size,
         );
@@ -288,26 +257,24 @@ export class SnapWheel extends SnapLogic {
           !isSlideScrolling &&
           lastThreeDeltas > 0
         ) {
-          this.next();
+          parent.next();
         } else if (
           activeSlide.progress < -slideThreshold &&
           !isSlideScrolling &&
           lastThreeDeltas < 0
         ) {
-          this.prev();
+          parent.prev();
         } else {
-          this.stick();
+          parent.stick();
         }
       } else if (!props.followWheel && !isTransitioning) {
-        // Stick if something goes wrong when followWheel is disabled
-        this.stick();
+        parent.stick();
       }
     }
 
     this.callbacks.emit('wheelEnd', undefined);
   }
 
-  /** Save delta */
   private _addDelta(delta: number) {
     if (this._deltas.length >= deltasCount) {
       this._deltas.shift();
@@ -316,12 +283,11 @@ export class SnapWheel extends SnapLogic {
     this._deltas.push(delta);
   }
 
-  /** Detect if touchpad */
+  // Heuristics to distinguish touchpad momentum from mouse wheel clicks
   private get isTouchPad() {
     return !this.isStableDelta || this.isSmallDelta;
   }
 
-  /** Detects if deltas are stable */
   private get isStableDelta() {
     const deltas = this.absDeltas;
     const precision = 0.8;
@@ -341,7 +307,6 @@ export class SnapWheel extends SnapLogic {
     return zeroDiffs.length > diffs.length * precision;
   }
 
-  /** Detects if the latest delta is small */
   private get isSmallDelta() {
     const deltas = this.absDeltas;
 
@@ -354,7 +319,6 @@ export class SnapWheel extends SnapLogic {
     return last < 50;
   }
 
-  /** Detect if delta is gaining its value */
   private get isGainingDelta() {
     const vevet = initVevet();
     const deltas = this.absDeltas;
@@ -377,7 +341,6 @@ export class SnapWheel extends SnapLogic {
     return isGaining;
   }
 
-  /** Get average value in an array */
   private _getAverage(array: number[]) {
     return array.length ? array.reduce((a, b) => a + b, 0) / array.length : 0;
   }
