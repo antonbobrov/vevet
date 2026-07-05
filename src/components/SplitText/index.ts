@@ -72,6 +72,8 @@ export class SplitText extends Module<TC, TS, TM> {
         'aria-label',
         isString(ariaLabel) ? ariaLabel : container.textContent || '',
       );
+
+      this.onDestroy(() => container.removeAttribute('aria-label'));
     }
 
     container.translate = false;
