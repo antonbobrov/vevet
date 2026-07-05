@@ -147,7 +147,7 @@ export class ProgressPreloader extends Preloader<TC, TS, TM> {
     }
   }
 
-  /** Stops {@link Raf} and optionally animates `progress` to `1` via `endDuration`. */
+  /** Stops {@link Raf} and optionally animates `progress` to `1` via `endDuration`. Emits `timelineStart`, `timelineUpdate`, and `timelineEnd`. */
   private _endWithTm() {
     this._raf?.destroy();
     this._raf = undefined;
@@ -160,11 +160,16 @@ export class ProgressPreloader extends Preloader<TC, TS, TM> {
     const tm = new Timeline({ duration: this.props.endDuration });
     this.onDestroy(() => tm.destroy());
 
-    tm.on('update', ({ progress }) => {
+    tm.on('start', () => this._emit('timelineStart', undefined));
+
+    tm.on('end', () => this._emit('timelineEnd', undefined));
+
+    tm.on('update', (data) => {
       const diff = 1 - startProgress;
-      this._progress = startProgress + diff * progress;
+      this._progress = startProgress + diff * data.progress;
 
       this._emit('progress', undefined);
+      this._emit('timelineUpdate', data);
     });
 
     tm.play();
@@ -180,12 +185,12 @@ export class ProgressPreloader extends Preloader<TC, TS, TM> {
 
     this.callbacks.on(
       'progress',
-      (() => {
+      () => {
         if (this.progress >= 1 && !isFinish) {
           isFinish = true;
           callback();
         }
-      }) as any,
+      },
       { protected: true, name: this.name },
     );
   }

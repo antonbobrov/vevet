@@ -26,7 +26,7 @@ Does not perform fetching for custom or virtual resources — only observes prog
 
 1. **Resources resolve** — images, videos, `data-loaded` elements, virtual ids, and page `onLoad` update weighted totals → [`resource`](callbacks#resource) / [`loadProgress`](accessors#loadprogress).
 2. **Smoothing** — each frame, [`progress`](accessors#progress) dampens toward `loadProgress` using [`lerp`](props#props.lerp).
-3. **Finish** — when `loadProgress >= 1`, [`endDuration`](props#props.endduration) may animate `progress` to `1`.
+3. **Finish** — when `loadProgress >= 1`, [`endDuration`](props#props.endduration) may animate `progress` to `1` → [`timelineStart`](callbacks#timelinestart) / [`timelineUpdate`](callbacks#timelineupdate) / [`timelineEnd`](callbacks#timelineend).
 4. **Preloader lifecycle** — when `progress >= 1`, [`loaded`](/docs/Preloader/callbacks#loaded) fires → [`requestHide`](/docs/Preloader/callbacks#requesthide) → optional hide → [`hidden`](/docs/Preloader/callbacks#hidden).
 
 :::note `loadProgress` vs `progress`

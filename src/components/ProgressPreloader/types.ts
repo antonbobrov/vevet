@@ -3,6 +3,7 @@ import {
   IPreloaderMutableProps,
   IPreloaderStaticProps,
 } from '../Preloader';
+import { ITimelineProgressArg } from '../Timeline';
 
 import { IProgressPreloaderResource } from './global';
 
@@ -72,4 +73,27 @@ export interface IProgressPreloaderCallbacksMap extends IPreloaderCallbacksMap<I
    * Fired each time a resource is loaded during preloading.
    */
   resource: IProgressPreloaderResource;
+
+  /**
+   * Fired when the {@link IProgressPreloaderStaticProps.endDuration | endDuration} finish timeline starts.
+   *
+   * Runs when all resources are loaded (`loadProgress >= 1`) but smoothed progress is still below `1`.
+   * Skipped when progress is already `1`.
+   */
+  timelineStart: undefined;
+
+  /**
+   * Fired on every frame of the finish timeline.
+   *
+   * Payload matches {@link ITimelineProgressArg}. {@link IProgressPreloaderCallbacksMap.progress | progress}
+   * also fires on the same tick.
+   */
+  timelineUpdate: ITimelineProgressArg;
+
+  /**
+   * Fired when the finish timeline completes and smoothed progress reaches `1`.
+   *
+   * {@link IPreloaderCallbacksMap.loaded | loaded} may fire on the same frame once `progress >= 1`.
+   */
+  timelineEnd: undefined;
 }
