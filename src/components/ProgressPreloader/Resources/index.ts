@@ -150,6 +150,10 @@ export class ProgressPreloaderResources extends ModulePart<ProgressPreloader> {
       return;
     }
 
+    if (resource.loaded >= 1) {
+      return;
+    }
+
     const targetWeight = loadedWeight ?? resource.weight;
     resource.loaded = clamp(targetWeight, 0, resource.weight);
 
