@@ -1,5 +1,4 @@
-import { unwrapAngleDelta } from '@/internal/unwrapAngle';
-import { ModulePart } from '@/shared/ModulePart';
+import { unwrapAngleDelta, ModulePart } from '@/internal';
 
 import { Pointers } from '..';
 import { IPointersVec2 } from '../global';

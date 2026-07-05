@@ -2,8 +2,8 @@ import {
   IPreloaderCallbacksMap,
   IPreloaderMutableProps,
   IPreloaderStaticProps,
-} from '../Preloader';
-import { ITimelineProgressArg } from '../Timeline';
+} from '../Preloader/types';
+import { ITimelineProgressArg } from '../Timeline/types';
 
 import { IProgressPreloaderResource } from './global';
 

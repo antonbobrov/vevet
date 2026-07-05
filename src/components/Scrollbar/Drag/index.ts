@@ -1,5 +1,6 @@
-import { ISwipeCoords, Swipe } from '@/components/Swipe';
-import { ModulePart } from '@/shared/ModulePart';
+import { Swipe } from '@/components/Swipe';
+import { ISwipeCoords } from '@/components/Swipe/global';
+import { ModulePart } from '@/internal';
 import { clamp } from '@/utils';
 
 import { Scrollbar } from '..';

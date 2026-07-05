@@ -1,4 +1,4 @@
-import { ModulePart } from '@/shared/ModulePart';
+import { ModulePart } from '@/internal';
 
 import { Swipe } from '../..';
 import { ISwipeAxes, ISwipeCoords, ISwipeVec3 } from '../../global';

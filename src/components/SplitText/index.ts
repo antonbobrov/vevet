@@ -1,8 +1,7 @@
-import { Module, TModuleProps } from '@/base';
+import { Module } from '@/base/Module';
+import { TModuleProps } from '@/base/Module/types';
 import { initVevet } from '@/global/initVevet';
-import { isString } from '@/internal/isString';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { TRequiredProps } from '@/internal/requiredProps';
+import { TRequiredProps, noopIfDestroyed, isString } from '@/internal';
 import { onResize } from '@/utils/listeners/onResize';
 
 import { MUTABLE_PROPS, GET_STATIC_PROPS } from './props';
@@ -17,8 +16,6 @@ import {
 import { saveInitialNodes } from './utils/saveInitialNodes';
 import { splitBase } from './utils/splitBase';
 import { wrapLines } from './utils/wrapLines';
-
-export * from './types';
 
 type TC = ISplitTextCallbacksMap;
 type TS = ISplitTextStaticProps;

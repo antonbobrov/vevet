@@ -1,5 +1,4 @@
-import { now } from '@/internal/now';
-import { ModulePart } from '@/shared/ModulePart';
+import { ModulePart, now } from '@/internal';
 import { EaseOutCubic } from '@/utils';
 
 import { Swipe } from '..';

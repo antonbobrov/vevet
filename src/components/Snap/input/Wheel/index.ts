@@ -1,7 +1,5 @@
 import { initVevet } from '@/global/initVevet';
-import { isNumber } from '@/internal/isNumber';
-import { onlyFinite } from '@/internal/onlyFinite';
-import { ModulePart } from '@/shared/ModulePart';
+import { isNumber, onlyFinite, ModulePart } from '@/internal';
 import { addEventListener, clamp, normalizeWheel } from '@/utils';
 
 import { Snap } from '../..';

@@ -1,4 +1,4 @@
-import { TSwipeInputType } from '../Gesture';
+import { TSwipeInputType } from '../Gesture/types';
 
 /** Callbacks wired from {@link SwipeInput} into {@link Swipe}. */
 export interface ISwipeInputHandlers {

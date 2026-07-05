@@ -1,14 +1,15 @@
-import { Module, TModuleProps } from '@/base/Module';
-import { isFiniteNumber } from '@/internal/isFiniteNumber';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { now } from '@/internal/now';
-import { TRequiredProps } from '@/internal/requiredProps';
+import { Module } from '@/base/Module';
+import { TModuleProps } from '@/base/Module/types';
+import {
+  isFiniteNumber,
+  noopIfDestroyed,
+  now,
+  TRequiredProps,
+} from '@/internal';
 import { lerp } from '@/utils';
 
 import { MUTABLE_PROPS, STATIC_PROPS } from './props';
 import { IRafCallbacksMap, IRafMutableProps, IRafStaticProps } from './types';
-
-export * from './types';
 
 type TC = IRafCallbacksMap;
 type TS = IRafStaticProps;

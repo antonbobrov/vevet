@@ -1,9 +1,13 @@
-import { Module, TModuleProps } from '@/base/Module';
+import { Module } from '@/base/Module';
+import { TModuleProps } from '@/base/Module/types';
 import { initVevet } from '@/global/initVevet';
-import { doc } from '@/internal/env';
-import { isHTMLElement } from '@/internal/isHTLMElement';
-import { isNumber } from '@/internal/isNumber';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import {
+  doc,
+  isHTMLElement,
+  noopIfDestroyed,
+  TRequiredProps,
+  isNumber,
+} from '@/internal';
 import { onResize } from '@/utils/listeners/onResize';
 
 import { MUTABLE_PROPS, STATIC_PROPS } from './props';
@@ -14,8 +18,6 @@ import {
   TCanvasRender,
 } from './types';
 import { applyCanvasStyles } from './utils/canvasStyles';
-
-export * from './types';
 
 /**
  * A class for managing an HTML5 Canvas element and its 2D context.
@@ -29,11 +31,11 @@ export class Canvas<
   S extends ICanvasStaticProps = ICanvasStaticProps,
   M extends ICanvasMutableProps = ICanvasMutableProps,
 > extends Module<C, S, M> {
-  public _getStatic() {
+  public _getStatic(): TRequiredProps<S> {
     return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
-  public _getMutable() {
+  public _getMutable(): TRequiredProps<M> {
     return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 

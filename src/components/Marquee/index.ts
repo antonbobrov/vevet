@@ -1,10 +1,13 @@
-import { Module, TModuleProps } from '@/base/Module';
+import { Module } from '@/base/Module';
+import { TModuleProps } from '@/base/Module/types';
 import { initVevet } from '@/global/initVevet';
-import { isFiniteNumber } from '@/internal/isFiniteNumber';
-import { isHTMLElement } from '@/internal/isHTLMElement';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { TRequiredProps } from '@/internal/requiredProps';
-import { isRtl } from '@/internal/textDirection';
+import {
+  isFiniteNumber,
+  isHTMLElement,
+  noopIfDestroyed,
+  TRequiredProps,
+  isRtl,
+} from '@/internal';
 import { onResize, toPixels } from '@/utils';
 
 import { Raf } from '../Raf';
@@ -22,8 +25,6 @@ import {
   IMarqueeMutableProps,
   IMarqueeStaticProps,
 } from './types';
-
-export * from './types';
 
 type TC = IMarqueeCallbacksMap;
 type TS = IMarqueeStaticProps;

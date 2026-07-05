@@ -20,5 +20,3 @@ export interface ISnapToSlideArg extends ISnapTransitionArg {
   direction?: 'next' | 'prev' | null;
   duration?: TSnapDuration;
 }
-
-export type { ISnapTransitionArg };

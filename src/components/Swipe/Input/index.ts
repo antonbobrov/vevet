@@ -1,5 +1,5 @@
 import { initVevet } from '@/global/initVevet';
-import { ModulePart } from '@/shared/ModulePart';
+import { ModulePart } from '@/internal';
 import { addEventListener } from '@/utils';
 
 import { Swipe } from '..';

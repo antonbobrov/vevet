@@ -1,6 +1,6 @@
-import { Module, TModuleProps } from '@/base';
-import { body } from '@/internal/env';
-import { TRequiredProps } from '@/internal/requiredProps';
+import { Module } from '@/base/Module';
+import { TModuleProps } from '@/base/Module/types';
+import { body, TRequiredProps } from '@/internal';
 import { addEventListener } from '@/utils';
 
 import { PointersCoords } from './Coords';
@@ -14,8 +14,6 @@ import {
   IPointersMutableProps,
   IPointersStaticProps,
 } from './types';
-
-export * from './types';
 
 type TC = IPointersCallbacksMap;
 type TS = IPointersStaticProps;

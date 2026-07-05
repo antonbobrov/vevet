@@ -1,4 +1,4 @@
-import { doc } from '@/internal/env';
+import { doc } from '@/internal';
 
 interface IClone {
   node: Node;

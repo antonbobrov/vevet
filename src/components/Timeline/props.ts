@@ -1,5 +1,5 @@
 import { initVevet } from '@/global/initVevet';
-import { TRequiredProps } from '@/internal/requiredProps';
+import { TRequiredProps } from '@/internal';
 
 import { ITimelineMutableProps, ITimelineStaticProps } from './types';
 

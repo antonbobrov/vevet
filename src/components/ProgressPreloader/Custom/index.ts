@@ -1,4 +1,4 @@
-import { ModulePart } from '@/shared/ModulePart';
+import { ModulePart } from '@/internal';
 import { clamp } from '@/utils';
 
 import { ProgressPreloader } from '..';

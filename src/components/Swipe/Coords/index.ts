@@ -1,9 +1,10 @@
-import { ModulePart } from '@/shared/ModulePart';
+import { ModulePart } from '@/internal';
 
 import { Swipe } from '..';
 
 import { SwipeBounds } from './Bounds';
-import { ISwipeDecodeAngle, SwipeDecode } from './Decode';
+import { SwipeDecode } from './Decode';
+import { ISwipeDecodeAngle } from './Decode/types';
 import { applyRubber } from './Rubber';
 import { SwipeSnap } from './Snap';
 

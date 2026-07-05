@@ -1,7 +1,6 @@
 import split from 'lodash.split';
 
-import { cnAdd } from '@/internal/cn';
-import { doc } from '@/internal/env';
+import { cnAdd, doc } from '@/internal';
 
 import {
   ISplitTextLetterMeta,

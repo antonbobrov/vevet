@@ -1,4 +1,4 @@
-import { isString } from '@/internal/isString';
+import { isString } from '@/internal';
 
 import { ISplitTextStaticProps } from '../types';
 

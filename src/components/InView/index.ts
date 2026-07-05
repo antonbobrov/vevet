@@ -1,8 +1,6 @@
-import { Module, TModuleProps } from '@/base/Module';
-import { body } from '@/internal/env';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { TRequiredProps } from '@/internal/requiredProps';
-import { isRtl } from '@/internal/textDirection';
+import { Module } from '@/base/Module';
+import { TModuleProps } from '@/base/Module/types';
+import { body, noopIfDestroyed, TRequiredProps, isRtl } from '@/internal';
 
 import { InViewElement } from './Element';
 import { InViewObservers } from './Observers';
@@ -12,9 +10,6 @@ import {
   IInViewMutableProps,
   IInViewStaticProps,
 } from './types';
-
-export * from './types';
-export * from './global';
 
 type TC = IInViewCallbacksMap;
 type TS = IInViewStaticProps;

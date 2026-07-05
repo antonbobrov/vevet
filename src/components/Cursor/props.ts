@@ -1,5 +1,4 @@
-import { isBrowser } from '@/internal/env';
-import { TRequiredProps } from '@/internal/requiredProps';
+import { isBrowser, TRequiredProps } from '@/internal';
 
 import { ICursorStaticProps, ICursorMutableProps } from './types';
 

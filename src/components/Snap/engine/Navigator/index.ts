@@ -1,5 +1,4 @@
-import { isString } from '@/internal/isString';
-import { ModulePart } from '@/shared/ModulePart';
+import { isString, ModulePart } from '@/internal';
 import { closest, loop } from '@/utils';
 
 import { Snap } from '../..';

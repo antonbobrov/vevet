@@ -1,7 +1,5 @@
 import { initVevet } from '@/global/initVevet';
-import { isBrowser } from '@/internal/env';
-import { isNumber } from '@/internal/isNumber';
-import { onlyFinite } from '@/internal/onlyFinite';
+import { isBrowser, isNumber, onlyFinite } from '@/internal';
 
 type TCache = Map<string | number, number>;
 

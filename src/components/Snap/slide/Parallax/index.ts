@@ -1,4 +1,4 @@
-import { Destroyable } from '@/shared/Destroyable';
+import { Destroyable } from '@/internal';
 import { clamp } from '@/utils';
 
 import { SnapSlide } from '..';
@@ -7,6 +7,7 @@ import { PARALLAX_GROUPS, PARALLAX_TYPES } from './constants';
 import { ISnapParallaxItem, ISnapParallaxType } from './types';
 import { getAttr, getFloatAttr, getScope, isParallaxAttr } from './utils';
 
+/** @internal */
 export class SnapParallax extends Destroyable {
   private _observer: MutationObserver;
 

@@ -2,7 +2,7 @@ import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
-} from '@/base';
+} from '@/base/Module/types';
 
 export interface ISplitTextStaticProps extends IModuleStaticProps {
   /** Container whose text content is split. */

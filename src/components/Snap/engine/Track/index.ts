@@ -1,5 +1,4 @@
-import { onlyFinite } from '@/internal/onlyFinite';
-import { ModulePart } from '@/shared/ModulePart';
+import { ModulePart, onlyFinite } from '@/internal';
 import { toPixels } from '@/utils';
 import { clamp, loop } from '@/utils/math';
 

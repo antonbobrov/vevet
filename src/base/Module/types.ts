@@ -1,4 +1,4 @@
-import { ICallbacksMap, TCallbacksAction } from '../Callbacks';
+import { ICallbacksMap, TCallbacksAction } from '../Callbacks/types';
 
 export interface IModuleStaticProps {
   __staticProp?: true;

@@ -2,7 +2,7 @@ import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
-} from '@/base/Module';
+} from '@/base/Module/types';
 import { TEasingType } from '@/utils/math/easing';
 
 export interface ITimelineStaticProps extends IModuleStaticProps {}

@@ -1,18 +1,19 @@
 import { initVevet } from '@/global/initVevet';
-import { mergeWithNoUndefined } from '@/internal/mergeWithNoUndefined';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { TRequiredProps } from '@/internal/requiredProps';
-import { Destroyable } from '@/shared/Destroyable';
+import {
+  mergeWithNoUndefined,
+  noopIfDestroyed,
+  Destroyable,
+  TRequiredProps,
+} from '@/internal';
 
-import { Callbacks, ICallbacksSettings, TCallbacksAction } from '../Callbacks';
+import { Callbacks } from '../Callbacks';
+import { ICallbacksSettings, TCallbacksAction } from '../Callbacks/types';
 
 import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
 } from './types';
-
-export * from './types';
 
 /**
  * A base class for modules that handle responsive properties, event listeners, and custom callbacks.

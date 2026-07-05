@@ -1,8 +1,6 @@
-import { TModuleProps } from '@/base';
+import { TModuleProps } from '@/base/Module/types';
 import { initVevet } from '@/global/initVevet';
-import { doc } from '@/internal/env';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { TRequiredProps } from '@/internal/requiredProps';
+import { doc, noopIfDestroyed, TRequiredProps } from '@/internal';
 import { clamp } from '@/utils/math';
 
 import { Preloader } from '../Preloader';
@@ -16,9 +14,6 @@ import {
   IProgressPreloaderMutableProps,
   IProgressPreloaderStaticProps,
 } from './types';
-
-export * from './types';
-export * from './global';
 
 type TC = IProgressPreloaderCallbacksMap;
 type TS = IProgressPreloaderStaticProps;

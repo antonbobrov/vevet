@@ -2,16 +2,11 @@ import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
-} from '@/base';
+} from '@/base/Module/types';
 
 import { IPointersMove } from './Coords/types';
 import { TPointersType } from './Decoder/types';
 import { IPointersItem } from './Points/types';
-
-export * from './Points/types';
-export * from './Decoder/types';
-export * from './Coords/types';
-export * from './global';
 
 export interface IPointersStaticProps extends IModuleStaticProps {
   /**

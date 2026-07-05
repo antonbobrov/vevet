@@ -2,13 +2,13 @@ import { Destroyable } from '../Destroyable';
 
 import { IModulePartParent } from './types';
 
-export * from './types';
-
 /**
  * Base class for internal subsystems owned by a {@link Module}.
  *
  * A part shares the parent's `props`, `prefix`, and `callbacks`, and is
  * destroyed automatically when the parent is destroyed.
+ *
+ * @internal
  *
  * @typeParam Parent - Parent instance implementing {@link IModulePartParent}.
  */

@@ -1,4 +1,4 @@
-import { ModulePart } from '@/shared/ModulePart';
+import { ModulePart } from '@/internal';
 
 import { Snap } from '../..';
 import { IDLE_DEBOUNCE, WHEEL_DEBOUNCE } from '../../constants';

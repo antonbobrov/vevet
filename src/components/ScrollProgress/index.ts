@@ -1,7 +1,7 @@
-import { Module, TModuleProps } from '@/base';
+import { Module } from '@/base/Module';
+import { TModuleProps } from '@/base/Module/types';
 import { initVevet } from '@/global/initVevet';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { TRequiredProps } from '@/internal/requiredProps';
+import { noopIfDestroyed, TRequiredProps } from '@/internal';
 import { addEventListener, clampScope } from '@/utils';
 
 import { MUTABLE_PROPS, STATIC_PROPS } from './props';
@@ -11,8 +11,6 @@ import {
   IScrollProgressMutableProps,
   IScrollProgressStaticProps,
 } from './types';
-
-export * from './types';
 
 type TC = IScrollProgressCallbacksMap;
 type TS = IScrollProgressStaticProps;
@@ -28,12 +26,10 @@ type TM = IScrollProgressMutableProps;
  * @group Components
  */
 export class ScrollProgress extends Module<TC, TS, TM> {
-  /** Retrieves the default static properties. */
   public _getStatic(): TRequiredProps<TS> {
     return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
-  /** Retrieves the default mutable properties. */
   public _getMutable(): TRequiredProps<TM> {
     return { ...super._getMutable(), ...MUTABLE_PROPS };
   }

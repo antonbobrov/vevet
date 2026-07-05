@@ -1,11 +1,17 @@
-import { Module, TModuleProps } from '@/base/Module';
+import { Module } from '@/base/Module';
+import { TModuleProps } from '@/base/Module/types';
 import { initVevet } from '@/global/initVevet';
-import { cnAdd, cnRemove, cnToggle } from '@/internal/cn';
-import { body, doc } from '@/internal/env';
-import { isFiniteNumber } from '@/internal/isFiniteNumber';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { TRequiredProps } from '@/internal/requiredProps';
-import { getTextDirection } from '@/internal/textDirection';
+import {
+  cnAdd,
+  cnRemove,
+  cnToggle,
+  body,
+  doc,
+  isFiniteNumber,
+  noopIfDestroyed,
+  TRequiredProps,
+  getTextDirection,
+} from '@/internal';
 import { toPixels } from '@/utils';
 import { addEventListener } from '@/utils/listeners';
 import { clamp, lerp } from '@/utils/math';
@@ -14,7 +20,7 @@ import { Raf } from '../Raf';
 
 import { LERP_APPROXIMATION } from './constants';
 import { CursorHoverElement } from './HoverElement';
-import { ICursorHoverElementProps } from './HoverElement/types';
+import { ICursorHoverElementProps } from './HoverElement/global';
 import { CursorPath } from './Path';
 import { MUTABLE_PROPS, STATIC_PROPS } from './props';
 import { createCursorStyles } from './styles';
@@ -26,9 +32,6 @@ import {
   ICursorTargetCoords,
   ICursorType,
 } from './types';
-
-export * from './types';
-export type { ICursorHoverElementProps };
 
 type TC = ICursorCallbacksMap;
 type TS = ICursorStaticProps;
@@ -43,12 +46,10 @@ type TM = ICursorMutableProps;
  * @group Components
  */
 export class Cursor extends Module<TC, TS, TM> {
-  /** Get default static properties */
   public _getStatic(): TRequiredProps<TS> {
     return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
-  /** Get default mutable properties */
   public _getMutable(): TRequiredProps<TM> {
     return { ...super._getMutable(), ...MUTABLE_PROPS };
   }

@@ -2,9 +2,9 @@ import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
-} from '@/base';
+} from '@/base/Module/types';
 
-import { IPointersCallbacksMap, IPointersStaticProps } from '../Pointers';
+import { IPointersCallbacksMap, IPointersStaticProps } from '../Pointers/types';
 
 import {
   ISwipeAxes,

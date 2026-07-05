@@ -1,5 +1,4 @@
-import { cnAdd, cnHas, cnRemove } from '@/internal/cn';
-import { ModulePart } from '@/shared/ModulePart';
+import { cnAdd, cnHas, cnRemove, ModulePart } from '@/internal';
 
 import { Scrollbar } from '..';
 

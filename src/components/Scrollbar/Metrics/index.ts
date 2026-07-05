@@ -1,4 +1,4 @@
-import { ModulePart } from '@/shared/ModulePart';
+import { ModulePart } from '@/internal';
 
 import { Scrollbar } from '..';
 import { isSnap } from '../utils/isSnap';

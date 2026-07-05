@@ -1,11 +1,9 @@
-import { ModulePart } from '@/shared/ModulePart';
+import { ModulePart } from '@/internal';
 
 import { Swipe } from '..';
 import { ISwipeState, ISwipeVec2 } from '../global';
 
 import { TSwipeGestureSample, TSwipeInputType } from './types';
-
-export * from './types';
 
 /**
  * Gesture activation state: pending threshold → swiping → ended / aborted.

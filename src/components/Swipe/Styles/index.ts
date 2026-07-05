@@ -1,5 +1,4 @@
-import { body } from '@/internal/env';
-import { ModulePart } from '@/shared/ModulePart';
+import { body, ModulePart } from '@/internal';
 
 import { swipeStyles } from './styles';
 

@@ -1,4 +1,4 @@
-import { doc, isBrowser } from '@/internal/env';
+import { doc, isBrowser } from '@/internal';
 
 export const styles = isBrowser ? doc.createElement('style') : null;
 

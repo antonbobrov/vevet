@@ -1,16 +1,12 @@
 import { initVevet } from '@/global/initVevet';
-import { now } from '@/internal/now';
-import { unwrapAngleDelta } from '@/internal/unwrapAngle';
-import { ModulePart } from '@/shared/ModulePart';
+import { unwrapAngleDelta, ModulePart, now } from '@/internal';
 
 import { Swipe } from '../..';
 import { ISwipeState, ISwipeVec2 } from '../../global';
 
+import { ISwipeDecodeAngle } from './types';
+
 /** Unwrapped angle state for cumulative rotation. */
-export interface ISwipeDecodeAngle {
-  raw: number;
-  unwrapped: number;
-}
 
 /**
  * Parses pointer events into swipe coordinate space.

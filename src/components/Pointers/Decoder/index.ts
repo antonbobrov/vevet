@@ -1,5 +1,4 @@
-import { isNumber } from '@/internal/isNumber';
-import { ModulePart } from '@/shared/ModulePart';
+import { isNumber, ModulePart } from '@/internal';
 import { clamp } from '@/utils';
 
 import { Pointers } from '..';

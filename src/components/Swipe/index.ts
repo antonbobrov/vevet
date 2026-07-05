@@ -1,11 +1,12 @@
-import { Module, TModuleProps } from '@/base';
-import { now } from '@/internal/now';
-import { TRequiredProps } from '@/internal/requiredProps';
+import { Module } from '@/base/Module';
+import { TModuleProps } from '@/base/Module/types';
+import { now, TRequiredProps } from '@/internal';
 
 import { SwipeBounce } from './Bounce';
 import { SwipeCoords } from './Coords';
 import { SwipeDirection } from './Direction';
-import { SwipeGesture, TSwipeInputType } from './Gesture';
+import { SwipeGesture } from './Gesture';
+import { TSwipeInputType } from './Gesture/types';
 import { ISwipeState, ISwipeVec2, ISwipeVec3 } from './global';
 import { SwipeInertia } from './Inertia';
 import { SwipeInput } from './Input';
@@ -16,9 +17,6 @@ import {
   ISwipeMutableProps,
   ISwipeStaticProps,
 } from './types';
-
-export * from './types';
-export * from './global';
 
 type TC = ISwipeCallbacksMap;
 type TS = ISwipeStaticProps;

@@ -1,13 +1,13 @@
-import { Module, TModuleProps } from '@/base';
-import { isUndefined } from '@/internal/isUndefined';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { TRequiredProps } from '@/internal/requiredProps';
+import { Module } from '@/base/Module';
+import { TModuleProps } from '@/base/Module/types';
+import { noopIfDestroyed, TRequiredProps, isUndefined } from '@/internal';
 import { IOnResize, onResize, damp, toPixels, inRange, clamp } from '@/utils';
 
 import { SnapAnimation } from './engine/Animation';
+import { ISnapTransitionArg } from './engine/Animation/types';
 import { SnapNavigator } from './engine/Navigator';
 import { SnapTrack } from './engine/Track';
-import { ISnapNexPrevArg, ISnapToSlideArg, ISnapTransitionArg } from './global';
+import { ISnapNexPrevArg, ISnapToSlideArg } from './global';
 import { SnapIdle } from './input/Idle';
 import { SnapInterval } from './input/Interval';
 import { SnapKeyboard } from './input/Keyboard';
@@ -21,10 +21,6 @@ import {
   ISnapMutableProps,
   ISnapStaticProps,
 } from './types';
-
-export * from './types';
-export * from './global';
-export * from './slide';
 
 type TC = ISnapCallbacksMap;
 type TS = ISnapStaticProps;

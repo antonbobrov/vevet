@@ -2,8 +2,7 @@ import { detect } from 'detect-browser';
 import InAppSpy from 'inapp-spy';
 import isMobileJs from 'ismobilejs';
 
-import { cnAdd, cnToggle } from '@/internal/cn';
-import { body, doc, html } from '@/internal/env';
+import { cnAdd, cnToggle, body, doc, html } from '@/internal';
 
 import manifest from '../manifest.json';
 

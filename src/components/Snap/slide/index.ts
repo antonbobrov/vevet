@@ -7,8 +7,6 @@ import { SnapParallax } from './Parallax';
 import { getParallaxElements } from './Parallax/shared';
 import { DEFAULT_PROPS } from './props';
 
-export type { ISnapSlideProps } from './global';
-
 /**
  * Single carousel slide: size, coords, magnets, parallax, and optional virtual DOM.
  *

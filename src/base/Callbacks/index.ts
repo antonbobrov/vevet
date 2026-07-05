@@ -1,6 +1,4 @@
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { safeAction } from '@/internal/safeAction';
-import { Destroyable } from '@/shared/Destroyable';
+import { noopIfDestroyed, safeAction, Destroyable } from '@/internal';
 import { uid } from '@/utils/common';
 
 import {
@@ -10,8 +8,6 @@ import {
   TCallbacksAction,
   ICallbacksProps,
 } from './types';
-
-export * from './types';
 
 /**
  * Typed event registry with support for one-time listeners, protected listeners,

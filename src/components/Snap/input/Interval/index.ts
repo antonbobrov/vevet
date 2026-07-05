@@ -1,5 +1,4 @@
-import { isFiniteNumber } from '@/internal/isFiniteNumber';
-import { ModulePart } from '@/shared/ModulePart';
+import { isFiniteNumber, ModulePart } from '@/internal';
 
 import { Snap } from '../..';
 

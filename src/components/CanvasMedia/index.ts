@@ -1,11 +1,11 @@
 import { getPos } from 'get-image-pos';
 
-import { TModuleProps } from '@/base';
-import { isHTMLVideo } from '@/internal/isHTMLVideo';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { TModuleProps } from '@/base/Module/types';
+import { isHTMLVideo, noopIfDestroyed, TRequiredProps } from '@/internal';
 import { addEventListener } from '@/utils';
 
-import { Canvas, ICanvasRenderArg } from '../Canvas';
+import { Canvas } from '../Canvas';
+import { ICanvasRenderArg } from '../Canvas/types';
 
 import { MUTABLE_PROPS, STATIC_PROPS } from './props';
 import {
@@ -13,8 +13,6 @@ import {
   ICanvasMediaMutableProps,
   ICanvasMediaStaticProps,
 } from './types';
-
-export * from './types';
 
 type TC = ICanvasMediaCallbacksMap;
 type TS = ICanvasMediaStaticProps;
@@ -29,11 +27,11 @@ type TM = ICanvasMediaMutableProps;
  * @group Components
  */
 export class CanvasMedia extends Canvas<TC, TS, TM> {
-  public _getStatic() {
+  public _getStatic(): TRequiredProps<TS> {
     return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
-  public _getMutable() {
+  public _getMutable(): TRequiredProps<TM> {
     return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 

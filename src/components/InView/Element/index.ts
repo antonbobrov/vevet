@@ -1,6 +1,5 @@
 import { initVevet } from '@/global/initVevet';
-import { cnToggle } from '@/internal/cn';
-import { ModulePart } from '@/shared/ModulePart';
+import { cnToggle, ModulePart } from '@/internal';
 import { clamp } from '@/utils';
 
 import { InView } from '..';

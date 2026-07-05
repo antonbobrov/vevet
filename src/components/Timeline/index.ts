@@ -1,8 +1,11 @@
-import { Module, TModuleProps } from '@/base/Module';
-import { isFiniteNumber } from '@/internal/isFiniteNumber';
-import { isUndefined } from '@/internal/isUndefined';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { TRequiredProps } from '@/internal/requiredProps';
+import { Module } from '@/base/Module';
+import { TModuleProps } from '@/base/Module/types';
+import {
+  isFiniteNumber,
+  isUndefined,
+  noopIfDestroyed,
+  TRequiredProps,
+} from '@/internal';
 import { clamp, easing } from '@/utils/math';
 
 import { MUTABLE_PROPS, STATIC_PROPS } from './props';
@@ -11,8 +14,6 @@ import {
   ITimelineMutableProps,
   ITimelineStaticProps,
 } from './types';
-
-export * from './types';
 
 type TC = ITimelineCallbacksMap;
 type TS = ITimelineStaticProps;

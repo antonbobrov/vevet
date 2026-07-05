@@ -1,4 +1,4 @@
-import { TRequiredProps } from '@/internal/requiredProps';
+import { TRequiredProps } from '@/internal';
 
 import {
   STATIC_PROPS as CANVAS_STATIC_PROPS,

@@ -1,7 +1,7 @@
 import { EaseOutCubic } from 'easing-progress';
 
 import { initVevet } from '@/global/initVevet';
-import { TRequiredProps } from '@/internal/requiredProps';
+import { TRequiredProps } from '@/internal';
 
 import { ISnapMutableProps, ISnapStaticProps } from './types';
 

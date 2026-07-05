@@ -1,6 +1,5 @@
 import type { Snap } from '@/components/Snap';
-import { cnToggle } from '@/internal/cn';
-import { ModulePart } from '@/shared/ModulePart';
+import { cnToggle, ModulePart } from '@/internal';
 import { clamp, onResize, toPixels } from '@/utils';
 
 import { Scrollbar } from '..';

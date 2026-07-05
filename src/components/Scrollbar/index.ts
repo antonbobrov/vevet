@@ -1,8 +1,7 @@
-import { Module, TModuleProps } from '@/base';
+import { Module } from '@/base/Module';
+import { TModuleProps } from '@/base/Module/types';
 import { initVevet } from '@/global/initVevet';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { TRequiredProps } from '@/internal/requiredProps';
-import { isRtl } from '@/internal/textDirection';
+import { noopIfDestroyed, TRequiredProps, isRtl } from '@/internal';
 import { addEventListener, clamp } from '@/utils';
 
 import { ScrollbarAction } from './Action';
@@ -17,8 +16,6 @@ import {
   IScrollbarStaticProps,
 } from './types';
 import { isSnap } from './utils/isSnap';
-
-export * from './types';
 
 type TC = IScrollbarCallbacksMap;
 type TS = IScrollbarStaticProps;

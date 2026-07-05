@@ -1,4 +1,4 @@
-import { ModulePart } from '@/shared/ModulePart';
+import { ModulePart } from '@/internal';
 
 import { Pointers } from '..';
 
@@ -6,6 +6,8 @@ import { IPointersItem } from './types';
 
 /**
  * Active pointer registry keyed by `pointerId`.
+ *
+ * @internal
  */
 export class PointersPoints extends ModulePart<Pointers> {
   private _map: Map<number, IPointersItem> = new Map();

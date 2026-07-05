@@ -1,6 +1,4 @@
-import { cnAdd } from '@/internal/cn';
-import { body, doc, html } from '@/internal/env';
-import { ModulePart } from '@/shared/ModulePart';
+import { cnAdd, body, doc, html, ModulePart } from '@/internal';
 
 import { Scrollbar } from '..';
 import { isSnap } from '../utils/isSnap';

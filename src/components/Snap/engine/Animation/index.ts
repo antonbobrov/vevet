@@ -1,7 +1,6 @@
 import { Raf } from '@/components/Raf';
 import { Timeline } from '@/components/Timeline';
-import { isNumber } from '@/internal/isNumber';
-import { ModulePart } from '@/shared/ModulePart';
+import { isNumber, ModulePart } from '@/internal';
 import { lerp } from '@/utils/math';
 
 import { Snap } from '../..';

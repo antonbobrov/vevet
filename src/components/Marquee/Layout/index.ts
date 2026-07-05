@@ -1,5 +1,4 @@
-import { isFiniteNumber } from '@/internal/isFiniteNumber';
-import { ModulePart } from '@/shared/ModulePart';
+import { isFiniteNumber, ModulePart } from '@/internal';
 import { loop } from '@/utils';
 
 import { MarqueeNodes } from '../Nodes';

@@ -1,6 +1,4 @@
-import { doc } from '@/internal/env';
-import { isFiniteNumber } from '@/internal/isFiniteNumber';
-import { ModulePart } from '@/shared/ModulePart';
+import { isFiniteNumber, ModulePart, doc } from '@/internal';
 
 import type { Marquee } from '..';
 

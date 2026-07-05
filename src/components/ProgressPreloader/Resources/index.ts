@@ -1,6 +1,4 @@
-import { cnHas } from '@/internal/cn';
-import { isFiniteNumber } from '@/internal/isFiniteNumber';
-import { ModulePart } from '@/shared/ModulePart';
+import { isFiniteNumber, ModulePart, cnHas } from '@/internal';
 import { clamp } from '@/utils';
 
 import { ProgressPreloader } from '..';

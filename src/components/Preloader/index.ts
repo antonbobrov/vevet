@@ -1,8 +1,7 @@
-import { Module, TModuleProps } from '@/base/Module';
+import { Module } from '@/base/Module';
+import { TModuleProps } from '@/base/Module/types';
 import { initVevet } from '@/global/initVevet';
-import { isNumber } from '@/internal/isNumber';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { TRequiredProps } from '@/internal/requiredProps';
+import { isNumber, noopIfDestroyed, TRequiredProps } from '@/internal';
 
 import { Timeline } from '../Timeline';
 
@@ -12,8 +11,6 @@ import {
   IPreloaderMutableProps,
   IPreloaderStaticProps,
 } from './types';
-
-export * from './types';
 
 /**
  * Page preloader — loading screen visibility and lifecycle.

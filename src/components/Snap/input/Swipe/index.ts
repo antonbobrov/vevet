@@ -1,5 +1,7 @@
-import { ISwipeCoords, ISwipeVec3, Swipe } from '@/components/Swipe';
-import { ModulePart } from '@/shared/ModulePart';
+import { Swipe } from '@/components/Swipe';
+import { ISwipeCoords, ISwipeVec3 } from '@/components/Swipe/global';
+import { ISwipeMutableProps } from '@/components/Swipe/types';
+import { ModulePart } from '@/internal';
 
 import { Snap } from '../..';
 
@@ -49,7 +51,7 @@ export class SnapSwipe extends ModulePart<Snap> {
     });
   }
 
-  private get swipeProps() {
+  private get swipeProps(): ISwipeMutableProps {
     const { props } = this;
 
     return {

@@ -1,7 +1,5 @@
 import { Raf } from '@/components/Raf';
-import { isFiniteNumber } from '@/internal/isFiniteNumber';
-import { now } from '@/internal/now';
-import { ModulePart } from '@/shared/ModulePart';
+import { isFiniteNumber, ModulePart, now } from '@/internal';
 import { clamp, lerp } from '@/utils';
 
 import { Swipe } from '..';

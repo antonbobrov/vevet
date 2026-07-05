@@ -1,4 +1,4 @@
-import { isFiniteNumber } from '@/internal/isFiniteNumber';
+import { isFiniteNumber } from '@/internal';
 import { lerp } from '@/utils';
 
 import { LERP_APPROXIMATION } from '../constants';
@@ -6,6 +6,7 @@ import { LERP_APPROXIMATION } from '../constants';
 import { svgQuadraticCurvePath } from './svgQuadraticCurvePath';
 import { ICursorPathPoint, ICursorPathVec2 } from './types';
 
+/** @internal */
 export class CursorPath {
   /** Cursor SVG Path Points */
   private _points: ICursorPathPoint[] = [];

@@ -1,6 +1,4 @@
-import { isFiniteNumber } from '@/internal/isFiniteNumber';
-import { isNumber } from '@/internal/isNumber';
-import { isString } from '@/internal/isString';
+import { isFiniteNumber, isNumber, isString } from '@/internal';
 import { addEventListener, clamp, lerp, toPixels } from '@/utils';
 
 import { LERP_APPROXIMATION } from '../constants';
@@ -8,8 +6,8 @@ import { LERP_APPROXIMATION } from '../constants';
 import {
   ICursorHoverElementProps,
   TCursorHoverElementStickyAmplitude,
-  TCursorHoverElementStickyParallax,
-} from './types';
+} from './global';
+import { TCursorHoverElementStickyParallax } from './types';
 
 export class CursorHoverElement {
   private _debounce: NodeJS.Timeout | null = null;

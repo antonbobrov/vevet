@@ -1,4 +1,4 @@
-import { ITimelineProgressArg } from '@/components/Timeline';
+import { ITimelineProgressArg } from '@/components/Timeline/types';
 import { TEasingType } from '@/utils/math';
 
 import { TSnapDuration } from '../../global';

@@ -1,12 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 import { initVevet } from '@/global/initVevet';
-import { Destroyable } from '@/shared/Destroyable';
+import { Destroyable } from '@/internal';
 
 import { Module } from '../Module';
 
 import { TResponsiveProps, TResponsiveRule, TResponsiveSource } from './types';
-
-export * from './types';
 
 /**
  * Applies different property values based on viewport and device.

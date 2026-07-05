@@ -6,6 +6,8 @@
  *
  * Used by {@link Module}, {@link Callbacks}, {@link Responsive}, and other
  * long-lived instances that must be explicitly disposed.
+ *
+ * @internal
  */
 export class Destroyable {
   /** Whether {@link destroy} has already been called. */
