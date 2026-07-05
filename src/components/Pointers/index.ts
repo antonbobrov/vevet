@@ -200,6 +200,8 @@ export class Pointers extends Module<TC, TS, TM> {
 
     const pointer = this._points.add(x, y, event.pointerId);
 
+    this._emit('pointerdown', { event, pointer });
+
     if (this._points.size === minPointers) {
       this._isStarted = true;
       this._emit('start', undefined);
@@ -210,8 +212,6 @@ export class Pointers extends Module<TC, TS, TM> {
     if (this.props.disableUserSelect && styles) {
       body.append(styles);
     }
-
-    this._emit('pointerdown', { event, pointer });
   }
 
   /**
