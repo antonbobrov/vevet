@@ -95,6 +95,8 @@ export class Preloader<
     this._isLoaded = true;
     this._emit('loaded', undefined);
 
+    this._emit('requestHide', undefined);
+
     if (isNumber(this.props.hide)) {
       this.hide(this.props.hide);
     }

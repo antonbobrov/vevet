@@ -40,6 +40,11 @@ export interface IPreloaderCallbacksMap<
   loaded: undefined;
 
   /**
+   * Triggered when the page is loaded and hide request is emmited.
+   */
+  requestHide: undefined;
+
+  /**
    * Triggered when the preloader starts hiding.
    */
   hide: undefined;

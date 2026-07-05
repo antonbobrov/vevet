@@ -25,10 +25,11 @@ Does not provide styling for the container.
 ## Lifecycle
 
 1. **`loaded`** — page is ready (`initVevet().onLoad`; overridable in [`ProgressPreloader`](/docs/ProgressPreloader)).
-2. **`hide`** — fade starts (automatic when `hide` is a number, or via [`hide()`](methods#hide)).
-3. **`hidden`** — fade completed; [`isHidden`](accessors#ishidden) is `true`.
+2. **`requestHide`** — hide is requested; use for custom hide timing when [`hide: false`](props#props.hide).
+3. **`hide`** — fade starts (automatic when `hide` is a number, or via [`hide()`](methods#hide)).
+4. **`hidden`** — fade completed; [`isHidden`](accessors#ishidden) is `true`.
 
-When `hide: false`, call `hide(duration)` manually after load.  
+When `hide: false`, call `hide(duration)` manually — typically from [`requestHide`](callbacks#requesthide).  
 When `container: null`, only callbacks fire — no DOM animation.
 
 ## Basic Demo
