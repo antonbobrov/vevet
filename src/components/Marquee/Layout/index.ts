@@ -87,6 +87,7 @@ export class MarqueeLayout extends ModulePart<Marquee> {
 
     if (props.cloneNodes && isFiniteNumber(times) && times > 1) {
       this._nodes.cloneAll(times - 1);
+      this.callbacks.emit('clone', undefined);
       this.resize();
     }
   }
