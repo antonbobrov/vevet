@@ -9,7 +9,7 @@ import { IProgressPreloaderResource } from '../global';
 import { ProgressPreloaderImage } from '../Image';
 import { ProgressPreloaderVideo } from '../Video';
 
-const INITIAL_RESOURCE = `vevet-page-${crypto.randomUUID()}`;
+const INITIAL_RESOURCE = `vevet-page-${Math.random()}`;
 
 /**
  * Weighted resource registry and DOM discovery.
