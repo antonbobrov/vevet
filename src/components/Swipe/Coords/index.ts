@@ -1,4 +1,4 @@
-import { ModulePart } from '@/internal';
+import { ModulePart, now } from '@/internal';
 
 import { Swipe } from '..';
 
@@ -230,7 +230,7 @@ export class SwipeCoords extends ModulePart<Swipe> {
   public setStart(state: ISwipeState) {
     this._tempAngle = { raw: state.angle, unwrapped: state.angle };
 
-    this._timestamp = performance.now();
+    this._timestamp = now();
     this._start = { ...state };
     this._prev = { ...state };
     this._current = { ...state };
@@ -257,7 +257,7 @@ export class SwipeCoords extends ModulePart<Swipe> {
       this.calculateBounds();
     }
 
-    this._timestamp = performance.now();
+    this._timestamp = now();
     this._prev = { ...this.current };
     this._current = { x, y, angle, time };
     const { _current: current, _prev: prev, overflow } = this;
