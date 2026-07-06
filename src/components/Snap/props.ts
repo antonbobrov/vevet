@@ -30,7 +30,7 @@ export const MUTABLE_PROPS: TRequiredProps<ISnapMutableProps> = {
   duration: 600,
   easing: EaseOutCubic,
   swipe: true,
-  grabCursor: false,
+  grabCursor: true,
   swipeSpeed: 1,
   swipeAxis: 'auto',
   followSwipe: true,
