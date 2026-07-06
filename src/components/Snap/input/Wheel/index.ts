@@ -1,11 +1,9 @@
-import { initVevet } from '@/global/initVevet';
-import { isNumber, onlyFinite, ModulePart } from '@/internal';
-import { addEventListener, clamp, normalizeWheel } from '@/utils';
+import { isNumber, ModulePart, now, onlyFinite } from '@/internal';
 
 import { Snap } from '../..';
-import { WHEEL_DEBOUNCE } from '../../constants';
 
-const deltasCount = 6;
+import { SnapWheelEvents } from './Events';
+import { SnapWheelThrottler } from './Throttler';
 
 /**
  * Mouse wheel input with follow and discrete navigation modes.
@@ -13,88 +11,71 @@ const deltasCount = 6;
  * @internal
  */
 export class SnapWheel extends ModulePart<Snap> {
-  private _hasStarted = false;
+  private _events: SnapWheelEvents;
 
-  private _debounce?: NodeJS.Timeout;
+  private _throttler: SnapWheelThrottler;
 
-  private _deltas: number[] = [];
-
-  private _lastWheelTime = 0;
+  private _lastTime = 0;
 
   constructor(parent: Snap) {
     super(parent);
 
-    const listener = addEventListener(parent.eventsEmitter, 'wheel', (event) =>
-      this._handleWheel(event),
-    );
+    this._events = new SnapWheelEvents(parent.eventsEmitter, {
+      getEnabled: () => parent.props.wheel,
+      getAxis: this._getAxis.bind(this),
+      onStart: this._start.bind(this),
+      onMove: this._move.bind(this),
+      onEnd: this._end.bind(this),
+    });
+
+    this._throttler = new SnapWheelThrottler(() => this._events.deltas);
 
     this.onDestroy(() => {
-      listener();
-
-      if (this._debounce) {
-        clearTimeout(this._debounce);
-      }
+      this._throttler.destroy();
+      this._events.destroy();
     });
   }
 
-  private get absDeltas() {
-    return this._deltas.map((d) => Math.abs(d));
-  }
-
   get isWheeling() {
-    return this._hasStarted;
+    return this._events.isWheeling;
   }
 
-  private _handleWheel(event: WheelEvent) {
-    const { props, axis } = this.parent;
+  private _getAxis() {
+    const { axis, props } = this.parent;
 
-    if (!props.wheel) {
-      return;
-    }
-
-    event.preventDefault();
-
-    const wheelData = normalizeWheel(event);
-    const wheelAxis = props.wheelAxis === 'auto' ? axis : props.wheelAxis;
-    const delta = wheelAxis === 'x' ? wheelData.pixelX : wheelData.pixelY;
-
-    this._handleStart(delta);
-    this._handleMove(delta, event);
-
-    if (this._debounce) {
-      clearTimeout(this._debounce);
-    }
-
-    this._debounce = setTimeout(() => this._handleEnd(), WHEEL_DEBOUNCE);
+    return props.wheelAxis === 'auto' ? axis : props.wheelAxis;
   }
 
-  private _handleStart(delta: number) {
-    if (this._hasStarted || Math.abs(delta) < 2) {
-      return;
-    }
-
-    this._hasStarted = true;
-
+  private _start() {
     this.callbacks.emit('wheelStart', undefined);
   }
 
-  private _handleMove(delta: number, event: WheelEvent) {
-    if (!this._hasStarted) {
+  private _move(evt: WheelEvent, delta: number) {
+    if (this.props.followWheel) {
+      this.callbacks.emit('wheel', evt);
+      this._follow(delta);
+
       return;
     }
 
-    this._addDelta(delta);
-
-    if (this.props.followWheel) {
-      this._handleFollow(delta);
-    } else {
-      this._handleNoFollow(delta);
+    const can = this._checkNoFollow(delta, evt.deltaMode);
+    if (can) {
+      this.callbacks.emit('wheel', evt);
+      this._noFollow(delta);
     }
-
-    this.callbacks.emit('wheel', event);
   }
 
-  private _handleFollow(delta: number) {
+  private _end() {
+    this.callbacks.emit('wheelEnd', undefined);
+
+    if (this.props.followWheel) {
+      this._endFollow();
+    } else {
+      this._endNoFollow();
+    }
+  }
+
+  private _follow(delta: number) {
     const { parent } = this;
     const { props, target } = parent;
 
@@ -103,243 +84,76 @@ export class SnapWheel extends ModulePart<Snap> {
     parent.clampTarget();
   }
 
-  /** Discrete slide steps; may switch to follow mode for oversized slides. */
-  private _handleNoFollow(deltaProp: number) {
-    const { isTouchPad, isGainingDelta, parent } = this;
-    const { props, activeSlide, canLoop } = parent;
-    const delta = deltaProp * props.wheelSpeed;
-
-    if (this._detectNoFollowThrottle()) {
-      return;
-    }
-
-    let shouldFollow = false;
-    let isThrottled = true;
-
-    if (!shouldFollow) {
-      if (parent.isSlideScrolling) {
-        if (activeSlide.coord === 0) {
-          if (delta > 0) {
-            shouldFollow = true;
-          }
-        } else if (
-          activeSlide.coord ===
-          parent.containerSize - activeSlide.size
-        ) {
-          if (delta < 0) {
-            shouldFollow = true;
-          }
-        } else {
-          shouldFollow = true;
-          isThrottled = false;
-        }
-      }
-    }
-
-    if (isThrottled) {
-      if (
-        !isTouchPad ||
-        (isTouchPad && (isGainingDelta || this.absDeltas.length === 1))
-      ) {
-        const direction = Math.sign(delta);
-
-        if (shouldFollow) {
-          parent.cancelTransition();
-
-          parent.setTarget(parent.target + direction);
-          parent.clampTarget();
-
-          if (!isTouchPad) {
-            parent.$_track.current = parent.target;
-          }
-        } else if (direction === 1) {
-          if (!canLoop && parent.activeIndex === parent.slides.length - 1) {
-            if (!props.rewind) {
-              return;
-            }
-          }
-
-          this._lastWheelTime = +new Date();
-
-          parent.next();
-        } else {
-          if (!canLoop && parent.activeIndex === 0) {
-            if (!props.rewind) {
-              return;
-            }
-          }
-
-          this._lastWheelTime = +new Date();
-
-          parent.prev();
-        }
-      }
-
-      return;
-    }
-
-    if (shouldFollow) {
-      parent.cancelTransition();
-
-      const deltaWithSpeed = delta;
-
-      const start = Math.min(...activeSlide.magnets);
-      const end = Math.max(...activeSlide.magnets);
-
-      const loopedTarget = parent.loopCoord(parent.target);
-
-      const clampedLoopedTarget = clamp(
-        loopedTarget + deltaWithSpeed,
-        start,
-        end,
-      );
-
-      parent.$_track.target =
-        parent.target + clampedLoopedTarget - loopedTarget;
-
-      parent.clampTarget();
+  private _noFollow(delta: number) {
+    if (delta > 0) {
+      this.parent.next();
+    } else {
+      this.parent.prev();
     }
   }
 
-  private _detectNoFollowThrottle() {
-    const { isTouchPad } = this;
+  private _checkNoFollow(delta: number, deltaMode: number) {
+    const { parent } = this;
     const { wheelThrottle } = this.props;
-    const { scrollableSlides, isTransitioning } = this.parent;
 
-    const timeDiff = +new Date() - this._lastWheelTime;
+    const timeDiff = now() - this._lastTime;
 
     if (isNumber(wheelThrottle)) {
-      return timeDiff < wheelThrottle;
-    }
-
-    if (isTouchPad) {
-      return isTransitioning;
-    }
-
-    const visibleScrollableSlides = scrollableSlides.filter(
-      (slide) => slide.isVisible,
-    );
-
-    if (visibleScrollableSlides.length && isTransitioning) {
-      return true;
-    }
-
-    if (timeDiff < 500) {
-      return true;
-    }
-
-    return false;
-  }
-
-  private _handleEnd() {
-    if (!this._hasStarted) {
-      return;
-    }
-
-    const { props, parent } = this;
-    const { activeSlide, isSlideScrolling, isTransitioning } = this.parent;
-
-    const lastThreeDeltas = this._deltas.slice(-3).reduce((a, b) => a + b, 0);
-
-    this._deltas = [];
-    this._hasStarted = false;
-
-    if (!props.freemode || props.freemode === 'sticky') {
-      if (props.followWheel && props.stickOnWheelEnd) {
-        const slideThreshold = onlyFinite(
-          Math.abs(props.stickOnWheelEndThreshold) / activeSlide.size,
-        );
-
-        if (
-          activeSlide.progress > slideThreshold &&
-          !isSlideScrolling &&
-          lastThreeDeltas > 0
-        ) {
-          parent.next();
-        } else if (
-          activeSlide.progress < -slideThreshold &&
-          !isSlideScrolling &&
-          lastThreeDeltas < 0
-        ) {
-          parent.prev();
-        } else {
-          parent.stick();
-        }
-      } else if (!props.followWheel && !isTransitioning) {
-        parent.stick();
+      if (timeDiff < wheelThrottle) {
+        return false;
+      }
+    } else {
+      if (parent.isTransitioning) {
+        return false;
       }
     }
 
-    this.callbacks.emit('wheelEnd', undefined);
-  }
-
-  private _addDelta(delta: number) {
-    if (this._deltas.length >= deltasCount) {
-      this._deltas.shift();
-    }
-
-    this._deltas.push(delta);
-  }
-
-  // Heuristics to distinguish touchpad momentum from mouse wheel clicks
-  private get isTouchPad() {
-    return !this.isStableDelta || this.isSmallDelta;
-  }
-
-  private get isStableDelta() {
-    const deltas = this.absDeltas;
-    const precision = 0.8;
-
-    // get difference between deltas
-    const diffs = deltas.map((d, i) => {
-      const prev = deltas[i - 1];
-      if (!deltas[i - 1]) {
-        return 0;
-      }
-
-      return d - prev;
-    });
-
-    const zeroDiffs = diffs.filter((d) => d === 0);
-
-    return zeroDiffs.length > diffs.length * precision;
-  }
-
-  private get isSmallDelta() {
-    const deltas = this.absDeltas;
-
-    if (deltas.length === 0) {
-      return true;
-    }
-
-    const last = deltas[deltas.length - 1];
-
-    return last < 50;
-  }
-
-  private get isGainingDelta() {
-    const vevet = initVevet();
-    const deltas = this.absDeltas;
-    const precision = vevet.osName.includes('window') ? 1.5 : 1.2;
-
-    if (deltas.length < deltasCount) {
+    const isThrottled = !this._throttler.test(delta, deltaMode);
+    if (isThrottled) {
       return false;
     }
 
-    const lastDeltas = deltas.slice(-deltasCount);
+    this._lastTime = now();
 
-    const half1 = lastDeltas.slice(0, Math.floor(lastDeltas.length / 2));
-    const half2 = lastDeltas.slice(Math.floor(lastDeltas.length / 2));
-
-    const avg1 = this._getAverage(half1);
-    const avg2 = this._getAverage(half2);
-
-    const isGaining = avg2 > avg1 * precision;
-
-    return isGaining;
+    return true;
   }
 
-  private _getAverage(array: number[]) {
-    return array.length ? array.reduce((a, b) => a + b, 0) / array.length : 0;
+  private _endFollow() {
+    const { parent, props } = this;
+    const { stickOnWheelEnd, stickOnWheelEndThreshold, freemode } = props;
+    const { activeSlide, isSlideScrolling } = parent;
+
+    if (!stickOnWheelEnd || freemode === true) {
+      return;
+    }
+
+    const slideThreshold = onlyFinite(
+      Math.abs(stickOnWheelEndThreshold) / activeSlide.size,
+    );
+
+    const lastThreeDeltas = this._events.deltas.slice(-3);
+    const totalDeltas = lastThreeDeltas.reduce((a, b) => a + b, 0);
+
+    if (
+      activeSlide.progress > slideThreshold &&
+      !isSlideScrolling &&
+      totalDeltas > 0
+    ) {
+      parent.next();
+    } else if (
+      activeSlide.progress < -slideThreshold &&
+      !isSlideScrolling &&
+      totalDeltas < 0
+    ) {
+      parent.prev();
+    } else {
+      parent.stick();
+    }
+  }
+
+  private _endNoFollow() {
+    if (!this.parent.isTransitioning) {
+      this.parent.stick();
+    }
   }
 }

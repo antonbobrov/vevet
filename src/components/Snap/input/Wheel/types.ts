@@ -28,8 +28,8 @@ export interface ISnapWheelProps {
    * Throttle wheel events, value in milliseconds.
    * Works only if `followWheel` is disabled.
    *
-   * - `auto` - automatic detection when `wheel` is enabled
-   * - `number - value in milliseconds
+   * - `auto` — automatic detection when `followWheel` is disabled
+   * - `number` — value in milliseconds
    *
    * @default `auto`
    */

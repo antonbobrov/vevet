@@ -1,7 +1,7 @@
 import { ModulePart } from '@/internal';
 
 import { Snap } from '../..';
-import { IDLE_DEBOUNCE, WHEEL_DEBOUNCE } from '../../constants';
+import { IDLE_DEBOUNCE, WHEEL_END_DEBOUNCE } from '../../constants';
 
 /**
  * Debounced `idle` callback when the scene is not animating or interacting.
@@ -36,7 +36,7 @@ export class SnapIdle extends ModulePart<Snap> {
   private _handleUpdate() {
     this._clear();
 
-    const debounce = Math.max(IDLE_DEBOUNCE, WHEEL_DEBOUNCE) + 10;
+    const debounce = Math.max(IDLE_DEBOUNCE, WHEEL_END_DEBOUNCE) + 10;
 
     this._timeout = setTimeout(() => this._handleTimeout(), debounce);
   }
