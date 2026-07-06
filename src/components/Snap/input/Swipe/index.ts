@@ -224,6 +224,16 @@ export class SnapSwipe extends ModulePart<Snap> {
 
   private _handleInertiaCancel() {
     this.callbacks.emit('swipeInertiaCancel', undefined);
+
+    const { parent } = this;
+
+    if (
+      this.isStickyFreemode &&
+      !parent.isSlideScrolling &&
+      !parent.isTransitioning
+    ) {
+      parent.stick();
+    }
   }
 
   private _end() {
