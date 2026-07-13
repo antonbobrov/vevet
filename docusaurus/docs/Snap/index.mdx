@@ -11,6 +11,7 @@ keywords:
   - touch swipe
 ---
 
+import MoreDemos from '@site/src/components/MoreDemos';
 import VevetDemo from '@site/src/components/VevetDemo';
 
 # Snap
@@ -38,11 +39,13 @@ It **does not impose layout or styling**, making it suitable for fully custom ca
 <VevetDemo id="jEqdQZg" height={500} />
 </section>
 
-## More demos
-
-- [Basic demos](./basic-demos)
-- [Advanced demos](./advanced-demos)
-- [Parallax demos](./parallax-demos)
+<MoreDemos
+  links={[
+    { label: 'Basic demos', to: './basic-demos' },
+    { label: 'Advanced demos', to: './advanced-demos' },
+    { label: 'Parallax demos', to: './parallax-demos' },
+  ]}
+/>
 
 ## Advantages
 
