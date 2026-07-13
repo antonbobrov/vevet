@@ -12,7 +12,8 @@
     "build:cjs": "tsc -p config/tsconfig.cjs.json && tsc-alias -p config/tsconfig.cjs.json",
     "build:types": "tsc -p config/tsconfig.types.json && tsc-alias -p config/tsconfig.types.json",
     "build:cdn": "esbuild ./lib/esm/index.js --bundle --format=iife --target=es2017 --global-name=Vevet --minify --outfile=./lib/cdn/vevet.iife.min.js",
-    "build:docs": "rimraf docs && typedoc --out docusaurus/static/v5 ./src --theme default --hideGenerator --includeVersion && cd docusaurus && npm run build && cd ..",
+    "build:docs": "rimraf docs && typedoc --out docusaurus/static/v5 ./src --theme default --hideGenerator --includeVersion && npm run unpack:typedoc-v4 && cd docusaurus && npm run build && cd ..",
+    "unpack:typedoc-v4": "node scripts/unpack-typedoc-v4.mjs",
     "deploy": "gh-pages -d docusaurus/build"
   },
   "main": "./lib/cjs/index.js",
