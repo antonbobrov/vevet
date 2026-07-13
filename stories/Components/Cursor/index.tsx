@@ -121,12 +121,6 @@ export const Component: FC<TProps> = ({ preset, ...props }) => {
         });
       });
 
-      window.addEventListener('keydown', (evt) => {
-        if (evt.key === 'Escape') {
-          mod.destroy();
-        }
-      });
-
       if (svgRef.current) {
         svgRef.current.append(mod.path);
         mod.path.style.strokeWidth = '6';

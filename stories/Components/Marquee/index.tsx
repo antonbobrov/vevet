@@ -73,9 +73,30 @@ export const Component: FC<TProps> = (props) => {
         }}
       >
         <div ref={ref}>
-          <span>Text 1</span>
+          <span
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: 50,
+              background: '#b00',
+              color: '#fff',
+            }}
+          >
+            Text 1
+          </span>
 
-          <span>Text 2</span>
+          <span
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: 30,
+              background: '#0b0',
+            }}
+          >
+            Text 2
+          </span>
 
           <span>Text 3</span>
         </div>
