@@ -7,7 +7,7 @@ export interface ISnapSwipeProps {
 
   /**
    * User will see the "grab" cursor when hovering and "grabbing" when swiping
-   * @default false
+   * @default true
    */
   grabCursor?: boolean;
 
