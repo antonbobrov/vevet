@@ -120,11 +120,6 @@ observer.removeElement(yourElement);
 observer.destroy();
 ```
 
-:::caution Zero-Size Elements
-InView cannot detect visibility of elements with `display: none` or zero height/width.  
-Ensure the element has a measurable size before adding it to the observer.
-:::
-
 ## Direction Detection
 
 InView automatically detects the direction from which elements enter or leave the viewport. This information is available in callbacks and can be used to create directional animations.
