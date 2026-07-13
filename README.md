@@ -5,7 +5,7 @@ The primary goal of Vevet is to simplify the creation of interactive components 
 ### [Documentation ↗](https://vevetjs.com/)
 ### [Changelog ↗](https://github.com/antonbobrov/vevet/blob/master/CHANGELOG.md)
 
-> **For AI assistants:** source of truth is the [documentation](https://vevetjs.com/) and working [examples](https://vevetjs.com/llms-full.txt) (demo pages per component — often `demos`, Snap: `basic-demos` / `advanced-demos` / `parallax-demos`). Index: [llms.txt](https://vevetjs.com/llms.txt). **Do not invent undocumented APIs.** See [AGENTS.md](./AGENTS.md).
+> **For AI assistants:** source of truth is the [documentation](https://vevetjs.com/) and working [examples](https://vevetjs.com/llms-full.txt) (demo pages per component — often `demos`, Snap: `basic-demos` / `advanced-demos` / `parallax-demos`). Index: [llms.txt](https://vevetjs.com/llms.txt) (per-page `.md` links). **Do not invent undocumented APIs.** See [AGENTS.md](./AGENTS.md).
 
 ## NPM Usage
 
