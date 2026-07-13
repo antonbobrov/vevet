@@ -43,7 +43,9 @@ export const Nav: FC<IProps> = ({
   }, [instance]);
 
   useEffect(() => {
-    instance?.toSlide(activeIndex);
+    if (typeof activeIndex === 'number') {
+      instance?.toSlide(activeIndex);
+    }
   }, [instance, activeIndex]);
 
   return (
