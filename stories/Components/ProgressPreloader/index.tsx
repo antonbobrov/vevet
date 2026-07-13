@@ -31,7 +31,7 @@ const LOG_EVENTS: Record<keyof IProgressPreloaderCallbacksMap, boolean> = {
   resource: true,
   timelineStart: true,
   timelineEnd: true,
-  timelineUpdate: true,
+  timelineUpdate: false,
 };
 
 export const Component: FC<TProps> = (props) => {
