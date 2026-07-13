@@ -1,6 +1,19 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useRef, useState } from 'react';
 
-import { Snap, SnapSlide } from '@/index';
+import { MUTABLE_PROPS, STATIC_PROPS } from '@/components/Snap/props';
+import { ISnapMutableProps, ISnapStaticProps, Snap, SnapSlide } from '@/index';
+
+import { useLogEvents } from '../../global/useLogEvents';
+import { useOnMutableProps } from '../../global/useOnMutableProps';
+import { useOnProps } from '../../global/useOnProps';
+
+import { LOG_EVENTS } from './constants';
+import { Nav } from './Nav';
+
+type TProps = Omit<
+  ISnapStaticProps & ISnapMutableProps,
+  '__mutableProp' | '__staticProp' | 'container' | 'eventsEmitter'
+>;
 
 let i = 0;
 
@@ -24,26 +37,24 @@ const createSlides = (count: number) => {
   return slides;
 };
 
-export const Virtual: FC = () => {
+export const Component: FC<TProps> = (props) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!ref.current) {
+  const [instance, setInstance] = useState<Snap>();
+
+  useLogEvents(instance, LOG_EVENTS);
+
+  useOnProps(props, STATIC_PROPS, (input: TProps) => {
+    const container = ref.current;
+
+    if (!container) {
       return undefined;
     }
 
-    const instance = new Snap({
+    const mod = new Snap({
+      ...input,
       container: ref.current,
       slides: createSlides(500),
-      direction: 'horizontal',
-      wheel: true,
-      wheelAxis: 'y',
-      swipeAxis: 'x',
-      origin: 'center',
-      loop: true,
-      gap: '5vw',
-      freemode: 'sticky',
-      shortSwipes: false,
       onUpdate: (data, { slides }) => {
         slides.forEach((slide) => {
           const { element, coord, isVisible } = slide;
@@ -55,14 +66,15 @@ export const Virtual: FC = () => {
       },
     });
 
-    instance.container.onclick = () => {
-      instance.updateProps({
-        slides: [...instance.slides, ...createSlides(10)],
-      });
-    };
+    setInstance(mod);
 
-    return () => instance.destroy();
-  }, []);
+    return () => {
+      mod.destroy();
+      setInstance(undefined);
+    };
+  });
+
+  useOnMutableProps(instance, props, MUTABLE_PROPS);
 
   return (
     <>
@@ -89,6 +101,8 @@ export const Virtual: FC = () => {
       </style>
 
       <div ref={ref} className="slider" />
+
+      <Nav instance={instance} activeIndex={props.activeIndex} />
     </>
   );
 };

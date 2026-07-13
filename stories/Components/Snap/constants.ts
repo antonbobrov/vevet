@@ -1,0 +1,27 @@
+import { ISnapCallbacksMap } from '@/components';
+
+export const LOG_EVENTS: Record<keyof ISnapCallbacksMap, boolean> = {
+  destroy: true,
+  props: true,
+  resize: true,
+  reflow: true,
+  update: false,
+  activeSlide: true,
+  rafPlay: false,
+  rafFrame: false,
+  rafPause: false,
+  wheelStart: true,
+  wheel: true,
+  wheelEnd: true,
+  swipeStart: true,
+  swipe: false,
+  swipeEnd: true,
+  timelineStart: true,
+  timelineUpdate: false,
+  timelineEnd: true,
+  swipeInertiaStart: true,
+  swipeInertiaEnd: true,
+  swipeInertiaCancel: true,
+  swipeInertiaFail: true,
+  idle: true,
+};

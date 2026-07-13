@@ -1,24 +1,50 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useRef, useState } from 'react';
 
-import { Snap } from '@/index';
+import { MUTABLE_PROPS, STATIC_PROPS } from '@/components/Snap/props';
+import { ISnapMutableProps, ISnapStaticProps, Snap } from '@/index';
 
-export const Circular: FC = () => {
+import { useLogEvents } from '../../global/useLogEvents';
+import { useOnMutableProps } from '../../global/useOnMutableProps';
+import { useOnProps } from '../../global/useOnProps';
+
+import { LOG_EVENTS } from './constants';
+import { Nav } from './Nav';
+
+type TProps = Omit<
+  ISnapStaticProps & ISnapMutableProps,
+  '__mutableProp' | '__staticProp' | 'container' | 'eventsEmitter'
+>;
+
+const SLIDES = [
+  'https://picsum.photos/id/758/400/600',
+  'https://picsum.photos/id/760/400/600',
+  'https://picsum.photos/id/770/400/600',
+  'https://picsum.photos/id/780/400/600',
+  'https://picsum.photos/id/790/400/600',
+  'https://picsum.photos/id/800/400/600',
+  'https://picsum.photos/id/810/400/600',
+  'https://picsum.photos/id/820/400/600',
+  'https://picsum.photos/id/830/400/600',
+  'https://picsum.photos/id/840/400/600',
+];
+
+export const Component: FC<TProps> = (props) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!ref.current) {
+  const [instance, setInstance] = useState<Snap>();
+
+  useLogEvents(instance, LOG_EVENTS);
+
+  useOnProps(props, STATIC_PROPS, (input: TProps) => {
+    const container = ref.current;
+
+    if (!container) {
       return undefined;
     }
 
-    const instance = new Snap({
-      container: ref.current,
-      direction: 'horizontal',
-      wheel: true,
-      swipeAxis: 'angle',
-      wheelAxis: 'y',
-      freemode: true,
-      swipeSpeed: -1,
-      loop: true,
+    const mod = new Snap({
+      ...input,
+      container,
       onUpdate: (data, { containerSize, slides }) => {
         const radius = containerSize / 2;
         const p2 = Math.PI * 2;
@@ -37,8 +63,15 @@ export const Circular: FC = () => {
       },
     });
 
-    return () => instance.destroy();
-  }, []);
+    setInstance(mod);
+
+    return () => {
+      mod.destroy();
+      setInstance(undefined);
+    };
+  });
+
+  useOnMutableProps(instance, props, MUTABLE_PROPS);
 
   return (
     <>
@@ -92,18 +125,7 @@ export const Circular: FC = () => {
       </style>
 
       <div ref={ref} className="container">
-        {[
-          'https://picsum.photos/id/758/400/600',
-          'https://picsum.photos/id/760/400/600',
-          'https://picsum.photos/id/770/400/600',
-          'https://picsum.photos/id/780/400/600',
-          'https://picsum.photos/id/790/400/600',
-          'https://picsum.photos/id/800/400/600',
-          'https://picsum.photos/id/810/400/600',
-          'https://picsum.photos/id/820/400/600',
-          'https://picsum.photos/id/830/400/600',
-          'https://picsum.photos/id/840/400/600',
-        ].map((src) => (
+        {SLIDES.map((src) => (
           <div key={src} className="slide">
             <div
               className="wrapper"
@@ -124,6 +146,8 @@ export const Circular: FC = () => {
           </div>
         ))}
       </div>
+
+      <Nav instance={instance} activeIndex={props.activeIndex} />
     </>
   );
 };
