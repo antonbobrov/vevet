@@ -1,7 +1,8 @@
-import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import extract from 'extract-zip';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const zip = path.join(root, 'docusaurus/static/legacy/v4.zip');
@@ -13,7 +14,8 @@ if (!fs.existsSync(zip)) {
 
 fs.rmSync(dest, { recursive: true, force: true });
 fs.mkdirSync(dest, { recursive: true });
-execFileSync('tar', ['-xf', zip, '-C', dest], { stdio: 'inherit' });
+
+await extract(zip, { dir: dest });
 
 if (!fs.existsSync(path.join(dest, 'index.html'))) {
   throw new Error(
