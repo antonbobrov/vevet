@@ -25,7 +25,7 @@ Manages swipe interactions:
 - Emits events on start, move, and end
 - Supports RAF-based release inertia with optional bounds bounce
 - Optional movement `bounds`, rubber-band `overflow`, and `snap` targets
-- Optional programmatic [`scale`](accessors#scale) with zoom-to-point via [`setScale`](methods#setScale)
+- Optional programmatic [`scale`](accessors#scale) with zoom-to-point via [`setScale`](methods#setscale)
 - Calculates rotation (`angle` in degrees)
 - Does not apply transforms — only provides computed coordinates
 
@@ -55,10 +55,10 @@ With [`pointers`](props#props.pointers) `> 1`, pointer-space coordinates follow 
 Swipe uses an internal state machine (`pending` → `swiping` → `end` / `aborted`):
 
 1. **`Pointers.start`** — a pointer session begins; window `touchmove` / `mousemove` listeners are attached for movement sampling.
-2. **Pending** — the pointer moves, but [`threshold`](props#props.threshold) or [`minTime`](props#props.mintime) is not satisfied yet. No `start` callback.
+2. **Pending** — the pointer moves, but [`threshold`](props#props.threshold) or [`minTime`](props#props.minTime) is not satisfied yet. No `start` callback.
 3. **Swiping** — threshold passed → [`start`](callbacks#start) fires, then [`move`](callbacks#move) on each sample.
 4. **End** — all pointers released → [`end`](callbacks#end), optional direction callbacks (`toLeft` …), then [inertia](callbacks#inertia) or bounce-back inside [`bounds`](props#props.bounds).
-5. **Aborted** — wrong [`axis`](props#props.axis) or [`willAbort`](props#props.willabort) → [`abort`](callbacks#abort). No `start` / `end`.
+5. **Aborted** — wrong [`axis`](props#props.axis) or [`willAbort`](props#props.willAbort) → [`abort`](callbacks#abort). No `start` / `end`.
 
 If the user releases before the threshold, `start` and `end` do not fire; overflow may still trigger bounce via [`releaseBounce`](methods#releasebounce).
 
@@ -66,8 +66,8 @@ If the user releases before the threshold, `start` and `end` do not fire; overfl
 
 Movement is sampled from [`Pointers.move`](/docs/Pointers/accessors#move) on each window `touchmove` / `mousemove`, **not** from `pointermove` directly. This allows:
 
-- [`preventTouchMove`](props#props.preventtouchmove) on touch (passive window listener)
-- [`requireCtrlKey`](props#props.requirectrlkey) for mouse pan
+- [`preventTouchMove`](props#props.preventTouchMove) on touch (passive window listener)
+- [`requireCtrlKey`](props#props.requireCtrlKey) for mouse pan
 - Stable coordinates when the browser coalesces or skips `pointermove` events
 
 ## Movement pipeline
@@ -266,5 +266,5 @@ swipe.destroy();
 - With `bounds` / `snap` / rubber, use **`movement`** and **`scale`**, not `diff`.
 - Set `transform-origin` on the transformed element (usually `0 0`) for predictable pan/zoom.
 - Use [`thumb`](props#props.thumb) when the drag handle differs from the event [`container`](props#props.container).
-- Enable [`inertia`](props#props.inertia) for natural release; tune [`inertiaThreshold`](props#props.inertiathreshold) if small flicks should not coast.
+- Enable [`inertia`](props#props.inertia) for natural release; tune [`inertiaThreshold`](props#props.inertiaThreshold) if small flicks should not coast.
 - Call [`destroy`](methods#destroy) when removing the component to free listeners and RAF/Timeline instances.

@@ -76,7 +76,7 @@ When the source is a **Module**, **Responsive** also subscribes to the module `d
 responsive.destroy();
 ```
 
-## Example — Module
+## Example — Module {#example-with-module}
 
 ```ts
 import { Marquee, Responsive } from 'vevet';
