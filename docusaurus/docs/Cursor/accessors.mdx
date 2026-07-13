@@ -64,10 +64,10 @@ cursor.domContainer; // cursor DOM parent
 
 Type: `undefined` | **[CursorHoverElement](interfaces#cursorhoverelement)**
 
-Contains information about the currently hovered **attached** element.
+Topmost active hover target registered via `.attachHover()`.
 
-- Available only while hovering an element registered via `.attachHover()`
-- Automatically resets to `undefined` when no interactive element is hovered
+- Available only while hovering an attached element
+- Resets to `undefined` when no attached element is hovered
 
 **Works for attached elements only. See [.attachHover()](methods#attachhover).**
 
@@ -81,8 +81,8 @@ cursor.hoveredElement.width;
 cursor.hoveredElement.height;
 cursor.hoveredElement.padding;
 cursor.hoveredElement.sticky;
-cursor.hoveredElement.stickyX;
-cursor.hoveredElement.stickyY;
+cursor.hoveredElement.stickyLerp;
+cursor.hoveredElement.stickyFriction;
 ```
 
 ### `inner`

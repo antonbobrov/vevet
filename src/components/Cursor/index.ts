@@ -1,36 +1,33 @@
+import { TModuleProps } from '@/base';
 import { Module } from '@/base/Module';
-import { TModuleProps } from '@/base/Module/types';
 import { initVevet } from '@/global/initVevet';
 import {
-  cnAdd,
-  cnRemove,
-  cnToggle,
   body,
-  doc,
-  isFiniteNumber,
   noopIfDestroyed,
+  SmoothNumber,
   TRequiredProps,
-  getTextDirection,
 } from '@/internal';
 import { toPixels } from '@/utils';
 import { addEventListener } from '@/utils/listeners';
-import { clamp, lerp } from '@/utils/math';
+import { clamp } from '@/utils/math';
 
 import { Raf } from '../Raf';
 
 import { LERP_APPROXIMATION } from './constants';
+import { CursorCoords } from './Coords';
+import { CursorDom } from './Dom';
 import { CursorHoverElement } from './HoverElement';
-import { ICursorHoverElementProps } from './HoverElement/global';
+import { ICursorHoverElementProps } from './HoverElement/types';
 import { CursorPath } from './Path';
 import { MUTABLE_PROPS, STATIC_PROPS } from './props';
 import { createCursorStyles } from './styles';
+import { CursorType } from './Type';
+import { ICursorType } from './Type/types';
 import {
   ICursorCallbacksMap,
   ICursorFullCoords,
   ICursorMutableProps,
   ICursorStaticProps,
-  ICursorTargetCoords,
-  ICursorType,
 } from './types';
 
 type TC = ICursorCallbacksMap;
@@ -38,8 +35,11 @@ type TS = ICursorStaticProps;
 type TM = ICursorMutableProps;
 
 /**
- * A customizable custom cursor component with smooth animations and hover interactions.
- * Supports dynamic appearance changes and enhanced user interaction.
+ * Custom cursor with smooth motion, hover sizing, sticky elements, and typed variants.
+ *
+ * - Builds outer/inner DOM (optional) and hides the native cursor when configured
+ * - Interpolates position/size via {@link Raf}; optional SVG path trailing (`behavior: 'path'`)
+ * - Hover targets via {@link attachHover}; alternate visuals via {@link attachCursor}
  *
  * [Documentation](https://vevetjs.com/docs/Cursor)
  *
@@ -54,86 +54,70 @@ export class Cursor extends Module<TC, TS, TM> {
     return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 
-  /** The outer element of the custom cursor */
-  private _outer?: HTMLElement;
+  /** Outer/inner nodes, visibility, click, and native-cursor styles. */
+  private _dom: CursorDom;
 
-  /** The inner element of the custom cursor. */
-  private _inner?: HTMLElement;
+  /** Registered cursor type elements and active type stack. */
+  private _type: CursorType;
 
-  /** Attached hover elements */
+  /** SVG path trail used when `behavior` is `'path'`. */
+  private _path: CursorPath;
+
+  /** Pointer coordinates, angle, and velocity. */
+  private _coords: CursorCoords;
+
+  private _width = new SmoothNumber(0);
+  private _height = new SmoothNumber(0);
+
+  private _raf: Raf;
+
   private _elements: CursorHoverElement[] = [];
 
-  /** Active hovered element */
   private _activeElements: CursorHoverElement[] = [];
 
-  /** Request animation frame handler */
-  private _raf?: Raf;
-
-  /** The current coordinates */
-  private _coords: ICursorFullCoords;
-
-  /** Target coordinates of the cursor. Element dimensions are not considered here (in getter - yes). */
-  private _rawTarget: ICursorTargetCoords;
-
-  /** Defines if the cursor has been moved after initialization */
   private _isFirstMove = true;
-
-  /** Cursor types */
-  private _types: ICursorType[];
-
-  /** Active cursor types */
-  private _activeTypes: string[];
-
-  /** Cursor Path Instance */
-  private _path: CursorPath;
 
   constructor(props?: TModuleProps<TC, TS, TM, Cursor>) {
     super(props);
 
     const { enabled: isEnabled } = this.props;
-    const { initialWidth, initialHeight } = this;
+    const { initialWidth, initialHeight, container, domContainer } = this;
 
-    // Set default variables
-    this._coords = {
-      x: 0,
-      y: 0,
-      width: initialWidth,
-      height: initialHeight,
-      angle: 0,
-      velocity: 0,
-    };
-    this._rawTarget = { ...this._coords };
-    this._types = [];
-    this._activeTypes = [];
-
-    // Create cursor path
-    this._path = new CursorPath(this.hasPath);
-
-    // No need to remove styles on destroy
+    // Injected once; shared stylesheet is not removed on destroy
     createCursorStyles(this.prefix);
 
-    // Setup
-    this._setClassNames();
-    this._createElements();
+    this._dom = new CursorDom(this, { container, domContainer });
+    this._type = new CursorType(this);
+    this._path = new CursorPath(this);
+
+    this._coords = new CursorCoords(this);
+    this._width.syncWith(initialWidth);
+    this._height.syncWith(initialHeight);
+
+    this._raf = new Raf({ enabled: false });
+    this._raf.on('frame', this.render.bind(this));
+    this.onDestroy(() => this._raf.destroy());
+
+    this.onDestroy(() => {
+      this._elements.forEach((element) => element.destroy());
+      this._elements = [];
+      this._activeElements = [];
+    });
+
     this._setEvents();
 
-    // enable by default
     this._toggle(isEnabled);
   }
 
-  /**
-   * Classname prefix for styling elements.
-   */
   get prefix() {
     return `${initVevet().prefix}cursor`;
   }
 
-  /** The cursor container */
   get container() {
     return this.props.container;
   }
 
-  /** Returns the DOM parent for the cursor element. */
+  /** DOM parent for the cursor node (`body` when `container` is `window`). */
   get domContainer() {
     if (this.container instanceof Window) {
       return body;
@@ -142,55 +126,41 @@ export class Cursor extends Module<TC, TS, TM> {
     return this.container as HTMLElement;
   }
 
-  /**
-   * The outer element of the custom cursor.
-   * This is the visual element that represents the cursor on screen.
-   */
   get outer() {
-    return this._outer!;
+    return this._dom.outer;
   }
 
-  /**
-   * The inner element of the custom cursor.
-   * This element is nested inside the outer element and can provide additional styling.
-   */
   get inner() {
-    return this._inner!;
+    return this._dom.inner;
   }
 
-  /** Cursor initial width */
+  /** SVG path element for path behavior (not necessarily mounted). */
+  get path() {
+    return this._path.path;
+  }
+
   get initialWidth() {
     return toPixels(this.props.width);
   }
 
-  /** Cursor initial width */
   get initialHeight() {
     return toPixels(this.props.height);
   }
 
-  /**
-   * The current coordinates (x, y, width, height).
-   * These are updated during cursor movement.
-   */
+  /** Smoothed coordinates including width/height. */
   get coords() {
-    return this._coords;
+    return {
+      ...this._coords.current,
+      width: this._width.current,
+      height: this._height.current,
+    };
   }
 
-  /**
-   * The currently hovered element.
-   * Stores information about the element that the cursor is currently interacting with.
-   */
-  get hoveredElement(): CursorHoverElement | undefined {
-    const activeElements = this._activeElements;
-
-    return activeElements[activeElements.length - 1];
-  }
-
-  /** Target coordinates of the cursor (without smooth interpolation). */
+  /** Target coordinates (hover dimensions applied, no smoothing). */
   get targetCoords(): ICursorFullCoords {
     const { hoveredElement, initialWidth, initialHeight } = this;
-    let { x, y } = this._rawTarget;
-    const { angle, velocity } = this._rawTarget;
+    const { angle, velocity } = this._coords.target;
+    let { x, y } = this._coords.target;
 
     let width = initialWidth;
     let height = initialHeight;
@@ -201,9 +171,9 @@ export class Cursor extends Module<TC, TS, TM> {
 
       width = dimensions.width ?? initialWidth;
       height = dimensions.height ?? initialHeight;
+      padding = dimensions.padding;
       x = dimensions.x ?? x;
       y = dimensions.y ?? y;
-      padding = dimensions.padding;
     }
 
     width += padding * 2;
@@ -212,251 +182,90 @@ export class Cursor extends Module<TC, TS, TM> {
     return { x, y, width, height, angle, velocity };
   }
 
-  /** Returns an SVG path element which represents the cursor movement */
-  get path() {
-    return this._path.path;
+  /** Topmost active hover target, if any. */
+  get hoveredElement(): CursorHoverElement | undefined {
+    const activeElements = this._activeElements;
+
+    return activeElements[activeElements.length - 1];
   }
 
-  /** Check if the cursor has a path */
-  private get hasPath() {
-    return this.props.behavior === 'path';
-  }
-
-  /** Handles property mutations */
   protected _handleProps(props: Partial<TM>) {
     super._handleProps(props);
 
     this._toggle(this.props.enabled);
   }
 
-  /** Sets class names */
-  private _setClassNames() {
-    const { domContainer } = this;
-
-    // Hide native cursor
-    if (this.props.hideNative) {
-      domContainer.style.cursor = 'none';
-
-      this._addTempClassName(domContainer, '-hide-default');
-    }
-
-    // Set class names
-    this._addTempClassName(domContainer, '-container');
-
-    // Set container position
-    if (domContainer !== body) {
-      domContainer.style.position = 'relative';
-    }
-
-    // Reset styles
-    this.onDestroy(() => {
-      domContainer.style.cursor = '';
-    });
+  private _toggle(enabled: boolean) {
+    this._dom.toggleEnabled(enabled);
+    this._raf.updateProps({ enabled });
   }
 
-  /** Creates the custom cursor and appends it to the DOM. */
-  private _createElements() {
-    const { container, domContainer, props } = this;
-    const isWindow = container instanceof Window;
-
-    const cn = this._cn.bind(this);
-
-    // Create outer element
-    const outer = doc.createElement('div');
-    cnAdd(outer, cn(''));
-    cnAdd(outer, cn(isWindow ? '-in-window' : '-in-element'));
-    cnAdd(outer, cn('-disabled'));
-
-    // Append the outer element to the DOM container
-    if (props.append) {
-      domContainer.append(outer);
-    }
-
-    // set direction
-    const direction = getTextDirection(outer);
-    cnAdd(outer, cn(`_${direction}`));
-
-    // Create inner element
-    const inner = doc.createElement('div');
-    outer.append(inner);
-    cnAdd(inner, cn('__inner'));
-    cnAdd(inner, cn('-disabled'));
-    outer.append(inner);
-
-    // assign
-    this._outer = outer;
-    this._inner = inner;
-
-    // Destroy the cursor
-    this.onDestroy(() => {
-      inner.remove();
-      outer.remove();
-    });
-  }
-
-  /** Sets up the various event listeners for the cursor, such as mouse movements and clicks. */
   private _setEvents() {
     const { domContainer } = this;
 
-    this._raf = new Raf({ enabled: false });
-    this._raf.on('frame', () => this.render());
-
-    const mouseenter = addEventListener(
-      domContainer,
-      'mouseenter',
-      this._handleMouseEnter.bind(this),
+    this.onDestroy(
+      addEventListener(
+        domContainer,
+        'mouseenter',
+        this._handleMouseEnter.bind(this),
+      ),
     );
 
-    const mouseleave = addEventListener(
-      domContainer,
-      'mouseleave',
-      this._handleMouseLeave.bind(this),
+    this.onDestroy(
+      addEventListener(
+        domContainer,
+        'mouseleave',
+        this._handleMouseLeave.bind(this),
+      ),
     );
 
-    const mousemove = addEventListener(
-      domContainer,
-      'mousemove',
-      this._handleMouseMove.bind(this),
+    this.onDestroy(
+      addEventListener(
+        domContainer,
+        'mousemove',
+        this._handleMouseMove.bind(this),
+      ),
     );
-
-    const mousedown = addEventListener(
-      domContainer,
-      'mousedown',
-      this._handleMouseDown.bind(this),
-    );
-
-    const mouseup = addEventListener(
-      domContainer,
-      'mouseup',
-      this._handleMouseUp.bind(this),
-    );
-
-    const blur = addEventListener(
-      window,
-      'blur',
-      this._handleWindowBlur.bind(this),
-    );
-
-    this.onDestroy(() => {
-      this._raf?.destroy();
-
-      mouseenter();
-      mouseleave();
-      mousemove();
-      mousedown();
-      mouseup();
-      blur();
-    });
   }
 
-  /** Enables cursor animation. */
-  private _toggle(enabled: boolean) {
-    const className = this._cn('-disabled');
-
-    cnToggle(this.outer, className, !enabled);
-    cnToggle(this.inner, className, !enabled);
-
-    this._raf?.updateProps({ enabled });
-  }
-
-  /** Handles mouse enter events. */
   private _handleMouseEnter(evt: MouseEvent) {
     if (!this.props.enabled) {
       return;
     }
 
-    const { clientX: x, clientY: y } = evt;
-    const target = this._rawTarget;
+    this._coords.syncXY(evt.clientX, evt.clientY);
+    this._path.addPoint(evt.clientX, evt.clientY, true);
 
-    this._coords.x = x;
-    this._coords.y = y;
-    target.x = x;
-    target.y = y;
-
-    this._path.addPoint(target, true);
-
-    cnAdd(this.outer, this._cn('-visible'));
+    this._dom.toggleVisibility(true);
   }
 
-  /** Handles mouse leave events. */
   private _handleMouseLeave() {
-    cnRemove(this.outer, this._cn('-visible'));
+    this._dom.toggleVisibility(false);
   }
 
-  /** Handles mouse move events. */
   private _handleMouseMove(evt: MouseEvent) {
     if (!this.props.enabled) {
       return;
     }
 
-    const { clientX: x, clientY: y } = evt;
-    const target = this._rawTarget;
-    const { x: prevX, y: prevY } = target;
+    this._coords.move(evt.clientX, evt.clientY);
 
-    // Calculate angle
-    const deltaX = prevX - this._coords.x;
-    const deltaY = prevY - this._coords.y;
-    const prevAngle = target.angle;
-    const rawAngle = (Math.atan2(deltaY, deltaX) * 180) / Math.PI;
-    const targetAngle =
-      prevAngle + ((((rawAngle - prevAngle) % 360) + 540) % 360) - 180;
-
-    // Calculate velocity
-    const velocity =
-      Math.min(Math.sqrt(deltaX ** 2 + deltaY ** 2) * 2, 150) / 150;
-
-    // Update target coordinates
-    target.x = x;
-    target.y = y;
-    target.angle = targetAngle;
-    target.velocity = velocity;
-
-    // Update interpolated coords if first move
     if (this._isFirstMove) {
-      this._coords.x = target.x;
-      this._coords.y = target.y;
-      this._coords.angle = target.angle;
-      this._coords.velocity = target.velocity;
-
+      this._coords.syncWithTarget();
       this._isFirstMove = false;
     }
 
-    // Add path point
-    this._path.addPoint(target);
+    this._path.addPoint(evt.clientX, evt.clientY);
 
-    // Handle classnames
-    cnAdd(this.outer, this._cn('-visible'));
+    this._dom.toggleVisibility(true);
 
-    // Enable animation
-    this._raf?.play();
-  }
-
-  /** Handles mouse down events. */
-  private _handleMouseDown(evt: MouseEvent) {
-    const className = this._cn('-click');
-
-    if (evt.which === 1) {
-      cnAdd(this.outer, className);
-      cnAdd(this.inner, className);
-    }
-  }
-
-  /** Handles mouse up events. */
-  private _handleMouseUp() {
-    const className = this._cn('-click');
-
-    cnRemove(this.outer, className);
-    cnRemove(this.inner, className);
-  }
-
-  /** Handles window blur events. */
-  private _handleWindowBlur() {
-    this._handleMouseUp();
+    this._raf.play();
   }
 
   /**
-   * Registers an element to interact with the cursor, enabling dynamic size and position changes based on hover effects.
-   * @returns Returns a destructor
+   * Registers a hover target that can resize, snap, or sticky-move the cursor.
+   *
+   * @returns Destructor that detaches listeners for this target
    */
   @noopIfDestroyed
   public attachHover(settings: ICursorHoverElementProps) {
@@ -468,17 +277,15 @@ export class Cursor extends Module<TC, TS, TM> {
 
     this._elements.push(element);
 
-    const destroy = () => {
-      this._elements = this._elements.filter((i) => i !== element);
+    return () => {
+      this._elements = this._elements.filter((item) => item !== element);
+      this._activeElements = this._activeElements.filter(
+        (item) => item !== element,
+      );
       element.destroy();
     };
-
-    this.onDestroy(() => destroy());
-
-    return () => destroy();
   }
 
-  /** Handle element mouse enter event */
   private _handleElementEnter(data: CursorHoverElement) {
     if (!this.props.enabled) {
       return;
@@ -487,159 +294,96 @@ export class Cursor extends Module<TC, TS, TM> {
     this._activeElements.push(data);
 
     if (data.type) {
-      this._toggleType(data.type, true);
+      this._type.toggle(data.type, true);
     }
 
-    this.callbacks.emit('hoverEnter', data);
+    this._emit('hoverEnter', data);
 
-    this._raf?.play();
+    this._raf.play();
   }
 
-  /** Handle element mouse leave event */
   private _handleElementLeave(data: CursorHoverElement) {
     this._activeElements = this._activeElements.filter((i) => i !== data);
 
     if (data.type) {
-      this._toggleType(data.type, false);
+      this._type.toggle(data.type, false);
     }
 
-    this.callbacks.emit('hoverLeave', data);
+    this._emit('hoverLeave', data);
 
     if (this.props.enabled) {
-      this._raf?.play();
+      this._raf.play();
     }
   }
 
-  /**
-   * Registers a cursor type.
-   */
+  /** Registers a typed cursor element and appends it to {@link inner}. */
   @noopIfDestroyed
   public attachCursor({ element, type }: ICursorType) {
-    this._types.push({ element, type });
-    this._inner?.append(element);
+    this._dom.inner?.append(element);
+    this._type.add(element, type);
   }
 
-  /** Enable or disable a cursor type */
-  private _toggleType(type: string, isEnabled: boolean) {
-    const targetType = this._types.find((item) => item.type === type);
-
-    if (isEnabled) {
-      this._activeTypes.push(type);
-    } else {
-      this._activeTypes = this._activeTypes.filter((item) => type !== item);
-    }
-
-    const activeTypes = this._activeTypes;
-
-    const activeType =
-      activeTypes.length > 0 ? activeTypes[activeTypes.length - 1] : null;
-
-    this._types.forEach((item) => {
-      cnToggle(item.element, 'active', item.type === activeType);
-    });
-
-    if (targetType) {
-      this.callbacks.emit(isEnabled ? 'typeShow' : 'typeHide', targetType);
-    }
-
-    if (!activeType) {
-      this.callbacks.emit('noType', undefined);
-    }
-  }
-
-  /**
-   * Checks if all coordinates are interpolated.
-   * @returns {boolean} True if all coordinates are interpolated, false otherwise.
-   */
   private get isInterpolated() {
-    const { coords, targetCoords, props } = this;
+    const { props, targetCoords, coords } = this;
 
-    const isWidthDone = coords.width === targetCoords.width;
-    const isHeightDone = coords.height === targetCoords.height;
-    const isAngleDone = coords.angle === targetCoords.angle;
-    const isVelocityDone = coords.velocity === targetCoords.velocity;
+    const elements = !this._elements.find((element) => !element.isInterpolated);
 
-    const isElementsDone = !this._elements.find(
-      (element) => !element.isInterpolated,
-    );
+    const width = this._width.current === targetCoords.width;
+    const height = this._height.current === targetCoords.height;
+    const x = coords.x === targetCoords.x;
+    const y = coords.y === targetCoords.y;
+    const angle = coords.angle === targetCoords.angle;
+    const velocity = coords.velocity === targetCoords.velocity;
 
-    const isPathDone = this._path.isInterpolated;
-    const isCoordsDone =
-      coords.x === targetCoords.x && coords.y === targetCoords.y;
+    const behavior =
+      props.behavior === 'path' ? this._path.isInterpolated : x && y;
 
-    return (
-      isWidthDone &&
-      isHeightDone &&
-      isAngleDone &&
-      isVelocityDone &&
-      isElementsDone &&
-      (props.behavior === 'path' ? isPathDone : isCoordsDone)
-    );
+    return width && height && elements && behavior && angle && velocity;
   }
 
-  /** Renders the cursor. */
+  /** Advances interpolation and writes transforms. */
   @noopIfDestroyed
   public render() {
     this._calculate();
     this._renderElements();
 
     if (this.props.autoStop && this.isInterpolated) {
-      this._raf?.pause();
+      this._raf.pause();
     }
 
-    // Launch render events
-    this.callbacks.emit('render', undefined);
+    this._emit('render', undefined);
   }
 
-  /** Recalculates current coordinates. */
   private _calculate() {
-    const { targetCoords: target, _coords: coords } = this;
-    const lerpFactor = this._getLerpFactor();
+    const { targetCoords: target } = this;
 
-    this._path.lerp(lerpFactor);
+    const ease = this._getLerpFactor();
+
+    this._path.lerp(ease);
     this._path.minimize();
 
     try {
-      if (this.hasPath) {
+      if (this._path.has) {
         const pathCoord = this._path.coord;
-        coords.x = pathCoord.x;
-        coords.y = pathCoord.y;
+        this._coords.setXYCurrent(pathCoord.x, pathCoord.y);
       } else {
         throw new Error('No path');
       }
     } catch {
-      coords.x = this._lerp(coords.x, target.x);
-      coords.y = this._lerp(coords.y, target.y);
+      this._coords.xTo(target.x, ease);
+      this._coords.yTo(target.y, ease);
     }
 
-    coords.width = this._lerp(coords.width, target.width);
-    coords.height = this._lerp(coords.height, target.height);
-    coords.angle = this._lerp(coords.angle, target.angle);
+    this._width.to(target.width, ease, LERP_APPROXIMATION);
+    this._height.to(target.height, ease, LERP_APPROXIMATION);
 
-    this._rawTarget.velocity = this._lerp(this._rawTarget.velocity, 0);
-    coords.velocity = this._lerp(coords.velocity, this._rawTarget.velocity);
+    this._coords.lerpVelocityAndAngle(ease);
   }
 
-  /** Gets the interpolation factor. */
   private _getLerpFactor(input = this.props.lerp) {
-    if (!isFiniteNumber(input)) {
-      return 1;
-    }
-
-    const lerpFactor = clamp(input, 0, 1);
-
-    return this._raf!.lerpFactor(lerpFactor);
+    return this._raf.lerpFactor(clamp(input, 0, 1));
   }
 
-  /** Performs linear interpolation. */
-  private _lerp(current: number, target: number) {
-    const lerpFactor = this._getLerpFactor();
-    const value = lerp(current, target, lerpFactor, LERP_APPROXIMATION);
-
-    return value;
-  }
-
-  /** Renders the cursor elements. */
   private _renderElements() {
     const { container, domContainer, outer, props, coords } = this;
     const { width, height } = coords;
@@ -651,13 +395,11 @@ export class Cursor extends Module<TC, TS, TM> {
       y -= bounding.top;
     }
 
-    // Update DOM coordinates
     const { style } = outer;
     style.setProperty('--cursor-w', `${width}px`);
     style.setProperty('--cursor-h', `${height}px`);
     style.transform = props.transformModifier({ ...coords, x, y });
 
-    // Render element
     this._elements.forEach((element) =>
       element.render(this._getLerpFactor.bind(this)),
     );

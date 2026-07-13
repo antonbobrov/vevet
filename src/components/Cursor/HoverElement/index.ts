@@ -1,66 +1,50 @@
-import { isFiniteNumber, isNumber, isString } from '@/internal';
-import { addEventListener, clamp, lerp, toPixels } from '@/utils';
+import {
+  Destroyable,
+  getTransforms,
+  isNumber,
+  isString,
+  onlyFinite,
+  SmoothNumber,
+} from '@/internal';
+import { addEventListener, clamp, toPixels } from '@/utils';
 
 import { LERP_APPROXIMATION } from '../constants';
+import { ICursorVec2 } from '../global';
 
 import {
   ICursorHoverElementProps,
   TCursorHoverElementStickyAmplitude,
-} from './global';
-import { TCursorHoverElementStickyParallax } from './types';
+} from './types';
 
-export class CursorHoverElement {
-  private _debounce: NodeJS.Timeout | null = null;
+/**
+ * Hover target for {@link Cursor.attachHover}: size/snap/sticky and enter/leave.
+ */
+export class CursorHoverElement extends Destroyable {
+  private _hovered = false;
 
-  private _mouseEnter: () => void;
+  private _x: SmoothNumber;
 
-  private _mouseLeave: () => void;
+  private _y: SmoothNumber;
 
-  private _mouseMove: () => void;
-
-  private _isHovered = false;
-
-  private _parallaxX: TCursorHoverElementStickyParallax = {
-    current: 0,
-    target: 0,
-    prevTarget: null,
-  };
-
-  private _parallaxY: TCursorHoverElementStickyParallax = {
-    current: 0,
-    target: 0,
-    prevTarget: null,
-  };
+  private _prevTarget: ICursorVec2 | null = null;
 
   constructor(
     private _data: ICursorHoverElementProps,
     private _onEnter: (element: CursorHoverElement) => void,
     private _onLeave: (element: CursorHoverElement) => void,
   ) {
+    super();
+
     const { emitter } = this;
 
+    this._x = new SmoothNumber(0);
+    this._y = new SmoothNumber(0);
+
     if (emitter.matches(':hover')) {
-      this._handleElementEnter();
+      this._handleEnter();
     }
 
-    this._mouseEnter = addEventListener(emitter, 'mouseenter', () => {
-      this._debounce = setTimeout(
-        () => this._handleElementEnter(),
-        _data.hoverDebounce ?? 16,
-      );
-    });
-
-    this._mouseLeave = addEventListener(emitter, 'mouseleave', () => {
-      if (this._debounce) {
-        clearTimeout(this._debounce);
-      }
-
-      this._handleElementLeave();
-    });
-
-    this._mouseMove = addEventListener(emitter, 'mousemove', (evt) => {
-      this._handleElementMove(evt);
-    });
+    this._setEvents();
   }
 
   get element() {
@@ -116,14 +100,17 @@ export class CursorHoverElement {
   }
 
   get stickyFriction() {
-    return this._data.stickyFriction ?? 0;
+    return onlyFinite(this._data.stickyFriction ?? 0, 0);
   }
 
   get hasStickyFriction() {
-    return isFiniteNumber(this.stickyFriction) && this.stickyFriction > 0;
+    return this.stickyFriction > 0;
   }
 
-  /** Get element dimensions */
+  get isInterpolated() {
+    return this._x.interpolated && this._y.interpolated;
+  }
+
   public getDimensions() {
     let x: number | undefined;
     let y: number | undefined;
@@ -155,124 +142,131 @@ export class CursorHoverElement {
     return { x, y, width, height, padding };
   }
 
-  /** Destroy all events */
-  public destroy() {
-    this._mouseEnter();
-    this._mouseMove();
-    this._mouseLeave();
+  private _setEvents() {
+    const { emitter, _data: data } = this;
 
-    if (this._debounce) {
-      clearTimeout(this._debounce);
-    }
+    let debounceTimeout: NodeJS.Timeout | undefined;
+
+    this.onDestroy(
+      addEventListener(emitter, 'mouseenter', () => {
+        debounceTimeout = setTimeout(
+          () => this._handleEnter(),
+          data.hoverDebounce ?? 16,
+        );
+      }),
+    );
+
+    this.onDestroy(
+      addEventListener(emitter, 'mouseleave', () => {
+        if (debounceTimeout) {
+          clearTimeout(debounceTimeout);
+          debounceTimeout = undefined;
+        }
+
+        this._handleLeave();
+      }),
+    );
+
+    this.onDestroy(
+      addEventListener(emitter, 'mousemove', (evt) => {
+        this._handleMove(evt);
+      }),
+    );
+
+    this.onDestroy(() => {
+      if (debounceTimeout) {
+        clearTimeout(debounceTimeout);
+      }
+    });
   }
 
-  /** Handle element enter */
-  private _handleElementEnter() {
-    this._isHovered = true;
+  private _handleEnter() {
+    this._hovered = true;
 
     this._onEnter(this);
   }
 
-  /** Handle element leave */
-  private _handleElementLeave() {
-    this._isHovered = false;
+  private _handleLeave() {
+    this._hovered = false;
 
-    this._parallaxX.target = 0;
-    this._parallaxX.prevTarget = null;
+    this._x.target = 0;
+    this._y.target = 0;
 
-    this._parallaxY.target = 0;
-    this._parallaxY.prevTarget = null;
+    this._prevTarget = null;
 
     this._onLeave(this);
   }
 
-  /** Handle element move */
-  private _handleElementMove(evt: MouseEvent) {
-    if (!this.sticky || !this._isHovered) {
+  private _handleMove(evt: MouseEvent) {
+    if (!this.sticky || !this._hovered) {
       return;
     }
 
-    const { element, _parallaxX: parallaxX, _parallaxY: parallaxY } = this;
-    const { clientX, clientY } = evt;
+    const { element } = this;
 
     const bounding = element.getBoundingClientRect();
-    const computed = getComputedStyle(element).transform;
-    const matrix =
-      computed === 'none' ? new DOMMatrix() : new DOMMatrix(computed);
+    const { translateX, translateY } = getTransforms(element);
 
     const { width, height } = bounding;
-    const translateX = matrix.e;
-    const translateY = matrix.f;
 
-    const basicLeft = bounding.left - translateX;
-    const basicTop = bounding.top - translateY;
+    const basicCenterX = bounding.left - translateX + width / 2;
+    const basicCenterY = bounding.top - translateY + height / 2;
 
-    const basicCenterX = basicLeft + width / 2;
-    const basicCenterY = basicTop + height / 2;
+    const distanceX = evt.clientX - basicCenterX;
+    const distanceY = evt.clientY - basicCenterY;
 
-    const distanceX = clientX - basicCenterX;
-    const distanceY = clientY - basicCenterY;
-
-    const amp = this._getStickyAmplitude();
+    const amp = this._getStickyAmp();
 
     const maxX = amp.x === 'auto' ? width : Math.abs(amp.x);
     const maxY = amp.y === 'auto' ? height : Math.abs(amp.y);
 
-    const parallaxXTarget = clamp(distanceX, -maxX, maxX);
-    const parallaxYTarget = clamp(distanceY, -maxY, maxY);
+    const xTarget = clamp(distanceX, -maxX, maxX);
+    const yTarget = clamp(distanceY, -maxY, maxY);
 
-    if (parallaxX.prevTarget === null) {
-      parallaxX.prevTarget = parallaxXTarget;
-    }
-
-    if (parallaxY.prevTarget === null) {
-      parallaxY.prevTarget = parallaxYTarget;
-    }
+    this._prevTarget = this._prevTarget ?? { x: xTarget, y: yTarget };
 
     if (this.hasStickyFriction) {
-      const parallaxXDelta = parallaxXTarget - parallaxX.prevTarget;
-      const parallaxYDelta = parallaxYTarget - parallaxY.prevTarget;
+      const parallaxXDelta = xTarget - this._prevTarget.x;
+      const parallaxYDelta = yTarget - this._prevTarget.y;
 
-      parallaxX.target += parallaxXDelta;
-      parallaxY.target += parallaxYDelta;
+      this._x.target += parallaxXDelta;
+      this._y.target += parallaxYDelta;
     } else {
-      parallaxX.target = parallaxXTarget;
-      parallaxY.target = parallaxYTarget;
+      this._x.target = xTarget;
+      this._y.target = yTarget;
     }
 
-    parallaxX.prevTarget = parallaxXTarget;
-    parallaxY.prevTarget = parallaxYTarget;
+    this._prevTarget.x = xTarget;
+    this._prevTarget.y = yTarget;
   }
 
-  /** Get sticky amplitude for both axis */
-  private _getStickyAmplitude() {
-    const { stickyAmplitude } = this._data;
+  private _getStickyAmp() {
+    const amp = this._data.stickyAmplitude;
 
     let x: 'auto' | number = 'auto';
     let y: 'auto' | number = 'auto';
 
-    if (!stickyAmplitude) {
+    if (!amp) {
       return { x, y };
     }
 
-    if (isNumber(stickyAmplitude) || isString(stickyAmplitude)) {
-      x = this._getStickyAmplitudeAxis(stickyAmplitude);
-      y = this._getStickyAmplitudeAxis(stickyAmplitude);
+    if (isNumber(amp) || isString(amp)) {
+      x = this._parseAmp(amp);
+      y = this._parseAmp(amp);
     } else {
-      if ('x' in stickyAmplitude) {
-        x = this._getStickyAmplitudeAxis(stickyAmplitude.x);
+      if ('x' in amp) {
+        x = this._parseAmp(amp.x);
       }
 
-      if ('y' in stickyAmplitude) {
-        y = this._getStickyAmplitudeAxis(stickyAmplitude.y);
+      if ('y' in amp) {
+        y = this._parseAmp(amp.y);
       }
     }
 
     return { x, y };
   }
 
-  /** Get sticky amplitude for one axis */
-  private _getStickyAmplitudeAxis(value?: TCursorHoverElementStickyAmplitude) {
+  private _parseAmp(value?: TCursorHoverElementStickyAmplitude) {
     if (isNumber(value)) {
       return value;
     }
@@ -284,62 +278,29 @@ export class CursorHoverElement {
     return toPixels(value);
   }
 
-  /** Check if the element is interpolated */
-  get isInterpolated() {
-    return (
-      this._parallaxX.current === this._parallaxX.target &&
-      this._parallaxY.current === this._parallaxY.target
-    );
-  }
-
-  /** Render the element */
   public render(getLerp: (source?: number) => number) {
-    const { _parallaxX: parallaxX, _parallaxY: parallaxY } = this;
-
     const element = this.element as HTMLElement;
 
-    if (!this.sticky || this.isInterpolated) {
+    if (!this.sticky) {
       return;
     }
 
-    // Friction
+    if (this.isInterpolated) {
+      return;
+    }
 
     if (this.hasStickyFriction) {
       const frictionLerp = getLerp(this.stickyFriction);
 
-      parallaxX.target = lerp(
-        parallaxX.target,
-        0,
-        frictionLerp,
-        LERP_APPROXIMATION,
-      );
-
-      parallaxY.target = lerp(
-        parallaxY.target,
-        0,
-        frictionLerp,
-        LERP_APPROXIMATION,
-      );
+      this._x.targetFriction(0, frictionLerp, LERP_APPROXIMATION);
+      this._y.targetFriction(0, frictionLerp, LERP_APPROXIMATION);
     }
-
-    // Magnet
 
     const lerpFactor = getLerp(this.stickyLerp);
 
-    parallaxX.current = lerp(
-      parallaxX.current,
-      parallaxX.target,
-      lerpFactor,
-      LERP_APPROXIMATION,
-    );
+    this._x.toTarget(lerpFactor, LERP_APPROXIMATION);
+    this._y.toTarget(lerpFactor, LERP_APPROXIMATION);
 
-    parallaxY.current = lerp(
-      parallaxY.current,
-      parallaxY.target,
-      lerpFactor,
-      LERP_APPROXIMATION,
-    );
-
-    element.style.transform = `translate3d(${parallaxX.current}px, ${parallaxY.current}px, 0)`;
+    element.style.transform = `translate3d(${this._x.current}px, ${this._y.current}px, 0)`;
   }
 }

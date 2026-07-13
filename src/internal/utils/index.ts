@@ -1,5 +1,6 @@
 export * from './cn';
 export * from './env';
+export * from './getTransforms';
 export * from './isFiniteNumber';
 export * from './isHTLMElement';
 export * from './isHTMLVideo';

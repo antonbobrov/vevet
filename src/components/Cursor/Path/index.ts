@@ -1,28 +1,31 @@
-import { isFiniteNumber } from '@/internal';
-import { lerp } from '@/utils';
+import { isFiniteNumber, ModulePart, SmoothNumber } from '@/internal';
 
+import { Cursor } from '..';
 import { LERP_APPROXIMATION } from '../constants';
 
-import { svgQuadraticCurvePath } from './svgQuadraticCurvePath';
-import { ICursorPathPoint, ICursorPathVec2 } from './types';
+import { ICursorPathPoint } from './types';
+import { svgQuadraticCurvePath } from './utils';
 
-/** @internal */
-export class CursorPath {
-  /** Cursor SVG Path Points */
+/**
+ * SVG path trail and length interpolation when `behavior` is `'path'`.
+ *
+ * The `<path>` is created for length sampling and exposed via {@link Cursor.path};
+ * mounting it in the document is left to the consumer.
+ *
+ * @internal
+ */
+export class CursorPath extends ModulePart<Cursor> {
+  private _line: SmoothNumber;
+
   private _points: ICursorPathPoint[] = [];
 
-  /** Cursor SVG Path */
   private _path: SVGPathElement;
 
-  /** Cursor SVG Path Line */
-  private _line = { current: 0, target: 0 };
+  constructor(parent: Cursor) {
+    super(parent);
 
-  /** Cursor SVG Path */
-  get path() {
-    return this._path;
-  }
+    this._line = new SmoothNumber(0);
 
-  constructor(private _isEnabled: boolean) {
     this._path = document.createElementNS(
       'http://www.w3.org/2000/svg',
       'path',
@@ -36,42 +39,50 @@ export class CursorPath {
     path.setAttribute('stroke', '#f00');
   }
 
-  /** Update SVG Path */
-  public addPoint(coords: ICursorPathVec2, isInstant = false) {
-    if (!this._isEnabled) {
+  get path() {
+    return this._path;
+  }
+
+  get has() {
+    return this.props.behavior === 'path';
+  }
+
+  private get points() {
+    return this._points;
+  }
+
+  private get line() {
+    return this._line;
+  }
+
+  public addPoint(x: number, y: number, isInstant = false) {
+    if (!this.has) {
       return;
     }
 
-    const points = this._points;
-    const path = this._path;
-    const line = this._line;
+    const { points, path, line } = this;
 
-    // Add point
-    const newPoint = { x: coords.x, y: coords.y, length: 0 };
+    const newPoint = { x, y, length: 0 };
     points.push(newPoint);
 
-    // Update path
     path.setAttribute('d', svgQuadraticCurvePath(points));
 
-    // Update total length
     const totalLength = path.getTotalLength();
     newPoint.length = totalLength;
     line.target = totalLength;
 
-    // Instant update of line
     if (isInstant) {
-      line.current = line.target;
+      line.syncWithTarget();
     }
   }
 
-  /** Minimize SVG Path */
+  /** Drops leading points that are already behind the interpolated line head. */
   public minimize() {
-    if (!this._isEnabled) {
+    if (!this.has) {
       return;
     }
 
-    const points = this._points;
-    const line = this._line;
+    const { points, line } = this;
 
     if (points.length < 3) {
       return;
@@ -104,29 +115,22 @@ export class CursorPath {
 
       points.splice(0, removeCount);
 
-      // Fix line after points removed
       line.current = Math.max(0, line.current - removedLength);
       line.target = Math.max(0, line.target - removedLength);
 
-      // Update path
       this._path.setAttribute('d', svgQuadraticCurvePath(points));
     }
   }
 
-  /** Check if the path is interpolated */
-  public get isInterpolated() {
-    return this._line.current === this._line.target;
+  get isInterpolated() {
+    return this.line.interpolated;
   }
 
-  /** Interpolate line */
   public lerp(factor: number) {
-    const line = this._line;
-
-    line.current = lerp(line.current, line.target, factor, LERP_APPROXIMATION);
+    this.line.toTarget(factor, LERP_APPROXIMATION);
   }
 
-  /** Get current coordinate */
   get coord() {
-    return this._path.getPointAtLength(this._line.current);
+    return this.path.getPointAtLength(this._line.current);
   }
 }
