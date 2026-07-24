@@ -62,12 +62,16 @@ export class SnapWheelThrottler {
 
   public test(delta: number, deltaMode?: number) {
     if (!(delta > 1 || delta < -1)) {
+      this._prevSnapshot = undefined;
+
       return false;
     }
 
     this._deltaMode = deltaMode ?? 0;
 
     if (this._throttling) {
+      this._prevSnapshot = undefined;
+
       return false;
     }
 
@@ -102,6 +106,7 @@ export class SnapWheelThrottler {
 
     this._debounce = setTimeout(() => {
       this._throttling = false;
+      this._debounce = undefined;
     }, THROTTLE_DEBOUNCE);
   }
 
