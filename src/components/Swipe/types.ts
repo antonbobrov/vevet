@@ -3,6 +3,7 @@ import {
   IModuleMutableProps,
   IModuleStaticProps,
 } from '@/base/Module/types';
+import { TEasingType } from '@/utils/math';
 
 import { IPointersCallbacksMap, IPointersStaticProps } from '../Pointers/types';
 
@@ -208,6 +209,26 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
    * @default null
    */
   snapRadius?: number | null;
+
+  /**
+   * @deprecated Timelined inertia is not supported anymore.
+   */
+  inertiaDuration?: (distance: number) => number;
+
+  /**
+   * @deprecated Timelined inertia is not supported anymore.
+   */
+  inertiaEasing?: TEasingType;
+
+  /**
+   * @deprecated Timelined inertia is not supported anymore.
+   */
+  velocityModifier?: false | ((velocity: ISwipeState) => ISwipeState);
+
+  /**
+   * @deprecated Timelined inertia is not supported anymore.
+   */
+  inertiaDistanceThreshold?: number;
 
   /**
    * Inertia distance modifier. Called when inertia distance is predicted but not yet started.

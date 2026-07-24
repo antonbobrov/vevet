@@ -149,6 +149,13 @@ export class Snap extends Module<TC, TS, TM> {
     return toPixels(containerSize);
   }
 
+  /**
+   * @deprecated
+   */
+  get domSize() {
+    return this.containerSize;
+  }
+
   get slides() {
     return this._slides.all;
   }
@@ -204,12 +211,24 @@ export class Snap extends Module<TC, TS, TM> {
     return this._wheel.isWheeling;
   }
 
+  /**
+   * @deprecated
+   */
+  get hasInteria() {
+    return this._swipe.hasInertia;
+  }
+
   get hasInertia() {
     return this._swipe.hasInertia;
   }
 
   get isInterpolating() {
     return this._animation.interpolating;
+  }
+
+  /** @deprecated */
+  get influence() {
+    return this._track.impulse;
   }
 
   get impulse() {
@@ -258,6 +277,10 @@ export class Snap extends Module<TC, TS, TM> {
   }
 
   get origin() {
+    if (this.props.centered) {
+      return 'center';
+    }
+
     return this.props.origin;
   }
 

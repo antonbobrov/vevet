@@ -39,5 +39,9 @@ export const MUTABLE_PROPS: TRequiredProps<ISwipeMutableProps> = {
   snap: null as any,
   canBounce: () => true,
   snapRadius: null as any,
+  inertiaDuration: null as any,
+  inertiaEasing: null as any,
+  velocityModifier: null as any,
+  inertiaDistanceThreshold: null as any,
   inertiaDistanceModifier: null as any,
 };

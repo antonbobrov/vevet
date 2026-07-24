@@ -67,6 +67,11 @@ export interface ISnapSwipeProps {
   swipeMinTime?: number;
 
   /**
+   * @deprecated
+   */
+  swipeInertiaDuration?: (distance: number) => number;
+
+  /**
    * Inertia strength.
    * @default 1
    */

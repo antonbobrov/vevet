@@ -65,6 +65,11 @@ export interface ISnapMutableProps
   direction?: 'horizontal' | 'vertical';
 
   /**
+   * @deprecated Use `origin` instead
+   */
+  centered?: boolean;
+
+  /**
    * Slide magnet origin
    * @default 'start'
    */

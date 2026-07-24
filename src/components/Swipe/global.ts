@@ -9,6 +9,9 @@ export interface ISwipeVec3 extends ISwipeVec2 {
   angle: number;
 }
 
+/** @deprecated Use {@link ISwipeVec3}. */
+export interface ISwipeMatrix extends ISwipeVec3 {}
+
 /** Pointer sample: position plus `time` (ms, `performance.now()`). */
 export interface ISwipeState extends ISwipeVec3 {
   time: number;

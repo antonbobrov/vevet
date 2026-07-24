@@ -114,6 +114,13 @@ export class Marquee extends Module<TC, TS, TM> {
     return this._layout.totalSize;
   }
 
+  /**
+   * @deprecated Use `totalSize` instead
+   */
+  get totalWidth() {
+    return this.totalSize;
+  }
+
   /** The current marquee coordinate. */
   get coord() {
     return this._coord;
@@ -122,6 +129,17 @@ export class Marquee extends Module<TC, TS, TM> {
   set coord(value) {
     this._coord = value;
     this.render(0);
+  }
+
+  /**
+   * @deprecated Use `coord` instead
+   */
+  get x() {
+    return this.coord;
+  }
+
+  set x(value) {
+    this.coord = value;
   }
 
   /** Check if the marquee is vertical */
