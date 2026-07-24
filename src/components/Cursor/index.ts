@@ -1,12 +1,7 @@
 import { TModuleProps } from '@/base';
 import { Module } from '@/base/Module';
 import { initVevet } from '@/global/initVevet';
-import {
-  body,
-  noopIfDestroyed,
-  SmoothNumber,
-  TRequiredProps,
-} from '@/internal';
+import { body, noopIfDestroyed, TRequiredProps } from '@/internal';
 import { toPixels } from '@/utils';
 import { addEventListener } from '@/utils/listeners';
 import { clamp } from '@/utils/math';
@@ -20,6 +15,7 @@ import { CursorHoverElement } from './HoverElement';
 import { ICursorHoverElementProps } from './HoverElement/types';
 import { CursorPath } from './Path';
 import { MUTABLE_PROPS, STATIC_PROPS } from './props';
+import { SmoothNumber } from './SmoothNumber';
 import { createCursorStyles } from './styles';
 import { CursorType } from './Type';
 import { ICursorType } from './Type/types';

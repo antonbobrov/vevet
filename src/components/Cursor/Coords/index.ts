@@ -1,6 +1,7 @@
-import { ModulePart, SmoothNumber } from '@/internal';
+import { ModulePart } from '@/internal';
 
 import { LERP_APPROXIMATION } from '../constants';
+import { SmoothNumber } from '../SmoothNumber';
 
 import type { Cursor } from '..';
 

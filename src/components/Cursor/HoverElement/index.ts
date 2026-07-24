@@ -4,12 +4,12 @@ import {
   isNumber,
   isString,
   onlyFinite,
-  SmoothNumber,
 } from '@/internal';
 import { addEventListener, clamp, toPixels } from '@/utils';
 
 import { LERP_APPROXIMATION } from '../constants';
 import { ICursorVec2 } from '../global';
+import { SmoothNumber } from '../SmoothNumber';
 
 import {
   ICursorHoverElementProps,

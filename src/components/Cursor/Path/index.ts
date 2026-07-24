@@ -1,7 +1,8 @@
-import { isFiniteNumber, ModulePart, SmoothNumber } from '@/internal';
+import { isFiniteNumber, ModulePart } from '@/internal';
 
 import { Cursor } from '..';
 import { LERP_APPROXIMATION } from '../constants';
+import { SmoothNumber } from '../SmoothNumber';
 
 import { ICursorPathPoint } from './types';
 import { svgQuadraticCurvePath } from './utils';
