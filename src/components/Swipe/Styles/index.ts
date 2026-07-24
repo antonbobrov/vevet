@@ -1,6 +1,4 @@
-import { body, ModulePart } from '@/internal';
-
-import { swipeStyles } from './styles';
+import { ModulePart } from '@/internal';
 
 import type { Swipe } from '..';
 
@@ -10,28 +8,28 @@ import type { Swipe } from '..';
  * @internal
  */
 export class SwipeStyles extends ModulePart<Swipe> {
-  private _styles?: HTMLStyleElement;
-
   constructor(parent: Swipe) {
     super(parent);
-
-    this._styles = swipeStyles?.cloneNode(true) as HTMLStyleElement;
 
     this.setInline();
 
     this.onDestroy(() => this.remove());
   }
 
+  private get target() {
+    return this.props.thumb || this.props.container;
+  }
+
+  private get canGrab() {
+    return this.props.enabled && this.props.grabCursor;
+  }
+
   /** Applies touch-action and cursor styles */
   public setInline() {
-    const { props } = this;
+    const { props, target, canGrab } = this;
+    const { axis } = props;
 
-    const target = props.thumb || props.container;
-
-    const { axis, enabled, grabCursor: hasGrabCursor } = props;
-    const { style } = target;
-
-    const cursor = enabled && hasGrabCursor ? 'grab' : '';
+    const cursor = canGrab ? 'grab' : '';
 
     let touchAction = 'none';
     if (axis === 'x') {
@@ -40,21 +38,25 @@ export class SwipeStyles extends ModulePart<Swipe> {
       touchAction = 'pan-x';
     }
 
-    style.cursor = cursor;
-    style.touchAction = touchAction;
+    target.style.cursor = cursor;
+    target.style.touchAction = touchAction;
   }
 
   /** Appends styles */
   public append() {
-    const { props } = this;
+    const { props, target } = this;
 
-    if (props.grabCursor && this._styles) {
-      body.append(this._styles);
+    if (props.grabCursor) {
+      target.style.cursor = 'grabbing';
     }
   }
 
   /** Remove styles */
   public remove() {
-    this._styles?.remove();
+    const { props, target } = this;
+
+    if (props.grabCursor) {
+      target.style.cursor = 'grab';
+    }
   }
 }
