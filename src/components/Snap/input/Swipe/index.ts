@@ -66,6 +66,10 @@ export class SnapSwipe extends ModulePart<Snap> {
     };
   }
 
+  private get eventsEmitterParent() {
+    return this.parent.eventsEmitter.parentElement;
+  }
+
   private get axis() {
     const { props, axis } = this.parent;
 
@@ -159,13 +163,17 @@ export class SnapSwipe extends ModulePart<Snap> {
   }
 
   private _handleStart(coords: ISwipeCoords) {
-    const { parent } = this;
+    const { parent, eventsEmitterParent, props } = this;
     const { $_track: track } = parent;
 
     this._startIndex = parent.activeIndex;
     this._startTime = +new Date();
 
     parent.eventsEmitter.style.pointerEvents = 'none';
+
+    if (eventsEmitterParent && props.grabCursor) {
+      eventsEmitterParent.style.cursor = 'grabbing';
+    }
 
     if (this.props.followSwipe) {
       this.parent.cancelTransition();
@@ -199,9 +207,15 @@ export class SnapSwipe extends ModulePart<Snap> {
   }
 
   private _handleEnd(coords: ISwipeCoords) {
+    const { eventsEmitterParent, props } = this;
+
     this._end();
 
     this.parent.eventsEmitter.style.pointerEvents = '';
+
+    if (eventsEmitterParent && props.grabCursor) {
+      eventsEmitterParent.style.cursor = '';
+    }
 
     this.callbacks.emit('swipeEnd', coords);
   }
