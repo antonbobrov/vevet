@@ -50,7 +50,7 @@ export interface IPointersStaticProps extends IModuleStaticProps {
   maxPointers?: number | ((type: TPointersType) => number);
 
   /**
-   * Disable user selection on drag.
+   * Prevent text selection during a mouse gesture.
    * @default true
    */
   disableUserSelect?: boolean;

@@ -1,6 +1,6 @@
 import { Module } from '@/base/Module';
 import { TModuleProps } from '@/base/Module/types';
-import { body, TRequiredProps } from '@/internal';
+import { TRequiredProps } from '@/internal';
 import { addEventListener } from '@/utils';
 
 import { PointersCoords } from './Coords';
@@ -8,7 +8,6 @@ import { PointersDecoder } from './Decoder';
 import { PointersPoints } from './Points';
 import { MUTABLE_PROPS, STATIC_PROPS } from './props';
 import { PointersScheduler } from './Scheduler';
-import { styles } from './styles';
 import {
   IPointersCallbacksMap,
   IPointersMutableProps,
@@ -151,11 +150,20 @@ export class Pointers extends Module<TC, TS, TM> {
     event.preventDefault();
   }
 
-  /** Prevents text selection while the primary mouse button is held. */
+  /**
+   * Prevents text selection while an allowed mouse button is held.
+   *
+   * Uses `mousedown` (not `pointerdown`) so compatibility `mousemove` events
+   * still fire — required by components like {@link Cursor}.
+   */
   private _handleMouseDown(event: MouseEvent) {
+    if (!this.props.disableUserSelect || !event.cancelable) {
+      return;
+    }
+
     const buttons = this._decoder.buttons('mouse');
 
-    if (buttons.includes(1)) {
+    if (buttons.includes(event.button)) {
       event.preventDefault();
     }
   }
@@ -206,10 +214,6 @@ export class Pointers extends Module<TC, TS, TM> {
     }
 
     this._setRuntimeEvents();
-
-    if (this.props.disableUserSelect && styles) {
-      body.append(styles);
-    }
   }
 
   /**
@@ -290,13 +294,7 @@ export class Pointers extends Module<TC, TS, TM> {
     this._cleanup();
   }
 
-  /** Clears text selection after a drag gesture. */
-  private _resetSelection() {
-    window.getSelection()?.empty();
-    window.getSelection()?.removeAllRanges();
-  }
-
-  /** Removes runtime listeners, pointers, and injected styles. */
+  /** Removes runtime listeners and resets pointer state. */
   private _cleanup() {
     this._listeners.forEach((listener) => listener());
     this._listeners = [];
@@ -305,11 +303,6 @@ export class Pointers extends Module<TC, TS, TM> {
     this._coords.reset();
     this._points.clear();
     this._scheduler.clear();
-
-    if (this.props.disableUserSelect) {
-      this._resetSelection();
-      styles?.remove();
-    }
   }
 
   protected _destroy() {
