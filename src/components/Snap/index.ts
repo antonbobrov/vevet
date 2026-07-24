@@ -320,7 +320,9 @@ export class Snap extends Module<TC, TS, TM> {
   private _handleResize() {
     const { container } = this.props;
 
-    this._animation.cancelTransition();
+    if (this.props.stickOnResize) {
+      this._animation.cancelTransition();
+    }
 
     this._containerSize =
       this.axis === 'x' ? container.offsetWidth : container.offsetHeight;
