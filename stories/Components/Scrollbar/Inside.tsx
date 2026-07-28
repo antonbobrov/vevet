@@ -1,32 +1,51 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useRef, useState } from 'react';
 
-import { Scrollbar } from '@/components';
+import { MUTABLE_PROPS, STATIC_PROPS } from '@/components/Scrollbar/props';
+import {
+  IScrollbarMutableProps,
+  IScrollbarStaticProps,
+  Scrollbar,
+} from '@/index';
 
-export const InElement: FC = () => {
+import { useLogEvents } from '../../global/useLogEvents';
+import { useOnMutableProps } from '../../global/useOnMutableProps';
+import { useOnProps } from '../../global/useOnProps';
+
+import { LOG_EVENTS } from './constants';
+
+type TProps = Omit<
+  IScrollbarStaticProps & IScrollbarMutableProps,
+  '__mutableProp' | '__staticProp' | 'container' | 'eventsEmitter'
+>;
+
+export const InsideComponent: FC<TProps> = (props) => {
   const parentRef = useRef<HTMLDivElement>(null);
   const scrollableRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  const [instance, setInstance] = useState<Scrollbar>();
+
+  useLogEvents(instance, LOG_EVENTS);
+
+  useOnProps(props, STATIC_PROPS, (input: TProps) => {
     if (!parentRef.current || !scrollableRef.current) {
       return undefined;
     }
 
-    const scrollbarY = new Scrollbar({
+    const mod = new Scrollbar({
+      ...input,
       container: scrollableRef.current,
       parent: parentRef.current,
     });
 
-    const scrollbarX = new Scrollbar({
-      container: scrollableRef.current,
-      parent: parentRef.current,
-      axis: 'x',
-    });
+    setInstance(mod);
 
     return () => {
-      scrollbarY.destroy();
-      scrollbarX.destroy();
+      mod.destroy();
+      setInstance(undefined);
     };
-  }, []);
+  });
+
+  useOnMutableProps(instance, props, MUTABLE_PROPS);
 
   return (
     <div ref={parentRef} style={{ position: 'relative', width: 250 }}>
