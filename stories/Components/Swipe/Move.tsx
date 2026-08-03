@@ -1,13 +1,24 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useRef, useState } from 'react';
 
+import { MUTABLE_PROPS, STATIC_PROPS } from '@/components/Swipe/props';
 import { clamp, Pointers, Swipe } from '@/index';
 
-export const Bounds: FC = () => {
+import { useLogEvents } from '../../global/useLogEvents';
+import { useOnMutableProps } from '../../global/useOnMutableProps';
+import { useOnProps } from '../../global/useOnProps';
+
+import { LOG_EVENTS, TProps } from './constants';
+
+export const MoveComponent: FC<TProps> = (props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
   const scalableRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  const [instance, setInstance] = useState<Swipe>();
+
+  useLogEvents(instance, LOG_EVENTS);
+
+  useOnProps(props, STATIC_PROPS, (input: TProps) => {
     const wrapper = wrapperRef.current;
     const thumb = thumbRef.current;
     const scalable = scalableRef.current;
@@ -16,24 +27,17 @@ export const Bounds: FC = () => {
       return undefined;
     }
 
-    const instance = new Swipe({
+    const mod = new Swipe({
+      ...input,
       container: wrapper,
-      thumb,
-      inertia: true,
-      grabCursor: true,
-      relative: true,
-      pointers: (type) => (type === 'mouse' ? 1 : 2),
-      overflow: () => 50,
-      bounds: () => ({ x: [0, 250], y: [0, 250] }),
-      onInertia: () => console.log('inertia'),
-      onInertiaStart: () => console.log('inertia start'),
-      onInertiaEnd: () => console.log('inertia end'),
-      onInertiaCancel: () => console.log('inertia cancel'),
-      onInertiaFail: () => console.log('inertia fail'),
       onMove: ({ movement }) => {
         thumb.style.transform = `translate(${movement.x}px, ${movement.y}px)`;
       },
     });
+
+    setInstance(mod);
+
+    mod.setMovement({ x: 125, y: 125 });
 
     let currentScale = 1;
     let currentAngle = 0;
@@ -50,13 +54,14 @@ export const Bounds: FC = () => {
       },
     });
 
-    instance.setMovement({ x: 125, y: 125 });
-
     return () => {
-      instance.destroy();
+      mod.destroy();
+      setInstance(undefined);
       pointers.destroy();
     };
-  }, []);
+  });
+
+  useOnMutableProps(instance, props, MUTABLE_PROPS);
 
   return (
     <>
