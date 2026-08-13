@@ -109,7 +109,7 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
 
   /**
    * Prevents edge swiping (iOS swipe-back gesture).
-   * @default true
+   * @default false
    */
   preventEdgeSwipe?: boolean;
 

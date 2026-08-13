@@ -28,6 +28,7 @@ export class SnapSwipe extends ModulePart<Snap> {
       inertia: false,
       inertiaThreshold: 3,
       recalculateBoundsOnInertia: false,
+      preventEdgeSwipe: false,
       overflow: () => parent.containerSize * (1 - parent.props.edgeFriction),
       canBounce: () => !parent.isTransitioning,
       bounds: this._getBounds.bind(this),

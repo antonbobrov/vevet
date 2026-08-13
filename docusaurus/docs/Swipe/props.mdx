@@ -290,18 +290,18 @@ observer.updateProps({
 ### `preventEdgeSwipe` {#props.preventEdgeSwipe}
 
 - **Type:** `boolean`
-- **Default:** `true`
+- **Default:** `false`
 - Prevents edge swiping (iOS swipe-back gesture).
 
 ```js
 const observer = new Swipe({
   container: document.getElementById('container'),
-  preventEdgeSwipe: true,
+  preventEdgeSwipe: false,
 });
 
 // change value
 observer.updateProps({
-  preventEdgeSwipe: false,
+  preventEdgeSwipe: true,
 });
 ```
 

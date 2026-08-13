@@ -22,7 +22,7 @@ export const MUTABLE_PROPS: TRequiredProps<ISwipeMutableProps> = {
   threshold: 5,
   minTime: 0,
   directionThreshold: 50,
-  preventEdgeSwipe: true,
+  preventEdgeSwipe: false,
   edgeSwipeThreshold: 20,
   preventTouchMove: true,
   requireCtrlKey: false,
