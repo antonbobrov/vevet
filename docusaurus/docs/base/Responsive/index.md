@@ -1,6 +1,8 @@
 ---
 description: Responsive — apply different props by viewport and device. Breakpoints, rules, Module integration. Vevet.js base.
 keywords:
+  - vevet.responsive
+  - vevetjs responsive
   - vevet responsive
   - base responsive
   - breakpoints

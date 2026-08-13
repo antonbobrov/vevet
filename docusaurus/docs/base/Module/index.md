@@ -1,6 +1,8 @@
 ---
 description: Module — base class for Vevet.js components. Props, callbacks, updateProps, onDestroy, destroy.
 keywords:
+  - vevet.module
+  - vevetjs module
   - vevet module
   - base module
   - abstract class

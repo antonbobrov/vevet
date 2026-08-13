@@ -4,6 +4,8 @@ description: Introduction to Vevet.js — a flexible JavaScript library for crea
 keywords:
   - vevet
   - vevet.js
+  - vevetjs
+  - npm vevet
   - javascript library
   - creative web development
   - installation
