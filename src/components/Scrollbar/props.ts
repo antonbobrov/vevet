@@ -1,11 +1,10 @@
-import { isBrowser } from '@/internal/env';
-import { TRequiredProps } from '@/internal/requiredProps';
+import { TRequiredProps } from '@/internal';
 
 import { IScrollbarStaticProps, IScrollbarMutableProps } from './types';
 
 export const STATIC_PROPS: TRequiredProps<IScrollbarStaticProps> = {
   __staticProp: true,
-  container: isBrowser ? window : (null as any),
+  container: typeof window !== 'undefined' ? window : (null as any),
   parent: false,
   class: false,
   axis: 'y',

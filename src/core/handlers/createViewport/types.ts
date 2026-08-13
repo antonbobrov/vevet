@@ -1,4 +1,5 @@
-import { Callbacks, ICallbacksMap } from '@/base/Callbacks';
+import { Callbacks } from '@/base/Callbacks';
+import { ICallbacksMap } from '@/base/Callbacks/types';
 
 export interface IViewportCallbacksMap extends ICallbacksMap {
   /**

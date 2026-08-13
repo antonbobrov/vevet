@@ -2,9 +2,12 @@ import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
-} from '@/base/Module';
+} from '@/base';
 
 import { CursorHoverElement } from './HoverElement';
+import { ICursorType } from './Type/types';
+
+export type { ICursorType, CursorHoverElement };
 
 export interface ICursorStaticProps extends IModuleStaticProps {
   /**
@@ -126,15 +129,4 @@ export interface ICursorTargetCoords {
 export interface ICursorFullCoords extends ICursorTargetCoords {
   width: number;
   height: number;
-}
-
-/**
- * Custom cursor type configuration.
- */
-export interface ICursorType {
-  /** Custom cursor element */
-  element: Element;
-
-  /** Cursor type */
-  type: string;
 }

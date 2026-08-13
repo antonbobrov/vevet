@@ -1,7 +1,8 @@
-import { isBrowser } from '@/internal/env';
-import { TRequiredProps } from '@/internal/requiredProps';
+import { TRequiredProps } from '@/internal';
 
 import { ICursorStaticProps, ICursorMutableProps } from './types';
+
+const isBrowser = typeof window !== 'undefined';
 
 export const STATIC_PROPS: TRequiredProps<ICursorStaticProps> = {
   __staticProp: true,

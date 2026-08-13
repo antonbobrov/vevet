@@ -2,8 +2,10 @@
 sidebar_position: 0
 description: Snap props — carousel configuration. Vevet.js Snap API reference.
 keywords:
+  - vevet.snap props
+  - vevetjs snap props
+  - vevet snap props
   - snap props
-  - vevet snap
   - carousel props
 ---
 
@@ -158,19 +160,6 @@ const snap = new Snap({
 
 snap.updateProps({
   origin: 'end',
-});
-```
-
-### `centered` {#props.centered}
-
-- **Type:** `boolean`
-- **Default:** `false`
-- **Status:** deprecated — use [`origin`](#props.origin) instead (`centered: true` is equivalent to `origin: 'center'`). If both are set, `centered` takes precedence.
-
-```js
-const snap = new Snap({
-  container: document.getElementById('container'),
-  origin: 'center',
 });
 ```
 
@@ -432,7 +421,7 @@ snap.updateProps({
 ### `grabCursor` {#props.grabCursor}
 
 - **Type:** `boolean`
-- **Default:** `false`
+- **Default:** `true`
 - Users will see the "grab" cursor when hovering and "grabbing" when swiping.  
   **See [demo](basic-demos#grab-cursor)**
 
@@ -618,17 +607,11 @@ snap.updateProps({
 });
 ```
 
-### `swipeInertiaDuration` {#props.swipeInertiaDuration}
-
-- **Type:** `(distance: number) => number`
-- **Default:** `null`
-- **Status:** deprecated — release inertia is now RAF-based and this prop is no longer applied.
-
 ### `swipeInertiaRatio` {#props.swipeInertiaRatio}
 
 - **Type:** `number`
 - **Default:** `1`
-- Inertia strength.
+- Inertia strength for freemode / sticky release swipes.
 
 ```js
 const snap = new Snap({

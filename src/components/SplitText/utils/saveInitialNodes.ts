@@ -1,4 +1,4 @@
-import { doc } from '@/internal/env';
+import { doc } from '@/internal';
 
 interface IClone {
   node: Node;
@@ -6,25 +6,26 @@ interface IClone {
   parent?: Node | null;
 }
 
+/**
+ * Deep-clones the container subtree and returns a restore function.
+ *
+ * Used by {@link SplitText.destroy} to put back the original DOM.
+ */
 export function saveInitialNodes(root: Node) {
   const flatArray: IClone[] = [];
 
   function copy(node: Node): void {
-    // Add the current node and its parent to the array
     flatArray.push({
       node,
       cssText: node instanceof HTMLElement ? node.style.cssText : null,
       parent: node.parentNode,
     });
 
-    // Recursively process child nodes
     node.childNodes.forEach((child) => copy(child));
   }
 
-  // Start recursion with the root node
   root.childNodes.forEach((child) => copy(child));
 
-  // Return a function to restore the initial nodes
   return {
     restore: () => {
       const fragment = doc.createDocumentFragment();

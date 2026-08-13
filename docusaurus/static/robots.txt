@@ -1,9 +1,11 @@
 # https://vevetjs.com — vevet.js documentation
-# LLM-friendly index: https://vevetjs.com/llms.txt
+# LLM-friendly index: https://vevetjs.com/llms.txt (links to per-page .md)
+# Full export: https://vevetjs.com/llms-full.txt
 # Source of truth: docs + examples (demo pages per component, or llms-full.txt). Do not invent APIs.
 
 User-agent: *
 Allow: /docs/
+Allow: /*.md$
 Allow: /llms.txt
 Allow: /llms-full.txt
 Disallow: /v4
@@ -12,31 +14,37 @@ Disallow: /pens
 
 User-agent: GPTBot
 Allow: /docs/
+Allow: /*.md$
 Allow: /llms.txt
 Allow: /llms-full.txt
 
 User-agent: ChatGPT-User
 Allow: /docs/
+Allow: /*.md$
 Allow: /llms.txt
 Allow: /llms-full.txt
 
 User-agent: Google-Extended
 Allow: /docs/
+Allow: /*.md$
 Allow: /llms.txt
 Allow: /llms-full.txt
 
 User-agent: anthropic-ai
 Allow: /docs/
+Allow: /*.md$
 Allow: /llms.txt
 Allow: /llms-full.txt
 
 User-agent: ClaudeBot
 Allow: /docs/
+Allow: /*.md$
 Allow: /llms.txt
 Allow: /llms-full.txt
 
 User-agent: PerplexityBot
 Allow: /docs/
+Allow: /*.md$
 Allow: /llms.txt
 Allow: /llms-full.txt
 

@@ -1,9 +1,13 @@
-import { Module, TModuleOnCallbacksProps } from '@/base/Module';
+import { Module } from '@/base/Module';
+import { TModuleProps } from '@/base/Module/types';
 import { initVevet } from '@/global/initVevet';
-import { doc } from '@/internal/env';
-import { isNumber } from '@/internal/isNumber';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { TRequiredProps } from '@/internal/requiredProps';
+import {
+  doc,
+  isHTMLElement,
+  noopIfDestroyed,
+  TRequiredProps,
+  isNumber,
+} from '@/internal';
 import { onResize } from '@/utils/listeners/onResize';
 
 import { MUTABLE_PROPS, STATIC_PROPS } from './props';
@@ -13,8 +17,7 @@ import {
   ICanvasStaticProps,
   TCanvasRender,
 } from './types';
-
-export * from './types';
+import { applyCanvasStyles } from './utils/canvasStyles';
 
 /**
  * A class for managing an HTML5 Canvas element and its 2D context.
@@ -28,12 +31,10 @@ export class Canvas<
   S extends ICanvasStaticProps = ICanvasStaticProps,
   M extends ICanvasMutableProps = ICanvasMutableProps,
 > extends Module<C, S, M> {
-  /** Get default static properties */
   public _getStatic(): TRequiredProps<S> {
     return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
-  /** Get default mutable properties */
   public _getMutable(): TRequiredProps<M> {
     return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
@@ -56,27 +57,17 @@ export class Canvas<
   /**
    * Constructor for the Ctx2D class.
    */
-  constructor(
-    props?: S & M & TModuleOnCallbacksProps<C, Canvas<C, S, M>>,
-    onCallbacks?: TModuleOnCallbacksProps<C, Canvas<C, S, M>>,
-  ) {
-    super(props, onCallbacks as any);
+  constructor(props?: TModuleProps<C, S, M, Canvas<C, S, M>>) {
+    super(props);
 
     const { container } = this.props;
 
     // Create canvas element
     this._canvas = doc.createElement('canvas');
-
-    // Add canvas styles
-    const { style } = this._canvas;
-    style.position = 'absolute';
-    style.top = '0';
-    style.left = '0';
-    style.width = '100%';
-    style.height = '100%';
+    applyCanvasStyles(this._canvas);
 
     // Append canvas to container if required
-    if (this.props.append && container instanceof HTMLElement) {
+    if (this.props.append && isHTMLElement(container)) {
       container.append(this._canvas);
     }
 
@@ -135,7 +126,7 @@ export class Canvas<
   }
 
   /** Set events */
-  protected _setEvents() {
+  private _setEvents() {
     const { props } = this;
     const { viewportTarget, resizeDebounce } = props;
 
@@ -161,44 +152,53 @@ export class Canvas<
     this.onDestroy(() => resizeHandler.remove());
   }
 
-  /** Triggers a canvas resize based on container or viewport dimensions. */
-  @noopIfDestroyed
-  public resize() {
+  /** Get DPR */
+  private _updateDPR() {
     const core = initVevet();
-    const { props, canvas } = this;
-    const { container } = this.props;
+    const { props } = this;
 
-    // Calculate DPR
     this._dpr = isNumber(props.dpr) ? props.dpr : core.dpr;
+  }
 
-    // Calculate new width and height
+  /** Get DPR */
+  private _updateSizes() {
+    const core = initVevet();
+    const { props } = this;
+
     let newWidth = 0;
     let newHeight = 0;
 
     if (props.width === 'auto') {
-      newWidth = container?.offsetWidth || core.width;
+      newWidth = props.container?.offsetWidth || core.width;
     } else {
       newWidth = props.width;
     }
 
     if (props.height === 'auto') {
-      newHeight = container?.offsetHeight || core.height;
+      newHeight = props.container?.offsetHeight || core.height;
     } else {
       newHeight = props.height;
     }
 
-    // Apply DPR
     newWidth *= this._dpr;
     newHeight *= this._dpr;
 
-    // Update canvas size
     this._width = newWidth;
     this._height = newHeight;
-    canvas.width = newWidth;
-    canvas.height = newHeight;
+  }
 
-    // Callbacks
-    this.callbacks.emit('resize', undefined);
+  /** Triggers a canvas resize based on container or viewport dimensions. */
+  @noopIfDestroyed
+  public resize() {
+    const { canvas } = this;
+
+    this._updateDPR();
+    this._updateSizes();
+
+    canvas.width = this._width;
+    canvas.height = this._height;
+
+    this._emit('resize', undefined);
   }
 
   /**

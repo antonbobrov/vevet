@@ -1,7 +1,7 @@
 import { Core } from '@/core';
 import { ICore } from '@/core/global';
 import { ICoreProps } from '@/core/types';
-import { isBrowser } from '@/internal/env';
+import { isBrowser } from '@/internal';
 
 declare global {
   interface Window {

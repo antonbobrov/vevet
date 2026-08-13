@@ -20,8 +20,15 @@ export interface ISwipeState extends ISwipeVec3 {
 /**
  * Snapshot exposed on swipe callbacks and accessors.
  *
- * Pointer space: `start`, `prev`, `current`, `diff`, `step`, `accum`.
- * Movement space: `movement` (after bounds rubber and snap; use for transforms).
+ * Pointer space
+ *
+ * `start`, `prev`, `current`, `diff`, `step`, `accum` — raw gesture tracking.
+ * Use for direction detection and velocity (`step` / `diff`).
+ *
+ * Movement space
+ *
+ * `movement`, `prevMovement`, `scale` — after bounds rubber and snap.
+ * Use for element `transform` when `bounds` or `snap` props are set.
  */
 export interface ISwipeCoords {
   /** Last event timestamp (ms). */

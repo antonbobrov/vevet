@@ -4,3 +4,4 @@ lib
 *storybook.log
 .npmrc
 docusaurus/static/pens
+docusaurus/static/v4

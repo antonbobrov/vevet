@@ -2,177 +2,156 @@ import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
-} from '@/base';
+} from '@/base/Module/types';
 
-/** Static properties for the SplitText module */
 export interface ISplitTextStaticProps extends IModuleStaticProps {
-  /**
-   * The text container where the text will be split.
-   */
+  /** Container whose text content is split. */
   container: HTMLElement;
 
   /**
-   * Allow aria-label. `false` prevents adding aria-label attributes to container. String value overrides the default aria-label.
+   * Accessible label for the container after splitting.
+   *
+   * - `true` — uses `textContent` as `aria-label`
+   * - `false` — does not set `aria-label`
+   * - `string` — uses the provided value
    * @default true
    */
   ariaLabel?: boolean | string;
 
   /**
-   * Specifies whether the text should be split into individual letters.
+   * Split each word into individual letter elements.
    * @default false
    */
   letters?: boolean;
 
   /**
-   * Specifies whether the text should be split into lines.
+   * Group words into line elements (reflows on resize).
    * @default false
    */
   lines?: boolean;
 
   /**
-   * Specifies whether to wrap each line in an additional container.
+   * Wrap each line in an extra element (useful for mask animations).
    * @default false
    */
   linesWrapper?: boolean;
 
   /**
-   * HTML tag to wrap each letter.
+   * HTML tag for letter wrappers.
    * @default `span`
    */
   letterTag?: keyof HTMLElementTagNameMap;
 
   /**
-   * HTML tag to wrap each word.
+   * HTML tag for word wrappers.
    * @default `span`
    */
   wordTag?: keyof HTMLElementTagNameMap;
 
   /**
-   * HTML tag to wrap each line.
+   * HTML tag for line wrappers.
    * @default `span`
    */
   lineTag?: keyof HTMLElementTagNameMap;
 
   /**
-   * Letter class name.
-   * @default `v-split-text__letter`
+   * CSS class for letter elements.
+   * @default `{prefix}__letter`
    */
   letterClass?: string;
 
   /**
-   * Word class name.
-   * @default `v-split-text__word`
+   * CSS class for word elements.
+   * @default `{prefix}__word`
    */
   wordClass?: string;
 
   /**
-   * Line class name.
-   * @default `v-split-text__line`
+   * CSS class for line elements.
+   * @default `{prefix}__line`
    */
   lineClass?: string;
 
   /**
-   * Line wrapper class name.
-   * @default `v-split-text__line-wrapper`
+   * CSS class for line wrapper elements.
+   * @default `{prefix}__line-wrapper`
    */
   lineWrapperClass?: string;
 
   /**
-   * The debounce delay for the resize event in milliseconds.
+   * Debounce delay for resize-driven line reflow (ms).
    * @default 0
    */
   resizeDebounce?: number;
 
   /**
-   * Do not split certain elements. Supports string selectors, array of elements, or function.
+   * Elements excluded from splitting (selector, list, or predicate).
    * @default null
    */
   ignore?: string | HTMLElement[] | ((element: HTMLElement) => boolean) | null;
 
   /**
-   * Optional callback to preprocess text before it is split into words.
-   * This function receives the original text and should return the modified text.
-   * It is useful for languages like Chinese where standard word splitting may not work correctly.
-   * 
+   * Preprocesses text before word splitting (e.g. CJK segmentation).
+   *
    * @example
-   * 
+   *
    * const segmenter = new Intl.Segmenter('zh', { granularity: 'word' });
-   * 
+   *
    * const instance = new SplitText({
    *   container,
    *   prepareText: (source) => [...segmenter.segment(source)].map((s) => s.segment).join(' '),
-    });
+   * });
    */
   prepareText?: (text: string) => string;
 
   /**
-   * Specifies a custom delimiter used to split text into words.
-   * By default, splitting occurs on regular whitespace.
-   * @default " "
+   * Delimiter used to split text into words.
+   * @default whitespace
    */
   wordDelimiter?: string;
 
   /**
-   * Provides an alternative delimiter to use when outputting the split words.
-   * Useful when a custom input delimiter is used but the output should differ.
+   * Delimiter inserted between words in the DOM (defaults to `wordDelimiter`).
    * @default null
    */
   wordDelimiterOutput?: string | null;
 }
 
-/** Mutable properties for the SplitText module */
 export interface ISplitTextMutableProps extends IModuleMutableProps {}
 
-/** Callbacks map for the SplitText module */
-export interface ISplitTextCallbacksMap extends IModuleCallbacksMap<IModuleMutableProps> {
-  /**
-   * Called before the text is split.
-   */
+export interface ISplitTextCallbacksMap extends IModuleCallbacksMap<ISplitTextMutableProps> {
+  /** Fired at the start of {@link SplitText.split}. */
   beforeSplit: undefined;
 
-  /**
-   * Called after the text has been split.
-   */
+  /** Fired after {@link SplitText.split} completes. */
   split: undefined;
 }
 
-/** SplitText Line Metadata */
+/** Metadata for a split line. */
 export interface ISplitTextLineMeta {
-  /**
-   * HTML element representing a single line of split text.
-   */
+  /** Line element containing word nodes. */
   element: HTMLElement;
 
   /**
-   * HTML element representing a wrapper for the line element. Useful for animating the line with masks.
-   *
-   * The element is created when `props.hasLinesWrapper` is `true`.
+   * Optional outer wrapper when `linesWrapper` is `true`.
    */
   wrapper?: HTMLElement;
 
-  /**
-   * Array of word objects within the line.
-   */
+  /** Words that belong to this line. */
   words: ISplitTextWordMeta[];
 }
 
-/** SplitText Word Metadata */
+/** Metadata for a split word. */
 export interface ISplitTextWordMeta {
-  /**
-   * HTML element representing a single word.
-   */
+  /** Word element. */
   element: HTMLElement;
 
-  /**
-   * Array of letter objects within the word.
-   */
+  /** Letter elements inside the word (empty when `letters` is `false`). */
   letters: ISplitTextLetterMeta[];
 }
 
-/** SplitText Letter Metadata */
+/** Metadata for a split letter. */
 export interface ISplitTextLetterMeta {
-  /**
-   * HTML element representing a single letter.
-   */
+  /** Letter element. */
   element: HTMLElement;
 }

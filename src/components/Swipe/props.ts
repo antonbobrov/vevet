@@ -1,4 +1,4 @@
-import { TRequiredProps } from '@/internal/requiredProps';
+import { TRequiredProps } from '@/internal';
 
 import { ISwipeMutableProps, ISwipeStaticProps } from './types';
 
@@ -22,7 +22,7 @@ export const MUTABLE_PROPS: TRequiredProps<ISwipeMutableProps> = {
   threshold: 5,
   minTime: 0,
   directionThreshold: 50,
-  preventEdgeSwipe: true,
+  preventEdgeSwipe: false,
   edgeSwipeThreshold: 20,
   preventTouchMove: true,
   requireCtrlKey: false,

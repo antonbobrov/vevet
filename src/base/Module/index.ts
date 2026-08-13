@@ -1,21 +1,19 @@
 import { initVevet } from '@/global/initVevet';
-import { cnAdd, cnHas, cnRemove } from '@/internal/cn';
-import { mergeWithNoUndefined } from '@/internal/mergeWithNoUndefined';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { TRequiredProps } from '@/internal/requiredProps';
+import {
+  mergeWithNoUndefined,
+  noopIfDestroyed,
+  Destroyable,
+  TRequiredProps,
+} from '@/internal';
 
-import { Callbacks, ICallbacksSettings, TCallbacksAction } from '../Callbacks';
+import { Callbacks } from '../Callbacks';
+import { ICallbacksSettings, TCallbacksAction } from '../Callbacks/types';
 
 import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
-  TModuleOnCallbacksProps,
 } from './types';
-
-// todo: jsdoc
-
-export * from './types';
 
 /**
  * A base class for modules that handle responsive properties, event listeners, and custom callbacks.
@@ -26,7 +24,7 @@ export class Module<
   CallbacksMap extends IModuleCallbacksMap = IModuleCallbacksMap,
   StaticProps extends IModuleStaticProps = IModuleStaticProps,
   MutableProps extends IModuleMutableProps = IModuleMutableProps,
-> {
+> extends Destroyable {
   /** Get default static props */
   public _getStatic(): TRequiredProps<StaticProps> {
     return { __staticProp: true } as TRequiredProps<StaticProps>;
@@ -39,6 +37,9 @@ export class Module<
 
   /** Current properties */
   private _props: TRequiredProps<MutableProps & StaticProps>;
+
+  /** Callbacks instance */
+  private _callbacks: Callbacks<CallbacksMap, this>;
 
   /**
    * Current properties. Do not mutate these directly, use {@linkcode updateProps} instead.
@@ -57,19 +58,6 @@ export class Module<
     return this.constructor.name;
   }
 
-  /** Tracks whether the module has been destroyed */
-  private _isDestroyed = false;
-
-  /**
-   * Checks if the module has been destroyed.
-   */
-  get isDestroyed() {
-    return this._isDestroyed;
-  }
-
-  /** Callbacks instance */
-  private _callbacks: Callbacks<CallbacksMap, this>;
-
   /**
    * Retrieves the module's callbacks instance.
    */
@@ -77,19 +65,12 @@ export class Module<
     return this._callbacks;
   }
 
-  /** Stores actions that need to be executed when the module is destroyed */
-  private _destroyable: (() => void)[] = [];
-
   /**
    * Creates a new instance of the Module class.
    */
-  constructor(
-    props?: StaticProps & MutableProps,
-    onCallbacksProp?: TModuleOnCallbacksProps<
-      CallbacksMap,
-      Module<CallbacksMap, StaticProps, MutableProps>
-    >,
-  ) {
+  constructor(props?: StaticProps & MutableProps) {
+    super();
+
     this._callbacks = new Callbacks({ ctx: this });
 
     this._props = mergeWithNoUndefined(
@@ -102,16 +83,11 @@ export class Module<
 
     // Initialize callbacks
 
-    const onCallbacks = {
-      ...props,
-      ...onCallbacksProp,
-    };
-
-    if (onCallbacks) {
-      const callbacksProps = Object.keys(onCallbacks).filter(
+    if (props) {
+      const callbacksProps = Object.keys(props).filter(
         (key) =>
           key.startsWith('on') &&
-          typeof onCallbacks[key as keyof typeof onCallbacks] === 'function',
+          typeof props[key as keyof typeof props] === 'function',
       );
 
       callbacksProps.forEach((key) => {
@@ -119,10 +95,20 @@ export class Module<
         target = target.charAt(0).toLowerCase() + target.slice(1);
         this._callbacks.on(
           target as keyof CallbacksMap,
-          onCallbacks[key as keyof typeof props],
+          props[key as keyof typeof props] as any,
         );
       });
     }
+  }
+
+  /**
+   * Emits a callback event with a fixed payload.
+   */
+  protected _emit<E extends keyof CallbacksMap>(
+    event: E,
+    arg: CallbacksMap[E],
+  ) {
+    return this.callbacks.emit(event, arg);
   }
 
   /**
@@ -130,6 +116,40 @@ export class Module<
    */
   protected _handleProps(diff: Partial<MutableProps>) {
     this.callbacks.emit('props', diff);
+  }
+
+  /**
+   * Builds one or more prefixed class names.
+   *
+   * @param classes - Unprefixed class name segments.
+   * @returns Space-separated prefixed class string.
+   */
+  protected _cn(...classes: string[]) {
+    return classes.map((value) => `${this.prefix}${value}`).join(' ');
+  }
+
+  /**
+   * Adds prefixed classes to an element and removes them on destroy.
+   *
+   * Skips classes that are already present on the element.
+   *
+   * @param element - Target DOM element.
+   * @param classes - Unprefixed class name segments.
+   */
+  protected _addTempClassName(element: Element, ...classes: string[]) {
+    const nextClassNames = classes.filter(
+      (name) => !element.classList.contains(this._cn(name)),
+    );
+
+    nextClassNames.forEach((name) => {
+      element.classList.add(this._cn(name));
+    });
+
+    this.onDestroy(() => {
+      nextClassNames.forEach((name) => {
+        element.classList.remove(this._cn(name));
+      });
+    });
   }
 
   /** Change module's mutable properties */
@@ -160,21 +180,6 @@ export class Module<
   }
 
   /**
-   * Adds a callback on the module's destruction.
-   *
-   * @param action - The function to execute during destruction.
-   */
-  public onDestroy(action: () => void) {
-    if (this.isDestroyed) {
-      action();
-
-      return;
-    }
-
-    this._destroyable.push(action);
-  }
-
-  /**
    * Adds a custom callback to the module.
    *
    * @param target - The event type to listen for (e.g., 'props', 'destroy').
@@ -191,49 +196,11 @@ export class Module<
   }
 
   /**
-   * Helper function to generate classnames with the module's prefix.
-   *
-   * @param classNames - The class names to generate.
-   * @returns A string of class names with the module's prefix applied.
-   */
-  protected _cn(...classNames: string[]) {
-    return classNames.map((value) => `${this.prefix}${value}`).join(' ');
-  }
-
-  /**
-   * Adds a class name on an element, and keeps track of it for removal when the module is destroyed.
-   *
-   * @param element - The target DOM element.
-   * @param className - The class name to toggle.
-   */
-  protected _addTempClassName(element: Element, className: string) {
-    const isAlreadyExists = cnHas(element, className);
-
-    if (!isAlreadyExists) {
-      cnAdd(element, className);
-
-      this.onDestroy(() => cnRemove(element, className));
-    }
-  }
-
-  /**
-   * Destroys the module, cleaning up resources, callbacks, and event listeners.
-   */
-  @noopIfDestroyed
-  public destroy() {
-    this._destroy();
-  }
-
-  /**
    * Internal method to handle the destruction of the module.
    * It removes all callbacks, destroys properties, and cleans up event listeners and class names.
    */
   protected _destroy() {
     this._callbacks.emit('destroy', undefined);
     this._callbacks.destroy();
-
-    this._destroyable.forEach((action) => action());
-
-    this._isDestroyed = true;
   }
 }

@@ -29,11 +29,11 @@ const config: Config = {
         '@context': 'https://schema.org',
         '@type': 'SoftwareApplication',
         name: 'vevet.js',
-        alternateName: ['vevet', 'Vevet.js'],
+        alternateName: ['vevet', 'vevetjs', 'Vevet.js', 'npm vevet'],
         applicationCategory: 'DeveloperApplication',
         operatingSystem: 'Web browser',
         description:
-          'Flexible client-side JavaScript library for creative web development: split text, carousels, marquees, preloaders, canvas, custom cursor, scroll tools, and more.',
+          'vevet.js (also vevetjs, npm: vevet) — flexible client-side JavaScript library for creative web development: split text, carousels, marquees, preloaders, canvas, custom cursor, scroll tools, and more.',
         url: 'https://vevetjs.com/',
         downloadUrl: 'https://www.npmjs.com/package/vevet',
         softwareVersion: '5',
@@ -57,7 +57,7 @@ const config: Config = {
       {
         siteTitle: 'vevet.js',
         siteDescription:
-          'vevet.js (npm: vevet) — client-side JavaScript library for creative web development, v5. Source of truth: documentation below and working examples (component demo pages — often /demos; Snap: basic-demos, advanced-demos, parallax-demos — or https://vevetjs.com/llms-full.txt). Do not invent undocumented props, methods, or events.',
+          'vevet.js (vevetjs, npm: vevet) — client-side JavaScript library for creative web development, v5. Source of truth: documentation below (per-page .md links) and working examples (component demo pages — often /demos; Snap: basic-demos, advanced-demos, parallax-demos — or https://vevetjs.com/llms-full.txt). Do not invent undocumented props, methods, or events.',
         depth: 2,
         optionalLinks: [
           {
@@ -79,7 +79,7 @@ const config: Config = {
             title: 'Full documentation export',
             url: 'https://vevetjs.com/llms-full.txt',
             description:
-              'All docs and demo code — primary source for working examples',
+              'All docs and demo code in one file — use when you need the complete export; prefer per-page .md from the index for focused reads',
           },
           {
             title: 'AGENTS.md (for coding agents)',
@@ -89,7 +89,7 @@ const config: Config = {
           },
         ],
         content: {
-          enableMarkdownFiles: false,
+          enableMarkdownFiles: true,
           enableLlmsFullTxt: true,
           relativePaths: false,
           includeDocs: true,
@@ -134,12 +134,12 @@ const config: Config = {
       {
         name: 'description',
         content:
-          'Vevet.js — flexible JavaScript library for creative web development. Timeline, scroll, split text, preloaders, canvas and more.',
+          'vevet.js (vevetjs, npm: vevet) — flexible JavaScript library for creative web development. Timeline, scroll, split text, preloaders, canvas and more.',
       },
       {
         name: 'keywords',
         content:
-          'vevet, vevet.js, javascript library, creative web development, animation, timeline, scroll, split text, preloader, canvas, marquee, swipe',
+          'vevet, vevet.js, vevetjs, npm vevet, javascript library, creative web development, animation, timeline, scroll, split text, preloader, canvas, marquee, swipe',
       },
     ],
 

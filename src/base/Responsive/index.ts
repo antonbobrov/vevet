@@ -1,30 +1,42 @@
 /* eslint-disable no-underscore-dangle */
 import { initVevet } from '@/global/initVevet';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
+import { Destroyable } from '@/internal';
 
 import { Module } from '../Module';
 
 import { TResponsiveProps, TResponsiveRule, TResponsiveSource } from './types';
 
-export * from './types';
-
-export class Responsive<T extends TResponsiveSource> {
-  /** Tracks whether the instance has been destroyed */
-  private _isDestroyed = false;
-
-  /** Destroyable actions */
-  private _destructors: (() => void)[] = [];
-
-  /** Previously active breakpoints */
+/**
+ * Applies different property values based on viewport and device.
+ *
+ * Pass a **Module** instance or a plain object as the source and a list of
+ * rules. When the active breakpoint set changes, matching rule props are
+ * merged and applied (via `updateProps()` for modules).
+ *
+ * Listens to `vevet.onResize('any')` and re-evaluates rules on viewport
+ * changes. When the source is a **Module**, **Responsive** is destroyed
+ * automatically on module `destroy`.
+ *
+ * @typeParam T - Source type (`Module` subclass or plain object).
+ *
+ * @group Base
+ */
+export class Responsive<T extends TResponsiveSource> extends Destroyable {
+  /** Serialized list of currently active `at` values (change detection). */
   private _prevBreakpoints = '[]';
 
-  /** Initial props */
+  /** Baseline props before responsive overrides. */
   private _initProps!: TResponsiveProps<T>;
 
-  /** Current props */
+  /** Current merged props (baseline + active rules). */
   private _props: TResponsiveProps<T>;
 
-  /** Current props */
+  /**
+   * Current merged props (baseline + active rules).
+   *
+   * Read-only snapshot. For **Module** sources, mirrors `source.props`
+   * after responsive updates.
+   */
   get props() {
     return this._props;
   }
@@ -34,18 +46,17 @@ export class Responsive<T extends TResponsiveSource> {
     private _rules: TResponsiveRule<T>[],
     private _onChange?: (props: TResponsiveProps<T>) => void,
   ) {
+    super();
+
     const source = _source;
 
     const app = initVevet();
     const sourceName = source instanceof Module ? source.name : 'Object';
 
-    // Fetch initial props
     this._fetchInitProps();
 
-    // Save current props
     this._props = { ...this._initProps };
 
-    // Override Module's `updateProps`
     if (source instanceof Module) {
       source.on('destroy', () => this.destroy(), {
         name: this.constructor.name,
@@ -66,18 +77,16 @@ export class Responsive<T extends TResponsiveSource> {
       });
     }
 
-    // Update Props
     this._handleUpdate();
 
-    // Add viewport listener
-    this._destructors.push(
-      app.onResize('any', () => this._handleUpdate(), {
-        name: `${this.constructor.name} / ${sourceName}`,
-      }),
-    );
+    const resizer = app.onResize('any', () => this._handleUpdate(), {
+      name: `${this.constructor.name} / ${sourceName}`,
+    });
+
+    this.onDestroy(() => resizer());
   }
 
-  /** Set initial props */
+  /** Reads baseline props from the source. */
   private _fetchInitProps() {
     const source = this._source;
 
@@ -96,7 +105,7 @@ export class Responsive<T extends TResponsiveSource> {
     this._initProps = this._source as any;
   }
 
-  /** Get active rules */
+  /** Returns rules whose `at` query currently matches. */
   private _getActiveRules() {
     const app = initVevet();
 
@@ -139,7 +148,7 @@ export class Responsive<T extends TResponsiveSource> {
     return rules;
   }
 
-  /** Get responsive props */
+  /** Merges `props` from all currently active rules. */
   private _getResponsiveProps() {
     const rules = this._getActiveRules();
     let newProps = {};
@@ -151,7 +160,11 @@ export class Responsive<T extends TResponsiveSource> {
     return newProps;
   }
 
-  /** Update properties */
+  /**
+   * Recomputes merged props when the active breakpoint set changes.
+   *
+   * Applies props to a **Module** source and calls `onChange`.
+   */
   private _handleUpdate() {
     const activeRules = this._getActiveRules();
     const activeBreakpoints = activeRules.map(({ at }) => at);
@@ -171,17 +184,5 @@ export class Responsive<T extends TResponsiveSource> {
     }
 
     this._onChange?.(this.props);
-  }
-
-  /**
-   * Destroy the instance and clean up resources.
-   *
-   * The instance is destroyed automatically when it is used to mutate Module's props.
-   */
-  @noopIfDestroyed
-  public destroy() {
-    this._isDestroyed = true;
-
-    this._destructors.forEach((destructor) => destructor());
   }
 }

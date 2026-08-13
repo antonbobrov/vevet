@@ -1,6 +1,6 @@
 import { ICore } from './core/global';
 import { initVevet } from './global/initVevet';
-import { isBrowser } from './internal/env';
+import { isBrowser } from './internal';
 
 export { initVevet };
 

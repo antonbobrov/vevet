@@ -2,8 +2,10 @@
 sidebar_position: 0
 description: Swipe props — configuration options for swipe component. Vevet.js Swipe API reference.
 keywords:
+  - vevet.swipe props
+  - vevetjs swipe props
+  - vevet swipe props
   - swipe props
-  - vevet swipe
   - swipe configuration
 ---
 
@@ -288,18 +290,18 @@ observer.updateProps({
 ### `preventEdgeSwipe` {#props.preventEdgeSwipe}
 
 - **Type:** `boolean`
-- **Default:** `true`
+- **Default:** `false`
 - Prevents edge swiping (iOS swipe-back gesture).
 
 ```js
 const observer = new Swipe({
   container: document.getElementById('container'),
-  preventEdgeSwipe: true,
+  preventEdgeSwipe: false,
 });
 
 // change value
 observer.updateProps({
-  preventEdgeSwipe: false,
+  preventEdgeSwipe: true,
 });
 ```
 
@@ -493,7 +495,7 @@ const swipe = new Swipe({
 - **Type:** `boolean`
 - **Default:** `false`
 - Enables RAF-based release inertia after swipe end.
-- **See [demo](demos#drag-inertia)**
+- **See [demo](demos#drag-inertia-bounce)**
 
 ```js
 const swipe = new Swipe({
@@ -591,9 +593,3 @@ const swipe = new Swipe({
   maxVelocity: { x: 10, y: 10, angle: 5 },
 });
 ```
-
-## Deprecated inertia props {#deprecated-inertia-props}
-
-:::caution
-Timelined inertia (`inertiaDuration`, `inertiaEasing`) and `velocityModifier` are **no longer applied**. Use RAF inertia props above (`inertiaDecay`, `inertiaBounceEase`, `inertiaThreshold`, `maxVelocity`).
-:::

@@ -2,8 +2,10 @@
 sidebar_position: 10
 description: Cursor demos and examples. Vevet.js Cursor component.
 keywords:
+  - vevet.cursor demos
+  - vevetjs cursor demos
+  - vevet cursor demos
   - cursor demos
-  - vevet cursor
   - custom cursor examples
 ---
 
@@ -19,65 +21,104 @@ import Head from '@docusaurus/Head';
 
 <section>
   ## Multi-Type Cursor
+
+Overview of several hover behaviors in one place: sticky, friction, snap, custom size, and typed cursors via `attachCursor()` / `attachHover()`.
+
   <VevetDemo id="vEEBNWN" height={600} />
 </section>
 
 <section>
   ## Typed Cursor
+
+Swap the cursor appearance on hover with `attachCursor()` and a matching `type` on `attachHover()` — here a default ring and a play icon.
+
   <VevetDemo id="ByKeOYv" height={600} />
 </section>
 
 <section>
   ## Dynamic Size
+
+Resize the cursor on hover: fixed `width` / `height`, or `auto` to match the target (optionally with `padding`).
+
   <VevetDemo id="qEZGMyP" height={600} />
 </section>
 
 <section>
   ## Cursor Area
+
+Cursor is scoped to a DOM `container` instead of the window. Native pointer is hidden with `hideNative: true`.
+
   <VevetDemo id="bNpyxQP" height={600} />
 </section>
 
 <section>
   ## Snap Cursor
+
+Compare default hover sizing with `snap: true`, which locks the cursor to the element center.
+
   <VevetDemo id="MYydqRe" height={600} />
 </section>
 
 <section>
   ## Sticky Cursor
+
+Sticky parallax on hover. `stickyAmplitude` can follow both axes or only one (`x` or `y`).
+
   <VevetDemo id="emzOjqK" height={600} />
 </section>
 
 <section>
   ## Sticky Friction Cursor
+
+Sticky hover with `stickyFriction` so the element eases back toward its origin after the pointer moves.
+
   <VevetDemo id="KwMYOjo" height={600} />
 </section>
 
 <section>
   ## Sticky & Snap Behavior
+
+Side-by-side comparison of snap, sticky, and sticky-with-friction on the same cursor.
+
   <VevetDemo id="azZrVwJ" height={600} />
 </section>
 
 <section>
   ## Sticky Ghost
+
+Layered sticky targets on one emitter (`emitter`) with decreasing `stickyFriction` — a trailing “ghost” effect.
+
   <VevetDemo id="xbONPYr" height={600} />
 </section>
 
 <section>
   ## Elastic Cursor
+
+Shape the cursor with `transformModifier` from pointer `velocity` and `angle` — stretch along the movement direction.
+
   <VevetDemo id="yyJBxNK" height={600} />
 </section>
 
 <section>
   ## Airplane Cursor
+
+Custom SVG cursor via `attachCursor()`, rotated and stretched with `transformModifier` as you move.
+
   <VevetDemo id="emzOLZP" height={600} />
 </section>
 
 <section>
   ## Trailing Cursor
+
+Several Cursor instances with different `lerp` values and `behavior: 'path'` for a trailing path effect.
+
   <VevetDemo id="RNazaLO" height={600} />
 </section>
 
 <section>
   ## Cursor Path Visualization
+
+`behavior: 'path'` exposes an SVG [`path`](accessors#path) you can append to the DOM to visualize smoothed pointer motion.
+
   <VevetDemo id="ByKgKrN" height={600} />
 </section>

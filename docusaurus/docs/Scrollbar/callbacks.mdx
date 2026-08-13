@@ -2,8 +2,10 @@
 sidebar_position: 3
 description: Scrollbar callbacks — scroll events. Vevet.js Scrollbar API reference.
 keywords:
+  - vevet.scrollbar callbacks
+  - vevetjs scrollbar callbacks
+  - vevet scrollbar callbacks
   - scrollbar callbacks
-  - vevet scrollbar
 ---
 
 import Head from '@docusaurus/Head';
@@ -58,7 +60,9 @@ destruct();
 
 ### `show`
 
-Triggered when the scrollbar is shown.
+Triggered when the scrollbar becomes visible during scroll activity (`autoHide`).
+
+Requires `autoHide: true`. Fired after a short delay once scroll position changes.
 
 ```ts
 const instance = new Scrollbar({
@@ -77,7 +81,7 @@ destruct();
 
 ### `hide`
 
-Triggered when the scrollbar is hidden.
+Triggered when the scrollbar hides after scroll inactivity (`autoHide`).
 
 ```ts
 const instance = new Scrollbar({

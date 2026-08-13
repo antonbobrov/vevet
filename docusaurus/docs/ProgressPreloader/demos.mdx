@@ -2,8 +2,10 @@
 sidebar_position: 10
 description: ProgressPreloader demos — load progress, resource weights, virtual resources, and line animation. Vevet.js ProgressPreloader.
 keywords:
+  - vevet.progresspreloader demos
+  - vevetjs progress preloader demos
+  - vevet progress preloader demos
   - progress preloader demos
-  - vevet preloader
   - loading progress
 ---
 
@@ -22,7 +24,7 @@ import Head from '@docusaurus/Head';
 
 Tracks page resource loading and displays smooth [`progress`](accessors#progress) as a percentage.
 
-Key props: [`hide: 700`](props#props.hide), [`onProgress`](callbacks#progress). Images in the grid are observed automatically via [`preloadImages`](props#props.preloadImages).
+Key props: [`hide: 700`](/docs/Preloader/props#props.hide), [`onProgress`](callbacks#progress). Images in the grid are observed automatically via [`preloadImages`](props#props.preloadImages).
 
 <VevetDemo id="vEGbxeq" height={500} />
 </section>
@@ -32,7 +34,7 @@ Key props: [`hide: 700`](props#props.hide), [`onProgress`](callbacks#progress). 
 
 Progress updates in real time, but the overlay stays until the user dismisses it.
 
-Key props: [`hide: false`](props#props.hide), [`onLoaded`](callbacks#loaded). A button appears after load completes and calls [`hide()`](/docs/Preloader/methods#hide).
+Key props: [`hide: false`](/docs/Preloader/props#props.hide), [`onLoaded`](/docs/Preloader/callbacks#loaded). A button appears after load completes and calls [`hide()`](/docs/Preloader/methods#hide).
 
 <VevetDemo id="EaKrWoR" height={500} />
 </section>
@@ -52,7 +54,7 @@ Reads [`loadedWeight`](accessors#loadedweight) and [`totalWeight`](accessors#tot
 
 Track custom payloads that are not images or videos.
 
-The button uses the default [`customSelector`](props#props.customselector) (`.js-preload`) with `data-weight="4"`. Each click calls [`resolveResource()`](/docs/ProgressPreloader/methods#resolveresource) to increment loaded weight until the resource is complete.
+The button uses the default [`customSelector`](props#props.customSelector) (`.js-preload`) with `data-weight="4"`. Each click calls [`resolveResource()`](/docs/ProgressPreloader/methods#resolveresource) to increment loaded weight until the resource is complete.
 
 <VevetDemo id="VYYZdQG" height={500} />
 </section>

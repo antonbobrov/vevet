@@ -1,7 +1,7 @@
 import { EaseOutCubic } from 'easing-progress';
 
 import { initVevet } from '@/global/initVevet';
-import { TRequiredProps } from '@/internal/requiredProps';
+import { TRequiredProps } from '@/internal';
 
 import { ISnapMutableProps, ISnapStaticProps } from './types';
 
@@ -31,7 +31,7 @@ export const MUTABLE_PROPS: TRequiredProps<ISnapMutableProps> = {
   duration: 600,
   easing: EaseOutCubic,
   swipe: true,
-  grabCursor: false,
+  grabCursor: true,
   swipeSpeed: 1,
   swipeAxis: 'auto',
   followSwipe: true,
@@ -54,9 +54,3 @@ export const MUTABLE_PROPS: TRequiredProps<ISnapMutableProps> = {
   interval: null as any,
   intervalDirection: 'next',
 };
-
-export const LERP_APPROXIMATION = 0.000001;
-
-export const WHEEL_DEBOUNCE = 200;
-
-export const IDLE_DEBOUNCE = 200;

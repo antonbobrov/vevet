@@ -2,8 +2,10 @@
 sidebar_position: 10
 description: Swipe demos — pointer tracking, axis lock, rotation, bounds, inertia, rubber-band, direction detection, and image viewer examples.
 keywords:
+  - vevet.swipe demos
+  - vevetjs swipe demos
+  - vevet swipe demos
   - swipe demos
-  - vevet swipe
   - swipe examples
 ---
 
@@ -96,7 +98,7 @@ Horizontal slider thumb inside a track. Position persists across gestures via [`
 
 Key props: [`thumb`](props#props.thumb), [`bounds`](props#props.bounds), [`inertia: true`](props#props.inertia), `grabCursor: true`.
 
-Bounds are recalculated on resize with [`calculateBounds()`](methods#calculateBounds) and [`releaseBounce()`](methods#releaseBounce).
+Bounds are recalculated on resize with [`calculateBounds()`](methods#calculatebounds) and [`releaseBounce()`](methods#releasebounce).
 
 <VevetDemo id="NPdRrLy" height={500} />
 </section>
@@ -130,17 +132,7 @@ Callbacks: `onStart`, `onToLeft`, `onToRight`, `onToTop`, `onToBottom`.
 </section>
 
 <section>
-## Drag Inertia {#drag-inertia}
-
-Release inertia without built-in bounds — limits are applied manually in `onMove`.
-
-Key props: [`inertia: true`](props#props.inertia), `grabCursor: true`. Position is accumulated from `step` and clamped with `clamp()`.
-
-<VevetDemo id="azNPaxx" height={500} />
-</section>
-
-<section>
-## Drag Inertia Bounce
+## Drag Inertia Bounce {#drag-inertia-bounce}
 
 Movement-space drag inside a wrapper with automatic bounds and rubber-band overflow.
 
@@ -205,7 +197,7 @@ Adjust [`inertiaRatio`](props#props.inertiaRatio), [`inertiaDecay`](props#props.
 Image viewer with pan, zoom, and pinch support. Combines Swipe with [`Pointers`](/docs/Pointers).
 
 - Pan: [`movement`](interfaces#iswipecoords) + [`bounds`](props#props.bounds) that depend on [`scale`](accessors#scale)
-- Zoom: mouse wheel, double-click, and two-finger pinch via [`setScale()`](methods#setScale)
+- Zoom: mouse wheel, double-click, and two-finger pinch via [`setScale()`](methods#setscale)
 - [`relative: true`](props#props.relative) for zoom-to-point
 
 <VevetDemo id="rajMgoY" height={500} />

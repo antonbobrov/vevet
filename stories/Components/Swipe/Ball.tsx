@@ -1,12 +1,25 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useRef, useState } from 'react';
 
+import { MUTABLE_PROPS, STATIC_PROPS } from '@/components/Swipe/props';
 import { clamp, Swipe, vevet } from '@/index';
 
-export const Ball: FC = () => {
+import { useLogEvents } from '../../global/useLogEvents';
+import { useOnMutableProps } from '../../global/useOnMutableProps';
+import { useOnProps } from '../../global/useOnProps';
+
+import { LOG_EVENTS, TProps } from './constants';
+
+export const BallComponent: FC<TProps> = (props) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!ref.current) {
+  const [instance, setInstance] = useState<Swipe>();
+
+  useLogEvents(instance, LOG_EVENTS);
+
+  useOnProps(props, STATIC_PROPS, (input: TProps) => {
+    const container = ref.current;
+
+    if (!container) {
       return undefined;
     }
 
@@ -16,16 +29,15 @@ export const Ball: FC = () => {
     let xDir = 1;
     let yDir = 1;
 
-    const instance = new Swipe({
-      container: ref.current,
-      inertia: true,
-      grabCursor: true,
+    const mod = new Swipe({
+      ...input,
+      container,
       onStart: () => {
         xDir = 1;
         yDir = 1;
       },
       onMove: ({ step }) => {
-        if (instance.hasInertia) {
+        if (mod.hasInertia) {
           if (x >= vevet.width / 2 || x <= -vevet.width / 2) {
             xDir *= -1;
           }
@@ -38,12 +50,21 @@ export const Ball: FC = () => {
         x = clamp(x + step.x * xDir, -vevet.width / 2, vevet.width / 2);
         y = clamp(y + step.y * yDir, -vevet.height / 2, vevet.height / 2);
 
-        instance.container.style.transform = `translate(${x}px, ${y}px)`;
+        mod.container.style.transform = `translate(${x}px, ${y}px)`;
       },
     });
 
-    return () => instance.destroy();
-  }, []);
+    setInstance(mod);
+
+    mod.setMovement({ x: 125, y: 125 });
+
+    return () => {
+      mod.destroy();
+      setInstance(undefined);
+    };
+  });
+
+  useOnMutableProps(instance, props, MUTABLE_PROPS);
 
   return (
     <>

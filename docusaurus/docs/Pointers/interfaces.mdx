@@ -2,8 +2,10 @@
 sidebar_position: 4
 description: Pointers interfaces — TypeScript types. Vevet.js Pointers API reference.
 keywords:
+  - vevet.pointers interfaces
+  - vevetjs pointers interfaces
+  - vevet pointers interfaces
   - pointers interfaces
-  - vevet pointers
   - typescript
 ---
 
@@ -68,7 +70,9 @@ interface IPointersItem {
 
 ```ts
 interface IPointersVec2 {
-  x: number; // X-coordinate relative to the container.
-  y: number; // Y-coordinate relative to the container.
+  x: number; // Horizontal coordinate (px).
+  y: number; // Vertical coordinate (px).
 }
 ```
+
+Coordinate space depends on [`relative`](props#props.relative): container-relative when `true`, viewport (`clientX` / `clientY`) when `false`.

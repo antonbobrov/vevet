@@ -2,8 +2,10 @@
 sidebar_position: 2
 description: Raf methods — play, pause, API reference. Vevet.js Raf component.
 keywords:
+  - vevet.raf methods
+  - vevetjs raf methods
+  - vevet raf methods
   - raf methods
-  - vevet raf
 ---
 
 import Head from '@docusaurus/Head';
@@ -20,16 +22,25 @@ All **[Module methods](/docs/base/Module/#methods)** are available in this class
 
 ### `lerpFactor`
 
-Calculates a linear interpolation factor to make animations run the same regardless of FPS.
+Frame-rate–independent interpolation factor for the last [`duration`](accessors#duration).
+
+Non-finite `ease` falls back to `1`.
 
 **See [demo](demos#damping)**
 
 ```ts
-// lerpFactor() calculates an FPS-independent interpolation coefficient.
-// Use it to make animations feel consistent across 60Hz, 120Hz, and 144Hz displays.
 const ease = raf.lerpFactor(0.1);
-
 lerp(from, to, ease);
+```
+
+### `damp`
+
+Shorthand for `lerp(from, to, raf.lerpFactor(ease))` on the instance.
+
+**See [demo](demos#damping)**
+
+```ts
+value = raf.damp(value, target, 0.1);
 ```
 
 ### `pause`

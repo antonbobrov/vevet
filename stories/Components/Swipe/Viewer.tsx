@@ -1,19 +1,31 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useRef, useState } from 'react';
 
+import { MUTABLE_PROPS, STATIC_PROPS } from '@/components/Swipe/props';
 import { addEventListener, clamp, onResize, Pointers, Swipe } from '@/index';
 
-export type TViewerInteraction = 'simple' | 'pinch';
+import { useLogEvents } from '../../global/useLogEvents';
+import { useOnMutableProps } from '../../global/useOnMutableProps';
+import { useOnProps } from '../../global/useOnProps';
 
-export interface IViewerProps {
-  interaction?: TViewerInteraction;
-}
+import { LOG_EVENTS, TProps } from './constants';
 
-export const Viewer: FC<IViewerProps> = ({ interaction = 'simple' }) => {
+type TCustomProps = TProps & {
+  interaction: 'simple' | 'pinch';
+};
+
+export const ViewerComponent: FC<TCustomProps> = ({
+  interaction,
+  ...props
+}) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLImageElement>(null);
   const touchCenterRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  const [instance, setInstance] = useState<Swipe>();
+
+  useLogEvents(instance, LOG_EVENTS);
+
+  useOnProps(props, STATIC_PROPS, (input: TProps) => {
     const wrapper = wrapperRef.current;
     const thumb = thumbRef.current;
     const touchCenter = touchCenterRef.current;
@@ -35,12 +47,11 @@ export const Viewer: FC<IViewerProps> = ({ interaction = 'simple' }) => {
     const stepScale = 1;
     const pointersCount = interaction === 'pinch' ? 2 : 1;
 
-    const swipe = new Swipe({
+    const mod = new Swipe({
+      ...input,
       container: wrapper,
       pointers: (type) => (type === 'mouse' ? 1 : pointersCount),
       relative: true,
-      inertia: true,
-      grabCursor: true,
       buttons: (type) =>
         type === 'touch' ? [0] : [interaction === 'simple' ? 0 : 2],
       inertiaRatio: interaction === 'simple' ? 1 : 0.1,
@@ -58,20 +69,22 @@ export const Viewer: FC<IViewerProps> = ({ interaction = 'simple' }) => {
       },
     });
 
+    setInstance(mod);
+
     const wheeler = addEventListener(
       thumb,
       'wheel',
       (evt) => {
         evt.preventDefault();
 
-        if (swipe.isSwiping) {
+        if (mod.isSwiping) {
           return;
         }
 
-        swipe.cancelInertia();
+        mod.cancelInertia();
 
-        swipe.setScale(
-          clamp(swipe.scale - evt.deltaY * 0.001, minScale, maxScale),
+        mod.setScale(
+          clamp(mod.scale - evt.deltaY * 0.001, minScale, maxScale),
           evt,
         );
       },
@@ -79,10 +92,10 @@ export const Viewer: FC<IViewerProps> = ({ interaction = 'simple' }) => {
     );
 
     const clicker = addEventListener(thumb, 'dblclick', (evt) => {
-      if (swipe.scale >= maxScale) {
-        swipe.setScale(minScale, evt);
+      if (mod.scale >= maxScale) {
+        mod.setScale(minScale, evt);
       } else {
-        swipe.setScale(clamp(swipe.scale + stepScale, minScale, maxScale), evt);
+        mod.setScale(clamp(mod.scale + stepScale, minScale, maxScale), evt);
       }
     });
 
@@ -90,18 +103,18 @@ export const Viewer: FC<IViewerProps> = ({ interaction = 'simple' }) => {
       element: [wrapper, thumb],
 
       callback: () => {
-        if (swipe.scale === minScale) {
+        if (mod.scale === minScale) {
           const wrapperSize = getWrapperSize();
           const thumbSize = getThumSizes();
 
-          swipe.setMovement({
+          mod.setMovement({
             x: (wrapperSize.width - thumbSize.width) / 2,
             y: (wrapperSize.height - thumbSize.height) / 2,
           });
         }
 
-        swipe.calculateBounds();
-        swipe.releaseBounce(0);
+        mod.calculateBounds();
+        mod.releaseBounce(0);
       },
     });
 
@@ -118,33 +131,37 @@ export const Viewer: FC<IViewerProps> = ({ interaction = 'simple' }) => {
         touchCenter.style.top = `${startCenter.y}px`;
         touchCenter.style.left = `${startCenter.x}px`;
 
-        swipe.setScale(
-          clamp(swipe.scale * (scale / prevScale), minScale, maxScale),
+        mod.setScale(
+          clamp(mod.scale * (scale / prevScale), minScale, maxScale),
           startCenter,
         );
       },
       onStart: () => {
         if (interaction === 'simple') {
-          swipe.updateProps({ enabled: false, inertia: false });
+          mod.updateProps({ enabled: false, inertia: false });
         }
       },
       onEnd: () => {
         if (interaction === 'simple') {
           setTimeout(() => {
-            swipe.updateProps({ enabled: true, inertia: true });
+            mod.updateProps({ enabled: true, inertia: true });
           });
         }
       },
     });
 
     return () => {
-      swipe.destroy();
+      mod.destroy();
+      setInstance(undefined);
+
       resizer.remove();
       wheeler();
       clicker();
       twoPointers.destroy();
     };
-  }, [interaction]);
+  });
+
+  useOnMutableProps(instance, props, MUTABLE_PROPS);
 
   return (
     <>

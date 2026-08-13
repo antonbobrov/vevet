@@ -1,7 +1,7 @@
-import { Module, TModuleOnCallbacksProps } from '@/base';
+import { Module } from '@/base/Module';
+import { TModuleProps } from '@/base/Module/types';
 import { initVevet } from '@/global/initVevet';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { TRequiredProps } from '@/internal/requiredProps';
+import { noopIfDestroyed, TRequiredProps } from '@/internal';
 import { addEventListener, clampScope } from '@/utils';
 
 import { MUTABLE_PROPS, STATIC_PROPS } from './props';
@@ -12,36 +12,32 @@ import {
   IScrollProgressStaticProps,
 } from './types';
 
-export * from './types';
-
 type TC = IScrollProgressCallbacksMap;
 type TS = IScrollProgressStaticProps;
 type TM = IScrollProgressMutableProps;
 
 /**
- * `ScrollProgress` is a component that tracks the scroll progress of a specified section element.
+ * Tracks scroll progress of a section relative to the viewport or a scroll root.
  *
- * This component can be used for creating scroll-based animations such as parallax effects.
+ * - Emits `update` on scroll (and optionally only while the section is visible)
+ * - Exposes `inProgress`, `outProgress`, `moveProgress`, and `progress`
+ * - Supports a custom scroll container via `root` and optional `useSvh` height
  *
  * [Documentation](https://vevetjs.com/docs/ScrollProgress)
  *
  * @group Components
  */
 export class ScrollProgress extends Module<TC, TS, TM> {
-  /** Retrieves the default static properties. */
   public _getStatic(): TRequiredProps<TS> {
     return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
-  /** Retrieves the default mutable properties. */
   public _getMutable(): TRequiredProps<TM> {
     return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 
-  /** Indicates whether the section is currently visible within the viewport or root element. */
   private _isVisible = false;
 
-  /** The bounds of the root element used for scroll calculations. */
   private _rootBounds: IScrollProgressBounds = {
     top: 0,
     left: 0,
@@ -49,7 +45,6 @@ export class ScrollProgress extends Module<TC, TS, TM> {
     height: 1,
   };
 
-  /** The bounds of the section element relative to the root element. */
   private _sectionBounds: IScrollProgressBounds = {
     top: 0,
     left: 0,
@@ -57,51 +52,45 @@ export class ScrollProgress extends Module<TC, TS, TM> {
     height: 1,
   };
 
-  constructor(
-    props?: TS & TM & TModuleOnCallbacksProps<TC, ScrollProgress>,
-    onCallbacks?: TModuleOnCallbacksProps<TC, ScrollProgress>,
-  ) {
-    super(props, onCallbacks as any);
+  constructor(props?: TModuleProps<TC, TS, TM, ScrollProgress>) {
+    super(props);
 
     this._isVisible = !this.props.optimized;
 
     this._setup();
   }
 
-  /**
-   * Returns the section element being tracked for scroll progress.
-   */
+  /** Section element whose progress is tracked. */
   get section() {
     return this.props.section;
   }
 
-  /** Indicates whether the section is currently visible within the viewport or root element. */
+  /** Whether the section is currently considered visible (`optimized` mode). */
   get isVisible() {
     return this._isVisible;
   }
 
-  /** The bounds of the root element used for scroll calculations. */
+  /** Root bounds used for progress math (viewport or `root` element). */
   get rootBounds() {
     return this._rootBounds;
   }
 
-  /** The bounds of the section element relative to the root element. */
+  /** Section bounds relative to {@link rootBounds}. */
   get sectionBounds() {
     return this._sectionBounds;
   }
 
-  /** Sets up events */
   private _setup() {
     this._setupObserver();
     this._setupScroll();
   }
 
   /**
-   * Sets up an `IntersectionObserver` to track the visibility of the section.
+   * When `optimized` is enabled, toggles updates via `IntersectionObserver`.
+   * Otherwise runs an initial forced {@link update}.
    */
   private _setupObserver() {
     if (!this.props.optimized) {
-      // Initial Update
       this.update(true);
 
       return;
@@ -109,12 +98,10 @@ export class ScrollProgress extends Module<TC, TS, TM> {
 
     const { section } = this.props;
 
-    // Initial Update
     const bounding = section.getBoundingClientRect();
     this._isVisible = bounding.top < window.innerHeight || bounding.bottom > 0;
     this.update(true);
 
-    // Observer Update
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.target === section) {
@@ -134,14 +121,10 @@ export class ScrollProgress extends Module<TC, TS, TM> {
     this.onDestroy(() => observer.disconnect());
   }
 
-  /**
-   * Sets up a scroll event listener to track and update progress.
-   */
+  /** Listens to scroll on `root` or `window`. */
   private _setupScroll() {
-    const container = this.props.root || window;
-
     const listener = addEventListener(
-      container,
+      this.props.root || window,
       'scroll',
       () => this.update(),
       { passive: false },
@@ -150,7 +133,11 @@ export class ScrollProgress extends Module<TC, TS, TM> {
     this.onDestroy(listener);
   }
 
-  /** Updates the section and root bounds, and emits an update callback. */
+  /**
+   * Refreshes root/section bounds and emits `update`.
+   *
+   * @param isForce - When `true`, updates even if the section is not visible.
+   */
   @noopIfDestroyed
   public update(isForce = false) {
     if (!this.isVisible && !isForce) {
@@ -185,22 +172,17 @@ export class ScrollProgress extends Module<TC, TS, TM> {
   }
 
   /**
-   * Calculates the section scroll progress relative to the root element.
+   * Progress of the section's top/left corner between the given thresholds.
    *
-   * The function takes top or left corner of the section as the reference point.
-   *
-   * @param topThreshold - Top threshold of the section position.
-   * @param rightThreshold - Right threshold of the section position.
-   * @param bottomThreshold - Bottom threshold of the section position.
-   * @param leftThreshold - Left threshold of the section position.
-   * @returns The scroll progress along the x and y axes.
+   * @param topThreshold - Y start threshold.
+   * @param rightThreshold - X end threshold.
+   * @param bottomThreshold - Y end threshold.
+   * @param leftThreshold - X start threshold.
+   * @returns Progress along `x` and `y`.
    *
    * @example
-   *
    * const progress = getProgress(0, vevet.width, vevet.height / 2, 0)
-   *
-   * // `progress.y` is `0` when the top corner of the section is at the beginning of the viewport or root element
-   * // `progress.y` is `1` when the top corner of the section is at the center of the viewport or root element
+   * // progress.y is 0 at the start of the root, 1 at the vertical midpoint
    */
   public getProgress(
     topThreshold: number,
@@ -224,7 +206,7 @@ export class ScrollProgress extends Module<TC, TS, TM> {
     };
   }
 
-  /** Calculates the progress of the section entering the root element. */
+  /** Progress while the section is entering the root. */
   get inProgress() {
     const { rootBounds, sectionBounds } = this;
 
@@ -245,7 +227,7 @@ export class ScrollProgress extends Module<TC, TS, TM> {
     return this.getProgress(top, right, bottom, left);
   }
 
-  /** Calculates the progress of the section leaving the root element. */
+  /** Progress while the section is leaving the root. */
   get outProgress() {
     const { rootBounds, sectionBounds } = this;
 
@@ -257,7 +239,7 @@ export class ScrollProgress extends Module<TC, TS, TM> {
     return this.getProgress(top, right, bottom, left);
   }
 
-  /** Calculates the progress of the section's movement within the root element. */
+  /** Progress while the section moves through the root (pin-like range). */
   get moveProgress() {
     const { rootBounds, sectionBounds } = this;
 
@@ -284,7 +266,7 @@ export class ScrollProgress extends Module<TC, TS, TM> {
     return this.getProgress(top, right, bottom, left);
   }
 
-  /** Calculates the global scroll progress of the section relative to the root element. */
+  /** Full travel progress from entering to fully leaving the root. */
   get progress() {
     const { sectionBounds, rootBounds } = this;
 

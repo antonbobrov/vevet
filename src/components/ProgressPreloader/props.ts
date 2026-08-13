@@ -1,4 +1,4 @@
-import { TRequiredProps } from '@/internal/requiredProps';
+import { TRequiredProps } from '@/internal';
 
 import {
   STATIC_PROPS as PRELOADER_STATIC_PROPS,

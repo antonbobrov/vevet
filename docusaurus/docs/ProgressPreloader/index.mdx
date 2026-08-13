@@ -4,40 +4,48 @@ toc_min_heading_level: 2
 toc_max_heading_level: 6
 description: ProgressPreloader — Vevet.js preloader for tracking and displaying loading progress of images, videos and custom resources.
 keywords:
+  - vevet.progresspreloader
+  - vevetjs progress preloader
   - vevet progress preloader
   - loading progress
   - resource loading
   - images videos preload
 ---
 
+import MoreDemos from '@site/src/components/MoreDemos';
 import VevetDemo from '@site/src/components/VevetDemo';
 
 # ProgressPreloader
 
-Page preloader for **tracking and displaying** the loading progress of resources (images, videos, custom elements).
+Resource-aware page preloader with smooth progress display:
 
-- Takes images and videos into account
-- Supports virtual resources
-- Calculates smooth loading progress for better animations.
+- Tracks weighted resources (images, videos, DOM custom elements, virtual ids)
+- Exposes raw `loadProgress` and smoothed `progress` for UI
+- Inherits [Preloader](/docs/Preloader) hide lifecycle after `loaded`
+
+Does not perform fetching for custom or virtual resources — only observes progress.
+
+## Progress pipeline
+
+1. **Resources resolve** — images, videos, `data-loaded` elements, virtual ids, and page `onLoad` update weighted totals → [`resource`](callbacks#resource) / [`loadProgress`](accessors#loadprogress).
+2. **Smoothing** — each frame, [`progress`](accessors#progress) dampens toward `loadProgress` using [`lerp`](props#props.lerp).
+3. **Finish** — when `loadProgress >= 1`, [`endDuration`](props#props.endDuration) may animate `progress` to `1` → [`timelineStart`](callbacks#timelinestart) / [`timelineUpdate`](callbacks#timelineupdate) / [`timelineEnd`](callbacks#timelineend).
+4. **Preloader lifecycle** — when `progress >= 1`, [`loaded`](/docs/Preloader/callbacks#loaded) fires → [`requestHide`](/docs/Preloader/callbacks#requesthide) → optional hide → [`hidden`](/docs/Preloader/callbacks#hidden).
+
+:::note `loadProgress` vs `progress`
+Use **`loadProgress`** for strict technical indicators. Use **`progress`** for UI.
+:::
 
 ## Basic Demo
 
 <VevetDemo id="VYYZdQG" height={600} />
 
-## More demos
-
-To explore more demos, click [here](./demos).
-
-## Features
-
-- Smooth progress calculation based on observed loading state.
-- Custom resource weight.
-- Virtual resources for manual or async progress control.
+<MoreDemos />
 
 ## Initialization
 
 :::caution
-The module does not provide styling for the container.
+The module does not provide styling for the container. See [Preloader](/docs/Preloader#initialization) for container CSS.
 :::
 
 ```html
@@ -46,56 +54,40 @@ The module does not provide styling for the container.
 </div>
 ```
 
-```css
-#preloader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 9;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-```
-
 ```js
-import { ProgressPreloader } from 'vevet';
+import { clamp, ProgressPreloader } from 'vevet';
 
-const preloader = new ProgressPreloader(
-  {
-    container: document.getElementById('preloader'),
-    hide: 700,
-  },
-  {
-    onProgress: () => {
-      const { progress } = preloader;
-      const percent = clamp(progress * 100, 0, 99);
-      const html = `${percent.toFixed(0)}%`;
+const progressElement = document.getElementById('progress');
 
-      progressElement.innerHTML = html;
-    },
+const preloader = new ProgressPreloader({
+  container: document.getElementById('preloader'),
+  hide: 700,
+  onProgress: (_data, { progress }) => {
+    const percent = clamp(progress * 100, 0, 99);
+    progressElement.textContent = `${percent.toFixed(0)}%`;
   },
-);
+});
 ```
 
-Add a custom resource:
+### Custom DOM resources
+
+Elements matched by [`customSelector`](props#props.customSelector) (default `.js-preload`):
 
 ```html
 <div class="js-preload" data-weight="10"></div>
 
-<!-- Update its 'loaded' attribute -->
+<!-- Update loaded weight as work completes -->
 <div class="js-preload" data-weight="10" data-loaded="7"></div>
 ```
 
-Add a virtual resource:
+### Virtual resources
+
+For async work (API, WebGL, timers):
 
 ```js
 preloader.addResource('my-resource', 20);
 preloader.resolveResource('my-resource', 15);
+preloader.resolveResource('my-resource', 20);
 ```
 
 Destroy the preloader:
@@ -106,9 +98,8 @@ preloader.destroy();
 
 ## Best Practices
 
-- The preloader does **not** perform resource loading — it only tracks loading progress.
-- Preloading lazy images is not supported — they are ignored automatically.
-- Avoid assigning extremely high resource weight values; balanced weights create smoother progress.
-- Virtual resources are ideal for async operations (API, WebGL, timers).
-- Use `lerp < 1` for cinematic UI preloaders; use `lerp: 1` for strict "technical" progress indicators.
-- Avoid triggering `destroy()` before the preloader reaches `loadProgress = 1`, unless you intend to cancel preloading completely.
+- The preloader does **not** load custom or virtual resources — it only **tracks** progress you report.
+- Lazy images (`loading="lazy"`) are ignored automatically.
+- Use balanced `data-weight` values — extreme weights make progress jumpy.
+- Use `lerp < 1` for cinematic UI; `lerp: 1` for strict technical progress.
+- Avoid `destroy()` before `loadProgress` reaches `1` unless you intend to cancel preloading.

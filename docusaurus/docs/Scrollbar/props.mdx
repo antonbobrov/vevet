@@ -2,8 +2,10 @@
 sidebar_position: 0
 description: Scrollbar props — configuration. Vevet.js Scrollbar API reference.
 keywords:
+  - vevet.scrollbar props
+  - vevetjs scrollbar props
+  - vevet scrollbar props
   - scrollbar props
-  - vevet scrollbar
 ---
 
 import Head from '@docusaurus/Head';
@@ -20,10 +22,11 @@ Static properties are set during initialization and cannot be modified later.
 
 ### `container` {#props.container}
 
-- **Type:** `Window | HTMLElement`
+- **Type:** `Window | HTMLElement | Snap`
 - **Default:** `window`
 - The element whose scroll position the scrollbar reflects.
 - For nested scroll areas, pass a custom `HTMLElement`.
+- For [`Snap`](/docs/Snap), pass the Snap instance as `container`.
 - **See [demo](demos#inner-scrollbar)**
 
 ```js

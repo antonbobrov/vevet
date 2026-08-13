@@ -2,8 +2,10 @@
 sidebar_position: 3
 description: ProgressPreloader callbacks — loading events. Vevet.js ProgressPreloader API reference.
 keywords:
+  - vevet.progresspreloader callbacks
+  - vevetjs progress preloader callbacks
+  - vevet progress preloader callbacks
   - progress preloader callbacks
-  - vevet preloader
 ---
 
 import Head from '@docusaurus/Head';
@@ -15,17 +17,18 @@ import Head from '@docusaurus/Head';
 </Head>
 
 :::note
-All **[Preloader's callbacks](/docs/Preloader/callbacks)** are available in this class.
+All **[Preloader callbacks](/docs/Preloader/callbacks)** (`loaded`, `requestHide`, `hide`, `hidden`, …) are available.  
+[`loaded`](/docs/Preloader/callbacks#loaded) fires when smoothed [`progress`](accessors#progress) reaches `1`, after all resources are resolved and optional [`endDuration`](props#props.endDuration) finish.
 :::
 
 ### `progress`
 
-Fired when the preloader's progress updates.
+Fired each animation frame while progress is updating — during Raf smoothing and during the [`endDuration`](props#props.endDuration) finish timeline ([`timelineUpdate`](#timelineupdate)).
 
 ```ts
 const preloader = new ProgressPreloader({
   container: document.getElementById('container'),
-  onProgress: () => console.log(preloader.progress),
+  onProgress: (_data, { progress }) => console.log(progress),
 });
 ```
 
@@ -35,6 +38,76 @@ or:
 const destruct = preloader.on('progress', () =>
   console.log(preloader.progress),
 );
+
+// Cancel the callback
+destruct();
+```
+
+### `timelineStart`
+
+Fired when the [`endDuration`](props#props.endDuration) finish timeline starts.  
+Runs when all resources are loaded (`loadProgress >= 1`) but smoothed [`progress`](accessors#progress) is still below `1`. Skipped when progress is already `1`.
+
+```ts
+const preloader = new ProgressPreloader({
+  container: document.getElementById('container'),
+  onTimelineStart: () => console.log('timelineStart'),
+});
+```
+
+or:
+
+```ts
+const destruct = preloader.on('timelineStart', () =>
+  console.log('timelineStart'),
+);
+
+// Cancel the callback
+destruct();
+```
+
+### `timelineUpdate`
+
+Fired on every frame of the finish timeline.
+
+Provides timeline progress (`progress` — linear, `eased` — with easing). Smoothed [`progress`](accessors#progress) is updated on the same tick — [`progress`](#progress) also fires.
+
+```ts
+const preloader = new ProgressPreloader({
+  container: document.getElementById('container'),
+  onTimelineUpdate: ({ progress, eased }) => {
+    console.log(progress, eased, preloader.progress);
+  },
+});
+```
+
+or:
+
+```ts
+const destruct = preloader.on('timelineUpdate', ({ progress, eased }) => {
+  console.log(progress, eased);
+});
+
+// Cancel the callback
+destruct();
+```
+
+### `timelineEnd`
+
+Fired when the finish timeline completes and smoothed [`progress`](accessors#progress) reaches `1`.  
+[`loaded`](/docs/Preloader/callbacks#loaded) may fire on the same frame.
+
+```ts
+const preloader = new ProgressPreloader({
+  container: document.getElementById('container'),
+  onTimelineEnd: () => console.log('timelineEnd'),
+});
+```
+
+or:
+
+```ts
+const destruct = preloader.on('timelineEnd', () => console.log('timelineEnd'));
 
 // Cancel the callback
 destruct();

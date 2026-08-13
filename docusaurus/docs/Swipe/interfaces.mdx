@@ -2,8 +2,10 @@
 sidebar_position: 4
 description: Swipe interfaces — TypeScript types and interfaces. Vevet.js Swipe API reference.
 keywords:
+  - vevet.swipe interfaces
+  - vevetjs swipe interfaces
+  - vevet swipe interfaces
   - swipe interfaces
-  - vevet swipe
   - typescript
 ---
 
@@ -46,16 +48,6 @@ interface ISwipeState extends ISwipeVec3 {
 }
 ```
 
-## ISwipeMatrix
-
-:::caution Deprecated
-Use [`ISwipeVec3`](#iswipevec3) or [`ISwipeState`](#iswipestate) instead.
-:::
-
-```ts
-interface ISwipeMatrix extends ISwipeVec3 {}
-```
-
 ## ISwipeAxes
 
 Optional numeric values per axis (`x`, `y`, `angle`).
@@ -73,10 +65,10 @@ interface ISwipeAxes {
 
 ## ISwipeCoords
 
-Snapshot on swipe callbacks and accessors.
+Snapshot on swipe callbacks and accessors. See also [Coordinate spaces](/docs/Swipe#coordinate-spaces).
 
-**Pointer space:** `start`, `prev`, `current`, `diff`, `step`, `accum`.  
-**Movement space:** `movement`, `prevMovement`, `scale` (after rubber and snap — use for transforms with `bounds`).
+**Pointer space:** `start`, `prev`, `current`, `diff`, `step`, `accum` — gesture deltas and velocity.  
+**Movement space:** `movement`, `prevMovement`, `scale` — after rubber and snap; use for transforms with [`bounds`](props#props.bounds).
 
 ```ts
 interface ISwipeCoords {

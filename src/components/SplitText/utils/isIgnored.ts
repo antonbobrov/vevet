@@ -1,7 +1,8 @@
-import { isString } from '@/internal/isString';
+import { isString } from '@/internal';
 
 import { ISplitTextStaticProps } from '../types';
 
+/** Whether `element` matches the `ignore` prop. */
 export function isIgnored(
   element: HTMLElement,
   ignore: ISplitTextStaticProps['ignore'],

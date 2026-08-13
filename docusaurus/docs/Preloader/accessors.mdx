@@ -2,8 +2,10 @@
 sidebar_position: 1
 description: Preloader accessors — state getters. Vevet.js Preloader API reference.
 keywords:
+  - vevet.preloader accessors
+  - vevetjs preloader accessors
+  - vevet preloader accessors
   - preloader accessors
-  - vevet preloader
 ---
 
 import Head from '@docusaurus/Head';
@@ -17,6 +19,29 @@ import Head from '@docusaurus/Head';
 :::note
 All **[Module accessors](/docs/base/Module/#accessors)** are available in this class.
 :::
+
+### `isLoaded`
+
+Type: `boolean`
+
+Whether the load signal has fired and [`loaded`](callbacks#loaded) was emitted.
+
+- `false` until page load
+- becomes `true` before [`hide()`](methods#hide) can run
+
+```js
+const preloader = new Preloader({
+  container: document.getElementById('container'),
+  hide: false,
+});
+
+preloader.isLoaded; // false
+
+preloader.on('loaded', () => {
+  preloader.isLoaded; // true
+  preloader.hide(500);
+});
+```
 
 ### `isHidden`
 
@@ -34,4 +59,21 @@ const preloader = new Preloader({
 });
 
 preloader.isHidden; // detect final hidden state
+```
+
+### `isHiding`
+
+Type: `boolean`
+
+Whether [`hide()`](methods#hide) has started but [`hidden`](callbacks#hidden) has not fired yet.
+
+```js
+preloader.on('hide', () => {
+  console.log(preloader.isHiding); // true
+  console.log(preloader.isHidden); // false — fade in progress
+});
+
+preloader.on('hidden', () => {
+  console.log(preloader.isHidden); // true
+});
 ```

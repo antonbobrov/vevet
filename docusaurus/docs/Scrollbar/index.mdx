@@ -4,39 +4,40 @@ toc_min_heading_level: 2
 toc_max_heading_level: 6
 description: Scrollbar — Vevet.js customizable scrollbar for window or element. Scroll tracking, drag, auto-sizing and styling.
 keywords:
+  - vevet.scrollbar
+  - vevetjs scrollbar
   - vevet scrollbar
   - custom scrollbar
   - scroll tracking
   - scroll drag
 ---
 
+import MoreDemos from '@site/src/components/MoreDemos';
 import VevetDemo from '@site/src/components/VevetDemo';
 
 # Scrollbar
 
-A customizable scrollbar component for both window and HTMLElement containers.
+Custom scrollbar for `window`, `HTMLElement`, and [`Snap`](/docs/Snap) containers.
 
-Provides scroll tracking, drag support, auto-sizing, and built-in styling.
+Provides scroll tracking, optional thumb drag, auto-sizing, built-in styling, and native scrollbar hiding on the scroll target.
 
 ## Basic Demo
 
 <VevetDemo id="XJJrYYa" height={400} />
 
-## More demos
-
-To explore more demos, click [here](./demos).
+<MoreDemos />
 
 ## Features
 
-- Supports both window-level and nested scrolling
-- Draggable scrollbar thumb
+- Supports `window`, nested `HTMLElement`, and `Snap` scrolling
+- Draggable scrollbar thumb (when `draggable` is `true`)
 - Configurable size and minimum thumb size
 - Supports both vertical (y) and horizontal (x) axes
 - Provides base styles (minor CSS tweaks recommended for layout stability)
 - RTL-compatible
 - Automatically adjusts to content and container changes
 
-:::warning
+:::info
 To prevent layout shifts, native scrollbars should be hidden via CSS:
 
 ```css
@@ -75,7 +76,7 @@ const x = new Scrollbar({
 });
 ```
 
-Destroying a scrollbar:
+Destroying a scrollbar removes its DOM, listeners, and temporary scrollable classes:
 
 ```js
 y.destroy();

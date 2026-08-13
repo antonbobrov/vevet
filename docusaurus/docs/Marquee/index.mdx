@@ -4,12 +4,15 @@ toc_min_heading_level: 2
 toc_max_heading_level: 6
 description: Marquee — Vevet.js custom marquee component for smooth horizontal or vertical scrolling.
 keywords:
+  - vevet.marquee
+  - vevetjs marquee
   - vevet marquee
   - marquee component
   - scrolling text
   - infinite scroll
 ---
 
+import MoreDemos from '@site/src/components/MoreDemos';
 import VevetDemo from '@site/src/components/VevetDemo';
 
 # Marquee
@@ -20,9 +23,7 @@ A custom marquee component that smoothly scrolls its children horizontally or ve
 
 <VevetDemo id="zxxOadw" height={500} />
 
-## More demos
-
-To explore more demos, click [here](./demos).
+<MoreDemos />
 
 ## Advantages
 
@@ -38,8 +39,8 @@ To explore more demos, click [here](./demos).
 - **Custom Speed & Gap With CSS Units**  
   Both speed and gap accept any CSS length unit (px, rem, vw, etc.), with gap supporting only zero or positive values.
 
-- **Playback Control API**  
-  Programmatically play, pause, and restart the marquee.
+- **Playback Control via `enabled`**  
+  Pause or resume the marquee with `updateProps({ enabled })`.
 
 - **Pause on Hover**  
   Optional hover-based pausing built in.

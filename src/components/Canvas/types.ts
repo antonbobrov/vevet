@@ -2,7 +2,7 @@ import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
-} from '@/base/Module';
+} from '@/base/Module/types';
 import { IViewportCallbacksMap } from '@/core/exported';
 
 /**

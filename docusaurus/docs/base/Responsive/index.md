@@ -1,6 +1,8 @@
 ---
 description: Responsive — apply different props by viewport and device. Breakpoints, rules, Module integration. Vevet.js base.
 keywords:
+  - vevet.responsive
+  - vevetjs responsive
   - vevet responsive
   - base responsive
   - breakpoints
@@ -10,9 +12,16 @@ keywords:
 
 # Responsive
 
-**Responsive** applies different property values based on viewport and device. You pass a **source** (a **[Module](/docs/base/Module/)** instance or a plain object) and a list of **rules**. When the active breakpoint changes, the matching rule’s `props` are merged into the source and (for Module) applied via `updateProps()`.
+**Responsive** applies different property values based on viewport and device flags from `vevet`.
 
-Use it to change component options by screen size (e.g. Marquee `gap`, Snap `slidesPerView`) or to drive any key-value state from breakpoints.
+Pass a **source** — a **[Module](/docs/base/Module/)** instance or a plain object — and a list of **rules**. When the active breakpoint set changes, matching rule props are merged and applied.
+
+## Source types
+
+| Source        | Behavior |
+| ------------- | -------- |
+| **Module**    | Reads mutable props, writes merged values back via `updateProps()`. Manual `updateProps()` calls update the responsive baseline. Destroying the module also destroys **Responsive**. |
+| Plain object  | Uses the object as initial state. The source object is **not** mutated — read `responsive.props` or use `onChange`. |
 
 ## Constructor
 
@@ -24,77 +33,52 @@ new Responsive<T>(
 );
 ```
 
-- **source** — a **[Module](/docs/base/Module/)** instance or a plain object. For Module, only its **mutable** props are read and updated; for a plain object, the object is used as-is.
-- **rules** — array of `{ at: query, props: partialProps }`. The first matching rule (and any following matches) are merged in order; later rules override earlier ones.
-- **onChange** — optional callback called with the current merged `props` whenever the active breakpoint set changes.
+| Argument    | Description |
+| ----------- | ----------- |
+| `source`    | **Module** instance or plain object. |
+| `rules`     | Array of `{ at, props }` rules (see below). |
+| `onChange`  | Optional. Called with merged `props` when the active breakpoint **set** changes. |
 
-## Query types (`at`)
+## Rules
 
-Rules are matched when the given condition is true. Supported `at` values:
+Each rule has the shape `{ at: query, props: partialProps }`.
 
-| Query            | When it matches                                                                                                         |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `'phone'`        | `vevet.phone === true`                                                                                                  |
-| `'tablet'`       | `vevet.tablet === true`                                                                                                 |
-| `'mobile'`       | `vevet.mobile === true` (phone or tablet)                                                                               |
-| `'non_mobile'`   | `vevet.mobile === false`                                                                                                |
-| `'portrait'`     | Viewport height &gt; width                                                                                              |
-| `'landscape'`    | Viewport width &gt; height                                                                                              |
-| `'@media (...)'` | Custom media query. Pass the full string, e.g. `'@media (min-width: 768px)'`. `window.matchMedia()` is used to test it. |
+- **Multiple rules can match at once.** All active rules are merged in array order; later rules override earlier ones.
+- Updates run only when the set of matching `at` values changes (not on every resize tick with the same result).
 
-Only one rule per condition is typically needed; multiple rules can match at once and their `props` are merged in array order.
+### Query types (`at`)
+
+| Query | When it matches |
+| ----- | --------------- |
+| `'phone'` | `vevet.phone === true` |
+| `'tablet'` | `vevet.tablet === true` |
+| `'mobile'` | `vevet.mobile === true` (phone or tablet) |
+| `'non_mobile'` | `vevet.mobile === false` |
+| `'portrait'` | Viewport height &gt; width |
+| `'landscape'` | Viewport width &gt; height |
+| `'@media (...)'` | Custom media query via `window.matchMedia()`. Pass the full string, e.g. `'@media (min-width: 768px)'`. |
+
+Only the queries listed above are evaluated. Arbitrary strings like `'lg'` or `'md'` do not match unless written as `@media` queries.
 
 ## Accessors
 
-| Accessor | Type                  | Description                                                            |
-| -------- | --------------------- | ---------------------------------------------------------------------- |
-| `props`  | `TResponsiveProps<T>` | Current merged props (initial source props + active rules). Read-only. |
+| Accessor | Type | Description |
+| -------- | ---- | ----------- |
+| `props` | `TResponsiveProps<T>` | Current merged props (baseline + active rules). Read-only. |
 
 ## Methods
 
 ### `destroy()`
 
-Removes the viewport listener and cleans up. When the source is a **Module**, Responsive subscribes to its `destroy` and is typically destroyed together with the module (e.g. in the same `useEffect` cleanup). Does nothing if already destroyed.
+Removes the viewport listener and cleans up. Safe to call multiple times.
+
+When the source is a **Module**, **Responsive** also subscribes to the module `destroy` event and destroys itself automatically — a separate `responsive.destroy()` in teardown is optional.
 
 ```ts
 responsive.destroy();
 ```
 
-## Example — plain object
-
-Use a plain object as source to drive your own state from breakpoints:
-
-```ts
-const responsive = new Responsive(
-  {
-    width: 'any',
-    count: 1,
-    device: 'any',
-  },
-  [
-    { at: 'tablet', props: { device: 'tablet' } },
-    { at: 'phone', props: { device: 'phone' } },
-    { at: 'mobile', props: { device: 'mobile' } },
-    { at: 'non_mobile', props: { device: 'desktop' } },
-    { at: 'landscape', props: { width: 'landscape' } },
-    { at: 'portrait', props: { width: 'portrait' } },
-    { at: '@media (min-width: 1024px)', props: { count: 3 } },
-  ],
-  (props) => {
-    console.log('Active props:', props);
-  },
-);
-
-// Read current props
-console.log(responsive.props);
-
-// Cleanup when done
-responsive.destroy();
-```
-
-## Example — with Module (e.g. Marquee) {#example-with-module}
-
-Pass a Module instance so Responsive updates its mutable props when breakpoints change:
+## Example — Module {#example-with-module}
 
 ```ts
 import { Marquee, Responsive } from 'vevet';
@@ -105,27 +89,30 @@ const marquee = new Marquee({
 });
 
 const responsive = new Responsive(marquee, [
-  {
-    at: '@media (min-width: 768px)',
-    props: { gap: 50 },
-  },
-  {
-    at: '@media (min-width: 1200px)',
-    props: { gap: 80 },
-  },
+  { at: '@media (min-width: 768px)', props: { gap: 50 } },
+  { at: '@media (min-width: 1200px)', props: { gap: 80 } },
 ]);
 
-// When viewport crosses 768px or 1200px, marquee.updateProps() is called
-// with the merged props (e.g. { gap: 50 } or { gap: 80 }).
+// Viewport crosses 768px / 1200px → marquee.updateProps({ gap: … })
 
-// Cleanup: destroy Responsive and the module
-marquee.on('destroy', () => responsive.destroy());
-// or in your teardown:
-marquee.destroy();
-responsive.destroy();
+marquee.destroy(); // responsive is destroyed automatically
 ```
 
-Initial props come from the Module’s current mutable props. Responsive overrides them when a rule matches and keeps them in sync on viewport resize.
+## Example — plain object
+
+```ts
+const responsive = new Responsive(
+  { count: 1, device: 'any' },
+  [
+    { at: 'mobile', props: { device: 'mobile' } },
+    { at: 'non_mobile', props: { device: 'desktop' } },
+    { at: '@media (min-width: 1024px)', props: { count: 3 } },
+  ],
+  (props) => console.log(props),
+);
+
+responsive.destroy();
+```
 
 ## Typedoc
 
