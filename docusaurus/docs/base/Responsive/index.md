@@ -58,7 +58,7 @@ Each rule has the shape `{ at: query, props: partialProps }`.
 | `'landscape'` | Viewport width &gt; height |
 | `'@media (...)'` | Custom media query via `window.matchMedia()`. Pass the full string, e.g. `'@media (min-width: 768px)'`. |
 
-Only the queries listed above are evaluated. Arbitrary strings like `'lg'` or `'md'` do not match unless written as `@media` queries.
+Custom queries must contain `@media`. Any other string throws when **Responsive** is created.
 
 ## Accessors
 

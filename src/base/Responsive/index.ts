@@ -6,6 +6,15 @@ import { Module } from '../Module';
 
 import { TResponsiveProps, TResponsiveRule, TResponsiveSource } from './types';
 
+const BUILT_IN_QUERIES = [
+  'tablet',
+  'phone',
+  'mobile',
+  'non_mobile',
+  'landscape',
+  'portrait',
+];
+
 /**
  * Applies different property values based on viewport and device.
  *
@@ -53,6 +62,7 @@ export class Responsive<T extends TResponsiveSource> extends Destroyable {
     const app = initVevet();
     const sourceName = source instanceof Module ? source.name : 'Object';
 
+    this._validateRules();
     this._fetchInitProps();
 
     this._props = { ...this._initProps };
@@ -103,6 +113,19 @@ export class Responsive<T extends TResponsiveSource> extends Destroyable {
     }
 
     this._initProps = this._source as any;
+  }
+
+  /** Built-in breakpoints, or a query that contains `@media`. */
+  private _validateRules() {
+    this._rules.forEach(({ at }) => {
+      if (BUILT_IN_QUERIES.includes(at) || at.includes('@media')) {
+        return;
+      }
+
+      throw new Error(
+        `Responsive rule "at" must be a built-in breakpoint or contain "@media". Received "${at}".`,
+      );
+    });
   }
 
   /** Returns rules whose `at` query currently matches. */
