@@ -22,6 +22,7 @@ export class SnapWheel extends ModulePart<Snap> {
 
     this._events = new SnapWheelEvents(parent.eventsEmitter, {
       getEnabled: () => parent.props.wheel,
+      getPrevent: () => parent.props.preventWheel,
       getAxis: this._getAxis.bind(this),
       onStart: this._start.bind(this),
       onMove: this._move.bind(this),

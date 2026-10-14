@@ -54,7 +54,9 @@ export class SnapWheelEvents {
       return;
     }
 
-    evt.preventDefault();
+    if (this._props.getPrevent() && evt.cancelable) {
+      evt.preventDefault();
+    }
 
     const wheelData = normalizeWheel(evt);
     const axis = this._props.getAxis();

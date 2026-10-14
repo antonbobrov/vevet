@@ -53,6 +53,7 @@ const meta: Meta<TComponent> = {
     swipeMinTime: MUTABLE_PROPS.swipeMinTime,
     swipeInertiaRatio: MUTABLE_PROPS.swipeInertiaRatio,
     wheel: MUTABLE_PROPS.wheel,
+    preventWheel: MUTABLE_PROPS.preventWheel,
     wheelSpeed: MUTABLE_PROPS.wheelSpeed,
     wheelAxis: MUTABLE_PROPS.wheelAxis,
     followWheel: MUTABLE_PROPS.followWheel,
@@ -177,6 +178,10 @@ const meta: Meta<TComponent> = {
       control: 'boolean',
       table: { category: MUTABLE_NAME },
     },
+    preventWheel: {
+      control: 'boolean',
+      table: { category: MUTABLE_NAME },
+    },
     wheelSpeed: {
       control: 'number',
       table: { category: MUTABLE_NAME },
@@ -229,6 +234,7 @@ export const Loop: StoryObj<TComponent> = {
   args: {
     loop: true,
     wheel: true,
+    preventWheel: true,
     wheelAxis: 'y',
   },
 };
@@ -238,6 +244,7 @@ export const NoLerp: StoryObj<TComponent> = {
     lerp: 1,
     loop: true,
     wheel: true,
+    preventWheel: true,
     wheelAxis: 'y',
   },
 };
@@ -246,6 +253,7 @@ export const Center: StoryObj<TComponent> = {
     origin: 'center',
     loop: true,
     wheel: true,
+    preventWheel: true,
     wheelAxis: 'y',
   },
 };
@@ -255,6 +263,7 @@ export const End: StoryObj<TComponent> = {
     origin: 'end',
     loop: true,
     wheel: true,
+    preventWheel: true,
     wheelAxis: 'y',
   },
 };
@@ -263,6 +272,7 @@ export const Freemode: StoryObj<TComponent> = {
   args: {
     freemode: true,
     wheel: true,
+    preventWheel: true,
     wheelAxis: 'y',
   },
 };
@@ -272,6 +282,7 @@ export const FreemodeLoop: StoryObj<TComponent> = {
     freemode: true,
     loop: true,
     wheel: true,
+    preventWheel: true,
     wheelAxis: 'y',
   },
 };
@@ -281,6 +292,7 @@ export const FreemodeSticky: StoryObj<TComponent> = {
     freemode: 'sticky',
     shortSwipes: false,
     wheel: true,
+    preventWheel: true,
     wheelAxis: 'y',
   },
 };
@@ -291,6 +303,7 @@ export const FreemodeStickyLoop: StoryObj<TComponent> = {
     shortSwipes: false,
     loop: true,
     wheel: true,
+    preventWheel: true,
     wheelAxis: 'y',
   },
 };
@@ -299,6 +312,7 @@ export const Vertical: StoryObj<TComponent> = {
   args: {
     direction: 'vertical',
     loop: true,
+    preventWheel: true,
     wheel: true,
     wheelAxis: 'y',
   },
@@ -311,6 +325,7 @@ export const WheelNoFollow: StoryObj<TComponent> = {
     wheelThrottle: 'auto',
     loop: true,
     wheel: true,
+    preventWheel: true,
     wheelAxis: 'y',
   },
 };
@@ -322,6 +337,7 @@ export const SwipeNoFollow: StoryObj<TComponent> = {
     wheelThrottle: 'auto',
     loop: true,
     wheel: true,
+    preventWheel: true,
     wheelAxis: 'y',
   },
 };
@@ -332,6 +348,7 @@ export const Rewind: StoryObj<TComponent> = {
     followWheel: false,
     wheelThrottle: 'auto',
     wheel: true,
+    preventWheel: true,
     wheelAxis: 'y',
   },
 };
@@ -342,6 +359,7 @@ export const Friction: StoryObj<TComponent> = {
     swipeFriction: true,
     shortSwipes: false,
     wheel: true,
+    preventWheel: true,
     wheelAxis: 'y',
     loop: true,
   },
@@ -350,9 +368,19 @@ export const Friction: StoryObj<TComponent> = {
 export const WheelNoStickyEnd: StoryObj<TComponent> = {
   args: {
     wheel: true,
+    preventWheel: true,
     wheelAxis: 'y',
     stickOnWheelEnd: false,
     friction: 0.3,
+  },
+};
+
+export const WheelHorizontal: StoryObj<TComponent> = {
+  args: {
+    loop: true,
+    wheel: true,
+    preventWheel: true,
+    wheelAxis: 'x',
   },
 };
 
@@ -367,6 +395,7 @@ export const Smooth: StoryObj<TComponent> = {
     duration: 1500,
     lerp: 0.05,
     wheel: true,
+    preventWheel: true,
     wheelAxis: 'y',
   },
 };
@@ -447,6 +476,7 @@ export const Cards: StoryObj<TComponent> = {
     loop: true,
     gap: 20,
     wheel: true,
+    preventWheel: true,
     freemode: 'sticky',
     wheelAxis: 'y',
   },
@@ -458,6 +488,7 @@ export const Carousel: StoryObj<TComponent> = {
     direction: 'horizontal',
     grabCursor: true,
     wheel: true,
+    preventWheel: true,
     wheelAxis: 'y',
     origin: 'center',
     loop: true,
@@ -472,6 +503,7 @@ export const Circular: StoryObj<TComponent> = {
   args: {
     direction: 'horizontal',
     wheel: true,
+    preventWheel: true,
     swipeAxis: 'angle',
     wheelAxis: 'y',
     freemode: true,
@@ -487,6 +519,7 @@ export const Expand: StoryObj<TComponent> = {
     direction: 'horizontal',
     gap: '1rem',
     wheel: true,
+    preventWheel: true,
     lerp: 1,
     wheelAxis: 'y',
     freemode: 'sticky',
@@ -525,6 +558,7 @@ export const Panorama: StoryObj<TComponent> = {
   args: {
     direction: 'horizontal',
     wheel: true,
+    preventWheel: true,
     wheelAxis: 'y',
     origin: 'center',
     loop: true,
@@ -540,6 +574,7 @@ export const Virtual: StoryObj<TComponent> = {
   args: {
     direction: 'horizontal',
     wheel: true,
+    preventWheel: true,
     wheelAxis: 'y',
     swipeAxis: 'x',
     origin: 'center',

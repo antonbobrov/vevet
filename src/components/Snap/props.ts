@@ -44,6 +44,7 @@ export const MUTABLE_PROPS: TRequiredProps<ISnapMutableProps> = {
   swipeInertiaDuration: null as any,
   swipeInertiaRatio: 1,
   wheel: false,
+  preventWheel: false,
   wheelSpeed: 1,
   wheelAxis: 'auto',
   followWheel: true,

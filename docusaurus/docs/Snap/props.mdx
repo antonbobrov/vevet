@@ -644,6 +644,25 @@ snap.updateProps({
 });
 ```
 
+### `preventWheel` {#props.preventWheel}
+
+- **Type:** `boolean`
+- **Default:** `false`
+- Prevents the browser default wheel action, such as page scroll, while wheel control is active.
+
+```js
+const snap = new Snap({
+  container: document.getElementById('container'),
+  wheel: true,
+  preventWheel: false,
+});
+
+// change value
+snap.updateProps({
+  preventWheel: true,
+});
+```
+
 ### `wheelSpeed` {#props.wheelSpeed}
 
 - **Type:** `number`

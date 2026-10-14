@@ -6,6 +6,12 @@ export interface ISnapWheelProps {
   wheel?: boolean;
 
   /**
+   * Prevents the browser default wheel action, such as page scroll.
+   * @default false
+   */
+  preventWheel?: boolean;
+
+  /**
    * Speed factor for mouse wheel movements
    * @default 1
    */
