@@ -71,21 +71,18 @@ const progressElement = document.getElementById("progress");
 const customLoader = document.getElementById("custom-loader");
 
 const preloader = new ProgressPreloader({
-    container: document.getElementById("preloader"),
-    hide: 700
-  },
+  container: document.getElementById("preloader"),
+  hide: 700,
+  onProgress: () => {
+    const {
+      progress
+    } = preloader;
+    const percent = clamp(progress * 100, 0, 99);
+    const html = `${percent.toFixed(0).padStart(2, "0")}%`;
 
-  {
-    onProgress: () => {
-      const {
-        progress
-      } = preloader;
-      const percent = clamp(progress * 100, 0, 99);
-      const html = `${percent.toFixed(0).padStart(2, "0")}%`;
-
-      progressElement.innerHTML = html;
-    }
-  });
+    progressElement.innerHTML = html;
+  }
+});
 
 customLoader.addEventListener("click", () => {
   const resource = preloader.resources.find(({

@@ -73,7 +73,8 @@ const carousel = new Snap({
   container,
   direction: "vertical",
   grabCursor: true,
-  wheel: true
+  wheel: true,
+  preventWheel: true
 });
 
 carousel.on("update", () => {

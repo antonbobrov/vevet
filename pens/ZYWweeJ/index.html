@@ -83,19 +83,16 @@ import {
 const hideButton = document.getElementById("hide-preloader");
 
 const preloader = new Preloader({
-    container: document.getElementById("preloader"),
-    hide: false
-  },
+  container: document.getElementById("preloader"),
+  hide: false,
+  onLoaded: () => {
+    hideButton.classList.add("show");
 
-  {
-    onLoaded: () => {
-      hideButton.classList.add("show");
-
-      hideButton.addEventListener("click", () => {
-        preloader.hide();
-      });
-    }
-  });
+    hideButton.addEventListener("click", () => {
+      preloader.hide();
+    });
+  }
+});
 
   </script>
       </body>

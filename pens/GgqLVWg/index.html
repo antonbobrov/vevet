@@ -135,36 +135,34 @@ import {
 } from "https://esm.sh/vevet@5";
 
 const carousel = new Snap({
-    container: document.getElementById("container"),
-    direction: "horizontal",
-    wheel: true,
-    wheelAxis: "y",
-    loop: true,
-    freemode: true,
-    grabCursor: true
-  },
+  container: document.getElementById("container"),
+  direction: "horizontal",
+  wheel: true,
+  preventWheel: true,
+  wheelAxis: "y",
+  loop: true,
+  freemode: true,
+  grabCursor: true,
+  onUpdate: (data, {
+    containerSize,
+    slides
+  }) => {
+    const radius = containerSize / 2;
+    const p2 = Math.PI * 2;
+    const offset = Math.PI * -0.5;
 
-  {
-    onUpdate: (data, {
-      containerSize,
-      slides
-    }) => {
-      const radius = containerSize / 2;
-      const p2 = Math.PI * 2;
-      const offset = Math.PI * -0.5;
+    slides.forEach(slide => {
+      const element = slide.element;
+      const progress = -slide.progress / slides.length;
 
-      slides.forEach(slide => {
-        const element = slide.element;
-        const progress = -slide.progress / slides.length;
+      const x = Math.cos(p2 * progress + offset) * radius;
+      const z = -Math.sin(p2 * progress + offset) * radius;
+      const rotation = p2 * progress;
 
-        const x = Math.cos(p2 * progress + offset) * radius;
-        const z = -Math.sin(p2 * progress + offset) * radius;
-        const rotation = p2 * progress;
-
-        element.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${rotation}rad)`;
-      });
-    }
-  });
+      element.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${rotation}rad)`;
+    });
+  }
+});
 
   </script>
       </body>

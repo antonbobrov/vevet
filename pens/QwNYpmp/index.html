@@ -81,21 +81,18 @@ import {
 const progressElement = document.getElementById("progress");
 
 const preloader = new ProgressPreloader({
-    container: document.getElementById("preloader"),
-    hide: 700
-  },
+  container: document.getElementById("preloader"),
+  hide: 700,
+  onProgress: () => {
+    const {
+      totalWeight,
+      loadedWeight
+    } = preloader;
+    const html = `${loadedWeight} of ${totalWeight}`;
 
-  {
-    onProgress: () => {
-      const {
-        totalWeight,
-        loadedWeight
-      } = preloader;
-      const html = `${loadedWeight} of ${totalWeight}`;
-
-      progressElement.innerHTML = html;
-    }
-  });
+    progressElement.innerHTML = html;
+  }
+});
 
   </script>
       </body>

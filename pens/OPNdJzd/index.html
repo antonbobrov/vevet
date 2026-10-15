@@ -72,35 +72,32 @@ const container = document.getElementById("container");
 const thumbs = document.querySelectorAll(".thumb");
 
 new Pointers({
-    container,
-    relative: true,
-    minPointers: 2,
-    maxPointers: 5
+  container,
+  relative: true,
+  minPointers: 2,
+  maxPointers: 5,
+  onPointermove: ({
+    pointer
+  }) => {
+    const finger = thumbs[pointer.index];
+
+    finger.style.opacity = "1";
+    finger.style.transform = `translate(${pointer.current.x}px, ${pointer.current.y}px)`;
   },
+  onPointerup: ({
+    pointer
+  }) => {
+    const finger = thumbs[pointer.index];
 
-  {
-    onPointermove: ({
-      pointer
-    }) => {
-      const finger = thumbs[pointer.index];
-
-      finger.style.opacity = "1";
-      finger.style.transform = `translate(${pointer.current.x}px, ${pointer.current.y}px)`;
-    },
-    onPointerup: ({
-      pointer
-    }) => {
-      const finger = thumbs[pointer.index];
-
-      finger.style.opacity = "0";
-    },
-    onStart: () => {
-      container.style.backgroundColor = "rgb(10, 23, 62)";
-    },
-    onEnd: () => {
-      container.style.backgroundColor = "";
-    }
-  });
+    finger.style.opacity = "0";
+  },
+  onStart: () => {
+    container.style.backgroundColor = "rgb(10, 23, 62)";
+  },
+  onEnd: () => {
+    container.style.backgroundColor = "";
+  }
+});
 
   </script>
       </body>

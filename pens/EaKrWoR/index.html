@@ -86,28 +86,25 @@ const progressElement = document.getElementById("progress");
 const hideButton = document.getElementById("hide-preloader");
 
 const preloader = new ProgressPreloader({
-    container: document.getElementById("preloader"),
-    hide: false
+  container: document.getElementById("preloader"),
+  hide: false,
+  onLoaded: () => {
+    hideButton.classList.add("show");
+
+    hideButton.addEventListener("click", () => {
+      preloader.hide();
+    });
   },
+  onProgress: () => {
+    const {
+      progress
+    } = preloader;
+    const percent = clamp(progress * 100, 0, 99);
+    const html = `${percent.toFixed(0).padStart(2, "0")}%`;
 
-  {
-    onLoaded: () => {
-      hideButton.classList.add("show");
-
-      hideButton.addEventListener("click", () => {
-        preloader.hide();
-      });
-    },
-    onProgress: () => {
-      const {
-        progress
-      } = preloader;
-      const percent = clamp(progress * 100, 0, 99);
-      const html = `${percent.toFixed(0).padStart(2, "0")}%`;
-
-      progressElement.innerHTML = html;
-    }
-  });
+    progressElement.innerHTML = html;
+  }
+});
 
   </script>
       </body>

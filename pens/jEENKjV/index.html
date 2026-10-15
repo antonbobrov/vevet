@@ -56,18 +56,15 @@ import {
 const thumb = document.getElementById("thumb");
 
 const tm = new Timeline({
-    duration: 2000,
-    easing: EaseOutBack
-  },
-
-  {
-    onUpdate: ({
-      progress,
-      eased
-    }) => {
-      thumb.style.left = `${eased * 100}%`;
-    }
-  });
+  duration: 2000,
+  easing: EaseOutBack,
+  onUpdate: ({
+    progress,
+    eased
+  }) => {
+    thumb.style.left = `${eased * 100}%`;
+  }
+});
 
 document.getElementById("play").addEventListener("click", () => tm.play());
 

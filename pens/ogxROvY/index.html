@@ -73,19 +73,16 @@ import {
 const progressElement = document.getElementById("progress");
 
 const preloader = new ProgressPreloader({
-    container: document.getElementById("preloader"),
-    hide: 700
-  },
+  container: document.getElementById("preloader"),
+  hide: 700,
+  onProgress: () => {
+    const {
+      progress
+    } = preloader;
 
-  {
-    onProgress: () => {
-      const {
-        progress
-      } = preloader;
-
-      progressElement.style.transform = `scale(${progress}, 1)`;
-    }
-  });
+    progressElement.style.transform = `scale(${progress}, 1)`;
+  }
+});
 
   </script>
       </body>

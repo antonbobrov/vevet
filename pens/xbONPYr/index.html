@@ -5,49 +5,27 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · xbONPYr</title>
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
-        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
-
-body {
-  margin: 0;
-  padding: 0 10px;
-
-  background: linear-gradient(165deg,
-      rgb(17, 25, 42) 0%,
-      rgb(30, 43, 82) 40%,
-      rgb(0, 58, 82) 100%);
-  color: #fff;
-
-  font-family: "Ubuntu", sans-serif;
-  font-size: 30px;
-}
-
-.dot-cursor {
-  background: linear-gradient(35deg,
-      rgb(255, 127, 135) 0%,
-      rgb(244, 214, 157) 100%);
-  border-radius: 50%;
+        <style>.fullpage-center {
+  padding: 1rem;
 }
 
 h1 {
-  margin: 30px 0;
-  font-size: 40px;
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
   font-weight: 600;
   text-align: center;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
+.dot-cursor {
+  background: var(--gradient-peach);
+  border-radius: 50%;
 }
 
 .hover {
   position: relative;
-  width: 150px;
-  height: 150px;
-  border-radius: 10px;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 1rem;
 }
 
 .hover-bg {
@@ -57,11 +35,12 @@ h1 {
   width: 100%;
   height: 100%;
   border-radius: inherit;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
 }</style>
       </head>
       <body>
-        <div class="container">
+        <div class="fullpage-center">
   <h1>Sticky Ghost</h1>
 
   <div class="hover">
@@ -81,7 +60,8 @@ import {
 const dotCursor = new Cursor({
   lerp: 0.25,
   width: 10,
-  height: 10
+  height: 10,
+  lerp: 0.2
 });
 
 dotCursor.inner.classList.add("dot-cursor");
@@ -95,7 +75,7 @@ bgs.forEach((bg, index) => {
     width: 16,
     height: 16,
     sticky: true,
-    stickyFriction: 0.4 - index * 0.075
+    stickyFriction: 0.2 - index * 0.035
   });
 
 });

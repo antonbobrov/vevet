@@ -66,7 +66,7 @@ const scrollable = new ScrollProgress({
     progress
   }) => {
     let step = progress.y - prevProgress;
-    marquee.render(step * marquee.totalWidth);
+    marquee.render(step * marquee.totalSize);
 
     prevProgress = progress.y;
   }

@@ -5,20 +5,41 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>vevet pen · KwMYOjo</title>
         <link rel="stylesheet" href="https://vevetjs.com/shared/codepen-styles.css" />
-        <style>@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;600;700&display=swap");
+        <style>.fullpage-center {
+  padding: 1rem;
+}
 
-body {
-  margin: 0;
-  padding: 0 10px;
+h1 {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+}
 
-  background: linear-gradient(165deg,
-      rgb(17, 25, 42) 0%,
-      rgb(30, 43, 82) 40%,
-      rgb(0, 58, 82) 100%);
+.grid {
+  width: 100%;
+  max-width: 30rem;
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
   color: #fff;
 
-  font-family: "Ubuntu", sans-serif;
-  font-size: 30px;
+  transition: color 1s, background-color 1s;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
 }
 
 .bg-cursor {
@@ -31,53 +52,10 @@ body {
 .dot-cursor {
   background-color: #fff;
   border-radius: 50%;
-}
-
-h1 {
-  margin: 30px 0;
-  font-size: 40px;
-  font-weight: 600;
-  text-align: center;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-
-  .grid {
-    width: 600px;
-    max-width: 100%;
-  }
-}
-
-.grid {
-  display: grid;
-  gap: 10px;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-
-.item {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 30px;
-  border-radius: 10px;
-  font-size: 20px;
-  background: rgba(255, 255, 255, 0.1);
-
-  transition: background-color 1s;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-  }
 }</style>
       </head>
       <body>
-        <div class="container">
+        <div class="fullpage-center">
   <h1>Sticky Friction Cursor</h1>
 
   <div class="grid">
