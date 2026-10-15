@@ -2,8 +2,10 @@
 sidebar_position: 3
 description: Preloader callbacks — lifecycle events. Vevet.js Preloader API reference.
 keywords:
+  - vevet.preloader callbacks
+  - vevetjs preloader callbacks
+  - vevet preloader callbacks
   - preloader callbacks
-  - vevet preloader
 ---
 
 import Head from '@docusaurus/Head';
@@ -38,9 +40,34 @@ const destruct = preloader.on('loaded', () => console.log('loaded'));
 destruct();
 ```
 
+### `requestHide`
+
+Triggered when the page is loaded and a hide is requested.  
+Fires immediately after [`loaded`](#loaded), before [`hide`](#hide) starts. When [`hide`](props#props.hide) is a number, auto-hide follows in the same tick.
+
+Use this callback for custom hide timing with `hide: false` — e.g. call [`hide()`](methods#hide) once your own readiness checks pass.
+
+```ts
+const preloader = new Preloader({
+  container: document.getElementById('container'),
+  hide: false,
+  onRequestHide: () => preloader.hide(500),
+});
+```
+
+or:
+
+```ts
+const destruct = preloader.on('requestHide', () => console.log('requestHide'));
+
+// Cancel the callback
+destruct();
+```
+
 ### `hide`
 
-Triggered when the preloader starts hiding — either automatically (if `hide` props is a number) or via manual `.hide()`.
+Triggered when the preloader starts hiding — either automatically (if `hide` props is a number) or via manual `.hide()`.  
+Preceded by [`requestHide`](#requesthide).
 
 ```ts
 const preloader = new Preloader({

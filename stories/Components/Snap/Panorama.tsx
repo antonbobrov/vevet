@@ -1,27 +1,50 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useRef, useState } from 'react';
 
-import { Snap } from '@/index';
+import { MUTABLE_PROPS, STATIC_PROPS } from '@/components/Snap/props';
+import { ISnapMutableProps, ISnapStaticProps, Snap } from '@/index';
 
-// Inspired by https://panorama-slider.uiinitiative.com/
+import { useLogEvents } from '../../global/useLogEvents';
+import { useOnMutableProps } from '../../global/useOnMutableProps';
+import { useOnProps } from '../../global/useOnProps';
 
-export const Panorama: FC = () => {
+import { LOG_EVENTS } from './constants';
+import { Nav } from './Nav';
+
+type TProps = Omit<
+  ISnapStaticProps & ISnapMutableProps,
+  '__mutableProp' | '__staticProp' | 'container' | 'eventsEmitter'
+>;
+
+const SLIDES = [
+  'https://picsum.photos/id/758/400/600',
+  'https://picsum.photos/id/760/400/600',
+  'https://picsum.photos/id/770/400/600',
+  'https://picsum.photos/id/780/400/600',
+  'https://picsum.photos/id/790/400/600',
+  'https://picsum.photos/id/800/400/600',
+  'https://picsum.photos/id/810/400/600',
+  'https://picsum.photos/id/820/400/600',
+  'https://picsum.photos/id/830/400/600',
+  'https://picsum.photos/id/840/400/600',
+];
+
+export const Component: FC<TProps> = (props) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!ref.current) {
+  const [instance, setInstance] = useState<Snap>();
+
+  useLogEvents(instance, LOG_EVENTS);
+
+  useOnProps(props, STATIC_PROPS, (input: TProps) => {
+    const container = ref.current;
+
+    if (!container) {
       return undefined;
     }
 
-    const instance = new Snap({
-      container: ref.current,
-      direction: 'horizontal',
-      wheel: true,
-      wheelAxis: 'y',
-      origin: 'center',
-      loop: true,
-      gap: 10,
-      freemode: 'sticky',
-      shortSwipes: false,
+    const mod = new Snap({
+      ...input,
+      container,
       onUpdate: (data, { slides }) => {
         const depth = 200;
         const rotation = 20;
@@ -40,8 +63,15 @@ export const Panorama: FC = () => {
       },
     });
 
-    return () => instance.destroy();
-  }, []);
+    setInstance(mod);
+
+    return () => {
+      mod.destroy();
+      setInstance(undefined);
+    };
+  });
+
+  useOnMutableProps(instance, props, MUTABLE_PROPS);
 
   return (
     <>
@@ -80,23 +110,14 @@ export const Panorama: FC = () => {
       </style>
 
       <div ref={ref} className="container">
-        {[
-          'https://picsum.photos/id/758/400/600',
-          'https://picsum.photos/id/760/400/600',
-          'https://picsum.photos/id/770/400/600',
-          'https://picsum.photos/id/780/400/600',
-          'https://picsum.photos/id/790/400/600',
-          'https://picsum.photos/id/800/400/600',
-          'https://picsum.photos/id/810/400/600',
-          'https://picsum.photos/id/820/400/600',
-          'https://picsum.photos/id/830/400/600',
-          'https://picsum.photos/id/840/400/600',
-        ].map((src) => (
+        {SLIDES.map((src) => (
           <div key={src} className="slide">
             <img src={src} alt="" />
           </div>
         ))}
       </div>
+
+      <Nav instance={instance} activeIndex={props.activeIndex} />
     </>
   );
 };

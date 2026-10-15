@@ -1,38 +1,65 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useRef, useState } from 'react';
 
-import { Canvas, TCanvasRender } from '@/index';
+import { MUTABLE_PROPS, STATIC_PROPS } from '@/components/Canvas/props';
+import {
+  Canvas,
+  ICanvasCallbacksMap,
+  ICanvasMutableProps,
+  ICanvasStaticProps,
+  TCanvasRender,
+} from '@/index';
 
-export const Component: FC = () => {
+import { useLogEvents } from '../../global/useLogEvents';
+import { useOnMutableProps } from '../../global/useOnMutableProps';
+import { useOnProps } from '../../global/useOnProps';
+
+type TProps = Omit<
+  ICanvasStaticProps & ICanvasMutableProps,
+  '__mutableProp' | '__staticProp' | 'container'
+>;
+
+const LOG_EVENTS: Record<keyof ICanvasCallbacksMap, boolean> = {
+  destroy: true,
+  props: true,
+  resize: true,
+};
+
+const render: TCanvasRender = ({ ctx, width, height }) => {
+  ctx.beginPath();
+  ctx.fillStyle = '#ccc';
+  ctx.fillRect(0, 0, width, height);
+  ctx.closePath();
+
+  ctx.beginPath();
+  ctx.fillStyle = '#000';
+  ctx.fillRect(10, 10, 50, 50);
+  ctx.closePath();
+};
+
+export const Component: FC<TProps> = (props) => {
   const ref = useRef<HTMLDivElement>(null);
+  const [instance, setInstance] = useState<Canvas>();
 
-  useEffect(() => {
-    if (!ref.current) {
-      return undefined;
-    }
+  useLogEvents(instance, LOG_EVENTS);
 
-    const instance = new Canvas({
+  useOnProps(props, STATIC_PROPS, (input) => {
+    const mod = new Canvas({
+      ...input,
       container: ref.current,
-      resizeOnInit: true,
-      resizeOnRuntime: true,
     });
 
-    const render: TCanvasRender = ({ ctx, width, height }) => {
-      ctx.beginPath();
-      ctx.fillStyle = '#ccc';
-      ctx.fillRect(0, 0, width, height);
-      ctx.closePath();
+    setInstance(mod);
 
-      ctx.beginPath();
-      ctx.fillStyle = '#000';
-      ctx.fillRect(10, 10, 50, 50);
-      ctx.closePath();
+    mod.render(render);
+    mod.on('resize', () => mod.render(render));
+
+    return () => {
+      mod.destroy();
+      setInstance(undefined);
     };
+  });
 
-    instance.render(render);
-    instance.on('resize', () => instance.render(render));
-
-    return () => instance.destroy();
-  }, []);
+  useOnMutableProps(instance, props, MUTABLE_PROPS);
 
   return (
     <div

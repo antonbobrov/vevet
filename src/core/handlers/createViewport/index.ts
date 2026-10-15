@@ -1,8 +1,6 @@
 import { Callbacks } from '@/base/Callbacks';
 import { ICoreProps } from '@/core/types';
-import { cnToggle } from '@/internal/cn';
-import { body, doc, html } from '@/internal/env';
-import { isFiniteNumber } from '@/internal/isFiniteNumber';
+import { cnToggle, body, doc, html, isFiniteNumber } from '@/internal';
 import { addEventListener } from '@/utils/listeners';
 
 import { IViewport, TViewportCallbacks } from './types';

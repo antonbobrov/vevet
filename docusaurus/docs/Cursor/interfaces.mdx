@@ -2,8 +2,10 @@
 sidebar_position: 4
 description: Cursor interfaces — TypeScript types. Vevet.js Cursor API reference.
 keywords:
+  - vevet.cursor interfaces
+  - vevetjs cursor interfaces
+  - vevet cursor interfaces
   - cursor interfaces
-  - vevet cursor
   - typescript
 ---
 
@@ -18,16 +20,19 @@ import Head from '@docusaurus/Head';
 ## CursorHoverElement
 
 Runtime representation of a hoverable element attached to the cursor.
-This object is created internally and exposed via the  
-**[hoveredElement](accessors#hoveredelement)** accessor while the element is hovered.
+Created by **[attachHover()](methods#attachhover)** and exposed via  
+**[hoveredElement](accessors#hoveredelement)** while that target is active.
 
 ```ts
 class CursorHoverElement {
   /** Hoverable DOM element */
   get element(): Element;
 
+  /** Events emitter (defaults to `element`) */
+  get emitter(): Element;
+
   /** Cursor type applied for this element */
-  get type(): string;
+  get type(): string | undefined;
 
   /** Whether the cursor snaps to the element center */
   get snap(): boolean;
@@ -41,14 +46,14 @@ class CursorHoverElement {
   /** Padding applied around the cursor */
   get padding(): number;
 
-  /** Whether the element sticks to the cursor */
+  /** Whether sticky parallax is enabled */
   get sticky(): boolean;
 
-  /** Sticky parallax strength on the X axis */
-  get stickyX(): number;
+  /** Sticky lerp override (falls back to cursor `lerp`) */
+  get stickyLerp(): number | undefined;
 
-  /** Sticky parallax strength on the Y axis */
-  get stickyY(): number;
+  /** Sticky pull-back friction */
+  get stickyFriction(): number;
 }
 ```
 
@@ -144,10 +149,7 @@ interface ICursorHoverElementProps {
 Defines the amplitude of the sticky animation.
 
 ```ts
-export type TCursorHoverElementStickyAmplitude =
-  | number
-  | 'auto'
-  | (string & {});
+type TCursorHoverElementStickyAmplitude = number | 'auto' | (string & {});
 ```
 
 ## TCursorHoverElementStickyAmplitudeObject
@@ -155,7 +157,7 @@ export type TCursorHoverElementStickyAmplitude =
 Axis-based sticky amplitude configuration.
 
 ```ts
-export type TCursorHoverElementStickyAmplitudeObject = {
+type TCursorHoverElementStickyAmplitudeObject = {
   x: TCursorHoverElementStickyAmplitude;
   y: TCursorHoverElementStickyAmplitude;
 };
@@ -163,14 +165,14 @@ export type TCursorHoverElementStickyAmplitudeObject = {
 
 ## ICursorType
 
-Custom cursor type configuration.
+Custom cursor type configuration for **[attachCursor()](methods#attachcursor)**.
 
 ```ts
-export type TCursorHoverElementStickyAmplitudeObject = {
+interface ICursorType {
   /** Custom cursor element */
   element: Element;
 
   /** Unique cursor type identifier */
   type: string;
-};
+}
 ```

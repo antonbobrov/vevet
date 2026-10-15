@@ -4,12 +4,15 @@ toc_min_heading_level: 2
 toc_max_heading_level: 6
 description: SplitText — split text into lines, words and letters. Resize support, HTML and emoji handling. Vevet.js.
 keywords:
+  - vevet.splittext
+  - vevetjs split text
   - vevet split text
   - text animation
   - split text lines words letters
   - typography
 ---
 
+import MoreDemos from '@site/src/components/MoreDemos';
 import VevetDemo from '@site/src/components/VevetDemo';
 
 # SplitText
@@ -30,9 +33,7 @@ Apply `fontKerning: none` to prevent layout shifts.
 
 <VevetDemo id="gbbYKQN" height={500} />
 
-## More demos
-
-To explore more demos, click [here](./demos).
+<MoreDemos />
 
 ## Performance
 
@@ -57,8 +58,8 @@ See performance comparison of:
 
 ## Initialization
 
-:::note Resizing Behavior
-SplitText automatically recalculates lines on every resize.  
+:::note Resizing behavior
+When `lines` is enabled, SplitText reflows line wrappers on resize.
 :::
 
 SplitText is easy to initialize:
@@ -80,7 +81,7 @@ const text = new SplitText({
 });
 ```
 
-Manual splitting (supported for lines only):
+Manual line reflow (only needed when `lines` is `true`):
 
 ```js
 text.split();
@@ -92,24 +93,20 @@ Add animation:
 import { SplitText } from 'vevet';
 import { animate, stagger } from 'animejs';
 
-const text = new SplitText(
-  {
-    container: document.getElementById('quote'),
-    letters: true,
+const text = new SplitText({
+  container: document.getElementById('quote'),
+  letters: true,
+  onSplit: () => {
+    animate(text.letters, {
+      duration: 800,
+      opacity: { from: 0, to: 1 },
+      ease: 'outBack',
+      delay: stagger(12),
+      y: { from: -50, to: 0 },
+      rotateX: { from: 270, to: 0 },
+    });
   },
-  {
-    onSplit: (data, { letters }) => {
-      animate(letters, {
-        duration: 800,
-        opacity: { from: 0, to: 1 },
-        ease: 'outBack',
-        delay: stagger(12),
-        y: { from: -50, to: 0 },
-        rotateX: { from: 270, to: 0 },
-      });
-    },
-  },
-);
+});
 ```
 
 Destroy the SplitText instance:

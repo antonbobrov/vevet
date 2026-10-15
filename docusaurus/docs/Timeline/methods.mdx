@@ -2,8 +2,10 @@
 sidebar_position: 2
 description: Timeline methods — play, reverse, pause, reset and more. Vevet.js Timeline API reference.
 keywords:
+  - vevet.timeline methods
+  - vevetjs timeline methods
+  - vevet timeline methods
   - timeline methods
-  - vevet timeline
   - play pause reverse
 ---
 
@@ -23,6 +25,8 @@ All **[Module methods](/docs/base/Module/#methods)** are available in this class
 
 Pause the timeline, halting progress without resetting it.
 
+Emits the [`pause`](callbacks#pause) callback when a rAF loop is active.
+
 ```ts
 const tm = new Timeline();
 
@@ -31,12 +35,13 @@ tm.pause();
 
 ### `play`
 
-Play the timeline, advancing progress **from the current value toward `1`.**
+Plays forward toward `progress = 1`.
 
 Notes:
 
 - If the timeline is reversed, calling `play()` switches it to forward mode.
-- Does nothing if the timeline is already playing or destroyed.
+- Emits [`resume`](callbacks#resume) when resuming from a pause, then [`play`](callbacks#play).
+- No-op when progress is already `1` or the instance is destroyed.
 
 ```ts
 const tm = new Timeline();
@@ -47,6 +52,8 @@ tm.play();
 ### `reset`
 
 Reset the timeline to the beginning (`progress = 0`).
+
+Emits [`reset`](callbacks#reset) before progress is set to `0` (`start` follows from the progress change).
 
 ```ts
 const tm = new Timeline();
@@ -61,6 +68,7 @@ Reverse the timeline, moving progress **from the current value toward `0`.**
 Notes:
 
 - If the timeline is playing forward, calling `reverse()` switches direction.
+- Emits [`resume`](callbacks#resume) when resuming from a pause, then [`reverse`](callbacks#reverse).
 - Does nothing if progress is already `0` or the instance is destroyed.
 
 ```ts

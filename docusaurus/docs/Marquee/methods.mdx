@@ -2,8 +2,10 @@
 sidebar_position: 2
 description: Marquee methods — API reference. Vevet.js Marquee component.
 keywords:
+  - vevet.marquee methods
+  - vevetjs marquee methods
+  - vevet marquee methods
   - marquee methods
-  - vevet marquee
 ---
 
 import Head from '@docusaurus/Head';
@@ -20,7 +22,7 @@ All **[Module methods](/docs/base/Module/#methods)** are available in this class
 
 ### `render`
 
-Renders the marquee, adjusting element positions.
+Moves the marquee by `step` and reapplies transforms to all items.
 
 ```ts
 const marquee = new Marquee({ container });
@@ -31,7 +33,7 @@ marquee.render(-1); // with step -1
 
 ### `resize`
 
-Resizes the marquee, recalculating element positions and cloning if necessary.
+Recomputes item sizes, clone count, and total loop size, then refreshes transforms.
 
 ```ts
 const marquee = new Marquee({ container });

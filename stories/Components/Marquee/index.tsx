@@ -1,88 +1,104 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 
+import { MUTABLE_PROPS, STATIC_PROPS } from '@/components/Marquee/props';
 import {
+  IMarqueeCallbacksMap,
   IMarqueeMutableProps,
   IMarqueeStaticProps,
   Marquee,
-  Responsive,
 } from '@/index';
 
-interface IProps extends IMarqueeStaticProps, IMarqueeMutableProps {}
+import { useLogEvents } from '../../global/useLogEvents';
+import { useOnMutableProps } from '../../global/useOnMutableProps';
+import { useOnProps } from '../../global/useOnProps';
 
-export const Component: FC<IProps> = (props) => {
+type TProps = Omit<
+  IMarqueeStaticProps & IMarqueeMutableProps,
+  '__mutableProp' | '__staticProp' | 'container'
+>;
+
+const LOG_EVENTS: Record<keyof IMarqueeCallbacksMap, boolean> = {
+  destroy: true,
+  props: true,
+  render: false,
+  resize: true,
+  clone: true,
+};
+
+export const Component: FC<TProps> = (props) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const [width, setWidth] = useState(400);
-  const [marquee, setMarquee] = useState<Marquee | undefined>();
+  const [size, setSize] = useState(400);
+  const [instance, setInstance] = useState<Marquee>();
 
-  useEffect(() => {
+  useLogEvents(instance, LOG_EVENTS);
+
+  useOnProps(props, STATIC_PROPS, (input) => {
     if (!ref.current) {
       return undefined;
     }
 
-    const instance = new Marquee({
-      ...props,
+    const mod = new Marquee({
+      ...input,
       container: ref.current,
     });
 
-    const responsive = new Responsive(instance, [
-      {
-        at: '@media (min-width: 768px)',
-        props: { gap: 50 },
-      },
-    ]);
-
-    setMarquee(instance);
+    setInstance(mod);
 
     return () => {
-      instance.destroy();
-      responsive.destroy();
+      mod.destroy();
+      setInstance(undefined);
     };
-  }, [props]);
+  });
+
+  useOnMutableProps(instance, props, MUTABLE_PROPS);
 
   return (
     <>
-      <button type="button" onClick={() => setWidth((val) => val + 20)}>
-        Resize (changes parent width)
+      <button type="button" onClick={() => setSize((val) => val + 20)}>
+        Resize (changes parent size)
       </button>
 
-      <button
-        type="button"
-        onClick={() => marquee?.updateProps({ enabled: true })}
-      >
-        Play
-      </button>
-
-      <button
-        type="button"
-        onClick={() => marquee?.updateProps({ enabled: false })}
-      >
-        Pause
-      </button>
-
-      <button type="button" onClick={() => marquee?.render()}>
-        Manual render
-      </button>
-
-      <button type="button" onClick={() => marquee?.destroy()}>
-        Destroy
+      <button type="button" onClick={() => setSize(400)}>
+        Reset size
       </button>
 
       <div
-        style={{ background: '#ccc', width, maxWidth: '100%', fontSize: 20 }}
+        style={{
+          background: '#ccc',
+          width: props.direction === 'vertical' ? '100%' : size,
+          height: props.direction === 'horizontal' ? '100%' : size,
+          maxWidth: '100%',
+          fontSize: 20,
+        }}
       >
         <div ref={ref}>
-          <div>
-            <span>Text 1</span>
-          </div>
+          <span
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: 50,
+              background: '#b00',
+              color: '#fff',
+            }}
+          >
+            Text 1
+          </span>
 
-          <div>
-            <span>Text 2</span>
-          </div>
+          <span
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: 30,
+              background: '#0b0',
+            }}
+          >
+            Text 2
+          </span>
 
-          <div>
-            <span>Text 3</span>
-          </div>
+          <span>Text 3</span>
         </div>
       </div>
     </>

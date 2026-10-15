@@ -10,20 +10,20 @@ import { lerp } from './lerp';
  * @param {number} current - The starting value.
  * @param {number} target - The end value.
  * @param {number} factor - The interpolation factor, typically between 0 and 1. A lower value results in slower interpolation, while a higher value makes it faster.
- * @param {number} delta - Time elapsed since the last update in milliseconds
+ * @param {number} deltaTime - Time elapsed since the last update in milliseconds
  * @param {number} [approximation=0] - A small threshold to determine when the difference between the interpolated value and the target is negligible. If the difference is within this threshold, the function returns `target` directly.
  */
 export function damp(
   current: number,
   target: number,
   factor: number,
-  delta: number,
+  deltaTime: number,
   approximation = 0,
 ) {
   return lerp(
     current,
     target,
-    1 - Math.exp(-factor * 60 * (delta / 1000)),
+    1 - Math.exp(-factor * 60 * (deltaTime / 1000)),
     approximation,
   );
 }

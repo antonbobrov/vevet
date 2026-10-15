@@ -2,9 +2,9 @@ import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
-} from '@/base';
+} from '@/base/Module/types';
 
-import { ISwipeCoords } from '../Swipe';
+import { ISwipeCoords } from '../Swipe/global';
 
 import type { Snap } from '../Snap';
 

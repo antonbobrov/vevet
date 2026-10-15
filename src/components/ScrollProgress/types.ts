@@ -2,7 +2,7 @@ import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
-} from '@/base';
+} from '@/base/Module/types';
 
 /** Static properties for the ScrollProgress module */
 export interface IScrollProgressStaticProps extends IModuleStaticProps {

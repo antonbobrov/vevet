@@ -2,8 +2,10 @@
 sidebar_position: 10
 description: InView demos and examples. Vevet.js InView component.
 keywords:
+  - vevet.inview demos
+  - vevetjs inview demos
+  - vevet inview demos
   - inview demos
-  - vevet inview
   - scroll animation examples
 ---
 
@@ -19,30 +21,48 @@ import Head from '@docusaurus/Head';
 
 <section>
   ## Basic Demo
+
+On first load, visible elements animate in with a staggered delay. After that, new elements animate as they enter the viewport while scrolling.
+
   <VevetDemo id="EaaYRmX" height={500} />
 </section>
 
 <section>
   ## In-Out Animation
+
+Same as the basic demo, but elements also re-animate when they leave and later re-enter the viewport (`hasOut: true`).
+
   <VevetDemo id="GgZepMd" height={500} />
 </section>
 
 <section>
   ## Control
+
+Observation starts disabled. Call `instance.updateProps({ enabled: true })` to start revealing elements.
+
   <VevetDemo id="GgZwgZZ" height={500} />
 </section>
 
 <section>
   ## With Anime.js
+
+Example of driving Anime.js animations from InView `in` / `out` callbacks.
+
   <VevetDemo id="LENXYRr" height={500} />
 </section>
 
 <section>
   ## Horizontal InView
+
+Reveal animations for a horizontally scrolling layout (`scrollDirection: 'horizontal'`).
+
   <VevetDemo id="GgZwRWa" height={500} />
 </section>
 
 <section>
   ## Horizontal RTL
+
+Same as horizontal InView, but with an RTL document so stagger delay follows the reading direction.
+
   <VevetDemo id="LENXYqq" height={500} />
 </section>

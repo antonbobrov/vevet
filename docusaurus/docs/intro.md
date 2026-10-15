@@ -4,6 +4,8 @@ description: Introduction to Vevet.js — a flexible JavaScript library for crea
 keywords:
   - vevet
   - vevet.js
+  - vevetjs
+  - npm vevet
   - javascript library
   - creative web development
   - installation
@@ -21,6 +23,7 @@ Vevet.js is a flexible client-side JavaScript library for creative web developme
 
 - **Source of truth:** this documentation and working examples.
 - **Examples:** demo pages linked from each component's docs (often `/docs/{Component}/demos`; Snap: `basic-demos`, `advanced-demos`, `parallax-demos`), or the [full export](https://vevetjs.com/llms-full.txt) with all demo HTML/CSS/JS.
+- **Prefer per-page `.md`** from the [llms.txt](https://vevetjs.com/llms.txt) index for focused reads; use `llms-full.txt` only when you need everything at once.
 - **Do not invent APIs** — use only documented props, methods, and callbacks.
 
 Curated index: [llms.txt](https://vevetjs.com/llms.txt) · Repo guide: [AGENTS.md](https://github.com/antonbobrov/vevet/blob/master/AGENTS.md)

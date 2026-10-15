@@ -2,7 +2,7 @@ import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
-} from '@/base/Module';
+} from '@/base/Module/types';
 
 /** Static properties for the Raf module */
 export interface IRafStaticProps extends IModuleStaticProps {}

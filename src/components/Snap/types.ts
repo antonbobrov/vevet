@@ -2,17 +2,18 @@ import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
-} from '@/base';
+} from '@/base/Module/types';
 import { TEasingType } from '@/utils/math';
 
-import { ISwipeCoords } from '../Swipe';
-import { ITimelineProgressArg } from '../Timeline';
+import { ISwipeCoords } from '../Swipe/global';
+import { ITimelineProgressArg } from '../Timeline/types';
 
-import { ISnapIntervalProps } from './logic/Interval/types';
-import { SnapSlide } from './logic/Slide';
-import { ISnapSlideProps } from './logic/Slide/types';
-import { ISnapSwipeProps } from './logic/Swipe/types';
-import { ISnapWheelProps } from './logic/Wheel/types';
+import { TSnapDuration } from './global';
+import { ISnapIntervalProps } from './input/Interval/types';
+import { ISnapSwipeProps } from './input/Swipe/types';
+import { ISnapWheelProps } from './input/Wheel/types';
+import { SnapSlide } from './slide';
+import { ISnapSlideProps } from './slide/global';
 
 /** Static properties for the Snap component */
 export interface ISnapStaticProps extends IModuleStaticProps {
@@ -163,10 +164,18 @@ export interface ISnapCallbacksMap extends IModuleCallbacksMap<ISnapMutableProps
   /** Fired after active slide change */
   activeSlide: SnapSlide;
 
-  /** Fired on requestAnimationFrame play */
+  /** Fired when the requestAnimationFrame loop starts. */
   rafPlay?: undefined;
 
-  /** Fired on requestAnimationFrame pause */
+  /**
+   * Fired on each requestAnimationFrame tick while the track interpolates toward the target.
+   *
+   * Skipped during Timeline transitions ({@link ISnapCallbacksMap.timelineUpdate | timelineUpdate}).
+   * Precedes {@link ISnapCallbacksMap.update | update} on the same tick.
+   */
+  rafFrame?: undefined;
+
+  /** Fired when the requestAnimationFrame loop pauses. */
   rafPause?: undefined;
 
   /** Fired on wheel start */
@@ -210,32 +219,4 @@ export interface ISnapCallbacksMap extends IModuleCallbacksMap<ISnapMutableProps
 
   /** Fired on idle */
   idle: undefined;
-}
-
-export type TSnapDuration = number | ((distance: number) => number);
-
-export interface ISnapMagnet {
-  /** Slide */
-  slide: SnapSlide;
-  /** Static magnet coordinate */
-  magnet: number;
-  /** Difference with current coordinate */
-  diff: number;
-}
-
-export interface ISnapTransitionArg {
-  duration?: TSnapDuration;
-  easing?: TEasingType;
-  onStart?: () => void;
-  onUpdate?: (data: ITimelineProgressArg) => void;
-  onEnd?: () => void;
-}
-
-export interface ISnapNexPrevArg extends ISnapTransitionArg {
-  skip?: number;
-}
-
-export interface ISnapToSlideArg extends ISnapTransitionArg {
-  direction?: 'next' | 'prev' | null;
-  duration?: TSnapDuration;
 }

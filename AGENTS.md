@@ -12,16 +12,16 @@
 | **Import**                | `import { vevet, SplitText, Snap, Timeline } from 'vevet'`          |
 | **CDN global**            | `Vevet` — `Vevet.SplitText`, etc.; core instance: `Vevet.app`       |
 | **Docs site**             | https://vevetjs.com/                                                |
-| **LLM index**             | https://vevetjs.com/llms.txt                                        |
+| **LLM index**             | https://vevetjs.com/llms.txt — links to per-page `.md` files        |
 | **Full doc export**       | https://vevetjs.com/llms-full.txt — all docs + demo code            |
-| **Markdown pages**        | append `.md` to any doc URL, e.g. https://vevetjs.com/docs/intro.md |
+| **Markdown pages**        | per-page `.md` from the index, e.g. https://vevetjs.com/docs/intro.md |
 | **TypeScript API**        | https://vevetjs.com/v5/ (TypeDoc)                                   |
 | **GitHub**                | https://github.com/antonbobrov/vevet                                |
 | **Current major version** | v5 (see `package.json` for exact version)                           |
 
 ## Source of truth
 
-1. **Documentation** — https://vevetjs.com/ or `docusaurus/docs/` in this repo. Use https://vevetjs.com/llms.txt as the curated index.
+1. **Documentation** — https://vevetjs.com/ or `docusaurus/docs/` in this repo. Use https://vevetjs.com/llms.txt as the curated index (links to per-page `.md` files for focused reads).
 2. **Working examples** — demo pages linked from each component docs (often `/docs/{Component}/demos`; Snap has `basic-demos`, `advanced-demos`, `parallax-demos`) or https://vevetjs.com/llms-full.txt (HTML/CSS/JS for every demo).
 
 Each component is documented under `/docs/{ComponentName}/` with pages such as `index`, `props`, `methods`, `callbacks`, `accessors`, and demo pages where available — not every component has every page or a `demos` route.
@@ -32,7 +32,7 @@ If a prop, method, callback, or event is not documented in the docs, demos, Type
 
 ## Module pattern
 
-All components extend `Module` — they accept `(props, onCallbacks)`, support `updateProps()`, `on('event', fn)`, and `destroy()`. See `docusaurus/docs/base/Module/index.md`.
+All components extend `Module` — they accept `props` (config + `onEvent` callbacks), support `updateProps()`, `on('event', fn)`, and `destroy()`. See `docusaurus/docs/base/Module/index.md`.
 
 ## Quick start
 

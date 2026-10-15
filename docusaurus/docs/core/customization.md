@@ -2,8 +2,9 @@
 sidebar_position: 3
 description: Customize Vevet.js via window.VEVET_PROPS — override default settings before library initialization.
 keywords:
+  - vevet.customization
+  - vevetjs customization
   - vevet customization
-  - vevet props
   - settings
   - configuration
 ---

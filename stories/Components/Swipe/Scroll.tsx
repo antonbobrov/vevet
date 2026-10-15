@@ -1,26 +1,37 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useRef, useState } from 'react';
 
+import { MUTABLE_PROPS, STATIC_PROPS } from '@/components/Swipe/props';
 import { Swipe, vevet } from '@/index';
+
+import { useLogEvents } from '../../global/useLogEvents';
+import { useOnMutableProps } from '../../global/useOnMutableProps';
+import { useOnProps } from '../../global/useOnProps';
+
+import { LOG_EVENTS, TProps } from './constants';
 
 const items = Array(50)
   .fill(0)
   .map((item, index) => index);
 
-export const Scroll: FC = () => {
+export const ScrollComponent: FC<TProps> = (props) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  const [instance, setInstance] = useState<Swipe>();
+
+  useLogEvents(instance, LOG_EVENTS);
+
+  useOnProps(props, STATIC_PROPS, (input: TProps) => {
     const container = ref.current;
+
     if (!container) {
       return undefined;
     }
 
     const elements = Array.from(container.children) as HTMLDivElement[];
 
-    const instance = new Swipe({
+    const mod = new Swipe({
+      ...input,
       container,
-      inertia: true,
-      grabCursor: true,
       bounds: () => ({ y: [0, -container.clientHeight + vevet.height] }),
       onMove: ({ movement }) => {
         elements.forEach((div) => {
@@ -29,8 +40,17 @@ export const Scroll: FC = () => {
       },
     });
 
-    return () => instance.destroy();
-  }, []);
+    setInstance(mod);
+
+    mod.setMovement({ x: 125, y: 125 });
+
+    return () => {
+      mod.destroy();
+      setInstance(undefined);
+    };
+  });
+
+  useOnMutableProps(instance, props, MUTABLE_PROPS);
 
   return (
     <>

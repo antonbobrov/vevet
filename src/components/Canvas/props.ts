@@ -1,4 +1,4 @@
-import { TRequiredProps } from '@/internal/requiredProps';
+import { TRequiredProps } from '@/internal';
 
 import { ICanvasMutableProps, ICanvasStaticProps } from './types';
 

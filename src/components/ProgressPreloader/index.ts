@@ -1,309 +1,198 @@
-import { TModuleOnCallbacksProps } from '@/base';
+import { TModuleProps } from '@/base/Module/types';
 import { initVevet } from '@/global/initVevet';
-import { cnHas } from '@/internal/cn';
-import { doc } from '@/internal/env';
-import { noopIfDestroyed } from '@/internal/noopIfDestroyed';
-import { TRequiredProps } from '@/internal/requiredProps';
-import { clamp, lerp } from '@/utils/math';
+import { doc, noopIfDestroyed, TRequiredProps } from '@/internal';
+import { clamp } from '@/utils/math';
 
 import { Preloader } from '../Preloader';
 import { Raf } from '../Raf';
 import { Timeline } from '../Timeline';
 
 import { MUTABLE_PROPS, STATIC_PROPS } from './props';
+import { ProgressPreloaderResources } from './Resources';
 import {
   IProgressPreloaderCallbacksMap,
-  IProgressPreloaderResource,
   IProgressPreloaderMutableProps,
   IProgressPreloaderStaticProps,
 } from './types';
-import { preloadCustomElement } from './utils/preloadCustomElement';
-import { preloadImage } from './utils/preloadImage';
-import { preloadVideo } from './utils/preloadVideo';
-
-export * from './types';
 
 type TC = IProgressPreloaderCallbacksMap;
 type TS = IProgressPreloaderStaticProps;
 type TM = IProgressPreloaderMutableProps;
 
-const PAGE_RESOURCE = `vevet-page-${Math.random()}`;
-
 /**
- * Page preloader for calculating and displaying the loading progress of resources (images, videos, custom elements).
- * Provides smooth progress transitions.
+ * Resource-aware page preloader with smooth progress display.
+ *
+ * - Tracks weighted resources (images, videos, DOM custom elements, virtual ids)
+ * - Exposes raw `loadProgress` and smoothed `progress` for UI
+ * - Inherits {@link Preloader} hide lifecycle after `loaded`
+ *
+ * Progress pipeline
+ *
+ * `resolveResource` → weighted `loadProgress` → {@link Raf} damp (`lerp`) →
+ * `progress` → optional {@link Timeline} finish (`endDuration`) → `loaded`.
  *
  * [Documentation](https://vevetjs.com/docs/ProgressPreloader)
  *
  * @group Components
  */
 export class ProgressPreloader extends Preloader<TC, TS, TM> {
-  /**
-   * Retrieves the default static properties.
-   */
   public _getStatic(): TRequiredProps<TS> {
     return { ...super._getStatic(), ...STATIC_PROPS };
   }
 
-  /**
-   * Retrieves the default mutable properties.
-   */
   public _getMutable(): TRequiredProps<TM> {
     return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 
-  /**
-   * List of custom resources to preload based on selectors.
-   */
-  private _resources: IProgressPreloaderResource[] = [
-    { id: PAGE_RESOURCE, weight: 1, loaded: 0 },
-  ];
+  private _resources: ProgressPreloaderResources;
 
-  /**
-   * Current interpolated progress value for smooth transitions.
-   */
+  /** Smoothed progress in the `0–1` range (UI value). */
   private _progress = 0;
 
-  /** Animation frame instance for managing smooth progress updates. */
-  private _raf: Raf;
+  private _raf?: Raf | null;
 
-  constructor(
-    props?: TS & TM & TModuleOnCallbacksProps<TC, ProgressPreloader>,
-    onCallbacks?: TModuleOnCallbacksProps<TC, ProgressPreloader>,
-  ) {
-    super(props as any, onCallbacks as any);
+  constructor(props?: TModuleProps<TC, TS, TM, ProgressPreloader>) {
+    super(props as any);
 
-    // Initialize animation frame if interpolation is enabled
+    this._resources = new ProgressPreloaderResources(
+      this,
+      this.resourceContainer,
+      (resource) => this._emit('resource', resource),
+    );
+
     this._raf = new Raf({ enabled: true });
     this._raf.on('frame', () => this._handleUpdate());
 
-    // Start preloading resources
-    this._fetchImages();
-    this._fetchVideos();
-    this._fetchResources();
-
-    // Handle resources on page load
-    initVevet().onLoad(() => this.resolveResource(PAGE_RESOURCE));
+    this.onDestroy(initVevet().onLoad(() => this._resources.resolveInitial()));
   }
 
-  /** Container source for preloader resources. */
+  /** DOM root for scanning images, videos, and {@link IProgressPreloaderStaticProps.customSelector}. */
   get resourceContainer() {
     return this.props.resourceContainer ?? doc;
   }
 
-  /**
-   * The list of custom resources to preload.
-   */
+  /** All tracked resources (DOM elements and virtual ids). */
   get resources() {
-    return this._resources;
+    return this._resources.items;
   }
 
-  /**
-   * Calculates the total number of resources to preload, including their weight.
-   */
+  /** Sum of all resource `weight` values. */
   get totalWeight() {
-    return this.resources.reduce((acc, { weight }) => acc + weight, 0);
+    return this._resources.totalWeight;
   }
 
-  /**
-   * Loaded weight
-   */
+  /** Sum of all resource `loaded` values. */
   get loadedWeight() {
-    return this.resources.reduce((acc, { loaded }) => acc + loaded, 0);
+    return this._resources.loadedWeight;
   }
 
   /**
-   * Current loading progress (0 to 1).
+   * Actual weighted progress (`0–1`), not interpolated.
+   *
+   * Updates immediately when a resource resolves.
    */
   get loadProgress() {
     return this.loadedWeight / this.totalWeight;
   }
 
   /**
-   * Gets the current progress value.
+   * Smoothed progress (`0–1`) for UI animations.
+   *
+   * Follows `loadProgress` via {@link Raf.damp} using `lerp`.
+   * {@link Preloader.loaded} waits for `progress >= 1`, not `loadProgress`.
    */
   get progress() {
     return this._progress;
   }
 
   /**
-   * Linear interpolation factor
-   */
-  private get lerpEase() {
-    return clamp(Math.abs(this.props.lerp));
-  }
-
-  /** Preload images */
-  private _fetchImages() {
-    if (!this.props.preloadImages) {
-      return;
-    }
-
-    let list = Array.from(this.resourceContainer.querySelectorAll('img'));
-    list = list.filter((resource) => {
-      const isIgnored = cnHas(resource, this.props.ignoreClassName);
-
-      return !isIgnored && resource.loading !== 'lazy';
-    });
-
-    this._resources.push(
-      ...list.map((resource) => ({
-        id: resource,
-        weight: 1,
-        loaded: 0,
-      })),
-    );
-
-    list.forEach((element) => {
-      preloadImage(element, () => this.resolveResource(element));
-    });
-  }
-
-  /** Preload videos */
-  private _fetchVideos() {
-    if (!this.props.preloadVideos) {
-      return;
-    }
-
-    let list = Array.from(this.resourceContainer.querySelectorAll('video'));
-    list = list.filter(
-      (resource) => !cnHas(resource, this.props.ignoreClassName),
-    );
-
-    this._resources.push(
-      ...list.map((resource) => ({
-        id: resource,
-        weight: 1,
-        loaded: 0,
-      })),
-    );
-
-    list.forEach((element) => {
-      preloadVideo(element, () => this.resolveResource(element));
-    });
-  }
-
-  /** Preload custom resources */
-  private _fetchResources() {
-    let list = Array.from(
-      this.resourceContainer.querySelectorAll(this.props.customSelector),
-    );
-
-    list = list.filter(
-      (resource) => !cnHas(resource, this.props.ignoreClassName),
-    );
-
-    list.forEach((element) => {
-      let weight = parseInt(element.getAttribute('data-weight') || '1', 10);
-      weight = Number.isNaN(weight) ? 1 : clamp(weight, 1, Infinity);
-
-      const resource = {
-        id: element,
-        weight,
-        loaded: 0,
-      };
-
-      this._resources.push(resource);
-
-      preloadCustomElement(resource, (loadedWeight) =>
-        this.resolveResource(element, loadedWeight),
-      );
-    });
-  }
-
-  /**
-   * Adds a custom resource
-   * @param id - The custom resource element or identifier to preload.
-   * @param weight - The resource weight
+   * Registers a virtual resource by id.
    */
   @noopIfDestroyed
   public addResource(id: Element | string, weight = 1) {
-    const hasResource = this.resources.some((item) => item.id === id);
-
-    if (hasResource) {
-      throw new Error('Resource already exists');
-    }
-
-    this._resources.push({ id, weight, loaded: 0 });
+    this._resources.add(id, weight);
   }
 
   /**
-   * Emits a resource load event and updates the count of loaded resources.
-   * @param id - The resource element or identifier being loaded.
+   * Updates loaded weight for a resource and emits {@link IProgressPreloaderCallbacksMap.resource}.
+   *
+   * For custom DOM elements, call as `data-loaded` changes (or use partial weights).
    */
   @noopIfDestroyed
   public resolveResource(id: Element | string, loadedWeight?: number) {
-    const resource = this.resources.find((item) => item.id === id);
-    if (!resource) {
+    this._resources.resolve(id, loadedWeight);
+  }
+
+  /** Damps `progress` toward `loadProgress` each frame; starts end timeline at `loadProgress >= 1`. */
+  @noopIfDestroyed
+  private _handleUpdate() {
+    if (!this._raf) {
       return;
     }
 
-    const targetWeight = loadedWeight ?? resource.weight;
-    resource.loaded = clamp(targetWeight, 0, resource.weight);
-
-    this.callbacks.emit('resource', resource);
-  }
-
-  /**
-   * Handles updates to the preloader's progress, triggering events and animations as needed.
-   * @param newProgress - The updated progress value.
-   */
-  private _handleUpdate() {
-    const ease = this._raf.lerpFactor(this.lerpEase);
-    const newProgress = lerp(this._progress, this.loadProgress, ease);
+    const ease = clamp(Math.abs(this.props.lerp));
+    const newProgress = this._raf.damp(this._progress, this.loadProgress, ease);
 
     this._progress = newProgress;
 
-    this.callbacks.emit('progress', undefined);
+    this._emit('progress', undefined);
 
-    if (this.loadProgress < 1) {
-      return;
+    if (this.loadProgress >= 1) {
+      this._endWithTm();
     }
+  }
 
+  /** Stops {@link Raf} and optionally animates `progress` to `1` via `endDuration`. Emits `timelineStart`, `timelineUpdate`, and `timelineEnd`. */
+  private _endWithTm() {
     this._raf?.destroy();
+    this._raf = undefined;
 
-    const startProgress = this.progress;
+    const startProgress = this._progress;
     if (startProgress >= 1) {
       return;
     }
 
-    const endTimeline = new Timeline({ duration: this.props.endDuration });
-    this.onDestroy(() => endTimeline.destroy());
+    const tm = new Timeline({ duration: this.props.endDuration });
+    this.onDestroy(() => tm.destroy());
 
-    endTimeline.on('update', ({ progress }) => {
+    tm.on('start', () => this._emit('timelineStart', undefined));
+
+    tm.on('end', () => this._emit('timelineEnd', undefined));
+
+    tm.on('update', (data) => {
       const diff = 1 - startProgress;
-      this._progress = startProgress + diff * progress;
+      this._progress = startProgress + diff * data.progress;
 
-      this.callbacks.emit('progress', undefined);
+      this._emit('progress', undefined);
+      this._emit('timelineUpdate', data);
     });
 
-    endTimeline.play();
+    tm.play();
   }
 
   /**
-   * Resolves when the page and all resources are fully loaded.
+   * Waits for smoothed `progress >= 1`, then runs {@link Preloader} load handling.
+   *
+   * Overrides {@link Preloader._onLoaded} — does not use `initVevet().onLoad` directly.
    */
   protected _onLoaded(callback: () => void) {
     let isFinish = false;
 
     this.callbacks.on(
       'progress',
-      (() => {
+      () => {
         if (this.progress >= 1 && !isFinish) {
           isFinish = true;
           callback();
         }
-      }) as any,
+      },
       { protected: true, name: this.name },
     );
   }
 
-  /**
-   * Cleans up resources and destroys the preloader instance.
-   */
   protected _destroy() {
     super._destroy();
 
-    this._raf.destroy();
+    this._raf?.destroy();
   }
 }

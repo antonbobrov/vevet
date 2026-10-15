@@ -4,6 +4,7 @@ interface IProps {
   isRtl: boolean;
 }
 
+/** Apply the minimal inline styles required for marquee layout. */
 export function appleMarqueeContainerStyles({
   container,
   isVertical,
@@ -17,6 +18,7 @@ export function appleMarqueeContainerStyles({
   style.alignItems = 'center';
   style.justifyContent = isRtl ? 'flex-end' : 'flex-start';
   style.overflow = 'hidden';
+
   if (isVertical) {
     style.height = '100%';
   } else {
@@ -24,6 +26,7 @@ export function appleMarqueeContainerStyles({
   }
 }
 
+/** Remove inline styles previously applied by `appleMarqueeContainerStyles`. */
 export function removeMarqueeContainerStyles(container: HTMLElement) {
   const { style } = container;
 

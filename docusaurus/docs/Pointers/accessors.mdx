@@ -2,8 +2,10 @@
 sidebar_position: 1
 description: Pointers accessors — state getters. Vevet.js Pointers API reference.
 keywords:
+  - vevet.pointers accessors
+  - vevetjs pointers accessors
+  - vevet pointers accessors
   - pointers accessors
-  - vevet pointers
 ---
 
 import Head from '@docusaurus/Head';
@@ -50,7 +52,7 @@ pointers.isStarted; // true or false
 
 Type: [`IPointersMove`](interfaces#ipointersmove) | `null`
 
-Latest aggregated gesture snapshot from the most recent [`move`](callbacks#move) update, or `null` before the first move after [`start`](#start) / after [`end`](#end).
+Latest aggregated gesture snapshot from the most recent [`move`](callbacks#move) update, or `null` before the first move after [`start`](callbacks#start) / after [`end`](callbacks#end).
 
 ```js
 const pointers = new Pointers({
@@ -68,7 +70,7 @@ Type: `Map<number,` [IPointersItem](interfaces#ipointersitem)`>`
 
 Contains all currently active pointers.  
 Keys correspond to native `pointerId` values from Pointer Events API.  
-Entries are updated every frame and preserved until the pointer is fully released (`pointerup` / `pointercancel`).
+Entries are updated on each `pointermove` and preserved until the pointer is released (`pointerup` / `pointercancel`).
 
 ```js
 const pointers = new Pointers({

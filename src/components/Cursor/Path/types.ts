@@ -1,11 +1,6 @@
-export interface ICursorPathVec2 {
-  x: number;
-  y: number;
-}
+import { ICursorVec2 } from '../global';
 
-/**
- * Represents the cursor's point on a path.
- */
-export interface ICursorPathPoint extends ICursorPathVec2 {
+/** Point on the cursor path trail, including cumulative path length. */
+export interface ICursorPathPoint extends ICursorVec2 {
   length: number;
 }

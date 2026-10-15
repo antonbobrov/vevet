@@ -1,6 +1,5 @@
 import { Callbacks } from '@/base/Callbacks';
-import { cnAdd, cnRemove } from '@/internal/cn';
-import { doc, html } from '@/internal/env';
+import { cnAdd, cnRemove, doc, html } from '@/internal';
 import { addEventListener } from '@/utils/listeners';
 
 import { IPageLoadCallbacksMap } from './types';

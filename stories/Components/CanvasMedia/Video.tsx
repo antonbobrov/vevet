@@ -1,55 +1,70 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useMemo, useRef, useState } from 'react';
 
-import { CanvasMedia, ICanvasMediaMutableProps } from '@/index';
+import { MUTABLE_PROPS, STATIC_PROPS } from '@/components/CanvasMedia/props';
+import {
+  CanvasMedia,
+  ICanvasMediaCallbacksMap,
+  ICanvasMediaMutableProps,
+  ICanvasMediaStaticProps,
+} from '@/index';
 
-export const Video: FC = () => {
+import { useLogEvents } from '../../global/useLogEvents';
+import { useOnMutableProps } from '../../global/useOnMutableProps';
+import { useOnProps } from '../../global/useOnProps';
+
+type TProps = Omit<
+  ICanvasMediaStaticProps & ICanvasMediaMutableProps,
+  '__mutableProp' | '__staticProp' | 'container'
+>;
+
+const LOG_EVENTS: Record<keyof ICanvasMediaCallbacksMap, boolean> = {
+  destroy: true,
+  props: true,
+  resize: true,
+  render: false,
+};
+
+const VIDEO_SRC =
+  'https://www.shutterstock.com/shutterstock/videos/1080319025/preview/stock-footage-abstract-tech-earth-globalization-in-d-motion-graphic-concept-transmit-ai-networking-on-fiber.mp4';
+
+export const Video: FC<TProps> = (props) => {
   const ref = useRef<HTMLDivElement>(null);
-  const mediaRef = useRef<HTMLVideoElement>(null);
 
+  const [media, setMedia] = useState<HTMLVideoElement>();
   const [instance, setInstance] = useState<CanvasMedia>();
-  const [rule, setRule] = useState<ICanvasMediaMutableProps['rule']>('cover');
 
-  useEffect(() => {
-    if (!ref.current || !mediaRef.current) {
-      return undefined;
-    }
+  useLogEvents(instance, LOG_EVENTS);
 
-    const media = new CanvasMedia({
-      media: mediaRef.current,
-      container: ref.current,
-      resizeOnRuntime: false,
-      rule: 'cover',
-    });
+  const deps = useMemo(() => [media], [media]);
 
-    setInstance(media);
+  useOnProps(
+    props,
+    STATIC_PROPS,
+    (input) => {
+      if (!media) {
+        return;
+      }
 
-    return () => media.destroy();
-  }, []);
+      const mod = new CanvasMedia({
+        ...input,
+        container: ref.current,
+        media,
+      });
 
-  useEffect(() => {
-    if (!instance) {
-      return;
-    }
+      setInstance(mod);
 
-    instance.updateProps({ rule });
-  }, [instance, rule]);
+      return () => {
+        mod.destroy();
+        setInstance(undefined);
+      };
+    },
+    deps,
+  );
+
+  useOnMutableProps(instance, props, MUTABLE_PROPS);
 
   return (
     <>
-      {[
-        'cover',
-        'contain',
-        'top-left',
-        'top-right',
-        'bottom-left',
-        'bottom-right',
-        'center',
-      ].map((key) => (
-        <button key={key} type="button" onClick={() => setRule(key as any)}>
-          {key}
-        </button>
-      ))}
-
       <div
         ref={ref}
         style={{
@@ -64,12 +79,13 @@ export const Video: FC = () => {
       <p>Original media</p>
 
       <video
-        ref={mediaRef}
         height={200}
         autoPlay
         muted
         controls
-        src="https://www.shutterstock.com/shutterstock/videos/1080319025/preview/stock-footage-abstract-tech-earth-globalization-in-d-motion-graphic-concept-transmit-ai-networking-on-fiber.mp4"
+        playsInline
+        src={VIDEO_SRC}
+        onLoadedMetadata={(event) => setMedia(event.currentTarget)}
       />
     </>
   );

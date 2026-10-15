@@ -1,12 +1,11 @@
-import { TEasingType } from 'easing-progress';
-
 import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
-} from '@/base';
+} from '@/base/Module/types';
+import { TEasingType } from '@/utils/math';
 
-import { IPointersCallbacksMap, IPointersStaticProps } from '../Pointers';
+import { IPointersCallbacksMap, IPointersStaticProps } from '../Pointers/types';
 
 import {
   ISwipeAxes,
@@ -110,7 +109,7 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
 
   /**
    * Prevents edge swiping (iOS swipe-back gesture).
-   * @default true
+   * @default false
    */
   preventEdgeSwipe?: boolean;
 

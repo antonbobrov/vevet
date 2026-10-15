@@ -2,8 +2,10 @@
 sidebar_position: 10
 description: Snap advanced demos. Custom carousel patterns with Vevet.js Snap.
 keywords:
+  - vevet.snap advanced demos
+  - vevetjs snap advanced demos
+  - vevet snap advanced demos
   - snap advanced demos
-  - vevet snap
   - carousel examples
 ---
 
@@ -24,7 +26,11 @@ Most map `coord`, `progress`, and slide metadata in the `update` callback to CSS
 <section>
 ## Focus
 
-(todo read code and describe)
+Centered loop where the active slide stays sharp and neighbors fall away.
+
+`progress` becomes a gaussian focus weight, then scale, opacity, blur, brightness, a sine offset, and rotation. Slide images also shift with `data-snap-parallax-*`.
+
+Key props: `origin: "center"`, `freemode: "sticky"`, `loop: true`, `easing: EaseOutBack`, `gap: "-1rem"`.
 
 <VevetDemo id="MYJbrWP" height={500} />
 </section>
@@ -52,7 +58,11 @@ Maps `progress` to `translateZ`, `rotateY`, and a horizontal offset in `onUpdate
 <section>
 ## Cube
 
-3D cube carousel with perspective (todo read code and describe)
+Cube faces in CSS 3D. Each slide uses `rotateY(progress * -90deg)` and `translateZ(size / 2)`. Faces with `progress` outside ±1 are hidden.
+
+The container sets `perspective` and `transform-style: preserve-3d`.
+
+Key props: `origin: "center"`, `freemode: "sticky"`, `loop: true`, `interval: 1000`, `shortSwipes: false`.
 
 <VevetDemo id="WbRoXzO" height={500} />
 </section>

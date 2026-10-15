@@ -4,6 +4,8 @@ toc_min_heading_level: 2
 toc_max_heading_level: 6
 description: Raf — Vevet.js requestAnimationFrame loop with FPS throttling, play/pause, FPS measurement and frame-rate-independent animations.
 keywords:
+  - vevet.raf
+  - vevetjs raf
   - vevet raf
   - requestAnimationFrame
   - fps throttling
@@ -11,23 +13,31 @@ keywords:
   - damping
 ---
 
+import MoreDemos from '@site/src/components/MoreDemos';
 import VevetDemo from '@site/src/components/VevetDemo';
 
 # Raf
 
-- Manages a requestAnimationFrame loop
-- Supports custom FPS throttling (including dynamic `'auto'` mode)
-- Provides playback control (play, pause)
-- Measures real-time FPS and frame duration
-- Includes tools for frame-rate–independent animations (damping)
+`requestAnimationFrame` loop with FPS throttling and frame-rate–independent easing:
+
+- Schedules a rAF chain while [`enabled`](props#props.enabled) is true
+- Throttles logical frames via [`fps`](props#props.fps) (fixed cap or `'auto'`)
+- Measures real-time [`fps`](accessors#fps), [`duration`](accessors#duration), and frame [`index`](accessors#index)
+- Provides [`lerpFactor`](methods#lerpfactor) and [`damp`](methods#damp) for refresh-rate–independent motion
+
+## Animation loop
+
+1. **`play`** / `enabled: true` — starts the rAF chain; emits [`play`](callbacks#play) and [`toggle`](callbacks#toggle).
+2. **`frame`** — fired on each **processed** frame (after FPS throttling), with `fps`, `fpsFactor`, `duration`, and `lerpFactor`.
+3. **`pause`** / `enabled: false` — `cancelAnimationFrame`; emits [`pause`](callbacks#pause) and [`toggle`](callbacks#toggle).
+
+Changing [`fps`](props#props.fps) or [`enabled`](props#props.enabled) resets frame timing.
 
 ## Basic Demo
 
 <VevetDemo id="EaaYREw" height={500} />
 
-## More demos
-
-To explore more demos, click [here](./demos).
+<MoreDemos />
 
 ## Initialization
 
@@ -69,26 +79,21 @@ Get real-time FPS:
 ```js
 import { Raf } from 'vevet';
 
-const raf = new Raf(
-  {
-    enabled: true,
-    fps: 30,
+const raf = new Raf({
+  enabled: true,
+  fps: 30,
+  onFrame: ({ fps }) => {
+    console.log(fps);
   },
-  {
-    onFrame: ({ fps }) => {
-      console.log(fps);
-    },
-  },
-);
+});
 ```
 
-Damping (used for consistent animations across 60Hz, 120Hz, and others, **see [demo](demos#damping)**):
+Damping — use [`damp`](methods#damp) or [`lerpFactor`](methods#lerpfactor) for consistent motion across 60 Hz, 120 Hz, and 144 Hz displays (**see [demo](demos#damping)**):
 
 ```ts
-const ease = raf.lerpFactor(0.1);
-
-// and use it in your lerp
-lerp(from, to, ease);
+raf.on('frame', () => {
+  value = raf.damp(value, target, 0.1);
+});
 ```
 
 Play:

@@ -1,9 +1,12 @@
 ---
 sidebar_position: 3
-description: Marquee callbacks — scroll events. Vevet.js Marquee API reference.
+description: Marquee callbacks — render, resize, clone events. Vevet.js Marquee API reference.
 keywords:
+  - vevet.marquee callbacks
+  - vevetjs marquee callbacks
+  - vevet marquee callbacks
   - marquee callbacks
-  - vevet marquee
+  - marquee clone
 ---
 
 import Head from '@docusaurus/Head';
@@ -53,6 +56,27 @@ or:
 
 ```ts
 const destruct = marquee.on('resize', () => console.log('resize'));
+
+// Cancel the callback
+destruct();
+```
+
+### `clone`
+
+Called when the marquee nodes are cloned.  
+Fires after clones are created when [`cloneNodes`](./props#props.cloneNodes) is enabled — during initial setup and whenever the clone count is recalculated on resize.
+
+```ts
+const marquee = new Marquee({
+  container,
+  onClone: () => console.log('clone'),
+});
+```
+
+or:
+
+```ts
+const destruct = marquee.on('clone', () => console.log('clone'));
 
 // Cancel the callback
 destruct();

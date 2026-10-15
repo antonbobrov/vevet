@@ -2,7 +2,7 @@ import {
   IModuleCallbacksMap,
   IModuleMutableProps,
   IModuleStaticProps,
-} from '@/base/Module';
+} from '@/base/Module/types';
 
 /**
  * Static properties for the Marquee component.
@@ -100,4 +100,9 @@ export interface IMarqueeCallbacksMap extends IModuleCallbacksMap<IMarqueeMutabl
    * Called on marquee resize
    */
   resize: undefined;
+
+  /**
+   * Called on marquee nodes cloned
+   */
+  clone: undefined;
 }

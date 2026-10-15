@@ -1,5 +1,4 @@
-import { doc } from '@/internal/env';
-import { prependStyles } from '@/internal/prependStyles';
+import { doc, prependStyles } from '@/internal';
 
 let style: HTMLStyleElement | null = null;
 

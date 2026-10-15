@@ -2,8 +2,10 @@
 sidebar_position: 0
 description: ProgressPreloader props — configuration. Vevet.js ProgressPreloader API reference.
 keywords:
+  - vevet.progresspreloader props
+  - vevetjs progress preloader props
+  - vevet progress preloader props
   - progress preloader props
-  - vevet preloader
 ---
 
 import Head from '@docusaurus/Head';
@@ -127,7 +129,8 @@ const preloader = new ProgressPreloader({
 - **Type:** `number`
 - **Default:** `500`
 - Duration (in ms) for a forced completion animation when all resources are loaded but the current interpolated [progress](accessors#progress) is still below `1`.  
-  This creates a smooth "finish animation" even if the last resources load instantly
+  This creates a smooth "finish animation" even if the last resources load instantly.
+- Emits [`timelineStart`](callbacks#timelinestart), [`timelineUpdate`](callbacks#timelineupdate), and [`timelineEnd`](callbacks#timelineend) during this animation.
 
 ```js
 const preloader = new ProgressPreloader({

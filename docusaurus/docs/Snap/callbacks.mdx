@@ -2,8 +2,10 @@
 sidebar_position: 3
 description: Snap callbacks — onActiveSlide, onSwipe and more. Vevet.js Snap API reference.
 keywords:
+  - vevet.snap callbacks
+  - vevetjs snap callbacks
+  - vevet snap callbacks
   - snap callbacks
-  - vevet snap
   - carousel events
 ---
 
@@ -40,29 +42,9 @@ const destruct = snap.on('activeSlide', (slide) => console.log(slide.index));
 destruct();
 ```
 
-### `rafPause`
-
-Triggered when the requestAnimationFrame loop is paused.
-
-```ts
-const snap = new Snap({
-  container,
-  onRafPause: () => console.log('pause'),
-});
-```
-
-or:
-
-```ts
-const destruct = snap.on('rafPause', () => console.log('pause'));
-
-// Cancel the callback
-destruct();
-```
-
 ### `rafPlay`
 
-Triggered when the requestAnimationFrame loop resumes.
+Triggered when the requestAnimationFrame loop starts — when the track begins interpolating toward the target.
 
 ```ts
 const snap = new Snap({
@@ -75,6 +57,50 @@ or:
 
 ```ts
 const destruct = snap.on('rafPlay', () => console.log('play'));
+
+// Cancel the callback
+destruct();
+```
+
+### `rafFrame`
+
+Triggered on each requestAnimationFrame tick while the track interpolates toward the target.
+
+- Skipped during Timeline transitions — use [`timelineUpdate`](#timelineupdate) instead.
+- Fires before [`update`](#update) on the same tick.
+- Does not fire when `render()` is called manually (e.g. on resize).
+
+```ts
+const snap = new Snap({
+  container,
+  onRafFrame: () => console.log('rafFrame'),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('rafFrame', () => console.log('rafFrame'));
+
+// Cancel the callback
+destruct();
+```
+
+### `rafPause`
+
+Triggered when the requestAnimationFrame loop pauses — when the track reaches the target and interpolation stops.
+
+```ts
+const snap = new Snap({
+  container,
+  onRafPause: () => console.log('pause'),
+});
+```
+
+or:
+
+```ts
+const destruct = snap.on('rafPause', () => console.log('pause'));
 
 // Cancel the callback
 destruct();
@@ -244,7 +270,10 @@ destruct();
 
 ### `update`
 
-Triggered on every carousel coordinate update.
+Triggered on every carousel coordinate update — after slide coords, magnets, and friction are applied.
+
+During RAF interpolation, fires on the same tick as [`rafFrame`](#rafframe), immediately after it.  
+During Timeline transitions, fires from [`timelineUpdate`](#timelineupdate) instead.
 
 ```ts
 const snap = new Snap({

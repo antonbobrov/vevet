@@ -1,21 +1,21 @@
 /**
- * Information about the currently hovered element affecting cursor behavior.
+ * Options for {@link Cursor.attachHover}.
  */
 export interface ICursorHoverElementProps {
-  /** Hoverable DOM element */
+  /** Hoverable DOM element (also receives sticky transforms when `sticky` is on) */
   element: Element;
 
   /**
-   * Hover events emitter. If not provided, the element itself will be used
+   * Element that emits hover events. Defaults to `element`.
    * @default null
    */
   emitter?: Element | null;
 
-  /** Cursor type to activate on hover */
+  /** Cursor type id to activate on hover (see {@link Cursor.attachCursor}) */
   type?: string;
 
   /**
-   * Debounce time for hover events, in milliseconds
+   * Debounce for `mouseenter` before treating as hovered, in milliseconds.
    * @default 16
    */
   hoverDebounce?: number;
@@ -42,36 +42,34 @@ export interface ICursorHoverElementProps {
   height?: null | number | 'auto' | (string & {});
 
   /**
-   * Padding applied around the cursor.
+   * Extra padding added to cursor width/height on hover.
    * Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.
    * @default 0
    */
   padding?: number | string;
 
   /**
-   * Enable sticky behavior for the hovered element.
+   * Move the hovered element with the pointer (sticky parallax).
    * @default false
    */
   sticky?: boolean;
 
   /**
-   * Linear interpolation factor for smooth sticky animation.
+   * Lerp factor for sticky motion. Defaults to the cursor `lerp`.
    * @default this.props.lerp
    */
   stickyLerp?: number;
 
   /**
-   * Friction factor for smooth sticky animation.
-   * Friction is applied during hover and will tend the element to its original position.
-   * The higher value the more resistance is applied.
+   * Pull-back friction while hovering. Higher values resist pointer offset more.
+   * Applied continuously toward the element's origin during hover.
    *
    * @default 0
    */
   stickyFriction?: number;
 
   /**
-   * Sticky animation amplitude.
-   * Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.
+   * Max sticky offset. Number, CSS length, `'auto'` (element size), or per-axis object.
    * @default 'auto'
    */
   stickyAmplitude?:
@@ -79,18 +77,14 @@ export interface ICursorHoverElementProps {
     | TCursorHoverElementStickyAmplitudeObject;
 }
 
+/** Single-axis sticky amplitude: pixels, CSS unit string, or element size. */
 export type TCursorHoverElementStickyAmplitude =
   | number
   | 'auto'
   | (string & {});
 
+/** Per-axis sticky amplitude. */
 export type TCursorHoverElementStickyAmplitudeObject = {
   x: TCursorHoverElementStickyAmplitude;
   y: TCursorHoverElementStickyAmplitude;
-};
-
-export type TCursorHoverElementStickyParallax = {
-  current: number;
-  target: number;
-  prevTarget: null | number;
 };

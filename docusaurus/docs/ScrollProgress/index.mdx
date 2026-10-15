@@ -4,6 +4,8 @@ toc_min_heading_level: 2
 toc_max_heading_level: 6
 description: ScrollProgress — Vevet.js component for tracking scroll progress of a section. Scroll-based and parallax animations.
 keywords:
+  - vevet.scrollprogress
+  - vevetjs scroll progress
   - vevet scroll progress
   - scroll progress
   - parallax
@@ -12,11 +14,30 @@ keywords:
 
 # ScrollProgress
 
-todo: examples
+Tracks scroll progress of a section relative to the viewport or a custom scroll root.  
+Useful for parallax, scrubbed animations, and enter/leave effects.
 
-`ScrollProgress` is a component that tracks the scroll progress of a specified section element.
+## Initialization
 
-This component can be used for creating scroll-based animations such as parallax effects.
+```js
+import { ScrollProgress, vevet } from 'vevet';
+
+const section = document.getElementById('section');
+
+const progress = new ScrollProgress({
+  section,
+  onUpdate: () => {
+    const { y } = progress.moveProgress;
+    section.style.setProperty('--p', String(y));
+  },
+});
+```
+
+Destroying the instance removes the scroll listener and disconnects the `IntersectionObserver`:
+
+```js
+progress.destroy();
+```
 
 ## Props
 
@@ -143,6 +164,17 @@ Updates the section and root bounds, and emits an update callback.
 
 ```ts
 instance.update();
+
+// Force update even when the section is not visible (optimized mode)
+instance.update(true);
+```
+
+### `destroy`
+
+Releases the scroll listener and disconnects the `IntersectionObserver`.
+
+```ts
+instance.destroy();
 ```
 
 ## Callbacks

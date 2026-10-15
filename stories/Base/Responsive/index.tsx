@@ -38,21 +38,21 @@ export const Component: FC = () => {
           },
         },
         {
-          at: 'lg',
+          at: '@media (max-width: 767px)',
           props: {
-            width: 'lg',
+            width: 'sm',
           },
         },
         {
-          at: 'md',
+          at: '@media (min-width: 768px)',
           props: {
             width: 'md',
           },
         },
         {
-          at: 'sm',
+          at: '@media (min-width: 1200px)',
           props: {
-            width: 'sm',
+            width: 'lg',
           },
         },
         {

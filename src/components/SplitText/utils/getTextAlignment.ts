@@ -1,3 +1,4 @@
+/** Resolves effective horizontal alignment for line grouping. */
 export function getTextAlignment(node: HTMLElement) {
   const { direction, textAlign } = getComputedStyle(node);
 

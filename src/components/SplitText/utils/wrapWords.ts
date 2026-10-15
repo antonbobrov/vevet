@@ -1,5 +1,4 @@
-import { cnAdd } from '@/internal/cn';
-import { doc } from '@/internal/env';
+import { doc, cnAdd } from '@/internal';
 
 import { ISplitTextStaticProps, ISplitTextWordMeta } from '../types';
 
