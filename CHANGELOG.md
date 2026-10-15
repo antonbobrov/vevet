@@ -1,5 +1,104 @@
 # Changelog
 
+# [5.11.0](https://github.com/antonbobrov/vevet/compare/v5.10.0...v5.11.0) (2026-10-15)
+
+
+### All
+
+* refactor & remove second param `onCallbacks` ([5fdf9a3](https://github.com/antonbobrov/vevet/commit/5fdf9a30a2a633601e080087e9007a516b7b1181))
+
+### Callbacks
+
+* update docs ([d5f8270](https://github.com/antonbobrov/vevet/commit/d5f827008d2cec3380fc1aa0d7e57e685b5a1d8a))
+
+### Canvas
+
+* update docs ([e43fdc6](https://github.com/antonbobrov/vevet/commit/e43fdc6dba7224d3e8da66f1e7d0d02db20683c7))
+
+### Cursor
+
+* global refactoring ([1714dc5](https://github.com/antonbobrov/vevet/commit/1714dc5a89abf9f350f43c2237087c82e265dcf7))
+
+### damp
+
+* update docs ([9369a24](https://github.com/antonbobrov/vevet/commit/9369a24b132491449f636824fb6cfcd9ecccc4ec))
+
+### InView
+
+* refactor & update docs ([41767bc](https://github.com/antonbobrov/vevet/commit/41767bccb2285889c9414c59eaf3e0b5cdf23241))
+
+### Marquee
+
+* add `clone` callback ([7f335b8](https://github.com/antonbobrov/vevet/commit/7f335b8c166686f4d199c51166c459423ecd8a5e))
+* refactor, update docs, remove deprecated props ([3a30047](https://github.com/antonbobrov/vevet/commit/3a3004786ce2ce33879dc1c8a99af677b31cf5ba))
+
+### Pointers
+
+* fix callbacks order ([036a233](https://github.com/antonbobrov/vevet/commit/036a233043844db6c766f0715a3d117300efcb87))
+* improve `disableUserSelect` ([b5dbb37](https://github.com/antonbobrov/vevet/commit/b5dbb37e4ec5c35a0029fd1bd4fd630fa3da6317))
+* refactor & update docs ([99f3bda](https://github.com/antonbobrov/vevet/commit/99f3bdaa1efdcd713fae7817ea522b4a958350e2))
+
+### Preloader
+
+* add `requestHide` callback ([82a8299](https://github.com/antonbobrov/vevet/commit/82a82999ac68d7a270ae668d07ebca4fdfacb5c3))
+* refactor & add `isLoaded` & `isHiding` ([6654e14](https://github.com/antonbobrov/vevet/commit/6654e14df12bfe302394060476d5285aae226b06))
+
+### ProgressPreloader
+
+* add `timelineStart`, `timelineUpdate` & `timelineEnd` callbacks ([309a9f5](https://github.com/antonbobrov/vevet/commit/309a9f57d8059a0e6d1afd39aab958845f8afe67))
+* avoid extra resource resolve ([701edcf](https://github.com/antonbobrov/vevet/commit/701edcf3a06db6561c8b27cef832fb4b4ca00dbd))
+* fix initial resource id ([4743555](https://github.com/antonbobrov/vevet/commit/4743555aaebff38119cd9b4098a44065e820b7d3))
+* refactor & update docs ([0b9a280](https://github.com/antonbobrov/vevet/commit/0b9a28078ccccda833f93b1dea1da7a41fbb7ad6))
+
+### Raf
+
+* add `damp` ([dacbff0](https://github.com/antonbobrov/vevet/commit/dacbff0b1c6a8e775e3fdcb85834b934030027b8))
+* update docs ([1deeb7a](https://github.com/antonbobrov/vevet/commit/1deeb7a513317235823972efbb8ce6144e78d97c))
+
+### Responsive
+
+* thow when invalid rules ([d11a3d6](https://github.com/antonbobrov/vevet/commit/d11a3d6eea65c703f4b0c9bcc221c20a23d7c660))
+* update docs ([dc8ee10](https://github.com/antonbobrov/vevet/commit/dc8ee109740ef315f2f0656f3c4d78fb86ccf310))
+
+### Scrollbar
+
+* refactor & update docs ([4f58963](https://github.com/antonbobrov/vevet/commit/4f58963ea6baf8f8a0428f3e3ac71bbe192e93aa))
+
+### ScrollProgress
+
+* update docs ([d450d0d](https://github.com/antonbobrov/vevet/commit/d450d0d10a35efe88859bf8a25bc1504018e0e3f))
+
+### Snap
+
+* `grabCursor: true` by default ([297957a](https://github.com/antonbobrov/vevet/commit/297957ab4dd473cd1b707659ff40484440651b94))
+* add `preventWheel` ([25aa5ba](https://github.com/antonbobrov/vevet/commit/25aa5baabf894ab8c1258f09545ab63c1c2dfea7))
+* disable scrollable slides when `followWheel: false` ([a5a681d](https://github.com/antonbobrov/vevet/commit/a5a681d5358072c5d908bce87f3c47150638b6ce))
+* do not cancel transition when `stickOnResize: false` ([4a9df1f](https://github.com/antonbobrov/vevet/commit/4a9df1ff6b631c8f6fa41ab95b5863b457cdb3c1))
+* fix single-slide bounds when `loop: true` ([e5909e3](https://github.com/antonbobrov/vevet/commit/e5909e33907939b38eafe4b173f597826e7c52f7))
+* optimize grabbing cursor ([12aaed8](https://github.com/antonbobrov/vevet/commit/12aaed890f32a14ab67c9a019a3f1bdbfec82b3b))
+* optimize parallax rendering ([95da5fa](https://github.com/antonbobrov/vevet/commit/95da5fa51e438f031377f8eec2d0b86a72cb1d59))
+* refactor, remove deprecated props, add `rafFrame` callback ([7f9eccd](https://github.com/antonbobrov/vevet/commit/7f9eccd44aecfec9d83ecab1a8834bcce9ac1285))
+* stick to nearest magnet when inertia is cancelled with `freemode: sticky` ([4672ddf](https://github.com/antonbobrov/vevet/commit/4672ddf6a35749cc3611c4178176601948ecae97))
+* update stories ([03019cf](https://github.com/antonbobrov/vevet/commit/03019cfc36b13aca766b92523e1759a72d1deab2))
+
+### SplitText
+
+* remove aria-label on destroy ([835aec8](https://github.com/antonbobrov/vevet/commit/835aec8f5e36c59616ac00c725a2b1ee0093e04f))
+* update docs ([8cdfb30](https://github.com/antonbobrov/vevet/commit/8cdfb309921572ec36ba8822004ee616d0bdc764))
+
+### Swipe
+
+* fix inertia thresholds check ([2009c3b](https://github.com/antonbobrov/vevet/commit/2009c3b996c19c28a8ebb92e60e64f63e33af9b2))
+* fix props update ([41c6485](https://github.com/antonbobrov/vevet/commit/41c64850bda90267692caab870610cc66e7c0861))
+* optimize grabbing cursor ([2fbc916](https://github.com/antonbobrov/vevet/commit/2fbc916b33b19e69a4949c4c33fda1b6ff82f2a5))
+* refactor & update docs ([761d3b6](https://github.com/antonbobrov/vevet/commit/761d3b6f155b6aae892f3373bd836c48c5b08830))
+* set `preventEdgeSwipe` to false ([78543e0](https://github.com/antonbobrov/vevet/commit/78543e0bfe7c03de74deaa94f4ea906e1ceb68ea))
+
+### Timeline
+
+* add `play`, `pause`, `reverse`, `reset` & `resume` callbacks ([810160e](https://github.com/antonbobrov/vevet/commit/810160e099f559114589b7c2b0ddd1aa566e3252))
+* update docs ([fb8e5ce](https://github.com/antonbobrov/vevet/commit/fb8e5ceaf177a85ecf61fa04ed6f8af50306e7ab))
+
 # [5.10.0](https://github.com/antonbobrov/vevet/compare/v5.9.1...v5.10.0) (2026-06-13)
 
 
