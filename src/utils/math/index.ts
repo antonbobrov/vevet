@@ -6,3 +6,4 @@ export * from './inRange';
 export * from './lerp';
 export * from './scoped';
 export * from './loop';
+export * from './spring';
