@@ -2,20 +2,16 @@ import { TModuleProps } from '@/base';
 import { Module } from '@/base/Module';
 import { initVevet } from '@/global/initVevet';
 import { body, noopIfDestroyed, TRequiredProps } from '@/internal';
-import { toPixels } from '@/utils';
 import { addEventListener } from '@/utils/listeners';
-import { clamp } from '@/utils/math';
 
 import { Raf } from '../Raf';
 
-import { LERP_APPROXIMATION } from './constants';
 import { CursorCoords } from './Coords';
 import { CursorDom } from './Dom';
 import { CursorHoverElement } from './HoverElement';
 import { ICursorHoverElementProps } from './HoverElement/types';
 import { CursorPath } from './Path';
 import { MUTABLE_PROPS, STATIC_PROPS } from './props';
-import { SmoothNumber } from './SmoothNumber';
 import { createCursorStyles } from './styles';
 import { CursorType } from './Type';
 import { ICursorType } from './Type/types';
@@ -34,7 +30,9 @@ type TM = ICursorMutableProps;
  * Custom cursor with smooth motion, hover sizing, sticky elements, and typed variants.
  *
  * - Builds outer/inner DOM (optional) and hides the native cursor when configured
- * - Interpolates position/size via {@link Raf}; optional SVG path trailing (`behavior: 'path'`)
+ * - Interpolates position, size, angle, and velocity via named {@link Raf} entries
+ * - Per-channel ease: `ease` / `easeCoords` / `easeSize` / `easeAngle` / `easeVelocity`
+ * - Optional SVG path trailing (`behavior: 'path'`)
  * - Hover targets via {@link attachHover}; alternate visuals via {@link attachCursor}
  *
  * [Documentation](https://vevetjs.com/docs/Cursor)
@@ -50,22 +48,15 @@ export class Cursor extends Module<TC, TS, TM> {
     return { ...super._getMutable(), ...MUTABLE_PROPS };
   }
 
-  /** Outer/inner nodes, visibility, click, and native-cursor styles. */
-  private _dom: CursorDom;
+  private _raf: Raf;
 
-  /** Registered cursor type elements and active type stack. */
-  private _type: CursorType;
-
-  /** SVG path trail used when `behavior` is `'path'`. */
-  private _path: CursorPath;
-
-  /** Pointer coordinates, angle, and velocity. */
   private _coords: CursorCoords;
 
-  private _width = new SmoothNumber(0);
-  private _height = new SmoothNumber(0);
+  private _dom: CursorDom;
 
-  private _raf: Raf;
+  private _path: CursorPath;
+
+  private _type: CursorType;
 
   private _elements: CursorHoverElement[] = [];
 
@@ -77,31 +68,28 @@ export class Cursor extends Module<TC, TS, TM> {
     super(props);
 
     const { enabled: isEnabled } = this.props;
-    const { initialWidth, initialHeight, container, domContainer } = this;
+    const { container, domContainer } = this;
 
     // Injected once; shared stylesheet is not removed on destroy
     createCursorStyles(this.prefix);
 
-    this._dom = new CursorDom(this, { container, domContainer });
-    this._type = new CursorType(this);
-    this._path = new CursorPath(this);
-
-    this._coords = new CursorCoords(this);
-    this._width.syncWith(initialWidth);
-    this._height.syncWith(initialHeight);
-
     this._raf = new Raf({ enabled: false });
     this._raf.on('frame', this.render.bind(this));
-    this.onDestroy(() => this._raf.destroy());
+
+    this._coords = new CursorCoords(this, this._raf);
+
+    this._dom = new CursorDom(this, { container, domContainer });
+    this._path = new CursorPath(this, this._raf);
+    this._type = new CursorType(this);
 
     this.onDestroy(() => {
       this._elements.forEach((element) => element.destroy());
       this._elements = [];
       this._activeElements = [];
+      this._raf.destroy();
     });
 
     this._setEvents();
-
     this._toggle(isEnabled);
   }
 
@@ -136,46 +124,45 @@ export class Cursor extends Module<TC, TS, TM> {
   }
 
   get initialWidth() {
-    return toPixels(this.props.width);
+    return this._coords.initialWidth;
   }
 
   get initialHeight() {
-    return toPixels(this.props.height);
+    return this._coords.initialHeight;
   }
 
-  /** Smoothed coordinates including width/height. */
+  /**
+   * Resolved base ease: {@link ICursorMutableProps.ease} ?? {@link ICursorMutableProps.lerp}.
+   */
+  get ease() {
+    return this.props.ease ?? this.props.lerp;
+  }
+
+  /** Smoothed coordinates including width/height (path head when `behavior` is `'path'`). */
   get coords() {
+    const current = this._coords.current;
+    const xy = { x: current.x, y: current.y };
+
+    try {
+      if (this._path.has) {
+        const pathCoords = this._path.coord;
+        xy.x = pathCoords.x;
+        xy.y = pathCoords.y;
+      }
+    } catch {
+      xy.x = current.x;
+      xy.y = current.y;
+    }
+
     return {
-      ...this._coords.current,
-      width: this._width.current,
-      height: this._height.current,
+      ...current,
+      ...xy,
     };
   }
 
   /** Target coordinates (hover dimensions applied, no smoothing). */
   get targetCoords(): ICursorFullCoords {
-    const { hoveredElement, initialWidth, initialHeight } = this;
-    const { angle, velocity } = this._coords.target;
-    let { x, y } = this._coords.target;
-
-    let width = initialWidth;
-    let height = initialHeight;
-    let padding = 0;
-
-    if (hoveredElement) {
-      const dimensions = hoveredElement.getDimensions();
-
-      width = dimensions.width ?? initialWidth;
-      height = dimensions.height ?? initialHeight;
-      padding = dimensions.padding;
-      x = dimensions.x ?? x;
-      y = dimensions.y ?? y;
-    }
-
-    width += padding * 2;
-    height += padding * 2;
-
-    return { x, y, width, height, angle, velocity };
+    return this._coords.target;
   }
 
   /** Topmost active hover target, if any. */
@@ -229,8 +216,9 @@ export class Cursor extends Module<TC, TS, TM> {
       return;
     }
 
-    this._coords.syncXY(evt.clientX, evt.clientY);
+    this._coords.updateTargets(evt.clientX, evt.clientY);
     this._path.addPoint(evt.clientX, evt.clientY, true);
+    this._raf.sync('x', 'y');
 
     this._dom.toggleVisibility(true);
   }
@@ -247,7 +235,7 @@ export class Cursor extends Module<TC, TS, TM> {
     this._coords.move(evt.clientX, evt.clientY);
 
     if (this._isFirstMove) {
-      this._coords.syncWithTarget();
+      this._raf.sync('x', 'y', 'angle', 'velocity');
       this._isFirstMove = false;
     }
 
@@ -265,11 +253,12 @@ export class Cursor extends Module<TC, TS, TM> {
    */
   @noopIfDestroyed
   public attachHover(settings: ICursorHoverElementProps) {
-    const element = new CursorHoverElement(
+    const element = new CursorHoverElement(this, {
       settings,
-      (data) => this._handleElementEnter(data),
-      (data) => this._handleElementLeave(data),
-    );
+      raf: this._raf,
+      onEnter: (data) => this._handleElementEnter(data),
+      onLeave: (data) => this._handleElementLeave(data),
+    });
 
     this._elements.push(element);
 
@@ -319,68 +308,22 @@ export class Cursor extends Module<TC, TS, TM> {
     this._type.add(element, type);
   }
 
-  private get isInterpolated() {
-    const { props, targetCoords, coords } = this;
-
-    const elements = !this._elements.find((element) => !element.isInterpolated);
-
-    const width = this._width.current === targetCoords.width;
-    const height = this._height.current === targetCoords.height;
-    const x = coords.x === targetCoords.x;
-    const y = coords.y === targetCoords.y;
-    const angle = coords.angle === targetCoords.angle;
-    const velocity = coords.velocity === targetCoords.velocity;
-
-    const behavior =
-      props.behavior === 'path' ? this._path.isInterpolated : x && y;
-
-    return width && height && elements && behavior && angle && velocity;
-  }
-
   /** Advances interpolation and writes transforms. */
   @noopIfDestroyed
   public render() {
-    this._calculate();
-    this._renderElements();
+    this._path.minimize();
+    this._coords.updateTargets();
 
-    if (this.props.autoStop && this.isInterpolated) {
+    this._draw();
+
+    if (this.props.autoStop && this._raf.interpolated()) {
       this._raf.pause();
     }
 
     this._emit('render', undefined);
   }
 
-  private _calculate() {
-    const { targetCoords: target } = this;
-
-    const ease = this._getLerpFactor();
-
-    this._path.lerp(ease);
-    this._path.minimize();
-
-    try {
-      if (this._path.has) {
-        const pathCoord = this._path.coord;
-        this._coords.setXYCurrent(pathCoord.x, pathCoord.y);
-      } else {
-        throw new Error('No path');
-      }
-    } catch {
-      this._coords.xTo(target.x, ease);
-      this._coords.yTo(target.y, ease);
-    }
-
-    this._width.to(target.width, ease, LERP_APPROXIMATION);
-    this._height.to(target.height, ease, LERP_APPROXIMATION);
-
-    this._coords.lerpVelocityAndAngle(ease);
-  }
-
-  private _getLerpFactor(input = this.props.lerp) {
-    return this._raf.lerpFactor(clamp(input, 0, 1));
-  }
-
-  private _renderElements() {
+  private _draw() {
     const { container, domContainer, outer, props, coords } = this;
     const { width, height } = coords;
     let { x, y } = coords;
@@ -396,8 +339,6 @@ export class Cursor extends Module<TC, TS, TM> {
     style.setProperty('--cursor-h', `${height}px`);
     style.transform = props.transformModifier({ ...coords, x, y });
 
-    this._elements.forEach((element) =>
-      element.render(this._getLerpFactor.bind(this)),
-    );
+    this._elements.forEach((element) => element.render());
   }
 }

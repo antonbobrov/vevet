@@ -1,3 +1,16 @@
+import { Raf } from '@/components/Raf';
+import { TRafEase } from '@/components/Raf/types';
+
+import type { CursorHoverElement } from '.';
+
+/** @internal Wiring for {@link CursorHoverElement}. */
+export interface ICursorHoverElementData {
+  settings: ICursorHoverElementProps;
+  raf: Raf;
+  onEnter: (element: CursorHoverElement) => void;
+  onLeave: (element: CursorHoverElement) => void;
+}
+
 /**
  * Options for {@link Cursor.attachHover}.
  */
@@ -6,8 +19,8 @@ export interface ICursorHoverElementProps {
   element: Element;
 
   /**
-   * Element that emits hover events. Defaults to `element`.
-   * @default null
+   * Element that emits hover events.
+   * @default the {@link element} itself
    */
   emitter?: Element | null;
 
@@ -55,22 +68,39 @@ export interface ICursorHoverElementProps {
   sticky?: boolean;
 
   /**
-   * Lerp factor for sticky motion. Defaults to the cursor `lerp`.
-   * @default this.props.lerp
+   * Ease for sticky offset interpolation (`number` damp or spring).
+   * @default Cursor {@link ICursorMutableProps.ease} / `lerp`
+   */
+  ease?: TRafEase;
+
+  /**
+   * @deprecated Use {@link ease} instead.
    */
   stickyLerp?: number;
 
   /**
-   * Pull-back friction while hovering. Higher values resist pointer offset more.
-   * Applied continuously toward the element's origin during hover.
-   *
+   * Sticky pull-back toward the origin while friction is active (`0`–`1`).
+   * Higher values snap back faster. `0` disables friction.
    * @default 0
+   */
+  friction?: number;
+
+  /**
+   * @deprecated Use {@link friction} instead.
    */
   stickyFriction?: number;
 
   /**
-   * Max sticky offset. Number, CSS length, `'auto'` (element size), or per-axis object.
+   * Sticky parallax amplitude (uniform or per axis).
+   * `'auto'` uses the hovered element size on that axis.
    * @default 'auto'
+   */
+  amp?:
+    | TCursorHoverElementStickyAmplitude
+    | TCursorHoverElementStickyAmplitudeObject;
+
+  /**
+   * @deprecated Use {@link amp} instead.
    */
   stickyAmplitude?:
     | TCursorHoverElementStickyAmplitude

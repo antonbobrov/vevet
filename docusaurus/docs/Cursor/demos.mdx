@@ -62,7 +62,7 @@ Compare default hover sizing with `snap: true`, which locks the cursor to the el
 <section>
   ## Sticky Cursor
 
-Sticky parallax on hover. `stickyAmplitude` can follow both axes or only one (`x` or `y`).
+Sticky parallax on hover. `amp` can follow both axes or only one (`x` or `y`).
 
   <VevetDemo id="emzOjqK" height={600} />
 </section>
@@ -70,7 +70,7 @@ Sticky parallax on hover. `stickyAmplitude` can follow both axes or only one (`x
 <section>
   ## Sticky Friction Cursor
 
-Sticky hover with `stickyFriction` so the element eases back toward its origin after the pointer moves.
+Sticky hover with `friction` so the element eases back toward its origin after the pointer moves.
 
   <VevetDemo id="KwMYOjo" height={600} />
 </section>
@@ -86,7 +86,7 @@ Side-by-side comparison of snap, sticky, and sticky-with-friction on the same cu
 <section>
   ## Sticky Ghost
 
-Layered sticky targets on one emitter (`emitter`) with decreasing `stickyFriction` — a trailing “ghost” effect.
+Layered sticky targets on one emitter (`emitter`) with decreasing `friction` — a trailing “ghost” effect.
 
   <VevetDemo id="xbONPYr" height={600} />
 </section>
@@ -110,7 +110,7 @@ Custom SVG cursor via `attachCursor()`, rotated and stretched with `transformMod
 <section>
   ## Trailing Cursor
 
-Several Cursor instances with different `lerp` values and `behavior: 'path'` for a trailing path effect.
+Several Cursor instances with different `ease` values and `behavior: 'path'` for a trailing path effect.
 
   <VevetDemo id="RNazaLO" height={600} />
 </section>

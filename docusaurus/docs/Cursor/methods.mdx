@@ -65,12 +65,13 @@ const remove = cursor.attachHover({
   height: 'auto',
   padding: 10,
   sticky: true,
-  // smoothness of sticky follow (defaults to cursor lerp)
-  stickyLerp: 0.15,
-  // make sticky element smoothly return to origin
-  stickyFriction: 0.2,
+  // sticky follow ease (defaults to cursor ease / lerp)
+  ease: 0.15,
+  // or spring: ease: { stiffness: 100, damping: 6 },
+  // pull sticky element back toward origin (0 disables)
+  friction: 0.2,
   // sticky movement range; supports number, 'auto', or { x, y } with CSS units
-  stickyAmplitude: { x: '2rem', y: 'auto' },
+  amp: { x: '2rem', y: 'auto' },
 });
 
 // Remove interaction
