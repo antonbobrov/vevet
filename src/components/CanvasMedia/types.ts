@@ -28,6 +28,18 @@ export interface ICanvasMediaStaticProps extends ICanvasStaticProps {
 }
 
 /**
+ * How media is positioned within the canvas.
+ */
+export type TCanvasMediaRule =
+  | 'cover'
+  | 'contain'
+  | 'top-left'
+  | 'top-right'
+  | 'bottom-left'
+  | 'bottom-right'
+  | 'center';
+
+/**
  * Extended mutable properties for the CanvasMedia class.
  */
 export interface ICanvasMediaMutableProps extends ICanvasMutableProps {
@@ -35,16 +47,8 @@ export interface ICanvasMediaMutableProps extends ICanvasMutableProps {
    * Defines how the media element is positioned within the canvas.
    * @default 'cover'
    */
-  rule?:
-    | 'cover'
-    | 'contain'
-    | 'top-left'
-    | 'top-right'
-    | 'bottom-left'
-    | 'bottom-right'
-    | 'center';
+  rule?: TCanvasMediaRule;
 }
-
 /**
  * Extended callbacks map for the CanvasMedia class.
  */

@@ -5,10 +5,59 @@ import {
 } from '@/base/Module/types';
 import { IViewportCallbacksMap } from '@/core/exported';
 
+export interface ICanvasStaticPropsResize {
+  /**
+   * Automatically adjusts canvas size on initialization.
+   * @default true
+   */
+  init?: boolean;
+
+  /**
+   * Enables dynamic resizing based on viewport or container changes.
+   * @default false
+   */
+  runtime?: boolean;
+
+  /**
+   * Defines which dimension(s) should trigger a resize.
+   * @default 'any'
+   */
+  target?: keyof IViewportCallbacksMap;
+
+  /**
+   * Debounce time (ms) for resize handling.
+   * @default 0
+   */
+  debounce?: number;
+}
+
+export interface ICanvasStaticPropsDeprecated {
+  /**
+   * @deprecated Use `resize.init`
+   */
+  resizeOnInit?: boolean;
+
+  /**
+   * @deprecated Use `resize.runtime`
+   */
+  resizeOnRuntime?: boolean;
+
+  /**
+   * @deprecated Use `resize.target`
+   */
+  viewportTarget?: keyof IViewportCallbacksMap;
+
+  /**
+   * @deprecated Use `resize.debounce`
+   */
+  resizeDebounce?: number;
+}
+
 /**
  * Static properties for canvas configuration.
  */
-export interface ICanvasStaticProps extends IModuleStaticProps {
+export interface ICanvasStaticProps
+  extends IModuleStaticProps, ICanvasStaticPropsDeprecated {
   /**
    * Parent element used to determine canvas size. If `null`, it uses the viewport.
    * @default null
@@ -22,28 +71,10 @@ export interface ICanvasStaticProps extends IModuleStaticProps {
   append?: boolean;
 
   /**
-   * Automatically adjusts canvas size on initialization.
-   * @default true
+   * Resize behavior. Use `false` to disable auto-resize on init and runtime.
+   * @default { init: true, runtime: false, target: 'any', debounce: 0 }
    */
-  resizeOnInit?: boolean;
-
-  /**
-   * Enables dynamic resizing based on viewport or container changes.
-   * @default false
-   */
-  resizeOnRuntime?: boolean;
-
-  /**
-   * Defines which dimension(s) should trigger a resize.
-   * @default 'any'
-   */
-  viewportTarget?: keyof IViewportCallbacksMap;
-
-  /**
-   * Debounce time (ms) for resize handling.
-   * @default 0
-   */
-  resizeDebounce?: number;
+  resize?: ICanvasStaticPropsResize | false;
 }
 
 /**

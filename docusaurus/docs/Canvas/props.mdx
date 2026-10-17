@@ -45,54 +45,38 @@ const canvas = new Canvas({
 });
 ```
 
-### `resizeOnInit` {#props.resizeOnInit}
+### `resize` {#props.resize}
 
-- **Type:** `boolean`
-- **Default:** `true`
-- Automatically adjusts canvas size on initialization.
+- **Type:** `ICanvasStaticPropsResize | false`
+- **Default:** `{ init: true, runtime: false, target: 'any', debounce: 0 }`
+- Resize behavior. Pass `false` to disable auto-resize on init and runtime.
 
-```js
-const canvas = new Canvas({
-  resizeOnInit: true,
-});
-```
-
-### `resizeOnRuntime` {#props.resizeOnRuntime}
-
-- **Type:** `boolean`
-- **Default:** `false`
-- Enables dynamic resizing based on viewport or container changes.
-- **Disabled by default**
+| Field | Type | Default | Description |
+| --- | --- | --- | --- |
+| `init` | `boolean` | `true` | Resize once on initialization. |
+| `runtime` | `boolean` | `false` | Resize on viewport/container changes. |
+| `target` | viewport event | `'any'` | Which dimension(s) trigger resize. [Learn more](/docs/core/features#vevetonresize) |
+| `debounce` | `number` | `0` | Debounce time (ms). |
 
 ```js
 const canvas = new Canvas({
-  resizeOnRuntime: true,
+  resize: {
+    init: true,
+    runtime: true,
+    target: 'any',
+    debounce: 0,
+  },
 });
 ```
 
-### `viewportTarget` {#props.viewportTarget}
+### Deprecated resize props
 
-- **Type:** `'width' | 'height' | 'both' | 'onlyWidth' | 'onlyHeight' | 'any' | 'trigger'`
-- **Default:** `'any'`
-- Defines which dimension(s) should trigger a resize. [Learn more](/docs/core/features#vevetonresize)
+Prefer [`resize`](#propsresize). These flat aliases still work when set:
 
-```js
-const canvas = new Canvas({
-  viewportTarget: 'any',
-});
-```
-
-### `resizeDebounce` {#props.resizeDebounce}
-
-- **Type:** `number`
-- **Default:** `0`
-- Debounce time (ms) for resize handling.
-
-```js
-const canvas = new Canvas({
-  resizeDebounce: 0,
-});
-```
+- `resizeOnInit` → `resize.init`
+- `resizeOnRuntime` → `resize.runtime`
+- `viewportTarget` → `resize.target`
+- `resizeDebounce` → `resize.debounce`
 
 ## Mutable Props
 

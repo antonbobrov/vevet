@@ -125,31 +125,48 @@ export class Canvas<
     this.resize();
   }
 
-  /** Set events */
-  private _setEvents() {
+  /**
+   * Nested `resize` with fallback to deprecated flat props.
+   * `false` when auto-resize is disabled.
+   */
+  private get resizeProp() {
     const { props } = this;
-    const { viewportTarget, resizeDebounce } = props;
 
-    // Set resize events
-    if (props.resizeOnInit) {
-      this.resize();
+    if (props.resize === false) {
+      return false;
     }
 
-    // Runtime resize
+    return {
+      init: props.resizeOnInit ?? props.resize.init,
+      runtime: props.resizeOnRuntime ?? props.resize.runtime,
+      target: props.viewportTarget ?? props.resize.target,
+      debounce: props.resizeDebounce ?? props.resize.debounce,
+    };
+  }
 
-    if (!props.resizeOnRuntime) {
+  /** Set events */
+  private _setEvents() {
+    const { resizeProp } = this;
+
+    if (!resizeProp) {
       return;
     }
 
-    const resizeHandler = onResize({
-      callback: () => this.resize(),
-      element: this.props.container,
-      viewportTarget,
-      resizeDebounce,
-      name: this.name,
-    });
+    if (resizeProp.init) {
+      this.resize();
+    }
 
-    this.onDestroy(() => resizeHandler.remove());
+    if (resizeProp.runtime) {
+      const resizeHandler = onResize({
+        callback: () => this.resize(),
+        element: this.props.container,
+        viewportTarget: resizeProp.target,
+        resizeDebounce: resizeProp.debounce,
+        name: this.name,
+      });
+
+      this.onDestroy(() => resizeHandler.remove());
+    }
   }
 
   /** Get DPR */

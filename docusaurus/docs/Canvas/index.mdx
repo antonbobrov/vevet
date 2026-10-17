@@ -45,8 +45,7 @@ Create a Canvas instance with auto-sizing:
 const instance = new Canvas({
   container: document.getElementById('container'),
   append: true,
-  resizeOnInit: true,
-  resizeOnRuntime: true,
+  resize: { init: true, runtime: true },
 });
 ```
 
@@ -92,6 +91,6 @@ instance.destroy();
 
 - Always check `canRender` before performing expensive draw operations.
 - Prefer using the provided `render()` method instead of accessing `ctx` directly — it automatically guards against zero-size renders.
-- Use `resizeOnRuntime` only when necessary, as frequent resizes can be expensive.
+- Use `resize.runtime` only when necessary, as frequent resizes can be expensive.
 - When working with animations, combine `Canvas` with `Raf` utilities instead of manual `requestAnimationFrame`.
 - For high-performance scenes, consider limiting `dpr` to a fixed value instead of `'auto'`.
