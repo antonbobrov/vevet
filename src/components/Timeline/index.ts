@@ -6,7 +6,7 @@ import {
   noopIfDestroyed,
   TRequiredProps,
 } from '@/internal';
-import { clamp, easing } from '@/utils/math';
+import { clamp, easing, isSpring, spring } from '@/utils/math';
 
 import { MUTABLE_PROPS, STATIC_PROPS } from './props';
 import {
@@ -20,9 +20,9 @@ type TS = ITimelineStaticProps;
 type TM = ITimelineMutableProps;
 
 /**
- * Timeline for time-based progress with easing.
+ * Timeline for time-based progress with easing (named, cubic bezier, custom, or spring).
  *
- * - Operates in the `0 → 1` range with configurable `duration` and `easing`
+ * - Operates in the `0 → 1` range with configurable `duration` and `ease`
  * - {@link play}, {@link reverse}, {@link pause}, and {@link reset} control playback
  * - Emits `update` on every progress change plus lifecycle callbacks (`start`, `end`,
  *   `play`, `pause`, `reverse`, `reset`, `resume`)
@@ -80,9 +80,14 @@ export class Timeline extends Module<TC, TS, TM> {
     this._onUpdate();
   }
 
-  /** Eased progress derived from {@link progress} and the `easing` prop. */
+  /** Eased progress derived from {@link progress} and the `ease` prop. */
   get eased() {
     return this._eased;
+  }
+
+  /** Resolved ease (`ease` prop, falling back to deprecated `easing`). */
+  private get ease() {
+    return this.props.ease ?? this.props.easing;
   }
 
   /** Whether a `requestAnimationFrame` loop is active. */
@@ -235,7 +240,11 @@ export class Timeline extends Module<TC, TS, TM> {
 
   /** Recomputes eased progress and emits `update` / `start` / `end`. */
   private _onUpdate() {
-    this._eased = easing(this._progress, this.props.easing);
+    const { ease } = this;
+
+    this._eased = isSpring(ease)
+      ? spring(this._progress, ease)
+      : easing(this._progress, ease);
 
     this._emit('update', {
       progress: this._progress,

@@ -37,12 +37,12 @@ tm.duration; // returns timeline duration
 
 Type: `number`
 
-Get the eased progress of the timeline, derived from the easing function.
+Get the eased progress of the timeline, derived from the [`ease`](props#props.ease) prop (including [`spring`](/docs/utils#spring) configs).
 
 ```js
 const tm = new Timeline();
 
-tm.eased; // timeline progress with easing applied (0 to 1)
+tm.eased; // timeline progress with easing applied
 ```
 
 ### `isPaused`
