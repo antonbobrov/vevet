@@ -115,9 +115,13 @@ export const Component: FC<TProps> = ({ preset, ...props }) => {
           padding: 5,
           sticky,
           snap,
-          stickyLerp: 0.2,
-          stickyAmplitude: { x: '2rem', y: 'auto' },
-          stickyFriction: friction,
+          ...(sticky
+            ? {
+                ease: { stiffness: 100, damping: 6 },
+                amp: { x: '2rem', y: 'auto' },
+                friction,
+              }
+            : {}),
         });
       });
 
@@ -217,7 +221,13 @@ export const Component: FC<TProps> = ({ preset, ...props }) => {
             Sticky
           </button>
 
-          <button type="button" data-el data-snap>
+          <button
+            type="button"
+            data-el
+            data-snap
+            data-width="auto"
+            data-height="auto"
+          >
             Snap
           </button>
 

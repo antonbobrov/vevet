@@ -62,3 +62,20 @@ raf.updateProps({
   enabled: true,
 });
 ```
+
+### `fpsRecalcFrames` {#props.fpsRecalcFrames}
+
+- **Type:** `number`
+- **Default:** `10`
+- How often real-time [`fps`](accessors#fps) is recalculated (every N processed frames, after the first 10).
+
+```js
+const raf = new Raf({
+  fpsRecalcFrames: 10,
+});
+
+// change value
+raf.updateProps({
+  fpsRecalcFrames: 30,
+});
+```

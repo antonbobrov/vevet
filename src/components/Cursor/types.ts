@@ -4,6 +4,8 @@ import {
   IModuleStaticProps,
 } from '@/base';
 
+import { TRafEase } from '../Raf/types';
+
 import { CursorHoverElement } from './HoverElement';
 import { ICursorType } from './Type/types';
 
@@ -30,7 +32,7 @@ export interface ICursorStaticProps extends IModuleStaticProps {
   append?: boolean;
 
   /**
-   * Cursor behavior
+   * Motion mode: direct follow (`'default'`) or SVG path trail (`'path'`).
    * @default 'default'
    */
   behavior?: 'default' | 'path';
@@ -64,15 +66,49 @@ export interface ICursorMutableProps extends IModuleMutableProps {
   height?: number | string;
 
   /**
-   * Linear interpolation factor for smooth cursor movement.
-   * The value must be between `0` and `1`, with higher values indicating faster movement.
-   * @default 0.2
+   * Base ease for Raf interpolation ({@link TRafEase}: damp `number` or spring).
+   * Used when channel eases are `'auto'`.
+   * When unset, falls back to {@link lerp}.
    */
-  lerp?: number;
+  ease?: TRafEase;
 
   /**
-   * Stops rendering the cursor automatically when its coordinates and size
-   * closely match the target values.
+   * @deprecated Use {@link ease} instead.
+   * @default 0.2
+   */
+  lerp?: TRafEase;
+
+  /**
+   * Ease for cursor `x` / `y` (and path length when `behavior` is `'path'`).
+   * `'auto'` uses {@link ease}. Path mode requires a numeric ease (non-number
+   * falls back to `0.1` with a warning).
+   * @default 'auto'
+   */
+  easeCoords?: TRafEase | 'auto';
+
+  /**
+   * Ease for cursor `width` / `height`.
+   * `'auto'` uses {@link ease}.
+   * @default 'auto'
+   */
+  easeSize?: TRafEase | 'auto';
+
+  /**
+   * Ease for cursor `angle`.
+   * `'auto'` uses {@link ease}.
+   * @default 'auto'
+   */
+  easeAngle?: TRafEase | 'auto';
+
+  /**
+   * Ease for cursor `velocity` (also used as friction when pulling velocity toward `0`).
+   * `'auto'` uses {@link ease}.
+   * @default 'auto'
+   */
+  easeVelocity?: TRafEase | 'auto';
+
+  /**
+   * Pauses the Raf loop when all named entries have settled within their `appx`.
    * @default true
    */
   autoStop?: boolean;
@@ -113,9 +149,7 @@ export interface ICursorCallbacksMap extends IModuleCallbacksMap<ICursorMutableP
   noType: undefined;
 }
 
-/**
- * Represents the cursor's target position, angle and velocity.
- */
+/** Cursor target position, angle, and velocity (pre-smoothing). */
 export interface ICursorTargetCoords {
   x: number;
   y: number;
@@ -123,9 +157,7 @@ export interface ICursorTargetCoords {
   velocity: number;
 }
 
-/**
- * Represents the cursor's coordinates, angle and size.
- */
+/** Smoothed cursor coordinates including size. */
 export interface ICursorFullCoords extends ICursorTargetCoords {
   width: number;
   height: number;

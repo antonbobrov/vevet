@@ -42,22 +42,44 @@ tm.updateProps({
 });
 ```
 
-### `easing` {#props.easing}
+### `ease` {#props.ease}
 
-- **Type:** `TEasingType`
+- **Type:** `TEasing | TSpring`
 - **Default:** `inherited from core settings` - [see settings](/docs/core/customization#modifying-settings).
-- Easing function for timeline progression.  
-  Accepts standard easing types or an array of bezier values.  
-  Use `false` for linear progress.  
-  See [easing types](/docs/utils#easing-types) for more information.
+- Ease for timeline progression. Supports:
+  - named easing types (e.g. `EaseInOutCubic`);
+  - **cubic bezier** as `[x1, y1, x2, y2]` (e.g. `[0.25, 0.1, 0.25, 1]`);
+  - a custom `(progress) => number` function;
+  - a [`TSpring`](/docs/utils#spring) config (`{ stiffness, damping }`);
+  - `false` for linear progress.  
+    See [easing types](/docs/utils#easing-types) and [spring](/docs/utils#spring) for more information.
 
 ```js
+import { Timeline, EaseInOutCubic } from 'vevet';
+
+// built-in easing
 const tm = new Timeline({
-  easing: [0.25, 0.1, 0.25, 1],
+  ease: EaseInOutCubic,
+});
+
+// cubic bezier
+const tmBezier = new Timeline({
+  ease: [0.25, 0.1, 0.25, 1],
+});
+
+// spring
+const tmSpring = new Timeline({
+  ease: { stiffness: 120, damping: 14 },
 });
 
 // change value
 tm.updateProps({
-  easing: EaseInOutCubic,
+  ease: EaseOutCubic,
 });
 ```
+
+### `easing` {#props.easing}
+
+:::warning Deprecated
+Use [`ease`](#props.ease) instead. Still used as a fallback when `ease` is not set.
+:::

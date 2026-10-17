@@ -79,7 +79,7 @@ destruct();
 
 ### `frame`
 
-Triggered on every animation frame.
+Triggered on every **processed** frame (after FPS throttling). Named entries are interpolated before this callback.
 
 ```ts
 const raf = new Raf({

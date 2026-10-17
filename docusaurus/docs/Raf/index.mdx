@@ -11,6 +11,7 @@ keywords:
   - fps throttling
   - animation loop
   - damping
+  - spring
 ---
 
 import MoreDemos from '@site/src/components/MoreDemos';
@@ -24,11 +25,12 @@ import VevetDemo from '@site/src/components/VevetDemo';
 - Throttles logical frames via [`fps`](props#props.fps) (fixed cap or `'auto'`)
 - Measures real-time [`fps`](accessors#fps), [`duration`](accessors#duration), and frame [`index`](accessors#index)
 - Provides [`lerpFactor`](methods#lerpfactor) and [`damp`](methods#damp) for refresh-rate–independent motion
+- Named entries via [`add`](methods#add) / [`value`](methods#value) / [`target`](methods#target) / [`sync`](methods#sync) / [`delete`](methods#delete) / [`interpolated`](methods#interpolated): damp (`ease: number`) or spring (`ease: { stiffness, damping }`), optional `friction` (pull numeric target toward `0` with the same `ease`), updated each processed frame before [`frame`](callbacks#frame)
 
 ## Animation loop
 
 1. **`play`** / `enabled: true` — starts the rAF chain; emits [`play`](callbacks#play) and [`toggle`](callbacks#toggle).
-2. **`frame`** — fired on each **processed** frame (after FPS throttling), with `fps`, `fpsFactor`, `duration`, and `lerpFactor`.
+2. **`frame`** — fired on each **processed** frame (after FPS throttling), with `fps`, `fpsFactor`, `duration`, and `lerpFactor`. Named entries are interpolated before this callback.
 3. **`pause`** / `enabled: false` — `cancelAnimationFrame`; emits [`pause`](callbacks#pause) and [`toggle`](callbacks#toggle).
 
 Changing [`fps`](props#props.fps) or [`enabled`](props#props.enabled) resets frame timing.
@@ -93,6 +95,30 @@ Damping — use [`damp`](methods#damp) or [`lerpFactor`](methods#lerpfactor) for
 ```ts
 raf.on('frame', () => {
   value = raf.damp(value, target, 0.1);
+});
+```
+
+Named entries — [`add`](methods#add) once, then [`target`](methods#target) / [`value`](methods#value) to update (starts the loop via [`play`](methods#play)):
+
+```ts
+raf.add('x', { value: 0, ease: 0.1 });
+raf.add('y', {
+  value: 0,
+  ease: { stiffness: 100, damping: 10 },
+});
+raf.add('velocity', { value: 0, ease: 0.1, friction: true });
+
+raf.target('x', pointer.x);
+raf.target('y', pointer.y);
+raf.target('velocity', speed);
+
+raf.on('frame', () => {
+  const x = raf.value('x');
+  const y = raf.value('y');
+
+  if (raf.interpolated()) {
+    raf.pause();
+  }
 });
 ```
 

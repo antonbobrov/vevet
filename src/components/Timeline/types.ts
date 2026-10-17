@@ -3,7 +3,7 @@ import {
   IModuleMutableProps,
   IModuleStaticProps,
 } from '@/base/Module/types';
-import { TEasingType } from '@/utils/math/easing';
+import { TEasing, TSpring } from '@/utils';
 
 export interface ITimelineStaticProps extends IModuleStaticProps {}
 
@@ -15,12 +15,19 @@ export interface ITimelineMutableProps extends IModuleMutableProps {
   duration?: number;
 
   /**
-   * Easing applied to linear {@link ITimelineProgressArg.progress}.
+   * Ease applied to linear {@link ITimelineProgressArg.progress}.
    *
-   * Accepts a named easing type, bezier control points, or `false` for linear.
+   * Accepts a named easing type, cubic bezier `[x1, y1, x2, y2]`, a custom
+   * function, a {@link TSpring} config, or `false` for linear.
    * @default inherited from core settings
    */
-  easing?: TEasingType;
+  ease?: TEasing | TSpring;
+
+  /**
+   * @deprecated Use {@link ease} instead.
+   * @default inherited from core settings
+   */
+  easing?: TEasing | TSpring;
 }
 
 export interface ITimelineCallbacksMap extends IModuleCallbacksMap<ITimelineMutableProps> {
@@ -63,6 +70,6 @@ export interface ITimelineProgressArg {
   /** Linear progress (`0 → 1`). */
   progress: number;
 
-  /** Progress after applying the `easing` prop. */
+  /** Progress after applying the `ease` prop. */
   eased: number;
 }

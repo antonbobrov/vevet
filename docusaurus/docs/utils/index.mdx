@@ -176,6 +176,36 @@ easing(0.35, (value) => Math.sin(Math.PI * 0.5 * value));
 - `EaseOutQuint`
 - `EaseOutSine`
 
+## spring
+
+```ts
+spring(progress: number, config: TSpring): number
+```
+
+Applies spring physics to a linear progress value (`0 → 1`).
+
+Time is normalized to the spring’s settle duration so `progress = 1` lands on rest. Mid-curve values may overshoot outside `0…1`.
+
+```ts
+spring(0.5, { stiffness: 100, damping: 10 });
+```
+
+Parameters (`TSpring`, required):
+
+| Name        | Description                                                  |
+| ----------- | ------------------------------------------------------------ |
+| `stiffness` | Spring stiffness. Higher values move faster and snap harder. |
+| `damping`   | Damping coefficient. Higher values reduce bounce.            |
+
+### `isSpring`
+
+Type guard for `TSpring`.
+
+```ts
+isSpring({ stiffness: 100, damping: 10 }); // true
+isSpring(0.1); // false
+```
+
 ## addEventListener
 
 A utility function to add an event listener to a specified element.

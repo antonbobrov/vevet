@@ -68,6 +68,8 @@ const cursor = new Cursor({
   `path` — Cursor follows a smooth SVG path repeating the pointer trajectory.  
   Use `path` for decorative or expressive cursor effects.
 
+  Path length uses [`easeCoords`](#props.easeCoords) and requires a **numeric** ease (spring falls back to `0.1` with a warning).
+
 ```js
 const cursor = new Cursor({
   behavior: 'path',
@@ -117,7 +119,7 @@ cursor.updateProps({
 
 ### `width` {#props.width}
 
-- **Type:** `number`
+- **Type:** `number | string`
 - **Default:** `50`
 - The initial width of the custom cursor. Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.
 
@@ -134,7 +136,7 @@ cursor.updateProps({
 
 ### `height` {#props.height}
 
-- **Type:** `number`
+- **Type:** `number | string`
 - **Default:** `50`
 - The initial height of the custom cursor. Supports css units like `px`, `rem`, `vw`, `vh`, `svh`.
 
@@ -149,21 +151,90 @@ cursor.updateProps({
 });
 ```
 
+### `ease` {#props.ease}
+
+- **Type:** `number | { stiffness: number; damping: number }` ([`TRafEase`](/docs/Raf/methods#add))
+- **Default:** falls back to [`lerp`](#props.lerp) (`0.2`)
+- Base ease for Raf interpolation. Used when channel eases are `'auto'`.
+  - `number` — damp strength (higher = snappier)
+  - `{ stiffness, damping }` — spring
+
+```js
+const cursor = new Cursor({
+  ease: 0.2,
+});
+
+// spring
+cursor.updateProps({
+  ease: { stiffness: 100, damping: 10 },
+});
+```
+
 ### `lerp` {#props.lerp}
 
-- **Type:** `number`
+- **Type:** `number | { stiffness: number; damping: number }`
 - **Default:** `0.2`
-- Linear interpolation factor for smooth cursor movement.  
-  The value must be between `0` and `1`, with higher values indicating faster movement.
+- **Deprecated.** Use [`ease`](#props.ease) instead. Still applied when `ease` is unset.
 
 ```js
 const cursor = new Cursor({
   lerp: 0.2,
 });
+```
 
-// change value
+### `easeCoords` {#props.easeCoords}
+
+- **Type:** `TRafEase | 'auto'`
+- **Default:** `'auto'`
+- Ease for cursor `x` / `y` (and path length when `behavior` is `'path'`).  
+  `'auto'` uses [`ease`](#props.ease).
+
+```js
+const cursor = new Cursor({
+  easeCoords: 0.15,
+});
+
 cursor.updateProps({
-  lerp: 0.05,
+  easeCoords: { stiffness: 100, damping: 10 },
+});
+```
+
+### `easeSize` {#props.easeSize}
+
+- **Type:** `TRafEase | 'auto'`
+- **Default:** `'auto'`
+- Ease for cursor `width` / `height`.  
+  `'auto'` uses [`ease`](#props.ease).
+
+```js
+const cursor = new Cursor({
+  easeSize: 0.2,
+});
+```
+
+### `easeAngle` {#props.easeAngle}
+
+- **Type:** `TRafEase | 'auto'`
+- **Default:** `'auto'`
+- Ease for cursor `angle`.  
+  `'auto'` uses [`ease`](#props.ease).
+
+```js
+const cursor = new Cursor({
+  easeAngle: { stiffness: 100, damping: 6 },
+});
+```
+
+### `easeVelocity` {#props.easeVelocity}
+
+- **Type:** `TRafEase | 'auto'`
+- **Default:** `'auto'`
+- Ease for cursor `velocity` (also used when friction pulls velocity toward `0`).  
+  `'auto'` uses [`ease`](#props.ease).
+
+```js
+const cursor = new Cursor({
+  easeVelocity: 0.1,
 });
 ```
 
@@ -171,7 +242,7 @@ cursor.updateProps({
 
 - **Type:** `boolean`
 - **Default:** `true`
-- Automatically stops the internal `requestAnimationFrame` loop when cursor position and size reach target values.  
+- Pauses the internal Raf loop when all named entries have settled within their `appx`.  
   Set to `false` if you need continuous rendering (e.g. for shaders or custom effects).
 
 ```js

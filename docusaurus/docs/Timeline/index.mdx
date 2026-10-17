@@ -2,13 +2,15 @@
 sidebar_position: 1300
 toc_min_heading_level: 2
 toc_max_heading_level: 6
-description: Timeline — Vevet.js class for managing animations with easing, play, reverse, pause, and progress control.
+description: Timeline — Vevet.js class for managing animations with easing, bezier, or spring, play, reverse, pause, and progress control.
 keywords:
   - vevet.timeline
   - vevetjs timeline
   - vevet timeline
   - animation timeline
   - easing
+  - bezier
+  - spring
   - progress control
   - play reverse pause
 ---
@@ -17,7 +19,7 @@ import VevetDemo from '@site/src/components/VevetDemo';
 
 # Timeline
 
-A simple timeline class for managing animations with easing and precise progress control.
+A simple timeline class for managing animations with easing, cubic bezier, or spring and precise progress control.
 
 It provides methods for playing, reversing, pausing, and resetting the timeline, plus lifecycle callbacks for each action.
 
@@ -36,11 +38,13 @@ It provides methods for playing, reversing, pausing, and resetting the timeline,
   :::
 
 ```js
-import { Timeline } from 'vevet';
+import { Timeline, EaseInOutCubic } from 'vevet';
 
 const tm = new Timeline({
   duration: 350,
-  easing: [0.25, 0.1, 0.25, 1],
+  ease: EaseInOutCubic, // built-in easing
+  // or: ease: [0.25, 0.1, 0.25, 1], // cubic bezier
+  // or: ease: { stiffness: 120, damping: 14 }, // spring
   onUpdate: ({ eased }) => {
     // your animation here
   },
