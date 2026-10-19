@@ -1,4 +1,9 @@
-import { isFiniteNumber } from '@/internal';
+import {
+  isFiniteNumber,
+  resolveSpring,
+  sampleSpring,
+  TResolvedSpring,
+} from '@/internal';
 
 export type TSpring = {
   /** Spring stiffness. Higher values move faster and snap harder. */
@@ -8,62 +13,18 @@ export type TSpring = {
   damping: number;
 };
 
-const FALLBACK: TSpring = {
-  stiffness: 100,
-  damping: 10,
-};
-
-const APPROXIMATION = 0.001;
-const SETTLE_STEP = 1 / 6;
-const SETTLE_REST_STEPS = 16;
-const SETTLE_LOOP_LIMIT = 1000;
-
 const settleDurationCache = new Map<string, number>();
 
-function clampPositive(value: number, fallback: number) {
-  if (!isFiniteNumber(value) || value <= 0) {
-    return fallback;
-  }
-
-  return value;
+function cacheKey(config: TResolvedSpring) {
+  return `${config.stiffness}:${config.damping}`;
 }
 
-type TResolvedSpringConfig = TSpring & {
-  omega: number;
-  zeta: number;
-};
+function getSettleDuration(config: TResolvedSpring) {
+  const APPROXIMATION = 0.001;
+  const SETTLE_STEP = 1 / 6;
+  const SETTLE_REST_STEPS = 16;
+  const SETTLE_LOOP_LIMIT = 1000;
 
-function resolveSpringConfig(config: TSpring): TResolvedSpringConfig {
-  const stiffness = clampPositive(config.stiffness, FALLBACK.stiffness);
-  const damping = clampPositive(config.damping, FALLBACK.damping);
-
-  return {
-    stiffness,
-    damping,
-    omega: Math.sqrt(stiffness),
-    zeta: damping / (2 * Math.sqrt(stiffness)),
-  };
-}
-
-function cacheKey(config: TResolvedSpringConfig) {
-  return [config.stiffness, config.damping].join(':');
-}
-
-function sampleSpring(time: number, config: TResolvedSpringConfig) {
-  const { omega: w0, zeta } = config;
-
-  if (zeta < 1) {
-    const wd = w0 * Math.sqrt(1 - zeta * zeta);
-    const b = (zeta * w0) / wd;
-    const envelope = Math.exp(-time * zeta * w0);
-
-    return 1 - envelope * (Math.cos(wd * time) + b * Math.sin(wd * time));
-  }
-
-  return 1 - (1 + w0 * time) * Math.exp(-time * w0);
-}
-
-function getSettleDuration(config: TResolvedSpringConfig) {
   const key = cacheKey(config);
   const cached = settleDurationCache.get(key);
 
@@ -131,7 +92,7 @@ export function spring(progress: number, config: TSpring): number {
     return 1;
   }
 
-  const resolved = resolveSpringConfig(config);
+  const resolved = resolveSpring(config);
   const duration = getSettleDuration(resolved);
   const time = (duration * progress) / 1000;
 

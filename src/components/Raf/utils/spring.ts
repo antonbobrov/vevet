@@ -1,3 +1,4 @@
+import { resolveSpring, springStep } from '@/internal';
 import { TSpring } from '@/utils';
 
 export type TRafSpringProps = {
@@ -25,22 +26,18 @@ export function rafSpring({
     return { value: target, velocity: 0 };
   }
 
-  const omega = Math.sqrt(spring.stiffness);
-  const zeta = spring.damping / (2 * Math.sqrt(spring.stiffness));
+  const resolved = resolveSpring(spring);
   const dt = Math.min(Math.max(duration, 0) / 1000, 1 / 30);
 
-  const acceleration =
-    omega * omega * (target - current) - 2 * zeta * omega * velocity;
-  const nextVelocity = velocity + acceleration * dt;
-  const nextValue = current + nextVelocity * dt;
+  const next = springStep({ current, target, velocity, dt, spring: resolved });
 
   if (
     appx > 0 &&
-    Math.abs(target - nextValue) <= appx &&
-    Math.abs(nextVelocity) <= appx
+    Math.abs(target - next.value) <= appx &&
+    Math.abs(next.velocity) <= appx
   ) {
     return { value: target, velocity: 0 };
   }
 
-  return { value: nextValue, velocity: nextVelocity };
+  return next;
 }
