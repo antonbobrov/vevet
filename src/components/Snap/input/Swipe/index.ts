@@ -27,12 +27,12 @@ export class SnapSwipe extends ModulePart<Snap> {
       container: parent.eventsEmitter,
       inertia: false,
       inertiaThreshold: 3,
-      recalculateBoundsOnInertia: false,
+      boundsOnInertia: false,
       preventEdgeSwipe: false,
-      overflow: () => parent.containerSize * (1 - parent.props.edgeFriction),
-      canBounce: () => !parent.isTransitioning,
+      overscroll: () => parent.containerSize * (1 - parent.props.edgeFriction),
+      canRubber: () => !parent.isTransitioning,
       bounds: this._getBounds.bind(this),
-      inertiaDistanceModifier: this._modifyInertiaDistance.bind(this),
+      modifyInertiaDistance: this._modifyInertiaDistance.bind(this),
       ...this.swipeProps,
     });
     this._swipe = swipe;

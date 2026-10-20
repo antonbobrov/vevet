@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-description: Swipe accessors — getters for coordinates and state. Vevet.js Swipe API reference.
+description: Swipe accessors — movement, scale, coords and gesture state. Vevet.js Swipe API reference.
 keywords:
   - vevet.swipe accessors
   - vevetjs swipe accessors
@@ -24,14 +24,12 @@ All **[Module accessors](/docs/base/Module/#accessors)** are available in this c
 
 Type: **[ISwipeCoords](interfaces#iswipecoords)**
 
-Full snapshot: pointer fields plus movement-space fields (`movement`, `prevMovement`, `scale`).
+Full snapshot — pointer fields plus `movement`, `prevMovement`, `scale`.
 
 ```js
-const instance = new Swipe();
-
-instance.coords.movement.x;
-instance.coords.scale;
-instance.coords.diff.x;
+swipe.coords.movement.x;
+swipe.coords.scale;
+swipe.coords.diff.x;
 ```
 
 ### `container`
@@ -40,135 +38,68 @@ Type: `HTMLElement | SVGElement`
 
 Coordinate reference element (`props.container`).
 
-```js
-const instance = new Swipe();
-
-instance.container;
-```
-
 ### `movement`
 
 Type: **[ISwipeVec3](interfaces#iswipevec3)**
 
-Total displacement in **movement space** (rubber + snap). Use for transforms when `bounds` / `snap` are enabled.
+Total displacement in **movement space** (after rubber-band on [`bounds`](props#props.bounds)). Use for transforms with persistent pan, zoom, or snap UIs — snap itself lands via inertia / [`releaseRubber`](methods#releaserubber).
 
 ```js
-const instance = new Swipe({
-  bounds: () => ({ x: [0, 200] }),
-  onMove: ({ movement, scale }) => {
-    el.style.transform = `translate(${movement.x}px, ${movement.y}px) scale(${scale})`;
-  },
+swipe.on('move', ({ movement, scale }) => {
+  el.style.transform = `translate(${movement.x}px, ${movement.y}px) scale(${scale})`;
 });
-
-instance.movement.x;
 ```
 
 ### `scale`
 
 Type: `number`
 
-Current scale modifier in movement space. Default is `1`. Updated by [`setScale`](methods#setscale). Included in [`ISwipeCoords`](interfaces#iswipecoords) on callbacks.
+Current scale (default `1`). Updated by [`setScale`](methods#setscale).
 
-```js
-const instance = new Swipe({
-  onMove: ({ movement, scale }) => {
-    el.style.transform = `translate(${movement.x}px, ${movement.y}px) scale(${scale})`;
-  },
-});
-
-instance.scale;
-```
-
-### `start`
+### `start` / `prev` / `current`
 
 Type: **[ISwipeState](interfaces#iswipestate)**
 
-Pointer position at swipe start.
-
-```js
-instance.start.x;
-instance.start.time;
-```
-
-### `prev`
-
-Type: **[ISwipeState](interfaces#iswipestate)**
-
-Previous pointer position.
-
-```js
-instance.prev.x;
-```
-
-### `current`
-
-Type: **[ISwipeState](interfaces#iswipestate)**
-
-Current pointer position.
-
-```js
-instance.current.x;
-instance.current.angle;
-```
+Pointer positions for this gesture (`x`, `y`, `angle`, `time`).
 
 ### `diff`
 
 Type: **[ISwipeState](interfaces#iswipestate)**
 
-Offset from swipe start to current pointer position (pointer space).
-
-```js
-instance.diff.x;
-instance.diff.angle;
-```
+Offset from gesture start to current pointer (pointer space). Great for one-shot drags that reset on release.
 
 ### `step`
 
 Type: **[ISwipeState](interfaces#iswipestate)**
 
-Offset from previous to current pointer position.
-
-```js
-instance.step.x;
-```
+Offset from previous sample to current — useful for velocity and custom physics.
 
 ### `accum`
 
 Type: **[ISwipeVec3](interfaces#iswipevec3)**
 
-Absolute path length since swipe start (`|step|` per axis).
-
-```js
-instance.accum.x;
-instance.accum.angle;
-```
+Absolute path length since gesture start (`|step|` per axis).
 
 ### `hasInertia`
 
 Type: `boolean`
 
-Whether release inertia (RAF) is running.
+Whether release inertia is running.
 
-```js
-instance.hasInertia;
-```
-
-### `hasBounce`
+### `hasRubber`
 
 Type: `boolean`
 
-Whether overflow bounce-back timeline is running.
-
-```js
-instance.hasBounce;
-```
+Whether the release rubber / snap settle timeline is running.
 
 ### `isSwiping`
 
 Type: `boolean`
 
-Whether a swipe gesture is in progress.
+Whether an active swipe is in progress (`start` has fired).
 
-```js
-instance.isSwiping;
-```
+## Deprecated
+
+| Deprecated | Use instead |
+| ---------- | ----------- |
+| `hasBounce` | [`hasRubber`](#hasrubber) |

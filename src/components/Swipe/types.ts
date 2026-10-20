@@ -3,9 +3,10 @@ import {
   IModuleMutableProps,
   IModuleStaticProps,
 } from '@/base/Module/types';
-import { TEasingType } from '@/utils/math';
+import { TEasing, TEasingType, TSpring } from '@/utils/math';
 
 import { IPointersCallbacksMap, IPointersStaticProps } from '../Pointers/types';
+import { TRafEase } from '../Raf/types';
 
 import {
   ISwipeAxes,
@@ -72,7 +73,7 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
   axis?: null | 'x' | 'y';
 
   /**
-   * Swipe movement scale.
+   * Multiplier applied to pointer `step` when accumulating `rawMovement`.
    * @default 1
    */
   ratio?: number;
@@ -96,7 +97,7 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
   threshold?: number;
 
   /**
-   * Minimum duration (ms) to trigger swipe move.
+   * Minimum hold duration (ms) before the swipe can activate (`start`).
    * @default 0
    */
   minTime?: number;
@@ -132,34 +133,69 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
   requireCtrlKey?: boolean;
 
   /**
-   * Duration of the bounce-back timeline when movement exceeds `bounds` and inertia does not run.
+   * Movement limits per axis in movement space. Unset axis is unbounded.
+   * Values are normalized to `[min, max]` per axis.
+   * @default null
+   */
+  bounds?: null | ((coords: ISwipeCoords) => ISwipeAxes | null);
+
+  /**
+   * Max rubber-band stretch past `bounds` while dragging
+   * (px for x/y, degrees for `angle`).
+   * @default 50
+   */
+  overscroll?: number | (() => number);
+
+  /**
+   * Whether {@link Swipe.releaseRubber} is allowed.
+   * @default () => true
+   */
+  canRubber?: () => boolean;
+
+  /**
+   * Snap targets per axis in movement space.
+   * Redirects inertia distance and rubber settle toward the nearest target.
+   * @default null
+   */
+  snap?: null | (() => ISwipeAxes | null);
+
+  /**
+   * Recalculate `bounds` while inertia is running.
+   * @default true
+   */
+  boundsOnInertia?: boolean;
+
+  /**
+   * Duration (ms) of {@link Swipe.releaseRubber} (snap settle or exceeds cancel)
+   * when release inertia does not run.
    * @default 250
    */
-  bounceDuration?: number;
+  rubberDuration?: number;
 
   /**
-   * Rubber-band distance past `bounds` (px for x/y, degrees for `angle`).
-   * @default () => 50
+   * Ease for {@link Swipe.releaseRubber} (`TEasing` or spring).
+   * @default EaseOutCubic
    */
-  overflow?: () => number;
+  rubberEase?: TEasing | TSpring;
 
   /**
-   * Enables release inertia (RAF-based decay).
+   * Enables release inertia after gesture end (RAF velocity decay).
    * @default false
    */
   inertia?: boolean;
 
   /**
-   * Inertia velocity decay per frame (higher = stops sooner).
+   * Freeflow velocity damp strength per frame (higher = stops sooner).
    * @default 0.05
    */
-  inertiaDecay?: number;
+  inertiaEase?: number;
 
   /**
-   * Easing factor for pulling inertia back inside `bounds` (per frame, FPS-independent).
+   * Ease for inertia overscroll bounce back inside `bounds`
+   * (`number` damp or spring).
    * @default 0.3
    */
-  inertiaBounceEase?: number;
+  inertiaRubberEase?: TRafEase;
 
   /**
    * Multiplier applied to release velocity.
@@ -178,37 +214,84 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
    * Falsy axis value disables inertia on that axis.
    * @default { x: 7, y: 7, angle: 3 }
    */
-  maxVelocity?: ISwipeVec3;
+  inertiaMaxVelocity?: ISwipeVec3;
 
   /**
-   * Movement limits per axis. Unset axis is unbounded.
+   * Modifies predicted freeflow distance when inertia starts.
+   * When set (or when snap redirects the end), inertia uses distance mode
+   * instead of integrating velocity. Snap still preferred per axis afterward.
    * @default null
    */
-  bounds?: null | ((coords: ISwipeCoords) => ISwipeAxes | null);
+  modifyInertiaDistance?: null | ((distance: ISwipeVec3) => ISwipeVec3 | null);
+
+  // ── deprecated ───────────────────────────────────────────────────────
 
   /**
-   * Enable bounds recalculation when inertia is active
-   * @default true
+   * @deprecated Use {@link overscroll}.
    */
-  recalculateBoundsOnInertia?: boolean;
+  overflow?: number | (() => number);
 
   /**
-   * Snap targets per axis in movement space.
-   * @default null
+   * @deprecated Use {@link canRubber}.
    */
-  snap?: null | (() => ISwipeAxes | null);
+  allowRubber?: () => boolean;
 
   /**
-   * Determines whether the swipe is allowed to bounce back.
-   * @default () => true
+   * @deprecated Use {@link canRubber}.
    */
   canBounce?: () => boolean;
 
   /**
-   * Max distance to a snap target (same units as the axis). Falsy = no radius limit.
-   * @default null
+   * @deprecated Unused — nearest snap is always used when `snap` is set.
    */
   snapRadius?: number | null;
+
+  /**
+   * @deprecated Use {@link boundsOnInertia}.
+   */
+  recalculateBoundsOnInertia?: boolean;
+
+  /**
+   * @deprecated Use {@link rubberDuration}.
+   */
+  bounceDuration?: number;
+
+  /**
+   * @deprecated Use {@link rubberEase}.
+   */
+  easeRubber?: TEasing | TSpring;
+
+  /**
+   * @deprecated Use {@link inertiaEase}.
+   */
+  inertiaDecay?: number;
+
+  /**
+   * @deprecated Use {@link inertiaRubberEase}.
+   */
+  easeOverflow?: TRafEase;
+
+  /**
+   * @deprecated Use {@link inertiaRubberEase}.
+   */
+  inertiaBounceEase?: TRafEase;
+
+  /**
+   * @deprecated Use {@link inertiaMaxVelocity}.
+   */
+  maxVelocity?: ISwipeVec3;
+
+  /**
+   * @deprecated Use {@link modifyInertiaDistance}.
+   */
+  inertiaDistance?: null | ((distance: ISwipeVec3) => ISwipeVec3 | null);
+
+  /**
+   * @deprecated Use {@link modifyInertiaDistance}.
+   */
+  inertiaDistanceModifier?:
+    | null
+    | ((distance: ISwipeVec3) => ISwipeVec3 | null);
 
   /**
    * @deprecated Timelined inertia is not supported anymore.
@@ -229,14 +312,6 @@ export interface ISwipeMutableProps extends IModuleMutableProps {
    * @deprecated Timelined inertia is not supported anymore.
    */
   inertiaDistanceThreshold?: number;
-
-  /**
-   * Inertia distance modifier. Called when inertia distance is predicted but not yet started.
-   * @default null
-   */
-  inertiaDistanceModifier?:
-    | null
-    | ((distance: ISwipeVec3) => ISwipeVec3 | null);
 }
 
 export interface ISwipeCallbacksMap
@@ -279,19 +354,19 @@ export interface ISwipeCallbacksMap
   /** Triggered on edge swipe preventing. */
   preventEdgeSwipe: undefined;
 
-  /** Triggered on inertia start. */
+  /** Triggered when release inertia starts. */
   inertiaStart: undefined;
 
-  /** Triggered on inertia progress. */
+  /** Triggered each inertia frame (before `move`). */
   inertia: undefined;
 
-  /** Triggered on inertia end. */
+  /** Triggered when release inertia finishes. */
   inertiaEnd: undefined;
 
-  /** Triggered when inertia fails to start because of lack of momentum. */
+  /** Triggered when inertia fails to start (momentum below threshold). */
   inertiaFail: undefined;
 
-  /** Triggered when inertia is cancelled. */
+  /** Triggered when release inertia is cancelled. */
   inertiaCancel: undefined;
 }
 

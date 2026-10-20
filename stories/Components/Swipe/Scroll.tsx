@@ -42,8 +42,6 @@ export const ScrollComponent: FC<TProps> = (props) => {
 
     setInstance(mod);
 
-    mod.setMovement({ x: 125, y: 125 });
-
     return () => {
       mod.destroy();
       setInstance(undefined);

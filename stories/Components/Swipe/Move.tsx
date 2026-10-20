@@ -30,6 +30,11 @@ export const MoveComponent: FC<TProps> = (props) => {
     const mod = new Swipe({
       ...input,
       container: wrapper,
+      thumb,
+      bounds: () => ({
+        x: [0, wrapper.clientWidth - thumb.clientWidth],
+        y: [0, wrapper.clientHeight - thumb.clientHeight],
+      }),
       onMove: ({ movement }) => {
         thumb.style.transform = `translate(${movement.x}px, ${movement.y}px)`;
       },
@@ -37,7 +42,10 @@ export const MoveComponent: FC<TProps> = (props) => {
 
     setInstance(mod);
 
-    mod.setMovement({ x: 125, y: 125 });
+    mod.setMovement({
+      x: (wrapper.clientWidth - thumb.clientWidth) / 2,
+      y: (wrapper.clientHeight - thumb.clientHeight) / 2,
+    });
 
     let currentScale = 1;
     let currentAngle = 0;
@@ -71,9 +79,8 @@ export const MoveComponent: FC<TProps> = (props) => {
             position: relative;
             margin: 0 auto;
 
-            width: 400px;
-            max-width: 100%;
-            height: 400px;
+            width: 100%;
+            height: 500px;
 
             background: #ddd;
           }

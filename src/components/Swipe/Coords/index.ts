@@ -1,12 +1,14 @@
 import { ModulePart, now } from '@/internal';
+import { closest } from '@/utils';
 
 import { Swipe } from '..';
+import { resolveBoundsOnInertia, resolveOverscroll } from '../resolveProps';
 
 import { SwipeBounds } from './Bounds';
 import { SwipeDecode } from './Decode';
 import { ISwipeDecodeAngle } from './Decode/types';
 import { applyRubber } from './Rubber';
-import { SwipeSnap } from './Snap';
+import { TSwipeAxis } from './types';
 
 import type {
   ISwipeCoords,
@@ -21,7 +23,7 @@ const START_STATE = { ...START_VEC3, time: 0 };
 /**
  * Coordinate snapshot and movement-space pipeline:
  *
- * `decode` → accumulate `rawMovement` → rubber → snap → `movement`
+ * `decode` → accumulate `rawMovement` → rubber-band → `movement`
  *
  * @internal
  */
@@ -30,36 +32,34 @@ export class SwipeCoords extends ModulePart<Swipe> {
 
   private _bounds: SwipeBounds;
 
-  private _snap: SwipeSnap;
-
   /** Event timestamp. */
   private _timestamp = 0;
 
-  /** Start position. */
+  /** Pointer position at swipe start. */
   private _start: ISwipeState = { ...START_STATE };
 
-  /** Previous position. */
+  /** Previous pointer position. */
   private _prev: ISwipeState = { ...START_STATE };
 
-  /** Current position. */
+  /** Current pointer position. */
   private _current: ISwipeState = { ...START_STATE };
 
-  /** Movement offset from start. */
+  /** Offset from `start` to `current` (pointer space). */
   private _diff: ISwipeState = { ...START_STATE };
 
-  /** Movement offset from previous position. */
+  /** Offset from `prev` to `current` (pointer space). */
   private _step: ISwipeState = { ...START_STATE };
 
-  /** Total accumulated movement since swipe start. */
+  /** Absolute path length since swipe start (pointer space). */
   private _accum: ISwipeVec3 = { ...START_VEC3 };
 
-  /** Movement with rubber and snap applied (movement space). */
+  /** Displacement after rubber-band (movement space). */
   private _movement: ISwipeVec3 = { ...START_VEC3 };
 
-  /** Previous movement with rubber and snap applied (movement space). */
+  /** Previous `movement` (movement space). */
   private _prevMovement: ISwipeVec3 = { ...START_VEC3 };
 
-  /** Raw accumulated displacement (before rubber). */
+  /** Accumulated displacement before rubber-band (same space as `bounds`). */
   private _rawMovement: ISwipeVec3 = { ...START_VEC3 };
 
   /** Raw atan2 angle and unwrapped cumulative angle. */
@@ -73,7 +73,6 @@ export class SwipeCoords extends ModulePart<Swipe> {
 
     this._decode = new SwipeDecode(parent);
     this._bounds = new SwipeBounds(parent);
-    this._snap = new SwipeSnap(parent);
   }
 
   get timestamp() {
@@ -104,7 +103,7 @@ export class SwipeCoords extends ModulePart<Swipe> {
     return this._accum;
   }
 
-  /** Displacement in movement space (rubber + snap). */
+  /** Displacement after rubber-band (movement space). */
   get movement(): ISwipeVec3 {
     return this._movement;
   }
@@ -121,12 +120,12 @@ export class SwipeCoords extends ModulePart<Swipe> {
     this._rawMovement.angle = newValue.angle;
   }
 
-  /** Previous displacement in movement space (rubber + snap). */
+  /** Previous displacement after rubber-band (movement space). */
   get prevMovement() {
     return this._prevMovement;
   }
 
-  /** Raw movement before rubber (same space as `bounds`). */
+  /** Accumulated displacement before rubber-band (same space as `bounds`). */
   get rawMovement() {
     return this._rawMovement;
   }
@@ -140,14 +139,17 @@ export class SwipeCoords extends ModulePart<Swipe> {
     return this.calculateBounds();
   }
 
-  /** Bound overflow */
-  get overflow() {
-    const { overflow } = this.props;
-
-    return overflow ? Math.abs(overflow()) : 0;
+  /** Max rubber-band stretch past `bounds` (from `overscroll` prop). */
+  get overscroll() {
+    return resolveOverscroll(this.props);
   }
 
-  /** Current scale modifier */
+  /** @deprecated Use {@link overscroll}. */
+  get overflow() {
+    return this.overscroll;
+  }
+
+  /** Current scale modifier. */
   get scale() {
     return this._scale;
   }
@@ -180,14 +182,23 @@ export class SwipeCoords extends ModulePart<Swipe> {
     };
   }
 
-  /** Resolved snap target per axis during the current gesture. */
-  get snap() {
-    return this._snap.targets;
+  /**
+   * Nearest snap target for `axis` closest to `value`, or `undefined` when
+   * `snap` is unset / empty for that axis.
+   */
+  public getSnapCoord(axis: TSwipeAxis, value: number) {
+    const snaps = this.props.snap?.()?.[axis];
+
+    if (!snaps?.length) {
+      return undefined;
+    }
+
+    return closest(value, snaps);
   }
 
   /**
-   * Overflow past `bounds` per axis in movement space.
-   * Zero when inside limits; used for bounce-back.
+   * Overflow of `rawMovement` past `bounds` per axis.
+   * Zero when inside limits; used by rubber settle when no snap applies.
    */
   get exceeds() {
     const bounds = this.bounds;
@@ -199,12 +210,12 @@ export class SwipeCoords extends ModulePart<Swipe> {
     return this._bounds.exceeds(this._rawMovement);
   }
 
-  /** Parses pointer coordinates relative to the container */
+  /** Parses pointer coordinates into swipe state. */
   public decode(event: MouseEvent | TouchEvent | ISwipeVec2) {
     return this._decode.decode(event);
   }
 
-  /** Apply scale and optionally zoom toward an origin in movement space. */
+  /** Sets scale and optionally zooms toward an origin in movement space. */
   public applyScale(
     value: number,
     originProp?: MouseEvent | TouchEvent | ISwipeVec2,
@@ -226,7 +237,7 @@ export class SwipeCoords extends ModulePart<Swipe> {
     this._scale = value;
   }
 
-  /** Set start coordinates */
+  /** Resets pointer-space tracking for a new gesture. */
   public setStart(state: ISwipeState) {
     this._tempAngle = { raw: state.angle, unwrapped: state.angle };
 
@@ -239,19 +250,22 @@ export class SwipeCoords extends ModulePart<Swipe> {
     this._accum = { ...START_VEC3 };
   }
 
-  /** Sync temp angle */
+  /** Aligns unwrapped angle tracking with the current pointer angle. */
   public syncTempAngle() {
     this._tempAngle.raw = this._current.angle;
     this._tempAngle.unwrapped = this._current.angle;
   }
 
-  /** Update coordinates through the movement pipeline. */
+  /**
+   * Updates pointer-space fields and accumulates movement
+   * (`rawMovement` → rubber-band → `movement`).
+   */
   public update({ x, y, angle, time }: ISwipeState, applyRatio = true) {
     const { start, props, parent } = this;
     const stepRatio = applyRatio ? props.ratio : 1;
 
     if (
-      (parent.hasInertia && props.recalculateBoundsOnInertia) ||
+      (parent.hasInertia && resolveBoundsOnInertia(props)) ||
       !parent.hasInertia
     ) {
       this.calculateBounds();
@@ -260,7 +274,7 @@ export class SwipeCoords extends ModulePart<Swipe> {
     this._timestamp = now();
     this._prev = { ...this.current };
     this._current = { x, y, angle, time };
-    const { _current: current, _prev: prev, overflow } = this;
+    const { _current: current, _prev: prev, overscroll } = this;
 
     this._decode.updateAngle(this._tempAngle, angle);
     current.angle = this._tempAngle.unwrapped;
@@ -297,23 +311,27 @@ export class SwipeCoords extends ModulePart<Swipe> {
 
     const bounds = this.bounds;
 
-    this._movement.x = applyRubber('x', this._rawMovement.x, bounds, overflow);
-    this._movement.y = applyRubber('y', this._rawMovement.y, bounds, overflow);
+    this._movement.x = applyRubber(
+      'x',
+      this._rawMovement.x,
+      bounds,
+      overscroll,
+    );
+    this._movement.y = applyRubber(
+      'y',
+      this._rawMovement.y,
+      bounds,
+      overscroll,
+    );
     this._movement.angle = applyRubber(
       'angle',
       this._rawMovement.angle,
       bounds,
-      overflow,
+      overscroll,
     );
-
-    const { hasInertia } = parent;
-
-    this._snap.applyAxis('x', this._movement, hasInertia);
-    this._snap.applyAxis('y', this._movement, hasInertia);
-    this._snap.applyAxis('angle', this._movement, hasInertia);
   }
 
-  /** Calculate bounds */
+  /** Recalculates normalized bounds from the `bounds` prop. */
   public calculateBounds() {
     return this._bounds.calculate(this.coords);
   }

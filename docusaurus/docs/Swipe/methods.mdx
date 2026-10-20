@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-description: Swipe methods — API reference. Vevet.js Swipe component.
+description: Swipe methods — setMovement, setScale, releaseRubber, cancelInertia and more. Vevet.js Swipe API reference.
 keywords:
   - vevet.swipe methods
   - vevetjs swipe methods
@@ -22,40 +22,18 @@ All **[Module methods](/docs/base/Module/#methods)** are available in this class
 
 ### `calculateBounds`
 
-Re-reads [`bounds`](props#props.bounds) and caches normalized `[min, max]` per axis. Called automatically on every move update; call manually when layout changes outside a gesture (for example after resize).
+Re-reads [`bounds`](props#props.bounds) and caches `[min, max]` per axis. Runs automatically on move; call after layout changes outside a gesture (e.g. resize).
 
 ```ts
-const swipe = new Swipe({
-  container: document.getElementById('wrapper'),
-  bounds: ({ scale }) => ({
-    x: [0, getMaxX(scale)],
-  }),
-});
-
 swipe.calculateBounds();
 ```
 
 ### `setScale`
 
-Sets programmatic scale in movement space. Optionally zooms toward an **origin** point, re-reads bounds, emits `move`, and clamps overflow via [`releaseBounce(0)`](#releasebounce) when inertia is not running.
-
-- **`value`:** next scale.
-- **`origin`:** `MouseEvent`, `TouchEvent`, or `{ x, y }` in **client (viewport) coordinates** — decoded with the same rules as [`relative`](props#props.relative). Pass a wheel or click event for zoom-to-cursor behavior.
+Sets scale in movement space. Pass an **origin** (`MouseEvent`, `TouchEvent`, or `{ x, y }` in client coords) to zoom toward a point. Emits `move`. When inertia is idle, settles with [`releaseRubber(0)`](#releaserubber).
 
 ```ts
 import { clamp } from 'vevet';
-
-const swipe = new Swipe({
-  container: document.getElementById('wrapper'),
-  thumb: document.getElementById('thumb'),
-  relative: true,
-  bounds: ({ scale }) => ({
-    x: [0, wrapper.clientWidth - thumb.clientWidth * scale],
-  }),
-  onMove: ({ movement, scale }) => {
-    thumb.style.transform = `translate(${movement.x}px, ${movement.y}px) scale(${scale})`;
-  },
-});
 
 wrapper.addEventListener(
   'wheel',
@@ -69,77 +47,51 @@ wrapper.addEventListener(
 
 ### `setMovement`
 
-Sets programmatic displacement in movement space. Reapplies rubber and snap, emits `move`, and clamps overflow via [`releaseBounce(0)`](#releasebounce).
+Sets displacement in movement space, emits `move`, then [`releaseRubber(0)`](#releaserubber).
 
 ```ts
-const swipe = new Swipe({
-  container: document.getElementById('wrapper'),
-  bounds: () => ({ x: [0, 300], y: [0, 300] }),
-});
-
 swipe.setMovement({ x: 100, y: 50 });
 swipe.setMovement({ angle: 45 });
 ```
 
+### `releaseRubber`
+
+Starts release settle: nearest [`snap`](props#props.snap) target when available, otherwise pulls back inside [`bounds`](props#props.bounds) when [`overscroll`](props#props.overscroll) allows it. [`canRubber`](props#props.canrubber) gates the entire settle (snap + exceeds).
+
+Called automatically after gesture end when inertia does not run. Pass `0` for an instant settle (used by `setScale` / `setMovement`).
+
+```ts
+swipe.releaseRubber(); // animated
+swipe.releaseRubber(0); // instant
+```
+
+### `cancelRubber`
+
+Stops the release settle timeline.
+
+```ts
+swipe.cancelRubber();
+```
+
 ### `cancelInertia`
 
-Stops release inertia animation.
+Stops release inertia.
 
 ```ts
-const swipe = new Swipe({
-  container: document.getElementById('container'),
-  inertia: true,
-});
-
 swipe.cancelInertia();
-```
-
-### `cancelBounce`
-
-Stops overflow bounce-back timeline.
-
-```ts
-const swipe = new Swipe({
-  container: document.getElementById('container'),
-  bounds: () => ({ x: [0, 200] }),
-});
-
-swipe.cancelBounce();
-```
-
-### `releaseBounce`
-
-Starts overflow bounce-back when movement exceeds [`bounds`](props#props.bounds) and [`canBounce`](props#props.canBounce) allows it. Called automatically on swipe release when inertia does not run.
-
-Pass `0` as `targetDuration` for an instant clamp (used internally by [`setScale`](#setscale) and [`setMovement`](#setmovement)).
-
-```ts
-const swipe = new Swipe({
-  container: document.getElementById('wrapper'),
-  bounds: ({ scale }) => ({
-    x: [0, wrapper.clientWidth - thumb.clientWidth * scale],
-  }),
-});
-
-// After layout or scale change outside a gesture
-swipe.calculateBounds();
-swipe.releaseBounce(0);
-```
-
-Animated bounce on release (default [`bounceDuration`](props#props.bounceDuration)):
-
-```ts
-swipe.releaseBounce();
 ```
 
 ### `destroy`
 
-Destroys the instance and cleans up resources.
+Removes listeners and stops inertia / rubber settle.
 
 ```ts
-const swipe = new Swipe({
-  container: document.getElementById('container'),
-});
-
 swipe.destroy();
 ```
+
+## Deprecated
+
+| Deprecated | Use instead |
+| ---------- | ----------- |
+| `releaseBounce` | [`releaseRubber`](#releaserubber) |
+| `cancelBounce` | [`cancelRubber`](#cancelrubber) |

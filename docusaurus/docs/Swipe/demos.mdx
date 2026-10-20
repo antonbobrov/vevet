@@ -1,6 +1,6 @@
 ---
 sidebar_position: 10
-description: Swipe demos — pointer tracking, axis lock, rotation, bounds, inertia, rubber-band, direction detection, and image viewer examples.
+description: Swipe demos — drag, rotation, bounds, inertia, rubber-band, snap, direction and image viewer examples.
 keywords:
   - vevet.swipe demos
   - vevetjs swipe demos
@@ -22,11 +22,11 @@ import Head from '@docusaurus/Head';
 <section>
 ## Basic Demo {#basic-demo}
 
-Overview of the main drag modes in one place: free movement, horizontal, vertical, and rotation.
+Free drag, horizontal, vertical, and rotation — side by side.
 
-Each instance uses pointer-space [`diff`](interfaces#iswipecoords) and resets the transform on release — no [`movement`](interfaces#iswipecoords) persistence.
+Uses pointer-space [`diff`](interfaces#iswipecoords) and resets on release.
 
-Key props: `grabCursor: true`, `axis: "x"` / `axis: "y"`, `relative: true` (rotation).
+Key props: `grabCursor`, `axis`, `relative` (rotation).
 
 <VevetDemo id="bNNbKyV" height={500} />
 </section>
@@ -34,9 +34,7 @@ Key props: `grabCursor: true`, `axis: "x"` / `axis: "y"`, `relative: true` (rota
 <section>
 ## Multidirectional Swipe
 
-Free drag on both axes without an axis lock.
-
-Applies `diff.x` and `diff.y` in `onMove`; the element snaps back on `onEnd`.
+Free drag on both axes. Applies `diff` in `onMove`, resets transform on `onEnd`.
 
 <VevetDemo id="xbVmaaB" height={500} />
 </section>
@@ -44,9 +42,9 @@ Applies `diff.x` and `diff.y` in `onMove`; the element snaps back on `onEnd`.
 <section>
 ## Two-fingers Pan {#two-fingers-pan}
 
-Two-finger pan on touch devices. Movement follows the center between both pointers.
+Two-finger pan follows the center between pointers.
 
-Key prop: [`pointers: 2`](props#props.pointers). Uses `diff` and resets on release — same pattern as Multidirectional Swipe.
+Key prop: [`pointers: 2`](props#props.pointers).
 
 <VevetDemo id="PwWGrRb" height={500} />
 </section>
@@ -64,9 +62,7 @@ Key prop: [`buttons: [2]`](props#props.buttons).
 <section>
 ## Horizontal Swipe
 
-Horizontal drag locked to the x-axis.
-
-Key prop: [`axis: "x"`](props#props.axis). Uses `diff.x` and resets on release.
+Locked to the x-axis via [`axis: "x"`](props#props.axis).
 
 <VevetDemo id="ZYWVMqR" height={500} />
 </section>
@@ -74,9 +70,7 @@ Key prop: [`axis: "x"`](props#props.axis). Uses `diff.x` and resets on release.
 <section>
 ## Vertical Swipe
 
-Vertical drag locked to the y-axis.
-
-Key prop: [`axis: "y"`](props#props.axis). Uses `diff.y` and resets on release.
+Locked to the y-axis via [`axis: "y"`](props#props.axis).
 
 <VevetDemo id="vEGvzvO" height={500} />
 </section>
@@ -86,7 +80,7 @@ Key prop: [`axis: "y"`](props#props.axis). Uses `diff.y` and resets on release.
 
 Angular drag around the element center.
 
-Key props: [`relative: true`](props#props.relative), `diff.angle`. Rotation resets on release.
+Key props: [`relative: true`](props#props.relative), `diff.angle`.
 
 <VevetDemo id="qEZLMLz" height={500} />
 </section>
@@ -94,11 +88,11 @@ Key props: [`relative: true`](props#props.relative), `diff.angle`. Rotation rese
 <section>
 ## Slide Right
 
-Horizontal slider thumb inside a track. Position persists across gestures via [`movement`](interfaces#iswipecoords).
+Horizontal thumb inside a track. Position persists via [`movement`](interfaces#iswipecoords).
 
-Key props: [`thumb`](props#props.thumb), [`bounds`](props#props.bounds), [`inertia: true`](props#props.inertia), `grabCursor: true`.
+Key props: [`thumb`](props#props.thumb), [`bounds`](props#props.bounds), [`inertia`](props#props.inertia).
 
-Bounds are recalculated on resize with [`calculateBounds()`](methods#calculatebounds) and [`releaseBounce()`](methods#releasebounce).
+On resize: [`calculateBounds()`](methods#calculatebounds) + [`releaseRubber()`](methods#releaserubber).
 
 <VevetDemo id="NPdRrLy" height={500} />
 </section>
@@ -106,7 +100,7 @@ Bounds are recalculated on resize with [`calculateBounds()`](methods#calculatebo
 <section>
 ## Slide Down
 
-Vertical slider variant — same pattern as Slide Right, but with y-axis [`bounds`](props#props.bounds).
+Same pattern as Slide Right, with y-axis [`bounds`](props#props.bounds).
 
 <VevetDemo id="MYJjRwL" height={500} />
 </section>
@@ -114,9 +108,9 @@ Vertical slider variant — same pattern as Slide Right, but with y-axis [`bound
 <section>
 ## Lever rotation {#lever-rotation}
 
-Radial lever control: drag the handle (`thumb`) to rotate the dial. Angle is measured relative to the container center.
+Drag a handle (`thumb`) to rotate a dial.
 
-Key props: [`thumb`](props#props.thumb), [`relative: true`](props#props.relative), [`inertia: true`](props#props.inertia). Rotation accumulates via `step.angle`.
+Key props: [`thumb`](props#props.thumb), [`relative`](props#props.relative), [`inertia`](props#props.inertia).
 
 <VevetDemo id="bNpOmGo" height={500} />
 </section>
@@ -124,9 +118,7 @@ Key props: [`thumb`](props#props.thumb), [`relative: true`](props#props.relative
 <section>
 ## Detect Swipe Direction
 
-Directional callbacks fire after the gesture ends once [`directionThreshold`](props#props.directionThreshold) is met.
-
-Callbacks: `onStart`, `onToLeft`, `onToRight`, `onToTop`, `onToBottom`.
+Directional callbacks after release once [`directionThreshold`](props#props.directionThreshold) is met.
 
 <VevetDemo id="ZYWVMwj" height={500} />
 </section>
@@ -134,9 +126,9 @@ Callbacks: `onStart`, `onToLeft`, `onToRight`, `onToTop`, `onToBottom`.
 <section>
 ## Drag Inertia {#drag-inertia}
 
-Release inertia without built-in bounds — limits are applied manually in `onMove`.
+Release inertia without built-in bounds — limits applied manually in `onMove`.
 
-Key props: [`inertia: true`](props#props.inertia), `grabCursor: true`. Position is accumulated from `step` and clamped with `clamp()`.
+Key prop: [`inertia: true`](props#props.inertia).
 
 <VevetDemo id="azNPaxx" height={500} />
 </section>
@@ -144,9 +136,9 @@ Key props: [`inertia: true`](props#props.inertia), `grabCursor: true`. Position 
 <section>
 ## Drag Inertia Bounce {#drag-inertia-bounce}
 
-Movement-space drag inside a wrapper with automatic bounds and rubber-band overflow.
+Bounded drag with rubber-band stretch and release inertia.
 
-Key props: [`bounds`](props#props.bounds), [`overflow`](props#props.overflow), [`inertia: true`](props#props.inertia), `movement` for transforms.
+Key props: [`bounds`](props#props.bounds), [`overscroll`](props#props.overscroll), [`inertia`](props#props.inertia), `movement`.
 
 <VevetDemo id="zxqbwVg" height={500} />
 </section>
@@ -154,9 +146,9 @@ Key props: [`bounds`](props#props.bounds), [`overflow`](props#props.overflow), [
 <section>
 ## Bouncing Ball
 
-Custom physics on top of release inertia: the ball reverses direction when it hits the viewport edges.
+Custom physics on top of inertia: reverse direction at viewport edges during coast.
 
-Uses `hasInertia` in `onMove` to flip direction only during the inertia phase.
+Uses [`hasInertia`](accessors#hasinertia) in `onMove`.
 
 <VevetDemo id="pvyqOMV" height={500} />
 </section>
@@ -164,9 +156,9 @@ Uses `hasInertia` in `onMove` to flip direction only during the inertia phase.
 <section>
 ## Vertical Scrolling
 
-Simulated vertical scroll with CSS `translateY` instead of native overflow.
+Custom scroll with `translateY` instead of native overflow.
 
-Key props: [`bounds`](props#props.bounds) on the y-axis, [`inertia: true`](props#props.inertia), `movement.y`, `grabCursor: true`.
+Key props: y [`bounds`](props#props.bounds), [`inertia`](props#props.inertia), `movement.y`.
 
 <VevetDemo id="KwagYqE" height={500} />
 </section>
@@ -174,9 +166,9 @@ Key props: [`bounds`](props#props.bounds) on the y-axis, [`inertia: true`](props
 <section>
 ## Fullpage Bounds
 
-Drag an element anywhere on the page, constrained to the viewport center.
+Drag anywhere on the page, constrained to the viewport.
 
-Key props: [`bounds`](props#props.bounds) relative to the page size, [`inertia: true`](props#props.inertia), `movement`. Recalculates bounds on resize.
+Key props: [`bounds`](props#props.bounds), [`inertia`](props#props.inertia), `movement`.
 
 <VevetDemo id="OPWRGBo" height={500} />
 </section>
@@ -186,7 +178,7 @@ Key props: [`bounds`](props#props.bounds) relative to the page size, [`inertia: 
 
 Caps how far release inertia can travel.
 
-Key prop: [`inertiaDistanceModifier`](props#props.inertiaDistanceModifier) — clamps x/y distance to ±100 px.
+Key prop: [`modifyInertiaDistance`](props#props.modifyinertiadistance).
 
 <VevetDemo id="zxNKXQK" height={500} />
 </section>
@@ -194,9 +186,9 @@ Key prop: [`inertiaDistanceModifier`](props#props.inertiaDistanceModifier) — c
 <section>
 ## Inertia Settings
 
-Live controls for tuning release inertia feel.
+Live controls for coast feel.
 
-Adjust [`inertiaRatio`](props#props.inertiaRatio), [`inertiaDecay`](props#props.inertiaDecay), and [`inertiaBounceEase`](props#props.inertiaBounceEase) via `updateProps()`.
+Tune [`inertiaRatio`](props#props.inertiaratio), [`inertiaEase`](props#props.inertiaease), [`inertiaRubberEase`](props#props.inertiarubberease).
 
 <VevetDemo id="pvREmov" height={500} />
 </section>
@@ -204,11 +196,10 @@ Adjust [`inertiaRatio`](props#props.inertiaRatio), [`inertiaDecay`](props#props.
 <section>
 ## Image Viewer
 
-Image viewer with pan, zoom, and pinch support. Combines Swipe with [`Pointers`](/docs/Pointers).
+Pan, zoom, and pinch — Swipe + [`Pointers`](/docs/Pointers).
 
-- Pan: [`movement`](interfaces#iswipecoords) + [`bounds`](props#props.bounds) that depend on [`scale`](accessors#scale)
-- Zoom: mouse wheel, double-click, and two-finger pinch via [`setScale()`](methods#setscale)
-- [`relative: true`](props#props.relative) for zoom-to-point
+- Pan: `movement` + scale-aware [`bounds`](props#props.bounds)
+- Zoom: wheel, double-click, pinch via [`setScale`](methods#setscale)
 
 <VevetDemo id="rajMgoY" height={500} />
 </section>
@@ -216,7 +207,7 @@ Image viewer with pan, zoom, and pinch support. Combines Swipe with [`Pointers`]
 <section>
 ## Image Viewer Right Click
 
-Same image viewer, but pan is triggered differently per input type:
+Same viewer, different start rules:
 
 - Mouse: right button (`buttons: [2]`)
 - Touch: two fingers (`pointers: 2`)

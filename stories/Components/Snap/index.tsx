@@ -47,6 +47,9 @@ export const Component: FC<TProps> = (props) => {
     const mod = new Snap({
       ...input,
       container,
+      lerp: 1,
+      easing: { stiffness: 100, damping: 10 },
+      duration: 1000,
       onUpdate: (data, snap) => {
         snap.slides.forEach(({ element, coord, progress }, index) => {
           const finalCoord =
