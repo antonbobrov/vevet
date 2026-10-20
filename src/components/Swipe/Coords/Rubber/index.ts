@@ -1,10 +1,10 @@
 import { TSwipeAxis } from '../types';
 
 /**
- * Rubber-band overscroll past movement bounds.
+ * Rubber-band transform for drag past movement bounds.
  *
- * Maps overscroll distance through `rubberDistance` so drag past limits
- * feels asymptotic rather than hard-clamped.
+ * Maps overflow through {@link rubberDistance} so stretch past limits is
+ * asymptotic. With `overscroll <= 0`, values outside bounds clamp hard.
  *
  * @internal
  */
@@ -12,7 +12,7 @@ export function applyRubber(
   axis: TSwipeAxis,
   rawMovement: number,
   bounds: { x?: number[]; y?: number[]; angle?: number[] } | null,
-  overflow: number,
+  overscroll: number,
 ) {
   const axisBounds = bounds?.[axis];
 
@@ -27,10 +27,10 @@ export function applyRubber(
   }
 
   if (rawMovement < min) {
-    return min - rubberDistance(min - rawMovement, overflow);
+    return min - rubberDistance(min - rawMovement, overscroll);
   }
 
-  return max + rubberDistance(rawMovement - max, overflow);
+  return max + rubberDistance(rawMovement - max, overscroll);
 }
 
 /** Overscroll → rubber displacement. */

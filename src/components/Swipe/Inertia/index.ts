@@ -1,23 +1,47 @@
 import { Raf } from '@/components/Raf';
 import { isFiniteNumber, ModulePart, now } from '@/internal';
-import { clamp, lerp } from '@/utils';
+import { clamp } from '@/utils';
 
 import { Swipe } from '..';
 import { SwipeCoords } from '../Coords';
+import { TSwipeAxis } from '../Coords/types';
 import { ISwipeState, ISwipeVec3 } from '../global';
+import {
+  resolveInertiaEase,
+  resolveInertiaMaxVelocity,
+  resolveInertiaRubberEase,
+  resolveModifyInertiaDistance,
+} from '../resolveProps';
 
 const IDLE_VEC3 = { x: 0, y: 0, angle: 0 };
 const IDLE_STATE = { ...IDLE_VEC3, time: 0 };
 
-const LERP_APPROX = 0.01;
+const LERP_APPROX = 0.001;
 const BELOW_THRESHOLD = 0.01;
+
+/**
+ * While freeflow |velocity| is above this (coord/ms), overscroll bounce waits
+ * until movement passes bounds by {@link SwipeCoords.overscroll}.
+ */
+const COAST_VEL = 0.5;
+
+function velKey(name: string) {
+  return `vel-${name}`;
+}
 
 /**
  * Release inertia via {@link Raf} after pointer up.
  *
- * Velocity is derived from the last `step` and decayed each frame.
- * When `inertiaDistanceModifier` is set, movement follows a predicted
- * distance curve instead of integrating velocity directly.
+ * Velocity comes from the last `step` and decays each frame (`inertiaEase`).
+ * Default mode integrates velocity into `rawMovement`. Distance mode runs when
+ * `modifyInertiaDistance` returns a value or snap redirects the freeflow end
+ * ({@link SwipeCoords.getSnapCoord} per axis).
+ *
+ * In distance mode, quiet axes (zero release velocity) borrow progress from the
+ * slowest still-moving axis so they do not jump to `1` immediately.
+ *
+ * Overscroll past `bounds` springs back with `inertiaRubberEase`
+ * (hard clamp when `overscroll <= 0`).
  *
  * @internal
  */
@@ -31,27 +55,25 @@ export class SwipeInertia extends ModulePart<Swipe> {
     super(parent);
   }
 
-  private _raf?: Raf;
+  private raf?: Raf;
 
-  private _velocity: ISwipeState = { ...IDLE_STATE };
+  private bouncing = { x: false, y: false, angle: false };
 
-  private _initialVelocity: ISwipeState = { ...IDLE_STATE };
+  private onUpdate?: (state: ISwipeVec3) => void;
 
-  private _distance?: ISwipeVec3 | null;
+  private dist?: ISwipeVec3 | null;
 
-  private _saveMovement: ISwipeVec3 = { ...IDLE_VEC3 };
+  private saveMovement: ISwipeVec3 = { ...IDLE_VEC3 };
 
-  private _movement: ISwipeVec3 = { ...IDLE_VEC3 };
+  private saveStep: ISwipeState = { ...IDLE_STATE };
 
-  private _saveStep: ISwipeState = { ...IDLE_STATE };
+  private saveCurrent: ISwipeState = { ...IDLE_STATE };
 
-  private _saveCurrent: ISwipeState = { ...IDLE_STATE };
-
-  private _onUpdate?: (state: ISwipeVec3) => void;
+  private saveVelocity: ISwipeVec3 = { ...IDLE_VEC3 };
 
   /** Whether release inertia animation is running. */
   get has() {
-    return !!this._raf;
+    return !!this.raf;
   }
 
   /**
@@ -61,15 +83,14 @@ export class SwipeInertia extends ModulePart<Swipe> {
    */
   public release(onUpdate: (state: ISwipeVec3) => void) {
     const { coords, props } = this;
+    const { rawMovement, step, current } = coords;
+    const inertiaEase = resolveInertiaEase(props);
 
-    this._distance = undefined;
+    this.saveCurrent = { ...current };
+    this.saveStep = { ...step };
+    this.saveMovement = { ...rawMovement };
 
-    this._saveCurrent = { ...coords.current };
-    this._saveStep = { ...coords.step };
-    this._saveMovement = { ...coords.rawMovement };
-    this._movement = { ...coords.rawMovement };
-
-    const data = this._getVelocityData();
+    const data = this._getVelocity();
 
     if (!data) {
       this.callbacks.emit('inertiaFail', undefined);
@@ -77,26 +98,40 @@ export class SwipeInertia extends ModulePart<Swipe> {
       return false;
     }
 
-    this._velocity = {
-      x: data.vx,
-      y: data.vy,
-      angle: data.va,
-      time: now(),
+    const { vx, vy, va } = data;
+
+    // resets
+    this.onUpdate = onUpdate;
+    this.dist = null;
+    this.bouncing = { x: false, y: false, angle: false };
+    this.saveVelocity = { x: vx, y: vy, angle: va };
+
+    // predicted → optional modifier → snap via getSnapCoord (preferred when found)
+    const predicted = {
+      x: this._predictDistance(vx, inertiaEase),
+      y: this._predictDistance(vy, inertiaEase),
+      angle: this._predictDistance(va, inertiaEase),
     };
 
-    this._initialVelocity = { ...this._velocity };
+    const modifyDistance = resolveModifyInertiaDistance(props);
+    const modified = modifyDistance ? modifyDistance(predicted) : null;
+    const { dist, hasSnap } = this._preferSnapDistance(modified ?? predicted);
 
-    if (props.inertiaDistanceModifier) {
-      this._distance = props.inertiaDistanceModifier({
-        x: this._predictDistance(data.vx, props.inertiaDecay),
-        y: this._predictDistance(data.vy, props.inertiaDecay),
-        angle: this._predictDistance(data.va, props.inertiaDecay),
-      });
-    }
+    this.dist = modified || hasSnap ? dist : null;
 
-    this._onUpdate = onUpdate;
+    // init raf
 
-    this._raf = new Raf({ enabled: true, onFrame: this._handleRaf.bind(this) });
+    this.raf = new Raf({ enabled: true, onFrame: this._handleRaf.bind(this) });
+
+    const ease = () => resolveInertiaEase(this.props);
+    this.raf.add(velKey('x'), { value: vx, ease, target: 0 });
+    this.raf.add(velKey('y'), { value: vy, ease, target: 0 });
+    this.raf.add(velKey('angle'), { value: va, ease, target: 0 });
+
+    const moveEase = () => resolveInertiaRubberEase(this.props);
+    this.raf.add('x', { value: rawMovement.x, ease: moveEase });
+    this.raf.add('y', { value: rawMovement.y, ease: moveEase });
+    this.raf.add('angle', { value: rawMovement.angle, ease: moveEase });
 
     this._onStart();
     this.callbacks.emit('inertiaStart', undefined);
@@ -104,8 +139,8 @@ export class SwipeInertia extends ModulePart<Swipe> {
     return true;
   }
 
-  /** Get velocity data if can start */
-  private _getVelocityData() {
+  /** Returns clamped release velocity, or `null` when below threshold. */
+  private _getVelocity() {
     const data = this._calcVelocity();
 
     if (!data || !isFiniteNumber(data.dt) || data.dt <= 0) {
@@ -133,42 +168,43 @@ export class SwipeInertia extends ModulePart<Swipe> {
     return data;
   }
 
-  /** Calculate velocity */
+  /** Derives per-axis velocity from the last `step` and release gap. */
   private _calcVelocity() {
-    const { _saveCurrent: current, _saveStep: step } = this;
-    const { inertiaRatio, ratio, maxVelocity, ...props } = this.props;
+    const { saveCurrent, saveStep, props } = this;
+    const { inertiaRatio, inertiaThreshold } = props;
+    const maxVelocity = resolveInertiaMaxVelocity(props);
 
-    if (!current || !step) {
+    if (!saveCurrent || !saveStep) {
       return null;
     }
 
-    const gap = now() - current.time;
-    const dt = Math.max(step.time, gap, 1);
+    const gap = now() - saveCurrent.time;
+    const dt = Math.max(saveStep.time, gap, 1);
 
     const iRatio = isFiniteNumber(inertiaRatio) ? inertiaRatio : 1;
-    const sRatio = isFiniteNumber(ratio) ? ratio : 1;
+    const sRatio = isFiniteNumber(props.ratio) ? props.ratio : 1;
     const finalRatio = sRatio * iRatio;
 
     const maxVX = maxVelocity.x ? Math.abs(maxVelocity.x) : 0;
-    let vx = (step.x / dt) * finalRatio;
+    let vx = (saveStep.x / dt) * finalRatio;
     vx = clamp(vx, -maxVX, maxVX);
 
     const maxVY = maxVelocity.y ? Math.abs(maxVelocity.y) : 0;
-    let vy = (step.y / dt) * finalRatio;
+    let vy = (saveStep.y / dt) * finalRatio;
     vy = clamp(vy, -maxVY, maxVY);
 
     const maxVA = maxVelocity.angle ? Math.abs(maxVelocity.angle) : 0;
-    let va = (step.angle / dt) * finalRatio;
+    let va = (saveStep.angle / dt) * finalRatio;
     va = clamp(va, -maxVA, maxVA);
 
     const linearSpeed = Math.hypot(vx, vy) * 1000;
     const angularSpeed = Math.abs(va) * 1000;
-    const threshold = Math.abs(props.inertiaThreshold);
+    const threshold = Math.abs(inertiaThreshold);
 
     return { dt, vx, vy, va, linearSpeed, angularSpeed, threshold };
   }
 
-  /** Predict inertia distance */
+  /** Predicted freeflow travel for exponential velocity decay. */
   private _predictDistance(
     velocity: number,
     decay: number,
@@ -180,146 +216,154 @@ export class SwipeInertia extends ModulePart<Swipe> {
     return (velocity * frameMs) / (1 - r);
   }
 
-  /** Handle RAF update */
+  /**
+   * Per axis: if snap targets exist, redirect distance so freeflow ends on
+   * the nearest target ({@link SwipeCoords.getSnapCoord}).
+   */
+  private _preferSnapDistance(dist: ISwipeVec3) {
+    const { saveMovement, coords } = this;
+    const next = { ...dist };
+    const axes: TSwipeAxis[] = ['x', 'y', 'angle'];
+    let hasSnap = false;
+
+    axes.forEach((axis) => {
+      const end = saveMovement[axis] + dist[axis];
+      const snap = coords.getSnapCoord(axis, end);
+
+      if (snap === undefined) {
+        return;
+      }
+
+      next[axis] = snap - saveMovement[axis];
+      hasSnap = true;
+    });
+
+    return { dist: next, hasSnap };
+  }
+
+  /** Integrates freeflow / distance mode and arms overscroll bounce. */
   private _handleRaf() {
-    if (!this._raf) {
+    if (!this.raf) {
       return;
     }
 
-    const { _raf: raf } = this;
-    const duration = this._raf.duration;
-
-    const { coords, props } = this;
-
-    const {
-      _velocity: velocity,
-      _saveCurrent: startCurrent,
-      _saveMovement: startMovement,
-      _movement: movement,
-      _distance: distance,
-    } = this;
-
-    const frameMs = duration;
+    const { coords, saveCurrent, saveMovement, raf, dist, bouncing } = this;
 
     // Delta
-    const dx = velocity.x * frameMs;
-    const dy = velocity.y * frameMs;
-    const dAngle = velocity.angle * frameMs;
-
-    // Friction
-    const decay = raf.lerpFactor(props.inertiaDecay);
-    velocity.x = lerp(velocity.x, 0, decay);
-    velocity.y = lerp(velocity.y, 0, decay);
-    velocity.angle = lerp(velocity.angle, 0, decay);
+    const dx = raf.value(velKey('x')) * raf.duration;
+    const dy = raf.value(velKey('y')) * raf.duration;
+    const dAngle = raf.value(velKey('angle')) * raf.duration;
 
     // Movement
-    if (distance) {
-      const xP = this._getVelocityProgress('x');
-      const yP = this._getVelocityProgress('y');
-      const aP = this._getVelocityProgress('angle');
+    if (dist) {
+      const xP = this._progressForAxis('x', ['y', 'angle']);
+      const yP = this._progressForAxis('y', ['x', 'angle']);
+      const aP = this._progressForAxis('angle', ['x', 'y']);
 
-      movement.x = startMovement.x + distance.x * xP;
-      movement.y = startMovement.y + distance.y * yP;
-      movement.angle = startMovement.angle + distance.angle * aP;
+      if (!bouncing.x) {
+        raf.target('x', saveMovement.x + dist.x * xP, true);
+      }
+      if (!bouncing.y) {
+        raf.target('y', saveMovement.y + dist.y * yP, true);
+      }
+      if (!bouncing.angle) {
+        raf.target('angle', saveMovement.angle + dist.angle * aP, true);
+      }
     } else {
-      movement.x += dx;
-      movement.y += dy;
-      movement.angle += dAngle;
+      if (!bouncing.x) {
+        raf.target('x', raf.value('x') + dx, true);
+      }
+      if (!bouncing.y) {
+        raf.target('y', raf.value('y') + dy, true);
+      }
+      if (!bouncing.angle) {
+        raf.target('angle', raf.value('angle') + dAngle, true);
+      }
     }
-
-    // Bounce
-    let isBouncing = false;
-    const rawBounceEase = props.inertiaBounceEase;
-    const bounceEase = rawBounceEase >= 1 ? 1 : raf.lerpFactor(rawBounceEase);
 
     // Bounce within bounds
 
     const { bounds } = coords;
 
     if (bounds?.x) {
-      const bx = this._applyAxisBounce(
-        'x',
-        movement.x,
-        velocity.x,
-        bounds.x,
-        bounceEase,
-      );
-
-      movement.x = bx.value;
-      velocity.x = bx.velocity;
-
-      isBouncing =
-        'bounceFinished' in bx && !bx.bounceFinished ? true : isBouncing;
+      this._applyAxisBounce('x', raf.value('x'), bounds.x);
     }
 
     if (bounds?.y) {
-      const by = this._applyAxisBounce(
-        'y',
-        movement.y,
-        velocity.y,
-        bounds.y,
-        bounceEase,
-      );
-
-      movement.y = by.value;
-      velocity.y = by.velocity;
-
-      isBouncing =
-        'bounceFinished' in by && !by.bounceFinished ? true : isBouncing;
+      this._applyAxisBounce('y', raf.value('y'), bounds.y);
     }
 
     if (bounds?.angle) {
-      const ba = this._applyAxisBounce(
-        'angle',
-        movement.angle,
-        velocity.angle,
-        bounds.angle,
-        bounceEase,
-      );
-
-      movement.angle = ba.value;
-      velocity.angle = ba.velocity;
-
-      isBouncing =
-        'bounceFinished' in ba && !ba.bounceFinished ? true : isBouncing;
+      this._applyAxisBounce('angle', raf.value('angle'), bounds.angle);
     }
 
     // Callbacks
 
-    const totalX = movement.x - startMovement.x;
-    const totalY = movement.y - startMovement.y;
-    const totalA = movement.angle - startMovement.angle;
+    const totalX = raf.value('x') - saveMovement.x;
+    const totalY = raf.value('y') - saveMovement.y;
+    const totalA = raf.value('angle') - saveMovement.angle;
 
-    const x = startCurrent.x + totalX;
-    const y = startCurrent.y + totalY;
-    const angle = startCurrent.angle + totalA;
+    const x = saveCurrent.x + totalX;
+    const y = saveCurrent.y + totalY;
+    const angle = saveCurrent.angle + totalA;
 
-    this._onUpdate?.({ x, y, angle });
+    this.onUpdate?.({ x, y, angle });
 
-    // Stop
-
+    // Freeflow settled (velocity near 0) and named entries reached targets
     const linearStep = Math.hypot(dx, dy);
     const angularStep = Math.abs(dAngle);
-
-    const shouldStop =
+    const freeflowSettled =
       linearStep < BELOW_THRESHOLD && angularStep < BELOW_THRESHOLD;
 
-    if (!isBouncing && shouldStop) {
+    if (raf.interpolated() && freeflowSettled) {
       this.callbacks.emit('inertiaEnd', undefined);
       this._clear();
     }
   }
 
-  /** Calculate velocity progress */
-  private _getVelocityProgress(axis: 'x' | 'y' | 'angle') {
-    const v = this._velocity[axis];
-    const initial = this._initialVelocity[axis];
+  /**
+   * Decay progress for `axis`. Quiet axes follow the slowest still-moving
+   * fallback (min progress) so a dead tiny-velocity axis cannot jump them to `1`.
+   */
+  private _progressForAxis(axis: TSwipeAxis, fallbacks: TSwipeAxis[]) {
+    const { saveVelocity } = this;
+
+    if (saveVelocity[axis] !== 0) {
+      return this._getVelocityProgress(axis);
+    }
+
+    let borrowed: number | undefined;
+
+    for (const other of fallbacks) {
+      if (saveVelocity[other] === 0) {
+        continue;
+      }
+
+      const p = this._getVelocityProgress(other);
+
+      if (borrowed === undefined || p < borrowed) {
+        borrowed = p;
+      }
+    }
+
+    return borrowed ?? 1;
+  }
+
+  /** Decay progress `0 → 1` from initial velocity toward rest. */
+  private _getVelocityProgress(axis: TSwipeAxis) {
+    const { raf, saveVelocity } = this;
+
+    if (!raf) {
+      return 1;
+    }
+
+    const initial = saveVelocity[axis];
 
     if (Math.abs(initial) === 0) {
       return 1;
     }
 
-    const p = 1 - Math.abs(v / initial);
+    const p = 1 - Math.abs(raf.value(velKey(axis)) / initial);
 
     if (Math.abs(1 - p) < LERP_APPROX / 10) {
       return 1;
@@ -328,57 +372,53 @@ export class SwipeInertia extends ModulePart<Swipe> {
     return p;
   }
 
-  /** Apply exponential axis bounce overflow */
+  /**
+   * Arms overscroll bounce toward the nearest bound edge.
+   * Fast freeflow may pass bounds by `overscroll` before bounce starts.
+   * With `overscroll <= 0`, clamps hard (no stretch / spring).
+   */
   private _applyAxisBounce(
     axis: 'x' | 'y' | 'angle',
     value: number,
-    velocity: number,
     bounds: number[],
-    ease: number,
   ) {
-    if (!bounds.length) {
-      return { value, velocity };
+    const { raf, bouncing, coords } = this;
+
+    if (!raf || bouncing[axis] || !bounds.length) {
+      return;
     }
 
-    const snappy = this.coords.snap[axis];
+    const lo = Math.min(...bounds);
+    const hi = Math.max(...bounds);
 
-    const lo = typeof snappy === 'number' ? snappy : Math.min(...bounds);
-    const hi = typeof snappy === 'number' ? snappy : Math.max(...bounds);
+    const overscroll = coords.overscroll;
+    const vel = raf.value(velKey(axis));
+    const offset =
+      overscroll <= 0 || Math.abs(vel) < COAST_VEL ? 0 : overscroll;
 
-    if (value < lo || value > hi) {
-      const target = clamp(value, lo, hi);
-
-      const val = lerp(value, target, ease, LERP_APPROX);
-      const vel = lerp(velocity, 0, ease, LERP_APPROX);
-
-      return {
-        value: val,
-        velocity: vel,
-        bounceFinished: val === target && vel === 0,
-      };
+    if (value < lo - offset || value > hi + offset) {
+      bouncing[axis] = true;
+      // hard clamp when overscroll is disabled — no rubber stretch
+      raf.target(axis, clamp(value, lo, hi), overscroll <= 0);
+      raf.target(velKey(axis), 0, true);
     }
-
-    return { value, velocity };
   }
 
-  /** Clear data and stop animation */
+  /** Destroys the RAF loop without emitting cancel. */
   private _clear() {
-    this._raf?.destroy();
-    this._raf = undefined;
-
-    this._velocity = { ...IDLE_STATE };
+    this.raf?.destroy();
+    this.raf = undefined;
   }
 
   /** Stops release inertia and emits `inertiaCancel`. */
   public cancel() {
-    if (this._raf) {
+    if (this.raf) {
       this.callbacks.emit('inertiaCancel', undefined);
     }
 
     this._clear();
   }
 
-  /** Destroy instance */
   protected _destroy() {
     this._clear();
 

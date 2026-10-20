@@ -2,7 +2,6 @@ import { Module } from '@/base/Module';
 import { TModuleProps } from '@/base/Module/types';
 import { now, TRequiredProps } from '@/internal';
 
-import { SwipeBounce } from './Bounce';
 import { SwipeCoords } from './Coords';
 import { SwipeDirection } from './Direction';
 import { SwipeGesture } from './Gesture';
@@ -11,6 +10,7 @@ import { ISwipeState, ISwipeVec2, ISwipeVec3 } from './global';
 import { SwipeInertia } from './Inertia';
 import { SwipeInput } from './Input';
 import { MUTABLE_PROPS, STATIC_PROPS } from './props';
+import { SwipeRubber } from './Rubber';
 import { SwipeStyles } from './Styles';
 import {
   ISwipeCallbacksMap,
@@ -26,20 +26,24 @@ type TM = ISwipeMutableProps;
  * Manages swipe interactions:
  * - Tracks movement and detects direction
  * - Emits events on start, move, and end
- * - Supports exponential inertia
- * - Optional bounds with rubber-band overflow and bounce-back
+ * - Optional RAF release inertia (velocity decay / distance + snap)
+ * - Optional bounds with rubber-band drag and release settle (snap or exceeds)
  *
  * Gesture lifecycle
  *
  * `Pointers.start` → window move samples → pending (threshold) →
- * `start` / `move` → `end` → direction → inertia or bounce.
+ * `start` / `move` → `end` → direction → inertia or rubber settle.
  *
- * If the threshold is never crossed, `start` and `end` are not emitted.
+ * If the threshold is never crossed, `start` and `end` are not emitted
+ * (rubber settle may still run on pointer up).
  *
  * Coordinate spaces
  *
  * - **Pointer space** — `start`, `prev`, `current`, `diff`, `step`, `accum`
- * - **Movement space** — `movement`, `prevMovement`, `scale` (after rubber / snap)
+ * - **Movement space** — `movement`, `prevMovement`, `scale` (after rubber-band)
+ *
+ * Snap redirects inertia distance and/or rubber settle toward the nearest
+ * target.
  *
  * Does not transform elements — only computes coordinates.
  *
@@ -60,7 +64,7 @@ export class Swipe extends Module<TC, TS, TM> {
 
   private _inertia: SwipeInertia;
 
-  private _bounce: SwipeBounce;
+  private _rubber: SwipeRubber;
 
   private _direction: SwipeDirection;
 
@@ -80,7 +84,7 @@ export class Swipe extends Module<TC, TS, TM> {
       this._coords.syncTempAngle(),
     );
 
-    this._bounce = new SwipeBounce(this, this._coords, (state) =>
+    this._rubber = new SwipeRubber(this, this._coords, (state) =>
       this._applyMove(state, false),
     );
 
@@ -90,7 +94,7 @@ export class Swipe extends Module<TC, TS, TM> {
 
     this._input = new SwipeInput(this, {
       onSessionStart: () => {
-        this.cancelBounce();
+        this.cancelRubber();
         this.cancelInertia();
       },
       onMove: (type) => this._onInputMove(type),
@@ -114,9 +118,14 @@ export class Swipe extends Module<TC, TS, TM> {
     return this._inertia.has;
   }
 
-  /** Whether overflow bounce-back timeline is running. */
+  /** @deprecated Use {@link hasRubber}. */
   get hasBounce() {
-    return this._bounce.has;
+    return this.hasRubber;
+  }
+
+  /** Whether the release rubber / snap settle timeline is running. */
+  get hasRubber() {
+    return this._rubber.has;
   }
 
   /** Whether a swipe gesture is in progress. */
@@ -135,7 +144,7 @@ export class Swipe extends Module<TC, TS, TM> {
     }
 
     if (!this.props.enabled) {
-      this.cancelBounce();
+      this.cancelRubber();
     }
   }
 
@@ -154,7 +163,7 @@ export class Swipe extends Module<TC, TS, TM> {
 
     if (sample.type === 'activate') {
       this.cancelInertia();
-      this.cancelBounce();
+      this.cancelRubber();
 
       this._coords.setStart(sample.state);
       this._emit('start', this.coords);
@@ -186,14 +195,14 @@ export class Swipe extends Module<TC, TS, TM> {
     }
 
     if (!hasInertia) {
-      this.releaseBounce();
+      this.releaseRubber();
     }
   }
 
-  /** Runs bounce when pointers end without an active swipe. */
+  /** Runs rubber settle when pointers end without an active swipe. */
   private _onPointersEnd() {
     if (!this.isSwiping) {
-      this.releaseBounce();
+      this.releaseRubber();
     }
   }
 
@@ -211,9 +220,17 @@ export class Swipe extends Module<TC, TS, TM> {
     });
   }
 
-  /** Animates movement back inside bounds after overflow. */
+  /**
+   * Starts release settle: nearest snap when available, otherwise cancel
+   * bounds `exceeds` (requires `overscroll > 0`). Gated by `canRubber`.
+   */
+  public releaseRubber(targetDuration?: number) {
+    this._rubber.release(targetDuration);
+  }
+
+  /** @deprecated Use {@link releaseRubber}. */
   public releaseBounce(targetDuration?: number) {
-    this._bounce.release(targetDuration);
+    this.releaseRubber(targetDuration);
   }
 
   /** Stops release inertia. */
@@ -221,9 +238,14 @@ export class Swipe extends Module<TC, TS, TM> {
     this._inertia.cancel();
   }
 
-  /** Stops overflow bounce animation. */
+  /** Stops the release rubber / snap settle timeline. */
+  public cancelRubber() {
+    this._rubber.cancel();
+  }
+
+  /** @deprecated Use {@link cancelRubber}. */
   public cancelBounce() {
-    this._bounce.cancel();
+    this.cancelRubber();
   }
 
   /** Recalculates movement bounds from the `bounds` prop. */
@@ -261,7 +283,10 @@ export class Swipe extends Module<TC, TS, TM> {
     return this._coords.accum;
   }
 
-  /** Total displacement in movement space (use for element transforms). */
+  /**
+   * Total displacement in movement space after rubber-band
+   * (use for element transforms).
+   */
   get movement() {
     return this._coords.movement;
   }
@@ -273,29 +298,30 @@ export class Swipe extends Module<TC, TS, TM> {
 
   /**
    * Sets programmatic scale in movement space.
-   * Optionally zooms toward an origin point and emits `move`.
+   * Optionally zooms toward an origin, emits `move`, then
+   * {@link releaseRubber} with duration `0` when inertia is not running.
    */
   public setScale(value: number, origin: MouseEvent | TouchEvent | ISwipeVec2) {
     this._coords.applyScale(value, origin);
     this._applyMove({ ...this.current, time: now() });
 
     if (!this._inertia.has) {
-      this.releaseBounce(0);
+      this.releaseRubber(0);
     }
   }
 
   /**
    * Sets programmatic displacement in movement space.
-   * Reapplies rubber, snap, emits `move`, and cancels overflow bounce.
+   * Emits `move`, then {@link releaseRubber} with duration `0`.
    */
   public setMovement(value: Partial<ISwipeVec3>) {
     this._coords.movement = value;
     this._applyMove({ ...this.current, time: now() });
-    this.releaseBounce(0);
+    this.releaseRubber(0);
   }
 
   protected _destroy() {
-    this.cancelBounce();
+    this.cancelRubber();
 
     super._destroy();
   }

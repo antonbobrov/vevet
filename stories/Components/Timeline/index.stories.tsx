@@ -15,6 +15,7 @@ const easingOptions = [
   'linear',
   'easeInOutCubic',
   'easeOutBack',
+  'spring',
 ] as const;
 
 const meta: Meta<TComponent> = {
@@ -22,14 +23,14 @@ const meta: Meta<TComponent> = {
   component: Component,
   args: {
     duration: MUTABLE_PROPS.duration,
-    easing: MUTABLE_PROPS.easing,
+    ease: MUTABLE_PROPS.easing,
   },
   argTypes: {
     duration: {
       control: { type: 'number', min: 0, step: 100 },
       table: { category: MUTABLE_NAME },
     },
-    easing: {
+    ease: {
       control: 'select',
       options: easingOptions,
       mapping: {
@@ -37,9 +38,10 @@ const meta: Meta<TComponent> = {
         linear: false,
         easeInOutCubic: EaseInOutCubic,
         easeOutBack: EaseOutBack,
+        spring: { stiffness: 100, damping: 10 },
       } satisfies Record<
         (typeof easingOptions)[number],
-        ITimelineMutableProps['easing']
+        ITimelineMutableProps['ease']
       >,
       table: { category: MUTABLE_NAME },
     },

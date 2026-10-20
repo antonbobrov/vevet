@@ -20,7 +20,8 @@ import VevetDemo from '@site/src/components/VevetDemo';
 A customizable smooth cursor component with hover interactions.
 
 The cursor is rendered independently from the native pointer and smoothly interpolates
-its position, size, and appearance based on user input and hovered elements.
+its position, size, angle, and velocity via named [Raf](/docs/Raf) entries, driven by
+user input and hovered elements.
 
 ## Basic Demo
 
@@ -30,7 +31,8 @@ its position, size, and appearance based on user input and hovered elements.
 
 ## Advantages
 
-- Smooth interpolated movement
+- Smooth interpolated movement (damp or spring)
+- Per-channel ease (`easeCoords`, `easeSize`, `easeAngle`, `easeVelocity`)
 - Dynamic size
 - Multiple cursor types
 - Hover-based interactions
@@ -55,8 +57,16 @@ const cursor = new Cursor({
   container: window,
   width: 60,
   height: 60,
-  lerp: 0.1,
+  ease: 0.1,
   behavior: 'default',
+});
+```
+
+Spring ease:
+
+```js
+const cursor = new Cursor({
+  ease: { stiffness: 100, damping: 10 },
 });
 ```
 
@@ -114,7 +124,7 @@ cursor.destroy();
 
 - Use `Cursor` as a **visual layer**, not as a logic controller.
 - Prefer styling via `.inner` and `.outer` instead of replacing DOM nodes.
-- Keep `lerp` values low (0.05–0.2) for smooth motion.
+- Keep damp `ease` values low (`0.05`–`0.2`) for smooth motion, or use spring for bounce.
 - Use `attachHover()` only for interactive elements to avoid unnecessary listeners.
 - Disable `autoStop` only when continuous rendering is required.
 - **Do not use `Cursor` on mobile devices** — custom cursors negatively impact usability and performance on touch screens.

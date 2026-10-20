@@ -14,5 +14,6 @@ export * from './onlyFinite';
 export * from './prependStyles';
 export * from './requiredProps';
 export * from './safeAction';
+export * from './spring';
 export * from './textDirection';
 export * from './unwrapAngleDelta';

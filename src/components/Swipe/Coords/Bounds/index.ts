@@ -6,8 +6,9 @@ import { ISwipeAxes, ISwipeCoords, ISwipeVec3 } from '../../global';
 /**
  * Movement bounds and overflow past limits.
  *
- * `calculate()` normalizes prop bounds to `[min, max]` per axis.
- * `exceeds()` measures how far `rawMovement` sits outside those limits (for bounce).
+ * `calculate()` normalizes the `bounds` prop to `[min, max]` per axis.
+ * `exceeds()` measures how far `rawMovement` sits outside those limits
+ * (used by release settle when snap does not apply).
  *
  * @internal
  */
@@ -52,7 +53,7 @@ export class SwipeBounds extends ModulePart<Swipe> {
 
   /**
    * Overflow past `bounds` per axis in movement space.
-   * Zero when inside limits; used for bounce-back.
+   * Zero when inside limits; used for rubber settle.
    */
   public exceeds(rawMovement: ISwipeVec3) {
     const { _bounds: bounds } = this;

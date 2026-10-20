@@ -15,8 +15,8 @@ import { ISwipeInputHandlers } from './types';
  * `preventTouchMove`, `requireCtrlKey`, and coalesced touch events.
  *
  * Two `pointers.on('end')` handlers are intentional:
- * - session-scoped — full gesture end pipeline
- * - global — bounce when swipe never activated
+ * - session-scoped — full gesture end (direction, inertia or rubber settle)
+ * - global — rubber settle when the swipe threshold was never crossed
  *
  * @internal
  */

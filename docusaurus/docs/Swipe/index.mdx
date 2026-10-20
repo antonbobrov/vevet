@@ -2,19 +2,19 @@
 sidebar_position: 800
 toc_min_heading_level: 2
 toc_max_heading_level: 6
-description: Swipe — Vevet.js component for swipe interactions, pointer tracking, direction detection, rotation, bounds, rubber-band, snap, scale and inertia.
+description: Swipe — Vevet.js drag and swipe engine with inertia, rubber-band bounds, snap, rotation and scale. Build sliders, viewers and custom gestures without fighting pointer events.
 keywords:
   - vevet.swipe
   - vevetjs swipe
   - vevet swipe
   - swipe gestures
+  - drag and drop
   - touch events
-  - pointer movement
   - inertia
+  - rubber band
   - bounds
   - snap
-  - scale
-  - zoom
+  - pan zoom
 ---
 
 import MoreDemos from '@site/src/components/MoreDemos';
@@ -22,15 +22,16 @@ import VevetDemo from '@site/src/components/VevetDemo';
 
 # Swipe
 
-Manages swipe interactions:
+A drag and swipe engine for the web. You get clean coordinates; you decide how they look on screen.
 
-- Tracks pointer movement and detects direction
-- Emits events on start, move, and end
-- Supports RAF-based release inertia with optional bounds bounce
-- Optional movement `bounds`, rubber-band `overflow`, and `snap` targets
-- Optional programmatic [`scale`](accessors#scale) with zoom-to-point via [`setScale`](methods#setscale)
-- Calculates rotation (`angle` in degrees)
-- Does not apply transforms — only provides computed coordinates
+Swipe handles pointer tracking, direction, inertia, rubber-band bounds, snap targets, rotation and scale. It does **not** move the DOM for you — so it fits any layout, canvas, or animation stack.
+
+## Why Swipe
+
+- **One API for mouse and touch** — including multi-finger pan
+- **Feels native** — release inertia, rubber-band stretch, optional snap-to-target
+- **You keep control** — apply `movement` / `diff` however you want (`transform`, canvas, GSAP…)
+- **Built for products** — image viewers, custom scroll, dials, sliders, cards
 
 ## Basic Demo
 
@@ -38,78 +39,56 @@ Manages swipe interactions:
 
 <MoreDemos />
 
-## Coordinate spaces
+## Two coordinate spaces
 
-Swipe exposes two related spaces in [`ISwipeCoords`](interfaces#iswipecoords):
+Swipe gives you two related views of the same gesture:
 
-| Space        | Fields                                              | Use for                                                   |
-| ------------ | --------------------------------------------------- | --------------------------------------------------------- |
-| **Pointer**  | `start`, `prev`, `current`, `diff`, `step`, `accum` | Gesture deltas, direction detection, velocity             |
-| **Movement** | `movement`, `prevMovement`, `scale`                 | Element `transform` when using `bounds` / `snap` / rubber |
+| Use this           | Fields                                              | Best for                                   |
+| ------------------ | --------------------------------------------------- | ------------------------------------------ |
+| **Pointer space**  | `start`, `prev`, `current`, `diff`, `step`, `accum` | One-shot gestures, direction, velocity     |
+| **Movement space** | `movement`, `prevMovement`, `scale`                 | Persistent drag, bounds, rubber-band, zoom |
 
-`movement` and `scale` are accumulated for the instance lifetime (not reset on each swipe). Per-gesture offsets live in `diff` and `step`.
+`diff` resets every gesture. `movement` and `scale` keep accumulating until you change them — ideal for pan/zoom UIs.
 
-With [`pointers`](props#props.pointers) `> 1`, pointer-space coordinates follow the **center** between active pointers (via internal [`Pointers.move`](/docs/Pointers/accessors#move)), not the first touch only.
+With [`pointers`](props#props.pointers) greater than `1`, pointer-space coords follow the **center** between fingers.
 
-## Gesture lifecycle
+## How a gesture works
 
-Swipe uses an internal state machine (`pending` → `swiping` → `end` / `aborted`):
+1. Pointer down → Swipe waits until [`threshold`](props#props.threshold) (and optional [`minTime`](props#props.minTime)) is met.
+2. Then [`start`](callbacks#start) fires, followed by [`move`](callbacks#move) on each sample.
+3. On release → [`end`](callbacks#end), optional direction callbacks, then **inertia** if enabled and fast enough — otherwise **rubber settle** (nearest snap, or back inside bounds).
 
-1. **`Pointers.start`** — a pointer session begins; window `touchmove` / `mousemove` listeners are attached for movement sampling.
-2. **Pending** — the pointer moves, but [`threshold`](props#props.threshold) or [`minTime`](props#props.minTime) is not satisfied yet. No `start` callback.
-3. **Swiping** — threshold passed → [`start`](callbacks#start) fires, then [`move`](callbacks#move) on each sample.
-4. **End** — all pointers released → [`end`](callbacks#end), optional direction callbacks (`toLeft` …), then [inertia](callbacks#inertia) or bounce-back inside [`bounds`](props#props.bounds).
-5. **Aborted** — wrong [`axis`](props#props.axis) or [`willAbort`](props#props.willAbort) → [`abort`](callbacks#abort). No `start` / `end`.
-
-If the user releases before the threshold, `start` and `end` do not fire; overflow may still trigger bounce via [`releaseBounce`](methods#releasebounce).
-
-## Input pipeline
-
-Movement is sampled from [`Pointers.move`](/docs/Pointers/accessors#move) on each window `touchmove` / `mousemove`, **not** from `pointermove` directly. This allows:
-
-- [`preventTouchMove`](props#props.preventTouchMove) on touch (passive window listener)
-- [`requireCtrlKey`](props#props.requireCtrlKey) for mouse pan
-- Stable coordinates when the browser coalesces or skips `pointermove` events
-
-## Movement pipeline
-
-When [`bounds`](props#props.bounds) or [`snap`](props#props.snap) are set, each `move` sample runs:
-
-**decode** → accumulate **rawMovement** → **rubber-band** past limits → **snap** → expose as `movement`
-
-Use `movement` (not `diff`) for transforms when bounds, rubber, or snap are active.
+If the user never crosses the threshold, `start` / `end` do not fire (rubber settle may still run). Wrong [`axis`](props#props.axis) or [`willAbort`](props#props.willAbort) → [`abort`](callbacks#abort).
 
 ## Initialization
 
 :::caution
 
-- `Swipe` does not transform elements — apply `movement`, `scale` (or `diff`) yourself in callbacks.
-- With `bounds` / `snap`, prefer **`movement`** and **`scale`** for transforms; `diff` is pointer space only.
-- Set `transform-origin` on the transformed element (typically `top left` / `0 0`) so translate and scale compose predictably.
+- Swipe only computes coordinates — apply them yourself in callbacks.
+- For pan / bounds / zoom, prefer **`movement`** and **`scale`**.
+- Set `transform-origin: 0 0` (or `top left`) on the transformed element so translate and scale compose cleanly.
   :::
 
-Simple drag (pointer space):
+### Simple drag
 
 ```js
 import { Swipe } from 'vevet';
 
-const swipe = new Swipe(
-  {
-    container: document.getElementById('container'),
-    grabCursor: true,
+const el = document.getElementById('card');
+
+const swipe = new Swipe({
+  container: el,
+  grabCursor: true,
+  onMove: ({ diff }) => {
+    el.style.transform = `translate(${diff.x}px, ${diff.y}px)`;
   },
-  {
-    onMove: ({ diff }) => {
-      el.style.transform = `translate(${diff.x}px, ${diff.y}px)`;
-    },
-    onEnd: () => {
-      el.style.transform = '';
-    },
+  onEnd: () => {
+    el.style.transform = '';
   },
-);
+});
 ```
 
-Bounded drag with rubber and inertia (movement space):
+### Bounded drag with rubber-band and inertia
 
 ```js
 import { Swipe } from 'vevet';
@@ -120,152 +99,39 @@ const thumb = document.getElementById('thumb');
 const swipe = new Swipe({
   container: wrapper,
   thumb,
-  relative: true,
   grabCursor: true,
   inertia: true,
-  overflow: () => 50,
+  overscroll: 50,
   bounds: () => ({ x: [0, 300], y: [0, 300] }),
   onMove: ({ movement }) => {
     thumb.style.transform = `translate(${movement.x}px, ${movement.y}px)`;
   },
 });
 
-// Optional initial offset
 swipe.setMovement({ x: 150, y: 150 });
 ```
 
-Image viewer with pan, wheel zoom, and scale-aware bounds (movement space):
+### Snap on release
 
 ```js
-import { addEventListener, clamp, Swipe } from 'vevet';
-
-const wrapper = document.getElementById('wrapper');
-const thumb = document.getElementById('thumb');
-
-const minScale = 1;
-const maxScale = 3;
-
 const swipe = new Swipe({
   container: wrapper,
   thumb,
-  relative: true,
   inertia: true,
-  grabCursor: true,
-  bounds: ({ scale }) => ({
-    x: [0, wrapper.clientWidth - thumb.clientWidth * scale],
-    y: [0, wrapper.clientHeight - thumb.clientHeight * scale],
-  }),
-  onMove: ({ movement, scale }) => {
-    thumb.style.transform = `translate(${movement.x}px, ${movement.y}px) scale(${scale})`;
+  bounds: () => ({ x: [0, 100], y: [0, 100] }),
+  snap: () => ({ x: [0, 100], y: [0, 100] }),
+  onMove: ({ movement }) => {
+    thumb.style.transform = `translate(${movement.x}px, ${movement.y}px)`;
   },
-});
-
-addEventListener(
-  thumb,
-  'wheel',
-  (event) => {
-    event.preventDefault();
-
-    if (swipe.isSwiping) {
-      return;
-    }
-
-    swipe.setScale(
-      clamp(swipe.scale - event.deltaY * 0.001, minScale, maxScale),
-      event,
-    );
-  },
-  { passive: false },
-);
-
-addEventListener(thumb, 'dblclick', (event) => {
-  const next =
-    swipe.scale >= maxScale
-      ? minScale
-      : clamp(swipe.scale + 1, minScale, maxScale);
-
-  swipe.setScale(next, event);
 });
 ```
 
-Two-finger pan (touch) + pinch zoom via a separate [`Pointers`](/docs/Pointers) instance:
+On release, inertia and rubber settle aim for the **nearest** target.
+
+### Direction and cleanup
 
 ```js
-import { clamp, Pointers, Swipe } from 'vevet';
+swipe.on('toLeft', () => console.log('swiped left'));
 
-const wrapper = document.getElementById('wrapper');
-const thumb = document.getElementById('thumb');
-
-const minScale = 1;
-const maxScale = 10;
-
-// Pan — one mouse pointer or two touch pointers
-const swipe = new Swipe({
-  container: wrapper,
-  relative: true,
-  inertia: true,
-  pointers: (type) => (type === 'mouse' ? 1 : 2),
-  bounds: ({ scale }) => ({
-    x: [0, wrapper.clientWidth - thumb.clientWidth * scale],
-    y: [0, wrapper.clientHeight - thumb.clientHeight * scale],
-  }),
-  onMove: ({ movement, scale }) => {
-    thumb.style.transform = `translate(${movement.x}px, ${movement.y}px) scale(${scale})`;
-  },
-});
-
-// Pinch — zoom toward the midpoint between fingers
-const pinch = new Pointers({
-  container: wrapper,
-  minPointers: 2,
-  maxPointers: 2,
-  relative: false, // client coords — matches Swipe.setScale origin decoding
-  onMove: ({ center, scale, prevScale }) => {
-    if (prevScale === scale) {
-      return;
-    }
-
-    swipe.setScale(
-      clamp(swipe.scale * (scale / prevScale), minScale, maxScale),
-      center,
-    );
-  },
-  onStart: () => swipe.updateProps({ inertia: false }),
-  onEnd: () => swipe.updateProps({ inertia: true }),
-});
-```
-
-:::tip Coordinate space for pinch origin
-Use a separate [`Pointers`](/docs/Pointers) instance with `relative: false` and pass `move.center` to [`setScale`](methods#setscale). Coordinates are client-based; Swipe converts them to container space when [`relative`](props#props.relative) is `true`.
-:::
-
-Detect direction:
-
-```js
-swipe.on('toLeft', () => console.log('swipe to left'));
-```
-
-Add inertia:
-
-```js
-const swipe = new Swipe({
-  container: document.getElementById('container'),
-  inertia: true,
-  inertiaThreshold: 1, // px/s or deg/s minimum release speed
-});
-```
-
-Destroy all events:
-
-```js
 swipe.destroy();
 ```
-
-## Best practices
-
-- Apply transforms yourself — Swipe only computes coordinates.
-- With `bounds` / `snap` / rubber, use **`movement`** and **`scale`**, not `diff`.
-- Set `transform-origin` on the transformed element (usually `0 0`) for predictable pan/zoom.
-- Use [`thumb`](props#props.thumb) when the drag handle differs from the event [`container`](props#props.container).
-- Enable [`inertia`](props#props.inertia) for natural release; tune [`inertiaThreshold`](props#props.inertiaThreshold) if small flicks should not coast.
-- Call [`destroy`](methods#destroy) when removing the component to free listeners and RAF/Timeline instances.

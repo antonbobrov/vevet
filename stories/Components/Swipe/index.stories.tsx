@@ -1,6 +1,11 @@
+import { EaseOutElastic } from 'easing-progress';
 import React from 'react';
 
-import { STATIC_PROPS, MUTABLE_PROPS } from '@/components/Swipe/props';
+import {
+  STATIC_PROPS,
+  MUTABLE_PROPS,
+  SWIPE_DEFAULTS,
+} from '@/components/Swipe/props';
 
 import { MUTABLE_NAME, STATIC_NAME } from '../../global/constants';
 
@@ -8,6 +13,7 @@ import { BallComponent } from './Ball';
 import { MoveComponent } from './Move';
 import { RotationComponent } from './Rotation';
 import { ScrollComponent } from './Scroll';
+import { SnapComponent } from './Snap';
 import { Component } from './Static';
 import { ViewerComponent } from './Viewer';
 
@@ -35,20 +41,20 @@ const meta: Meta<TComponent> = {
     edgeSwipeThreshold: MUTABLE_PROPS.edgeSwipeThreshold,
     preventTouchMove: MUTABLE_PROPS.preventTouchMove,
     requireCtrlKey: MUTABLE_PROPS.requireCtrlKey,
-    bounceDuration: MUTABLE_PROPS.bounceDuration,
-    overflow: MUTABLE_PROPS.overflow,
+    bounds: MUTABLE_PROPS.bounds,
+    overscroll: SWIPE_DEFAULTS.overscroll,
+    canRubber: SWIPE_DEFAULTS.canRubber,
+    snap: MUTABLE_PROPS.snap,
+    boundsOnInertia: SWIPE_DEFAULTS.boundsOnInertia,
+    rubberDuration: SWIPE_DEFAULTS.rubberDuration,
+    rubberEase: SWIPE_DEFAULTS.rubberEase,
     inertia: MUTABLE_PROPS.inertia,
-    inertiaDecay: MUTABLE_PROPS.inertiaDecay,
-    inertiaBounceEase: MUTABLE_PROPS.inertiaBounceEase,
+    inertiaEase: SWIPE_DEFAULTS.inertiaEase,
+    inertiaRubberEase: SWIPE_DEFAULTS.inertiaRubberEase,
     inertiaRatio: MUTABLE_PROPS.inertiaRatio,
     inertiaThreshold: MUTABLE_PROPS.inertiaThreshold,
-    maxVelocity: MUTABLE_PROPS.maxVelocity,
-    bounds: MUTABLE_PROPS.bounds,
-    recalculateBoundsOnInertia: MUTABLE_PROPS.recalculateBoundsOnInertia,
-    snap: MUTABLE_PROPS.snap,
-    canBounce: MUTABLE_PROPS.canBounce,
-    snapRadius: MUTABLE_PROPS.snapRadius,
-    inertiaDistanceModifier: MUTABLE_PROPS.inertiaDistanceModifier,
+    inertiaMaxVelocity: SWIPE_DEFAULTS.inertiaMaxVelocity,
+    modifyInertiaDistance: MUTABLE_PROPS.modifyInertiaDistance,
   },
   argTypes: {
     buttons: {
@@ -114,23 +120,40 @@ const meta: Meta<TComponent> = {
       control: 'boolean',
       table: { category: MUTABLE_NAME },
     },
-    bounceDuration: {
+    bounds: {
+      table: { disable: true, category: MUTABLE_NAME },
+    },
+    overscroll: {
+      table: { disable: true, category: MUTABLE_NAME },
+    },
+    canRubber: {
+      table: { disable: true, category: MUTABLE_NAME },
+    },
+    snap: {
+      table: { disable: true, category: MUTABLE_NAME },
+    },
+    boundsOnInertia: {
+      control: 'boolean',
+      table: { category: MUTABLE_NAME },
+    },
+    rubberDuration: {
       control: { type: 'number', min: 0, step: 50 },
       table: { category: MUTABLE_NAME },
     },
-    overflow: {
-      table: { disable: true, category: MUTABLE_NAME },
+    rubberEase: {
+      control: 'object',
+      table: { category: MUTABLE_NAME },
     },
     inertia: {
       control: 'boolean',
       table: { category: MUTABLE_NAME },
     },
-    inertiaDecay: {
+    inertiaEase: {
       control: 'number',
       table: { category: MUTABLE_NAME },
     },
-    inertiaBounceEase: {
-      control: 'number',
+    inertiaRubberEase: {
+      control: 'object',
       table: { category: MUTABLE_NAME },
     },
     inertiaRatio: {
@@ -141,27 +164,10 @@ const meta: Meta<TComponent> = {
       control: 'number',
       table: { category: MUTABLE_NAME },
     },
-    maxVelocity: {
+    inertiaMaxVelocity: {
       table: { disable: true, category: MUTABLE_NAME },
     },
-    bounds: {
-      table: { disable: true, category: MUTABLE_NAME },
-    },
-    recalculateBoundsOnInertia: {
-      control: 'boolean',
-      table: { category: MUTABLE_NAME },
-    },
-    snap: {
-      table: { disable: true, category: MUTABLE_NAME },
-    },
-    canBounce: {
-      table: { disable: true, category: MUTABLE_NAME },
-    },
-    snapRadius: {
-      control: 'number',
-      table: { category: MUTABLE_NAME },
-    },
-    inertiaDistanceModifier: {
+    modifyInertiaDistance: {
       table: { disable: true, category: MUTABLE_NAME },
     },
   },
@@ -183,8 +189,24 @@ export const Move: StoryObj<TComponent> = {
   args: {
     inertia: true,
     grabCursor: true,
-    bounds: () => ({ x: [0, 250], y: [0, 250] }),
-    overflow: () => 50,
+  },
+  render: (arg) => <MoveComponent {...arg}></MoveComponent>,
+};
+
+export const MoveOverscroll: StoryObj<TComponent> = {
+  args: {
+    inertia: true,
+    grabCursor: true,
+    overscroll: () => 200,
+  },
+  render: (arg) => <MoveComponent {...arg}></MoveComponent>,
+};
+
+export const MoveNoOverscroll: StoryObj<TComponent> = {
+  args: {
+    inertia: true,
+    grabCursor: true,
+    overscroll: 0,
   },
   render: (arg) => <MoveComponent {...arg}></MoveComponent>,
 };
@@ -193,8 +215,6 @@ export const MoveNoInertia: StoryObj<TComponent> = {
   args: {
     inertia: false,
     grabCursor: true,
-    bounds: () => ({ x: [0, 250], y: [0, 250] }),
-    overflow: () => 50,
   },
   render: (arg) => <MoveComponent {...arg}></MoveComponent>,
 };
@@ -204,8 +224,6 @@ export const MoveRightButton: StoryObj<TComponent> = {
     inertia: true,
     grabCursor: true,
     buttons: [2],
-    bounds: () => ({ x: [0, 250], y: [0, 250] }),
-    overflow: () => 50,
   },
   render: (arg) => <MoveComponent {...arg}></MoveComponent>,
 };
@@ -215,8 +233,6 @@ export const MoveCenterButton: StoryObj<TComponent> = {
     inertia: true,
     grabCursor: true,
     buttons: [1],
-    bounds: () => ({ x: [0, 250], y: [0, 250] }),
-    overflow: () => 50,
   },
   render: (arg) => <MoveComponent {...arg}></MoveComponent>,
 };
@@ -226,8 +242,6 @@ export const MoveCtrl: StoryObj<TComponent> = {
     inertia: true,
     grabCursor: true,
     requireCtrlKey: true,
-    bounds: () => ({ x: [0, 250], y: [0, 250] }),
-    overflow: () => 50,
   },
   render: (arg) => <MoveComponent {...arg}></MoveComponent>,
 };
@@ -237,8 +251,6 @@ export const MoveTriggerY: StoryObj<TComponent> = {
     inertia: true,
     grabCursor: true,
     axis: 'y',
-    bounds: () => ({ x: [0, 250], y: [0, 250] }),
-    overflow: () => 50,
   },
   render: (arg) => <MoveComponent {...arg}></MoveComponent>,
 };
@@ -248,8 +260,6 @@ export const MoveRatio: StoryObj<TComponent> = {
     inertia: true,
     grabCursor: true,
     ratio: 2.5,
-    bounds: () => ({ x: [0, 250], y: [0, 250] }),
-    overflow: () => 50,
   },
   render: (arg) => <MoveComponent {...arg}></MoveComponent>,
 };
@@ -258,9 +268,7 @@ export const MoveThreshold: StoryObj<TComponent> = {
   args: {
     inertia: true,
     grabCursor: true,
-    threshold: 50,
-    bounds: () => ({ x: [0, 250], y: [0, 250] }),
-    overflow: () => 50,
+    threshold: 100,
   },
   render: (arg) => <MoveComponent {...arg}></MoveComponent>,
 };
@@ -270,57 +278,61 @@ export const MoveMinTime: StoryObj<TComponent> = {
     inertia: true,
     grabCursor: true,
     minTime: 750,
-    bounds: () => ({ x: [0, 250], y: [0, 250] }),
-    overflow: () => 50,
   },
   render: (arg) => <MoveComponent {...arg}></MoveComponent>,
 };
 
-export const MoveBounceDuration: StoryObj<TComponent> = {
+export const MoveRubberDuration: StoryObj<TComponent> = {
   args: {
     inertia: false,
     grabCursor: true,
-    bounceDuration: 7000,
-    bounds: () => ({ x: [0, 250], y: [0, 250] }),
-    overflow: () => 50,
+    rubberDuration: 1500,
+    rubberEase: EaseOutElastic,
   },
   render: (arg) => <MoveComponent {...arg}></MoveComponent>,
 };
 
-export const MoveInertiaBounceEase: StoryObj<TComponent> = {
+export const MoveInertiaRubberSpring: StoryObj<TComponent> = {
   args: {
     inertia: true,
     grabCursor: true,
-    inertiaBounceEase: 0.05,
-    bounds: () => ({ x: [0, 250], y: [0, 250] }),
-    overflow: () => 50,
+    rubberDuration: 1200,
+    rubberEase: { stiffness: 120, damping: 10 },
+    inertiaRubberEase: { stiffness: 100, damping: 10 },
   },
   render: (arg) => <MoveComponent {...arg}></MoveComponent>,
 };
 
-export const MoveSnap: StoryObj<TComponent> = {
+export const Snap: StoryObj<TComponent> = {
   args: {
     inertia: true,
     grabCursor: true,
-    snap: () => ({ x: [0, 50, 100, 150, 200, 250] }),
-    bounds: () => ({ x: [0, 250], y: [0, 250] }),
-    overflow: () => 50,
+    rubberDuration: 1200,
+    rubberEase: { stiffness: 100, damping: 10 },
   },
-  render: (arg) => <MoveComponent {...arg}></MoveComponent>,
+  render: (arg) => <SnapComponent {...arg}></SnapComponent>,
 };
 
 export const Rotation: StoryObj<TComponent> = {
   args: {
     inertia: true,
     grabCursor: true,
+    rubberDuration: 1200,
+    rubberEase: { stiffness: 100, damping: 10 },
+    inertiaRubberEase: { stiffness: 100, damping: 10 },
+    bounds: () => ({ angle: [0, 360] }),
   },
   render: (arg) => <RotationComponent {...arg}></RotationComponent>,
 };
 
 export const RotationSnap: StoryObj<TComponent> = {
   args: {
-    inertia: false,
+    inertia: true,
+    inertiaRatio: 0.1,
     grabCursor: true,
+    rubberDuration: 1200,
+    rubberEase: { stiffness: 100, damping: 10 },
+    inertiaRubberEase: { stiffness: 100, damping: 10 },
     bounds: () => ({ angle: [0, 360] }),
     snap: () => ({
       angle: [0, 36, 72, 108, 144, 180, 216, 252, 288, 324, 360],
@@ -341,6 +353,8 @@ export const Scroll: StoryObj<TComponent> = {
   args: {
     inertia: true,
     grabCursor: true,
+    rubberEase: { stiffness: 170, damping: 20 },
+    inertiaRubberEase: { stiffness: 170, damping: 20 },
   },
   render: (arg) => <ScrollComponent {...arg}></ScrollComponent>,
 };
@@ -349,6 +363,8 @@ export const ViewerSimple: StoryObj<TComponent> = {
   args: {
     inertia: true,
     grabCursor: true,
+    rubberEase: { stiffness: 170, damping: 20 },
+    inertiaRubberEase: { stiffness: 170, damping: 20 },
   },
   render: (arg) => (
     <ViewerComponent {...arg} interaction="simple"></ViewerComponent>
@@ -359,6 +375,8 @@ export const ViewerPinch: StoryObj<TComponent> = {
   args: {
     inertia: true,
     grabCursor: true,
+    rubberEase: { stiffness: 170, damping: 20 },
+    inertiaRubberEase: { stiffness: 170, damping: 20 },
   },
   render: (arg) => (
     <ViewerComponent {...arg} interaction="pinch"></ViewerComponent>

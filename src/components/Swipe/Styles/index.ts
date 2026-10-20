@@ -24,7 +24,7 @@ export class SwipeStyles extends ModulePart<Swipe> {
     return this.props.enabled && this.props.grabCursor;
   }
 
-  /** Applies touch-action and cursor styles */
+  /** Applies `touch-action` and idle grab cursor. */
   public setInline() {
     const { props, target, canGrab } = this;
     const { axis } = props;
@@ -42,7 +42,7 @@ export class SwipeStyles extends ModulePart<Swipe> {
     target.style.touchAction = touchAction;
   }
 
-  /** Appends styles */
+  /** Sets grabbing cursor while a swipe is active. */
   public append() {
     const { props, target } = this;
 
@@ -51,7 +51,7 @@ export class SwipeStyles extends ModulePart<Swipe> {
     }
   }
 
-  /** Remove styles */
+  /** Restores idle grab cursor after swipe end. */
   public remove() {
     const { props, target } = this;
 

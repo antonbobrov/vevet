@@ -20,63 +20,11 @@ import Head from '@docusaurus/Head';
 All **[Module accessors](/docs/base/Module/#accessors)** are available in this class.
 :::
 
-### `duration`
-
-Type: `number`
-
-Duration of the last frame in ms.
-
-```js
-const raf = new Raf();
-
-raf.duration; // returns duration of the last frame in ms
-```
-
-### `fps`
-
-Type: `number`
-
-Real-time FPS. **See [demo](demos#info)**
-
-```js
-const raf = new Raf();
-
-raf.fps; // returns real-time fps
-```
-
-### `fpsFactor`
-
-Type: `number`
-
-Scaling coefficient based on a 60 FPS target.
-
-Useful for making physics and easing consistent regardless of monitor refresh rate.
-
-**See [demo](demos#info)**
-
-```js
-const raf = new Raf();
-
-raf.fpsFactor; // returns scaling coefficient
-```
-
-### `index`
-
-Type: `number`
-
-Current frame index. **See [demo](demos#info)**
-
-```js
-const raf = new Raf();
-
-raf.index; // returns frame index
-```
-
 ### `isPlaying`
 
 Type: `boolean`
 
-Playback state of the RAF loop.
+Whether the rAF chain is active (`enabled` and not paused).
 
 ```js
 const raf = new Raf();
@@ -88,10 +36,62 @@ raf.isPlaying; // true or false
 
 Type: `number`
 
-Timestamp of the current frame. **See [demo](demos#info)**
+High-resolution timestamp of the last processed frame. **See [demo](demos#info)**
 
 ```js
 const raf = new Raf();
 
 raf.timestamp; // returns timestamp
+```
+
+### `index`
+
+Type: `number`
+
+Count of processed frames since the last `enabled` / `fps` reset. **See [demo](demos#info)**
+
+```js
+const raf = new Raf();
+
+raf.index; // returns frame index
+```
+
+### `fps`
+
+Type: `number`
+
+Estimated real-time FPS (recalculated every [`fpsRecalcFrames`](props#props.fpsRecalcFrames)). **See [demo](demos#info)**
+
+```js
+const raf = new Raf();
+
+raf.fps; // returns real-time fps
+```
+
+### `duration`
+
+Type: `number`
+
+Duration of the last processed frame in ms.
+
+```js
+const raf = new Raf();
+
+raf.duration; // returns duration of the last frame in ms
+```
+
+### `fpsFactor`
+
+Type: `number`
+
+Multiplier `60 / fps` for physics tuned to a 60 Hz baseline.
+
+Useful for making physics and easing consistent regardless of monitor refresh rate.
+
+**See [demo](demos#info)**
+
+```js
+const raf = new Raf();
+
+raf.fpsFactor; // returns scaling coefficient
 ```

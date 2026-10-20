@@ -12,3 +12,8 @@ export const MUTABLE_PROPS: TRequiredProps<IRafMutableProps> = {
   enabled: false,
   fpsRecalcFrames: 10,
 };
+
+export const DEFAULTS = {
+  ease: 0.1,
+  appx: 0.000001,
+};

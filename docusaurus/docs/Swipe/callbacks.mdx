@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-description: Swipe callbacks — onStart, onMove, onEnd. Vevet.js Swipe API reference.
+description: Swipe callbacks — start, move, end, direction, inertia and input events. Vevet.js Swipe API reference.
 keywords:
   - vevet.swipe callbacks
   - vevetjs swipe callbacks
@@ -23,10 +23,10 @@ All **[Module callbacks](/docs/base/Module/#callbacks)** are available in this c
 
 ### `start`
 
-Swipe start event. See [ISwipeCoords](interfaces#iswipecoords).
+Fires once the gesture is active (past threshold). Payload: [ISwipeCoords](interfaces#iswipecoords).
 
 ```ts
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   onStart: (coords) => console.log(coords),
 });
@@ -35,18 +35,16 @@ const observer = new Swipe({
 or:
 
 ```ts
-const destruct = observer.on('start', (coords) => console.log(coords));
-
-// Cancel the callback
-destruct();
+const off = swipe.on('start', (coords) => console.log(coords));
+off();
 ```
 
 ### `move`
 
-Swipe move event. Payload: [ISwipeCoords](interfaces#iswipecoords) (includes `movement`, `scale`, and `prevMovement` for bounded / snapped / zoomed transforms).
+Every sample while dragging (and during inertia / rubber settle). Payload: [ISwipeCoords](interfaces#iswipecoords) — use `movement` / `scale` for pan-zoom UIs.
 
 ```ts
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   onMove: ({ movement, scale }) => {
     el.style.transform = `translate(${movement.x}px, ${movement.y}px) scale(${scale})`;
@@ -57,18 +55,16 @@ const observer = new Swipe({
 or:
 
 ```ts
-const destruct = observer.on('move', (coords) => console.log(coords));
-
-// Cancel the callback
-destruct();
+const off = swipe.on('move', (coords) => console.log(coords));
+off();
 ```
 
 ### `end`
 
-Swipe end event. See [ISwipeCoords](interfaces#iswipecoords).
+Pointers released after an active swipe. Direction callbacks, then inertia or rubber settle, follow this event.
 
 ```ts
-const observer = new Swipe({
+const swipe = new Swipe({
   container: document.getElementById('container'),
   onEnd: (coords) => console.log(coords),
 });
@@ -77,12 +73,9 @@ const observer = new Swipe({
 or:
 
 ```ts
-const destruct = observer.on('end', (coords) => console.log(coords));
-
-// Cancel the callback
-destruct();
+const off = swipe.on('end', (coords) => console.log(coords));
+off();
 ```
-
 ### `toTop`
 
 Swipe from bottom to top.
@@ -337,7 +330,7 @@ destruct();
 
 ### `inertiaStart`
 
-Triggered on inertia start.
+Release inertia began.
 
 ```ts
 const observer = new Swipe({
@@ -359,7 +352,7 @@ destruct();
 
 ### `inertia`
 
-Triggered on inertia progress.
+Each inertia frame (before the related `move`).
 
 ```ts
 const observer = new Swipe({
@@ -381,7 +374,7 @@ destruct();
 
 ### `inertiaEnd`
 
-Triggered on inertia end.
+Release inertia finished.
 
 ```ts
 const observer = new Swipe({
@@ -401,7 +394,7 @@ destruct();
 
 ### `inertiaFail`
 
-Triggered when inertia fails to start because of lack of momentum.
+Release speed was below [`inertiaThreshold`](props#props.inertiathreshold).
 
 ```ts
 const observer = new Swipe({
@@ -421,7 +414,7 @@ destruct();
 
 ### `inertiaCancel`
 
-Triggered when inertia is canceled.
+Inertia stopped via [`cancelInertia`](methods#cancelinertia).
 
 ```ts
 const observer = new Swipe({

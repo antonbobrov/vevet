@@ -19,5 +19,11 @@ export const MUTABLE_PROPS: TRequiredProps<ICursorMutableProps> = {
   width: 50,
   height: 50,
   lerp: 0.2,
+  // `undefined` so deprecated `lerp` still applies when `ease` is unset
+  ease: undefined as any,
+  easeCoords: 'auto',
+  easeSize: 'auto',
+  easeAngle: 'auto',
+  easeVelocity: 'auto',
   autoStop: true,
 };

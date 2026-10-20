@@ -6,15 +6,16 @@ import { ISwipeState, ISwipeVec2 } from '../../global';
 
 import { ISwipeDecodeAngle } from './types';
 
-/** Unwrapped angle state for cumulative rotation. */
-
 /**
  * Parses pointer events into swipe coordinate space.
+ *
+ * With `relative`, x/y are container-local; angle is always from the
+ * viewport or container center to the pointer.
  *
  * @internal
  */
 export class SwipeDecode extends ModulePart<Swipe> {
-  /** Parses pointer coordinates relative to the container. */
+  /** Parses pointer / vec2 into `{ x, y, angle, time }`. */
   public decode(event: MouseEvent | TouchEvent | ISwipeVec2): ISwipeState {
     const vevet = initVevet();
     const { container, props } = this.parent;

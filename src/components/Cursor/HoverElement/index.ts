@@ -1,44 +1,53 @@
 import {
-  Destroyable,
   getTransforms,
   isNumber,
   isString,
+  ModulePart,
   onlyFinite,
 } from '@/internal';
-import { addEventListener, clamp, toPixels } from '@/utils';
+import { addEventListener, clamp, lerp, toPixels, uid } from '@/utils';
 
-import { LERP_APPROXIMATION } from '../constants';
+import { APPX } from '../constants';
 import { ICursorVec2 } from '../global';
-import { SmoothNumber } from '../SmoothNumber';
 
 import {
-  ICursorHoverElementProps,
+  ICursorHoverElementData,
   TCursorHoverElementStickyAmplitude,
 } from './types';
 
+import type { Cursor } from '..';
+
 /**
- * Hover target for {@link Cursor.attachHover}: size/snap/sticky and enter/leave.
+ * Hover target for {@link Cursor.attachHover}: size / snap / sticky and enter / leave.
+ *
+ * Sticky offsets use named {@link Raf} entries on the parent cursor loop.
  */
-export class CursorHoverElement extends Destroyable {
+export class CursorHoverElement extends ModulePart<Cursor> {
   private _hovered = false;
-
-  private _x: SmoothNumber;
-
-  private _y: SmoothNumber;
 
   private _prevTarget: ICursorVec2 | null = null;
 
+  private xKey: string;
+  private yKey: string;
+
   constructor(
-    private _data: ICursorHoverElementProps,
-    private _onEnter: (element: CursorHoverElement) => void,
-    private _onLeave: (element: CursorHoverElement) => void,
+    parent: Cursor,
+    private data: ICursorHoverElementData,
   ) {
-    super();
+    super(parent);
 
     const { emitter } = this;
 
-    this._x = new SmoothNumber(0);
-    this._y = new SmoothNumber(0);
+    this.xKey = uid('cursor-hover-element-x');
+    this.yKey = uid('cursor-hover-element-y');
+
+    data.raf.add(this.xKey, { value: 0, appx: APPX, ease: () => this.ease });
+    data.raf.add(this.yKey, { value: 0, appx: APPX, ease: () => this.ease });
+
+    this.onDestroy(() => {
+      this.raf.delete(this.xKey);
+      this.raf.delete(this.yKey);
+    });
 
     if (emitter.matches(':hover')) {
       this._handleEnter();
@@ -47,70 +56,85 @@ export class CursorHoverElement extends Destroyable {
     this._setEvents();
   }
 
+  private get settings() {
+    return this.data.settings;
+  }
+
+  private get raf() {
+    return this.data.raf;
+  }
+
+  private get ease() {
+    return this.settings.ease ?? this.settings.stickyLerp ?? this.parent.ease;
+  }
+
+  private get enabled() {
+    return this.parent.props.enabled;
+  }
+
   get element() {
-    return this._data.element;
+    return this.settings.element;
   }
 
   get emitter() {
-    return this._data.emitter ?? this._data.element;
+    return this.settings.emitter ?? this.settings.element;
   }
 
   get type() {
-    return this._data.type;
+    return this.settings.type;
   }
 
   get snap() {
-    return this._data.snap ?? false;
+    return this.settings.snap ?? false;
   }
 
   get width() {
-    if (this._data.width === 'auto') {
+    if (this.settings.width === 'auto') {
       return 'auto';
     }
 
-    if (this._data.width) {
-      return toPixels(this._data.width);
+    if (this.settings.width) {
+      return toPixels(this.settings.width);
     }
 
     return null;
   }
 
   get height() {
-    if (this._data.height === 'auto') {
+    if (this.settings.height === 'auto') {
       return 'auto';
     }
 
-    if (this._data.height) {
-      return toPixels(this._data.height);
+    if (this.settings.height) {
+      return toPixels(this.settings.height);
     }
 
     return null;
   }
 
   get padding() {
-    return this._data.padding ? toPixels(this._data.padding) : 0;
+    return this.settings.padding ? toPixels(this.settings.padding) : 0;
   }
 
   get sticky() {
-    return this._data.sticky ?? false;
+    return this.settings.sticky ?? false;
   }
 
   get stickyLerp() {
-    return this._data.stickyLerp ?? undefined;
+    return this.settings.stickyLerp ?? undefined;
   }
 
-  get stickyFriction() {
-    return onlyFinite(this._data.stickyFriction ?? 0, 0);
+  get friction() {
+    const value = this.settings.friction ?? this.settings.stickyFriction ?? 0;
+
+    return onlyFinite(value, 0);
   }
 
-  get hasStickyFriction() {
-    return this.stickyFriction > 0;
+  get hasFriction() {
+    return this.friction > 0;
   }
 
-  get isInterpolated() {
-    return this._x.interpolated && this._y.interpolated;
-  }
-
+  /** Hover size / snap center used to update cursor targets. */
   public getDimensions() {
     let x: number | undefined;
     let y: number | undefined;
@@ -143,7 +167,7 @@ export class CursorHoverElement extends Destroyable {
   }
 
   private _setEvents() {
-    const { emitter, _data: data } = this;
+    const { emitter, settings: props } = this;
 
     let debounceTimeout: NodeJS.Timeout | undefined;
 
@@ -151,7 +175,7 @@ export class CursorHoverElement extends Destroyable {
       addEventListener(emitter, 'mouseenter', () => {
         debounceTimeout = setTimeout(
           () => this._handleEnter(),
-          data.hoverDebounce ?? 16,
+          props.hoverDebounce ?? 16,
         );
       }),
     );
@@ -183,26 +207,29 @@ export class CursorHoverElement extends Destroyable {
   private _handleEnter() {
     this._hovered = true;
 
-    this._onEnter(this);
+    this.data.onEnter(this);
   }
 
   private _handleLeave() {
-    this._hovered = false;
-
-    this._x.target = 0;
-    this._y.target = 0;
-
-    this._prevTarget = null;
-
-    this._onLeave(this);
-  }
-
-  private _handleMove(evt: MouseEvent) {
-    if (!this.sticky || !this._hovered) {
+    if (!this.enabled) {
       return;
     }
 
-    const { element } = this;
+    this._hovered = false;
+    this._prevTarget = null;
+
+    this.raf.target(this.xKey, 0);
+    this.raf.target(this.yKey, 0);
+
+    this.data.onLeave(this);
+  }
+
+  private _handleMove(evt: MouseEvent) {
+    if (!this.enabled || !this.sticky || !this._hovered) {
+      return;
+    }
+
+    const { element, raf, xKey, yKey } = this;
 
     const bounding = element.getBoundingClientRect();
     const { translateX, translateY } = getTransforms(element);
@@ -225,15 +252,15 @@ export class CursorHoverElement extends Destroyable {
 
     this._prevTarget = this._prevTarget ?? { x: xTarget, y: yTarget };
 
-    if (this.hasStickyFriction) {
+    if (this.hasFriction) {
       const parallaxXDelta = xTarget - this._prevTarget.x;
       const parallaxYDelta = yTarget - this._prevTarget.y;
 
-      this._x.target += parallaxXDelta;
-      this._y.target += parallaxYDelta;
+      raf.target(xKey, raf.target(xKey) + parallaxXDelta);
+      raf.target(yKey, raf.target(yKey) + parallaxYDelta);
     } else {
-      this._x.target = xTarget;
-      this._y.target = yTarget;
+      this.raf.target(xKey, xTarget);
+      this.raf.target(yKey, yTarget);
     }
 
     this._prevTarget.x = xTarget;
@@ -241,7 +268,7 @@ export class CursorHoverElement extends Destroyable {
   }
 
   private _getStickyAmp() {
-    const amp = this._data.stickyAmplitude;
+    const amp = this.settings.amp ?? this.settings.stickyAmplitude;
 
     let x: 'auto' | number = 'auto';
     let y: 'auto' | number = 'auto';
@@ -278,29 +305,30 @@ export class CursorHoverElement extends Destroyable {
     return toPixels(value);
   }
 
-  public render(getLerp: (source?: number) => number) {
+  public render() {
     const element = this.element as HTMLElement;
+    const { raf, xKey, yKey } = this;
 
-    if (!this.sticky) {
+    if (!this.enabled || !this.sticky) {
       return;
     }
 
-    if (this.isInterpolated) {
+    if (raf.interpolated(xKey) && raf.interpolated(yKey)) {
       return;
     }
 
-    if (this.hasStickyFriction) {
-      const frictionLerp = getLerp(this.stickyFriction);
+    if (this.hasFriction) {
+      const friction = raf.lerpFactor(clamp(this.friction, 0, 1));
 
-      this._x.targetFriction(0, frictionLerp, LERP_APPROXIMATION);
-      this._y.targetFriction(0, frictionLerp, LERP_APPROXIMATION);
+      const targetX = lerp(raf.target(xKey), 0, friction, APPX);
+      const targetY = lerp(raf.target(yKey), 0, friction, APPX);
+
+      raf.target(xKey, targetX);
+      raf.target(yKey, targetY);
     }
 
-    const lerpFactor = getLerp(this.stickyLerp);
-
-    this._x.toTarget(lerpFactor, LERP_APPROXIMATION);
-    this._y.toTarget(lerpFactor, LERP_APPROXIMATION);
-
-    element.style.transform = `translate3d(${this._x.current}px, ${this._y.current}px, 0)`;
+    const x = raf.value(xKey);
+    const y = raf.value(yKey);
+    element.style.transform = `translate3d(${x}px, ${y}px, 0)`;
   }
 }

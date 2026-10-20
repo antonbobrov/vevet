@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-description: Raf methods — play, pause, API reference. Vevet.js Raf component.
+description: Raf methods — play, pause, named entries, API reference. Vevet.js Raf component.
 keywords:
   - vevet.raf methods
   - vevetjs raf methods
@@ -35,12 +35,133 @@ lerp(from, to, ease);
 
 ### `damp`
 
-Shorthand for `lerp(from, to, raf.lerpFactor(ease))` on the instance.
+Shorthand for `lerp(from, to, raf.lerpFactor(ease), approximation)` on the instance.
+
+Optional `approximation` snaps to `to` when close enough (same idea as entry `appx`).
 
 **See [demo](demos#damping)**
 
 ```ts
 value = raf.damp(value, target, 0.1);
+value = raf.damp(value, target, 0.1, 0.01);
+```
+
+### `add`
+
+Registers a named entry. It is interpolated toward its target automatically each processed frame (before [`frame`](callbacks#frame)). No-op if the name already exists.
+
+`ease` selects the mode (may be a getter resolved every frame):
+- `number` → [`damp`](#damp) (`@default` `0.1`)
+- `{ stiffness, damping }` → spring (`TSpring`)
+
+`target` and `appx` may also be getters resolved every frame. `appx` is the snap distance for damp / spring (`@default` `0.000001`). Non-positive / non-finite disables snapping.
+
+`friction: true` also interpolates a numeric `target` toward `0` each frame with the same `ease` (before interpolating `value`). Ignored for getter targets.
+
+```ts
+// damp
+raf.add('x', 0);
+raf.add('y', { value: 0, ease: 0.1, appx: 0.01 });
+
+// spring
+raf.add('cursorX', {
+  value: 0,
+  ease: { stiffness: 100, damping: 10 },
+});
+
+// friction — pull target to 0 with the same ease
+raf.add('velocity', { value: 0, ease: 0.1, friction: true });
+
+// dynamic target / ease / appx
+raf.add('z', {
+  value: 0,
+  target: () => pointer.x,
+  ease: () => (fast ? 0.3 : { stiffness: 80, damping: 12 }),
+  appx: () => (precise ? 0.0001 : 0.01),
+});
+```
+
+### `value`
+
+Gets or sets the current (lerped) value for a registered name.
+
+- `value(name)` — current value
+- `value(name, number)` — set value, clear spring velocity, and call [`play`](#play)
+
+Throws if `name` is not registered.
+
+```ts
+raf.on('frame', () => {
+  const x = raf.value('x');
+  const y = raf.value('y');
+});
+
+// set without changing target
+raf.value('x', 0);
+```
+
+### `target`
+
+Gets or sets the lerp target for a registered name.
+
+- `target(name)` — current target
+- `target(name, value)` — set target and call [`play`](#play)
+- `target(name, value, true)` — snap immediately (clear spring velocities) and call [`play`](#play)
+
+Throws if `name` is not registered.
+
+```ts
+raf.target('x', pointer.x);
+raf.target('y', pointer.y);
+
+// read
+const targetX = raf.target('x');
+
+// snap without lerping
+raf.target('x', 0, true);
+```
+
+### `sync`
+
+Snaps named entries to their targets, clears spring velocities (value and friction), and calls [`play`](#play).
+
+- No args — every registered entry
+- `sync('x', 'y')` — only those names (throws if a name is not registered)
+
+Does not replace getter targets — only snaps `value` to the resolved target.
+
+```ts
+raf.sync();
+raf.sync('x', 'y');
+```
+
+### `delete`
+
+Removes a registered entry.
+
+```ts
+raf.delete('x');
+```
+
+### `interpolated`
+
+`true` when named entries have settled within their `appx` (same snap threshold used by damp / spring). With `friction`, value and target (and spring velocities) must be near `0`.
+
+- No args — every registered entry
+- `name` — that entry only (throws if not registered)
+
+Useful with [`pause`](#pause) after [`target`](#target).
+
+```ts
+raf.on('frame', () => {
+  if (raf.interpolated()) {
+    raf.pause();
+  }
+
+  if (raf.interpolated('x')) {
+    // `x` settled
+  }
+});
 ```
 
 ### `pause`

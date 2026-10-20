@@ -27,8 +27,8 @@ export interface ISwipeState extends ISwipeVec3 {
  *
  * Movement space
  *
- * `movement`, `prevMovement`, `scale` — after bounds rubber and snap.
- * Use for element `transform` when `bounds` or `snap` props are set.
+ * `movement`, `prevMovement`, `scale` — after rubber-band on `bounds`.
+ * Use for element `transform`.
  */
 export interface ISwipeCoords {
   /** Last event timestamp (ms). */
@@ -45,19 +45,16 @@ export interface ISwipeCoords {
   step: ISwipeState;
   /** Absolute path length since swipe start (`|step|` per axis). */
   accum: ISwipeVec3;
-  /** Total displacement in movement space (rubber + snap applied). */
+  /** Total displacement in movement space (after rubber-band). */
   movement: ISwipeVec3;
-  /** Movement on the previous frame (movement space, after rubber and snap). */
+  /** Movement on the previous frame (movement space). */
   prevMovement: ISwipeVec3;
-  /** Current scaling modifier */
+  /** Current scaling modifier. */
   scale: number;
 }
 
 /**
- * Optional numeric values per swipe axis (`x`, `y`, `angle`).
- *
- * - `bounds`: each array is normalized to `[min, max]` movement limits.
- * - `snap`: each array lists snap targets in movement space.
+ * Optional per-axis value lists (e.g. `bounds` edges or `snap` targets).
  */
 export interface ISwipeAxes {
   x?: number[];

@@ -1,4 +1,7 @@
-import { easing as easingProgress } from 'easing-progress';
+import {
+  easing as easingProgress,
+  TEasingType as TEasingTypeSource,
+} from 'easing-progress';
 
 import { initVevet } from '@/global/initVevet';
 
@@ -35,11 +38,12 @@ export {
   EaseOutSine,
 } from 'easing-progress';
 
-export type {
-  TEasingBezier,
-  TEasingFunction,
-  TEasingType,
-} from 'easing-progress';
+export type { TEasingBezier, TEasingFunction } from 'easing-progress';
+
+/** @deprecated */
+export type TEasingType = TEasingTypeSource;
+
+export type TEasing = TEasingTypeSource;
 
 /**
  * Applies an easing function to a given progress value.

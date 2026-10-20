@@ -114,7 +114,7 @@ export const ViewerComponent: FC<TCustomProps> = ({
         }
 
         mod.calculateBounds();
-        mod.releaseBounce(0);
+        mod.releaseRubber(0);
       },
     });
 
